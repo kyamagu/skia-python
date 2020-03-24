@@ -4,4 +4,6 @@
 namespace py = pybind11;
 
 void initRect(py::module &m) {
+    py::class_<SkRect>(m, "Rect")
+        ;
 }

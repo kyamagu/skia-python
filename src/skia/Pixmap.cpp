@@ -4,4 +4,6 @@
 namespace py = pybind11;
 
 void initPixmap(py::module &m) {
+    py::class_<SkPixmap>(m, "Pixmap")
+        ;
 }

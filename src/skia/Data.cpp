@@ -19,9 +19,11 @@ py::class_<SkData, sk_sp<SkData>>(m, "Data", py::buffer_protocol())
     })
     .def("size", &SkData::size, "Returns the number of bytes stored.")
     .def("isEmpty", &SkData::isEmpty)
-    .def("data", &SkData::data, "Returns the ptr to the data.")
-    // .def("bytes", &SkData::bytes)
-    .def("writable_data", &SkData::writable_data, "USE WITH CAUTION.")
+    .def("data", &SkData::data, "Returns the ptr to the data.",
+        py::return_value_policy::reference)
+    // .def("bytes", &SkData::bytes, return_value_policy::reference)
+    .def("writable_data", &SkData::writable_data, "USE WITH CAUTION.",
+        py::return_value_policy::reference)
     .def("copyRange", &SkData::copyRange,
         "Helper to copy a range of the data into a caller-provided buffer.")
     .def("equals", &SkData::equals, "Returns true if these two objects have the"

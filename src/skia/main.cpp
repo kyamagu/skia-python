@@ -12,6 +12,7 @@ void initBlendMode(py::module &);
 void initCanvas(py::module &);
 void initColor(py::module &);
 void initData(py::module &);
+void initGrContext(py::module &);
 void initFont(py::module &);
 void initImage(py::module &);
 void initImageInfo(py::module &);
@@ -29,6 +30,7 @@ void initRRect(py::module &);
 void initSurface(py::module &);
 void initTextBlob(py::module &);
 void initTextBlobBuilder(py::module &);
+void initVertices(py::module &);
 
 // Main entry point.
 PYBIND11_MODULE(skia, m) {
@@ -43,6 +45,7 @@ PYBIND11_MODULE(skia, m) {
             BlendMode
             Canvas
             Color
+            ColorSpace
             Data
             Font
             Image
@@ -70,6 +73,7 @@ PYBIND11_MODULE(skia, m) {
     initColor(m);
     initData(m);
     initFont(m);
+    initGrContext(m);
     initImage(m);
     initImageInfo(m);
     initIPoint(m);
@@ -86,9 +90,7 @@ PYBIND11_MODULE(skia, m) {
     initSurface(m);
     initTextBlob(m);
     initTextBlobBuilder(m);
-
-    m.def("ColorSetARGB", &SkColorSetARGB,
-        "Returns color value from 8-bit component values.");
+    initVertices(m);
 
 #ifdef VERSION_INFO
     m.attr("__version__") = VERSION_INFO;

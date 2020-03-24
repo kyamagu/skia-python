@@ -13,8 +13,10 @@ SRC = [
     'src/skia/BlendMode.cpp',
     'src/skia/Canvas.cpp',
     'src/skia/Color.cpp',
+    'src/skia/ColorSpace.cpp',
     'src/skia/Data.cpp',
     'src/skia/Font.cpp',
+    'src/skia/GrContext.cpp',
     'src/skia/Image.cpp',
     'src/skia/ImageInfo.cpp',
     'src/skia/IPoint.cpp',
@@ -26,10 +28,12 @@ SRC = [
     'src/skia/Picture.cpp',
     'src/skia/Pixmap.cpp',
     'src/skia/Rect.cpp',
+    'src/skia/Region.cpp',
     'src/skia/RRect.cpp',
     'src/skia/Surface.cpp',
     'src/skia/TextBlob.cpp',
     'src/skia/TextBlobBuilder.cpp',
+    'src/skia/Vertices.cpp',
 ]
 
 

@@ -6,6 +6,8 @@ namespace py = pybind11;
 PYBIND11_DECLARE_HOLDER_TYPE(T, sk_sp<T>);
 
 void initSurface(py::module &m) {
+py::class_<SkSurfaceProps>(m, "SurfaceProps")
+    ;
 py::class_<SkSurface, sk_sp<SkSurface>>(m, "Surface")
     .def(py::init([](int width, int height) {
         return sk_sp<SkSurface>(
