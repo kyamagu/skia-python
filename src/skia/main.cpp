@@ -1,25 +1,34 @@
 #include <pybind11/pybind11.h>
 #include <skia.h>
-#include <stdexcept>
-#include <utility>
 
-using namespace std;
 namespace py = pybind11;
 
 PYBIND11_DECLARE_HOLDER_TYPE(T, sk_sp<T>);
 
 // Declarations.
-void AutoCanvasRestore(py::module &);
-void Canvas(py::module &);
-void Data(py::module &);
-void Image(py::module &);
-void ImageInfo(py::module &);
-void IPoint(py::module &);
-void IRect(py::module &);
-void ISize(py::module &);
-void Surface(py::module &);
-void Paint(py::module &);
-void Path(py::module &);
+void initAutoCanvasRestore(py::module &);
+void initBitmap(py::module &);
+void initBlendMode(py::module &);
+void initCanvas(py::module &);
+void initColor(py::module &);
+void initData(py::module &);
+void initFont(py::module &);
+void initImage(py::module &);
+void initImageInfo(py::module &);
+void initIPoint(py::module &);
+void initIRect(py::module &);
+void initISize(py::module &);
+void initMatrix(py::module &);
+void initPaint(py::module &);
+void initPath(py::module &);
+void initPicture(py::module &);
+void initPixmap(py::module &);
+void initRect(py::module &);
+void initRegion(py::module &);
+void initRRect(py::module &);
+void initSurface(py::module &);
+void initTextBlob(py::module &);
+void initTextBlobBuilder(py::module &);
 
 // Main entry point.
 PYBIND11_MODULE(skia, m) {
@@ -28,21 +37,55 @@ PYBIND11_MODULE(skia, m) {
         --------------------
         .. currentmodule:: skia
         .. autosummary::
-           :toctree: _generate
-           SkSurface
+            :toctree: _generate
+            AutoCanvasRestore
+            Bitmap
+            BlendMode
+            Canvas
+            Color
+            Data
+            Font
+            Image
+            ImageInfo
+            IPoint
+            IRect
+            ISize
+            Matrix
+            Paint
+            Path
+            Picture
+            Pixmap
+            Rect
+            Region
+            RRect
+            Surface
+            TextBlob
+            TextBlobBuilder
     )docstring";
 
-    AutoCanvasRestore(m);
-    Canvas(m);
-    Data(m);
-    Image(m);
-    ImageInfo(m);
-    IPoint(m);
-    IRect(m);
-    ISize(m);
-    Surface(m);
-    Paint(m);
-    Path(m);
+    initAutoCanvasRestore(m);
+    initBitmap(m);
+    initBlendMode(m);
+    initCanvas(m);
+    initColor(m);
+    initData(m);
+    initFont(m);
+    initImage(m);
+    initImageInfo(m);
+    initIPoint(m);
+    initIRect(m);
+    initISize(m);
+    initMatrix(m);
+    initPaint(m);
+    initPath(m);
+    initPicture(m);
+    initPixmap(m);
+    initRect(m);
+    initRegion(m);
+    initRRect(m);
+    initSurface(m);
+    initTextBlob(m);
+    initTextBlobBuilder(m);
 
     m.def("ColorSetARGB", &SkColorSetARGB,
         "Returns color value from 8-bit component values.");

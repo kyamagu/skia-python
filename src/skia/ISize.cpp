@@ -3,7 +3,7 @@
 
 namespace py = pybind11;
 
-void ISize(py::module &m) {
+void initISize(py::module &m) {
 py::class_<SkISize>(m, "ISize")
     .def("set", &SkISize::set)
     .def("isZero", &SkISize::isZero,

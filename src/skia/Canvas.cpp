@@ -3,7 +3,7 @@
 
 namespace py = pybind11;
 
-void Canvas(py::module &m) {
+void initCanvas(py::module &m) {
 py::class_<SkCanvas>(m, "Canvas")
     .def("drawPath", &SkCanvas::drawPath,
         "Draws SkPath path using clip, SkMatrix, and SkPaint paint.")

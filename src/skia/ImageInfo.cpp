@@ -3,7 +3,7 @@
 
 namespace py = pybind11;
 
-void ImageInfo(py::module &m) {
+void initImageInfo(py::module &m) {
 py::class_<SkImageInfo>(m, "ImageInfo")
     .def(py::init<>())
     ;

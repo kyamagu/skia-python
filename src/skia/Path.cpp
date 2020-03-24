@@ -3,7 +3,7 @@
 
 namespace py = pybind11;
 
-void Path(py::module &m) {
+void initPath(py::module &m) {
 py::class_<SkPath>(m, "Path")
     .def(py::init<>())
     .def("moveTo",

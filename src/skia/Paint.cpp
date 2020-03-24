@@ -3,7 +3,7 @@
 
 namespace py = pybind11;
 
-void Paint(py::module &m) {
+void initPaint(py::module &m) {
 py::class_<SkPaint>(m, "Paint")
     .def(py::init<>())
     .def("setAntiAlias", &SkPaint::setAntiAlias,

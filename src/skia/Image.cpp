@@ -5,7 +5,7 @@ namespace py = pybind11;
 
 PYBIND11_DECLARE_HOLDER_TYPE(T, sk_sp<T>);
 
-void Image(py::module &m) {
+void initImage(py::module &m) {
 py::class_<SkImage, sk_sp<SkImage>>(m, "Image")
     .def("encodeToData", [](const SkImage& image) {
         sk_sp<SkData> data(image.encodeToData());

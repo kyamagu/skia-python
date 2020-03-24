@@ -3,7 +3,7 @@
 
 namespace py = pybind11;
 
-void IRect(py::module &m) {
+void initIRect(py::module &m) {
 py::class_<SkIRect>(m, "IRect")
     .def("left", &SkIRect::left)
     .def("top", &SkIRect::top)

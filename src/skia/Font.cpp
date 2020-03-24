@@ -3,6 +3,5 @@
 
 namespace py = pybind11;
 
-void initIPoint(py::module &m) {
-py::class_<SkIPoint>(m, "IPoint");
+void initFont(py::module &m) {
 }

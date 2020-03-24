@@ -9,16 +9,27 @@ __version__ = '0.0.1'
 SRC = [
     'src/skia/main.cpp',
     'src/skia/AutoCanvasRestore.cpp',
+    'src/skia/Bitmap.cpp',
+    'src/skia/BlendMode.cpp',
     'src/skia/Canvas.cpp',
+    'src/skia/Color.cpp',
     'src/skia/Data.cpp',
+    'src/skia/Font.cpp',
     'src/skia/Image.cpp',
     'src/skia/ImageInfo.cpp',
     'src/skia/IPoint.cpp',
     'src/skia/IRect.cpp',
     'src/skia/ISize.cpp',
-    'src/skia/Surface.cpp',
+    'src/skia/Matrix.cpp',
     'src/skia/Paint.cpp',
     'src/skia/Path.cpp',
+    'src/skia/Picture.cpp',
+    'src/skia/Pixmap.cpp',
+    'src/skia/Rect.cpp',
+    'src/skia/RRect.cpp',
+    'src/skia/Surface.cpp',
+    'src/skia/TextBlob.cpp',
+    'src/skia/TextBlobBuilder.cpp',
 ]
 
 
