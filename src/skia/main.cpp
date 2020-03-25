@@ -24,6 +24,7 @@ void initPaint(py::module &);
 void initPath(py::module &);
 void initPicture(py::module &);
 void initPixmap(py::module &);
+void initPoint(py::module &);
 void initRect(py::module &);
 void initRegion(py::module &);
 void initRRect(py::module &);
@@ -58,6 +59,7 @@ PYBIND11_MODULE(skia, m) {
             Path
             Picture
             Pixmap
+            Point
             Rect
             Region
             RRect
@@ -84,6 +86,7 @@ PYBIND11_MODULE(skia, m) {
     initPath(m);
     initPicture(m);
     initPixmap(m);
+    initPoint(m);
     initRect(m);
     initRegion(m);
     initRRect(m);
