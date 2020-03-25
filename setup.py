@@ -69,11 +69,11 @@ class BuildExt(build_ext):
     """A custom build extension for adding compiler-specific options."""
     c_opts = {
         'msvc': ['/EHsc'],
-        'unix': ['-Iskia', '-Iskia/out/macos/gen'],
+        'unix': ['-Iskia', '-Iskia/out/Release/gen'],
     }
     l_opts = {
         'msvc': [''],
-        'unix': ['skia/out/macos/libskia.a'],
+        'unix': ['skia/out/Release/libskia.a'],
     }
 
     if sys.platform == 'darwin':
