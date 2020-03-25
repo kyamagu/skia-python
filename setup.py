@@ -19,8 +19,6 @@ SRC = [
     'src/skia/GrContext.cpp',
     'src/skia/Image.cpp',
     'src/skia/ImageInfo.cpp',
-    'src/skia/IPoint.cpp',
-    'src/skia/IRect.cpp',
     'src/skia/Matrix.cpp',
     'src/skia/Paint.cpp',
     'src/skia/Path.cpp',

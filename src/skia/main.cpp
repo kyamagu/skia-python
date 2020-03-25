@@ -16,8 +16,6 @@ void initGrContext(py::module &);
 void initFont(py::module &);
 void initImage(py::module &);
 void initImageInfo(py::module &);
-void initIPoint(py::module &);
-void initIRect(py::module &);
 void initSize(py::module &);
 void initMatrix(py::module &);
 void initPaint(py::module &);
@@ -51,8 +49,6 @@ PYBIND11_MODULE(skia, m) {
             Font
             Image
             ImageInfo
-            IPoint
-            IRect
             Matrix
             Paint
             Path
@@ -78,8 +74,6 @@ PYBIND11_MODULE(skia, m) {
     initGrContext(m);
     initImage(m);
     initImageInfo(m);
-    initIPoint(m);
-    initIRect(m);
     initMatrix(m);
     initPaint(m);
     initPath(m);
