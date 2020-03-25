@@ -24,6 +24,7 @@ SRC = [
     'src/skia/Path.cpp',
     'src/skia/Picture.cpp',
     'src/skia/Pixmap.cpp',
+    'src/skia/Point.cpp',
     'src/skia/Rect.cpp',
     'src/skia/Region.cpp',
     'src/skia/RRect.cpp',

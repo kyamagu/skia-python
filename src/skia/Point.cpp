@@ -61,7 +61,7 @@ py::class_<SkPoint>(m, "Point")
         "Returns the Euclidean distance from origin, computed as: "
         "sqrt(fX * fX + fY * fY)")
     .def("normalize", &SkPoint::normalize,
-        "   Scales (fX, fY) so that length() returns one, while preserving "
+        "Scales (fX, fY) so that length() returns one, while preserving "
         "ratio of fX to fY, if possible.")
     .def("setNormalize", &SkPoint::setNormalize,
         "Sets vector to (x, y) scaled so length() returns one, and so that "
@@ -71,7 +71,8 @@ py::class_<SkPoint>(m, "Point")
     .def("setLength",
         py::overload_cast<SkScalar, SkScalar, SkScalar>(&SkPoint::setLength),
         "Sets vector to (x, y) scaled to length, if possible.")
-    .def("scale", py::overload_cast<SkScalar, SkPoint*>(&SkPoint::scale),
+    .def("scale",
+        py::overload_cast<SkScalar, SkPoint*>(&SkPoint::scale, py::const_),
         "Sets dst to SkPoint times scale.")
     .def("scale", py::overload_cast<SkScalar>(&SkPoint::scale),
         "Scales SkPoint in place by scale.")
@@ -127,5 +128,50 @@ py::class_<SkPoint>(m, "Point")
     },
     "Returns SkPoint resulting from SkPoint a offset by vector b, "
     "computed as: (b.fX + a.fX, b.fY + a.fY).", py::is_operator())
+    ;
+// Point3
+py::class_<SkPoint3>(m, "Point3")
+    .def("x", &SkPoint3::x)
+    .def("y", &SkPoint3::y)
+    .def("z", &SkPoint3::z)
+    .def("set", &SkPoint3::set)
+    .def("length", &SkPoint3::length,
+        "Return the Euclidian distance from (0,0,0) to the point.")
+    .def("normalize", &SkPoint3::normalize,
+        "Set the point (vector) to be unit-length in the same direction as it "
+        "already points.")
+    .def("makeScale", &SkPoint3::makeScale,
+        "Return a new point whose X, Y and Z coordinates are scaled.")
+    .def("scale", &SkPoint3::scale,
+        "Scale the point's coordinates by scale.")
+    .def(-py::self,
+        "Return a new point whose X, Y and Z coordinates are the negative of "
+        "the original point's.")
+    .def("__iadd__", &SkPoint3::operator+=,
+        "Add v's coordinates to the point's.", py::is_operator())
+    .def("__isub__", &SkPoint3::operator-=,
+        "Subtract v's coordinates from the point's.", py::is_operator())
+    .def("isFinite", &SkPoint3::isFinite,
+        "Returns true if fX, fY, and fZ are measurable values.")
+    .def("dot", &SkPoint3::dot)
+    .def("cross", &SkPoint3::cross)
+    .def_static("Make", &SkPoint3::Make)
+    .def_static("Length", &SkPoint3::Length,
+        "Returns the Euclidian distance from (0,0,0) to (x,y,z)")
+    .def_static("DotProduct", &SkPoint3::DotProduct,
+        "Returns the dot product of a and b, treating them as 3D vectors.")
+    .def_static("CrossProduct", &SkPoint3::CrossProduct,
+        "Returns the cross product of a and b, treating them as 3D vectors.")
+    .def_readwrite("fX", &SkPoint3::fX, "x-axis value")
+    .def_readwrite("fY", &SkPoint3::fY, "y-axis value")
+    .def_readwrite("fZ", &SkPoint3::fZ, "z-axis value")
+    .def(py::self == py::self, "Returns true if a is equivalent to b.")
+    .def(py::self != py::self, "Returns true if a is not equivalent to b.")
+    .def(py::self - py::self,
+        "Returns a new point whose coordinates are the difference between a "
+        "and b (i.e., a - b)")
+    .def(py::self + py::self,
+        "Returns a new point whose coordinates are the sum of a and b (a + b)")
+    .def(SkScalar() * py::self)
     ;
 }
