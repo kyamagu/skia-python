@@ -1,4 +1,5 @@
 #include <pybind11/pybind11.h>
+#include <pybind11/operators.h>
 #include <skia.h>
 
 namespace py = pybind11;
@@ -113,13 +114,99 @@ paint
     .def("setPathEffect", &SkPaint::setPathEffect,
         "Sets SkPathEffect to pathEffect, decreasing SkRefCnt of the previous "
         "SkPathEffect.")
+    .def("getMaskFilter", &SkPaint::getMaskFilter,
+        "Returns SkMaskFilter if set, or nullptr.",
+        py::return_value_policy::reference)
+    .def("refMaskFilter", &SkPaint::refMaskFilter,
+        "Returns SkMaskFilter if set, or nullptr.")
+    .def("setMaskFilter", &SkPaint::setMaskFilter,
+        "Sets SkMaskFilter to maskFilter, decreasing SkRefCnt of the previous "
+        "SkMaskFilter.")
+    .def("getImageFilter", &SkPaint::getImageFilter,
+        "Returns SkImageFilter if set, or nullptr.",
+        py::return_value_policy::reference)
+    .def("refImageFilter", &SkPaint::refImageFilter,
+        "Returns SkImageFilter if set, or nullptr.")
+    .def("setImageFilter", &SkPaint::setImageFilter,
+        "Sets SkImageFilter to imageFilter, decreasing SkRefCnt of the "
+        "previous SkImageFilter.")
+    .def("nothingToDraw", &SkPaint::nothingToDraw,
+        "Returns true if SkPaint prevents all drawing; otherwise, the SkPaint "
+        "may or may not allow drawing.")
+    .def("canComputeFastBounds", &SkPaint::canComputeFastBounds,
+        "(to be made private) Returns true if SkPaint does not include "
+        "elements requiring extensive computation to compute SkBaseDevice "
+        "bounds of drawn geometry.")
+    .def("computeFastBounds", &SkPaint::computeFastBounds,
+        "(to be made private) Only call this if canComputeFastBounds() "
+        "returned true.")
+    .def("computeFastStrokeBounds", &SkPaint::computeFastStrokeBounds,
+        "(to be made private)")
+    .def("doComputeFastBounds", &SkPaint::doComputeFastBounds,
+        "(to be made private) Computes the bounds, overriding the SkPaint "
+        "SkPaint::Style.")
+    .def_readonly_static("kStyleCount", &SkPaint::kStyleCount)
+    .def_readonly_static("kCapCount", &SkPaint::kCapCount)
+    .def_readonly_static("kJoinCount", &SkPaint::kJoinCount)
+    .def(py::self == py::self,
+        "Compares a and b, and returns true if a and b are equivalent.")
+    .def(py::self != py::self,
+        "Compares a and b, and returns true if a and b are not equivalent.")
     ;
 // Shader
-py::class_<SkShader, sk_sp<SkShader>>(m, "Shader")
+// TODO: Need a wrapper class for pure virtual functions.
+py::class_<SkShader, sk_sp<SkShader>> shader(m, "Shader");
+py::class_<SkShader::GradientInfo>(shader, "GradientInfo")
+    .def_readwrite("fColorCount", &SkShader::GradientInfo::fColorCount)
+    .def_readwrite("fColors", &SkShader::GradientInfo::fColors)
+    .def_readwrite("fColorOffsets", &SkShader::GradientInfo::fColorOffsets)
+    // .def_readwrite("fPoint", &SkShader::GradientInfo::fPoint)
+    // .def_readwrite("fRadius", &SkShader::GradientInfo::fRadius)
+    .def_readwrite("fTileMode", &SkShader::GradientInfo::fTileMode)
+    .def_readwrite("fGradientFlags", &SkShader::GradientInfo::fGradientFlags)
+    ;
+py::enum_<SkShader::GradientType>(shader, "GradientType");
+py::enum_<SkShader::Type>(shader, "Type");
+shader
     .def("isOpaque", &SkShader::isOpaque,
         "Returns true if the shader is guaranteed to produce only opaque "
         "colors, subject to the SkPaint using the shader to apply an opaque "
         "alpha value.")
+    .def("isAImage",
+        py::overload_cast<SkMatrix*, SkTileMode[2]>(
+            &SkShader::isAImage, py::const_),
+        "Iff this shader is backed by a single SkImage, return its ptr (the "
+        "caller must ref this if they want to keep it longer than the lifetime "
+        "of the shader).")
+    .def("isAImage", py::overload_cast<>(&SkShader::isAImage, py::const_))
+    .def("asAGradient", &SkShader::asAGradient)
+    .def("makeWithLocalMatrix", &SkShader::makeWithLocalMatrix,
+        "Return a shader that will apply the specified localMatrix to this "
+        "shader.")
+    .def("makeWithColorFilter", &SkShader::makeWithColorFilter,
+        "Create a new shader that produces the same colors as invoking this "
+        "shader and then applying the colorfilter.")
+    // .def("getFactory", &SkShader::getFactory,
+    //     "Implement this to return a factory function pointer that can be "
+    //     "called to recreate your class given a buffer (previously written to "
+    //     "by your override of flatten().")
+    // .def("getTypeName", &SkShader::getTypeName,
+    //     "Returns the name of the object's class.")
+    // .def("flatten", &SkShader::flatten,
+    //     "Override this if your subclass needs to record data that it will "
+    //     "need to recreate itself from its CreateProc (returned by "
+    //     "getFactory())")
+    // .def("getFlattenableType", &SkShader::getFlattenableType)
+    // .def("serialize",
+    //     py::overload_cast<const SkSerialProcs*>(
+    //         &SkShader::serialize, py::const_))
+    // .def("serialize",
+    //     py::overload_cast<void*, size_t, const SkSerialProcs*>(
+    //         &SkShader::serialize, py::const_))
+    .def("unique", &SkShader::unique,
+        "May return true if the caller is the only owner.")
+    .def("ref", &SkShader::ref, "Increment the reference count.")
+    .def("unref", &SkShader::unref, "Decrement the reference count.")
     ;
 // ColorFilter
 py::class_<SkColorFilter, sk_sp<SkColorFilter>>(m, "ColorFilter");
