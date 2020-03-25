@@ -18,7 +18,7 @@ void initImage(py::module &);
 void initImageInfo(py::module &);
 void initIPoint(py::module &);
 void initIRect(py::module &);
-void initISize(py::module &);
+void initSize(py::module &);
 void initMatrix(py::module &);
 void initPaint(py::module &);
 void initPath(py::module &);
@@ -53,7 +53,6 @@ PYBIND11_MODULE(skia, m) {
             ImageInfo
             IPoint
             IRect
-            ISize
             Matrix
             Paint
             Path
@@ -63,6 +62,7 @@ PYBIND11_MODULE(skia, m) {
             Rect
             Region
             RRect
+            Size
             Surface
             TextBlob
             TextBlobBuilder
@@ -80,7 +80,6 @@ PYBIND11_MODULE(skia, m) {
     initImageInfo(m);
     initIPoint(m);
     initIRect(m);
-    initISize(m);
     initMatrix(m);
     initPaint(m);
     initPath(m);
@@ -90,6 +89,7 @@ PYBIND11_MODULE(skia, m) {
     initRect(m);
     initRegion(m);
     initRRect(m);
+    initSize(m);
     initSurface(m);
     initTextBlob(m);
     initTextBlobBuilder(m);
