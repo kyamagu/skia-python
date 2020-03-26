@@ -67,7 +67,7 @@ ext_modules = [
         extra_objects=[
             os.path.join(
                 os.getenv('SKIA_PATH', 'skia'), 'out', 'Release', 'libskia.a'),
-        ]
+        ],
         language='c++'
     ),
 ]

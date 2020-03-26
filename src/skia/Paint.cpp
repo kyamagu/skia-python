@@ -7,7 +7,6 @@ namespace py = pybind11;
 PYBIND11_DECLARE_HOLDER_TYPE(T, sk_sp<T>);
 
 void initPaint(py::module &m) {
-py::enum_<SkFilterQuality>(m, "FilterQuality");
 // Paint
 py::class_<SkPaint> paint(m, "Paint");
 py::enum_<SkPaint::Style>(paint, "Style");
