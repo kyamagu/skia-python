@@ -30,7 +30,6 @@ jobs:
         cd gn
         python build/gen.py
         ninja -C out
-        cp -f out/gn ../skia/bin/gn
         cd ..
     - name: Install libfreetype2 and fontconfig
       run: |
@@ -50,6 +49,7 @@ jobs:
       run: |
         cd skia
         python tools/git-sync-deps
+        cp -f ../gn/out/gn bin/gn  # Replace gn.
         bin/gn gen out/Release --args='is_official_build=false is_debug=false extra_cflags_cc=["-frtti"]'
         ninja -C out/Release skia skia.h
         cd ..
@@ -78,8 +78,10 @@ jobs:
         key: ${{ runner.os }}-skia-out
     - name: Build Skia
       run: |
-        cd skia
-        python tools/git-sync-deps
-        bin/gn gen out/Release --args='is_official_build=false is_debug=false extra_cflags_cc=["-frtti"]'
-        ninja -C out/Release skia skia.h
-        cd ..
+        if [ ! -f "skia/out/Release/libskia.a" ]; then
+          cd skia
+          python tools/git-sync-deps
+          bin/gn gen out/Release --args='is_official_build=false is_debug=false extra_cflags_cc=["-frtti"]'
+          ninja -C out/Release skia skia.h
+          cd ..
+        fi
