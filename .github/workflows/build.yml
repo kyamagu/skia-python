@@ -4,16 +4,66 @@ on: push
 
 jobs:
   build:
-    runs-on: macos-latest
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ macos-latest, ubuntu-latest ]
+    container:
+      image: quay.io/pypa/manylinux2010_x86_64
+      if: ${{ runner.os == 'Linux' }}
     steps:
     - uses: actions/checkout@v2
       with:
         submodules: recursive
-    - uses: actions/setup-python@v1
+    - name: Set up Python 2.7 (Other)
+      uses: actions/setup-python@v1
       with:
         python-version: 2.7
+      if: ${{ runner.os != 'Linux' }}
+    - name: Set up Python 2.7 (Linux)
+      run: echo "::add-path::/opt/python/cp27-cp27m/bin"
+      if: ${{ runner.os == 'Linux' }}
     - name: Set PATH
       run: echo "::add-path::$PWD/depot_tools"
+    - name: Cache Skia
+      uses: actions/cache@v1
+      env:
+        cache-name: cache-skia
+      with:
+        path: skia/out/Release
+        key: ${{ runner.os }}-build-${{ env.cache-name }}
+        restore-keys: |
+          ${{ runner.os }}-build-
+          ${{ runner.os }}-
+    - name: Install gn (Linux)
+      env:
+        CC: gcc
+        CXX: g++
+        AR: gcc
+        LDFLAGS: -lrt
+      run: |
+        git clone https://gn.googlesource.com/gn
+        cd gn
+        python build/gen.py
+        ninja -C out
+        cp -f out/gn ../skia/bin/gn
+        cd ..
+      if: ${{ runner.os == 'Linux' }}
+    - name: Install libfreetype2 and fontconfig (Linux)
+      run: |
+        yum install -y freetype-devel expat-devel
+        curl -L -O https://www.freedesktop.org/software/fontconfig/release/fontconfig-2.10.93.tar.bz2
+        tar xjf fontconfig-2.10.93.tar.bz2
+        cd fontconfig-2.10.93
+        ./configure --prefix=/usr \
+                    --sysconfdir=/etc \
+                    --localstatedir=/var \
+                    --docdir=/usr/share/doc/fontconfig-2.10.93 \
+                    --disable-docs \
+                    --disable-static
+        make -j2 install
+        cd ..
+      if: ${{ runner.os == 'Linux' }}
     - name: Build Skia
       run: |
         cd skia
