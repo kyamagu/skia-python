@@ -16,10 +16,7 @@ jobs:
       run: |
         curl -L -O https://github.com/jcheng5/node-centos6/releases/download/v12.16.1/node-v12.16.1-linux-x64.tar.gz
         tar xzf node-v12.16.1-linux-x64.tar.gz
-        cp -r node-v12.16.1-linux-x64/bin/* /usr/local/bin/
-        cp -r node-v12.16.1-linux-x64/include/* /usr/local/include/
-        cp -r node-v12.16.1-linux-x64/lib/* /usr/local/lib64/
-        cp -r node-v12.16.1-linux-x64/share/doc/node /usr/local/share/
+        mv node-v12.16.1-linux-x64/* /__e/node12/
     - uses: actions/checkout@v2
       with:
         submodules: recursive
