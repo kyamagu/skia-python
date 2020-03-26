@@ -10,7 +10,7 @@ jobs:
     steps:
     - uses: actions/checkout@v1
       with:
-        submodules: recursive
+        submodules: true
     - name: Set up Python 2.7
       run: echo "::add-path::/opt/python/cp27-cp27m/bin"
     - name: Set PATH
@@ -58,6 +58,8 @@ jobs:
     container: quay.io/pypa/manylinux2014_x86_64
     steps:
     - uses: actions/checkout@v2
+      with:
+        submodules: true
     - name: Set PATH
       run: echo "::add-path::$PWD/depot_tools"
     - uses: actions/cache@v1
@@ -67,8 +69,6 @@ jobs:
     - name: Build Skia
       run: |
         if [ ! -d "skia/out/Release" ]; then
-          git submodule init
-          git submodule update
           yum install -y fontconfig-devel
           cd skia
           python tools/git-sync-deps
@@ -91,6 +91,8 @@ jobs:
         python-version: [3.5]
     steps:
     - uses: actions/checkout@v2
+      with:
+        submodules: true
     - name: Set up Python 2.7
       uses: actions/setup-python@v1
       with:
@@ -105,8 +107,6 @@ jobs:
       shell: bash
       run: |
         if [ ! -d "skia/out/Release" ]; then
-          git submodule init
-          git submodule update
           cd skia
           python tools/git-sync-deps
           bin/gn gen out/Release --args='is_official_build=false is_debug=false extra_cflags_cc=["-frtti"]'

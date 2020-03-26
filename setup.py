@@ -1,5 +1,6 @@
 from setuptools import setup, Extension
 from setuptools.command.build_ext import build_ext
+import os
 import sys
 import setuptools
 
@@ -58,8 +59,15 @@ ext_modules = [
         include_dirs=[
             # Path to pybind11 headers
             get_pybind_include(),
-            get_pybind_include(user=True)
+            get_pybind_include(user=True),
+            os.getenv('SKIA_PATH', 'skia'),
+            os.path.join(
+                os.getenv('SKIA_PATH', 'skia'), 'out', 'Release', 'gen'),
         ],
+        extra_objects=[
+            os.path.join(
+                os.getenv('SKIA_PATH', 'skia'), 'out', 'Release', 'libskia.a'),
+        ]
         language='c++'
     ),
 ]
@@ -69,11 +77,11 @@ class BuildExt(build_ext):
     """A custom build extension for adding compiler-specific options."""
     c_opts = {
         'msvc': ['/EHsc'],
-        'unix': ['-Iskia', '-Iskia/out/Release/gen'],
+        'unix': [],
     }
     l_opts = {
-        'msvc': [''],
-        'unix': ['skia/out/Release/libskia.a'],
+        'msvc': [],
+        'unix': [],
     }
 
     if sys.platform == 'darwin':
