@@ -3,26 +3,20 @@ name: Building wheel package
 on: push
 
 jobs:
-  build:
-    runs-on: ${{ matrix.os }}
+  build-manylinux:
+    runs-on: ubuntu-latest
     strategy:
       matrix:
-        os: [ macos-latest, ubuntu-latest ]
+        container:
+          - quay.io/pypa/manylinux2010_x86_64
     container:
-      image: quay.io/pypa/manylinux2010_x86_64
-      if: ${{ runner.os == 'Linux' }}
+      image: ${{ matrix.container }}
     steps:
     - uses: actions/checkout@v2
       with:
         submodules: recursive
-    - name: Set up Python 2.7 (Other)
-      uses: actions/setup-python@v1
-      with:
-        python-version: 2.7
-      if: ${{ runner.os != 'Linux' }}
-    - name: Set up Python 2.7 (Linux)
+    - name: Set up Python 2.7
       run: echo "::add-path::/opt/python/cp27-cp27m/bin"
-      if: ${{ runner.os == 'Linux' }}
     - name: Set PATH
       run: echo "::add-path::$PWD/depot_tools"
     - name: Cache Skia
@@ -35,7 +29,7 @@ jobs:
         restore-keys: |
           ${{ runner.os }}-build-
           ${{ runner.os }}-
-    - name: Install gn (Linux)
+    - name: Install gn
       env:
         CC: gcc
         CXX: g++
@@ -48,8 +42,7 @@ jobs:
         ninja -C out
         cp -f out/gn ../skia/bin/gn
         cd ..
-      if: ${{ runner.os == 'Linux' }}
-    - name: Install libfreetype2 and fontconfig (Linux)
+    - name: Install libfreetype2 and fontconfig
       run: |
         yum install -y freetype-devel expat-devel
         curl -L -O https://www.freedesktop.org/software/fontconfig/release/fontconfig-2.10.93.tar.bz2
@@ -63,7 +56,38 @@ jobs:
                     --disable-static
         make -j2 install
         cd ..
-      if: ${{ runner.os == 'Linux' }}
+    - name: Build Skia
+      run: |
+        cd skia
+        python tools/git-sync-deps
+        bin/gn gen out/Release --args='is_official_build=false is_debug=false extra_cflags_cc=["-frtti"]'
+        ninja -C out/Release skia skia.h
+        cd ..
+  build:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ macos-latest ]
+    steps:
+    - uses: actions/checkout@v2
+      with:
+        submodules: recursive
+    - name: Set up Python 2.7
+      uses: actions/setup-python@v1
+      with:
+        python-version: 2.7
+    - name: Set PATH
+      run: echo "::add-path::$PWD/depot_tools"
+    - name: Cache Skia
+      uses: actions/cache@v1
+      env:
+        cache-name: cache-skia
+      with:
+        path: skia/out/Release
+        key: ${{ runner.os }}-build-${{ env.cache-name }}
+        restore-keys: |
+          ${{ runner.os }}-build-
+          ${{ runner.os }}-
     - name: Build Skia
       run: |
         cd skia
