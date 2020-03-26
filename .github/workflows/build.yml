@@ -80,7 +80,9 @@ jobs:
       run: echo "::add-path::/opt/python/${{ matrix.python-version }}/bin"
     - name: Build python binding
       run: |
-        python setup.py build_ext
+        python -m pip install -U pip
+        python -m pip install pybind11 wheel
+        python setup.py bdist_wheel
   build:
     runs-on: ${{ matrix.os }}
     strategy:
@@ -117,4 +119,6 @@ jobs:
         python-version: ${{ matrix.python-version }}
     - name: Build python binding
       run: |
-        python setup.py build_ext
+        python -m pip install -U pip
+        python -m pip install pybind11 wheel
+        python setup.py bdist_wheel
