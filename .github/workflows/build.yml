@@ -83,6 +83,7 @@ jobs:
         python -m pip install -U pip
         python -m pip install pybind11 wheel
         python setup.py bdist_wheel
+      if: false
   build:
     runs-on: ${{ matrix.os }}
     strategy:
@@ -133,3 +134,4 @@ jobs:
         python -m pip install -U pip
         python -m pip install pybind11 wheel
         python setup.py bdist_wheel
+      if: runner.os == 'macOS'

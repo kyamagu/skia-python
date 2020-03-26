@@ -5,6 +5,9 @@ namespace py = pybind11;
 
 PYBIND11_DECLARE_HOLDER_TYPE(T, sk_sp<T>);
 
+template<>
+struct py::detail::has_operator_delete<SkVertices, void> : std::false_type {};
+
 void initVertices(py::module &m) {
 py::class_<SkVertices, sk_sp<SkVertices>> vertices(m, "Vertices");
 vertices
