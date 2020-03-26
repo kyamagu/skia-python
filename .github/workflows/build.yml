@@ -19,16 +19,6 @@ jobs:
       run: echo "::add-path::/opt/python/cp27-cp27m/bin"
     - name: Set PATH
       run: echo "::add-path::$PWD/depot_tools"
-    - name: Cache Skia
-      uses: actions/cache@v1
-      env:
-        cache-name: cache-skia
-      with:
-        path: skia/out/Release
-        key: ${{ runner.os }}-build-${{ env.cache-name }}
-        restore-keys: |
-          ${{ runner.os }}-build-
-          ${{ runner.os }}-
     - name: Install gn
       env:
         CC: gcc
@@ -78,16 +68,16 @@ jobs:
         python-version: 2.7
     - name: Set PATH
       run: echo "::add-path::$PWD/depot_tools"
+    - name: Cache Third Party
+      uses: actions/cache@v1
+      with:
+        path: skia/third_party/externals
+        key: ${{ runner.os }}-third-party
     - name: Cache Skia
       uses: actions/cache@v1
-      env:
-        cache-name: cache-skia
       with:
         path: skia/out/Release
-        key: ${{ runner.os }}-build-${{ env.cache-name }}
-        restore-keys: |
-          ${{ runner.os }}-build-
-          ${{ runner.os }}-
+        key: ${{ runner.os }}-build-cache-skia
     - name: Build Skia
       run: |
         cd skia
