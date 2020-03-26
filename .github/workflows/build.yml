@@ -3,14 +3,10 @@ name: Building wheel package
 on: push
 
 jobs:
-  build-manylinux:
+  build-manylinux2010:
+    if: false
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        container:
-          - quay.io/pypa/manylinux2010_x86_64
-    container:
-      image: ${{ matrix.container }}
+    container: quay.io/pypa/manylinux2010_x86_64
     steps:
     - uses: actions/checkout@v1
       with:
@@ -48,20 +44,50 @@ jobs:
     - name: Build Skia
       run: |
         cd skia
-        python tools/git-sync-deps
+        python2 tools/git-sync-deps
         cp -f ../gn/out/gn bin/gn  # Replace gn.
-        bin/gn gen out/Release --args='is_official_build=false is_debug=false extra_cflags_cc=["-frtti"]'
+        bin/gn gen out/Release --args='is_official_build=false is_debug=false extra_cflags_cc=["-frtti"] extra_ldflags=["-lrt"]'
         ninja -C out/Release skia skia.h
         cd ..
+  build-manylinux2014:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version:
+          - cp35-cp35m
+    container: quay.io/pypa/manylinux2014_x86_64
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set PATH
+      run: echo "::add-path::$PWD/depot_tools"
+    - uses: actions/cache@v1
+      with:
+        path: skia/out/Release
+        key: manylinux2014-skia-out
+    - name: Build Skia
+      run: |
+        if [ ! -d "skia/out/Release" ]; then
+          git submodule init
+          git submodule update
+          cd skia
+          python tools/git-sync-deps
+          bin/gn gen out/Release --args='is_official_build=false is_debug=false extra_cflags_cc=["-frtti"] extra_ldflags=["-lrt"]'
+          ninja -C out/Release skia skia.h
+          cd ..
+        fi
+    - name: Set up Python
+      run: echo "::add-path::/opt/python/${{ matrix.python-version }}/bin"
+    - name: Build python binding
+      run: |
+        python setup.py build_ext
   build:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [ macos-latest ]
+        os: [ macos-latest, windows-latest ]
+        python-version: [3.5]
     steps:
     - uses: actions/checkout@v2
-      with:
-        submodules: recursive
     - name: Set up Python 2.7
       uses: actions/setup-python@v1
       with:
@@ -70,18 +96,23 @@ jobs:
       run: echo "::add-path::$PWD/depot_tools"
     - uses: actions/cache@v1
       with:
-        path: skia/third_party/externals
-        key: ${{ runner.os }}-third-party
-    - uses: actions/cache@v1
-      with:
         path: skia/out/Release
         key: ${{ runner.os }}-skia-out
     - name: Build Skia
       run: |
-        if [ ! -f "skia/out/Release/libskia.a" ]; then
+        if [ ! -d "skia/out/Release" ]; then
+          git submodule init
+          git submodule update
           cd skia
           python tools/git-sync-deps
           bin/gn gen out/Release --args='is_official_build=false is_debug=false extra_cflags_cc=["-frtti"]'
           ninja -C out/Release skia skia.h
           cd ..
         fi
+    - name: Set up Python
+      uses: actions/setup-python@v1
+      with:
+        python-version: ${{ matrix.python-version }}
+    - name: Build python binding
+      run: |
+        python setup.py build_ext
