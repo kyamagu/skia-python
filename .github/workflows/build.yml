@@ -103,19 +103,27 @@ jobs:
       with:
         path: skia/out/Release
         key: ${{ runner.os }}-skia-out
-    - name: Set ENV (macOS)
-      run: echo "::set-env name=EXTRA_CFLAGS_CC::-frtti"
+    - name: Build Skia (macOS)
+      run: |
+        if [ ! -d "skia/out/Release" ]; then
+          cd skia
+          python tools/git-sync-deps
+          bin/gn gen out/Release --args='is_official_build=false is_debug=false extra_cflags_cc=["-frtti"]'
+          ninja -C out/Release skia skia.h
+          cd ..
+        fi
       if: runner.os == 'macOS'
-    - name: Build Skia
+    - name: Build Skia (Windows)
       shell: bash
       run: |
         if [ ! -d "skia/out/Release" ]; then
           cd skia
           python tools/git-sync-deps
-          bin/gn gen out/Release --args='is_official_build=false is_debug=false extra_cflags_cc=["$EXTRA_CFLAGS_CC"]'
+          bin/gn gen out/Release --args='is_official_build=false is_debug=false'
           ninja -C out/Release skia skia.h
           cd ..
         fi
+      if: runner.os == 'Windows'
     - name: Set up Python
       uses: actions/setup-python@v1
       with:

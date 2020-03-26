@@ -6,7 +6,7 @@ namespace py = pybind11;
 PYBIND11_DECLARE_HOLDER_TYPE(T, sk_sp<T>, true);
 
 template<>
-struct pybind11::detail::has_operator_delete<SkData, void> : std::false_type {};
+struct py::detail::has_operator_delete<SkData, void> : std::false_type {};
 
 void initData(py::module &m) {
 py::class_<SkData, sk_sp<SkData>>(m, "Data", py::buffer_protocol())
