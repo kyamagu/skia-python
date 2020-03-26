@@ -66,7 +66,8 @@ ext_modules = [
         ],
         extra_objects=[
             os.path.join(
-                os.getenv('SKIA_PATH', 'skia'), 'out', 'Release', 'libskia.a'),
+                os.getenv('SKIA_PATH', 'skia'), 'out', 'Release',
+                ('skia.lib' if sys.platform.startswith('win') else 'libskia.a')),
         ],
         language='c++'
     ),
@@ -76,7 +77,7 @@ ext_modules = [
 class BuildExt(build_ext):
     """A custom build extension for adding compiler-specific options."""
     c_opts = {
-        'msvc': ['/EHsc'],
+        'msvc': ['/EHsc', '/std:c++latest'],
         'unix': [],
     }
     l_opts = {
@@ -87,7 +88,7 @@ class BuildExt(build_ext):
     if sys.platform == 'darwin':
         darwin_opts = [
             '-stdlib=libc++',
-            '-mmacosx-version-min=10.14',
+            '-mmacosx-version-min=10.9',
         ]
         c_opts['unix'] += darwin_opts
         l_opts['unix'] += darwin_opts
@@ -104,7 +105,7 @@ class BuildExt(build_ext):
         link_opts = self.l_opts.get(ct, [])
         if ct == 'unix':
             opts.append('-DVERSION_INFO="%s"' % self.distribution.get_version())
-            opts.append('-std=c++17')
+            opts.append('-std=c++14')
             opts.append('-fvisibility=hidden')
         elif ct == 'msvc':
             opts.append('/DVERSION_INFO=\\"%s\\"' % self.distribution.get_version())

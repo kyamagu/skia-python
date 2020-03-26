@@ -103,13 +103,16 @@ jobs:
       with:
         path: skia/out/Release
         key: ${{ runner.os }}-skia-out
+    - name: Set ENV (macOS)
+      run: echo "::set-env name=EXTRA_CFLAGS_CC::-frtti"
+      if: runner.os == 'macOS'
     - name: Build Skia
       shell: bash
       run: |
         if [ ! -d "skia/out/Release" ]; then
           cd skia
           python tools/git-sync-deps
-          bin/gn gen out/Release --args='is_official_build=false is_debug=false extra_cflags_cc=["-frtti"]'
+          bin/gn gen out/Release --args='is_official_build=false is_debug=false extra_cflags_cc=["$EXTRA_CFLAGS_CC"]'
           ninja -C out/Release skia skia.h
           cd ..
         fi
