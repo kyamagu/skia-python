@@ -83,7 +83,6 @@ jobs:
         python -m pip install -U pip
         python -m pip install pybind11 wheel
         python setup.py bdist_wheel
-      if: false
   build:
     runs-on: ${{ matrix.os }}
     strategy:
@@ -124,6 +123,9 @@ jobs:
           ninja -C out/Release skia skia.h
           cd ..
         fi
+        vswhere -latest -products * -requires Microsoft.VisualStudio.Component.VC.Tools.x86.x64 -property installationPath
+        echo "::set-env name=DISTUTILS_USE_SDK::1"
+        \"C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\vcvarsall.bat\" x86
       if: runner.os == 'Windows'
     - name: Set up Python
       uses: actions/setup-python@v1
@@ -134,4 +136,3 @@ jobs:
         python -m pip install -U pip
         python -m pip install pybind11 wheel
         python setup.py bdist_wheel
-      if: runner.os == 'macOS'
