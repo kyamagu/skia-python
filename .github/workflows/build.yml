@@ -80,6 +80,7 @@ jobs:
       run: echo "::add-path::/opt/python/${{ matrix.python-version }}/bin"
     - name: Build python binding
       run: |
+        yum install -y fontconfig freetype
         python -m pip install -U pip
         python -m pip install pybind11
         python setup.py install
