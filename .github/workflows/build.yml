@@ -68,8 +68,8 @@ jobs:
         key: manylinux2014-skia-out
     - name: Build Skia
       run: |
+        yum install -y fontconfig-devel
         if [ ! -d "skia/out/Release" ]; then
-          yum install -y fontconfig-devel
           cd skia
           python tools/git-sync-deps
           bin/gn gen out/Release --args='is_official_build=false is_debug=false extra_cflags_cc=["-frtti"] extra_ldflags=["-lrt"]'
@@ -80,7 +80,6 @@ jobs:
       run: echo "::add-path::/opt/python/${{ matrix.python-version }}/bin"
     - name: Build python binding
       run: |
-        yum install -y fontconfig freetype
         python -m pip install -U pip
         python -m pip install pybind11
         python setup.py install
@@ -181,4 +180,4 @@ jobs:
     - name: Test
       run: |
         python -m pip install pytest pytest-faulthandler
-        python -q -X faulthandler -c 'import skia'
+        python -q -X faulthandler tests/test_skia.py
