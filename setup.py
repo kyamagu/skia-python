@@ -119,7 +119,7 @@ class BuildExt(build_ext):
 
 
 setup(
-    name='skia-python',
+    name='skia',
     version=__version__,
     author='Kota Yamaguchi',
     author_email='KotaYamaguchi1984@gmail.com',
