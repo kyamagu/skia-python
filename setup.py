@@ -77,7 +77,7 @@ ext_modules = [
 class BuildExt(build_ext):
     """A custom build extension for adding compiler-specific options."""
     c_opts = {
-        'msvc': ['/EHsc', '/std:c++latest'],
+        'msvc': ['/std:c++latest'],
         'unix': ['-std=c++14', '-fvisibility=hidden'],
     }
     l_opts = {
