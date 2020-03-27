@@ -181,4 +181,4 @@ jobs:
     - name: Test
       run: |
         python -m pip install pytest pytest-faulthandler
-        python -m pytest tests
+        python -q -X faulthandler -c 'import skia'
