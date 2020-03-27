@@ -103,10 +103,10 @@ class BuildExt(build_ext):
         ct = self.compiler.compiler_type
         opts = self.c_opts.get(ct, [])
         link_opts = self.l_opts.get(ct, [])
--        if ct == 'unix':
--            opts.append('-DVERSION_INFO="%s"' % self.distribution.get_version())
--        elif ct == 'msvc':
--            opts.append('/DVERSION_INFO=\\"%s\\"' % self.distribution.get_version())
+        if ct == 'unix':
+            opts.append('-DVERSION_INFO="%s"' % self.distribution.get_version())
+        elif ct == 'msvc':
+            opts.append('/DVERSION_INFO=\\"%s\\"' % self.distribution.get_version())
         for ext in self.extensions:
             ext.extra_compile_args = opts
             ext.extra_link_args = link_opts
