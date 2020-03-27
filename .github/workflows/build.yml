@@ -158,8 +158,9 @@ jobs:
         DISTUTILS_USE_SDK: 1
       run: |
         $path = vswhere -latest -products * -requires Microsoft.VisualStudio.Component.VC.Tools.x86.x64 -property installationPath
+        $args = '-arch=x64 -host_arch=x64'
         if ($path) {
-            $path = join-path $path 'Common7\Tools\vsdevcmd.bat -arch=x64 -host_arch=x64'
+            $path = join-path $path 'Common7\Tools\vsdevcmd.bat'
             if (test-path $path) {
                 cmd /s /c """$path"" $args && set" | where { $_ -match '(\w+)=(.*)' } | foreach {
                     $null = new-item -force -path "Env:\$($Matches[1])" -value $Matches[2]
