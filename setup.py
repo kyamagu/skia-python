@@ -103,6 +103,8 @@ class BuildExt(build_ext):
             '-framework', 'CoreText',
             '-framework', 'CoreFoundation'
         ]
+    elif sys.platform == 'linux':
+        l_opts['unix'] += ['-lfontconfig', '-lfreetype']
 
     def build_extensions(self):
         ct = self.compiler.compiler_type
