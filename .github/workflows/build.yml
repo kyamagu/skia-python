@@ -156,7 +156,7 @@ jobs:
         python-version: ${{ matrix.python-version }}
     - name: Build python binding
       run: |
-        vswhere -latest -products * -requires Microsoft.VisualStudio.Component.VC.v141.x86.x64 -property installationPath
+        vswhere -latest -products * -requires Microsoft.VisualStudio.Component.VC.Tools.x86.x64 -property installationPath
         "C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\vcvarsall.bat" x86_amd64
         python -m pip install -U pip
         python -m pip install pybind11 wheel
