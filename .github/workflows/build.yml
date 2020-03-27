@@ -68,7 +68,7 @@ jobs:
         key: manylinux2014-skia-out
     - name: Build Skia
       run: |
-        yum install -y fontconfig-devel
+        yum install -y fontconfig-devel mesa-libGL-devel
         if [ ! -d "skia/out/Release" ]; then
           cd skia
           python tools/git-sync-deps

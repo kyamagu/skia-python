@@ -105,7 +105,7 @@ class BuildExt(build_ext):
         ]
     elif sys.platform == 'linux':
         c_opts['unix'] += ['-Wno-attributes',]
-        l_opts['unix'] += ['-lfontconfig', '-lfreetype']
+        l_opts['unix'] += ['-lfontconfig', '-lfreetype', '-lGL']
 
     def build_extensions(self):
         ct = self.compiler.compiler_type
