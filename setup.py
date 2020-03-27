@@ -52,6 +52,16 @@ class get_pybind_include(object):
         return pybind11.get_include(self.user)
 
 
+skia_path = os.getenv('SKIA_PATH', 'skia')
+if sys.platform.startswith('win'):
+    EXTRA_OBJECTS = [
+        os.path.join(skia_path, 'out', 'Release', 'skia.lib'),
+        'user32.lib',
+    ]
+else:
+    EXTRA_OBJECTS = [os.path.join(skia_path, 'out', 'Release', 'libskia.a')]
+
+
 ext_modules = [
     Extension(
         'skia',
@@ -60,15 +70,10 @@ ext_modules = [
             # Path to pybind11 headers
             get_pybind_include(),
             get_pybind_include(user=True),
-            os.getenv('SKIA_PATH', 'skia'),
-            os.path.join(
-                os.getenv('SKIA_PATH', 'skia'), 'out', 'Release', 'gen'),
+            skia_path,
+            os.path.join(skia_path, 'out', 'Release', 'gen'),
         ],
-        extra_objects=[
-            os.path.join(
-                os.getenv('SKIA_PATH', 'skia'), 'out', 'Release',
-                ('skia.lib' if sys.platform.startswith('win') else 'libskia.a')),
-        ],
+        extra_objects=EXTRA_OBJECTS,
         language='c++'
     ),
 ]
