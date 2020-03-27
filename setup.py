@@ -69,6 +69,9 @@ ext_modules = [
                 os.getenv('SKIA_PATH', 'skia'), 'out', 'Release',
                 ('skia.lib' if sys.platform.startswith('win') else 'libskia.a')),
         ],
+        define_macros=[
+            ('VERSION_INFO', '"%s"' % (__version__)),
+        ],
         language='c++'
     ),
 ]
@@ -82,7 +85,7 @@ class BuildExt(build_ext):
     }
     l_opts = {
         'msvc': [],
-        'unix': [],
+        'unix': ['-std=c++14', '-fvisibility=hidden'],
     }
 
     if sys.platform == 'darwin':
@@ -103,12 +106,6 @@ class BuildExt(build_ext):
         ct = self.compiler.compiler_type
         opts = self.c_opts.get(ct, [])
         link_opts = self.l_opts.get(ct, [])
-        if ct == 'unix':
-            opts.append('-DVERSION_INFO="%s"' % self.distribution.get_version())
-            opts.append('-std=c++14')
-            opts.append('-fvisibility=hidden')
-        elif ct == 'msvc':
-            opts.append('/DVERSION_INFO=\\"%s\\"' % self.distribution.get_version())
         for ext in self.extensions:
             ext.extra_compile_args = opts
             ext.extra_link_args = link_opts
