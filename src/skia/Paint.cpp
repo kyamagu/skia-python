@@ -6,6 +6,11 @@ namespace py = pybind11;
 
 PYBIND11_DECLARE_HOLDER_TYPE(T, sk_sp<T>);
 
+// Static variables must be declared.
+const int SkPaint::kStyleCount;
+const int SkPaint::kCapCount;
+const int SkPaint::kJoinCount;
+
 void initPaint(py::module &m) {
 // Paint
 py::class_<SkPaint> paint(m, "Paint");

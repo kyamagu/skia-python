@@ -3,6 +3,23 @@
 
 namespace py = pybind11;
 
+// Static variables must be declared.
+constexpr int SkMatrix::kMScaleX;
+constexpr int SkMatrix::kMSkewX;
+constexpr int SkMatrix::kMTransX;
+constexpr int SkMatrix::kMSkewY;
+constexpr int SkMatrix::kMScaleY;
+constexpr int SkMatrix::kMTransY;
+constexpr int SkMatrix::kMPersp0;
+constexpr int SkMatrix::kMPersp1;
+constexpr int SkMatrix::kMPersp2;
+constexpr int SkMatrix::kAScaleX;
+constexpr int SkMatrix::kASkewY;
+constexpr int SkMatrix::kASkewX;
+constexpr int SkMatrix::kAScaleY;
+constexpr int SkMatrix::kATransX;
+constexpr int SkMatrix::kATransY;
+
 void initMatrix(py::module &m) {
 py::enum_<SkApplyPerspectiveClip>(m, "ApplyPerspectiveClip");
 // Matrix
