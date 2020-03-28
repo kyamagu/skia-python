@@ -1,6 +1,8 @@
 #include <pybind11/pybind11.h>
 #include <skia.h>
 
+#define STRING(s) #s
+
 namespace py = pybind11;
 
 PYBIND11_DECLARE_HOLDER_TYPE(T, sk_sp<T>);
@@ -90,7 +92,7 @@ PYBIND11_MODULE(skia, m) {
     initVertices(m);
 
 #ifdef VERSION_INFO
-    m.attr("__version__") = VERSION_INFO;
+    m.attr("__version__") = STRING(VERSION_INFO);
 #else
     m.attr("__version__") = "dev";
 #endif
