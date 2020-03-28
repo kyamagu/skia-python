@@ -60,15 +60,16 @@ jobs:
     - uses: actions/checkout@v2
       with:
         submodules: true
-    - name: Set PATH
-      run: echo "::add-path::$PWD/depot_tools"
-    - name: Install dependency
+    - name: Install system dependency
       run: yum install -y fontconfig-devel mesa-libGL-devel
     - uses: actions/cache@v1
       id: cache
       with:
         path: skia/out/Release
         key: manylinux2014-skia-out
+    - name: Set PATH
+      run: echo "::add-path::$PWD/depot_tools"
+      if: steps.cache.outputs.cache-hit != 'true'
     - name: Build Skia
       run: |
         cd skia
@@ -97,17 +98,19 @@ jobs:
     - uses: actions/checkout@v2
       with:
         submodules: true
-    - name: Set up Python 2.7
-      uses: actions/setup-python@v1
-      with:
-        python-version: 2.7
-    - name: Set PATH
-      run: echo "::add-path::$PWD/depot_tools"
     - uses: actions/cache@v1
       id: cache
       with:
         path: skia/out/Release
         key: ${{ runner.os }}-skia-out
+    - name: Set up Python 2.7
+      uses: actions/setup-python@v1
+      with:
+        python-version: 2.7
+      if: steps.cache.outputs.cache-hit != 'true'
+    - name: Set PATH
+      run: echo "::add-path::$PWD/depot_tools"
+      if: steps.cache.outputs.cache-hit != 'true'
     - name: Build Skia
       run: |
         cd skia
@@ -138,22 +141,24 @@ jobs:
     - uses: actions/checkout@v2
       with:
         submodules: true
-    - name: Set up Python 2.7
-      uses: actions/setup-python@v1
-      with:
-        python-version: 2.7
-    - name: Set PATH
-      run: echo "::add-path::$PWD\depot_tools"
     - uses: actions/cache@v1
       id: cache
       with:
         path: skia\out\Release
         key: ${{ runner.os }}-skia-out
+    - name: Set up Python 2.7
+      uses: actions/setup-python@v1
+      with:
+        python-version: 2.7
+      if: true || steps.cache.outputs.cache-hit != 'true'
+    - name: Set PATH
+      run: echo "::add-path::$PWD\depot_tools"
+      if: true || steps.cache.outputs.cache-hit != 'true'
     - name: Build Skia
       run: |
         cd skia
         python tools\git-sync-deps
-        bin\gn gen out\Release --args='is_official_build=false is_debug=true target_cpu="x64"'
+        bin\gn gen out\Release --args='is_official_build=false is_debug=true target_cpu=`"x64`"'
         ninja -C out\Release skia skia.h
         cd ..
       if: true || steps.cache.outputs.cache-hit != 'true'
