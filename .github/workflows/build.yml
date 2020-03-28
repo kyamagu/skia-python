@@ -156,7 +156,7 @@ jobs:
         bin\gn gen out\Release --args='is_official_build=false is_debug=true target_cpu="x64"'
         ninja -C out\Release skia skia.h
         cd ..
-      if: false && steps.cache.outputs.cache-hit != 'true'
+      if: true || steps.cache.outputs.cache-hit != 'true'
     - name: Set up Python
       uses: actions/setup-python@v1
       with:
@@ -181,5 +181,4 @@ jobs:
     - name: Test
       run: |
         python -m pip install pytest pytest-faulthandler
-        python tests/test_skia.py
         python -m pytest tests

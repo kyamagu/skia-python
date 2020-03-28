@@ -1,5 +1,3 @@
-import faulthandler
-faulthandler.enable()
 import skia
 import pytest
 
