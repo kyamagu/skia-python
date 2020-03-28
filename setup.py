@@ -62,6 +62,8 @@ if sys.platform == 'win32':
         '/wd4267',  # Conversion from 'size_t' to 'int', possible loss of data.
         '/wd4800',  # Forcing value to bool 'true' or 'false'.
         '/wd4180',  # Qualifier applied to function type has no meaning.
+        '/GR',
+        '/UNDEBUG',
     ]
     EXTRA_LINK_ARGS = [
         '/OPT:ICF',
