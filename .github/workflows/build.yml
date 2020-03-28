@@ -63,19 +63,19 @@ jobs:
     - name: Set PATH
       run: echo "::add-path::$PWD/depot_tools"
     - uses: actions/cache@v1
+      id: cache
       with:
         path: skia/out/Release
         key: manylinux2014-skia-out
     - name: Build Skia
       run: |
         yum install -y fontconfig-devel mesa-libGL-devel
-        if [ ! -d "skia/out/Release" ]; then
-          cd skia
-          python tools/git-sync-deps
-          bin/gn gen out/Release --args='is_official_build=false is_debug=false extra_cflags_cc=["-frtti"] extra_ldflags=["-lrt"]'
-          ninja -C out/Release skia skia.h
-          cd ..
-        fi
+        cd skia
+        python tools/git-sync-deps
+        bin/gn gen out/Release --args='is_official_build=false is_debug=false extra_cflags_cc=["-frtti"] extra_ldflags=["-lrt"]'
+        ninja -C out/Release skia skia.h
+        cd ..
+      if: steps.cache.outputs.cache-hit != 'true'
     - name: Set up Python
       run: echo "::add-path::/opt/python/${{ matrix.python-version }}/bin"
     - name: Build python binding
@@ -103,18 +103,18 @@ jobs:
     - name: Set PATH
       run: echo "::add-path::$PWD/depot_tools"
     - uses: actions/cache@v1
+      id: cache
       with:
         path: skia/out/Release
         key: ${{ runner.os }}-skia-out
     - name: Build Skia
       run: |
-        if [ ! -d "skia/out/Release" ]; then
-          cd skia
-          python tools/git-sync-deps
-          bin/gn gen out/Release --args='is_official_build=false is_debug=false extra_cflags_cc=["-frtti"]'
-          ninja -C out/Release skia skia.h
-          cd ..
-        fi
+        cd skia
+        python tools/git-sync-deps
+        bin/gn gen out/Release --args='is_official_build=false is_debug=false extra_cflags_cc=["-frtti"]'
+        ninja -C out/Release skia skia.h
+        cd ..
+      if: steps.cache.outputs.cache-hit != 'true'
     - name: Set up Python
       uses: actions/setup-python@v1
       with:
@@ -144,18 +144,18 @@ jobs:
     - name: Set PATH
       run: echo "::add-path::$PWD\depot_tools"
     - uses: actions/cache@v1
+      id: cache
       with:
         path: skia\out\Release
         key: ${{ runner.os }}-skia-out
     - name: Build Skia
       run: |
-        if (!(test-path skia\out\Release)) {
-          cd skia
-          python tools\git-sync-deps
-          bin\gn gen out\Release --args='is_official_build=false is_debug=false target_cpu="x64"'
-          ninja -C out\Release skia skia.h
-          cd ..
-        }
+        cd skia
+        python tools\git-sync-deps
+        bin\gn gen out\Release --args='is_official_build=false is_debug=true target_cpu="x64"'
+        ninja -C out\Release skia skia.h
+        cd ..
+      if: false && steps.cache.outputs.cache-hit != 'true'
     - name: Set up Python
       uses: actions/setup-python@v1
       with:
@@ -180,4 +180,5 @@ jobs:
     - name: Test
       run: |
         python -m pip install pytest pytest-faulthandler
+        python tests/test_skia.py
         python -m pytest tests

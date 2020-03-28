@@ -68,6 +68,7 @@ if sys.platform == 'win32':
     EXTRA_LINK_ARGS = [
         '/OPT:ICF',
         '/OPT:REF',
+        '/DEBUG',
     ]
 elif sys.platform == 'darwin':
     DEFINE_MACROS = [('VERSION_INFO', __version__)]
