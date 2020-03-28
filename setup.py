@@ -40,22 +40,28 @@ SKIA_PATH = os.getenv('SKIA_PATH', 'skia')
 if sys.platform == 'win32':
     DEFINE_MACROS = []  # doesn't work for cl.exe
     LIBRARIES = [
-        'FontSub.lib',
-        'Ole32.lib',
-        'OleAut32.lib',
-        'User32.lib',
-        'Usp10.lib',
-        'OpenGL32.lib',
-        'Gdi32.lib',
-        # 'd3d12.lib',
-        # 'dxgi.lib',
-        # 'd3dcompiler.lib',
+        'FontSub',
+        'Ole32',
+        'OleAut32',
+        'User32',
+        'Usp10',
+        'OpenGL32',
+        'Gdi32',
+        # 'd3d12',
+        # 'dxgi',
+        # 'd3dcompiler',
     ]
     EXTRA_OBJECTS = [os.path.join(SKIA_PATH, 'out', 'Release', 'skia.lib')]
     EXTRA_COMPILE_ARGS = [
         '/std:c++latest',
         '/DVERSION_INFO=%s' % __version__,
         '/Zc:inline',
+        # Disable a bunch of warnings.
+        '/wd5030',  # Warnings about unknown attributes.
+        '/wd4244',  # Conversion from 'float' to 'int', possible loss of data.
+        '/wd4267',  # Conversion from 'size_t' to 'int', possible loss of data.
+        '/wd4800',  # Forcing value to bool 'true' or 'false'.
+        '/wd4180',  # Qualifier applied to function type has no meaning.
     ]
     EXTRA_LINK_ARGS = [
         '/OPT:ICF',
@@ -95,7 +101,6 @@ else:
     ]
     EXTRA_OBJECTS = [os.path.join(SKIA_PATH, 'out', 'Release', 'libskia.a')]
     EXTRA_COMPILE_ARGS = [
-        '-pthread',
         '-std=c++14',
         '-fvisibility=hidden',
         '-Wno-attributes',
