@@ -161,7 +161,7 @@ jobs:
       run: |
         cd skia
         python tools\git-sync-deps
-        bin\gn gen out\Release --args='is_official_build=false is_debug=true target_cpu=`"x64`"'
+        bin\gn gen out\Release --args='is_official_build=false is_debug=false target_cpu=\"x64\"'
         ninja -C out\Release skia skia.h
         cd ..
       if: true || steps.cache.outputs.cache-hit != 'true'
@@ -189,4 +189,4 @@ jobs:
     - name: Test
       run: |
         python -m pip install pytest pytest-faulthandler
-        python -m pytest tests
+        python -m pytest tests/test_skia.py
