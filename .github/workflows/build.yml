@@ -124,6 +124,9 @@ jobs:
       with:
         python-version: ${{ matrix.python-version }}
     - name: Build python binding
+      env:
+        CC: clang
+        CXX: clang++
       run: |
         python -m pip install -U pip
         python -m pip install pybind11
