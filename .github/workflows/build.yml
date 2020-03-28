@@ -62,6 +62,8 @@ jobs:
         submodules: true
     - name: Set PATH
       run: echo "::add-path::$PWD/depot_tools"
+    - name: Install dependency
+      run: yum install -y fontconfig-devel mesa-libGL-devel
     - uses: actions/cache@v1
       id: cache
       with:
@@ -69,7 +71,6 @@ jobs:
         key: manylinux2014-skia-out
     - name: Build Skia
       run: |
-        yum install -y fontconfig-devel mesa-libGL-devel
         cd skia
         python tools/git-sync-deps
         bin/gn gen out/Release --args='is_official_build=false is_debug=false extra_cflags_cc=["-frtti"] extra_ldflags=["-lrt"]'

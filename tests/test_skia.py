@@ -30,5 +30,5 @@ def test_skia():
     canvas = surface.getCanvas()
     draw(canvas)
     image = surface.makeImageSnapshot()
-    data = image.encodeToData()
-    encoded = bytes(data)
+    # data = image.encodeToData()
+    # encoded = bytes(data)
