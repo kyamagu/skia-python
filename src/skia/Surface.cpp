@@ -11,7 +11,7 @@ py::class_<SkSurfaceProps>(m, "SurfaceProps")
 py::class_<SkSurface, sk_sp<SkSurface>>(m, "Surface")
     .def(py::init([](int width, int height) -> sk_sp<SkSurface> {
         auto surface = SkSurface::MakeRasterN32Premul(width, height);
-        if (!surface)
+        if (surface.get() == nullptr)
             throw std::runtime_error("Failed to allocate surface.");
         return surface;
     }))
