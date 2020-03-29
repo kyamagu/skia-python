@@ -25,8 +25,7 @@ def draw(canvas):
 
 def test_skia():
     surface = skia.Surface(256, 256)
-    # canvas = surface.getCanvas()
-    skia.Canvas()
+    canvas = surface.getCanvas()
     # draw(canvas)
     # image = surface.makeImageSnapshot()
     # data = image.encodeToData()

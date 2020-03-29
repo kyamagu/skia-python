@@ -16,7 +16,7 @@ py::class_<SkSurface, sk_sp<SkSurface>>(m, "Surface")
         return surface;
     }))
     .def("getCanvas", &SkSurface::getCanvas,
-        py::return_value_policy::reference)
+        py::return_value_policy::reference_internal)
     // .def("getCanvas", [](SkSurface& surface) -> bool {
     //     surface.getCanvas();
     //     return true;
