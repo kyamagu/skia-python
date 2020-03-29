@@ -23,10 +23,17 @@ def draw(canvas):
     canvas.drawPath(path, paint)
 
 
+# def test_skia():
+#     surface = skia.Surface(256, 256)
+#     canvas = surface.getCanvas()
+#     draw(canvas)
+#     image = surface.makeImageSnapshot()
+#     data = image.encodeToData()
+#     encoded = bytes(data)
+
 def test_skia():
-    surface = skia.Surface(256, 256)
-    canvas = surface.getCanvas()
-    draw(canvas)
-    image = surface.makeImageSnapshot()
-    data = image.encodeToData()
-    encoded = bytes(data)
+    import numpy as np
+    array = np.zeros((256, 256, 4), dtype=np.uint8)
+    info = skia.ImageInfo.MakeN32Premul(256, 256)
+    surface = skia.Surface.MakeRasterDirect(info, array)
+    draw(surface.getCanvas())

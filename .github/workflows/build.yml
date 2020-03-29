@@ -87,7 +87,7 @@ jobs:
         python setup.py install
     - name: Test
       run: |
-        python -m pip install pytest
+        python -m pip install pytest numpy
         python -m pytest tests
   build-macos:
     runs-on: macos-latest
@@ -133,7 +133,7 @@ jobs:
         python setup.py install
     - name: Test
       run: |
-        python -m pip install pytest
+        python -m pip install pytest numpy
         python -m pytest tests
   build-windows:
     runs-on: windows-latest
@@ -188,5 +188,5 @@ jobs:
         python setup.py install
     - name: Test
       run: |
-        python -m pip install pytest pytest-faulthandler
-        python -m pytest tests/test_skia.py
+        python -m pip install pytest pytest-faulthandler numpy
+        python -m pytest tests

@@ -137,7 +137,9 @@ py::class_<SkImageInfo>(m, "ImageInfo")
         (SkImageInfo (*)(int, int, sk_sp<SkColorSpace>))
         &SkImageInfo::MakeN32Premul,
         "Creates SkImageInfo from integral dimensions width and height, "
-        "kN32_SkColorType, kPremul_SkAlphaType, with optional SkColorSpace.")
+        "kN32_SkColorType, kPremul_SkAlphaType, with optional SkColorSpace.",
+        py::arg("width"), py::arg("height"),
+        py::arg("cs") = sk_sp<SkColorSpace>(nullptr))
     .def_static("MakeN32Premul",
         (SkImageInfo (*)(SkISize, sk_sp<SkColorSpace>))
         &SkImageInfo::MakeN32Premul,

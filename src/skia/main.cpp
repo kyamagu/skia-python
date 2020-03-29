@@ -13,6 +13,7 @@ void initBitmap(py::module &);
 void initBlendMode(py::module &);
 void initCanvas(py::module &);
 void initColor(py::module &);
+void initColorSpace(py::module &);
 void initData(py::module &);
 void initGrContext(py::module &);
 void initFont(py::module &);
@@ -71,6 +72,7 @@ PYBIND11_MODULE(skia, m) {
     initBlendMode(m);
     initCanvas(m);
     initColor(m);
+    initColorSpace(m);
     initData(m);
     initFont(m);
     initGrContext(m);
