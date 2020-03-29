@@ -153,10 +153,10 @@ jobs:
       uses: actions/setup-python@v1
       with:
         python-version: 2.7
-      if: true || steps.cache.outputs.cache-hit != 'true'
+      if: steps.cache.outputs.cache-hit != 'true'
     - name: Set PATH
       run: echo "::add-path::$PWD\depot_tools"
-      if: true || steps.cache.outputs.cache-hit != 'true'
+      if: steps.cache.outputs.cache-hit != 'true'
     - name: Build Skia
       run: |
         cd skia
@@ -164,7 +164,7 @@ jobs:
         bin\gn gen out\Release --args='is_official_build=false is_debug=false target_cpu=\"x64\"'
         ninja -C out\Release skia skia.h
         cd ..
-      if: true || steps.cache.outputs.cache-hit != 'true'
+      if: steps.cache.outputs.cache-hit != 'true'
     - name: Set up Python
       uses: actions/setup-python@v1
       with:
