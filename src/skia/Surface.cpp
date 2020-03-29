@@ -9,9 +9,11 @@ void initSurface(py::module &m) {
 py::class_<SkSurfaceProps>(m, "SurfaceProps")
     ;
 py::class_<SkSurface, sk_sp<SkSurface>>(m, "Surface")
-    .def(py::init([](int width, int height) {
-        return sk_sp<SkSurface>(
-            SkSurface::MakeRasterN32Premul(width, height));
+    .def(py::init([](int width, int height) -> sk_sp<SkSurface> {
+        auto surface = SkSurface::MakeRasterN32Premul(width, height);
+        if (!surface)
+            throw std::runtime_error("Failed to allocate surface.");
+        return surface;
     }))
     .def("getCanvas", &SkSurface::getCanvas,
         py::return_value_policy::reference)
