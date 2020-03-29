@@ -7,25 +7,25 @@ void initCanvas(py::module &m) {
 py::enum_<SkClipOp>(m, "ClipOp");
 
 py::class_<SkCanvas> canvas(m, "Canvas");
-py::enum_<SkCanvas::SrcRectConstraint>(canvas, "SrcRectConstraint")
-    .value("kStrict_SrcRectConstraint",
-        SkCanvas::SrcRectConstraint::kStrict_SrcRectConstraint)
-    .value("kFast_SrcRectConstraint",
-        SkCanvas::SrcRectConstraint::kFast_SrcRectConstraint)
-    .export_values();
-py::enum_<SkCanvas::PointMode>(canvas, "PointMode")
-    .value("kPoints_PointMode", SkCanvas::PointMode::kPoints_PointMode)
-    .value("kLines_PointMode", SkCanvas::PointMode::kLines_PointMode)
-    .value("kPolygon_PointMode", SkCanvas::PointMode::kPolygon_PointMode)
-    .export_values();
-py::enum_<SkCanvas::QuadAAFlags>(canvas, "QuadAAFlags")
-    .value("kLeft_QuadAAFlag", SkCanvas::QuadAAFlags::kLeft_QuadAAFlag)
-    .value("kTop_QuadAAFlag", SkCanvas::QuadAAFlags::kTop_QuadAAFlag)
-    .value("kRight_QuadAAFlag", SkCanvas::QuadAAFlags::kRight_QuadAAFlag)
-    .value("kBottom_QuadAAFlag", SkCanvas::QuadAAFlags::kBottom_QuadAAFlag)
-    .value("kNone_QuadAAFlags", SkCanvas::QuadAAFlags::kNone_QuadAAFlags)
-    .value("kAll_QuadAAFlags", SkCanvas::QuadAAFlags::kAll_QuadAAFlags)
-    .export_values();
+py::enum_<SkCanvas::SrcRectConstraint>(canvas, "SrcRectConstraint");
+    // .value("kStrict_SrcRectConstraint",
+    //     SkCanvas::SrcRectConstraint::kStrict_SrcRectConstraint)
+    // .value("kFast_SrcRectConstraint",
+    //     SkCanvas::SrcRectConstraint::kFast_SrcRectConstraint)
+    // .export_values();
+py::enum_<SkCanvas::PointMode>(canvas, "PointMode");
+    // .value("kPoints_PointMode", SkCanvas::PointMode::kPoints_PointMode)
+    // .value("kLines_PointMode", SkCanvas::PointMode::kLines_PointMode)
+    // .value("kPolygon_PointMode", SkCanvas::PointMode::kPolygon_PointMode)
+    // .export_values();
+py::enum_<SkCanvas::QuadAAFlags>(canvas, "QuadAAFlags");
+    // .value("kLeft_QuadAAFlag", SkCanvas::QuadAAFlags::kLeft_QuadAAFlag)
+    // .value("kTop_QuadAAFlag", SkCanvas::QuadAAFlags::kTop_QuadAAFlag)
+    // .value("kRight_QuadAAFlag", SkCanvas::QuadAAFlags::kRight_QuadAAFlag)
+    // .value("kBottom_QuadAAFlag", SkCanvas::QuadAAFlags::kBottom_QuadAAFlag)
+    // .value("kNone_QuadAAFlags", SkCanvas::QuadAAFlags::kNone_QuadAAFlags)
+    // .value("kAll_QuadAAFlags", SkCanvas::QuadAAFlags::kAll_QuadAAFlags)
+    // .export_values();
 // py::class_<SkCanvas::SaveLayerRec> savelayerrec(canvas, "SaveLayerRec");
 // savelayerrec
 //     .def_readwrite("fBounds", &SkCanvas::Lattice::fBounds)
@@ -45,11 +45,11 @@ lattice
     .def_readwrite("fBounds", &SkCanvas::Lattice::fBounds)
     .def_readwrite("fColors", &SkCanvas::Lattice::fColors)
     ;
-py::enum_<SkCanvas::Lattice::RectType>(lattice, "RectType")
-    .value("kDefault", SkCanvas::Lattice::RectType::kDefault)
-    .value("kTransparent", SkCanvas::Lattice::RectType::kTransparent)
-    .value("kFixedColor", SkCanvas::Lattice::RectType::kFixedColor)
-    .export_values();
+py::enum_<SkCanvas::Lattice::RectType>(lattice, "RectType");
+    // .value("kDefault", SkCanvas::Lattice::RectType::kDefault)
+    // .value("kTransparent", SkCanvas::Lattice::RectType::kTransparent)
+    // .value("kFixedColor", SkCanvas::Lattice::RectType::kFixedColor)
+    // .export_values();
 
 canvas.def(py::init<>(),
         "Creates an empty SkCanvas with no backing device or pixels, with a "
