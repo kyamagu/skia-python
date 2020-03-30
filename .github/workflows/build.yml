@@ -162,7 +162,7 @@ jobs:
       run: |
         cd skia
         python tools\git-sync-deps
-        bin\gn gen out\Release --args='is_official_build=false is_debug=false extra_cflags_cc=[\"/GR\"] target_cpu=\"${{ matrix.arch }}\"'
+        bin\gn gen out\Release --args='is_official_build=false is_debug=false extra_cflags_cc=[\"/GR\", \"/EHsc\"] target_cpu=\"${{ matrix.arch }}\"'
         ninja -C out\Release skia skia.h
         cd ..
       if: steps.cache.outputs.cache-hit != 'true'
