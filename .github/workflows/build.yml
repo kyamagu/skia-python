@@ -139,6 +139,7 @@ jobs:
     runs-on: windows-latest
     strategy:
       matrix:
+        arch: [ x64 ]
         python-version: [3.5]
     steps:
     - uses: actions/checkout@v2
@@ -148,7 +149,7 @@ jobs:
       id: cache
       with:
         path: skia\out\Release
-        key: ${{ runner.os }}-skia-out
+        key: ${{ runner.os }}-${{ matrix.arch }}-skia-out
     - name: Set up Python 2.7
       uses: actions/setup-python@v1
       with:
@@ -161,7 +162,7 @@ jobs:
       run: |
         cd skia
         python tools\git-sync-deps
-        bin\gn gen out\Release --args='is_official_build=false is_debug=false target_cpu=\"x64\"'
+        bin\gn gen out\Release --args='is_official_build=false is_debug=false extra_cflags_cc=[\"/GR\"] target_cpu=\"${{ matrix.arch }}\"'
         ninja -C out\Release skia skia.h
         cd ..
       if: steps.cache.outputs.cache-hit != 'true'
@@ -174,7 +175,7 @@ jobs:
         DISTUTILS_USE_SDK: 1
       run: |
         $path = vswhere -latest -products * -requires Microsoft.VisualStudio.Component.VC.Tools.x86.x64 -property installationPath
-        $args = '-arch=x64'
+        $args = '-arch=${{ matrix.arch }}'
         if ($path) {
             $path = join-path $path 'Common7\Tools\vsdevcmd.bat'
             if (test-path $path) {
