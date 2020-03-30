@@ -28,7 +28,6 @@ void initPixmap(py::module &);
 void initPoint(py::module &);
 void initRect(py::module &);
 void initRegion(py::module &);
-void initRRect(py::module &);
 void initSurface(py::module &);
 void initTextBlob(py::module &);
 void initTextBlobBuilder(py::module &);
@@ -86,7 +85,6 @@ PYBIND11_MODULE(skia, m) {
     initPoint(m);
     initRect(m);
     initRegion(m);
-    initRRect(m);
     initSize(m);
     initSurface(m);
     initTextBlob(m);
