@@ -1,6 +1,7 @@
 #include <pybind11/pybind11.h>
 #include <pybind11/operators.h>
 #include <skia.h>
+#include <sstream>
 
 namespace py = pybind11;
 
@@ -9,6 +10,17 @@ constexpr size_t SkRRect::kSizeInMemory;
 void initRect(py::module &m) {
 // IRect
 py::class_<SkIRect>(m, "IRect")
+    // Python additions.
+    .def(py::init(&SkIRect::MakeEmpty))
+    .def(py::init(&SkIRect::MakeWH))
+    .def(py::init(&SkIRect::MakeLTRB))
+    .def("__repr__", [](const SkIRect& r) {
+        std::stringstream s;
+        s << "IRect(" << r.fLeft << ", " << r.fTop << ", " <<
+            r.fRight << ", " << r.fBottom << ")";
+        return s.str();
+    })
+    // Wrappers.
     .def("left", &SkIRect::left, "Returns left edge of SkIRect, if sorted.")
     .def("top", &SkIRect::top, "Returns top edge of SkIRect, if sorted.")
     .def("right", &SkIRect::right, "Returns right edge of SkIRect, if sorted.")
@@ -108,6 +120,17 @@ py::class_<SkIRect>(m, "IRect")
     ;
 // Rect
 py::class_<SkRect>(m, "Rect")
+    // Python additions.
+    .def(py::init(&SkRect::MakeEmpty))
+    .def(py::init(&SkRect::MakeWH))
+    .def(py::init(&SkRect::MakeLTRB))
+    .def("__repr__", [](const SkRect& r) {
+        std::stringstream s;
+        s << "Rect(" << r.fLeft << ", " << r.fTop << ", " <<
+            r.fRight << ", " << r.fBottom << ")";
+        return s.str();
+    })
+    // Wrappers.
     .def("isEmpty", &SkRect::isEmpty,
         "Returns true if fLeft is equal to or greater than fRight, or if "
         "fTop is equal to or greater than fBottom.")
@@ -350,5 +373,11 @@ rrect
     .def_static("MakeRectXY", &SkRRect::MakeRectXY,
         "Sets to rounded rectangle with the same radii for all four corners.")
     .def_readonly_static("kSizeInMemory", &SkRRect::kSizeInMemory)
+    .def(py::self == py::self,
+        "Returns true if bounds and radii in a are equal to bounds and radii "
+        "in b.")
+    .def(py::self != py::self,
+        "Returns true if bounds and radii in a are not equal to bounds and "
+        "radii in b.")
     ;
 }
