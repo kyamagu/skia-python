@@ -192,8 +192,18 @@ typeface
     //     "instance of a typeface referring to the same font.")
     ;
 // Font
-py::enum_<SkFontHinting>(m, "FontHinting");
-py::enum_<SkTextEncoding>(m, "TextEncoding");
+py::enum_<SkFontHinting>(m, "FontHinting")
+    .value("kNone", SkFontHinting::kNone)
+    .value("kSlight", SkFontHinting::kSlight)
+    .value("kNormal", SkFontHinting::kNormal)
+    .value("kFull", SkFontHinting::kFull)
+    .export_values();
+py::enum_<SkTextEncoding>(m, "TextEncoding")
+    .value("kUTF8", SkTextEncoding::kUTF8)
+    .value("kUTF16", SkTextEncoding::kUTF16)
+    .value("kUTF32", SkTextEncoding::kUTF32)
+    .value("kGlyphID", SkTextEncoding::kGlyphID)
+    .export_values();
 py::class_<SkFont> font(m, "Font");
 py::enum_<SkFont::Edging>(font, "Edging")
     .value("kAlias", SkFont::Edging::kAlias)

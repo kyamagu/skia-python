@@ -30,7 +30,6 @@ SOURCES = [
     'src/skia/Size.cpp',
     'src/skia/Surface.cpp',
     'src/skia/TextBlob.cpp',
-    'src/skia/TextBlobBuilder.cpp',
     'src/skia/Vertices.cpp',
 ]
 

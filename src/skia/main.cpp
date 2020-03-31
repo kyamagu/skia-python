@@ -30,7 +30,6 @@ void initRect(py::module &);
 void initRegion(py::module &);
 void initSurface(py::module &);
 void initTextBlob(py::module &);
-void initTextBlobBuilder(py::module &);
 void initVertices(py::module &);
 
 // Main entry point.
@@ -88,7 +87,6 @@ PYBIND11_MODULE(skia, m) {
     initSize(m);
     initSurface(m);
     initTextBlob(m);
-    initTextBlobBuilder(m);
     initVertices(m);
 
 #ifdef VERSION_INFO
