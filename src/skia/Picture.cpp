@@ -23,6 +23,24 @@ public:
     }
 };
 
+class PyBBoxHierarchy : public SkBBoxHierarchy {
+public:
+    void insert(const SkRect rects[], int N) override {
+        PYBIND11_OVERLOAD_PURE(void, SkBBoxHierarchy, insert, rects, N);
+    }
+    void insert(
+        const SkRect rects[], const SkBBoxHierarchy::Metadata m[],
+        int N) override {
+        PYBIND11_OVERLOAD(void, SkBBoxHierarchy, insert, rects, N);
+    }
+    void search(const SkRect& query, std::vector<int> *results) const override {
+        PYBIND11_OVERLOAD_PURE(void, SkBBoxHierarchy, search, query, results);
+    }
+    size_t bytesUsed() const override {
+        PYBIND11_OVERLOAD_PURE(size_t, SkBBoxHierarchy, bytesUsed);
+    }
+};
+
 
 void initPicture(py::module &m) {
 py::class_<SkPicture, PyPicture, sk_sp<SkPicture>>(m, "Picture")
@@ -70,5 +88,60 @@ py::class_<SkPicture, PyPicture, sk_sp<SkPicture>>(m, "Picture")
     .def_static("MakePlaceholder", &SkPicture::MakePlaceholder,
         "Returns a placeholder SkPicture.")
     ;
-
+py::class_<SkBBoxHierarchy, PyBBoxHierarchy, sk_sp<SkBBoxHierarchy>>
+    bboxhierarchy(m, "BBoxHierarchy");
+py::class_<SkBBoxHierarchy::Metadata>(bboxhierarchy, "Metadata")
+    .def_readwrite("isDraw", &SkBBoxHierarchy::Metadata::isDraw);
+bboxhierarchy
+    .def(py::init())
+    .def("insert",
+        py::overload_cast<const SkRect[], int>(&SkBBoxHierarchy::insert),
+        "Insert N bounding boxes into the hierarchy.")
+    .def("insert",
+        py::overload_cast<const SkRect[], const SkBBoxHierarchy::Metadata[],
+            int>(&SkBBoxHierarchy::insert))
+    .def("search", &SkBBoxHierarchy::search,
+        "Populate results with the indices of bounding boxes intersecting "
+        "that query.")
+    .def("bytesUsed", &SkBBoxHierarchy::bytesUsed,
+        "Return approximate size in memory of *this.")
+    .def("unique", &SkBBoxHierarchy::unique,
+        "May return true if the caller is the only owner.")
+    .def("ref", &SkBBoxHierarchy::ref,
+        "Increment the reference count.")
+    .def("unref", &SkBBoxHierarchy::unref,
+        "Decrement the reference count.")
+    ;
+py::class_<SkPictureRecorder> picturerecorder(m, "PictureRecorder");
+py::enum_<SkPictureRecorder::RecordFlags>(picturerecorder, "RecordFlags")
+    .value("kPlaybackDrawPicture_RecordFlag",
+        SkPictureRecorder::RecordFlags::kPlaybackDrawPicture_RecordFlag)
+    .export_values();
+py::enum_<SkPictureRecorder::FinishFlags>(picturerecorder, "FinishFlags");
+picturerecorder
+    .def(py::init())
+    .def("beginRecording",
+        py::overload_cast<const SkRect&, sk_sp<SkBBoxHierarchy>, uint32_t>(
+            &SkPictureRecorder::beginRecording),
+        "Returns the canvas that records the drawing commands.")
+    // .def("beginRecording",
+    //     py::overload_cast<const SkRect&, SkBBHFactory*, uint32_t>(
+    //         &SkPictureRecorder::beginRecording))
+    // .def("beginRecording",
+    //     py::overload_cast<SkScalar, SkScalar, SkBBHFactory*, uint32_t>(
+    //         &SkPictureRecorder::beginRecording))
+    .def("getRecordingCanvas", &SkPictureRecorder::getRecordingCanvas,
+        "Returns the recording canvas if one is active, or NULL if recording "
+        "is not active.")
+    .def("finishRecordingAsPicture",
+        &SkPictureRecorder::finishRecordingAsPicture,
+        "Signal that the caller is done recording.")
+    .def("finishRecordingAsPictureWithCull",
+        &SkPictureRecorder::finishRecordingAsPictureWithCull,
+        "Signal that the caller is done recording, and update the cull rect "
+        "to use for bounding box hierarchy (BBH) generation.")
+    .def("finishRecordingAsDrawable",
+        &SkPictureRecorder::finishRecordingAsDrawable,
+        "Signal that the caller is done recording.")
+    ;
 }
