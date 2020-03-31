@@ -25,13 +25,9 @@ public:
 
 class PyBBoxHierarchy : public SkBBoxHierarchy {
 public:
+    using SkBBoxHierarchy::SkBBoxHierarchy;
     void insert(const SkRect rects[], int N) override {
         PYBIND11_OVERLOAD_PURE(void, SkBBoxHierarchy, insert, rects, N);
-    }
-    void insert(
-        const SkRect rects[], const SkBBoxHierarchy::Metadata m[],
-        int N) override {
-        PYBIND11_OVERLOAD(void, SkBBoxHierarchy, insert, rects, N);
     }
     void search(const SkRect& query, std::vector<int> *results) const override {
         PYBIND11_OVERLOAD_PURE(void, SkBBoxHierarchy, search, query, results);
