@@ -14,9 +14,9 @@ py::class_<SkIPoint>(m, "IPoint")
         "Returns true if fX and fY are both zero.")
     .def("set", &SkIPoint::set, "Sets fX to x and fY to y.")
     .def(-py::self, "Returns SkIPoint changing the signs of fX and fY.")
-    .def("__iadd__", [] (SkIPoint& p, SkIPoint& v) { p += v; return p; },
+    .def("__iadd__", [] (SkIPoint& p, const SkIPoint& v) { p += v; return p; },
         "Offsets SkIPoint by ivector v.", py::is_operator())
-    .def("__isub__", [] (SkIPoint& p, SkIPoint& v) { p -= v; return p; },
+    .def("__isub__", [] (SkIPoint& p, const SkIPoint& v) { p -= v; return p; },
         "Subtracts ivector v from SkIPoint.", py::is_operator())
     .def("equals", &SkIPoint::equals,
         "Returns true if SkIPoint is equivalent to SkIPoint constructed from "
