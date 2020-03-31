@@ -14,9 +14,33 @@ const int SkPaint::kJoinCount;
 void initPaint(py::module &m) {
 // Paint
 py::class_<SkPaint> paint(m, "Paint");
-py::enum_<SkPaint::Style>(paint, "Style");
-py::enum_<SkPaint::Cap>(paint, "Cap");
-py::enum_<SkPaint::Join>(paint, "Join");
+
+py::enum_<SkPaint::Style>(paint, "Style")
+    .value("kFill", SkPaint::Style::kFill_Style, "set to fill geometry")
+    .value("kStroke", SkPaint::Style::kStroke_Style, "set to stroke geometry")
+    .value("kStrokeAndFill", SkPaint::Style::kStrokeAndFill_Style,
+        "sets to stroke and fill geometry")
+    .export_values();
+
+py::enum_<SkPaint::Cap>(paint, "Cap")
+    .value("kButt", SkPaint::Cap::kButt_Cap, "no stroke extension")
+    .value("kRound", SkPaint::Cap::kRound_Cap, "adds circle")
+    .value("kSquare", SkPaint::Cap::kSquare_Cap, "adds square")
+    .value("kLast", SkPaint::Cap::kLast_Cap, "largest Cap value")
+    .value("kDefault", SkPaint::Cap::kDefault_Cap,
+        "equivalent to kButt_Cap")
+    .export_values();
+
+py::enum_<SkPaint::Join>(paint, "Join")
+    .value("kMiter", SkPaint::Join::kMiter_Join, "extends to miter limit")
+    .value("kRound", SkPaint::Join::kRound_Join, "adds circle")
+    .value("kBevel", SkPaint::Join::kBevel_Join, "connects outside edges")
+    .value("kLast", SkPaint::Join::kLast_Join,
+        "equivalent to the largest value for Join")
+    .value("kDefault", SkPaint::Join::kDefault_Join,
+        "equivalent to kMiter_Join")
+    .export_values();
+
 paint
     .def(py::init<>(), "Constructs SkPaint with default values.")
     .def(py::init<const SkColor4f&, SkColorSpace*>(),
@@ -169,8 +193,32 @@ py::class_<SkShader::GradientInfo>(shader, "GradientInfo")
     .def_readwrite("fTileMode", &SkShader::GradientInfo::fTileMode)
     .def_readwrite("fGradientFlags", &SkShader::GradientInfo::fGradientFlags)
     ;
-py::enum_<SkShader::GradientType>(shader, "GradientType");
-py::enum_<SkShader::Type>(shader, "Type");
+
+py::enum_<SkShader::GradientType>(shader, "GradientType")
+    .value("kNone", SkShader::GradientType::kNone_GradientType)
+    .value("kColor", SkShader::GradientType::kColor_GradientType)
+    .value("kLinear", SkShader::GradientType::kLinear_GradientType)
+    .value("kRadial", SkShader::GradientType::kRadial_GradientType)
+    .value("kSweep", SkShader::GradientType::kSweep_GradientType)
+    .value("kConical", SkShader::GradientType::kConical_GradientType)
+    .value("kLast", SkShader::GradientType::kLast_GradientType)
+    .export_values();
+
+py::enum_<SkShader::Type>(shader, "Type")
+    .value("kSkColorFilter", SkShader::Type::kSkColorFilter_Type)
+    .value("kSkDrawable", SkShader::Type::kSkDrawable_Type)
+    .value("kSkDrawLooper", SkShader::Type::kSkDrawLooper_Type)
+    .value("kSkImageFilter", SkShader::Type::kSkImageFilter_Type)
+    .value("kSkMaskFilter", SkShader::Type::kSkMaskFilter_Type)
+    .value("kSkPathEffect", SkShader::Type::kSkPathEffect_Type)
+    .value("kSkPixelRef", SkShader::Type::kSkPixelRef_Type)
+    .value("kSkUnused4", SkShader::Type::kSkUnused_Type4)
+    .value("kSkShaderBase", SkShader::Type::kSkShaderBase_Type)
+    .value("kSkUnused", SkShader::Type::kSkUnused_Type)
+    .value("kSkUnused2", SkShader::Type::kSkUnused_Type2)
+    // .value("kSkUnused3", SkShader::Type::kSkUnused_Type3)
+    .export_values();
+
 shader
     .def("isOpaque", &SkShader::isOpaque,
         "Returns true if the shader is guaranteed to produce only opaque "
