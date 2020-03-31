@@ -8,7 +8,6 @@ __version__ = '0.0.1'
 
 SOURCES = [
     'src/skia/main.cpp',
-    'src/skia/AutoCanvasRestore.cpp',
     'src/skia/Bitmap.cpp',
     'src/skia/BlendMode.cpp',
     'src/skia/Canvas.cpp',

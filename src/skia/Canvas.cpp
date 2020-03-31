@@ -4,6 +4,11 @@
 namespace py = pybind11;
 
 void initCanvas(py::module &m) {
+py::class_<SkAutoCanvasRestore>(m, "AutoCanvasRestore")
+    .def(py::init<SkCanvas*, bool>(), "Preserves SkCanvas::save() count.")
+    .def("restore", &SkAutoCanvasRestore::restore,
+        "Restores SkCanvas to saved state immediately.")
+    ;
 py::enum_<SkClipOp>(m, "ClipOp")
     .value("kDifference", SkClipOp::kDifference)
     .value("kIntersect", SkClipOp::kIntersect)

@@ -8,7 +8,6 @@ namespace py = pybind11;
 PYBIND11_DECLARE_HOLDER_TYPE(T, sk_sp<T>);
 
 // Declarations.
-void initAutoCanvasRestore(py::module &);
 void initBitmap(py::module &);
 void initBlendMode(py::module &);
 void initCanvas(py::module &);
@@ -65,7 +64,6 @@ PYBIND11_MODULE(skia, m) {
             TextBlobBuilder
     )docstring";
 
-    initAutoCanvasRestore(m);
     initBitmap(m);
     initBlendMode(m);
     initCanvas(m);
