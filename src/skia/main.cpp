@@ -5,8 +5,6 @@
 
 namespace py = pybind11;
 
-PYBIND11_DECLARE_HOLDER_TYPE(T, sk_sp<T>);
-
 // Declarations.
 void initBitmap(py::module &);
 void initBlendMode(py::module &);
@@ -34,34 +32,79 @@ void initVertices(py::module &);
 // Main entry point.
 PYBIND11_MODULE(skia, m) {
     m.doc() = R"docstring(
-        Pybind11 skia plugin
-        --------------------
+        skia
+        ----
+
+        Python Skia binding.
+
         .. currentmodule:: skia
+
         .. autosummary::
             :toctree: _generate
+
+            AlphaType
+            ApplyPerspectiveClip
             AutoCanvasRestore
+            BBoxHierarchy
             Bitmap
             BlendMode
+            BlendModeCoeff
             Canvas
-            Color
+            ClipOp
+            Color4f
+            ColorFilter
+            ColorInfo
             ColorSpace
+            ColorType
             Data
+            DeserialProcs
+            EncodedImageFormat
+            FilterQuality
             Font
+            FontArguments
+            FontHinting
+            FontMetrics
+            FontStyle
+            GrContext
+            IPoint
+            IRect
+            ISize
             Image
+            ImageFilter
             ImageInfo
+            M44
+            MaskFilter
             Matrix
             Paint
             Path
+            PathConvexityType
+            PathDirection
+            PathEffect
+            PathFillType
+            PathSegmentMask
+            PathVerb
             Picture
+            PictureRecorder
+            PixelGeometry
             Pixmap
             Point
+            Point3
+            RRect
+            RSXform
             Rect
             Region
-            RRect
+            Shader
             Size
             Surface
+            SurfaceCharacterization
+            SurfaceProps
             TextBlob
             TextBlobBuilder
+            TextEncoding
+            TileMode
+            Typeface
+            Vertices
+            YUVColorSpace
     )docstring";
 
     initBitmap(m);

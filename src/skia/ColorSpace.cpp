@@ -37,7 +37,7 @@ py::class_<sk_sp<SkColorSpace>>(m, "ColorSpace")
     .def("writeToMemory", [](const sk_sp<SkColorSpace>& cs, void* memory) {
         return cs->writeToMemory(memory);
     },
-        "If |memory| is nullptr, returns the size required to serialize.")
+        "If memory is nullptr, returns the size required to serialize.")
     .def("transferFn", [] (const sk_sp<SkColorSpace>& cs, float gabcdef[7]) {
         cs->transferFn(gabcdef);
     })

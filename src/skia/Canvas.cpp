@@ -4,7 +4,12 @@
 namespace py = pybind11;
 
 void initCanvas(py::module &m) {
-py::class_<SkAutoCanvasRestore>(m, "AutoCanvasRestore")
+py::class_<SkAutoCanvasRestore>(m, "AutoCanvasRestore", R"docstring(
+    Stack helper class calls SkCanvas::restoreToCount when SkAutoCanvasRestore
+    goes out of scope.
+
+    Use this to guarantee that the canvas is restored to a known state.
+    )docstring")
     .def(py::init<SkCanvas*, bool>(), "Preserves SkCanvas::save() count.")
     .def("restore", &SkAutoCanvasRestore::restore,
         "Restores SkCanvas to saved state immediately.")

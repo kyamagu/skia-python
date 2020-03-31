@@ -70,7 +70,15 @@ py::enum_<SkBlendMode>(m, "BlendMode")
     .value("kLastMode", SkBlendMode::kLastMode,
         "last valid value")
     .export_values();
-py::enum_<SkBlendModeCoeff>(m, "BlendModeCoeff")
+
+py::enum_<SkBlendModeCoeff>(m, "BlendModeCoeff", R"docstring(
+    For Porter-Duff SkBlendModes (those <= kLastCoeffMode), these coefficients
+    describe the blend equation used.
+
+    Coefficient-based blend modes specify an equation: ('dstCoeff' * dst +
+    'srcCoeff' * src), where the coefficient values are constants, functions of
+    the src or dst alpha, or functions of the src or dst color.
+    )docstring")
     .value("kZero", SkBlendModeCoeff::kZero,
         "0")
     .value("kOne", SkBlendModeCoeff::kOne,

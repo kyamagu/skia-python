@@ -158,7 +158,7 @@ extension = Extension(
 
 
 setup(
-    name='skia',
+    name='skia-python',
     version=__version__,
     author='Kota Yamaguchi',
     author_email='KotaYamaguchi1984@gmail.com',

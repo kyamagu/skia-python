@@ -100,7 +100,7 @@ bboxhierarchy
         "Populate results with the indices of bounding boxes intersecting "
         "that query.")
     .def("bytesUsed", &SkBBoxHierarchy::bytesUsed,
-        "Return approximate size in memory of *this.")
+        "Return approximate size in memory of this.")
     .def("unique", &SkBBoxHierarchy::unique,
         "May return true if the caller is the only owner.")
     .def("ref", &SkBBoxHierarchy::ref,
