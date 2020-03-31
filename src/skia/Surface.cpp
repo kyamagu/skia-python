@@ -13,10 +13,26 @@ template<typename T>
 using NumPy = py::array_t<T, py::array::c_style | py::array::forcecast>;
 
 void initSurface(py::module &m) {
-py::enum_<SkPixelGeometry>(m, "PixelGeometry");
+py::enum_<SkPixelGeometry>(m, "PixelGeometry")
+    .value("kUnknown", SkPixelGeometry::kUnknown_SkPixelGeometry)
+    .value("kRGB_H", SkPixelGeometry::kRGB_H_SkPixelGeometry)
+    .value("kBGR_H", SkPixelGeometry::kBGR_H_SkPixelGeometry)
+    .value("kRGB_V", SkPixelGeometry::kRGB_V_SkPixelGeometry)
+    .value("kBGR_V", SkPixelGeometry::kBGR_V_SkPixelGeometry)
+    .export_values();
+
 py::class_<SkSurfaceProps> surfaceprops(m, "SurfaceProps");
-py::enum_<SkSurfaceProps::Flags>(surfaceprops, "Flags");
-py::enum_<SkSurfaceProps::InitType>(surfaceprops, "InitType");
+
+py::enum_<SkSurfaceProps::Flags>(surfaceprops, "Flags")
+    .value("kUseDeviceIndependentFonts",
+        SkSurfaceProps::Flags::kUseDeviceIndependentFonts_Flag)
+    .export_values();
+
+py::enum_<SkSurfaceProps::InitType>(surfaceprops, "InitType")
+    .value("kLegacyFontHost",
+        SkSurfaceProps::InitType::kLegacyFontHost_InitType)
+    .export_values();
+
 surfaceprops
     .def(py::init<uint32_t, SkPixelGeometry>())
     .def(py::init<SkSurfaceProps::InitType>())
@@ -31,6 +47,7 @@ surfaceprops
     .def_readonly_static("kUseDistanceFieldFonts_Flag",
         &SkSurfaceProps::kUseDistanceFieldFonts_Flag)
     ;
+
 py::class_<SkSurfaceCharacterization>(m, "SurfaceCharacterization")
     .def(py::init())
     .def("createResized", &SkSurfaceCharacterization::createResized)
@@ -55,14 +72,48 @@ py::class_<SkSurfaceCharacterization>(m, "SurfaceCharacterization")
     .def("refColorSpace", &SkSurfaceCharacterization::refColorSpace)
     .def("surfaceProps", &SkSurfaceCharacterization::surfaceProps)
     ;
+
 py::class_<SkSurface, sk_sp<SkSurface>> surface(
     m, "Surface", py::buffer_protocol());
+
 py::class_<SkSurface::AsyncReadResult>(surface, "AsyncReadResult");
-py::enum_<SkSurface::ContentChangeMode>(surface, "ContentChangeMode");
-py::enum_<SkSurface::BackendHandleAccess>(surface, "BackendHandleAccess");
-py::enum_<SkSurface::RescaleGamma>(surface, "RescaleGamma");
-py::enum_<SkSurface::BackendSurfaceAccess>(surface, "BackendSurfaceAccess");
-py::enum_<SkSurface::FlushFlags>(surface, "FlushFlags");
+
+py::enum_<SkSurface::ContentChangeMode>(surface, "ContentChangeMode")
+    .value("kDiscard", SkSurface::ContentChangeMode::kDiscard_ContentChangeMode,
+        "discards surface on change")
+    .value("kRetain", SkSurface::ContentChangeMode::kRetain_ContentChangeMode,
+        "preserves surface on change")
+    .export_values();
+
+py::enum_<SkSurface::BackendHandleAccess>(surface, "BackendHandleAccess")
+    .value("kFlushRead",
+        SkSurface::BackendHandleAccess::kFlushRead_BackendHandleAccess,
+        "back-end object is readable")
+    .value("kFlushWrite",
+        SkSurface::BackendHandleAccess::kFlushWrite_BackendHandleAccess,
+        "back-end object is writable")
+    .value("kDiscardWrite",
+        SkSurface::BackendHandleAccess::kDiscardWrite_BackendHandleAccess,
+        "back-end object must be overwritten")
+    .export_values();
+
+py::enum_<SkSurface::RescaleGamma>(surface, "RescaleGamma")
+    .value("kSrc", SkSurface::RescaleGamma::kSrc)
+    .value("kLinear", SkSurface::RescaleGamma::kLinear)
+    .export_values();
+
+py::enum_<SkSurface::BackendSurfaceAccess>(surface, "BackendSurfaceAccess")
+    .value("kNoAccess", SkSurface::BackendSurfaceAccess::kNoAccess,
+        "back-end object will not be used by client")
+    .value("kPresent", SkSurface::BackendSurfaceAccess::kPresent,
+        "back-end surface will be used for presenting to screen")
+    .export_values();
+
+py::enum_<SkSurface::FlushFlags>(surface, "FlushFlags")
+    .value("kNone_FlushFlags", SkSurface::FlushFlags::kNone_FlushFlags)
+    .value("kSyncCpu_FlushFlag", SkSurface::FlushFlags::kSyncCpu_FlushFlag)
+    .export_values();
+
 surface
     .def(py::init(&SkSurface::MakeRasterN32Premul),
         py::arg("width"), py::arg("height"), py::arg("surfaceProps") = nullptr)
