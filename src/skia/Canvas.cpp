@@ -4,37 +4,70 @@
 namespace py = pybind11;
 
 void initCanvas(py::module &m) {
-py::enum_<SkClipOp>(m, "ClipOp");
-
+py::enum_<SkClipOp>(m, "ClipOp")
+    .value("kDifference", SkClipOp::kDifference)
+    .value("kIntersect", SkClipOp::kIntersect)
+    .value("kExtraEnumNeedInternallyPleaseIgnoreWillGoAway2",
+        SkClipOp::kExtraEnumNeedInternallyPleaseIgnoreWillGoAway2)
+    .value("kExtraEnumNeedInternallyPleaseIgnoreWillGoAway3",
+        SkClipOp::kExtraEnumNeedInternallyPleaseIgnoreWillGoAway3)
+    .value("kExtraEnumNeedInternallyPleaseIgnoreWillGoAway4",
+        SkClipOp::kExtraEnumNeedInternallyPleaseIgnoreWillGoAway4)
+    .value("kExtraEnumNeedInternallyPleaseIgnoreWillGoAway5",
+        SkClipOp::kExtraEnumNeedInternallyPleaseIgnoreWillGoAway5)
+    .value("kMax_EnumValue", SkClipOp::kMax_EnumValue)
+    .export_values();
 py::class_<SkCanvas> canvas(m, "Canvas");
-py::enum_<SkCanvas::SrcRectConstraint>(canvas, "SrcRectConstraint");
-    // .value("kStrict_SrcRectConstraint",
-    //     SkCanvas::SrcRectConstraint::kStrict_SrcRectConstraint)
-    // .value("kFast_SrcRectConstraint",
-    //     SkCanvas::SrcRectConstraint::kFast_SrcRectConstraint)
-    // .export_values();
-py::enum_<SkCanvas::PointMode>(canvas, "PointMode");
-    // .value("kPoints_PointMode", SkCanvas::PointMode::kPoints_PointMode)
-    // .value("kLines_PointMode", SkCanvas::PointMode::kLines_PointMode)
-    // .value("kPolygon_PointMode", SkCanvas::PointMode::kPolygon_PointMode)
-    // .export_values();
-py::enum_<SkCanvas::QuadAAFlags>(canvas, "QuadAAFlags");
-    // .value("kLeft_QuadAAFlag", SkCanvas::QuadAAFlags::kLeft_QuadAAFlag)
-    // .value("kTop_QuadAAFlag", SkCanvas::QuadAAFlags::kTop_QuadAAFlag)
-    // .value("kRight_QuadAAFlag", SkCanvas::QuadAAFlags::kRight_QuadAAFlag)
-    // .value("kBottom_QuadAAFlag", SkCanvas::QuadAAFlags::kBottom_QuadAAFlag)
-    // .value("kNone_QuadAAFlags", SkCanvas::QuadAAFlags::kNone_QuadAAFlags)
-    // .value("kAll_QuadAAFlags", SkCanvas::QuadAAFlags::kAll_QuadAAFlags)
-    // .export_values();
-// py::class_<SkCanvas::SaveLayerRec> savelayerrec(canvas, "SaveLayerRec");
-// savelayerrec
-//     .def_readwrite("fBounds", &SkCanvas::Lattice::fBounds)
-//     .def_readwrite("fPaint", &SkCanvas::Lattice::fPaint)
-//     .def_readwrite("fBackdrop", &SkCanvas::Lattice::fBackdrop)
-//     .def_readwrite("fClipMask", &SkCanvas::Lattice::fClipMask)
-//     .def_readwrite("fClipMatrix", &SkCanvas::Lattice::fClipMatrix)
-//     .def_readwrite("fSaveLayerFlags", &SkCanvas::Lattice::fSaveLayerFlags)
-//     ;
+py::enum_<SkCanvas::SrcRectConstraint>(canvas, "SrcRectConstraint")
+    .value("kStrict", SkCanvas::SrcRectConstraint::kStrict_SrcRectConstraint)
+    .value("kFast", SkCanvas::SrcRectConstraint::kFast_SrcRectConstraint)
+    .export_values();
+py::enum_<SkCanvas::PointMode>(canvas, "PointMode")
+    .value("kPoints", SkCanvas::PointMode::kPoints_PointMode)
+    .value("kLines", SkCanvas::PointMode::kLines_PointMode)
+    .value("kPolygon", SkCanvas::PointMode::kPolygon_PointMode)
+    .export_values();
+py::enum_<SkCanvas::QuadAAFlags>(canvas, "QuadAAFlags")
+    .value("kLeft", SkCanvas::QuadAAFlags::kLeft_QuadAAFlag)
+    .value("kTop", SkCanvas::QuadAAFlags::kTop_QuadAAFlag)
+    .value("kRight", SkCanvas::QuadAAFlags::kRight_QuadAAFlag)
+    .value("kBottom", SkCanvas::QuadAAFlags::kBottom_QuadAAFlag)
+    .value("kNone", SkCanvas::QuadAAFlags::kNone_QuadAAFlags)
+    .value("kAll", SkCanvas::QuadAAFlags::kAll_QuadAAFlags)
+    .export_values();
+py::class_<SkCanvas::SaveLayerRec> savelayerrec(canvas, "SaveLayerRec");
+savelayerrec
+    .def(py::init(),
+        "Sets fBounds, fPaint, and fBackdrop to nullptr.")
+    .def(py::init<const SkRect*, const SkPaint*, SkCanvas::SaveLayerFlags>(),
+        "Sets fBounds, fPaint, and fSaveLayerFlags; sets fBackdrop to nullptr.")
+    .def(py::init<const SkRect*, const SkPaint*, const SkImageFilter*,
+        SkCanvas::SaveLayerFlags>(),
+        "Sets fBounds, fPaint, fBackdrop, and fSaveLayerFlags.")
+    .def(py::init<const SkRect*, const SkPaint*, const SkImageFilter*,
+        const SkImage*, const SkMatrix*, SkCanvas::SaveLayerFlags>(),
+        "Experimental.")
+    .def_readwrite("fBounds", &SkCanvas::SaveLayerRec::fBounds,
+        "hints at layer size limit",
+        py::return_value_policy::reference)
+    .def_readwrite("fPaint", &SkCanvas::SaveLayerRec::fPaint,
+        "modifies overlay",
+        py::return_value_policy::reference)
+    .def_readwrite("fBackdrop", &SkCanvas::SaveLayerRec::fBackdrop,
+        "If not null, this triggers the same initialization behavior as "
+        "setting kInitWithPrevious_SaveLayerFlag on fSaveLayerFlags: the "
+        "current layer is copied into the new layer, rather than initializing "
+        "the new layer with transparent-black.",
+        py::return_value_policy::reference)
+    .def_readwrite("fClipMask", &SkCanvas::SaveLayerRec::fClipMask,
+        "clips layer with mask alpha",
+        py::return_value_policy::reference)
+    .def_readwrite("fClipMatrix", &SkCanvas::SaveLayerRec::fClipMatrix,
+        "transforms mask alpha used to clip",
+        py::return_value_policy::reference)
+    .def_readwrite("fSaveLayerFlags", &SkCanvas::SaveLayerRec::fSaveLayerFlags,
+        "preserves LCD text, creates with prior layer contents")
+    ;
 py::class_<SkCanvas::Lattice> lattice(canvas, "Lattice");
 lattice
     .def_readwrite("fXDivs", &SkCanvas::Lattice::fXDivs)
@@ -45,12 +78,11 @@ lattice
     .def_readwrite("fBounds", &SkCanvas::Lattice::fBounds)
     .def_readwrite("fColors", &SkCanvas::Lattice::fColors)
     ;
-py::enum_<SkCanvas::Lattice::RectType>(lattice, "RectType");
-    // .value("kDefault", SkCanvas::Lattice::RectType::kDefault)
-    // .value("kTransparent", SkCanvas::Lattice::RectType::kTransparent)
-    // .value("kFixedColor", SkCanvas::Lattice::RectType::kFixedColor)
-    // .export_values();
-
+py::enum_<SkCanvas::Lattice::RectType>(lattice, "RectType")
+    .value("kDefault", SkCanvas::Lattice::RectType::kDefault)
+    .value("kTransparent", SkCanvas::Lattice::RectType::kTransparent)
+    .value("kFixedColor", SkCanvas::Lattice::RectType::kFixedColor)
+    .export_values();
 canvas.def(py::init<>(),
         "Creates an empty SkCanvas with no backing device or pixels, with a "
         "width and height of zero.")
