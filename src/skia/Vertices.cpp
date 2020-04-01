@@ -5,8 +5,14 @@ namespace py = pybind11;
 
 PYBIND11_DECLARE_HOLDER_TYPE(T, sk_sp<T>);
 
+template<>
+struct py::detail::has_operator_delete<SkVertices, void> : std::false_type {};
+
 void initVertices(py::module &m) {
-py::class_<SkVertices, sk_sp<SkVertices>> vertices(m, "Vertices");
+py::class_<SkVertices, sk_sp<SkVertices>> vertices(m, "Vertices", R"docstring(
+    An immutable set of vertex data that can be used with SkCanvas::drawVertices.
+    )docstring");
+
 vertices
     .def("uniqueID", &SkVertices::uniqueID)
     .def("bounds", &SkVertices::bounds)
@@ -32,6 +38,7 @@ vertices
         "Recreate a vertices from a buffer previously created by calling "
         "encode().")
     ;
+
 py::enum_<SkVertices::VertexMode>(vertices, "VertexMode")
     .value("kTriangles_VertexMode",
         SkVertices::VertexMode::kTriangles_VertexMode)

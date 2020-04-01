@@ -4,7 +4,32 @@
 namespace py = pybind11;
 
 void initBitmap(py::module &m) {
-py::class_<SkBitmap>(m, "Bitmap", py::buffer_protocol())
+py::class_<SkBitmap>(m, "Bitmap", py::buffer_protocol(), R"docstring(
+        SkBitmap describes a two-dimensional raster pixel array.
+
+        SkBitmap is built on SkImageInfo, containing integer width and height,
+        SkColorType and SkAlphaType describing the pixel format, and
+        SkColorSpace describing the range of colors. SkBitmap points to
+        SkPixelRef, which describes the physical array of pixels. SkImageInfo
+        bounds may be located anywhere fully inside SkPixelRef bounds.
+
+        SkBitmap can be drawn using SkCanvas. SkBitmap can be a drawing
+        destination for SkCanvas draw member functions. SkBitmap flexibility
+        as a pixel container limits some optimizations available to the target
+        platform.
+
+        If pixel array is primarily read-only, use SkImage for better
+        performance. If pixel array is primarily written to, use SkSurface for
+        better performance.
+
+        Declaring SkBitmap const prevents altering SkImageInfo: the SkBitmap
+        height, width, and so on cannot change. It does not affect SkPixelRef:
+        a caller may write its pixels. Declaring SkBitmap const affects
+        SkBitmap configuration, not its contents.
+
+        SkBitmap is not thread safe. Each thread must have its own copy of
+        SkBitmap fields, although threads may share the underlying pixel array.
+    )docstring")
     .def_buffer([](SkBitmap &d) -> py::buffer_info {
         return py::buffer_info(
             const_cast<void*>(d.getPixels()),

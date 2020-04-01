@@ -3,12 +3,73 @@
 
 namespace py = pybind11;
 
+// Static variables must be declared.
+constexpr int SkMatrix::kMScaleX;
+constexpr int SkMatrix::kMSkewX;
+constexpr int SkMatrix::kMTransX;
+constexpr int SkMatrix::kMSkewY;
+constexpr int SkMatrix::kMScaleY;
+constexpr int SkMatrix::kMTransY;
+constexpr int SkMatrix::kMPersp0;
+constexpr int SkMatrix::kMPersp1;
+constexpr int SkMatrix::kMPersp2;
+constexpr int SkMatrix::kAScaleX;
+constexpr int SkMatrix::kASkewY;
+constexpr int SkMatrix::kASkewX;
+constexpr int SkMatrix::kAScaleY;
+constexpr int SkMatrix::kATransX;
+constexpr int SkMatrix::kATransY;
+
 void initMatrix(py::module &m) {
-py::enum_<SkApplyPerspectiveClip>(m, "ApplyPerspectiveClip");
+py::enum_<SkApplyPerspectiveClip>(m, "ApplyPerspectiveClip")
+    .value("kNo", SkApplyPerspectiveClip::kNo,
+        "Don't pre-clip the geometry before applying the (perspective) matrix.")
+    .value("kYes", SkApplyPerspectiveClip::kYes,
+        "Do pre-clip the geometry before applying the (perspective) matrix.")
+    .export_values();
+
 // Matrix
-py::class_<SkMatrix> matrix(m, "Matrix");
-py::enum_<SkMatrix::ScaleToFit>(matrix, "ScaleToFit");
-py::enum_<SkMatrix::TypeMask>(matrix, "TypeMask");
+py::class_<SkMatrix> matrix(m, "Matrix", R"docstring(
+    SkMatrix holds a 3x3 matrix for transforming coordinates.
+
+    This allows mapping SkPoint and vectors with translation, scaling, skewing,
+    rotation, and perspective.
+
+    SkMatrix elements are in row major order. SkMatrix does not have a
+    constructor, so it must be explicitly initialized. setIdentity() initializes
+    SkMatrix so it has no effect. setTranslate(), setScale(), setSkew(),
+    setRotate(), set9 and setAll() initializes all SkMatrix elements with the
+    corresponding mapping.
+
+    SkMatrix includes a hidden variable that classifies the type of matrix to
+    improve performance. SkMatrix is not thread safe unless getType() is called
+    first.
+    )docstring");
+
+py::enum_<SkMatrix::ScaleToFit>(matrix, "ScaleToFit")
+    .value("kFill", SkMatrix::ScaleToFit::kFill_ScaleToFit,
+        "scales in x and y to fill destination SkRect")
+    .value("kStart", SkMatrix::ScaleToFit::kStart_ScaleToFit,
+        "scales and aligns to left and top")
+    .value("kCenter", SkMatrix::ScaleToFit::kCenter_ScaleToFit,
+        "scales and aligns to center")
+    .value("kEnd", SkMatrix::ScaleToFit::kEnd_ScaleToFit,
+        "scales and aligns to right and bottom")
+    .export_values();
+
+py::enum_<SkMatrix::TypeMask>(matrix, "TypeMask")
+    .value("kIdentity_Mask", SkMatrix::TypeMask::kIdentity_Mask,
+        "identity SkMatrix; all bits clear")
+    .value("kTranslate_Mask", SkMatrix::TypeMask::kTranslate_Mask,
+        "translation SkMatrix")
+    .value("kScale_Mask", SkMatrix::TypeMask::kScale_Mask,
+        "scale SkMatrix")
+    .value("kAffine_Mask", SkMatrix::TypeMask::kAffine_Mask,
+        "skew or rotate SkMatrix")
+    .value("kPerspective_Mask", SkMatrix::TypeMask::kPerspective_Mask,
+        "perspective SkMatrix")
+    .export_values();
+
 matrix
     .def(py::init<>(), "Creates an identity SkMatrix.")
     .def("getType", &SkMatrix::getType,
@@ -321,10 +382,21 @@ matrix
     .def_readonly_static("kATransX", &SkMatrix::kATransX)
     .def_readonly_static("kATransY", &SkMatrix::kATransY)
     ;
+
 // M44
-py::class_<SkM44>(m, "M44")
+py::class_<SkM44>(m, "M44", R"docstring(
+    4x4 matrix used by SkCanvas and other parts of Skia.
+
+    Skia assumes a right-handed coordinate system: +X goes to the right +Y goes
+    down +Z goes into the screen (away from the viewer)
+    )docstring")
     ;
+
 // RSXform
-py::class_<SkRSXform>(m, "RSXform")
+py::class_<SkRSXform>(m, "RSXform", R"docstring(
+    A compressed form of a rotation+scale matrix.
+
+    [ fSCos -fSSin fTx ] [ fSSin fSCos fTy ] [ 0 0 1 ]
+    )docstring")
     ;
 }

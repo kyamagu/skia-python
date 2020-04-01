@@ -6,11 +6,72 @@ namespace py = pybind11;
 PYBIND11_DECLARE_HOLDER_TYPE(T, sk_sp<T>);
 
 void initImage(py::module &m) {
-py::enum_<SkFilterQuality>(m, "FilterQuality");
-py::enum_<SkTileMode>(m, "TileMode");
-py::enum_<SkEncodedImageFormat>(m, "EncodedImageFormat");
+py::enum_<SkFilterQuality>(m, "FilterQuality", R"docstring(
+    Controls how much filtering to be done when scaling/transforming complex
+    colors e.g. image.
+    )docstring")
+    .value("kNone", SkFilterQuality::kNone_SkFilterQuality,
+        "fastest but lowest quality, typically nearest-neighbor")
+    .value("kLow", SkFilterQuality::kLow_SkFilterQuality,
+        "typically bilerp")
+    .value("kMedium", SkFilterQuality::kMedium_SkFilterQuality,
+        "typically bilerp + mipmaps for down-scaling")
+    .value("kHigh", SkFilterQuality::kHigh_SkFilterQuality,
+        "slowest but highest quality, typically bicubic or better")
+    .value("kLast", SkFilterQuality::kLast_SkFilterQuality)
+    .export_values();
 
-py::class_<SkImage, sk_sp<SkImage>> image(m, "Image");
+py::enum_<SkTileMode>(m, "TileMode")
+    .value("kClamp", SkTileMode::kClamp,
+        "Replicate the edge color if the shader draws outside of its original "
+        "bounds.")
+    .value("kRepeat", SkTileMode::kRepeat,
+        "Repeat the shader's image horizontally and vertically.")
+    .value("kMirror", SkTileMode::kMirror,
+        "Repeat the shader's image horizontally and vertically, alternating "
+        "mirror images so that adjacent images always seam.")
+    .value("kDecal", SkTileMode::kDecal,
+        "Only draw within the original domain, return transparent-black "
+        "everywhere else.")
+    .value("kLastTileMode", SkTileMode::kLastTileMode,
+        "")
+    .export_values();
+
+py::enum_<SkEncodedImageFormat>(m, "EncodedImageFormat", R"docstring(
+    Enum describing format of encoded data.
+    )docstring")
+    .value("kBMP", SkEncodedImageFormat::kBMP)
+    .value("kGIF", SkEncodedImageFormat::kGIF)
+    .value("kICO", SkEncodedImageFormat::kICO)
+    .value("kJPEG", SkEncodedImageFormat::kJPEG)
+    .value("kPNG", SkEncodedImageFormat::kPNG)
+    .value("kWBMP", SkEncodedImageFormat::kWBMP)
+    .value("kWEBP", SkEncodedImageFormat::kWEBP)
+    .value("kPKM", SkEncodedImageFormat::kPKM)
+    .value("kKTX", SkEncodedImageFormat::kKTX)
+    .value("kASTC", SkEncodedImageFormat::kASTC)
+    .value("kDNG", SkEncodedImageFormat::kDNG)
+    .value("kHEIF", SkEncodedImageFormat::kHEIF)
+    .export_values();
+
+py::class_<SkImage, sk_sp<SkImage>> image(m, "Image", R"docstring(
+    SkImage describes a two dimensional array of pixels to draw.
+
+    The pixels may be decoded in a raster bitmap, encoded in a SkPicture or
+    compressed data stream, or located in GPU memory as a GPU texture.
+
+    SkImage cannot be modified after it is created. SkImage may allocate
+    additional storage as needed; for instance, an encoded SkImage may decode
+    when drawn.
+
+    SkImage width and height are greater than zero. Creating an SkImage with
+    zero width or height returns SkImage equal to nullptr.
+
+    SkImage may be created from SkBitmap, SkPixmap, SkSurface, SkPicture,
+    encoded streams, GPU texture, YUV_ColorSpace data, or hardware buffer.
+    Encoded streams supported include BMP, GIF, HEIF, ICO, JPEG, PNG, WBMP,
+    WebP. Supported encoding details vary with platform.
+    )docstring");
 
 py::enum_<SkImage::CompressionType>(image, "CompressionType")
     .value("kNone", SkImage::CompressionType::kNone)
@@ -56,20 +117,17 @@ image
     .def("isOpaque", &SkImage::isOpaque,
         "Returns true if pixels ignore their alpha value and are treated as "
         "fully opaque.")
-    // .def("makeShader",
-    //     (sk_sp<SkShader> (SkImage::*)(SkTileMode, SkTileMode,
-    //         const SkMatrix*) const) &SkImage::makeShader,
-    //     "Creates SkShader from SkImage.")
-    // .def("makeShader",
-    //     (sk_sp<SkShader> (SkImage::*)(SkTileMode, SkTileMode,
-    //         const SkMatrix&) const) &SkImage::makeShader)
-    // .def("makeShader",
-    //     (sk_sp<SkShader> (SkImage::*)(const SkMatrix*) const)
-    //         &SkImage::makeShader,
-    //     "Creates SkShader from SkImage.")
-    // .def("makeShader",
-    //     (sk_sp<SkShader> (SkImage::*)(const SkMatrix&) const)
-    //         &SkImage::makeShader)
+    .def("makeShader",
+        py::overload_cast<SkTileMode, SkTileMode, const SkMatrix*>(
+            &SkImage::makeShader, py::const_),
+        "Creates SkShader from SkImage.")
+    .def("makeShader",
+        py::overload_cast<SkTileMode, SkTileMode, const SkMatrix&>(
+            &SkImage::makeShader, py::const_))
+    .def("makeShader",
+        py::overload_cast<const SkMatrix*>(&SkImage::makeShader, py::const_))
+    .def("makeShader",
+        py::overload_cast<const SkMatrix&>(&SkImage::makeShader, py::const_))
     .def("peekPixels", &SkImage::peekPixels,
         "Copies SkImage pixel address, row bytes, and SkImageInfo to pixmap, "
         "if address is available, and returns true.")

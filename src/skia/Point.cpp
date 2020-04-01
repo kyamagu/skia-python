@@ -6,16 +6,19 @@ namespace py = pybind11;
 
 void initPoint(py::module &m) {
 // IPoint
-py::class_<SkIPoint>(m, "IPoint")
+py::class_<SkIPoint>(m, "IPoint", R"docstring(
+    SkIPoint holds two 32-bit integer coordinates.
+    )docstring")
+    .def(py::init(&SkIPoint::Make), "Sets fX to x, fY to y.")
     .def("x", &SkIPoint::x, "Returns x-axis value of SkIPoint.")
     .def("y", &SkIPoint::y, "Returns y-axis value of SkIPoint.")
     .def("isZero", &SkIPoint::isZero,
         "Returns true if fX and fY are both zero.")
     .def("set", &SkIPoint::set, "Sets fX to x and fY to y.")
     .def(-py::self, "Returns SkIPoint changing the signs of fX and fY.")
-    .def("__iadd__", &SkIPoint::operator+=, "Offsets SkIPoint by ivector v.",
-        py::is_operator())
-    .def("__isub__", &SkIPoint::operator-=,
+    .def("__iadd__", [] (SkIPoint& p, const SkIPoint& v) { p += v; return p; },
+        "Offsets SkIPoint by ivector v.", py::is_operator())
+    .def("__isub__", [] (SkIPoint& p, const SkIPoint& v) { p -= v; return p; },
         "Subtracts ivector v from SkIPoint.", py::is_operator())
     .def("equals", &SkIPoint::equals,
         "Returns true if SkIPoint is equivalent to SkIPoint constructed from "
@@ -27,19 +30,17 @@ py::class_<SkIPoint>(m, "IPoint")
     .def(py::self != py::self, "Returns true if a is not equivalent to b.")
     .def(py::self - py::self,
         "Returns ivector from b to a; computed as (a.fX - b.fX, a.fY - b.fY).")
-    .def("__add__", [](const SkIPoint& a, const SkIVector& b) {
-        return a + b;
-    },
-    "Returns SkIPoint resulting from SkIPoint a offset by ivector b, "
-    "computed as: (a.fX + b.fX, a.fY + b.fY).", py::is_operator())
-    .def("__radd__", [](const SkIPoint& a, const SkIVector& b) {
-        return b + a;
-    },
-    "Returns SkIPoint resulting from SkIPoint a offset by ivector b, "
-    "computed as: (b.fX + a.fX, b.fY + a.fY).", py::is_operator())
+    .def(py::self + py::self,
+        "Returns SkIPoint resulting from SkIPoint a offset by ivector b, "
+        "computed as: (a.fX + b.fX, a.fY + b.fY)."
+        )
     ;
+
 // Point
-py::class_<SkPoint>(m, "Point")
+py::class_<SkPoint>(m, "Point", R"docstring(
+    SkPoint holds two 32-bit floating point coordinates.
+    )docstring")
+    .def(py::init(&SkPoint::Make), "Sets fX to x, fY to y.")
     .def("x", &SkPoint::x, "Returns x-axis value of SkPoint or vector.")
     .def("y", &SkPoint::y, "Returns y-axis value of SkPoint or vector.")
     .def("isZero", &SkPoint::isZero,
@@ -78,10 +79,10 @@ py::class_<SkPoint>(m, "Point")
         "Scales SkPoint in place by scale.")
     .def("negate", &SkPoint::negate, "Changes the sign of fX and fY.")
     .def(-py::self, "Returns SkPoint changing the signs of fX and fY.")
-    .def("__iadd__", &SkPoint::operator+=, "Adds vector v to SkPoint.",
-        py::is_operator())
-    .def("__isub__", &SkPoint::operator-=, "Subtracts vector v from SkPoint.",
-        py::is_operator())
+    .def("__iadd__", [](SkPoint& p, const SkPoint& v) { p += v; return p; },
+        "Adds vector v to SkPoint.")
+    .def("__isub__", [](SkPoint& p, const SkPoint& v) { p -= v; return p; },
+        "Subtracts vector v from SkPoint.")
     .def(py::self * SkScalar(), "Returns SkPoint multiplied by scale.")
     .def(py::self *= SkScalar(), "Multiplies SkPoint by scale.")
     .def("isFinite", &SkPoint::isFinite,
@@ -118,19 +119,13 @@ py::class_<SkPoint>(m, "Point")
     .def(py::self != py::self, "Returns true if a is not equivalent to b.")
     .def(py::self - py::self,
         "Returns vector from b to a; computed as (a.fX - b.fX, a.fY - b.fY).")
-    .def("__add__", [](const SkPoint& a, const SkVector& b) {
-        return a + b;
-    },
-    "Returns SkPoint resulting from SkPoint a offset by vector b, "
-    "computed as: (a.fX + b.fX, a.fY + b.fY).", py::is_operator())
-    .def("__radd__", [](const SkPoint& a, const SkVector& b) {
-        return b + a;
-    },
-    "Returns SkPoint resulting from SkPoint a offset by vector b, "
-    "computed as: (b.fX + a.fX, b.fY + a.fY).", py::is_operator())
+    .def(py::self + py::self,
+        "Returns SkPoint resulting from SkPoint a offset by vector b, "
+        "computed as: (a.fX + b.fX, a.fY + b.fY).")
     ;
 // Point3
 py::class_<SkPoint3>(m, "Point3")
+    .def(py::init(&SkPoint3::Make))
     .def("x", &SkPoint3::x)
     .def("y", &SkPoint3::y)
     .def("z", &SkPoint3::z)
@@ -147,9 +142,9 @@ py::class_<SkPoint3>(m, "Point3")
     .def(-py::self,
         "Return a new point whose X, Y and Z coordinates are the negative of "
         "the original point's.")
-    .def("__iadd__", &SkPoint3::operator+=,
+    .def("__iadd__", [] (SkPoint3& p, const SkPoint3& v) { p += v; return p; },
         "Add v's coordinates to the point's.", py::is_operator())
-    .def("__isub__", &SkPoint3::operator-=,
+    .def("__isub__", [] (SkPoint3& p, const SkPoint3& v) { p -= v; return p; },
         "Subtract v's coordinates from the point's.", py::is_operator())
     .def("isFinite", &SkPoint3::isFinite,
         "Returns true if fX, fY, and fZ are measurable values.")

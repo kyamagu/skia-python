@@ -1,5 +1,5 @@
-import pytest
 import skia
+import pytest
 
 
 def draw(canvas):
@@ -23,10 +23,17 @@ def draw(canvas):
     canvas.drawPath(path, paint)
 
 
-def test_skia():
-    surface = skia.Surface(256, 256)
-    canvas = surface.getCanvas()
-    draw(canvas)
-    image = surface.makeImageSnapshot()
-    data = image.encodeToData()
-    encoded = bytes(data)
+# def test_skia():
+#     surface = skia.Surface(256, 256)
+#     canvas = surface.getCanvas()
+#     draw(canvas)
+#     image = surface.makeImageSnapshot()
+#     data = image.encodeToData()
+#     encoded = bytes(data)
+
+
+# def test_numpy():
+#     import numpy as np
+#     array = np.zeros((240, 320, 4), dtype=np.uint8)
+#     surface = skia.Surface(array)
+#     draw(surface.getCanvas())

@@ -3,7 +3,7 @@ Python binding to [Skia Graphics Library](https://skia.org/).
 
 - Binding based on [pybind11](https://github.com/pybind/pybind11).
 
-## Build
+## Installation
 
 First, clone the repo.
 
@@ -12,10 +12,27 @@ git clone --recursive https://github.com/kyamagu/skia-python.git
 cd skia-python
 ```
 
-### manylinux2010
+### Linux
 
-This is a CentOS 6 environment. Other linux distributions do not need some of
-the following steps.
+Prerequisites:
+
+- Python 2.7 (build time only)
+- GLIBC >= 2.17
+- fontconfig >= 2.10.93
+- OpenGL
+
+
+Install dependencies:
+
+```bash
+apt-get install -y libfontconfig1-dev libgl-dev
+```
+
+or,
+
+```bash
+yum install -y fontconfig-devel mesa-libGL-devel
+```
 
 Set up `PATH` to the `depot_tools`. Note the build tools require relatively new
 glibc and python 2.7.
@@ -24,52 +41,25 @@ glibc and python 2.7.
 export PATH="$PWD/depot_tools:$PATH"
 ```
 
-Install compatible `gn` binary.
-
-```bash
-export CC=gcc
-export CXX=g++
-export AR=gcc
-export LDFLAGS=-lrt
-
-git clone https://gn.googlesource.com/gn
-cd gn
-python build/gen.py
-ninja -C out
-cp -f out/gn ../skia/bin/gn
-cd ..
-```
-
-Install `libfreetype2` and `fontcofig` that works with old glibc.
-
-```bash
-yum install freetype-devel expat-devel
-curl -L -O https://www.freedesktop.org/software/fontconfig/release/fontconfig-2.10.93.tar.bz2
-tar xjf fontconfig-2.10.93.tar.bz2
-cd fontconfig-2.10.93
-./configure --prefix=/usr \
-            --sysconfdir=/etc \
-            --localstatedir=/var \
-            --docdir=/usr/share/doc/fontconfig-2.10.93 \
-            --disable-docs \
-            --disable-static &&
-make install
-cd ..
-```
-
-Then, build skia library.
+Then, build skia library. At this point, `python` executable should be python 2.
 
 ```bash
 cd skia
+python2 tools/git-sync-deps
 bin/gn gen out/Release --args='is_official_build=false is_debug=false extra_cflags_cc=["-frtti"] extra_ldflags=["-lrt"]'
 ninja -C out/Release skia skia.h
 cd ..
 ```
 
-Finally, build skia python binding.
+For detailed Skia build instructions, check [the official page](https://skia.org/).
+
+Finally, build and install skia python binding. At this point, `python` should
+be set to the desired version.
 
 ```bash
-python setup.py build
+export SKIA_PATH=$PWD/skia
+python -m pip install pybind11
+python setup.py install
 ```
 
 ### macOS
@@ -80,17 +70,57 @@ Set up `PATH` to the `depot_tools`.
 export PATH="$PWD/depot_tools:$PATH"
 ```
 
-Then, build skia library.
+Then, build skia library. At this point, `python` executable should be python 2.
 
 ```bash
 cd skia
+python2 tools/git-sync-deps
 bin/gn gen out/Release --args='is_official_build=false is_debug=false extra_cflags_cc=["-frtti"]'
 ninja -C out/Release skia skia.h
 cd ..
 ```
 
-Finally, build skia python binding.
+For detailed Skia build instructions, check [the official page](https://skia.org/).
+
+Finally, build and install skia python binding. At this point, `python` should
+be set to the desired version.
 
 ```bash
-python setup.py build
+export SKIA_PATH=$PWD/skia
+python -m pip install pybind11
+python setup.py install
 ```
+
+### Windows
+
+Windows binary can be built using the generic steps above. However, Windows
+support is experimental.
+
+
+## Testing
+
+```bash
+python -m pip install pytest numpy
+python -m pytest tests
+```
+
+Alternatively, use `tox` to run tests under various python versions.
+
+```bash
+export SKIA_PATH=$PWD/skia
+tox
+```
+
+## Documentation
+
+Once skia-python is installed, sphinx documentation can be built:
+
+```
+python -m pip install sphinx
+make -C docs html
+```
+
+
+## Contributing
+
+Feel free to post an issue or PR.

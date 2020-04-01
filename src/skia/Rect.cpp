@@ -1,12 +1,34 @@
 #include <pybind11/pybind11.h>
 #include <pybind11/operators.h>
 #include <skia.h>
+#include <sstream>
 
 namespace py = pybind11;
 
+constexpr size_t SkRRect::kSizeInMemory;
+
 void initRect(py::module &m) {
 // IRect
-py::class_<SkIRect>(m, "IRect")
+py::class_<SkIRect>(m, "IRect", R"docstring(
+    SkIRect holds four 32-bit integer coordinates describing the upper and lower
+    bounds of a rectangle.
+
+    SkIRect may be created from outer bounds or from position, width, and
+    height. SkIRect describes an area; if its right is less than or equal to its
+    left, or if its bottom is less than or equal to its top, it is considered
+    empty.
+    )docstring")
+    // Python additions.
+    .def(py::init(&SkIRect::MakeEmpty))
+    .def(py::init(&SkIRect::MakeWH))
+    .def(py::init(&SkIRect::MakeLTRB))
+    .def("__repr__", [](const SkIRect& r) {
+        std::stringstream s;
+        s << "IRect(" << r.fLeft << ", " << r.fTop << ", " <<
+            r.fRight << ", " << r.fBottom << ")";
+        return s.str();
+    })
+    // Wrappers.
     .def("left", &SkIRect::left, "Returns left edge of SkIRect, if sorted.")
     .def("top", &SkIRect::top, "Returns top edge of SkIRect, if sorted.")
     .def("right", &SkIRect::right, "Returns right edge of SkIRect, if sorted.")
@@ -104,8 +126,27 @@ py::class_<SkIRect>(m, "IRect")
         "Returns true if any member in a: fLeft, fTop, fRight, and fBottom; is "
         "not identical to the corresponding member in b.")
     ;
+
 // Rect
-py::class_<SkRect>(m, "Rect")
+py::class_<SkRect>(m, "Rect", R"docstring(
+    SkRect holds four SkScalar coordinates describing the upper and lower bounds
+    of a rectangle.
+
+    SkRect may be created from outer bounds or from position, width, and height.
+    SkRect describes an area; if its right is less than or equal to its left, or
+    if its bottom is less than or equal to its top, it is considered empty.
+    )docstring")
+    // Python additions.
+    .def(py::init(&SkRect::MakeEmpty))
+    .def(py::init(&SkRect::MakeWH))
+    .def(py::init(&SkRect::MakeLTRB))
+    .def("__repr__", [](const SkRect& r) {
+        std::stringstream s;
+        s << "Rect(" << r.fLeft << ", " << r.fTop << ", " <<
+            r.fRight << ", " << r.fBottom << ")";
+        return s.str();
+    })
+    // Wrappers.
     .def("isEmpty", &SkRect::isEmpty,
         "Returns true if fLeft is equal to or greater than fRight, or if "
         "fTop is equal to or greater than fBottom.")
@@ -264,5 +305,137 @@ py::class_<SkRect>(m, "Rect")
     .def(py::self != py::self,
         "Returns true if any member in a: fLeft, fTop, fRight, and fBottom; is "
         "not identical to the corresponding member in b.")
+    ;
+
+py::class_<SkRRect> rrect(m, "RRect", R"docstring(
+    SkRRect describes a rounded rectangle with a bounds and a pair of radii for
+    each corner.
+
+    The bounds and radii can be set so that SkRRect describes: a rectangle with
+    sharp corners; a circle; an oval; or a rectangle with one or more rounded
+    corners.
+
+    SkRRect allows implementing CSS properties that describe rounded corners.
+    SkRRect may have up to eight different radii, one for each axis on each of
+    its four corners.
+
+    SkRRect may modify the provided parameters when initializing bounds and
+    radii. If either axis radii is zero or less: radii are stored as zero;
+    corner is square. If corner curves overlap, radii are proportionally reduced
+    to fit within bounds.
+    )docstring");
+
+py::enum_<SkRRect::Type>(rrect, "Type")
+    .value("kEmpty", SkRRect::Type::kEmpty_Type, "zero width or height")
+    .value("kRect", SkRRect::Type::kRect_Type,
+        "non-zero width and height, and zeroed radii")
+    .value("kOval", SkRRect::Type::kOval_Type,
+        "non-zero width and height filled with radii")
+    .value("kSimple", SkRRect::Type::kSimple_Type,
+        "non-zero width and height with equal radii")
+    .value("kNinePatch", SkRRect::Type::kNinePatch_Type,
+        "non-zero width and height with axis-aligned radii")
+    .value("kComplex", SkRRect::Type::kComplex_Type,
+        "non-zero width and height with arbitrary radii")
+    .value("kLastType", SkRRect::Type::kLastType, "largest Type value")
+    .export_values();
+
+py::enum_<SkRRect::Corner>(rrect, "Corner")
+    .value("kUpperLeft", SkRRect::Corner::kUpperLeft_Corner,
+        "index of top-left corner radii")
+    .value("kUpperRight", SkRRect::Corner::kUpperRight_Corner,
+        "index of top-right corner radii")
+    .value("kLowerRight", SkRRect::Corner::kLowerRight_Corner,
+        "index of bottom-right corner radii")
+    .value("kLowerLeft", SkRRect::Corner::kLowerLeft_Corner,
+        "index of bottom-left corner radii")
+    .export_values();
+
+rrect
+    .def(py::init(),
+        "Initializes bounds at (0, 0), the origin, with zero width and height.")
+    .def(py::init<const SkRRect&>(),
+        "Initializes to copy of rrect bounds and corner radii.")
+    .def("getType", &SkRRect::getType)
+    .def("type", &SkRRect::type)
+    .def("isEmpty", &SkRRect::isEmpty)
+    .def("isRect", &SkRRect::isRect)
+    .def("isOval", &SkRRect::isOval)
+    .def("isSimple", &SkRRect::isSimple)
+    .def("isNinePatch", &SkRRect::isNinePatch)
+    .def("isComplex", &SkRRect::isComplex)
+    .def("width", &SkRRect::width, "Returns span on the x-axis.")
+    .def("height", &SkRRect::height, "Returns span on the y-axis.")
+    .def("getSimpleRadii", &SkRRect::getSimpleRadii,
+        "Returns top-left corner radii.")
+    .def("setEmpty", &SkRRect::setEmpty,
+        "Sets bounds to zero width and height at (0, 0), the origin.")
+    .def("setRect", &SkRRect::setRect,
+        "Sets bounds to sorted rect, and sets corner radii to zero.")
+    .def("setOval", &SkRRect::setOval,
+        "Sets bounds to oval, x-axis radii to half oval.width(), and all "
+        "y-axis radii to half oval.height().")
+    .def("setRectXY", &SkRRect::setRectXY,
+        "Sets to rounded rectangle with the same radii for all four corners.")
+    .def("setNinePatch", &SkRRect::setNinePatch,
+        "Sets bounds to rect.")
+    .def("setRectRadii", &SkRRect::setRectRadii,
+        "Sets bounds to rect.")
+    .def("rect", &SkRRect::rect, "Returns bounds.")
+    .def("radii", &SkRRect::radii,
+        "Returns scalar pair for radius of curve on x-axis and y-axis for one "
+        "corner.")
+    .def("getBounds", &SkRRect::getBounds, "Returns bounds.")
+    .def("inset",
+        py::overload_cast<SkScalar, SkScalar, SkRRect*>(
+            &SkRRect::inset, py::const_),
+        "Copies SkRRect to dst, then insets dst bounds by dx and dy, and "
+        "adjusts dst radii by dx and dy.")
+    .def("inset",
+        py::overload_cast<SkScalar, SkScalar>(&SkRRect::inset),
+        "Insets bounds by dx and dy, and adjusts radii by dx and dy.")
+    .def("outset",
+        py::overload_cast<SkScalar, SkScalar, SkRRect*>(
+            &SkRRect::outset, py::const_),
+        "Outsets dst bounds by dx and dy, and adjusts radii by dx and dy.")
+    .def("outset",
+        py::overload_cast<SkScalar, SkScalar>(&SkRRect::outset),
+        "Outsets bounds by dx and dy, and adjusts radii by dx and dy.")
+    .def("offset", &SkRRect::offset, "Translates SkRRect by (dx, dy).")
+    .def("makeOffset", &SkRRect::makeOffset,
+        "Returns SkRRect translated by (dx, dy).")
+    .def("contains", &SkRRect::contains,
+        "Returns true if rect is inside the bounds and corner radii, and if "
+        "SkRRect and rect are not empty.")
+    .def("isValid", &SkRRect::isValid,
+        "Returns true if bounds and radii values are finite and describe a "
+        "SkRRect SkRRect::Type that matches getType().")
+    .def("writeToMemory", &SkRRect::writeToMemory, "Writes SkRRect to buffer.")
+    .def("readFromMemory", &SkRRect::readFromMemory,
+        "Reads SkRRect from buffer, reading kSizeInMemory bytes.")
+    .def("transform", &SkRRect::transform,
+        "Transforms by SkRRect by matrix, storing result in dst.")
+    .def("dump", py::overload_cast<bool>(&SkRRect::dump, py::const_),
+        "Writes text representation of SkRRect to standard output.")
+    .def("dump", py::overload_cast<>(&SkRRect::dump, py::const_),
+        "Writes text representation of SkRRect to standard output.")
+    .def("dumpHex", &SkRRect::dumpHex,
+        "Writes text representation of SkRRect to standard output.")
+    .def_static("MakeEmpty", &SkRRect::MakeEmpty,
+        "Initializes bounds at (0, 0), the origin, with zero width and height.")
+    .def_static("MakeRect", &SkRRect::MakeRect,
+        "Initializes to copy of r bounds and zeroes corner radii.")
+    .def_static("MakeOval", &SkRRect::MakeOval,
+        "Sets bounds to oval, x-axis radii to half oval.width(), and all "
+        "y-axis radii to half oval.height().")
+    .def_static("MakeRectXY", &SkRRect::MakeRectXY,
+        "Sets to rounded rectangle with the same radii for all four corners.")
+    .def_readonly_static("kSizeInMemory", &SkRRect::kSizeInMemory)
+    .def(py::self == py::self,
+        "Returns true if bounds and radii in a are equal to bounds and radii "
+        "in b.")
+    .def(py::self != py::self,
+        "Returns true if bounds and radii in a are not equal to bounds and "
+        "radii in b.")
     ;
 }

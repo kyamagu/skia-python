@@ -1,59 +1,72 @@
 #include <pybind11/pybind11.h>
 #include <skia.h>
 
+#define CONST_CALL(T, method) [](const sk_sp<T>& cs) { return cs->method(); }
+
 namespace py = pybind11;
 
-PYBIND11_DECLARE_HOLDER_TYPE(T, sk_sp<T>);
-
 void initColorSpace(py::module &m) {
-py::class_<SkColorSpace, sk_sp<SkColorSpace>>(m, "ColorSpace")
+py::class_<sk_sp<SkColorSpace>>(m, "ColorSpace")
     // .def("toProfile", &SkColorSpace::toProfile,
     //     "Convert this color space to an skcms ICC profile struct.")
-    .def("gammaCloseToSRGB", &SkColorSpace::gammaCloseToSRGB,
+    .def("gammaCloseToSRGB", CONST_CALL(SkColorSpace, gammaCloseToSRGB),
         "Returns true if the color space gamma is near enough to be "
         "approximated as sRGB.")
-    .def("gammaIsLinear", &SkColorSpace::gammaIsLinear,
+    .def("gammaIsLinear", CONST_CALL(SkColorSpace, gammaIsLinear),
         "Returns true if the color space gamma is linear.")
     // .def("isNumericalTransferFn", &SkColorSpace::isNumericalTransferFn,
     //     "Sets |fn| to the transfer function from this color space.")
     // .def("toXYZD50", &SkColorSpace::toXYZD50,
     //     "Returns true and sets |toXYZD50| if the color gamut can be "
     //     "described as a matrix.")
-    .def("toXYZD50Hash", &SkColorSpace::toXYZD50Hash,
+    .def("toXYZD50Hash", CONST_CALL(SkColorSpace, toXYZD50Hash),
         "Returns a hash of the gamut transformation to XYZ D50.")
-    .def("makeLinearGamma", &SkColorSpace::makeLinearGamma,
+    .def("makeLinearGamma", CONST_CALL(SkColorSpace, makeLinearGamma),
         "Returns a color space with the same gamut as this one, but with a "
         "linear gamma.")
-    .def("makeSRGBGamma", &SkColorSpace::makeSRGBGamma,
+    .def("makeSRGBGamma", CONST_CALL(SkColorSpace, makeSRGBGamma),
         "Returns a color space with the same gamut as this one, with with the "
         "sRGB transfer function.")
-    .def("makeColorSpin", &SkColorSpace::makeColorSpin,
+    .def("makeColorSpin", CONST_CALL(SkColorSpace, makeColorSpin),
         "Returns a color space with the same transfer function as this one, "
         "but with the primary colors rotated.")
-    .def("isSRGB", &SkColorSpace::isSRGB,
+    .def("isSRGB", CONST_CALL(SkColorSpace, isSRGB),
         "Returns true if the color space is sRGB.")
-    .def("serialize", &SkColorSpace::serialize, "Returns nullptr on failure.")
-    .def("writeToMemory", &SkColorSpace::writeToMemory,
-        "If |memory| is nullptr, returns the size required to serialize.")
-    .def("transferFn",
-        (void (SkColorSpace::*)(float[7]) const) &SkColorSpace::transferFn)
-    // .def("transferFn",
-    //     (void (SkColorSpace::*)(skcms_TransferFunction*) const)
-    //     &SkColorSpace::transferFn)
-    // .def("invTransferFn", &SkColorSpace::invTransferFn)
-    // .def("gamutTransformTo", &SkColorSpace::gamutTransformTo)
-    .def("transferFnHash", &SkColorSpace::transferFnHash)
-    .def("hash", &SkColorSpace::hash)
-    .def("unique", &SkColorSpace::unique)
-    .def("ref", &SkColorSpace::ref)
-    .def("unref", &SkColorSpace::unref)
-    .def("deref", &SkColorSpace::deref)
-    .def("refCntGreaterThan", &SkColorSpace::refCntGreaterThan)
-    .def_static("MakeSRGB", &SkColorSpace::MakeSRGB)
-    .def_static("MakeSRGBLinear", &SkColorSpace::MakeSRGBLinear)
-    // .def_static("MakeRGB", &SkColorSpace::MakeRGB)
-    // .def_static("Make", &SkColorSpace::Make)
+    .def("serialize", CONST_CALL(SkColorSpace, serialize),
+        "Returns nullptr on failure.")
+    .def("writeToMemory", [](const sk_sp<SkColorSpace>& cs, void* memory) {
+        return cs->writeToMemory(memory);
+    },
+        "If memory is nullptr, returns the size required to serialize.")
+    .def("transferFn", [] (const sk_sp<SkColorSpace>& cs, float gabcdef[7]) {
+        cs->transferFn(gabcdef);
+    })
+    // // .def("transferFn",
+    // //     (void (SkColorSpace::*)(skcms_TransferFunction*) const)
+    // //     &SkColorSpace::transferFn)
+    // // .def("invTransferFn", &SkColorSpace::invTransferFn)
+    // // .def("gamutTransformTo", &SkColorSpace::gamutTransformTo)
+    .def("transferFnHash", CONST_CALL(SkColorSpace, transferFnHash))
+    .def("hash", CONST_CALL(SkColorSpace, hash))
+    .def("unique", CONST_CALL(SkColorSpace, unique))
+    .def("ref", CONST_CALL(SkColorSpace, ref))
+    .def("unref", CONST_CALL(SkColorSpace, unref))
+    .def("deref", CONST_CALL(SkColorSpace, deref))
+    .def("refCntGreaterThan",
+        [] (const sk_sp<SkColorSpace>& cs, int32_t threadIsolatedTestCnt) {
+            return cs->refCntGreaterThan(threadIsolatedTestCnt);
+        })
+    .def_static("MakeSRGB", &SkColorSpace::MakeSRGB,
+        "Create the sRGB color space.")
+    .def_static("MakeSRGBLinear", &SkColorSpace::MakeSRGBLinear,
+        "Create the sRGB color space.")
+    // .def("MakeRGB", &SkColorSpace::MakeRGB,
+    //     "Create an SkColorSpace from a transfer function and a row-major 3x3 "
+    //     "transformation to XYZ.")
+    // .def("Make", &SkColorSpace::Make,
+    //     "Create an SkColorSpace from a parsed (skcms) ICC profile.")
     .def_static("Deserialize", &SkColorSpace::Deserialize)
-    .def_static("Equals", &SkColorSpace::Equals)
+    .def_static("Equals", &SkColorSpace::Equals,
+        "If both are null, we return true.")
     ;
 }
