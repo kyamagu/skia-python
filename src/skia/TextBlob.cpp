@@ -9,8 +9,15 @@ template<>
 struct py::detail::has_operator_delete<SkTextBlob, void> : std::false_type {};
 
 void initTextBlob(py::module &m) {
+
 py::class_<SkDeserialProcs>(m, "DeserialProcs");
-py::class_<SkTextBlob, sk_sp<SkTextBlob>>(m, "TextBlob")
+
+py::class_<SkTextBlob, sk_sp<SkTextBlob>>(m, "TextBlob", R"docstring(
+    SkTextBlob combines multiple text runs into an immutable container.
+
+    Each text run consists of glyphs, SkPaint, and position. Only parts of
+    SkPaint related to fonts and text rendering are used by run.
+    )docstring")
     .def("bounds", &SkTextBlob::bounds,
         "Returns conservative bounding box.")
     .def("uniqueID", &SkTextBlob::uniqueID,
@@ -52,8 +59,15 @@ py::class_<SkTextBlob, sk_sp<SkTextBlob>>(m, "TextBlob")
     .def_static("Deserialize", &SkTextBlob::Deserialize,
         "Recreates SkTextBlob that was serialized into data.")
     ;
-py::class_<SkTextBlobBuilder> textblobbuilder(m, "TextBlobBuilder");
-py::class_<SkTextBlobBuilder::RunBuffer>(textblobbuilder, "RunBuffer")
+
+py::class_<SkTextBlobBuilder> textblobbuilder(m, "TextBlobBuilder", R"docstring(
+    Helper class for constructing SkTextBlob.
+    )docstring");
+
+py::class_<SkTextBlobBuilder::RunBuffer>(textblobbuilder, "RunBuffer",
+    R"docstring(
+    RunBuffer supplies storage for glyphs and positions within a run.
+    )docstring")
     .def("points", &SkTextBlobBuilder::RunBuffer::points,
         py::return_value_policy::reference)
     .def("xforms", &SkTextBlobBuilder::RunBuffer::xforms,
@@ -71,6 +85,7 @@ py::class_<SkTextBlobBuilder::RunBuffer>(textblobbuilder, "RunBuffer")
         "reserved for future use.",
         py::return_value_policy::reference)
     ;
+
 textblobbuilder
     .def(py::init(), "Constructs empty SkTextBlobBuilder.")
     .def("make", &SkTextBlobBuilder::make,

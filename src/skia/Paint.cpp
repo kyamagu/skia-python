@@ -13,7 +13,19 @@ const int SkPaint::kJoinCount;
 
 void initPaint(py::module &m) {
 // Paint
-py::class_<SkPaint> paint(m, "Paint");
+py::class_<SkPaint> paint(m, "Paint", R"docstring(
+    SkPaint controls options applied when drawing.
+
+    SkPaint collects all options outside of the SkCanvas clip and SkCanvas
+    matrix.
+
+    Various options apply to strokes and fills, and images.
+
+    SkPaint collects effects and filters that describe single-pass and
+    multiple-pass algorithms that alter the drawing geometry, color, and
+    transparency. For instance, SkPaint does not directly implement dashing or
+    blur, but contains the objects that do so.
+    )docstring");
 
 py::enum_<SkPaint::Style>(paint, "Style")
     .value("kFill", SkPaint::Style::kFill_Style, "set to fill geometry")
@@ -181,9 +193,19 @@ paint
     .def(py::self != py::self,
         "Compares a and b, and returns true if a and b are not equivalent.")
     ;
+
 // Shader
 // TODO: Need a wrapper class for pure virtual functions.
-py::class_<SkShader, sk_sp<SkShader>> shader(m, "Shader");
+py::class_<SkShader, sk_sp<SkShader>> shader(m, "Shader", R"docstring(
+    Shaders specify the source color(s) for what is being drawn.
+
+    If a paint has no shader, then the paint's color is used. If the paint has a
+    shader, then the shader's color(s) are use instead, but they are modulated
+    by the paint's alpha. This makes it easy to create a shader once (e.g.
+    bitmap tiling or gradient) and then change its transparency w/o having to
+    modify the original shader... only the paint's alpha needs to be modified.
+    )docstring");
+
 py::class_<SkShader::GradientInfo>(shader, "GradientInfo")
     .def_readwrite("fColorCount", &SkShader::GradientInfo::fColorCount)
     .def_readwrite("fColors", &SkShader::GradientInfo::fColors)
@@ -194,7 +216,10 @@ py::class_<SkShader::GradientInfo>(shader, "GradientInfo")
     .def_readwrite("fGradientFlags", &SkShader::GradientInfo::fGradientFlags)
     ;
 
-py::enum_<SkShader::GradientType>(shader, "GradientType")
+py::enum_<SkShader::GradientType>(shader, "GradientType", R"docstring(
+    If the shader subclass can be represented as a gradient, asAGradient returns
+    the matching GradientType enum (or kNone_GradientType if it cannot).
+    )docstring")
     .value("kNone", SkShader::GradientType::kNone_GradientType)
     .value("kColor", SkShader::GradientType::kColor_GradientType)
     .value("kLinear", SkShader::GradientType::kLinear_GradientType)

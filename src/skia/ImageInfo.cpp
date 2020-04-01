@@ -4,7 +4,14 @@
 namespace py = pybind11;
 
 void initImageInfo(py::module &m) {
-py::class_<SkColorInfo>(m, "ColorInfo")
+py::class_<SkColorInfo>(m, "ColorInfo", R"docstring(
+    Describes pixel and encoding.
+
+    SkImageInfo can be created from SkColorInfo by providing dimensions.
+
+    It encodes how pixel bits describe alpha, transparency; color components
+    red, blue, and green; and SkColorSpace, the range and linearity of colors.
+    )docstring")
     .def(py::init<>(),
         "Creates an SkColorInfo with kUnknown_SkColorType, "
         "kUnknown_SkAlphaType, and no SkColorSpace.")
@@ -42,7 +49,19 @@ py::class_<SkColorInfo>(m, "ColorInfo")
     .def("shiftPerPixel", &SkColorInfo::shiftPerPixel,
         "Returns bit shift converting row bytes to row pixels.")
     ;
-py::class_<SkImageInfo>(m, "ImageInfo")
+
+py::class_<SkImageInfo>(m, "ImageInfo", R"docstring(
+    Describes pixel dimensions and encoding.
+
+    SkBitmap, SkImage, PixMap, and SkSurface can be created from SkImageInfo.
+    SkImageInfo can be retrieved from SkBitmap and SkPixmap, but not from
+    SkImage and SkSurface. For example, SkImage and SkSurface implementations
+    may defer pixel depth, so may not completely specify SkImageInfo.
+
+    SkImageInfo contains dimensions, the pixel integral width and height. It
+    encodes how pixel bits describe alpha, transparency; color components red,
+    blue, and green; and SkColorSpace, the range and linearity of colors.
+    )docstring")
     .def(py::init<>())
     .def("width", &SkImageInfo::width, "Returns pixel count in each row.")
     .def("height", &SkImageInfo::height, "Returns pixel row count.")
@@ -166,6 +185,7 @@ py::class_<SkImageInfo>(m, "ImageInfo")
     .def_static("ByteSizeOverflowed", &SkImageInfo::ByteSizeOverflowed,
         "Returns true if byteSize equals SIZE_MAX.")
     ;
+
 py::enum_<SkAlphaType>(m, "AlphaType")
     .value("kUnknown", SkAlphaType::kUnknown_SkAlphaType,
         "uninitialized")
@@ -178,6 +198,7 @@ py::enum_<SkAlphaType>(m, "AlphaType")
     .value("kLastEnum", SkAlphaType::kLastEnum_SkAlphaType,
         "last valid value")
     .export_values();
+
 py::enum_<SkColorType>(m, "ColorType")
     .value("kUnknown", SkColorType::kUnknown_SkColorType, "uninitialized")
     .value("kAlpha_8", SkColorType::kAlpha_8_SkColorType,
@@ -214,6 +235,7 @@ py::enum_<SkColorType>(m, "ColorType")
     .value("kR16G16_float", SkColorType::kR16G16_float_SkColorType)
     .value("kA16_unorm", SkColorType::kA16_unorm_SkColorType)
     .export_values();
+
 py::enum_<SkYUVColorSpace>(m, "YUVColorSpace")
     .value("kJPEG", SkYUVColorSpace::kJPEG_SkYUVColorSpace,
         "describes full range")
@@ -228,6 +250,7 @@ py::enum_<SkYUVColorSpace>(m, "YUVColorSpace")
     .value("kLastEnum", SkYUVColorSpace::kLastEnum_SkYUVColorSpace,
         "last valid value")
     .export_values();
+
 m.def("AlphaTypeIsOpaque", &SkAlphaTypeIsOpaque);
 m.def("ColorTypeBytesPerPixel", &SkColorTypeBytesPerPixel);
 m.def("ColorTypeIsAlwaysOpaque", &SkColorTypeIsAlwaysOpaque);

@@ -21,7 +21,12 @@ py::enum_<SkPixelGeometry>(m, "PixelGeometry")
     .value("kBGR_V", SkPixelGeometry::kBGR_V_SkPixelGeometry)
     .export_values();
 
-py::class_<SkSurfaceProps> surfaceprops(m, "SurfaceProps");
+py::class_<SkSurfaceProps> surfaceprops(m, "SurfaceProps", R"docstring(
+    Describes properties and constraints of a given SkSurface.
+
+    The rendering engine can parse these during drawing, and can sometimes
+    optimize its performance (e.g. disabling an expensive feature).
+    )docstring");
 
 py::enum_<SkSurfaceProps::Flags>(surfaceprops, "Flags")
     .value("kUseDeviceIndependentFonts",
@@ -74,9 +79,21 @@ py::class_<SkSurfaceCharacterization>(m, "SurfaceCharacterization")
     ;
 
 py::class_<SkSurface, sk_sp<SkSurface>> surface(
-    m, "Surface", py::buffer_protocol());
+    m, "Surface", py::buffer_protocol(), R"docstring(
+    SkSurface is responsible for managing the pixels that a canvas draws into.
 
-py::class_<SkSurface::AsyncReadResult>(surface, "AsyncReadResult");
+    The pixels can be allocated either in CPU memory (a raster surface) or on
+    the GPU (a GrRenderTarget surface). SkSurface takes care of allocating a
+    SkCanvas that will draw into the surface. Call surface->getCanvas() to use
+    that canvas (but don't delete it, it is owned by the surface). SkSurface
+    always has non-zero dimensions. If there is a request for a new surface, and
+    either of the requested dimensions are zero, then nullptr will be returned.
+    )docstring");
+
+py::class_<SkSurface::AsyncReadResult>(surface, "AsyncReadResult", R"docstring(
+    The result from asyncRescaleAndReadPixels() or
+    asyncRescaleAndReadPixelsYUV420().
+    )docstring");
 
 py::enum_<SkSurface::ContentChangeMode>(surface, "ContentChangeMode")
     .value("kDiscard", SkSurface::ContentChangeMode::kDiscard_ContentChangeMode,

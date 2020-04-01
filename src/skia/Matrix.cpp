@@ -27,8 +27,25 @@ py::enum_<SkApplyPerspectiveClip>(m, "ApplyPerspectiveClip")
     .value("kYes", SkApplyPerspectiveClip::kYes,
         "Do pre-clip the geometry before applying the (perspective) matrix.")
     .export_values();
+
 // Matrix
-py::class_<SkMatrix> matrix(m, "Matrix");
+py::class_<SkMatrix> matrix(m, "Matrix", R"docstring(
+    SkMatrix holds a 3x3 matrix for transforming coordinates.
+
+    This allows mapping SkPoint and vectors with translation, scaling, skewing,
+    rotation, and perspective.
+
+    SkMatrix elements are in row major order. SkMatrix does not have a
+    constructor, so it must be explicitly initialized. setIdentity() initializes
+    SkMatrix so it has no effect. setTranslate(), setScale(), setSkew(),
+    setRotate(), set9 and setAll() initializes all SkMatrix elements with the
+    corresponding mapping.
+
+    SkMatrix includes a hidden variable that classifies the type of matrix to
+    improve performance. SkMatrix is not thread safe unless getType() is called
+    first.
+    )docstring");
+
 py::enum_<SkMatrix::ScaleToFit>(matrix, "ScaleToFit")
     .value("kFill", SkMatrix::ScaleToFit::kFill_ScaleToFit,
         "scales in x and y to fill destination SkRect")
@@ -39,6 +56,7 @@ py::enum_<SkMatrix::ScaleToFit>(matrix, "ScaleToFit")
     .value("kEnd", SkMatrix::ScaleToFit::kEnd_ScaleToFit,
         "scales and aligns to right and bottom")
     .export_values();
+
 py::enum_<SkMatrix::TypeMask>(matrix, "TypeMask")
     .value("kIdentity_Mask", SkMatrix::TypeMask::kIdentity_Mask,
         "identity SkMatrix; all bits clear")
@@ -51,6 +69,7 @@ py::enum_<SkMatrix::TypeMask>(matrix, "TypeMask")
     .value("kPerspective_Mask", SkMatrix::TypeMask::kPerspective_Mask,
         "perspective SkMatrix")
     .export_values();
+
 matrix
     .def(py::init<>(), "Creates an identity SkMatrix.")
     .def("getType", &SkMatrix::getType,
@@ -363,10 +382,21 @@ matrix
     .def_readonly_static("kATransX", &SkMatrix::kATransX)
     .def_readonly_static("kATransY", &SkMatrix::kATransY)
     ;
+
 // M44
-py::class_<SkM44>(m, "M44")
+py::class_<SkM44>(m, "M44", R"docstring(
+    4x4 matrix used by SkCanvas and other parts of Skia.
+
+    Skia assumes a right-handed coordinate system: +X goes to the right +Y goes
+    down +Z goes into the screen (away from the viewer)
+    )docstring")
     ;
+
 // RSXform
-py::class_<SkRSXform>(m, "RSXform")
+py::class_<SkRSXform>(m, "RSXform", R"docstring(
+    A compressed form of a rotation+scale matrix.
+
+    [ fSCos -fSSin fTx ] [ fSSin fSCos fTy ] [ 0 0 1 ]
+    )docstring")
     ;
 }

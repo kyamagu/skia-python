@@ -21,6 +21,7 @@ py::class_<SkISize>(m, "ISize")
     .def_readwrite("fWidth", &SkISize::fWidth)
     .def_readwrite("fHeight", &SkISize::fHeight)
     ;
+
 // Size
 py::class_<SkSize>(m, "Size")
     .def("set", &SkSize::set)

@@ -5,7 +5,13 @@
 namespace py = pybind11;
 
 void initColor(py::module &m) {
-py::class_<SkColor4f>(m, "Color4f")
+py::class_<SkColor4f>(m, "Color4f", R"docstring(
+    RGBA color value, holding four floating point components.
+
+    Color components are always in a known order, and are unpremultiplied.
+
+    This is a specialization of SkRGBA4f.
+    )docstring")
     .def(py::self == py::self,
         "Compares SkRGBA4f with other, and returns true if all components "
         "are equal.")

@@ -8,6 +8,7 @@ PYBIND11_DECLARE_HOLDER_TYPE(T, sk_sp<T>);
 void initFont(py::module &m) {
 // FontStyle
 py::class_<SkFontStyle> fontstyle(m, "FontStyle");
+
 py::enum_<SkFontStyle::Weight>(fontstyle, "Weight")
     .value("kInvisible", SkFontStyle::Weight::kInvisible_Weight)
     .value("kThin", SkFontStyle::Weight::kThin_Weight)
@@ -21,6 +22,7 @@ py::enum_<SkFontStyle::Weight>(fontstyle, "Weight")
     .value("kBlack", SkFontStyle::Weight::kBlack_Weight)
     .value("kExtraBlack", SkFontStyle::Weight::kExtraBlack_Weight)
     .export_values();
+
 py::enum_<SkFontStyle::Width>(fontstyle, "Width")
     .value("kUltraCondensed", SkFontStyle::Width::kUltraCondensed_Width)
     .value("kExtraCondensed", SkFontStyle::Width::kExtraCondensed_Width)
@@ -32,11 +34,13 @@ py::enum_<SkFontStyle::Width>(fontstyle, "Width")
     .value("kExtraExpanded", SkFontStyle::Width::kExtraExpanded_Width)
     .value("kUltraExpanded", SkFontStyle::Width::kUltraExpanded_Width)
     .export_values();
+
 py::enum_<SkFontStyle::Slant>(fontstyle, "Slant")
     .value("kUpright", SkFontStyle::Slant::kUpright_Slant)
     .value("kItalic", SkFontStyle::Slant::kItalic_Slant)
     .value("kOblique", SkFontStyle::Slant::kOblique_Slant)
     .export_values();
+
 fontstyle
     .def(py::init<int, int, SkFontStyle::Slant>())
     .def(py::init<>())
@@ -48,14 +52,20 @@ fontstyle
     .def_static("Italic", &SkFontStyle::Italic)
     .def_static("BoldItalic", &SkFontStyle::BoldItalic)
     ;
+
 // Typeface
-py::class_<SkFontArguments> fontarguments(m, "FontArguments");
+py::class_<SkFontArguments> fontarguments(m, "FontArguments", R"docstring(
+    Represents a set of actual arguments for a font.
+    )docstring");
+
 py::class_<SkFontArguments::Axis>(fontarguments, "Axis")
     .def_readwrite("fStyleValue", &SkFontArguments::Axis::fStyleValue)
     .def_readwrite("fTag", &SkFontArguments::Axis::fTag)
     ;
+
 py::class_<SkFontArguments::VariationPosition>
     variationposition(fontarguments, "VariationPosition");
+
 py::class_<SkFontArguments::VariationPosition::Coordinate>(
     variationposition, "Coordinate")
     .def_readwrite("axis",
@@ -63,6 +73,7 @@ py::class_<SkFontArguments::VariationPosition::Coordinate>(
     .def_readwrite("value",
         &SkFontArguments::VariationPosition::Coordinate::value)
     ;
+
 variationposition
     .def_readwrite("coordinates",
         &SkFontArguments::VariationPosition::coordinates,
@@ -70,6 +81,7 @@ variationposition
     .def_readwrite("coordinateCount",
         &SkFontArguments::VariationPosition::coordinateCount)
     ;
+
 fontarguments
     .def(py::init<>())
     .def("setCollectionIndex", &SkFontArguments::setCollectionIndex)
@@ -82,13 +94,28 @@ fontarguments
     .def("getVariationDesignPosition",
         &SkFontArguments::getVariationDesignPosition)
     ;
-py::class_<SkTypeface, sk_sp<SkTypeface>> typeface(m, "Typeface");
-py::enum_<SkTypeface::SerializeBehavior>(typeface, "SerializeBehavior")
+
+py::class_<SkTypeface, sk_sp<SkTypeface>> typeface(m, "Typeface", R"docstring(
+    The SkTypeface class specifies the typeface and intrinsic style of a font.
+
+    This is used in the paint, along with optionally algorithmic settings like
+    textSize, textSkewX, textScaleX, kFakeBoldText_Mask, to specify how text
+    appears when drawn (and measured).
+
+    Typeface objects are immutable, and so they can be shared between threads.
+    )docstring");
+
+py::enum_<SkTypeface::SerializeBehavior>(typeface, "SerializeBehavior",
+    R"docstring(
+    A typeface can serialize just a descriptor (names, etc.), or it can also
+    include the actual font data (which can be large).
+    )docstring")
     .value("kDoIncludeData", SkTypeface::SerializeBehavior::kDoIncludeData)
     .value("kDontIncludeData", SkTypeface::SerializeBehavior::kDontIncludeData)
     .value("kIncludeDataIfLocal",
         SkTypeface::SerializeBehavior::kIncludeDataIfLocal)
     .export_values();
+
 typeface
     .def("fontStyle", &SkTypeface::fontStyle,
         "Returns the typeface's intrinsic style attributes.")
@@ -191,6 +218,7 @@ typeface
     //     "Given the data previously written by serialize(), return a new "
     //     "instance of a typeface referring to the same font.")
     ;
+
 // Font
 py::enum_<SkFontHinting>(m, "FontHinting")
     .value("kNone", SkFontHinting::kNone)
@@ -198,18 +226,26 @@ py::enum_<SkFontHinting>(m, "FontHinting")
     .value("kNormal", SkFontHinting::kNormal)
     .value("kFull", SkFontHinting::kFull)
     .export_values();
+
 py::enum_<SkTextEncoding>(m, "TextEncoding")
     .value("kUTF8", SkTextEncoding::kUTF8)
     .value("kUTF16", SkTextEncoding::kUTF16)
     .value("kUTF32", SkTextEncoding::kUTF32)
     .value("kGlyphID", SkTextEncoding::kGlyphID)
     .export_values();
-py::class_<SkFont> font(m, "Font");
-py::enum_<SkFont::Edging>(font, "Edging")
+
+py::class_<SkFont> font(m, "Font", R"docstring(
+    SkFont controls options applied when drawing and measuring text.
+    )docstring");
+
+py::enum_<SkFont::Edging>(font, "Edging", R"docstring(
+    Whether edge pixels draw opaque or with partial transparency.
+    )docstring")
     .value("kAlias", SkFont::Edging::kAlias)
     .value("kAntiAlias", SkFont::Edging::kAntiAlias)
     .value("kSubpixelAntiAlias", SkFont::Edging::kSubpixelAntiAlias)
     .export_values();
+
 font
     .def(py::init<>(), "Constructs SkFont with default values.")
     .def(py::init<sk_sp<SkTypeface>, SkScalar>(),
@@ -338,8 +374,21 @@ font
         "descent, ascent, and leading.")
     .def("dump", &SkFont::dump, "Dumps fields of the font to SkDebugf.")
     ;
-py::class_<SkFontMetrics> fontmetrics(m, "FontMetrics");
-py::enum_<SkFontMetrics::FontMetricsFlags>(fontmetrics, "FontMetricsFlags")
+
+py::class_<SkFontMetrics> fontmetrics(m, "FontMetrics", R"docstring(
+    The metrics of an SkFont.
+
+    The metric values are consistent with the Skia y-down coordinate system.
+    )docstring");
+
+py::enum_<SkFontMetrics::FontMetricsFlags>(fontmetrics, "FontMetricsFlags",
+    R"docstring(
+    FontMetricsFlags indicate when certain metrics are valid; the underline or
+    strikeout metrics may be valid and zero.
+
+    Fonts with embedded bitmaps may not have valid underline or strikeout
+    metrics.
+    )docstring")
     .value("kUnderlineThicknessIsValid",
         SkFontMetrics::FontMetricsFlags::kUnderlineThicknessIsValid_Flag,
         "set if fUnderlineThickness is valid")
@@ -353,6 +402,7 @@ py::enum_<SkFontMetrics::FontMetricsFlags>(fontmetrics, "FontMetricsFlags")
         SkFontMetrics::FontMetricsFlags::kStrikeoutPositionIsValid_Flag,
         "set if fStrikeoutPosition is valid")
     .export_values();
+
 fontmetrics
     .def("hasUnderlineThickness", &SkFontMetrics::hasUnderlineThickness,
         "Returns true if SkFontMetrics has a valid underline thickness, and "

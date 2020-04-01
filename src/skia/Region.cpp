@@ -7,8 +7,20 @@ namespace py = pybind11;
 const int SkRegion::kOpCnt;
 
 void initRegion(py::module &m) {
-py::class_<SkRegion> region(m, "Region");
-py::class_<SkRegion::Cliperator>(region, "Cliperator")
+py::class_<SkRegion> region(m, "Region", R"docstring(
+    SkRegion describes the set of pixels used to clip SkCanvas.
+
+    SkRegion is compact, efficiently storing a single integer rectangle, or a
+    run length encoded array of rectangles. SkRegion may reduce the current
+    SkCanvas clip, or may be drawn as one or more integer rectangles. SkRegion
+    iterator returns the scan lines or rectangles contained by it, optionally
+    intersecting a bounding rectangle.
+    )docstring");
+
+py::class_<SkRegion::Cliperator>(region, "Cliperator", R"docstring(
+    Returns the sequence of rectangles, sorted along y-axis, then x-axis, that
+    make up SkRegion intersected with the specified clip rectangle.
+    )docstring")
     .def(py::init<const SkRegion&, const SkIRect&>(),
         "Sets SkRegion::Cliperator to return elements of SkIRect array in "
         "SkRegion within clip.")
@@ -21,7 +33,11 @@ py::class_<SkRegion::Cliperator>(region, "Cliperator")
         "   Returns SkIRect element in SkRegion, intersected with clip "
         "passed to SkRegion::Cliperator constructor.")
     ;
-py::class_<SkRegion::Iterator>(region, "Iterator")
+
+py::class_<SkRegion::Iterator>(region, "Iterator", R"docstring(
+    Returns sequence of rectangles, sorted along y-axis, then x-axis, that make
+    up SkRegion.
+    )docstring")
     .def(py::init<>(),
         "Initializes SkRegion::Iterator with an empty SkRegion.")
     .def(py::init<const SkRegion&>(),
@@ -42,7 +58,11 @@ py::class_<SkRegion::Iterator>(region, "Iterator")
     .def("rgn", &SkRegion::Iterator::rgn,
         "Returns SkRegion if set; otherwise, returns nullptr.")
     ;
-py::class_<SkRegion::Spanerator>(region, "Spanerator")
+
+py::class_<SkRegion::Spanerator>(region, "Spanerator", R"docstring(
+    Returns the line segment ends within SkRegion that intersect a horizontal
+    line.
+    )docstring")
     .def(py::init<const SkRegion&, int, int, int>(),
         "Sets SkRegion::Spanerator to return line segments in SkRegion on "
         "scan line.")
@@ -50,6 +70,7 @@ py::class_<SkRegion::Spanerator>(region, "Spanerator")
         "Advances iterator to next span intersecting SkRegion within line "
         "segment provided in constructor.")
     ;
+
 py::enum_<SkRegion::Op>(region, "Op")
     .value("kDifference_Op", SkRegion::Op::kDifference_Op)
     .value("kIntersect_Op", SkRegion::Op::kIntersect_Op)
@@ -59,6 +80,7 @@ py::enum_<SkRegion::Op>(region, "Op")
     .value("kReplace_Op", SkRegion::Op::kReplace_Op)
     .value("kLastOp", SkRegion::Op::kLastOp)
     .export_values();
+
 region
     .def(py::init<>(), "Constructs an empty SkRegion.")
     .def(py::init<const SkRegion&>(),

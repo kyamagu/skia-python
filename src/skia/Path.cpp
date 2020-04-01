@@ -56,9 +56,30 @@ m.def("PathFillType_IsInverse", &SkPathFillType_IsInverse);
 m.def("PathFillType_ConvertToNonInverse", &SkPathFillType_ConvertToNonInverse);
 
 // Path
-py::class_<SkPath> path(m, "Path");
+py::class_<SkPath> path(m, "Path", R"docstring(
+    SkPath contain geometry.
 
-py::class_<SkPath::Iter>(path, "Iter")
+    SkPath may be empty, or contain one or more verbs that outline a figure.
+    SkPath always starts with a move verb to a Cartesian coordinate, and may be
+    followed by additional verbs that add lines or curves. Adding a close verb
+    makes the geometry into a continuous loop, a closed contour. SkPath may
+    contain any number of contours, each beginning with a move verb.
+
+    SkPath contours may contain only a move verb, or may also contain lines,
+    quadratic beziers, conics, and cubic beziers. SkPath contours may be open or
+    closed.
+
+    When used to draw a filled area, SkPath describes whether the fill is inside
+    or outside the geometry. SkPath also describes the winding rule used to fill
+    overlapping contours.
+
+    Internally, SkPath lazily computes metrics likes bounds and convexity. Call
+    SkPath::updateBoundsCache to make SkPath thread safe.
+    )docstring");
+
+py::class_<SkPath::Iter>(path, "Iter", R"docstring(
+    Iterates through verb array, and associated SkPoint array and conic weight.
+    )docstring")
     .def(py::init(),
         "Initializes SkPath::Iter with an empty SkPath.")
     .def(py::init<const SkPath&, bool>(),
@@ -79,7 +100,9 @@ py::class_<SkPath::Iter>(path, "Iter")
         "returning kMove_Verb.")
     ;
 
-py::class_<SkPath::RawIter>(path, "RawIter")
+py::class_<SkPath::RawIter>(path, "RawIter", R"docstring(
+    Iterates through verb array, and associated SkPoint array and conic weight.
+    )docstring")
     .def(py::init(),
         "Initializes SkPath::RawIter with an empty SkPath.")
     .def(py::init<const SkPath&>(),

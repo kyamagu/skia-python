@@ -4,7 +4,19 @@
 namespace py = pybind11;
 
 void initPixmap(py::module &m) {
-py::class_<SkPixmap>(m, "Pixmap")
+py::class_<SkPixmap>(m, "Pixmap", R"docstring(
+    SkPixmap provides a utility to pair SkImageInfo with pixels and row bytes.
+
+    SkPixmap is a low level class which provides convenience functions to access
+    raster destinations. SkCanvas can not draw SkPixmap, nor does SkPixmap
+    provide a direct drawing destination.
+
+    Use SkBitmap to draw pixels referenced by SkPixmap; use SkSurface to draw
+    into pixels referenced by SkPixmap.
+
+    SkPixmap does not try to manage the lifetime of the pixel memory. Use
+    SkPixelRef to manage pixel memory; SkPixelRef is safe across threads.
+    )docstring")
     .def(py::init<>(),
         "Creates an empty SkPixmap without pixels, with "
         "kUnknown_SkColorType, with kUnknown_SkAlphaType, and with a "

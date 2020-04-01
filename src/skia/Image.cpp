@@ -6,7 +6,10 @@ namespace py = pybind11;
 PYBIND11_DECLARE_HOLDER_TYPE(T, sk_sp<T>);
 
 void initImage(py::module &m) {
-py::enum_<SkFilterQuality>(m, "FilterQuality")
+py::enum_<SkFilterQuality>(m, "FilterQuality", R"docstring(
+    Controls how much filtering to be done when scaling/transforming complex
+    colors e.g. image.
+    )docstring")
     .value("kNone", SkFilterQuality::kNone_SkFilterQuality,
         "fastest but lowest quality, typically nearest-neighbor")
     .value("kLow", SkFilterQuality::kLow_SkFilterQuality,
@@ -17,6 +20,7 @@ py::enum_<SkFilterQuality>(m, "FilterQuality")
         "slowest but highest quality, typically bicubic or better")
     .value("kLast", SkFilterQuality::kLast_SkFilterQuality)
     .export_values();
+
 py::enum_<SkTileMode>(m, "TileMode")
     .value("kClamp", SkTileMode::kClamp,
         "Replicate the edge color if the shader draws outside of its original "
@@ -32,7 +36,10 @@ py::enum_<SkTileMode>(m, "TileMode")
     .value("kLastTileMode", SkTileMode::kLastTileMode,
         "")
     .export_values();
-py::enum_<SkEncodedImageFormat>(m, "EncodedImageFormat")
+
+py::enum_<SkEncodedImageFormat>(m, "EncodedImageFormat", R"docstring(
+    Enum describing format of encoded data.
+    )docstring")
     .value("kBMP", SkEncodedImageFormat::kBMP)
     .value("kGIF", SkEncodedImageFormat::kGIF)
     .value("kICO", SkEncodedImageFormat::kICO)
@@ -47,7 +54,24 @@ py::enum_<SkEncodedImageFormat>(m, "EncodedImageFormat")
     .value("kHEIF", SkEncodedImageFormat::kHEIF)
     .export_values();
 
-py::class_<SkImage, sk_sp<SkImage>> image(m, "Image");
+py::class_<SkImage, sk_sp<SkImage>> image(m, "Image", R"docstring(
+    SkImage describes a two dimensional array of pixels to draw.
+
+    The pixels may be decoded in a raster bitmap, encoded in a SkPicture or
+    compressed data stream, or located in GPU memory as a GPU texture.
+
+    SkImage cannot be modified after it is created. SkImage may allocate
+    additional storage as needed; for instance, an encoded SkImage may decode
+    when drawn.
+
+    SkImage width and height are greater than zero. Creating an SkImage with
+    zero width or height returns SkImage equal to nullptr.
+
+    SkImage may be created from SkBitmap, SkPixmap, SkSurface, SkPicture,
+    encoded streams, GPU texture, YUV_ColorSpace data, or hardware buffer.
+    Encoded streams supported include BMP, GIF, HEIF, ICO, JPEG, PNG, WBMP,
+    WebP. Supported encoding details vary with platform.
+    )docstring");
 
 py::enum_<SkImage::CompressionType>(image, "CompressionType")
     .value("kNone", SkImage::CompressionType::kNone)
