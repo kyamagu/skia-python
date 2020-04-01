@@ -1,7 +1,12 @@
 name: Build and test
 
-on: push
-
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - master
 jobs:
   build-manylinux2010:
     if: false
