@@ -92,9 +92,9 @@ jobs:
         python setup.py install
     - name: Test
       run: |
-        yum install -y xorg-x11-server-Xvfb
+        yum install -y xorg-x11-server-Xvfb mesa-dri-drivers
         python -m pip install pytest numpy glfw
-        xvfb-run python -m pytest tests
+        xvfb-run -s "-screen 0 640x480x24" python -m pytest tests
   build-macos:
     runs-on: macos-latest
     strategy:
