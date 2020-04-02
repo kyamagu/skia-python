@@ -92,7 +92,7 @@ jobs:
         python setup.py install
     - name: Test
       run: |
-        yum install -y xorg-x11-server-Xvfb
+        yum install -y xorg-x11-server-Xvfb freeglut
         python -m pip install pytest numpy pyopengl pyopengl-accelerate
         xvfb-run python -m pytest tests
   build-macos:
