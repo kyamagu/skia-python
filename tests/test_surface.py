@@ -1,8 +1,9 @@
+import contextlib
 import skia
 import pytest
 
 
-# @pytest.fixture(scope='session')
+# @contextlib.contextmanager
 # def opengl():
 #     from OpenGL.GLUT import glutInit, glutCreateWindow, glutHideWindow
 #     glutInit()
@@ -10,7 +11,7 @@ import pytest
 #     glutHideWindow()
 
 
-@pytest.fixture(scope='session')
+@contextlib.contextmanager
 def opengl():
     import glfw
     if not glfw.init():
@@ -21,12 +22,14 @@ def opengl():
     yield context
 
 
-@pytest.fixture(scope='module', params=['raster', 'gpu'])
-def surface(request, opengl):
+@pytest.fixture(scope='session', params=['raster', 'gpu'])
+def surface(request):
     if request.param == 'gpu':
-        context = skia.GrContext.MakeGL()
-        info = skia.ImageInfo.MakeN32Premul(320, 240)
-        yield skia.Surface.MakeRenderTarget(context, skia.Budgeted.kNo, info)
+        with opengl():
+            context = skia.GrContext.MakeGL()
+            info = skia.ImageInfo.MakeN32Premul(320, 240)
+            yield skia.Surface.MakeRenderTarget(
+                context, skia.Budgeted.kNo, info)
     else:
         yield skia.Surface(320, 240)
 
