@@ -6,6 +6,108 @@ namespace py = pybind11;
 PYBIND11_DECLARE_HOLDER_TYPE(T, sk_sp<T>);
 
 void initGrContext(py::module &m) {
+
+py::enum_<GrBackendApi>(m, "GrBackendApi", R"docstring(
+    Possible 3D APIs that may be used by Ganesh.
+    )docstring")
+    .value("kOpenGL", GrBackendApi::kOpenGL)
+    .value("kVulkan", GrBackendApi::kVulkan)
+    .value("kMetal", GrBackendApi::kMetal)
+    .value("kDirect3D", GrBackendApi::kDirect3D)
+    .value("kDawn", GrBackendApi::kDawn)
+    .value("kMock", GrBackendApi::kMock,
+        "Mock is a backend that does not draw anything. It is used for unit "
+        "tests and to measure CPU overhead.")
+    .value("kOpenGL_GrBackend", GrBackendApi::kOpenGL_GrBackend,
+        "Added here to support the legacy GrBackend enum value and clients "
+        "who referenced it using GrBackend::kOpenGL_GrBackend.")
+    .export_values();
+
+py::enum_<GrMipMapped>(m, "GrMipMapped", R"docstring(
+    Used to say whether a texture has mip levels allocated or not.
+    )docstring")
+    .value("kNo", GrMipMapped::kNo)
+    .value("kYes", GrMipMapped::kYes)
+    .export_values();
+
+py::enum_<GrRenderable>(m, "GrRenderable")
+    .value("kNo", GrRenderable::kNo)
+    .value("kYes", GrRenderable::kYes)
+    .export_values();
+
+py::enum_<GrProtected>(m, "GrProtected")
+    .value("kNo", GrProtected::kNo)
+    .value("kYes", GrProtected::kYes)
+    .export_values();
+
+py::enum_<GrSurfaceOrigin>(m, "GrSurfaceOrigin", R"docstring(
+    GPU SkImage and SkSurfaces can be stored such that (0, 0) in texture space
+    may correspond to either the top-left or bottom-left content pixel.
+    )docstring")
+    .value("kTopLeft", GrSurfaceOrigin::kTopLeft_GrSurfaceOrigin)
+    .value("kBottomLeft", GrSurfaceOrigin::kBottomLeft_GrSurfaceOrigin)
+    .export_values();
+
+py::enum_<GrGLBackendState>(m, "GrGLBackendState", R"docstring(
+    A GrContext's cache of backend context state can be partially invalidated.
+
+    These enums are specific to the GL backend and we'd add a new set for an
+    alternative backend.
+    )docstring")
+    .value("kRenderTarget", GrGLBackendState::kRenderTarget_GrGLBackendState)
+    .value("kTextureBinding",
+        GrGLBackendState::kTextureBinding_GrGLBackendState)
+    .value("kView", GrGLBackendState::kView_GrGLBackendState)
+    .value("kBlend", GrGLBackendState::kBlend_GrGLBackendState)
+    .value("kMSAAEnable", GrGLBackendState::kMSAAEnable_GrGLBackendState)
+    .value("kVertex", GrGLBackendState::kVertex_GrGLBackendState)
+    .value("kStencil", GrGLBackendState::kStencil_GrGLBackendState)
+    .value("kPixelStore", GrGLBackendState::kPixelStore_GrGLBackendState)
+    .value("kProgram", GrGLBackendState::kProgram_GrGLBackendState)
+    .value("kFixedFunction", GrGLBackendState::kFixedFunction_GrGLBackendState)
+    .value("kMisc", GrGLBackendState::kMisc_GrGLBackendState)
+    .value("kPathRendering", GrGLBackendState::kPathRendering_GrGLBackendState)
+    .value("kALL", GrGLBackendState::kALL_GrGLBackendState)
+    .export_values();
+
+py::enum_<GrFlushFlags>(m, "GrFlushFlags", R"docstring(
+    Enum used as return value when flush with semaphores so the client knows
+    whether the semaphores were submitted to GPU or not.
+    )docstring")
+    .value("kNone", GrFlushFlags::kNone_GrFlushFlags)
+    .value("kSyncCpu", GrFlushFlags::kSyncCpu_GrFlushFlag)
+    .export_values();
+
+py::enum_<GrSemaphoresSubmitted>(m, "GrSemaphoresSubmitted")
+    .value("kNo", GrSemaphoresSubmitted::kNo)
+    .value("kYes", GrSemaphoresSubmitted::kYes)
+    .export_values();
+
+py::class_<GrBackendSemaphore>(m, "GrBackendSemaphore")
+    .def(py::init())
+    // .def("initGL", &GrBackendSemaphore::initGL)
+    // .def("initVulkan", &GrBackendSemaphore::initVulkan)
+    // .def("initMetal", &GrBackendSemaphore::initMetal)
+    .def("isInitialized", &GrBackendSemaphore::isInitialized)
+    // .def("glSync", &GrBackendSemaphore::glSync)
+    // .def("vkSemaphore", &GrBackendSemaphore::vkSemaphore)
+    // .def("mtlSemaphore", &GrBackendSemaphore::mtlSemaphore)
+    // .def("mtlValue", &GrBackendSemaphore::mtlValue)
+    ;
+
+py::class_<GrBackendTexture>(m, "GrBackendTexture")
+    .def(py::init())
+    .def("isValid", &GrBackendTexture::isValid)
+    ;
+
+py::class_<sk_sp<const GrGLInterface>>(m, "GrGLInterface")
+    .def(py::init([] {
+        auto interface = GrGLMakeNativeInterface();
+        if (!interface.get())
+            throw std::runtime_error("null pointer exception.");
+        return interface;
+    }));
+
 py::class_<GrContext, sk_sp<GrContext>>(m, "GrContext")
     .def("resetContext", &GrContext::resetContext,
         "The GrContext normally assumes that no outsider is setting state "
@@ -139,6 +241,14 @@ py::class_<GrContext, sk_sp<GrContext>>(m, "GrContext")
     //     &GrContext::createCompressedBackendTexture)
     // .def("deleteBackendTexture", &GrContext::deleteBackendTexture)
     .def("precompileShader", &GrContext::precompileShader)
+    .def_static("MakeGL",
+        py::overload_cast<sk_sp<const GrGLInterface>, const GrContextOptions&>(
+            &GrContext::MakeGL))
+    .def_static("MakeGL",
+        py::overload_cast<sk_sp<const GrGLInterface>>(&GrContext::MakeGL))
+    .def_static("MakeGL",
+        py::overload_cast<const GrContextOptions&>(&GrContext::MakeGL))
+    .def_static("MakeGL", py::overload_cast<>(&GrContext::MakeGL))
     // .def_static("MakeVulkan",
     //     (sk_sp<GrContext> (*)(const GrVkBackendContext&,
     //         const GrContextOptions&)) &GrContext::MakeVulkan,

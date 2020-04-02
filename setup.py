@@ -86,9 +86,6 @@ elif sys.platform == 'darwin':
         '-framework', 'AppKit',
         '-framework', 'ApplicationServices',
         '-framework', 'OpenGL',
-        #'-framework', 'Metal',
-        #'-framework', 'MetalKit',
-        #'-framework', 'Foundation',
     ]
 else:
     DEFINE_MACROS = [('VERSION_INFO', __version__)]
