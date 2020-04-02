@@ -2,12 +2,23 @@ import skia
 import pytest
 
 
+# @pytest.fixture(scope='session')
+# def opengl():
+#     from OpenGL.GLUT import glutInit, glutCreateWindow, glutHideWindow
+#     glutInit()
+#     glutCreateWindow('Hidden window for OpenGL context')
+#     glutHideWindow()
+
+
 @pytest.fixture(scope='session')
 def opengl():
-    from OpenGL.GLUT import glutInit, glutCreateWindow, glutHideWindow
-    glutInit()
-    glutCreateWindow('Hidden window for OpenGL context')
-    glutHideWindow()
+    import glfw
+    if not glfw.init():
+        raise RuntimeError('glfw.init() failed')
+    glfw.window_hint(glfw.VISIBLE, glfw.FALSE)
+    context = glfw.create_window(640, 480, '', None, None)
+    glfw.make_context_current(context)
+    yield context
 
 
 @pytest.fixture(scope='module', params=['raster', 'gpu'])
