@@ -2,7 +2,6 @@ import contextlib
 import skia
 import pytest
 
-
 # @contextlib.contextmanager
 # def opengl():
 #     from OpenGL.GLUT import glutInit, glutCreateWindow, glutHideWindow
@@ -17,12 +16,16 @@ def opengl():
     if not glfw.init():
         raise RuntimeError('glfw.init() failed')
     glfw.window_hint(glfw.VISIBLE, glfw.FALSE)
+    glfw.window_hint(glfw.STENCIL_BITS, 8)
     context = glfw.create_window(640, 480, '', None, None)
     glfw.make_context_current(context)
     yield context
 
 
-@pytest.fixture(scope='session', params=['raster', 'gpu'])
+@pytest.fixture(scope='session', params=[
+    'raster',
+    'gpu',
+])
 def surface(request):
     if request.param == 'gpu':
         with opengl():
