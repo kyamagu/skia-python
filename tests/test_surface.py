@@ -33,7 +33,10 @@ def opengl_context():
 
 @pytest.fixture(scope='session', params=[
     'raster',
-    'gpu',
+    ('gpu', pytest.mark.skipif(
+        sys.platform == 'win32',
+        reason='Windows VMs on Github Actions do not support capable drivers.',
+        )),
 ])
 def surface(request):
     if request.param == 'gpu':
@@ -60,6 +63,7 @@ def test_Surface_methods(surface):
     assert isinstance(surface.getCanvas(), skia.Canvas)
     assert isinstance(surface.generationID(), int)
     if sys.platform != 'win32':
+        # This segfault on windows VM, needs investigation.
         assert isinstance(surface.makeSurface(
             skia.ImageInfo.MakeN32Premul(120, 120)), skia.Surface)
     assert isinstance(surface.makeSurface(120, 120), skia.Surface)
