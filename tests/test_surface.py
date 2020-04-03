@@ -59,8 +59,9 @@ def test_Surface_methods(surface):
     assert isinstance(surface.imageInfo(), skia.ImageInfo)
     assert isinstance(surface.getCanvas(), skia.Canvas)
     assert isinstance(surface.generationID(), int)
-    assert isinstance(surface.makeSurface(
-        skia.ImageInfo.MakeN32Premul(120, 120)), skia.Surface)
+    if sys.platform != 'win32':
+        assert isinstance(surface.makeSurface(
+            skia.ImageInfo.MakeN32Premul(120, 120)), skia.Surface)
     assert isinstance(surface.makeSurface(120, 120), skia.Surface)
     assert isinstance(surface.makeImageSnapshot(), skia.Image)
     assert isinstance(
