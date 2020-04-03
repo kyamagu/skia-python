@@ -13,6 +13,22 @@ template<typename T>
 using NumPy = py::array_t<T, py::array::c_style | py::array::forcecast>;
 
 void initSurface(py::module &m) {
+
+py::enum_<SkBackingFit>(m, "BackingFit", R"docstring(
+    Indicates whether a backing store needs to be an exact match or can be
+    larger than is strictly necessary.
+    )docstring")
+    .value("kApprox", SkBackingFit::kApprox)
+    .value("kExact", SkBackingFit::kExact)
+    .export_values();
+
+py::enum_<SkBudgeted>(m, "Budgeted", R"docstring(
+    Indicates whether an allocation should count against a cache budget.
+    )docstring")
+    .value("kNo", SkBudgeted::kNo)
+    .value("kYes", SkBudgeted::kYes)
+    .export_values();
+
 py::enum_<SkPixelGeometry>(m, "PixelGeometry")
     .value("kUnknown", SkPixelGeometry::kUnknown_SkPixelGeometry)
     .value("kRGB_H", SkPixelGeometry::kRGB_H_SkPixelGeometry)
@@ -276,7 +292,8 @@ surface
             &SkSurface::MakeRaster),
         "Allocates raster SkSurface.")
     .def_static("MakeRasterN32Premul", &SkSurface::MakeRasterN32Premul,
-        "Allocates raster SkSurface.")
+        "Allocates raster SkSurface.",
+        py::arg("width"), py::arg("height"), py::arg("surfaceProps") = nullptr)
     // .def_static("MakeFromBackendTexture", &SkSurface::MakeFromBackendTexture,
     //     "Wraps a GPU-backed texture into SkSurface.")
     // .def_static("MakeFromBackendRenderTarget",
@@ -285,19 +302,19 @@ surface
     // .def_static("MakeFromBackendTextureAsRenderTarget",
     //     &SkSurface::MakeFromBackendTextureAsRenderTarget,
     //     "Wraps a GPU-backed texture into SkSurface.")
-    // .def_static("MakeRenderTarget",
-    //     py::overload_cast<GrContext*, SkBudgeted, const SkImageInfo&, int,
-    //     GrSurfaceOrigin, const SkSurfaceProps*, bool>(
-    //         &SkSurface::MakeRenderTarget),
-    //     "Returns SkSurface on GPU indicated by context.")
-    // .def_static("MakeRenderTarget",
-    //     py::overload_cast<GrContext*, SkBudgeted, const SkImageInfo&, int,
-    //     const SkSurfaceProps*>(&SkSurface::MakeRenderTarget),
-    //     "Returns SkSurface on GPU indicated by context.")
-    // .def_static("MakeRenderTarget",
-    //     py::overload_cast<GrContext*, SkBudgeted, const SkImageInfo&>(
-    //         &SkSurface::MakeRenderTarget),
-    //     "Returns SkSurface on GPU indicated by context.")
+    .def_static("MakeRenderTarget",
+        py::overload_cast<GrContext*, SkBudgeted, const SkImageInfo&, int,
+        GrSurfaceOrigin, const SkSurfaceProps*, bool>(
+            &SkSurface::MakeRenderTarget),
+        "Returns SkSurface on GPU indicated by context.")
+    .def_static("MakeRenderTarget",
+        py::overload_cast<GrContext*, SkBudgeted, const SkImageInfo&, int,
+        const SkSurfaceProps*>(&SkSurface::MakeRenderTarget),
+        "Returns SkSurface on GPU indicated by context.")
+    .def_static("MakeRenderTarget",
+        py::overload_cast<GrContext*, SkBudgeted, const SkImageInfo&>(
+            &SkSurface::MakeRenderTarget),
+        "Returns SkSurface on GPU indicated by context.")
     // .def_static("MakeRenderTarget",
     //     py::overload_cast<GrRecordingContext*,
     //     const SkSurfaceCharacterization&, SkBudgeted>(

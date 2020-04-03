@@ -60,12 +60,10 @@ if sys.platform == 'win32':
         '/wd4267',  # Conversion from 'size_t' to 'int', possible loss of data.
         '/wd4800',  # Forcing value to bool 'true' or 'false'.
         '/wd4180',  # Qualifier applied to function type has no meaning.
-        '/UNDEBUG',
     ]
     EXTRA_LINK_ARGS = [
         '/OPT:ICF',
         '/OPT:REF',
-        '/DEBUG',
     ]
 elif sys.platform == 'darwin':
     DEFINE_MACROS = [('VERSION_INFO', __version__)]
@@ -86,9 +84,6 @@ elif sys.platform == 'darwin':
         '-framework', 'AppKit',
         '-framework', 'ApplicationServices',
         '-framework', 'OpenGL',
-        #'-framework', 'Metal',
-        #'-framework', 'MetalKit',
-        #'-framework', 'Foundation',
     ]
 else:
     DEFINE_MACROS = [('VERSION_INFO', __version__)]
