@@ -1,25 +1,34 @@
 import contextlib
 import skia
 import pytest
+import sys
+import logging
 
-# @contextlib.contextmanager
-# def opengl():
-#     from OpenGL.GLUT import glutInit, glutCreateWindow, glutHideWindow
-#     glutInit()
-#     glutCreateWindow('Hidden window for OpenGL context')
-#     glutHideWindow()
+logger = logging.getLogger(__name__)
 
 
 @contextlib.contextmanager
-def opengl():
-    import glfw
-    if not glfw.init():
-        raise RuntimeError('glfw.init() failed')
-    glfw.window_hint(glfw.VISIBLE, glfw.FALSE)
-    glfw.window_hint(glfw.STENCIL_BITS, 8)
-    context = glfw.create_window(640, 480, '', None, None)
-    glfw.make_context_current(context)
-    yield context
+def opengl_context():
+    if sys.platform in ('linux', 'win32'):
+        # Seems macos VM fails to create OpenGL context via glfw.
+        import glfw
+        if not glfw.init():
+            raise RuntimeError('glfw.init() failed')
+        glfw.window_hint(glfw.VISIBLE, glfw.FALSE)
+        glfw.window_hint(glfw.STENCIL_BITS, 8)
+        context = glfw.create_window(640, 480, '', None, None)
+        glfw.make_context_current(context)
+        yield context
+        glfw.terminate()
+    elif sys.platform in ('darwin',):
+        from OpenGL.GLUT import glutInit, glutCreateWindow, glutHideWindow
+        glutInit()
+        context = glutCreateWindow('Hidden window for OpenGL context')
+        glutHideWindow()
+        yield context
+    else:
+        logger.warning('Platform not supported: %s' % sys.platform)
+        yield None
 
 
 @pytest.fixture(scope='session', params=[
@@ -28,7 +37,7 @@ def opengl():
 ])
 def surface(request):
     if request.param == 'gpu':
-        with opengl():
+        with opengl_context():
             context = skia.GrContext.MakeGL()
             info = skia.ImageInfo.MakeN32Premul(320, 240)
             yield skia.Surface.MakeRenderTarget(
