@@ -41,14 +41,18 @@ PYBIND11_MODULE(skia, m) {
 
         .. autosummary::
             :toctree: _generate
+            :nosignatures:
+            :template: class.rst
 
             AlphaType
             ApplyPerspectiveClip
             AutoCanvasRestore
             BBoxHierarchy
+            BackingFit
             Bitmap
             BlendMode
             BlendModeCoeff
+            Budgeted
             Canvas
             ClipOp
             Color4f
@@ -65,7 +69,18 @@ PYBIND11_MODULE(skia, m) {
             FontHinting
             FontMetrics
             FontStyle
+            GrBackendApi
+            GrBackendSemaphore
+            GrBackendTexture
             GrContext
+            GrFlushFlags
+            GrGLBackendState
+            GrGLInterface
+            GrMipMapped
+            GrProtected
+            GrRenderable
+            GrSemaphoresSubmitted
+            GrSurfaceOrigin
             IPoint
             IRect
             ISize
