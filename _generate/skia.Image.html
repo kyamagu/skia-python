@@ -1,0 +1,687 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>Image &#8212; skia-python 0.0.1 documentation</title>
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/language_data.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="ImageFilter" href="skia.ImageFilter.html" />
+    <link rel="prev" title="ISize" href="skia.ISize.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="image">
+<h1>Image<a class="headerlink" href="#image" title="Permalink to this headline">¶</a></h1>
+<dl class="py class">
+<dt id="skia.Image">
+<em class="property">class </em><code class="sig-name descname">Image</code><a class="headerlink" href="#skia.Image" title="Permalink to this definition">¶</a></dt>
+<dd><p>SkImage describes a two dimensional array of pixels to draw.</p>
+<p>The pixels may be decoded in a raster bitmap, encoded in a SkPicture or
+compressed data stream, or located in GPU memory as a GPU texture.</p>
+<p>SkImage cannot be modified after it is created. SkImage may allocate
+additional storage as needed; for instance, an encoded SkImage may decode
+when drawn.</p>
+<p>SkImage width and height are greater than zero. Creating an SkImage with
+zero width or height returns SkImage equal to nullptr.</p>
+<p>SkImage may be created from SkBitmap, SkPixmap, SkSurface, SkPicture,
+encoded streams, GPU texture, YUV_ColorSpace data, or hardware buffer.
+Encoded streams supported include BMP, GIF, HEIF, ICO, JPEG, PNG, WBMP,
+WebP. Supported encoding details vary with platform.</p>
+<p class="rubric">Methods</p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Image.DecodeToRaster" title="skia.Image.DecodeToRaster"><code class="xref py py-obj docutils literal notranslate"><span class="pre">DecodeToRaster</span></code></a></p></td>
+<td><p>Overloaded function.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.Image.DecodeToTexture" title="skia.Image.DecodeToTexture"><code class="xref py py-obj docutils literal notranslate"><span class="pre">DecodeToTexture</span></code></a></p></td>
+<td><p>Overloaded function.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Image.MakeCrossContextFromPixmap" title="skia.Image.MakeCrossContextFromPixmap"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MakeCrossContextFromPixmap</span></code></a></p></td>
+<td><p>Creates SkImage from pixmap.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.Image.MakeFromBitmap" title="skia.Image.MakeFromBitmap"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MakeFromBitmap</span></code></a></p></td>
+<td><p>Creates SkImage from bitmap, sharing or copying bitmap pixels.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Image.MakeFromEncoded" title="skia.Image.MakeFromEncoded"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MakeFromEncoded</span></code></a></p></td>
+<td><p>Return an image backed by the encoded data, but attempt to defer decoding until the image is actually used/drawn.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.Image.MakeFromPicture" title="skia.Image.MakeFromPicture"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MakeFromPicture</span></code></a></p></td>
+<td><p>Creates SkImage from picture.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Image.MakeFromRaster" title="skia.Image.MakeFromRaster"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MakeFromRaster</span></code></a></p></td>
+<td><p>Creates SkImage from pixmap, sharing SkPixmap pixels.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.Image.MakeFromTexture" title="skia.Image.MakeFromTexture"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MakeFromTexture</span></code></a></p></td>
+<td><p>Creates SkImage from GPU texture associated with context.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Image.MakeRasterCopy" title="skia.Image.MakeRasterCopy"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MakeRasterCopy</span></code></a></p></td>
+<td><p>Creates SkImage from SkPixmap and copy of pixels.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.Image.MakeRasterData" title="skia.Image.MakeRasterData"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MakeRasterData</span></code></a></p></td>
+<td><p>Creates SkImage from SkImageInfo, sharing pixels.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Image.MakeRasterFromCompressed" title="skia.Image.MakeRasterFromCompressed"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MakeRasterFromCompressed</span></code></a></p></td>
+<td><p>Creates a CPU-backed SkImage from compressed data.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.Image.__init__" title="skia.Image.__init__"><code class="xref py py-obj docutils literal notranslate"><span class="pre">__init__</span></code></a></p></td>
+<td><p>Initialize self.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Image.alphaType" title="skia.Image.alphaType"><code class="xref py py-obj docutils literal notranslate"><span class="pre">alphaType</span></code></a></p></td>
+<td><p>Returns SkAlphaType.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.Image.asLegacyBitmap" title="skia.Image.asLegacyBitmap"><code class="xref py py-obj docutils literal notranslate"><span class="pre">asLegacyBitmap</span></code></a></p></td>
+<td><p>Deprecated.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Image.bounds" title="skia.Image.bounds"><code class="xref py py-obj docutils literal notranslate"><span class="pre">bounds</span></code></a></p></td>
+<td><p>Returns SkIRect { 0, 0, width(), height() }.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.Image.colorSpace" title="skia.Image.colorSpace"><code class="xref py py-obj docutils literal notranslate"><span class="pre">colorSpace</span></code></a></p></td>
+<td><p>Returns SkColorSpace, the range of colors, associated with SkImage.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Image.colorType" title="skia.Image.colorType"><code class="xref py py-obj docutils literal notranslate"><span class="pre">colorType</span></code></a></p></td>
+<td><p>Returns SkColorType if known; otherwise, returns kUnknown_SkColorType.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.Image.dimensions" title="skia.Image.dimensions"><code class="xref py py-obj docutils literal notranslate"><span class="pre">dimensions</span></code></a></p></td>
+<td><p>Returns SkISize { width(), height() }.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Image.encodeToData" title="skia.Image.encodeToData"><code class="xref py py-obj docutils literal notranslate"><span class="pre">encodeToData</span></code></a></p></td>
+<td><p>Overloaded function.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.Image.flush" title="skia.Image.flush"><code class="xref py py-obj docutils literal notranslate"><span class="pre">flush</span></code></a></p></td>
+<td><p>Version of flush() that uses a default GrFlushInfo.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Image.height" title="skia.Image.height"><code class="xref py py-obj docutils literal notranslate"><span class="pre">height</span></code></a></p></td>
+<td><p>Returns pixel row count.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.Image.imageInfo" title="skia.Image.imageInfo"><code class="xref py py-obj docutils literal notranslate"><span class="pre">imageInfo</span></code></a></p></td>
+<td><p>Returns a SkImageInfo describing the width, height, color type, alpha type, and color space of the SkImage.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Image.isAlphaOnly" title="skia.Image.isAlphaOnly"><code class="xref py py-obj docutils literal notranslate"><span class="pre">isAlphaOnly</span></code></a></p></td>
+<td><p>Returns true if SkImage pixels represent transparency only.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.Image.isLazyGenerated" title="skia.Image.isLazyGenerated"><code class="xref py py-obj docutils literal notranslate"><span class="pre">isLazyGenerated</span></code></a></p></td>
+<td><p>Returns true if SkImage is backed by an image-generator or other service that creates and caches its pixels or texture on-demand.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Image.isOpaque" title="skia.Image.isOpaque"><code class="xref py py-obj docutils literal notranslate"><span class="pre">isOpaque</span></code></a></p></td>
+<td><p>Returns true if pixels ignore their alpha value and are treated as fully opaque.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.Image.isTextureBacked" title="skia.Image.isTextureBacked"><code class="xref py py-obj docutils literal notranslate"><span class="pre">isTextureBacked</span></code></a></p></td>
+<td><p>Returns true the contents of SkImage was created on or uploaded to GPU memory, and is available as a GPU texture.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Image.isValid" title="skia.Image.isValid"><code class="xref py py-obj docutils literal notranslate"><span class="pre">isValid</span></code></a></p></td>
+<td><p>Returns true if SkImage can be drawn on either raster surface or GPU surface.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.Image.makeColorSpace" title="skia.Image.makeColorSpace"><code class="xref py py-obj docutils literal notranslate"><span class="pre">makeColorSpace</span></code></a></p></td>
+<td><p>Creates SkImage in target SkColorSpace.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Image.makeColorTypeAndColorSpace" title="skia.Image.makeColorTypeAndColorSpace"><code class="xref py py-obj docutils literal notranslate"><span class="pre">makeColorTypeAndColorSpace</span></code></a></p></td>
+<td><p>Experimental.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.Image.makeNonTextureImage" title="skia.Image.makeNonTextureImage"><code class="xref py py-obj docutils literal notranslate"><span class="pre">makeNonTextureImage</span></code></a></p></td>
+<td><p>Returns raster image or lazy image.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Image.makeRasterImage" title="skia.Image.makeRasterImage"><code class="xref py py-obj docutils literal notranslate"><span class="pre">makeRasterImage</span></code></a></p></td>
+<td><p>Returns raster image.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.Image.makeShader" title="skia.Image.makeShader"><code class="xref py py-obj docutils literal notranslate"><span class="pre">makeShader</span></code></a></p></td>
+<td><p>Overloaded function.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Image.makeSubset" title="skia.Image.makeSubset"><code class="xref py py-obj docutils literal notranslate"><span class="pre">makeSubset</span></code></a></p></td>
+<td><p>Returns subset of SkImage.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.Image.peekPixels" title="skia.Image.peekPixels"><code class="xref py py-obj docutils literal notranslate"><span class="pre">peekPixels</span></code></a></p></td>
+<td><p>Copies SkImage pixel address, row bytes, and SkImageInfo to pixmap, if address is available, and returns true.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Image.readPixels" title="skia.Image.readPixels"><code class="xref py py-obj docutils literal notranslate"><span class="pre">readPixels</span></code></a></p></td>
+<td><p>Overloaded function.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.Image.ref" title="skia.Image.ref"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ref</span></code></a></p></td>
+<td><p>Increment the reference count.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Image.refColorSpace" title="skia.Image.refColorSpace"><code class="xref py py-obj docutils literal notranslate"><span class="pre">refColorSpace</span></code></a></p></td>
+<td><p>Returns a smart pointer to SkColorSpace, the range of colors, associated with SkImage.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.Image.refEncodedData" title="skia.Image.refEncodedData"><code class="xref py py-obj docutils literal notranslate"><span class="pre">refEncodedData</span></code></a></p></td>
+<td><p>Returns encoded SkImage pixels as SkData, if SkImage was created from supported encoded stream format.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Image.reinterpretColorSpace" title="skia.Image.reinterpretColorSpace"><code class="xref py py-obj docutils literal notranslate"><span class="pre">reinterpretColorSpace</span></code></a></p></td>
+<td><p>Creates a new SkImage identical to this one, but with a different SkColorSpace.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.Image.scalePixels" title="skia.Image.scalePixels"><code class="xref py py-obj docutils literal notranslate"><span class="pre">scalePixels</span></code></a></p></td>
+<td><p>Copies SkImage to dst, scaling pixels to fit dst.width() and dst.height(), and converting pixels to match dst.colorType() and dst.alphaType().</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Image.unique" title="skia.Image.unique"><code class="xref py py-obj docutils literal notranslate"><span class="pre">unique</span></code></a></p></td>
+<td><p>May return true if the caller is the only owner.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.Image.uniqueID" title="skia.Image.uniqueID"><code class="xref py py-obj docutils literal notranslate"><span class="pre">uniqueID</span></code></a></p></td>
+<td><p>Returns value unique to image.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Image.unref" title="skia.Image.unref"><code class="xref py py-obj docutils literal notranslate"><span class="pre">unref</span></code></a></p></td>
+<td><p>Decrement the reference count.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.Image.width" title="skia.Image.width"><code class="xref py py-obj docutils literal notranslate"><span class="pre">width</span></code></a></p></td>
+<td><p>Returns pixel count in each row.</p></td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Attributes</p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">kAllow_CachingHint</span></code></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">kBC1_RGB8_UNORM</span></code></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">kBC1_RGBA8_UNORM</span></code></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">kDisallow_CachingHint</span></code></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">kETC2_RGB8_UNORM</span></code></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">kF16</span></code></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">kLast</span></code></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">kNone</span></code></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">kU8</span></code></p></td>
+<td><p></p></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<div class="section" id="methods">
+<h2>Methods<a class="headerlink" href="#methods" title="Permalink to this headline">¶</a></h2>
+<dl class="py method">
+<dt id="skia.Image.DecodeToRaster">
+<em class="property">static </em><code class="sig-prename descclassname">Image.</code><code class="sig-name descname">DecodeToRaster</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span><span class="n">args</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#skia.Image.DecodeToRaster" title="Permalink to this definition">¶</a></dt>
+<dd><p>Overloaded function.</p>
+<ol class="arabic simple">
+<li><p>DecodeToRaster(encoded: capsule, length: int, subset: SkIRect = None) -&gt; skia.Image</p></li>
+</ol>
+<p>Decode the data in encoded/length into a raster image.</p>
+<ol class="arabic simple" start="2">
+<li><p>DecodeToRaster(data: skia.Data, subset: SkIRect = None) -&gt; skia.Image</p></li>
+</ol>
+</dd></dl>
+
+<dl class="py method">
+<dt id="skia.Image.DecodeToTexture">
+<em class="property">static </em><code class="sig-prename descclassname">Image.</code><code class="sig-name descname">DecodeToTexture</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span><span class="n">args</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#skia.Image.DecodeToTexture" title="Permalink to this definition">¶</a></dt>
+<dd><p>Overloaded function.</p>
+<ol class="arabic simple">
+<li><p>DecodeToTexture(ctx: skia.GrContext, encoded: capsule, length: int, subset: SkIRect = None) -&gt; skia.Image</p></li>
+</ol>
+<p>Decode the data in encoded/length into a texture-backed image.</p>
+<ol class="arabic simple" start="2">
+<li><p>DecodeToTexture(ctx: skia.GrContext, data: skia.Data, subset: SkIRect = None) -&gt; skia.Image</p></li>
+</ol>
+</dd></dl>
+
+<dl class="py method">
+<dt id="skia.Image.MakeCrossContextFromPixmap">
+<em class="property">static </em><code class="sig-prename descclassname">Image.</code><code class="sig-name descname">MakeCrossContextFromPixmap</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">arg0</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.GrContext.html#skia.GrContext" title="skia.GrContext">skia.GrContext</a></span></em>, <em class="sig-param"><span class="n">arg1</span><span class="p">:</span> <span class="n">SkPixmap</span></em>, <em class="sig-param"><span class="n">arg2</span><span class="p">:</span> <span class="n">bool</span></em>, <em class="sig-param"><span class="n">arg3</span><span class="p">:</span> <span class="n">bool</span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="#skia.Image" title="skia.Image">skia.Image</a><a class="headerlink" href="#skia.Image.MakeCrossContextFromPixmap" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates SkImage from pixmap.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="skia.Image.MakeFromBitmap">
+<em class="property">static </em><code class="sig-prename descclassname">Image.</code><code class="sig-name descname">MakeFromBitmap</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">arg0</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.Bitmap.html#skia.Bitmap" title="skia.Bitmap">skia.Bitmap</a></span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="#skia.Image" title="skia.Image">skia.Image</a><a class="headerlink" href="#skia.Image.MakeFromBitmap" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates SkImage from bitmap, sharing or copying bitmap pixels.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="skia.Image.MakeFromEncoded">
+<em class="property">static </em><code class="sig-prename descclassname">Image.</code><code class="sig-name descname">MakeFromEncoded</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">arg0</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.Data.html#skia.Data" title="skia.Data">skia.Data</a></span></em>, <em class="sig-param"><span class="n">arg1</span><span class="p">:</span> <span class="n">SkIRect</span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="#skia.Image" title="skia.Image">skia.Image</a><a class="headerlink" href="#skia.Image.MakeFromEncoded" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return an image backed by the encoded data, but attempt to defer decoding until the image is actually used/drawn.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="skia.Image.MakeFromPicture">
+<em class="property">static </em><code class="sig-prename descclassname">Image.</code><code class="sig-name descname">MakeFromPicture</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">arg0</span><span class="p">:</span> <span class="n">SkPicture</span></em>, <em class="sig-param"><span class="n">arg1</span><span class="p">:</span> <span class="n">SkISize</span></em>, <em class="sig-param"><span class="n">arg2</span><span class="p">:</span> <span class="n">SkMatrix</span></em>, <em class="sig-param"><span class="n">arg3</span><span class="p">:</span> <span class="n">SkPaint</span></em>, <em class="sig-param"><span class="n">arg4</span><span class="p">:</span> <span class="n">skia.Image.BitDepth</span></em>, <em class="sig-param"><span class="n">arg5</span><span class="p">:</span> <span class="n">SkColorSpace</span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="#skia.Image" title="skia.Image">skia.Image</a><a class="headerlink" href="#skia.Image.MakeFromPicture" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates SkImage from picture.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="skia.Image.MakeFromRaster">
+<em class="property">static </em><code class="sig-prename descclassname">Image.</code><code class="sig-name descname">MakeFromRaster</code><span class="sig-paren">(</span><em class="sig-param">arg0: SkPixmap</em>, <em class="sig-param">arg1: void (void const*</em>, <em class="sig-param">void*)</em>, <em class="sig-param">arg2: capsule</em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="#skia.Image" title="skia.Image">skia.Image</a><a class="headerlink" href="#skia.Image.MakeFromRaster" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates SkImage from pixmap, sharing SkPixmap pixels.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="skia.Image.MakeFromTexture">
+<em class="property">static </em><code class="sig-prename descclassname">Image.</code><code class="sig-name descname">MakeFromTexture</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">arg0</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.GrContext.html#skia.GrContext" title="skia.GrContext">skia.GrContext</a></span></em>, <em class="sig-param"><span class="n">arg1</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.GrBackendTexture.html#skia.GrBackendTexture" title="skia.GrBackendTexture">skia.GrBackendTexture</a></span></em>, <em class="sig-param"><span class="n">arg2</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.GrSurfaceOrigin.html#skia.GrSurfaceOrigin" title="skia.GrSurfaceOrigin">skia.GrSurfaceOrigin</a></span></em>, <em class="sig-param"><span class="n">arg3</span><span class="p">:</span> <span class="n">SkColorType</span></em>, <em class="sig-param"><span class="n">arg4</span><span class="p">:</span> <span class="n">SkAlphaType</span></em>, <em class="sig-param"><span class="n">arg5</span><span class="p">:</span> <span class="n">SkColorSpace</span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="#skia.Image" title="skia.Image">skia.Image</a><a class="headerlink" href="#skia.Image.MakeFromTexture" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates SkImage from GPU texture associated with context.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="skia.Image.MakeRasterCopy">
+<em class="property">static </em><code class="sig-prename descclassname">Image.</code><code class="sig-name descname">MakeRasterCopy</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">arg0</span><span class="p">:</span> <span class="n">SkPixmap</span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="#skia.Image" title="skia.Image">skia.Image</a><a class="headerlink" href="#skia.Image.MakeRasterCopy" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates SkImage from SkPixmap and copy of pixels.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="skia.Image.MakeRasterData">
+<em class="property">static </em><code class="sig-prename descclassname">Image.</code><code class="sig-name descname">MakeRasterData</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">arg0</span><span class="p">:</span> <span class="n">SkImageInfo</span></em>, <em class="sig-param"><span class="n">arg1</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.Data.html#skia.Data" title="skia.Data">skia.Data</a></span></em>, <em class="sig-param"><span class="n">arg2</span><span class="p">:</span> <span class="n">int</span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="#skia.Image" title="skia.Image">skia.Image</a><a class="headerlink" href="#skia.Image.MakeRasterData" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates SkImage from SkImageInfo, sharing pixels.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="skia.Image.MakeRasterFromCompressed">
+<em class="property">static </em><code class="sig-prename descclassname">Image.</code><code class="sig-name descname">MakeRasterFromCompressed</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">arg0</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.Data.html#skia.Data" title="skia.Data">skia.Data</a></span></em>, <em class="sig-param"><span class="n">arg1</span><span class="p">:</span> <span class="n">int</span></em>, <em class="sig-param"><span class="n">arg2</span><span class="p">:</span> <span class="n">int</span></em>, <em class="sig-param"><span class="n">arg3</span><span class="p">:</span> <span class="n">skia.Image.CompressionType</span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="#skia.Image" title="skia.Image">skia.Image</a><a class="headerlink" href="#skia.Image.MakeRasterFromCompressed" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates a CPU-backed SkImage from compressed data.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="skia.Image.__init__">
+<code class="sig-prename descclassname">Image.</code><code class="sig-name descname">__init__</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#skia.Image.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Initialize self.  See help(type(self)) for accurate signature.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="skia.Image.alphaType">
+<code class="sig-prename descclassname">Image.</code><code class="sig-name descname">alphaType</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Image" title="skia.Image">skia.Image</a></span></em><span class="sig-paren">)</span> &#x2192; SkAlphaType<a class="headerlink" href="#skia.Image.alphaType" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns SkAlphaType.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="skia.Image.asLegacyBitmap">
+<code class="sig-prename descclassname">Image.</code><code class="sig-name descname">asLegacyBitmap</code><span class="sig-paren">(</span><em class="sig-param">self: skia.Image</em>, <em class="sig-param">arg0: skia.Bitmap</em>, <em class="sig-param">arg1: SkImage::LegacyBitmapMode</em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#skia.Image.asLegacyBitmap" title="Permalink to this definition">¶</a></dt>
+<dd><p>Deprecated.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="skia.Image.bounds">
+<code class="sig-prename descclassname">Image.</code><code class="sig-name descname">bounds</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Image" title="skia.Image">skia.Image</a></span></em><span class="sig-paren">)</span> &#x2192; SkIRect<a class="headerlink" href="#skia.Image.bounds" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns SkIRect { 0, 0, width(), height() }.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="skia.Image.colorSpace">
+<code class="sig-prename descclassname">Image.</code><code class="sig-name descname">colorSpace</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Image" title="skia.Image">skia.Image</a></span></em><span class="sig-paren">)</span> &#x2192; SkColorSpace<a class="headerlink" href="#skia.Image.colorSpace" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns SkColorSpace, the range of colors, associated with SkImage.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="skia.Image.colorType">
+<code class="sig-prename descclassname">Image.</code><code class="sig-name descname">colorType</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Image" title="skia.Image">skia.Image</a></span></em><span class="sig-paren">)</span> &#x2192; SkColorType<a class="headerlink" href="#skia.Image.colorType" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns SkColorType if known; otherwise, returns kUnknown_SkColorType.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="skia.Image.dimensions">
+<code class="sig-prename descclassname">Image.</code><code class="sig-name descname">dimensions</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Image" title="skia.Image">skia.Image</a></span></em><span class="sig-paren">)</span> &#x2192; SkISize<a class="headerlink" href="#skia.Image.dimensions" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns SkISize { width(), height() }.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="skia.Image.encodeToData">
+<code class="sig-prename descclassname">Image.</code><code class="sig-name descname">encodeToData</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span><span class="n">args</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#skia.Image.encodeToData" title="Permalink to this definition">¶</a></dt>
+<dd><p>Overloaded function.</p>
+<ol class="arabic simple">
+<li><p>encodeToData(self: skia.Image, arg0: skia.EncodedImageFormat, arg1: int) -&gt; skia.Data</p></li>
+</ol>
+<p>Encodes SkImage pixels, returning result as SkData.</p>
+<ol class="arabic simple" start="2">
+<li><p>encodeToData(self: skia.Image) -&gt; skia.Data</p></li>
+</ol>
+<p>Encodes SkImage pixels, returning result as SkData.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="skia.Image.flush">
+<code class="sig-prename descclassname">Image.</code><code class="sig-name descname">flush</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Image" title="skia.Image">skia.Image</a></span></em>, <em class="sig-param"><span class="n">arg0</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.GrContext.html#skia.GrContext" title="skia.GrContext">skia.GrContext</a></span></em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#skia.Image.flush" title="Permalink to this definition">¶</a></dt>
+<dd><p>Version of flush() that uses a default GrFlushInfo.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="skia.Image.height">
+<code class="sig-prename descclassname">Image.</code><code class="sig-name descname">height</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Image" title="skia.Image">skia.Image</a></span></em><span class="sig-paren">)</span> &#x2192; int<a class="headerlink" href="#skia.Image.height" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns pixel row count.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="skia.Image.imageInfo">
+<code class="sig-prename descclassname">Image.</code><code class="sig-name descname">imageInfo</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Image" title="skia.Image">skia.Image</a></span></em><span class="sig-paren">)</span> &#x2192; SkImageInfo<a class="headerlink" href="#skia.Image.imageInfo" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a SkImageInfo describing the width, height, color type, alpha type, and color space of the SkImage.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="skia.Image.isAlphaOnly">
+<code class="sig-prename descclassname">Image.</code><code class="sig-name descname">isAlphaOnly</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Image" title="skia.Image">skia.Image</a></span></em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#skia.Image.isAlphaOnly" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns true if SkImage pixels represent transparency only.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="skia.Image.isLazyGenerated">
+<code class="sig-prename descclassname">Image.</code><code class="sig-name descname">isLazyGenerated</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Image" title="skia.Image">skia.Image</a></span></em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#skia.Image.isLazyGenerated" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns true if SkImage is backed by an image-generator or other service that creates and caches its pixels or texture on-demand.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="skia.Image.isOpaque">
+<code class="sig-prename descclassname">Image.</code><code class="sig-name descname">isOpaque</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Image" title="skia.Image">skia.Image</a></span></em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#skia.Image.isOpaque" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns true if pixels ignore their alpha value and are treated as fully opaque.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="skia.Image.isTextureBacked">
+<code class="sig-prename descclassname">Image.</code><code class="sig-name descname">isTextureBacked</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Image" title="skia.Image">skia.Image</a></span></em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#skia.Image.isTextureBacked" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns true the contents of SkImage was created on or uploaded to GPU memory, and is available as a GPU texture.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="skia.Image.isValid">
+<code class="sig-prename descclassname">Image.</code><code class="sig-name descname">isValid</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Image" title="skia.Image">skia.Image</a></span></em>, <em class="sig-param"><span class="n">arg0</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.GrContext.html#skia.GrContext" title="skia.GrContext">skia.GrContext</a></span></em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#skia.Image.isValid" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns true if SkImage can be drawn on either raster surface or GPU surface.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="skia.Image.makeColorSpace">
+<code class="sig-prename descclassname">Image.</code><code class="sig-name descname">makeColorSpace</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Image" title="skia.Image">skia.Image</a></span></em>, <em class="sig-param"><span class="n">arg0</span><span class="p">:</span> <span class="n">SkColorSpace</span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="#skia.Image" title="skia.Image">skia.Image</a><a class="headerlink" href="#skia.Image.makeColorSpace" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates SkImage in target SkColorSpace.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="skia.Image.makeColorTypeAndColorSpace">
+<code class="sig-prename descclassname">Image.</code><code class="sig-name descname">makeColorTypeAndColorSpace</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Image" title="skia.Image">skia.Image</a></span></em>, <em class="sig-param"><span class="n">arg0</span><span class="p">:</span> <span class="n">SkColorType</span></em>, <em class="sig-param"><span class="n">arg1</span><span class="p">:</span> <span class="n">SkColorSpace</span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="#skia.Image" title="skia.Image">skia.Image</a><a class="headerlink" href="#skia.Image.makeColorTypeAndColorSpace" title="Permalink to this definition">¶</a></dt>
+<dd><p>Experimental.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="skia.Image.makeNonTextureImage">
+<code class="sig-prename descclassname">Image.</code><code class="sig-name descname">makeNonTextureImage</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Image" title="skia.Image">skia.Image</a></span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="#skia.Image" title="skia.Image">skia.Image</a><a class="headerlink" href="#skia.Image.makeNonTextureImage" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns raster image or lazy image.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="skia.Image.makeRasterImage">
+<code class="sig-prename descclassname">Image.</code><code class="sig-name descname">makeRasterImage</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Image" title="skia.Image">skia.Image</a></span></em>, <em class="sig-param"><span class="n">arg0</span><span class="p">:</span> <span class="n">skia.Image.CachingHint</span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="#skia.Image" title="skia.Image">skia.Image</a><a class="headerlink" href="#skia.Image.makeRasterImage" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns raster image.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="skia.Image.makeShader">
+<code class="sig-prename descclassname">Image.</code><code class="sig-name descname">makeShader</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span><span class="n">args</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#skia.Image.makeShader" title="Permalink to this definition">¶</a></dt>
+<dd><p>Overloaded function.</p>
+<ol class="arabic simple">
+<li><p>makeShader(self: skia.Image, arg0: skia.TileMode, arg1: skia.TileMode, arg2: SkMatrix) -&gt; SkShader</p></li>
+</ol>
+<p>Creates SkShader from SkImage.</p>
+<ol class="arabic simple" start="2">
+<li><p>makeShader(self: skia.Image, arg0: skia.TileMode, arg1: skia.TileMode, arg2: SkMatrix) -&gt; SkShader</p></li>
+<li><p>makeShader(self: skia.Image, arg0: SkMatrix) -&gt; SkShader</p></li>
+<li><p>makeShader(self: skia.Image, arg0: SkMatrix) -&gt; SkShader</p></li>
+</ol>
+</dd></dl>
+
+<dl class="py method">
+<dt id="skia.Image.makeSubset">
+<code class="sig-prename descclassname">Image.</code><code class="sig-name descname">makeSubset</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Image" title="skia.Image">skia.Image</a></span></em>, <em class="sig-param"><span class="n">arg0</span><span class="p">:</span> <span class="n">SkIRect</span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="#skia.Image" title="skia.Image">skia.Image</a><a class="headerlink" href="#skia.Image.makeSubset" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns subset of SkImage.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="skia.Image.peekPixels">
+<code class="sig-prename descclassname">Image.</code><code class="sig-name descname">peekPixels</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Image" title="skia.Image">skia.Image</a></span></em>, <em class="sig-param"><span class="n">arg0</span><span class="p">:</span> <span class="n">SkPixmap</span></em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#skia.Image.peekPixels" title="Permalink to this definition">¶</a></dt>
+<dd><p>Copies SkImage pixel address, row bytes, and SkImageInfo to pixmap, if address is available, and returns true.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="skia.Image.readPixels">
+<code class="sig-prename descclassname">Image.</code><code class="sig-name descname">readPixels</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span><span class="n">args</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#skia.Image.readPixels" title="Permalink to this definition">¶</a></dt>
+<dd><p>Overloaded function.</p>
+<ol class="arabic simple">
+<li><p>readPixels(self: skia.Image, dstInfo: SkImageInfo, dstPixels: capsule, dstRowBytes: int, srcX: int, srcY: int, cachingHint: skia.Image.CachingHint = CachingHint.kAllow_CachingHint) -&gt; bool</p></li>
+</ol>
+<p>Copies SkRect of pixels from SkImage to dstPixels.</p>
+<ol class="arabic simple" start="2">
+<li><p>readPixels(self: skia.Image, dst: SkPixmap, srcX: int, srcY: int, cachingHint: skia.Image.CachingHint = CachingHint.kAllow_CachingHint) -&gt; bool</p></li>
+</ol>
+<p>Copies a SkRect of pixels from SkImage to dst.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="skia.Image.ref">
+<code class="sig-prename descclassname">Image.</code><code class="sig-name descname">ref</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Image" title="skia.Image">skia.Image</a></span></em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#skia.Image.ref" title="Permalink to this definition">¶</a></dt>
+<dd><p>Increment the reference count.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="skia.Image.refColorSpace">
+<code class="sig-prename descclassname">Image.</code><code class="sig-name descname">refColorSpace</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Image" title="skia.Image">skia.Image</a></span></em><span class="sig-paren">)</span> &#x2192; SkColorSpace<a class="headerlink" href="#skia.Image.refColorSpace" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a smart pointer to SkColorSpace, the range of colors, associated with SkImage.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="skia.Image.refEncodedData">
+<code class="sig-prename descclassname">Image.</code><code class="sig-name descname">refEncodedData</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Image" title="skia.Image">skia.Image</a></span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="skia.Data.html#skia.Data" title="skia.Data">skia.Data</a><a class="headerlink" href="#skia.Image.refEncodedData" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns encoded SkImage pixels as SkData, if SkImage was created from supported encoded stream format.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="skia.Image.reinterpretColorSpace">
+<code class="sig-prename descclassname">Image.</code><code class="sig-name descname">reinterpretColorSpace</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Image" title="skia.Image">skia.Image</a></span></em>, <em class="sig-param"><span class="n">arg0</span><span class="p">:</span> <span class="n">SkColorSpace</span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="#skia.Image" title="skia.Image">skia.Image</a><a class="headerlink" href="#skia.Image.reinterpretColorSpace" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates a new SkImage identical to this one, but with a different SkColorSpace.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="skia.Image.scalePixels">
+<code class="sig-prename descclassname">Image.</code><code class="sig-name descname">scalePixels</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Image" title="skia.Image">skia.Image</a></span></em>, <em class="sig-param"><span class="n">arg0</span><span class="p">:</span> <span class="n">SkPixmap</span></em>, <em class="sig-param"><span class="n">arg1</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.FilterQuality.html#skia.FilterQuality" title="skia.FilterQuality">skia.FilterQuality</a></span></em>, <em class="sig-param"><span class="n">arg2</span><span class="p">:</span> <span class="n">skia.Image.CachingHint</span></em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#skia.Image.scalePixels" title="Permalink to this definition">¶</a></dt>
+<dd><p>Copies SkImage to dst, scaling pixels to fit dst.width() and dst.height(), and converting pixels to match dst.colorType() and dst.alphaType().</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="skia.Image.unique">
+<code class="sig-prename descclassname">Image.</code><code class="sig-name descname">unique</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Image" title="skia.Image">skia.Image</a></span></em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#skia.Image.unique" title="Permalink to this definition">¶</a></dt>
+<dd><p>May return true if the caller is the only owner.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="skia.Image.uniqueID">
+<code class="sig-prename descclassname">Image.</code><code class="sig-name descname">uniqueID</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Image" title="skia.Image">skia.Image</a></span></em><span class="sig-paren">)</span> &#x2192; int<a class="headerlink" href="#skia.Image.uniqueID" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns value unique to image.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="skia.Image.unref">
+<code class="sig-prename descclassname">Image.</code><code class="sig-name descname">unref</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Image" title="skia.Image">skia.Image</a></span></em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#skia.Image.unref" title="Permalink to this definition">¶</a></dt>
+<dd><p>Decrement the reference count.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="skia.Image.width">
+<code class="sig-prename descclassname">Image.</code><code class="sig-name descname">width</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Image" title="skia.Image">skia.Image</a></span></em><span class="sig-paren">)</span> &#x2192; int<a class="headerlink" href="#skia.Image.width" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns pixel count in each row.</p>
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../index.html">skia-python</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../skia.html">skia</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="skia.AlphaType.html">AlphaType</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.ApplyPerspectiveClip.html">ApplyPerspectiveClip</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.AutoCanvasRestore.html">AutoCanvasRestore</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.BBoxHierarchy.html">BBoxHierarchy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.BackingFit.html">BackingFit</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.Bitmap.html">Bitmap</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.BlendMode.html">BlendMode</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.BlendModeCoeff.html">BlendModeCoeff</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.Budgeted.html">Budgeted</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.Canvas.html">Canvas</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.ClipOp.html">ClipOp</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.Color4f.html">Color4f</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.ColorFilter.html">ColorFilter</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.ColorInfo.html">ColorInfo</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.ColorSpace.html">ColorSpace</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.ColorType.html">ColorType</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.Data.html">Data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.DeserialProcs.html">DeserialProcs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.EncodedImageFormat.html">EncodedImageFormat</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.FilterQuality.html">FilterQuality</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.Font.html">Font</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.FontArguments.html">FontArguments</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.FontHinting.html">FontHinting</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.FontMetrics.html">FontMetrics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.FontStyle.html">FontStyle</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.GrBackendApi.html">GrBackendApi</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.GrBackendSemaphore.html">GrBackendSemaphore</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.GrBackendTexture.html">GrBackendTexture</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.GrContext.html">GrContext</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.GrFlushFlags.html">GrFlushFlags</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.GrGLBackendState.html">GrGLBackendState</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.GrGLInterface.html">GrGLInterface</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.GrMipMapped.html">GrMipMapped</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.GrProtected.html">GrProtected</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.GrRenderable.html">GrRenderable</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.GrSemaphoresSubmitted.html">GrSemaphoresSubmitted</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.GrSurfaceOrigin.html">GrSurfaceOrigin</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.IPoint.html">IPoint</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.IRect.html">IRect</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.ISize.html">ISize</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Image</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.ImageFilter.html">ImageFilter</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.ImageInfo.html">ImageInfo</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.M44.html">M44</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.MaskFilter.html">MaskFilter</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.Matrix.html">Matrix</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.Paint.html">Paint</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.Path.html">Path</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.PathConvexityType.html">PathConvexityType</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.PathDirection.html">PathDirection</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.PathEffect.html">PathEffect</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.PathFillType.html">PathFillType</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.PathSegmentMask.html">PathSegmentMask</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.PathVerb.html">PathVerb</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.Picture.html">Picture</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.PictureRecorder.html">PictureRecorder</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.PixelGeometry.html">PixelGeometry</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.Pixmap.html">Pixmap</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.Point.html">Point</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.Point3.html">Point3</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.RRect.html">RRect</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.RSXform.html">RSXform</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.Rect.html">Rect</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.Region.html">Region</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.Shader.html">Shader</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.Size.html">Size</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.Surface.html">Surface</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.SurfaceCharacterization.html">SurfaceCharacterization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.SurfaceProps.html">SurfaceProps</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.TextBlob.html">TextBlob</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.TextBlobBuilder.html">TextBlobBuilder</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.TextEncoding.html">TextEncoding</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.TileMode.html">TileMode</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.Typeface.html">Typeface</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.Vertices.html">Vertices</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.YUVColorSpace.html">YUVColorSpace</a></li>
+</ul>
+</li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  <li><a href="../skia.html">skia</a><ul>
+      <li>Previous: <a href="skia.ISize.html" title="previous chapter">ISize</a></li>
+      <li>Next: <a href="skia.ImageFilter.html" title="next chapter">ImageFilter</a></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2020, Kota Yamaguchi.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.0.0</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="../_sources/_generate/skia.Image.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

@@ -1,0 +1,535 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>Surface &#8212; skia-python 0.0.1 documentation</title>
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/language_data.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="SurfaceCharacterization" href="skia.SurfaceCharacterization.html" />
+    <link rel="prev" title="Size" href="skia.Size.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="surface">
+<h1>Surface<a class="headerlink" href="#surface" title="Permalink to this headline">¶</a></h1>
+<dl class="py class">
+<dt id="skia.Surface">
+<em class="property">class </em><code class="sig-name descname">Surface</code><a class="headerlink" href="#skia.Surface" title="Permalink to this definition">¶</a></dt>
+<dd><p>SkSurface is responsible for managing the pixels that a canvas draws into.</p>
+<p>The pixels can be allocated either in CPU memory (a raster surface) or on
+the GPU (a GrRenderTarget surface). SkSurface takes care of allocating a
+SkCanvas that will draw into the surface. Call surface-&gt;getCanvas() to use
+that canvas (but don’t delete it, it is owned by the surface). SkSurface
+always has non-zero dimensions. If there is a request for a new surface, and
+either of the requested dimensions are zero, then nullptr will be returned.</p>
+<p class="rubric">Methods</p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Surface.MakeNull" title="skia.Surface.MakeNull"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MakeNull</span></code></a></p></td>
+<td><p>Returns SkSurface without backing pixels.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.Surface.MakeRaster" title="skia.Surface.MakeRaster"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MakeRaster</span></code></a></p></td>
+<td><p>Overloaded function.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Surface.MakeRasterDirect" title="skia.Surface.MakeRasterDirect"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MakeRasterDirect</span></code></a></p></td>
+<td><p>Allocates raster SkSurface.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.Surface.MakeRasterN32Premul" title="skia.Surface.MakeRasterN32Premul"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MakeRasterN32Premul</span></code></a></p></td>
+<td><p>Allocates raster SkSurface.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Surface.MakeRenderTarget" title="skia.Surface.MakeRenderTarget"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MakeRenderTarget</span></code></a></p></td>
+<td><p>Overloaded function.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.Surface.__init__" title="skia.Surface.__init__"><code class="xref py py-obj docutils literal notranslate"><span class="pre">__init__</span></code></a></p></td>
+<td><p>Overloaded function.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Surface.characterize" title="skia.Surface.characterize"><code class="xref py py-obj docutils literal notranslate"><span class="pre">characterize</span></code></a></p></td>
+<td><p>Initializes SkSurfaceCharacterization that can be used to perform GPU back-end processing in a separate thread.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.Surface.draw" title="skia.Surface.draw"><code class="xref py py-obj docutils literal notranslate"><span class="pre">draw</span></code></a></p></td>
+<td><p>Overloaded function.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Surface.flush" title="skia.Surface.flush"><code class="xref py py-obj docutils literal notranslate"><span class="pre">flush</span></code></a></p></td>
+<td><p>Overloaded function.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.Surface.generationID" title="skia.Surface.generationID"><code class="xref py py-obj docutils literal notranslate"><span class="pre">generationID</span></code></a></p></td>
+<td><p>Returns unique value identifying the content of SkSurface.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Surface.getCanvas" title="skia.Surface.getCanvas"><code class="xref py py-obj docutils literal notranslate"><span class="pre">getCanvas</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.Surface.height" title="skia.Surface.height"><code class="xref py py-obj docutils literal notranslate"><span class="pre">height</span></code></a></p></td>
+<td><p>Returns pixel row count; may be zero or greater.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Surface.imageInfo" title="skia.Surface.imageInfo"><code class="xref py py-obj docutils literal notranslate"><span class="pre">imageInfo</span></code></a></p></td>
+<td><p>Returns an ImageInfo describing the surface.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.Surface.makeImageSnapshot" title="skia.Surface.makeImageSnapshot"><code class="xref py py-obj docutils literal notranslate"><span class="pre">makeImageSnapshot</span></code></a></p></td>
+<td><p>Overloaded function.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Surface.makeSurface" title="skia.Surface.makeSurface"><code class="xref py py-obj docutils literal notranslate"><span class="pre">makeSurface</span></code></a></p></td>
+<td><p>Overloaded function.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.Surface.peekPixels" title="skia.Surface.peekPixels"><code class="xref py py-obj docutils literal notranslate"><span class="pre">peekPixels</span></code></a></p></td>
+<td><p>Copies SkSurface pixel address, row bytes, and SkImageInfo to SkPixmap, if address is available, and returns true.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Surface.props" title="skia.Surface.props"><code class="xref py py-obj docutils literal notranslate"><span class="pre">props</span></code></a></p></td>
+<td><p>Returns SkSurfaceProps for surface.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.Surface.readPixels" title="skia.Surface.readPixels"><code class="xref py py-obj docutils literal notranslate"><span class="pre">readPixels</span></code></a></p></td>
+<td><p>Overloaded function.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Surface.ref" title="skia.Surface.ref"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ref</span></code></a></p></td>
+<td><p>Increment the reference count.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.Surface.unique" title="skia.Surface.unique"><code class="xref py py-obj docutils literal notranslate"><span class="pre">unique</span></code></a></p></td>
+<td><p>May return true if the caller is the only owner.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Surface.unref" title="skia.Surface.unref"><code class="xref py py-obj docutils literal notranslate"><span class="pre">unref</span></code></a></p></td>
+<td><p>Decrement the reference count.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.Surface.width" title="skia.Surface.width"><code class="xref py py-obj docutils literal notranslate"><span class="pre">width</span></code></a></p></td>
+<td><p>Returns pixel count in each row; may be zero or greater.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Surface.writePixels" title="skia.Surface.writePixels"><code class="xref py py-obj docutils literal notranslate"><span class="pre">writePixels</span></code></a></p></td>
+<td><p>Overloaded function.</p></td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Attributes</p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">kDiscard</span></code></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">kDiscardWrite</span></code></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">kFlushRead</span></code></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">kFlushWrite</span></code></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">kLinear</span></code></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">kNoAccess</span></code></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">kNone_FlushFlags</span></code></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">kPresent</span></code></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">kRetain</span></code></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">kSrc</span></code></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">kSyncCpu_FlushFlag</span></code></p></td>
+<td><p></p></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<div class="section" id="methods">
+<h2>Methods<a class="headerlink" href="#methods" title="Permalink to this headline">¶</a></h2>
+<dl class="py method">
+<dt id="skia.Surface.MakeNull">
+<em class="property">static </em><code class="sig-prename descclassname">Surface.</code><code class="sig-name descname">MakeNull</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">arg0</span><span class="p">:</span> <span class="n">int</span></em>, <em class="sig-param"><span class="n">arg1</span><span class="p">:</span> <span class="n">int</span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="#skia.Surface" title="skia.Surface">skia.Surface</a><a class="headerlink" href="#skia.Surface.MakeNull" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns SkSurface without backing pixels.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="skia.Surface.MakeRaster">
+<em class="property">static </em><code class="sig-prename descclassname">Surface.</code><code class="sig-name descname">MakeRaster</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span><span class="n">args</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#skia.Surface.MakeRaster" title="Permalink to this definition">¶</a></dt>
+<dd><p>Overloaded function.</p>
+<ol class="arabic simple">
+<li><p>MakeRaster(arg0: skia.ImageInfo, arg1: int, arg2: skia.SurfaceProps) -&gt; skia.Surface</p></li>
+</ol>
+<p>Allocates raster SkSurface.</p>
+<ol class="arabic simple" start="2">
+<li><p>MakeRaster(arg0: skia.ImageInfo, arg1: skia.SurfaceProps) -&gt; skia.Surface</p></li>
+</ol>
+<p>Allocates raster SkSurface.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="skia.Surface.MakeRasterDirect">
+<em class="property">static </em><code class="sig-prename descclassname">Surface.</code><code class="sig-name descname">MakeRasterDirect</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">info</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.ImageInfo.html#skia.ImageInfo" title="skia.ImageInfo">skia.ImageInfo</a></span></em>, <em class="sig-param"><span class="n">buf</span><span class="p">:</span> <span class="n">numpy.ndarray<span class="p">[</span>uint8<span class="p">]</span></span></em>, <em class="sig-param"><span class="n">surfaceProps</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.SurfaceProps.html#skia.SurfaceProps" title="skia.SurfaceProps">skia.SurfaceProps</a></span> <span class="o">=</span> <span class="default_value">None</span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="#skia.Surface" title="skia.Surface">skia.Surface</a><a class="headerlink" href="#skia.Surface.MakeRasterDirect" title="Permalink to this definition">¶</a></dt>
+<dd><p>Allocates raster SkSurface.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="skia.Surface.MakeRasterN32Premul">
+<em class="property">static </em><code class="sig-prename descclassname">Surface.</code><code class="sig-name descname">MakeRasterN32Premul</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">width</span><span class="p">:</span> <span class="n">int</span></em>, <em class="sig-param"><span class="n">height</span><span class="p">:</span> <span class="n">int</span></em>, <em class="sig-param"><span class="n">surfaceProps</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.SurfaceProps.html#skia.SurfaceProps" title="skia.SurfaceProps">skia.SurfaceProps</a></span> <span class="o">=</span> <span class="default_value">None</span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="#skia.Surface" title="skia.Surface">skia.Surface</a><a class="headerlink" href="#skia.Surface.MakeRasterN32Premul" title="Permalink to this definition">¶</a></dt>
+<dd><p>Allocates raster SkSurface.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="skia.Surface.MakeRenderTarget">
+<em class="property">static </em><code class="sig-prename descclassname">Surface.</code><code class="sig-name descname">MakeRenderTarget</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span><span class="n">args</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#skia.Surface.MakeRenderTarget" title="Permalink to this definition">¶</a></dt>
+<dd><p>Overloaded function.</p>
+<ol class="arabic simple">
+<li><p>MakeRenderTarget(arg0: skia.GrContext, arg1: skia.Budgeted, arg2: skia.ImageInfo, arg3: int, arg4: skia.GrSurfaceOrigin, arg5: skia.SurfaceProps, arg6: bool) -&gt; skia.Surface</p></li>
+</ol>
+<p>Returns SkSurface on GPU indicated by context.</p>
+<ol class="arabic simple" start="2">
+<li><p>MakeRenderTarget(arg0: skia.GrContext, arg1: skia.Budgeted, arg2: skia.ImageInfo, arg3: int, arg4: skia.SurfaceProps) -&gt; skia.Surface</p></li>
+</ol>
+<p>Returns SkSurface on GPU indicated by context.</p>
+<ol class="arabic simple" start="3">
+<li><p>MakeRenderTarget(arg0: skia.GrContext, arg1: skia.Budgeted, arg2: skia.ImageInfo) -&gt; skia.Surface</p></li>
+</ol>
+<p>Returns SkSurface on GPU indicated by context.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="skia.Surface.__init__">
+<code class="sig-prename descclassname">Surface.</code><code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span><span class="n">args</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#skia.Surface.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Overloaded function.</p>
+<ol class="arabic simple">
+<li><p>__init__(self: skia.Surface, width: int, height: int, surfaceProps: skia.SurfaceProps = None) -&gt; None</p></li>
+<li><p>__init__(self: skia.Surface, arg0: numpy.ndarray[uint8]) -&gt; None</p></li>
+</ol>
+</dd></dl>
+
+<dl class="py method">
+<dt id="skia.Surface.characterize">
+<code class="sig-prename descclassname">Surface.</code><code class="sig-name descname">characterize</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Surface" title="skia.Surface">skia.Surface</a></span></em>, <em class="sig-param"><span class="n">arg0</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.SurfaceCharacterization.html#skia.SurfaceCharacterization" title="skia.SurfaceCharacterization">skia.SurfaceCharacterization</a></span></em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#skia.Surface.characterize" title="Permalink to this definition">¶</a></dt>
+<dd><p>Initializes SkSurfaceCharacterization that can be used to perform GPU back-end processing in a separate thread.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="skia.Surface.draw">
+<code class="sig-prename descclassname">Surface.</code><code class="sig-name descname">draw</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span><span class="n">args</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#skia.Surface.draw" title="Permalink to this definition">¶</a></dt>
+<dd><p>Overloaded function.</p>
+<ol class="arabic simple">
+<li><p>draw(self: skia.Surface, arg0: skia.Canvas, arg1: float, arg2: float, arg3: skia.Paint) -&gt; None</p></li>
+</ol>
+<p>Draws SkSurface contents to canvas, with its top-left corner at (x, y).</p>
+<ol class="arabic simple" start="2">
+<li><p>draw(self: skia.Surface, arg0: SkDeferredDisplayList) -&gt; bool</p></li>
+</ol>
+<p>Draws deferred display list created using SkDeferredDisplayListRecorder.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="skia.Surface.flush">
+<code class="sig-prename descclassname">Surface.</code><code class="sig-name descname">flush</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span><span class="n">args</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#skia.Surface.flush" title="Permalink to this definition">¶</a></dt>
+<dd><p>Overloaded function.</p>
+<ol class="arabic simple">
+<li><p>flush(self: skia.Surface) -&gt; None</p></li>
+</ol>
+<p>Issues pending SkSurface commands to the GPU-backed API and resolves any SkSurface MSAA.</p>
+<ol class="arabic simple" start="2">
+<li><p>flush(self: skia.Surface) -&gt; None</p></li>
+</ol>
+<p>Issues pending SkSurface commands to the GPU-backed API and resolves any SkSurface MSAA.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="skia.Surface.generationID">
+<code class="sig-prename descclassname">Surface.</code><code class="sig-name descname">generationID</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Surface" title="skia.Surface">skia.Surface</a></span></em><span class="sig-paren">)</span> &#x2192; int<a class="headerlink" href="#skia.Surface.generationID" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns unique value identifying the content of SkSurface.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="skia.Surface.getCanvas">
+<code class="sig-prename descclassname">Surface.</code><code class="sig-name descname">getCanvas</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Surface" title="skia.Surface">skia.Surface</a></span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="skia.Canvas.html#skia.Canvas" title="skia.Canvas">skia.Canvas</a><a class="headerlink" href="#skia.Surface.getCanvas" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="skia.Surface.height">
+<code class="sig-prename descclassname">Surface.</code><code class="sig-name descname">height</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Surface" title="skia.Surface">skia.Surface</a></span></em><span class="sig-paren">)</span> &#x2192; int<a class="headerlink" href="#skia.Surface.height" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns pixel row count; may be zero or greater.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="skia.Surface.imageInfo">
+<code class="sig-prename descclassname">Surface.</code><code class="sig-name descname">imageInfo</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Surface" title="skia.Surface">skia.Surface</a></span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="skia.ImageInfo.html#skia.ImageInfo" title="skia.ImageInfo">skia.ImageInfo</a><a class="headerlink" href="#skia.Surface.imageInfo" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns an ImageInfo describing the surface.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="skia.Surface.makeImageSnapshot">
+<code class="sig-prename descclassname">Surface.</code><code class="sig-name descname">makeImageSnapshot</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span><span class="n">args</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#skia.Surface.makeImageSnapshot" title="Permalink to this definition">¶</a></dt>
+<dd><p>Overloaded function.</p>
+<ol class="arabic simple">
+<li><p>makeImageSnapshot(self: skia.Surface) -&gt; skia.Image</p></li>
+</ol>
+<p>Returns SkImage capturing SkSurface contents.</p>
+<ol class="arabic simple" start="2">
+<li><p>makeImageSnapshot(self: skia.Surface, arg0: skia.IRect) -&gt; skia.Image</p></li>
+</ol>
+<p>Like the no-parameter version, this returns an image of the current surface contents.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="skia.Surface.makeSurface">
+<code class="sig-prename descclassname">Surface.</code><code class="sig-name descname">makeSurface</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span><span class="n">args</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#skia.Surface.makeSurface" title="Permalink to this definition">¶</a></dt>
+<dd><p>Overloaded function.</p>
+<ol class="arabic simple">
+<li><p>makeSurface(self: skia.Surface, arg0: skia.ImageInfo) -&gt; skia.Surface</p></li>
+</ol>
+<p>Returns a compatible SkSurface, or nullptr.</p>
+<ol class="arabic simple" start="2">
+<li><p>makeSurface(self: skia.Surface, arg0: int, arg1: int) -&gt; skia.Surface</p></li>
+</ol>
+<p>Calls makeSurface(ImageInfo) with the same ImageInfo as this surface, but with the specified width and height.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="skia.Surface.peekPixels">
+<code class="sig-prename descclassname">Surface.</code><code class="sig-name descname">peekPixels</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Surface" title="skia.Surface">skia.Surface</a></span></em>, <em class="sig-param"><span class="n">arg0</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.Pixmap.html#skia.Pixmap" title="skia.Pixmap">skia.Pixmap</a></span></em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#skia.Surface.peekPixels" title="Permalink to this definition">¶</a></dt>
+<dd><p>Copies SkSurface pixel address, row bytes, and SkImageInfo to SkPixmap, if address is available, and returns true.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="skia.Surface.props">
+<code class="sig-prename descclassname">Surface.</code><code class="sig-name descname">props</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Surface" title="skia.Surface">skia.Surface</a></span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="skia.SurfaceProps.html#skia.SurfaceProps" title="skia.SurfaceProps">skia.SurfaceProps</a><a class="headerlink" href="#skia.Surface.props" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns SkSurfaceProps for surface.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="skia.Surface.readPixels">
+<code class="sig-prename descclassname">Surface.</code><code class="sig-name descname">readPixels</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span><span class="n">args</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#skia.Surface.readPixels" title="Permalink to this definition">¶</a></dt>
+<dd><p>Overloaded function.</p>
+<ol class="arabic simple">
+<li><p>readPixels(self: skia.Surface, arg0: skia.Pixmap, arg1: int, arg2: int) -&gt; bool</p></li>
+</ol>
+<p>Copies SkRect of pixels to dst.</p>
+<ol class="arabic simple" start="2">
+<li><p>readPixels(self: skia.Surface, arg0: skia.ImageInfo, arg1: capsule, arg2: int, arg3: int, arg4: int) -&gt; bool</p></li>
+</ol>
+<p>Copies SkRect of pixels from SkCanvas into dstPixels.</p>
+<ol class="arabic simple" start="3">
+<li><p>readPixels(self: skia.Surface, arg0: skia.Bitmap, arg1: int, arg2: int) -&gt; bool</p></li>
+</ol>
+<p>Copies SkRect of pixels from SkSurface into bitmap.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="skia.Surface.ref">
+<code class="sig-prename descclassname">Surface.</code><code class="sig-name descname">ref</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Surface" title="skia.Surface">skia.Surface</a></span></em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#skia.Surface.ref" title="Permalink to this definition">¶</a></dt>
+<dd><p>Increment the reference count.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="skia.Surface.unique">
+<code class="sig-prename descclassname">Surface.</code><code class="sig-name descname">unique</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Surface" title="skia.Surface">skia.Surface</a></span></em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#skia.Surface.unique" title="Permalink to this definition">¶</a></dt>
+<dd><p>May return true if the caller is the only owner.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="skia.Surface.unref">
+<code class="sig-prename descclassname">Surface.</code><code class="sig-name descname">unref</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Surface" title="skia.Surface">skia.Surface</a></span></em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#skia.Surface.unref" title="Permalink to this definition">¶</a></dt>
+<dd><p>Decrement the reference count.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="skia.Surface.width">
+<code class="sig-prename descclassname">Surface.</code><code class="sig-name descname">width</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Surface" title="skia.Surface">skia.Surface</a></span></em><span class="sig-paren">)</span> &#x2192; int<a class="headerlink" href="#skia.Surface.width" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns pixel count in each row; may be zero or greater.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="skia.Surface.writePixels">
+<code class="sig-prename descclassname">Surface.</code><code class="sig-name descname">writePixels</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span><span class="n">args</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#skia.Surface.writePixels" title="Permalink to this definition">¶</a></dt>
+<dd><p>Overloaded function.</p>
+<ol class="arabic simple">
+<li><p>writePixels(self: skia.Surface, arg0: skia.Pixmap, arg1: int, arg2: int) -&gt; None</p></li>
+</ol>
+<p>Copies SkRect of pixels from the src SkPixmap to the SkSurface.</p>
+<ol class="arabic simple" start="2">
+<li><p>writePixels(self: skia.Surface, arg0: skia.Bitmap, arg1: int, arg2: int) -&gt; None</p></li>
+</ol>
+<p>Copies SkRect of pixels from the src SkBitmap to the SkSurface.</p>
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../index.html">skia-python</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../skia.html">skia</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="skia.AlphaType.html">AlphaType</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.ApplyPerspectiveClip.html">ApplyPerspectiveClip</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.AutoCanvasRestore.html">AutoCanvasRestore</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.BBoxHierarchy.html">BBoxHierarchy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.BackingFit.html">BackingFit</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.Bitmap.html">Bitmap</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.BlendMode.html">BlendMode</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.BlendModeCoeff.html">BlendModeCoeff</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.Budgeted.html">Budgeted</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.Canvas.html">Canvas</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.ClipOp.html">ClipOp</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.Color4f.html">Color4f</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.ColorFilter.html">ColorFilter</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.ColorInfo.html">ColorInfo</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.ColorSpace.html">ColorSpace</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.ColorType.html">ColorType</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.Data.html">Data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.DeserialProcs.html">DeserialProcs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.EncodedImageFormat.html">EncodedImageFormat</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.FilterQuality.html">FilterQuality</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.Font.html">Font</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.FontArguments.html">FontArguments</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.FontHinting.html">FontHinting</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.FontMetrics.html">FontMetrics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.FontStyle.html">FontStyle</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.GrBackendApi.html">GrBackendApi</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.GrBackendSemaphore.html">GrBackendSemaphore</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.GrBackendTexture.html">GrBackendTexture</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.GrContext.html">GrContext</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.GrFlushFlags.html">GrFlushFlags</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.GrGLBackendState.html">GrGLBackendState</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.GrGLInterface.html">GrGLInterface</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.GrMipMapped.html">GrMipMapped</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.GrProtected.html">GrProtected</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.GrRenderable.html">GrRenderable</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.GrSemaphoresSubmitted.html">GrSemaphoresSubmitted</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.GrSurfaceOrigin.html">GrSurfaceOrigin</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.IPoint.html">IPoint</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.IRect.html">IRect</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.ISize.html">ISize</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.Image.html">Image</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.ImageFilter.html">ImageFilter</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.ImageInfo.html">ImageInfo</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.M44.html">M44</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.MaskFilter.html">MaskFilter</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.Matrix.html">Matrix</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.Paint.html">Paint</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.Path.html">Path</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.PathConvexityType.html">PathConvexityType</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.PathDirection.html">PathDirection</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.PathEffect.html">PathEffect</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.PathFillType.html">PathFillType</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.PathSegmentMask.html">PathSegmentMask</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.PathVerb.html">PathVerb</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.Picture.html">Picture</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.PictureRecorder.html">PictureRecorder</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.PixelGeometry.html">PixelGeometry</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.Pixmap.html">Pixmap</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.Point.html">Point</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.Point3.html">Point3</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.RRect.html">RRect</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.RSXform.html">RSXform</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.Rect.html">Rect</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.Region.html">Region</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.Shader.html">Shader</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.Size.html">Size</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Surface</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.SurfaceCharacterization.html">SurfaceCharacterization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.SurfaceProps.html">SurfaceProps</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.TextBlob.html">TextBlob</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.TextBlobBuilder.html">TextBlobBuilder</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.TextEncoding.html">TextEncoding</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.TileMode.html">TileMode</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.Typeface.html">Typeface</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.Vertices.html">Vertices</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.YUVColorSpace.html">YUVColorSpace</a></li>
+</ul>
+</li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  <li><a href="../skia.html">skia</a><ul>
+      <li>Previous: <a href="skia.Size.html" title="previous chapter">Size</a></li>
+      <li>Next: <a href="skia.SurfaceCharacterization.html" title="next chapter">SurfaceCharacterization</a></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2020, Kota Yamaguchi.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.0.0</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="../_sources/_generate/skia.Surface.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

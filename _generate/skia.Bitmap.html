@@ -1,0 +1,823 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>Bitmap &#8212; skia-python 0.0.1 documentation</title>
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/language_data.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="BlendMode" href="skia.BlendMode.html" />
+    <link rel="prev" title="BackingFit" href="skia.BackingFit.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="bitmap">
+<h1>Bitmap<a class="headerlink" href="#bitmap" title="Permalink to this headline">¶</a></h1>
+<dl class="py class">
+<dt id="skia.Bitmap">
+<em class="property">class </em><code class="sig-name descname">Bitmap</code><a class="headerlink" href="#skia.Bitmap" title="Permalink to this definition">¶</a></dt>
+<dd><p>SkBitmap describes a two-dimensional raster pixel array.</p>
+<p>SkBitmap is built on SkImageInfo, containing integer width and height,
+SkColorType and SkAlphaType describing the pixel format, and
+SkColorSpace describing the range of colors. SkBitmap points to
+SkPixelRef, which describes the physical array of pixels. SkImageInfo
+bounds may be located anywhere fully inside SkPixelRef bounds.</p>
+<p>SkBitmap can be drawn using SkCanvas. SkBitmap can be a drawing
+destination for SkCanvas draw member functions. SkBitmap flexibility
+as a pixel container limits some optimizations available to the target
+platform.</p>
+<p>If pixel array is primarily read-only, use SkImage for better
+performance. If pixel array is primarily written to, use SkSurface for
+better performance.</p>
+<p>Declaring SkBitmap const prevents altering SkImageInfo: the SkBitmap
+height, width, and so on cannot change. It does not affect SkPixelRef:
+a caller may write its pixels. Declaring SkBitmap const affects
+SkBitmap configuration, not its contents.</p>
+<p>SkBitmap is not thread safe. Each thread must have its own copy of
+SkBitmap fields, although threads may share the underlying pixel array.</p>
+<p class="rubric">Methods</p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Bitmap.__init__" title="skia.Bitmap.__init__"><code class="xref py py-obj docutils literal notranslate"><span class="pre">__init__</span></code></a></p></td>
+<td><p>Overloaded function.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.Bitmap.allocN32Pixels" title="skia.Bitmap.allocN32Pixels"><code class="xref py py-obj docutils literal notranslate"><span class="pre">allocN32Pixels</span></code></a></p></td>
+<td><p>Sets SkImageInfo to info following the rules in setInfo() and allocates pixel memory.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Bitmap.allocPixels" title="skia.Bitmap.allocPixels"><code class="xref py py-obj docutils literal notranslate"><span class="pre">allocPixels</span></code></a></p></td>
+<td><p>Overloaded function.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.Bitmap.allocPixelsFlags" title="skia.Bitmap.allocPixelsFlags"><code class="xref py py-obj docutils literal notranslate"><span class="pre">allocPixelsFlags</span></code></a></p></td>
+<td><p>Sets SkImageInfo to info following the rules in setInfo() and allocates pixel memory.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Bitmap.alphaType" title="skia.Bitmap.alphaType"><code class="xref py py-obj docutils literal notranslate"><span class="pre">alphaType</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.Bitmap.bounds" title="skia.Bitmap.bounds"><code class="xref py py-obj docutils literal notranslate"><span class="pre">bounds</span></code></a></p></td>
+<td><p>Returns SkIRect { 0, 0, width(), height() }.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Bitmap.bytesPerPixel" title="skia.Bitmap.bytesPerPixel"><code class="xref py py-obj docutils literal notranslate"><span class="pre">bytesPerPixel</span></code></a></p></td>
+<td><p>Returns number of bytes per pixel required by SkColorType.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.Bitmap.colorSpace" title="skia.Bitmap.colorSpace"><code class="xref py py-obj docutils literal notranslate"><span class="pre">colorSpace</span></code></a></p></td>
+<td><p>Returns SkColorSpace, the range of colors, associated with SkImageInfo.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Bitmap.colorType" title="skia.Bitmap.colorType"><code class="xref py py-obj docutils literal notranslate"><span class="pre">colorType</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.Bitmap.computeByteSize" title="skia.Bitmap.computeByteSize"><code class="xref py py-obj docutils literal notranslate"><span class="pre">computeByteSize</span></code></a></p></td>
+<td><p>Returns minimum memory required for pixel storage.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Bitmap.dimensions" title="skia.Bitmap.dimensions"><code class="xref py py-obj docutils literal notranslate"><span class="pre">dimensions</span></code></a></p></td>
+<td><p>Returns SkISize { width(), height() }.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.Bitmap.drawsNothing" title="skia.Bitmap.drawsNothing"><code class="xref py py-obj docutils literal notranslate"><span class="pre">drawsNothing</span></code></a></p></td>
+<td><p>Returns true if width() or height() are zero, or if SkPixelRef is nullptr.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Bitmap.empty" title="skia.Bitmap.empty"><code class="xref py py-obj docutils literal notranslate"><span class="pre">empty</span></code></a></p></td>
+<td><p>Returns true if either width() or height() are zero.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.Bitmap.erase" title="skia.Bitmap.erase"><code class="xref py py-obj docutils literal notranslate"><span class="pre">erase</span></code></a></p></td>
+<td><p>Replaces pixel values inside area with c.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Bitmap.eraseARGB" title="skia.Bitmap.eraseARGB"><code class="xref py py-obj docutils literal notranslate"><span class="pre">eraseARGB</span></code></a></p></td>
+<td><p>Replaces pixel values with unpremultiplied color built from a, r, g, and b.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.Bitmap.eraseArea" title="skia.Bitmap.eraseArea"><code class="xref py py-obj docutils literal notranslate"><span class="pre">eraseArea</span></code></a></p></td>
+<td><p>Deprecated</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Bitmap.eraseColor" title="skia.Bitmap.eraseColor"><code class="xref py py-obj docutils literal notranslate"><span class="pre">eraseColor</span></code></a></p></td>
+<td><p>Replaces pixel values with c.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.Bitmap.extractAlpha" title="skia.Bitmap.extractAlpha"><code class="xref py py-obj docutils literal notranslate"><span class="pre">extractAlpha</span></code></a></p></td>
+<td><p>Overloaded function.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Bitmap.extractSubset" title="skia.Bitmap.extractSubset"><code class="xref py py-obj docutils literal notranslate"><span class="pre">extractSubset</span></code></a></p></td>
+<td><p>Shares SkPixelRef with dst.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.Bitmap.getAddr" title="skia.Bitmap.getAddr"><code class="xref py py-obj docutils literal notranslate"><span class="pre">getAddr</span></code></a></p></td>
+<td><p>Returns pixel address at (x, y).</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Bitmap.getAddr16" title="skia.Bitmap.getAddr16"><code class="xref py py-obj docutils literal notranslate"><span class="pre">getAddr16</span></code></a></p></td>
+<td><p>Returns address at (x, y).</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.Bitmap.getAddr32" title="skia.Bitmap.getAddr32"><code class="xref py py-obj docutils literal notranslate"><span class="pre">getAddr32</span></code></a></p></td>
+<td><p>Returns address at (x, y).</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Bitmap.getAddr8" title="skia.Bitmap.getAddr8"><code class="xref py py-obj docutils literal notranslate"><span class="pre">getAddr8</span></code></a></p></td>
+<td><p>Returns address at (x, y).</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.Bitmap.getAlphaf" title="skia.Bitmap.getAlphaf"><code class="xref py py-obj docutils literal notranslate"><span class="pre">getAlphaf</span></code></a></p></td>
+<td><p>Look up the pixel at (x,y) and return its alpha component, normalized to [0..1].</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Bitmap.getBounds" title="skia.Bitmap.getBounds"><code class="xref py py-obj docutils literal notranslate"><span class="pre">getBounds</span></code></a></p></td>
+<td><p>Overloaded function.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.Bitmap.getColor" title="skia.Bitmap.getColor"><code class="xref py py-obj docutils literal notranslate"><span class="pre">getColor</span></code></a></p></td>
+<td><p>Returns pixel at (x, y) as unpremultiplied color.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Bitmap.getGenerationID" title="skia.Bitmap.getGenerationID"><code class="xref py py-obj docutils literal notranslate"><span class="pre">getGenerationID</span></code></a></p></td>
+<td><p>Returns a unique value corresponding to the pixels in SkPixelRef.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.Bitmap.getPixels" title="skia.Bitmap.getPixels"><code class="xref py py-obj docutils literal notranslate"><span class="pre">getPixels</span></code></a></p></td>
+<td><p>Returns pixel address, the base address corresponding to the pixel origin.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Bitmap.getSubset" title="skia.Bitmap.getSubset"><code class="xref py py-obj docutils literal notranslate"><span class="pre">getSubset</span></code></a></p></td>
+<td><p>Returns the bounds of this bitmap, offset by its SkPixelRef origin.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.Bitmap.height" title="skia.Bitmap.height"><code class="xref py py-obj docutils literal notranslate"><span class="pre">height</span></code></a></p></td>
+<td><p>Returns pixel row count.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Bitmap.info" title="skia.Bitmap.info"><code class="xref py py-obj docutils literal notranslate"><span class="pre">info</span></code></a></p></td>
+<td><p>Returns width, height, SkAlphaType, SkColorType, and SkColorSpace.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.Bitmap.installPixels" title="skia.Bitmap.installPixels"><code class="xref py py-obj docutils literal notranslate"><span class="pre">installPixels</span></code></a></p></td>
+<td><p>Overloaded function.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Bitmap.isImmutable" title="skia.Bitmap.isImmutable"><code class="xref py py-obj docutils literal notranslate"><span class="pre">isImmutable</span></code></a></p></td>
+<td><p>Returns true if pixels can not change.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.Bitmap.isNull" title="skia.Bitmap.isNull"><code class="xref py py-obj docutils literal notranslate"><span class="pre">isNull</span></code></a></p></td>
+<td><p>Returns true if SkPixelRef is nullptr.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Bitmap.isOpaque" title="skia.Bitmap.isOpaque"><code class="xref py py-obj docutils literal notranslate"><span class="pre">isOpaque</span></code></a></p></td>
+<td><p>Returns true if SkAlphaType is set to hint that all pixels are opaque; their alpha value is implicitly or explicitly 1.0.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.Bitmap.isVolatile" title="skia.Bitmap.isVolatile"><code class="xref py py-obj docutils literal notranslate"><span class="pre">isVolatile</span></code></a></p></td>
+<td><p>Provides a hint to caller that pixels should not be cached.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Bitmap.notifyPixelsChanged" title="skia.Bitmap.notifyPixelsChanged"><code class="xref py py-obj docutils literal notranslate"><span class="pre">notifyPixelsChanged</span></code></a></p></td>
+<td><p>Marks that pixels in SkPixelRef have changed.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.Bitmap.peekPixels" title="skia.Bitmap.peekPixels"><code class="xref py py-obj docutils literal notranslate"><span class="pre">peekPixels</span></code></a></p></td>
+<td><p>Copies SkBitmap pixel address, row bytes, and SkImageInfo to pixmap, if address is available, and returns true.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Bitmap.pixelRefOrigin" title="skia.Bitmap.pixelRefOrigin"><code class="xref py py-obj docutils literal notranslate"><span class="pre">pixelRefOrigin</span></code></a></p></td>
+<td><p>Returns origin of pixels within SkPixelRef.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.Bitmap.pixmap" title="skia.Bitmap.pixmap"><code class="xref py py-obj docutils literal notranslate"><span class="pre">pixmap</span></code></a></p></td>
+<td><p>Returns a constant reference to the SkPixmap holding the SkBitmap pixel address, row bytes, and SkImageInfo.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Bitmap.readPixels" title="skia.Bitmap.readPixels"><code class="xref py py-obj docutils literal notranslate"><span class="pre">readPixels</span></code></a></p></td>
+<td><p>Overloaded function.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.Bitmap.readyToDraw" title="skia.Bitmap.readyToDraw"><code class="xref py py-obj docutils literal notranslate"><span class="pre">readyToDraw</span></code></a></p></td>
+<td><p>Returns true if SkBitmap is can be drawn.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Bitmap.refColorSpace" title="skia.Bitmap.refColorSpace"><code class="xref py py-obj docutils literal notranslate"><span class="pre">refColorSpace</span></code></a></p></td>
+<td><p>Returns smart pointer to SkColorSpace, the range of colors, associated with SkImageInfo.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.Bitmap.reset" title="skia.Bitmap.reset"><code class="xref py py-obj docutils literal notranslate"><span class="pre">reset</span></code></a></p></td>
+<td><p>Resets to its initial state; all fields are set to zero, as if SkBitmap had been initialized by SkBitmap().</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Bitmap.rowBytes" title="skia.Bitmap.rowBytes"><code class="xref py py-obj docutils literal notranslate"><span class="pre">rowBytes</span></code></a></p></td>
+<td><p>Returns row bytes, the interval from one pixel row to the next.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.Bitmap.rowBytesAsPixels" title="skia.Bitmap.rowBytesAsPixels"><code class="xref py py-obj docutils literal notranslate"><span class="pre">rowBytesAsPixels</span></code></a></p></td>
+<td><p>Returns number of pixels that fit on row.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Bitmap.setAlphaType" title="skia.Bitmap.setAlphaType"><code class="xref py py-obj docutils literal notranslate"><span class="pre">setAlphaType</span></code></a></p></td>
+<td><p>Sets SkAlphaType, if alphaType is compatible with SkColorType.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.Bitmap.setImmutable" title="skia.Bitmap.setImmutable"><code class="xref py py-obj docutils literal notranslate"><span class="pre">setImmutable</span></code></a></p></td>
+<td><p>Sets internal flag to mark SkBitmap as immutable.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Bitmap.setInfo" title="skia.Bitmap.setInfo"><code class="xref py py-obj docutils literal notranslate"><span class="pre">setInfo</span></code></a></p></td>
+<td><p>Sets width, height, SkAlphaType, SkColorType, SkColorSpace, and optional rowBytes.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.Bitmap.setIsVolatile" title="skia.Bitmap.setIsVolatile"><code class="xref py py-obj docutils literal notranslate"><span class="pre">setIsVolatile</span></code></a></p></td>
+<td><p>Sets if pixels should be read from SkPixelRef on every access.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Bitmap.setPixels" title="skia.Bitmap.setPixels"><code class="xref py py-obj docutils literal notranslate"><span class="pre">setPixels</span></code></a></p></td>
+<td><p>Replaces SkPixelRef with pixels, preserving SkImageInfo and rowBytes().</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.Bitmap.shiftPerPixel" title="skia.Bitmap.shiftPerPixel"><code class="xref py py-obj docutils literal notranslate"><span class="pre">shiftPerPixel</span></code></a></p></td>
+<td><p>Returns bit shift converting row bytes to row pixels.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Bitmap.swap" title="skia.Bitmap.swap"><code class="xref py py-obj docutils literal notranslate"><span class="pre">swap</span></code></a></p></td>
+<td><p>Swaps the fields of the two bitmaps.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.Bitmap.tryAllocN32Pixels" title="skia.Bitmap.tryAllocN32Pixels"><code class="xref py py-obj docutils literal notranslate"><span class="pre">tryAllocN32Pixels</span></code></a></p></td>
+<td><p>Sets SkImageInfo to info following the rules in setInfo() and allocates pixel memory.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Bitmap.tryAllocPixels" title="skia.Bitmap.tryAllocPixels"><code class="xref py py-obj docutils literal notranslate"><span class="pre">tryAllocPixels</span></code></a></p></td>
+<td><p>Overloaded function.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.Bitmap.tryAllocPixelsFlags" title="skia.Bitmap.tryAllocPixelsFlags"><code class="xref py py-obj docutils literal notranslate"><span class="pre">tryAllocPixelsFlags</span></code></a></p></td>
+<td><p>Sets SkImageInfo to info following the rules in setInfo() and allocates pixel memory.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Bitmap.width" title="skia.Bitmap.width"><code class="xref py py-obj docutils literal notranslate"><span class="pre">width</span></code></a></p></td>
+<td><p>Returns pixel count in each row.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.Bitmap.writePixels" title="skia.Bitmap.writePixels"><code class="xref py py-obj docutils literal notranslate"><span class="pre">writePixels</span></code></a></p></td>
+<td><p>Overloaded function.</p></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<div class="section" id="methods">
+<h2>Methods<a class="headerlink" href="#methods" title="Permalink to this headline">¶</a></h2>
+<dl class="py method">
+<dt id="skia.Bitmap.__init__">
+<code class="sig-prename descclassname">Bitmap.</code><code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span><span class="n">args</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#skia.Bitmap.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Overloaded function.</p>
+<ol class="arabic simple">
+<li><p>__init__(self: skia.Bitmap) -&gt; None</p></li>
+</ol>
+<p>Creates an empty SkBitmap without pixels, with kUnknown_SkColorType, kUnknown_SkAlphaType, and with a width and height of zero.</p>
+<ol class="arabic simple" start="2">
+<li><p>__init__(self: skia.Bitmap, arg0: skia.Bitmap) -&gt; None</p></li>
+</ol>
+<p>Copies settings from src to returned SkBitmap.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="skia.Bitmap.allocN32Pixels">
+<code class="sig-prename descclassname">Bitmap.</code><code class="sig-name descname">allocN32Pixels</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Bitmap" title="skia.Bitmap">skia.Bitmap</a></span></em>, <em class="sig-param"><span class="n">arg0</span><span class="p">:</span> <span class="n">int</span></em>, <em class="sig-param"><span class="n">arg1</span><span class="p">:</span> <span class="n">int</span></em>, <em class="sig-param"><span class="n">arg2</span><span class="p">:</span> <span class="n">bool</span></em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#skia.Bitmap.allocN32Pixels" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets SkImageInfo to info following the rules in setInfo() and allocates pixel memory.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="skia.Bitmap.allocPixels">
+<code class="sig-prename descclassname">Bitmap.</code><code class="sig-name descname">allocPixels</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span><span class="n">args</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#skia.Bitmap.allocPixels" title="Permalink to this definition">¶</a></dt>
+<dd><p>Overloaded function.</p>
+<ol class="arabic simple">
+<li><p>allocPixels(self: skia.Bitmap, arg0: SkImageInfo, arg1: int) -&gt; None</p></li>
+</ol>
+<p>Sets SkImageInfo to info following the rules in setInfo() and allocates pixel memory.</p>
+<ol class="arabic simple" start="2">
+<li><p>allocPixels(self: skia.Bitmap, arg0: SkImageInfo) -&gt; None</p></li>
+</ol>
+<p>Sets SkImageInfo to info following the rules in setInfo() and allocates pixel memory.</p>
+<ol class="arabic simple" start="3">
+<li><p>allocPixels(self: skia.Bitmap) -&gt; None</p></li>
+</ol>
+<p>Allocates pixel memory with HeapAllocator, and replaces existing SkPixelRef.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="skia.Bitmap.allocPixelsFlags">
+<code class="sig-prename descclassname">Bitmap.</code><code class="sig-name descname">allocPixelsFlags</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Bitmap" title="skia.Bitmap">skia.Bitmap</a></span></em>, <em class="sig-param"><span class="n">arg0</span><span class="p">:</span> <span class="n">SkImageInfo</span></em>, <em class="sig-param"><span class="n">arg1</span><span class="p">:</span> <span class="n">int</span></em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#skia.Bitmap.allocPixelsFlags" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets SkImageInfo to info following the rules in setInfo() and allocates pixel memory.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="skia.Bitmap.alphaType">
+<code class="sig-prename descclassname">Bitmap.</code><code class="sig-name descname">alphaType</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Bitmap" title="skia.Bitmap">skia.Bitmap</a></span></em><span class="sig-paren">)</span> &#x2192; SkAlphaType<a class="headerlink" href="#skia.Bitmap.alphaType" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="skia.Bitmap.bounds">
+<code class="sig-prename descclassname">Bitmap.</code><code class="sig-name descname">bounds</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Bitmap" title="skia.Bitmap">skia.Bitmap</a></span></em><span class="sig-paren">)</span> &#x2192; SkIRect<a class="headerlink" href="#skia.Bitmap.bounds" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns SkIRect { 0, 0, width(), height() }.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="skia.Bitmap.bytesPerPixel">
+<code class="sig-prename descclassname">Bitmap.</code><code class="sig-name descname">bytesPerPixel</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Bitmap" title="skia.Bitmap">skia.Bitmap</a></span></em><span class="sig-paren">)</span> &#x2192; int<a class="headerlink" href="#skia.Bitmap.bytesPerPixel" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns number of bytes per pixel required by SkColorType.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="skia.Bitmap.colorSpace">
+<code class="sig-prename descclassname">Bitmap.</code><code class="sig-name descname">colorSpace</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Bitmap" title="skia.Bitmap">skia.Bitmap</a></span></em><span class="sig-paren">)</span> &#x2192; SkColorSpace<a class="headerlink" href="#skia.Bitmap.colorSpace" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns SkColorSpace, the range of colors, associated with SkImageInfo.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="skia.Bitmap.colorType">
+<code class="sig-prename descclassname">Bitmap.</code><code class="sig-name descname">colorType</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Bitmap" title="skia.Bitmap">skia.Bitmap</a></span></em><span class="sig-paren">)</span> &#x2192; SkColorType<a class="headerlink" href="#skia.Bitmap.colorType" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="skia.Bitmap.computeByteSize">
+<code class="sig-prename descclassname">Bitmap.</code><code class="sig-name descname">computeByteSize</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Bitmap" title="skia.Bitmap">skia.Bitmap</a></span></em><span class="sig-paren">)</span> &#x2192; int<a class="headerlink" href="#skia.Bitmap.computeByteSize" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns minimum memory required for pixel storage.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="skia.Bitmap.dimensions">
+<code class="sig-prename descclassname">Bitmap.</code><code class="sig-name descname">dimensions</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Bitmap" title="skia.Bitmap">skia.Bitmap</a></span></em><span class="sig-paren">)</span> &#x2192; SkISize<a class="headerlink" href="#skia.Bitmap.dimensions" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns SkISize { width(), height() }.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="skia.Bitmap.drawsNothing">
+<code class="sig-prename descclassname">Bitmap.</code><code class="sig-name descname">drawsNothing</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Bitmap" title="skia.Bitmap">skia.Bitmap</a></span></em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#skia.Bitmap.drawsNothing" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns true if width() or height() are zero, or if SkPixelRef is nullptr.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="skia.Bitmap.empty">
+<code class="sig-prename descclassname">Bitmap.</code><code class="sig-name descname">empty</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Bitmap" title="skia.Bitmap">skia.Bitmap</a></span></em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#skia.Bitmap.empty" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns true if either width() or height() are zero.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="skia.Bitmap.erase">
+<code class="sig-prename descclassname">Bitmap.</code><code class="sig-name descname">erase</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Bitmap" title="skia.Bitmap">skia.Bitmap</a></span></em>, <em class="sig-param"><span class="n">arg0</span><span class="p">:</span> <span class="n">int</span></em>, <em class="sig-param"><span class="n">arg1</span><span class="p">:</span> <span class="n">SkIRect</span></em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#skia.Bitmap.erase" title="Permalink to this definition">¶</a></dt>
+<dd><p>Replaces pixel values inside area with c.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="skia.Bitmap.eraseARGB">
+<code class="sig-prename descclassname">Bitmap.</code><code class="sig-name descname">eraseARGB</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Bitmap" title="skia.Bitmap">skia.Bitmap</a></span></em>, <em class="sig-param"><span class="n">arg0</span><span class="p">:</span> <span class="n">int</span></em>, <em class="sig-param"><span class="n">arg1</span><span class="p">:</span> <span class="n">int</span></em>, <em class="sig-param"><span class="n">arg2</span><span class="p">:</span> <span class="n">int</span></em>, <em class="sig-param"><span class="n">arg3</span><span class="p">:</span> <span class="n">int</span></em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#skia.Bitmap.eraseARGB" title="Permalink to this definition">¶</a></dt>
+<dd><p>Replaces pixel values with unpremultiplied color built from a, r, g, and b.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="skia.Bitmap.eraseArea">
+<code class="sig-prename descclassname">Bitmap.</code><code class="sig-name descname">eraseArea</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Bitmap" title="skia.Bitmap">skia.Bitmap</a></span></em>, <em class="sig-param"><span class="n">arg0</span><span class="p">:</span> <span class="n">SkIRect</span></em>, <em class="sig-param"><span class="n">arg1</span><span class="p">:</span> <span class="n">int</span></em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#skia.Bitmap.eraseArea" title="Permalink to this definition">¶</a></dt>
+<dd><p>Deprecated</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="skia.Bitmap.eraseColor">
+<code class="sig-prename descclassname">Bitmap.</code><code class="sig-name descname">eraseColor</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Bitmap" title="skia.Bitmap">skia.Bitmap</a></span></em>, <em class="sig-param"><span class="n">arg0</span><span class="p">:</span> <span class="n">int</span></em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#skia.Bitmap.eraseColor" title="Permalink to this definition">¶</a></dt>
+<dd><p>Replaces pixel values with c.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="skia.Bitmap.extractAlpha">
+<code class="sig-prename descclassname">Bitmap.</code><code class="sig-name descname">extractAlpha</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span><span class="n">args</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#skia.Bitmap.extractAlpha" title="Permalink to this definition">¶</a></dt>
+<dd><p>Overloaded function.</p>
+<ol class="arabic simple">
+<li><p>extractAlpha(self: skia.Bitmap, arg0: skia.Bitmap) -&gt; bool</p></li>
+</ol>
+<p>Sets dst to alpha described by pixels.</p>
+<ol class="arabic simple" start="2">
+<li><p>extractAlpha(self: skia.Bitmap, arg0: skia.Bitmap, arg1: SkPaint, arg2: SkIPoint) -&gt; bool</p></li>
+</ol>
+<p>Sets dst to alpha described by pixels.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="skia.Bitmap.extractSubset">
+<code class="sig-prename descclassname">Bitmap.</code><code class="sig-name descname">extractSubset</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Bitmap" title="skia.Bitmap">skia.Bitmap</a></span></em>, <em class="sig-param"><span class="n">arg0</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Bitmap" title="skia.Bitmap">skia.Bitmap</a></span></em>, <em class="sig-param"><span class="n">arg1</span><span class="p">:</span> <span class="n">SkIRect</span></em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#skia.Bitmap.extractSubset" title="Permalink to this definition">¶</a></dt>
+<dd><p>Shares SkPixelRef with dst.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="skia.Bitmap.getAddr">
+<code class="sig-prename descclassname">Bitmap.</code><code class="sig-name descname">getAddr</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Bitmap" title="skia.Bitmap">skia.Bitmap</a></span></em>, <em class="sig-param"><span class="n">arg0</span><span class="p">:</span> <span class="n">int</span></em>, <em class="sig-param"><span class="n">arg1</span><span class="p">:</span> <span class="n">int</span></em><span class="sig-paren">)</span> &#x2192; capsule<a class="headerlink" href="#skia.Bitmap.getAddr" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns pixel address at (x, y).</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="skia.Bitmap.getAddr16">
+<code class="sig-prename descclassname">Bitmap.</code><code class="sig-name descname">getAddr16</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Bitmap" title="skia.Bitmap">skia.Bitmap</a></span></em>, <em class="sig-param"><span class="n">arg0</span><span class="p">:</span> <span class="n">int</span></em>, <em class="sig-param"><span class="n">arg1</span><span class="p">:</span> <span class="n">int</span></em><span class="sig-paren">)</span> &#x2192; int<a class="headerlink" href="#skia.Bitmap.getAddr16" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns address at (x, y).</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="skia.Bitmap.getAddr32">
+<code class="sig-prename descclassname">Bitmap.</code><code class="sig-name descname">getAddr32</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Bitmap" title="skia.Bitmap">skia.Bitmap</a></span></em>, <em class="sig-param"><span class="n">arg0</span><span class="p">:</span> <span class="n">int</span></em>, <em class="sig-param"><span class="n">arg1</span><span class="p">:</span> <span class="n">int</span></em><span class="sig-paren">)</span> &#x2192; int<a class="headerlink" href="#skia.Bitmap.getAddr32" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns address at (x, y).</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="skia.Bitmap.getAddr8">
+<code class="sig-prename descclassname">Bitmap.</code><code class="sig-name descname">getAddr8</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Bitmap" title="skia.Bitmap">skia.Bitmap</a></span></em>, <em class="sig-param"><span class="n">arg0</span><span class="p">:</span> <span class="n">int</span></em>, <em class="sig-param"><span class="n">arg1</span><span class="p">:</span> <span class="n">int</span></em><span class="sig-paren">)</span> &#x2192; int<a class="headerlink" href="#skia.Bitmap.getAddr8" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns address at (x, y).</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="skia.Bitmap.getAlphaf">
+<code class="sig-prename descclassname">Bitmap.</code><code class="sig-name descname">getAlphaf</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Bitmap" title="skia.Bitmap">skia.Bitmap</a></span></em>, <em class="sig-param"><span class="n">arg0</span><span class="p">:</span> <span class="n">int</span></em>, <em class="sig-param"><span class="n">arg1</span><span class="p">:</span> <span class="n">int</span></em><span class="sig-paren">)</span> &#x2192; float<a class="headerlink" href="#skia.Bitmap.getAlphaf" title="Permalink to this definition">¶</a></dt>
+<dd><p>Look up the pixel at (x,y) and return its alpha component, normalized to [0..1].</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="skia.Bitmap.getBounds">
+<code class="sig-prename descclassname">Bitmap.</code><code class="sig-name descname">getBounds</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span><span class="n">args</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#skia.Bitmap.getBounds" title="Permalink to this definition">¶</a></dt>
+<dd><p>Overloaded function.</p>
+<ol class="arabic simple">
+<li><p>getBounds(self: skia.Bitmap, arg0: SkRect) -&gt; None</p></li>
+</ol>
+<p>Returns SkRect { 0, 0, width(), height() }.</p>
+<ol class="arabic simple" start="2">
+<li><p>getBounds(self: skia.Bitmap, arg0: SkIRect) -&gt; None</p></li>
+</ol>
+<p>Returns SkIRect { 0, 0, width(), height() }.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="skia.Bitmap.getColor">
+<code class="sig-prename descclassname">Bitmap.</code><code class="sig-name descname">getColor</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Bitmap" title="skia.Bitmap">skia.Bitmap</a></span></em>, <em class="sig-param"><span class="n">arg0</span><span class="p">:</span> <span class="n">int</span></em>, <em class="sig-param"><span class="n">arg1</span><span class="p">:</span> <span class="n">int</span></em><span class="sig-paren">)</span> &#x2192; int<a class="headerlink" href="#skia.Bitmap.getColor" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns pixel at (x, y) as unpremultiplied color.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="skia.Bitmap.getGenerationID">
+<code class="sig-prename descclassname">Bitmap.</code><code class="sig-name descname">getGenerationID</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Bitmap" title="skia.Bitmap">skia.Bitmap</a></span></em><span class="sig-paren">)</span> &#x2192; int<a class="headerlink" href="#skia.Bitmap.getGenerationID" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a unique value corresponding to the pixels in SkPixelRef.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="skia.Bitmap.getPixels">
+<code class="sig-prename descclassname">Bitmap.</code><code class="sig-name descname">getPixels</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Bitmap" title="skia.Bitmap">skia.Bitmap</a></span></em><span class="sig-paren">)</span> &#x2192; capsule<a class="headerlink" href="#skia.Bitmap.getPixels" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns pixel address, the base address corresponding to the pixel origin.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="skia.Bitmap.getSubset">
+<code class="sig-prename descclassname">Bitmap.</code><code class="sig-name descname">getSubset</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Bitmap" title="skia.Bitmap">skia.Bitmap</a></span></em><span class="sig-paren">)</span> &#x2192; SkIRect<a class="headerlink" href="#skia.Bitmap.getSubset" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the bounds of this bitmap, offset by its SkPixelRef origin.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="skia.Bitmap.height">
+<code class="sig-prename descclassname">Bitmap.</code><code class="sig-name descname">height</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Bitmap" title="skia.Bitmap">skia.Bitmap</a></span></em><span class="sig-paren">)</span> &#x2192; int<a class="headerlink" href="#skia.Bitmap.height" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns pixel row count.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="skia.Bitmap.info">
+<code class="sig-prename descclassname">Bitmap.</code><code class="sig-name descname">info</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Bitmap" title="skia.Bitmap">skia.Bitmap</a></span></em><span class="sig-paren">)</span> &#x2192; SkImageInfo<a class="headerlink" href="#skia.Bitmap.info" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns width, height, SkAlphaType, SkColorType, and SkColorSpace.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="skia.Bitmap.installPixels">
+<code class="sig-prename descclassname">Bitmap.</code><code class="sig-name descname">installPixels</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span><span class="n">args</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#skia.Bitmap.installPixels" title="Permalink to this definition">¶</a></dt>
+<dd><p>Overloaded function.</p>
+<ol class="arabic simple">
+<li><p>installPixels(self: skia.Bitmap, arg0: SkImageInfo, arg1: capsule, arg2: int, arg3: void (void*, void*), arg4: capsule) -&gt; bool</p></li>
+</ol>
+<p>Sets SkImageInfo to info following the rules in setInfo(), and creates SkPixelRef containing pixels and rowBytes.</p>
+<ol class="arabic simple" start="2">
+<li><p>installPixels(self: skia.Bitmap, arg0: SkImageInfo, arg1: capsule, arg2: int) -&gt; bool</p></li>
+</ol>
+<p>Sets SkImageInfo to info following the rules in setInfo(), and creates SkPixelRef containing pixels and rowBytes.</p>
+<ol class="arabic simple" start="3">
+<li><p>installPixels(self: skia.Bitmap, arg0: SkPixmap) -&gt; bool</p></li>
+</ol>
+<p>Sets SkImageInfo to pixmap.info() following the rules in setInfo(), and creates SkPixelRef containing pixmap.addr() and pixmap.rowBytes().</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="skia.Bitmap.isImmutable">
+<code class="sig-prename descclassname">Bitmap.</code><code class="sig-name descname">isImmutable</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Bitmap" title="skia.Bitmap">skia.Bitmap</a></span></em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#skia.Bitmap.isImmutable" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns true if pixels can not change.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="skia.Bitmap.isNull">
+<code class="sig-prename descclassname">Bitmap.</code><code class="sig-name descname">isNull</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Bitmap" title="skia.Bitmap">skia.Bitmap</a></span></em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#skia.Bitmap.isNull" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns true if SkPixelRef is nullptr.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="skia.Bitmap.isOpaque">
+<code class="sig-prename descclassname">Bitmap.</code><code class="sig-name descname">isOpaque</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Bitmap" title="skia.Bitmap">skia.Bitmap</a></span></em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#skia.Bitmap.isOpaque" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns true if SkAlphaType is set to hint that all pixels are opaque; their alpha value is implicitly or explicitly 1.0.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="skia.Bitmap.isVolatile">
+<code class="sig-prename descclassname">Bitmap.</code><code class="sig-name descname">isVolatile</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Bitmap" title="skia.Bitmap">skia.Bitmap</a></span></em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#skia.Bitmap.isVolatile" title="Permalink to this definition">¶</a></dt>
+<dd><p>Provides a hint to caller that pixels should not be cached.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="skia.Bitmap.notifyPixelsChanged">
+<code class="sig-prename descclassname">Bitmap.</code><code class="sig-name descname">notifyPixelsChanged</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Bitmap" title="skia.Bitmap">skia.Bitmap</a></span></em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#skia.Bitmap.notifyPixelsChanged" title="Permalink to this definition">¶</a></dt>
+<dd><p>Marks that pixels in SkPixelRef have changed.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="skia.Bitmap.peekPixels">
+<code class="sig-prename descclassname">Bitmap.</code><code class="sig-name descname">peekPixels</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Bitmap" title="skia.Bitmap">skia.Bitmap</a></span></em>, <em class="sig-param"><span class="n">arg0</span><span class="p">:</span> <span class="n">SkPixmap</span></em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#skia.Bitmap.peekPixels" title="Permalink to this definition">¶</a></dt>
+<dd><p>Copies SkBitmap pixel address, row bytes, and SkImageInfo to pixmap, if address is available, and returns true.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="skia.Bitmap.pixelRefOrigin">
+<code class="sig-prename descclassname">Bitmap.</code><code class="sig-name descname">pixelRefOrigin</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Bitmap" title="skia.Bitmap">skia.Bitmap</a></span></em><span class="sig-paren">)</span> &#x2192; SkIPoint<a class="headerlink" href="#skia.Bitmap.pixelRefOrigin" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns origin of pixels within SkPixelRef.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="skia.Bitmap.pixmap">
+<code class="sig-prename descclassname">Bitmap.</code><code class="sig-name descname">pixmap</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Bitmap" title="skia.Bitmap">skia.Bitmap</a></span></em><span class="sig-paren">)</span> &#x2192; SkPixmap<a class="headerlink" href="#skia.Bitmap.pixmap" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a constant reference to the SkPixmap holding the SkBitmap pixel address, row bytes, and SkImageInfo.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="skia.Bitmap.readPixels">
+<code class="sig-prename descclassname">Bitmap.</code><code class="sig-name descname">readPixels</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span><span class="n">args</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#skia.Bitmap.readPixels" title="Permalink to this definition">¶</a></dt>
+<dd><p>Overloaded function.</p>
+<ol class="arabic simple">
+<li><p>readPixels(self: skia.Bitmap, arg0: SkImageInfo, arg1: capsule, arg2: int, arg3: int, arg4: int) -&gt; bool</p></li>
+</ol>
+<p>Copies a SkRect of pixels from SkBitmap to dstPixels.</p>
+<ol class="arabic simple" start="2">
+<li><p>readPixels(self: skia.Bitmap, arg0: SkPixmap, arg1: int, arg2: int) -&gt; bool</p></li>
+</ol>
+<p>Copies a SkRect of pixels from SkBitmap to dst.</p>
+<ol class="arabic simple" start="3">
+<li><p>readPixels(self: skia.Bitmap, arg0: SkPixmap) -&gt; bool</p></li>
+</ol>
+<p>Copies a SkRect of pixels from SkBitmap to dst.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="skia.Bitmap.readyToDraw">
+<code class="sig-prename descclassname">Bitmap.</code><code class="sig-name descname">readyToDraw</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Bitmap" title="skia.Bitmap">skia.Bitmap</a></span></em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#skia.Bitmap.readyToDraw" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns true if SkBitmap is can be drawn.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="skia.Bitmap.refColorSpace">
+<code class="sig-prename descclassname">Bitmap.</code><code class="sig-name descname">refColorSpace</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Bitmap" title="skia.Bitmap">skia.Bitmap</a></span></em><span class="sig-paren">)</span> &#x2192; sk_sp&lt;SkColorSpace&gt;<a class="headerlink" href="#skia.Bitmap.refColorSpace" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns smart pointer to SkColorSpace, the range of colors, associated with SkImageInfo.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="skia.Bitmap.reset">
+<code class="sig-prename descclassname">Bitmap.</code><code class="sig-name descname">reset</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Bitmap" title="skia.Bitmap">skia.Bitmap</a></span></em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#skia.Bitmap.reset" title="Permalink to this definition">¶</a></dt>
+<dd><p>Resets to its initial state; all fields are set to zero, as if SkBitmap had been initialized by SkBitmap().</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="skia.Bitmap.rowBytes">
+<code class="sig-prename descclassname">Bitmap.</code><code class="sig-name descname">rowBytes</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Bitmap" title="skia.Bitmap">skia.Bitmap</a></span></em><span class="sig-paren">)</span> &#x2192; int<a class="headerlink" href="#skia.Bitmap.rowBytes" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns row bytes, the interval from one pixel row to the next.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="skia.Bitmap.rowBytesAsPixels">
+<code class="sig-prename descclassname">Bitmap.</code><code class="sig-name descname">rowBytesAsPixels</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Bitmap" title="skia.Bitmap">skia.Bitmap</a></span></em><span class="sig-paren">)</span> &#x2192; int<a class="headerlink" href="#skia.Bitmap.rowBytesAsPixels" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns number of pixels that fit on row.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="skia.Bitmap.setAlphaType">
+<code class="sig-prename descclassname">Bitmap.</code><code class="sig-name descname">setAlphaType</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Bitmap" title="skia.Bitmap">skia.Bitmap</a></span></em>, <em class="sig-param"><span class="n">arg0</span><span class="p">:</span> <span class="n">SkAlphaType</span></em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#skia.Bitmap.setAlphaType" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets SkAlphaType, if alphaType is compatible with SkColorType.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="skia.Bitmap.setImmutable">
+<code class="sig-prename descclassname">Bitmap.</code><code class="sig-name descname">setImmutable</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Bitmap" title="skia.Bitmap">skia.Bitmap</a></span></em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#skia.Bitmap.setImmutable" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets internal flag to mark SkBitmap as immutable.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="skia.Bitmap.setInfo">
+<code class="sig-prename descclassname">Bitmap.</code><code class="sig-name descname">setInfo</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Bitmap" title="skia.Bitmap">skia.Bitmap</a></span></em>, <em class="sig-param"><span class="n">arg0</span><span class="p">:</span> <span class="n">SkImageInfo</span></em>, <em class="sig-param"><span class="n">arg1</span><span class="p">:</span> <span class="n">int</span></em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#skia.Bitmap.setInfo" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets width, height, SkAlphaType, SkColorType, SkColorSpace, and optional rowBytes.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="skia.Bitmap.setIsVolatile">
+<code class="sig-prename descclassname">Bitmap.</code><code class="sig-name descname">setIsVolatile</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Bitmap" title="skia.Bitmap">skia.Bitmap</a></span></em>, <em class="sig-param"><span class="n">arg0</span><span class="p">:</span> <span class="n">bool</span></em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#skia.Bitmap.setIsVolatile" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets if pixels should be read from SkPixelRef on every access.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="skia.Bitmap.setPixels">
+<code class="sig-prename descclassname">Bitmap.</code><code class="sig-name descname">setPixels</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Bitmap" title="skia.Bitmap">skia.Bitmap</a></span></em>, <em class="sig-param"><span class="n">arg0</span><span class="p">:</span> <span class="n">capsule</span></em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#skia.Bitmap.setPixels" title="Permalink to this definition">¶</a></dt>
+<dd><p>Replaces SkPixelRef with pixels, preserving SkImageInfo and rowBytes().</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="skia.Bitmap.shiftPerPixel">
+<code class="sig-prename descclassname">Bitmap.</code><code class="sig-name descname">shiftPerPixel</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Bitmap" title="skia.Bitmap">skia.Bitmap</a></span></em><span class="sig-paren">)</span> &#x2192; int<a class="headerlink" href="#skia.Bitmap.shiftPerPixel" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns bit shift converting row bytes to row pixels.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="skia.Bitmap.swap">
+<code class="sig-prename descclassname">Bitmap.</code><code class="sig-name descname">swap</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Bitmap" title="skia.Bitmap">skia.Bitmap</a></span></em>, <em class="sig-param"><span class="n">arg0</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Bitmap" title="skia.Bitmap">skia.Bitmap</a></span></em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#skia.Bitmap.swap" title="Permalink to this definition">¶</a></dt>
+<dd><p>Swaps the fields of the two bitmaps.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="skia.Bitmap.tryAllocN32Pixels">
+<code class="sig-prename descclassname">Bitmap.</code><code class="sig-name descname">tryAllocN32Pixels</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Bitmap" title="skia.Bitmap">skia.Bitmap</a></span></em>, <em class="sig-param"><span class="n">arg0</span><span class="p">:</span> <span class="n">int</span></em>, <em class="sig-param"><span class="n">arg1</span><span class="p">:</span> <span class="n">int</span></em>, <em class="sig-param"><span class="n">arg2</span><span class="p">:</span> <span class="n">bool</span></em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#skia.Bitmap.tryAllocN32Pixels" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets SkImageInfo to info following the rules in setInfo() and allocates pixel memory.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="skia.Bitmap.tryAllocPixels">
+<code class="sig-prename descclassname">Bitmap.</code><code class="sig-name descname">tryAllocPixels</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span><span class="n">args</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#skia.Bitmap.tryAllocPixels" title="Permalink to this definition">¶</a></dt>
+<dd><p>Overloaded function.</p>
+<ol class="arabic simple">
+<li><p>tryAllocPixels(self: skia.Bitmap, arg0: SkImageInfo, arg1: int) -&gt; bool</p></li>
+</ol>
+<p>Sets SkImageInfo to info following the rules in setInfo() and allocates pixel memory.</p>
+<ol class="arabic simple" start="2">
+<li><p>tryAllocPixels(self: skia.Bitmap, arg0: SkImageInfo) -&gt; bool</p></li>
+</ol>
+<p>Sets SkImageInfo to info following the rules in setInfo() and allocates pixel memory.</p>
+<ol class="arabic simple" start="3">
+<li><p>tryAllocPixels(self: skia.Bitmap) -&gt; bool</p></li>
+</ol>
+<p>Allocates pixel memory with HeapAllocator, and replaces existing SkPixelRef.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="skia.Bitmap.tryAllocPixelsFlags">
+<code class="sig-prename descclassname">Bitmap.</code><code class="sig-name descname">tryAllocPixelsFlags</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Bitmap" title="skia.Bitmap">skia.Bitmap</a></span></em>, <em class="sig-param"><span class="n">arg0</span><span class="p">:</span> <span class="n">SkImageInfo</span></em>, <em class="sig-param"><span class="n">arg1</span><span class="p">:</span> <span class="n">int</span></em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#skia.Bitmap.tryAllocPixelsFlags" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets SkImageInfo to info following the rules in setInfo() and allocates pixel memory.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="skia.Bitmap.width">
+<code class="sig-prename descclassname">Bitmap.</code><code class="sig-name descname">width</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Bitmap" title="skia.Bitmap">skia.Bitmap</a></span></em><span class="sig-paren">)</span> &#x2192; int<a class="headerlink" href="#skia.Bitmap.width" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns pixel count in each row.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="skia.Bitmap.writePixels">
+<code class="sig-prename descclassname">Bitmap.</code><code class="sig-name descname">writePixels</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span><span class="n">args</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#skia.Bitmap.writePixels" title="Permalink to this definition">¶</a></dt>
+<dd><p>Overloaded function.</p>
+<ol class="arabic simple">
+<li><p>writePixels(self: skia.Bitmap, arg0: SkPixmap, arg1: int, arg2: int) -&gt; bool</p></li>
+</ol>
+<p>Copies a SkRect of pixels from src.</p>
+<ol class="arabic simple" start="2">
+<li><p>writePixels(self: skia.Bitmap, arg0: SkPixmap) -&gt; bool</p></li>
+</ol>
+<p>Copies a SkRect of pixels from src.</p>
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../index.html">skia-python</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../skia.html">skia</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="skia.AlphaType.html">AlphaType</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.ApplyPerspectiveClip.html">ApplyPerspectiveClip</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.AutoCanvasRestore.html">AutoCanvasRestore</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.BBoxHierarchy.html">BBoxHierarchy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.BackingFit.html">BackingFit</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Bitmap</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.BlendMode.html">BlendMode</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.BlendModeCoeff.html">BlendModeCoeff</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.Budgeted.html">Budgeted</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.Canvas.html">Canvas</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.ClipOp.html">ClipOp</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.Color4f.html">Color4f</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.ColorFilter.html">ColorFilter</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.ColorInfo.html">ColorInfo</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.ColorSpace.html">ColorSpace</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.ColorType.html">ColorType</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.Data.html">Data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.DeserialProcs.html">DeserialProcs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.EncodedImageFormat.html">EncodedImageFormat</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.FilterQuality.html">FilterQuality</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.Font.html">Font</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.FontArguments.html">FontArguments</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.FontHinting.html">FontHinting</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.FontMetrics.html">FontMetrics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.FontStyle.html">FontStyle</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.GrBackendApi.html">GrBackendApi</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.GrBackendSemaphore.html">GrBackendSemaphore</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.GrBackendTexture.html">GrBackendTexture</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.GrContext.html">GrContext</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.GrFlushFlags.html">GrFlushFlags</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.GrGLBackendState.html">GrGLBackendState</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.GrGLInterface.html">GrGLInterface</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.GrMipMapped.html">GrMipMapped</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.GrProtected.html">GrProtected</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.GrRenderable.html">GrRenderable</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.GrSemaphoresSubmitted.html">GrSemaphoresSubmitted</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.GrSurfaceOrigin.html">GrSurfaceOrigin</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.IPoint.html">IPoint</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.IRect.html">IRect</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.ISize.html">ISize</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.Image.html">Image</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.ImageFilter.html">ImageFilter</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.ImageInfo.html">ImageInfo</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.M44.html">M44</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.MaskFilter.html">MaskFilter</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.Matrix.html">Matrix</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.Paint.html">Paint</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.Path.html">Path</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.PathConvexityType.html">PathConvexityType</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.PathDirection.html">PathDirection</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.PathEffect.html">PathEffect</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.PathFillType.html">PathFillType</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.PathSegmentMask.html">PathSegmentMask</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.PathVerb.html">PathVerb</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.Picture.html">Picture</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.PictureRecorder.html">PictureRecorder</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.PixelGeometry.html">PixelGeometry</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.Pixmap.html">Pixmap</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.Point.html">Point</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.Point3.html">Point3</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.RRect.html">RRect</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.RSXform.html">RSXform</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.Rect.html">Rect</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.Region.html">Region</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.Shader.html">Shader</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.Size.html">Size</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.Surface.html">Surface</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.SurfaceCharacterization.html">SurfaceCharacterization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.SurfaceProps.html">SurfaceProps</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.TextBlob.html">TextBlob</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.TextBlobBuilder.html">TextBlobBuilder</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.TextEncoding.html">TextEncoding</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.TileMode.html">TileMode</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.Typeface.html">Typeface</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.Vertices.html">Vertices</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.YUVColorSpace.html">YUVColorSpace</a></li>
+</ul>
+</li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  <li><a href="../skia.html">skia</a><ul>
+      <li>Previous: <a href="skia.BackingFit.html" title="previous chapter">BackingFit</a></li>
+      <li>Next: <a href="skia.BlendMode.html" title="next chapter">BlendMode</a></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2020, Kota Yamaguchi.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.0.0</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="../_sources/_generate/skia.Bitmap.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

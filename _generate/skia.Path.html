@@ -1,0 +1,1074 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>Path &#8212; skia-python 0.0.1 documentation</title>
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/language_data.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="PathConvexityType" href="skia.PathConvexityType.html" />
+    <link rel="prev" title="Paint" href="skia.Paint.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="path">
+<h1>Path<a class="headerlink" href="#path" title="Permalink to this headline">¶</a></h1>
+<dl class="py class">
+<dt id="skia.Path">
+<em class="property">class </em><code class="sig-name descname">Path</code><a class="headerlink" href="#skia.Path" title="Permalink to this definition">¶</a></dt>
+<dd><p>SkPath contain geometry.</p>
+<p>SkPath may be empty, or contain one or more verbs that outline a figure.
+SkPath always starts with a move verb to a Cartesian coordinate, and may be
+followed by additional verbs that add lines or curves. Adding a close verb
+makes the geometry into a continuous loop, a closed contour. SkPath may
+contain any number of contours, each beginning with a move verb.</p>
+<p>SkPath contours may contain only a move verb, or may also contain lines,
+quadratic beziers, conics, and cubic beziers. SkPath contours may be open or
+closed.</p>
+<p>When used to draw a filled area, SkPath describes whether the fill is inside
+or outside the geometry. SkPath also describes the winding rule used to fill
+overlapping contours.</p>
+<p>Internally, SkPath lazily computes metrics likes bounds and convexity. Call
+SkPath::updateBoundsCache to make SkPath thread safe.</p>
+<p class="rubric">Methods</p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Path.ConvertConicToQuads" title="skia.Path.ConvertConicToQuads"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ConvertConicToQuads</span></code></a></p></td>
+<td><p>Approximates conic with quad array.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.Path.IsCubicDegenerate" title="skia.Path.IsCubicDegenerate"><code class="xref py py-obj docutils literal notranslate"><span class="pre">IsCubicDegenerate</span></code></a></p></td>
+<td><p>Tests if cubic is degenerate.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Path.IsLineDegenerate" title="skia.Path.IsLineDegenerate"><code class="xref py py-obj docutils literal notranslate"><span class="pre">IsLineDegenerate</span></code></a></p></td>
+<td><p>Tests if line between SkPoint pair is degenerate.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.Path.IsQuadDegenerate" title="skia.Path.IsQuadDegenerate"><code class="xref py py-obj docutils literal notranslate"><span class="pre">IsQuadDegenerate</span></code></a></p></td>
+<td><p>Tests if quad is degenerate.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Path.__init__" title="skia.Path.__init__"><code class="xref py py-obj docutils literal notranslate"><span class="pre">__init__</span></code></a></p></td>
+<td><p>Overloaded function.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.Path.addArc" title="skia.Path.addArc"><code class="xref py py-obj docutils literal notranslate"><span class="pre">addArc</span></code></a></p></td>
+<td><p>Appends arc to SkPath, as the start of new contour.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Path.addCircle" title="skia.Path.addCircle"><code class="xref py py-obj docutils literal notranslate"><span class="pre">addCircle</span></code></a></p></td>
+<td><p>Adds circle centered at (x, y) of size radius to SkPath, appending kMove_Verb, four kConic_Verb, and kClose_Verb.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.Path.addOval" title="skia.Path.addOval"><code class="xref py py-obj docutils literal notranslate"><span class="pre">addOval</span></code></a></p></td>
+<td><p>Overloaded function.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Path.addPath" title="skia.Path.addPath"><code class="xref py py-obj docutils literal notranslate"><span class="pre">addPath</span></code></a></p></td>
+<td><p>Overloaded function.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.Path.addPoly" title="skia.Path.addPoly"><code class="xref py py-obj docutils literal notranslate"><span class="pre">addPoly</span></code></a></p></td>
+<td><p>Overloaded function.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Path.addRRect" title="skia.Path.addRRect"><code class="xref py py-obj docutils literal notranslate"><span class="pre">addRRect</span></code></a></p></td>
+<td><p>Overloaded function.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.Path.addRect" title="skia.Path.addRect"><code class="xref py py-obj docutils literal notranslate"><span class="pre">addRect</span></code></a></p></td>
+<td><p>Overloaded function.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Path.addRoundRect" title="skia.Path.addRoundRect"><code class="xref py py-obj docutils literal notranslate"><span class="pre">addRoundRect</span></code></a></p></td>
+<td><p>Overloaded function.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.Path.approximateBytesUsed" title="skia.Path.approximateBytesUsed"><code class="xref py py-obj docutils literal notranslate"><span class="pre">approximateBytesUsed</span></code></a></p></td>
+<td><p>Returns the approximate byte size of the SkPath in memory.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Path.arcTo" title="skia.Path.arcTo"><code class="xref py py-obj docutils literal notranslate"><span class="pre">arcTo</span></code></a></p></td>
+<td><p>Overloaded function.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.Path.close" title="skia.Path.close"><code class="xref py py-obj docutils literal notranslate"><span class="pre">close</span></code></a></p></td>
+<td><p>Appends kClose_Verb to SkPath.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Path.computeTightBounds" title="skia.Path.computeTightBounds"><code class="xref py py-obj docutils literal notranslate"><span class="pre">computeTightBounds</span></code></a></p></td>
+<td><p>Returns minimum and maximum axes values of the lines and curves in SkPath.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.Path.conicTo" title="skia.Path.conicTo"><code class="xref py py-obj docutils literal notranslate"><span class="pre">conicTo</span></code></a></p></td>
+<td><p>Overloaded function.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Path.conservativelyContainsRect" title="skia.Path.conservativelyContainsRect"><code class="xref py py-obj docutils literal notranslate"><span class="pre">conservativelyContainsRect</span></code></a></p></td>
+<td><p>Returns true if rect is contained by SkPath.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.Path.contains" title="skia.Path.contains"><code class="xref py py-obj docutils literal notranslate"><span class="pre">contains</span></code></a></p></td>
+<td><p>Returns true if the point (x, y) is contained by SkPath, taking into account FillType.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Path.countPoints" title="skia.Path.countPoints"><code class="xref py py-obj docutils literal notranslate"><span class="pre">countPoints</span></code></a></p></td>
+<td><p>Returns the number of points in SkPath.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.Path.countVerbs" title="skia.Path.countVerbs"><code class="xref py py-obj docutils literal notranslate"><span class="pre">countVerbs</span></code></a></p></td>
+<td><p>Returns the number of verbs: kMove_Verb, kLine_Verb, kQuad_Verb, kConic_Verb, kCubic_Verb, and kClose_Verb; added to SkPath.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Path.cubicTo" title="skia.Path.cubicTo"><code class="xref py py-obj docutils literal notranslate"><span class="pre">cubicTo</span></code></a></p></td>
+<td><p>Overloaded function.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.Path.dump" title="skia.Path.dump"><code class="xref py py-obj docutils literal notranslate"><span class="pre">dump</span></code></a></p></td>
+<td><p>Writes text representation of SkPath to standard output.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Path.dumpHex" title="skia.Path.dumpHex"><code class="xref py py-obj docutils literal notranslate"><span class="pre">dumpHex</span></code></a></p></td>
+<td><p>Writes text representation of SkPath to standard output.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.Path.getBounds" title="skia.Path.getBounds"><code class="xref py py-obj docutils literal notranslate"><span class="pre">getBounds</span></code></a></p></td>
+<td><p>Returns minimum and maximum axes values of SkPoint array.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Path.getConvexityType" title="skia.Path.getConvexityType"><code class="xref py py-obj docutils literal notranslate"><span class="pre">getConvexityType</span></code></a></p></td>
+<td><p>Returns the comvexity type, computing if needed.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.Path.getConvexityTypeOrUnknown" title="skia.Path.getConvexityTypeOrUnknown"><code class="xref py py-obj docutils literal notranslate"><span class="pre">getConvexityTypeOrUnknown</span></code></a></p></td>
+<td><p>If the path’s convexity is already known, return it, else return kUnknown.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Path.getFillType" title="skia.Path.getFillType"><code class="xref py py-obj docutils literal notranslate"><span class="pre">getFillType</span></code></a></p></td>
+<td><p>Returns SkPathFillType, the rule used to fill SkPath.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.Path.getGenerationID" title="skia.Path.getGenerationID"><code class="xref py py-obj docutils literal notranslate"><span class="pre">getGenerationID</span></code></a></p></td>
+<td><p>(See Skia bug 1762.) Returns a non-zero, globally unique value.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Path.getLastPt" title="skia.Path.getLastPt"><code class="xref py py-obj docutils literal notranslate"><span class="pre">getLastPt</span></code></a></p></td>
+<td><p>Returns last point on SkPath in lastPt.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.Path.getPoint" title="skia.Path.getPoint"><code class="xref py py-obj docutils literal notranslate"><span class="pre">getPoint</span></code></a></p></td>
+<td><p>Returns SkPoint at index in SkPoint array.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Path.getPoints" title="skia.Path.getPoints"><code class="xref py py-obj docutils literal notranslate"><span class="pre">getPoints</span></code></a></p></td>
+<td><p>Returns number of points in SkPath.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.Path.getSegmentMasks" title="skia.Path.getSegmentMasks"><code class="xref py py-obj docutils literal notranslate"><span class="pre">getSegmentMasks</span></code></a></p></td>
+<td><p>Returns a mask, where each set bit corresponds to a SegmentMask constant if SkPath contains one or more verbs of that type.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Path.getVerbs" title="skia.Path.getVerbs"><code class="xref py py-obj docutils literal notranslate"><span class="pre">getVerbs</span></code></a></p></td>
+<td><p>Returns the number of verbs in the path.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.Path.incReserve" title="skia.Path.incReserve"><code class="xref py py-obj docutils literal notranslate"><span class="pre">incReserve</span></code></a></p></td>
+<td><p>Grows SkPath verb array and SkPoint array to contain extraPtCount additional SkPoint.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Path.interpolate" title="skia.Path.interpolate"><code class="xref py py-obj docutils literal notranslate"><span class="pre">interpolate</span></code></a></p></td>
+<td><p>Interpolates between SkPath with SkPoint array of equal size.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.Path.isConvex" title="skia.Path.isConvex"><code class="xref py py-obj docutils literal notranslate"><span class="pre">isConvex</span></code></a></p></td>
+<td><p>Returns true if the path is convex.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Path.isEmpty" title="skia.Path.isEmpty"><code class="xref py py-obj docutils literal notranslate"><span class="pre">isEmpty</span></code></a></p></td>
+<td><p>Returns if SkPath is empty.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.Path.isFinite" title="skia.Path.isFinite"><code class="xref py py-obj docutils literal notranslate"><span class="pre">isFinite</span></code></a></p></td>
+<td><p>Returns true for finite SkPoint array values between negative SK_ScalarMax and positive SK_ScalarMax.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Path.isInterpolatable" title="skia.Path.isInterpolatable"><code class="xref py py-obj docutils literal notranslate"><span class="pre">isInterpolatable</span></code></a></p></td>
+<td><p>Returns true if SkPath contain equal verbs and equal weights.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.Path.isInverseFillType" title="skia.Path.isInverseFillType"><code class="xref py py-obj docutils literal notranslate"><span class="pre">isInverseFillType</span></code></a></p></td>
+<td><p>Returns if FillType describes area outside SkPath geometry.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Path.isLastContourClosed" title="skia.Path.isLastContourClosed"><code class="xref py py-obj docutils literal notranslate"><span class="pre">isLastContourClosed</span></code></a></p></td>
+<td><p>Returns if contour is closed.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.Path.isLine" title="skia.Path.isLine"><code class="xref py py-obj docutils literal notranslate"><span class="pre">isLine</span></code></a></p></td>
+<td><p>Returns true if SkPath contains only one line; SkPath::Verb array has two entries: kMove_Verb, kLine_Verb.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Path.isOval" title="skia.Path.isOval"><code class="xref py py-obj docutils literal notranslate"><span class="pre">isOval</span></code></a></p></td>
+<td><p>Returns true if this path is recognized as an oval or circle.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.Path.isRRect" title="skia.Path.isRRect"><code class="xref py py-obj docutils literal notranslate"><span class="pre">isRRect</span></code></a></p></td>
+<td><p>Returns true if path is representable as SkRRect.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Path.isRect" title="skia.Path.isRect"><code class="xref py py-obj docutils literal notranslate"><span class="pre">isRect</span></code></a></p></td>
+<td><p>Returns true if SkPath is equivalent to SkRect when filled.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.Path.isValid" title="skia.Path.isValid"><code class="xref py py-obj docutils literal notranslate"><span class="pre">isValid</span></code></a></p></td>
+<td><p>Returns if SkPath data is consistent.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Path.isVolatile" title="skia.Path.isVolatile"><code class="xref py py-obj docutils literal notranslate"><span class="pre">isVolatile</span></code></a></p></td>
+<td><p>Returns true if the path is volatile; it will not be altered or discarded by the caller after it is drawn.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.Path.lineTo" title="skia.Path.lineTo"><code class="xref py py-obj docutils literal notranslate"><span class="pre">lineTo</span></code></a></p></td>
+<td><p>Overloaded function.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Path.moveTo" title="skia.Path.moveTo"><code class="xref py py-obj docutils literal notranslate"><span class="pre">moveTo</span></code></a></p></td>
+<td><p>Overloaded function.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.Path.offset" title="skia.Path.offset"><code class="xref py py-obj docutils literal notranslate"><span class="pre">offset</span></code></a></p></td>
+<td><p>Overloaded function.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Path.quadTo" title="skia.Path.quadTo"><code class="xref py py-obj docutils literal notranslate"><span class="pre">quadTo</span></code></a></p></td>
+<td><p>Overloaded function.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.Path.rArcTo" title="skia.Path.rArcTo"><code class="xref py py-obj docutils literal notranslate"><span class="pre">rArcTo</span></code></a></p></td>
+<td><p>Appends arc to SkPath, relative to last SkPath SkPoint.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Path.rConicTo" title="skia.Path.rConicTo"><code class="xref py py-obj docutils literal notranslate"><span class="pre">rConicTo</span></code></a></p></td>
+<td><p>Adds conic from last point towards vector (dx1, dy1), to vector (dx2, dy2), weighted by w.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.Path.rCubicTo" title="skia.Path.rCubicTo"><code class="xref py py-obj docutils literal notranslate"><span class="pre">rCubicTo</span></code></a></p></td>
+<td><p>Adds cubic from last point towards vector (dx1, dy1), then towards vector (dx2, dy2), to vector (dx3, dy3).</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Path.rLineTo" title="skia.Path.rLineTo"><code class="xref py py-obj docutils literal notranslate"><span class="pre">rLineTo</span></code></a></p></td>
+<td><p>Adds line from last point to vector (dx, dy).</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.Path.rMoveTo" title="skia.Path.rMoveTo"><code class="xref py py-obj docutils literal notranslate"><span class="pre">rMoveTo</span></code></a></p></td>
+<td><p>Adds beginning of contour relative to last point.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Path.rQuadTo" title="skia.Path.rQuadTo"><code class="xref py py-obj docutils literal notranslate"><span class="pre">rQuadTo</span></code></a></p></td>
+<td><p>Adds quad from last point towards vector (dx1, dy1), to vector (dx2, dy2).</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.Path.readFromMemory" title="skia.Path.readFromMemory"><code class="xref py py-obj docutils literal notranslate"><span class="pre">readFromMemory</span></code></a></p></td>
+<td><p>Initializes SkPath from buffer of size length.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Path.reset" title="skia.Path.reset"><code class="xref py py-obj docutils literal notranslate"><span class="pre">reset</span></code></a></p></td>
+<td><p>Sets SkPath to its initial state.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.Path.reverseAddPath" title="skia.Path.reverseAddPath"><code class="xref py py-obj docutils literal notranslate"><span class="pre">reverseAddPath</span></code></a></p></td>
+<td><p>Appends src to SkPath, from back to front.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Path.rewind" title="skia.Path.rewind"><code class="xref py py-obj docutils literal notranslate"><span class="pre">rewind</span></code></a></p></td>
+<td><p>Sets SkPath to its initial state, preserving internal storage.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.Path.serialize" title="skia.Path.serialize"><code class="xref py py-obj docutils literal notranslate"><span class="pre">serialize</span></code></a></p></td>
+<td><p>Writes SkPath to buffer, returning the buffer written to, wrapped in SkData.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Path.setConvexityType" title="skia.Path.setConvexityType"><code class="xref py py-obj docutils literal notranslate"><span class="pre">setConvexityType</span></code></a></p></td>
+<td><p>Returns the comvexity type, computing if needed.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.Path.setFillType" title="skia.Path.setFillType"><code class="xref py py-obj docutils literal notranslate"><span class="pre">setFillType</span></code></a></p></td>
+<td><p>Sets FillType, the rule used to fill SkPath.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Path.setIsVolatile" title="skia.Path.setIsVolatile"><code class="xref py py-obj docutils literal notranslate"><span class="pre">setIsVolatile</span></code></a></p></td>
+<td><p>Specifies whether SkPath is volatile; whether it will be altered or discarded by the caller after it is drawn.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.Path.setLastPt" title="skia.Path.setLastPt"><code class="xref py py-obj docutils literal notranslate"><span class="pre">setLastPt</span></code></a></p></td>
+<td><p>Overloaded function.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Path.shrinkToFit" title="skia.Path.shrinkToFit"><code class="xref py py-obj docutils literal notranslate"><span class="pre">shrinkToFit</span></code></a></p></td>
+<td><p>Shrinks SkPath verb array and SkPoint array storage to discard unused capacity.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.Path.swap" title="skia.Path.swap"><code class="xref py py-obj docutils literal notranslate"><span class="pre">swap</span></code></a></p></td>
+<td><p>Exchanges the verb array, SkPoint array, weights, and SkPath::FillType with other.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Path.toggleInverseFillType" title="skia.Path.toggleInverseFillType"><code class="xref py py-obj docutils literal notranslate"><span class="pre">toggleInverseFillType</span></code></a></p></td>
+<td><p>Replaces FillType with its inverse.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.Path.transform" title="skia.Path.transform"><code class="xref py py-obj docutils literal notranslate"><span class="pre">transform</span></code></a></p></td>
+<td><p>Overloaded function.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Path.updateBoundsCache" title="skia.Path.updateBoundsCache"><code class="xref py py-obj docutils literal notranslate"><span class="pre">updateBoundsCache</span></code></a></p></td>
+<td><p>Updates internal bounds so that subsequent calls to getBounds() are instantaneous.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.Path.writeToMemory" title="skia.Path.writeToMemory"><code class="xref py py-obj docutils literal notranslate"><span class="pre">writeToMemory</span></code></a></p></td>
+<td><p>Writes SkPath to buffer, returning the number of bytes written.</p></td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Attributes</p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">kAppend</span></code></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">kClose</span></code></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">kConic</span></code></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">kCubic</span></code></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">kDone</span></code></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">kExtend</span></code></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">kLarge</span></code></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">kLine</span></code></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">kMove</span></code></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">kQuad</span></code></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">kSmall</span></code></p></td>
+<td><p></p></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<div class="section" id="methods">
+<h2>Methods<a class="headerlink" href="#methods" title="Permalink to this headline">¶</a></h2>
+<dl class="py method">
+<dt id="skia.Path.ConvertConicToQuads">
+<em class="property">static </em><code class="sig-prename descclassname">Path.</code><code class="sig-name descname">ConvertConicToQuads</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">arg0</span><span class="p">:</span> <span class="n">SkPoint</span></em>, <em class="sig-param"><span class="n">arg1</span><span class="p">:</span> <span class="n">SkPoint</span></em>, <em class="sig-param"><span class="n">arg2</span><span class="p">:</span> <span class="n">SkPoint</span></em>, <em class="sig-param"><span class="n">arg3</span><span class="p">:</span> <span class="n">float</span></em>, <em class="sig-param"><span class="n">arg4</span><span class="p">:</span> <span class="n">SkPoint</span></em>, <em class="sig-param"><span class="n">arg5</span><span class="p">:</span> <span class="n">int</span></em><span class="sig-paren">)</span> &#x2192; int<a class="headerlink" href="#skia.Path.ConvertConicToQuads" title="Permalink to this definition">¶</a></dt>
+<dd><p>Approximates conic with quad array.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="skia.Path.IsCubicDegenerate">
+<em class="property">static </em><code class="sig-prename descclassname">Path.</code><code class="sig-name descname">IsCubicDegenerate</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">arg0</span><span class="p">:</span> <span class="n">SkPoint</span></em>, <em class="sig-param"><span class="n">arg1</span><span class="p">:</span> <span class="n">SkPoint</span></em>, <em class="sig-param"><span class="n">arg2</span><span class="p">:</span> <span class="n">SkPoint</span></em>, <em class="sig-param"><span class="n">arg3</span><span class="p">:</span> <span class="n">SkPoint</span></em>, <em class="sig-param"><span class="n">arg4</span><span class="p">:</span> <span class="n">bool</span></em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#skia.Path.IsCubicDegenerate" title="Permalink to this definition">¶</a></dt>
+<dd><p>Tests if cubic is degenerate.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="skia.Path.IsLineDegenerate">
+<em class="property">static </em><code class="sig-prename descclassname">Path.</code><code class="sig-name descname">IsLineDegenerate</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">arg0</span><span class="p">:</span> <span class="n">SkPoint</span></em>, <em class="sig-param"><span class="n">arg1</span><span class="p">:</span> <span class="n">SkPoint</span></em>, <em class="sig-param"><span class="n">arg2</span><span class="p">:</span> <span class="n">bool</span></em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#skia.Path.IsLineDegenerate" title="Permalink to this definition">¶</a></dt>
+<dd><p>Tests if line between SkPoint pair is degenerate.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="skia.Path.IsQuadDegenerate">
+<em class="property">static </em><code class="sig-prename descclassname">Path.</code><code class="sig-name descname">IsQuadDegenerate</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">arg0</span><span class="p">:</span> <span class="n">SkPoint</span></em>, <em class="sig-param"><span class="n">arg1</span><span class="p">:</span> <span class="n">SkPoint</span></em>, <em class="sig-param"><span class="n">arg2</span><span class="p">:</span> <span class="n">SkPoint</span></em>, <em class="sig-param"><span class="n">arg3</span><span class="p">:</span> <span class="n">bool</span></em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#skia.Path.IsQuadDegenerate" title="Permalink to this definition">¶</a></dt>
+<dd><p>Tests if quad is degenerate.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="skia.Path.__init__">
+<code class="sig-prename descclassname">Path.</code><code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span><span class="n">args</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#skia.Path.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Overloaded function.</p>
+<ol class="arabic simple">
+<li><p>__init__(self: skia.Path) -&gt; None</p></li>
+</ol>
+<p>Constructs an empty SkPath.</p>
+<ol class="arabic simple" start="2">
+<li><p>__init__(self: skia.Path, arg0: skia.Path) -&gt; None</p></li>
+</ol>
+<p>Constructs a copy of an existing path.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="skia.Path.addArc">
+<code class="sig-prename descclassname">Path.</code><code class="sig-name descname">addArc</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Path" title="skia.Path">skia.Path</a></span></em>, <em class="sig-param"><span class="n">arg0</span><span class="p">:</span> <span class="n">SkRect</span></em>, <em class="sig-param"><span class="n">arg1</span><span class="p">:</span> <span class="n">float</span></em>, <em class="sig-param"><span class="n">arg2</span><span class="p">:</span> <span class="n">float</span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="#skia.Path" title="skia.Path">skia.Path</a><a class="headerlink" href="#skia.Path.addArc" title="Permalink to this definition">¶</a></dt>
+<dd><p>Appends arc to SkPath, as the start of new contour.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="skia.Path.addCircle">
+<code class="sig-prename descclassname">Path.</code><code class="sig-name descname">addCircle</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Path" title="skia.Path">skia.Path</a></span></em>, <em class="sig-param"><span class="n">arg0</span><span class="p">:</span> <span class="n">float</span></em>, <em class="sig-param"><span class="n">arg1</span><span class="p">:</span> <span class="n">float</span></em>, <em class="sig-param"><span class="n">arg2</span><span class="p">:</span> <span class="n">float</span></em>, <em class="sig-param"><span class="n">arg3</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.PathDirection.html#skia.PathDirection" title="skia.PathDirection">skia.PathDirection</a></span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="#skia.Path" title="skia.Path">skia.Path</a><a class="headerlink" href="#skia.Path.addCircle" title="Permalink to this definition">¶</a></dt>
+<dd><p>Adds circle centered at (x, y) of size radius to SkPath, appending kMove_Verb, four kConic_Verb, and kClose_Verb.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="skia.Path.addOval">
+<code class="sig-prename descclassname">Path.</code><code class="sig-name descname">addOval</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span><span class="n">args</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#skia.Path.addOval" title="Permalink to this definition">¶</a></dt>
+<dd><p>Overloaded function.</p>
+<ol class="arabic simple">
+<li><p>addOval(self: skia.Path, arg0: SkRect, arg1: skia.PathDirection) -&gt; skia.Path</p></li>
+</ol>
+<p>Adds oval to path, appending kMove_Verb, four kConic_Verb, and kClose_Verb.</p>
+<ol class="arabic simple" start="2">
+<li><p>addOval(self: skia.Path, arg0: SkRect, arg1: skia.PathDirection, arg2: int) -&gt; skia.Path</p></li>
+</ol>
+<p>Adds oval to SkPath, appending kMove_Verb, four kConic_Verb, and kClose_Verb.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="skia.Path.addPath">
+<code class="sig-prename descclassname">Path.</code><code class="sig-name descname">addPath</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span><span class="n">args</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#skia.Path.addPath" title="Permalink to this definition">¶</a></dt>
+<dd><p>Overloaded function.</p>
+<ol class="arabic simple">
+<li><p>addPath(self: skia.Path, arg0: skia.Path, arg1: float, arg2: float, arg3: skia.Path.AddPathMode) -&gt; skia.Path</p></li>
+</ol>
+<p>Appends src to SkPath, offset by (dx, dy).</p>
+<ol class="arabic simple" start="2">
+<li><p>addPath(self: skia.Path, arg0: skia.Path, arg1: skia.Path.AddPathMode) -&gt; skia.Path</p></li>
+</ol>
+<p>Appends src to SkPath.</p>
+<ol class="arabic simple" start="3">
+<li><p>addPath(self: skia.Path, arg0: skia.Path, arg1: skia.Matrix, arg2: skia.Path.AddPathMode) -&gt; skia.Path</p></li>
+</ol>
+<p>Appends src to SkPath, transformed by matrix.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="skia.Path.addPoly">
+<code class="sig-prename descclassname">Path.</code><code class="sig-name descname">addPoly</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span><span class="n">args</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#skia.Path.addPoly" title="Permalink to this definition">¶</a></dt>
+<dd><p>Overloaded function.</p>
+<ol class="arabic simple">
+<li><p>addPoly(self: skia.Path, arg0: SkPoint, arg1: int, arg2: bool) -&gt; skia.Path</p></li>
+</ol>
+<p>Adds contour created from line array, adding (count - 1) line segments.</p>
+<ol class="arabic simple" start="2">
+<li><p>addPoly(self: skia.Path, arg0: std::initializer_list&lt;SkPoint&gt;, arg1: bool) -&gt; skia.Path</p></li>
+</ol>
+<p>Adds contour created from list.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="skia.Path.addRRect">
+<code class="sig-prename descclassname">Path.</code><code class="sig-name descname">addRRect</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span><span class="n">args</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#skia.Path.addRRect" title="Permalink to this definition">¶</a></dt>
+<dd><p>Overloaded function.</p>
+<ol class="arabic simple">
+<li><p>addRRect(self: skia.Path, arg0: SkRRect, arg1: skia.PathDirection) -&gt; skia.Path</p></li>
+</ol>
+<p>Adds rrect to SkPath, creating a new closed contour.</p>
+<ol class="arabic simple" start="2">
+<li><p>addRRect(self: skia.Path, arg0: SkRRect, arg1: skia.PathDirection, arg2: int) -&gt; skia.Path</p></li>
+</ol>
+<p>Adds rrect to SkPath, creating a new closed contour.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="skia.Path.addRect">
+<code class="sig-prename descclassname">Path.</code><code class="sig-name descname">addRect</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span><span class="n">args</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#skia.Path.addRect" title="Permalink to this definition">¶</a></dt>
+<dd><p>Overloaded function.</p>
+<ol class="arabic simple">
+<li><p>addRect(self: skia.Path, arg0: SkRect, arg1: skia.PathDirection) -&gt; skia.Path</p></li>
+</ol>
+<p>Adds SkRect to SkPath, appending kMove_Verb, three kLine_Verb, and kClose_Verb, starting with top-left corner of SkRect; followed by top-right, bottom-right, and bottom-left if dir is kCW_Direction; or followed by bottom-left, bottom-right, and top-right if dir is kCCW_Direction.</p>
+<ol class="arabic simple" start="2">
+<li><p>addRect(self: skia.Path, arg0: SkRect, arg1: skia.PathDirection, arg2: int) -&gt; skia.Path</p></li>
+</ol>
+<p>Adds SkRect to SkPath, appending kMove_Verb, three kLine_Verb, and kClose_Verb.</p>
+<ol class="arabic simple" start="3">
+<li><p>addRect(self: skia.Path, arg0: float, arg1: float, arg2: float, arg3: float, arg4: skia.PathDirection) -&gt; skia.Path</p></li>
+</ol>
+<p>Adds SkRect (left, top, right, bottom) to SkPath, appending kMove_Verb, three kLine_Verb, and kClose_Verb, starting with top-left corner of SkRect; followed by top-right, bottom-right, and bottom-left if dir is kCW_Direction; or followed by bottom-left, bottom-right, and top-right if dir is kCCW_Direction.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="skia.Path.addRoundRect">
+<code class="sig-prename descclassname">Path.</code><code class="sig-name descname">addRoundRect</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span><span class="n">args</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#skia.Path.addRoundRect" title="Permalink to this definition">¶</a></dt>
+<dd><p>Overloaded function.</p>
+<ol class="arabic simple">
+<li><p>addRoundRect(self: skia.Path, arg0: SkRect, arg1: float, arg2: float, arg3: skia.PathDirection) -&gt; skia.Path</p></li>
+</ol>
+<p>Appends SkRRect to SkPath, creating a new closed contour.</p>
+<ol class="arabic simple" start="2">
+<li><p>addRoundRect(self: skia.Path, arg0: SkRect, arg1: float, arg2: skia.PathDirection) -&gt; skia.Path</p></li>
+</ol>
+<p>Appends SkRRect to SkPath, creating a new closed contour.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="skia.Path.approximateBytesUsed">
+<code class="sig-prename descclassname">Path.</code><code class="sig-name descname">approximateBytesUsed</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Path" title="skia.Path">skia.Path</a></span></em><span class="sig-paren">)</span> &#x2192; int<a class="headerlink" href="#skia.Path.approximateBytesUsed" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the approximate byte size of the SkPath in memory.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="skia.Path.arcTo">
+<code class="sig-prename descclassname">Path.</code><code class="sig-name descname">arcTo</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span><span class="n">args</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#skia.Path.arcTo" title="Permalink to this definition">¶</a></dt>
+<dd><p>Overloaded function.</p>
+<ol class="arabic simple">
+<li><p>arcTo(self: skia.Path, arg0: SkRect, arg1: float, arg2: float, arg3: bool) -&gt; skia.Path</p></li>
+</ol>
+<p>Appends arc to SkPath.</p>
+<ol class="arabic simple" start="2">
+<li><p>arcTo(self: skia.Path, arg0: float, arg1: float, arg2: float, arg3: float, arg4: float) -&gt; skia.Path</p></li>
+</ol>
+<p>Appends arc to SkPath, after appending line if needed.</p>
+<ol class="arabic simple" start="3">
+<li><p>arcTo(self: skia.Path, arg0: SkPoint, arg1: SkPoint, arg2: float) -&gt; skia.Path</p></li>
+</ol>
+<p>Appends arc to SkPath, after appending line if needed.</p>
+<ol class="arabic simple" start="4">
+<li><p>arcTo(self: skia.Path, arg0: float, arg1: float, arg2: float, arg3: skia.Path.ArcSize, arg4: skia.PathDirection, arg5: float, arg6: float) -&gt; skia.Path</p></li>
+</ol>
+<p>Appends arc to SkPath.</p>
+<ol class="arabic simple" start="5">
+<li><p>arcTo(self: skia.Path, arg0: SkPoint, arg1: float, arg2: skia.Path.ArcSize, arg3: skia.PathDirection, arg4: SkPoint) -&gt; skia.Path</p></li>
+</ol>
+<p>Appends arc to SkPath.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="skia.Path.close">
+<code class="sig-prename descclassname">Path.</code><code class="sig-name descname">close</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Path" title="skia.Path">skia.Path</a></span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="#skia.Path" title="skia.Path">skia.Path</a><a class="headerlink" href="#skia.Path.close" title="Permalink to this definition">¶</a></dt>
+<dd><p>Appends kClose_Verb to SkPath.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="skia.Path.computeTightBounds">
+<code class="sig-prename descclassname">Path.</code><code class="sig-name descname">computeTightBounds</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Path" title="skia.Path">skia.Path</a></span></em><span class="sig-paren">)</span> &#x2192; SkRect<a class="headerlink" href="#skia.Path.computeTightBounds" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns minimum and maximum axes values of the lines and curves in SkPath.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="skia.Path.conicTo">
+<code class="sig-prename descclassname">Path.</code><code class="sig-name descname">conicTo</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span><span class="n">args</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#skia.Path.conicTo" title="Permalink to this definition">¶</a></dt>
+<dd><p>Overloaded function.</p>
+<ol class="arabic simple">
+<li><p>conicTo(self: skia.Path, arg0: float, arg1: float, arg2: float, arg3: float, arg4: float) -&gt; skia.Path</p></li>
+</ol>
+<p>Adds conic from last point towards (x1, y1), to (x2, y2), weighted by w.</p>
+<ol class="arabic simple" start="2">
+<li><p>conicTo(self: skia.Path, arg0: SkPoint, arg1: SkPoint, arg2: float) -&gt; skia.Path</p></li>
+</ol>
+<p>Adds conic from last point towards SkPoint p1, to SkPoint p2, weighted by w.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="skia.Path.conservativelyContainsRect">
+<code class="sig-prename descclassname">Path.</code><code class="sig-name descname">conservativelyContainsRect</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Path" title="skia.Path">skia.Path</a></span></em>, <em class="sig-param"><span class="n">arg0</span><span class="p">:</span> <span class="n">SkRect</span></em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#skia.Path.conservativelyContainsRect" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns true if rect is contained by SkPath.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="skia.Path.contains">
+<code class="sig-prename descclassname">Path.</code><code class="sig-name descname">contains</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Path" title="skia.Path">skia.Path</a></span></em>, <em class="sig-param"><span class="n">arg0</span><span class="p">:</span> <span class="n">float</span></em>, <em class="sig-param"><span class="n">arg1</span><span class="p">:</span> <span class="n">float</span></em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#skia.Path.contains" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns true if the point (x, y) is contained by SkPath, taking into account FillType.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="skia.Path.countPoints">
+<code class="sig-prename descclassname">Path.</code><code class="sig-name descname">countPoints</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Path" title="skia.Path">skia.Path</a></span></em><span class="sig-paren">)</span> &#x2192; int<a class="headerlink" href="#skia.Path.countPoints" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the number of points in SkPath.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="skia.Path.countVerbs">
+<code class="sig-prename descclassname">Path.</code><code class="sig-name descname">countVerbs</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Path" title="skia.Path">skia.Path</a></span></em><span class="sig-paren">)</span> &#x2192; int<a class="headerlink" href="#skia.Path.countVerbs" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the number of verbs: kMove_Verb, kLine_Verb, kQuad_Verb, kConic_Verb, kCubic_Verb, and kClose_Verb; added to SkPath.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="skia.Path.cubicTo">
+<code class="sig-prename descclassname">Path.</code><code class="sig-name descname">cubicTo</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span><span class="n">args</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#skia.Path.cubicTo" title="Permalink to this definition">¶</a></dt>
+<dd><p>Overloaded function.</p>
+<ol class="arabic simple">
+<li><p>cubicTo(self: skia.Path, arg0: float, arg1: float, arg2: float, arg3: float, arg4: float, arg5: float) -&gt; skia.Path</p></li>
+</ol>
+<p>Adds cubic from last point towards (x1, y1), then towards (x2, y2), ending at (x3, y3).</p>
+<ol class="arabic simple" start="2">
+<li><p>cubicTo(self: skia.Path, arg0: SkPoint, arg1: SkPoint, arg2: SkPoint) -&gt; skia.Path</p></li>
+</ol>
+<p>Adds cubic from last point towards SkPoint p1, then towards SkPoint p2, ending at SkPoint p3.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="skia.Path.dump">
+<code class="sig-prename descclassname">Path.</code><code class="sig-name descname">dump</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Path" title="skia.Path">skia.Path</a></span></em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#skia.Path.dump" title="Permalink to this definition">¶</a></dt>
+<dd><p>Writes text representation of SkPath to standard output.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="skia.Path.dumpHex">
+<code class="sig-prename descclassname">Path.</code><code class="sig-name descname">dumpHex</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Path" title="skia.Path">skia.Path</a></span></em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#skia.Path.dumpHex" title="Permalink to this definition">¶</a></dt>
+<dd><p>Writes text representation of SkPath to standard output.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="skia.Path.getBounds">
+<code class="sig-prename descclassname">Path.</code><code class="sig-name descname">getBounds</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Path" title="skia.Path">skia.Path</a></span></em><span class="sig-paren">)</span> &#x2192; SkRect<a class="headerlink" href="#skia.Path.getBounds" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns minimum and maximum axes values of SkPoint array.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="skia.Path.getConvexityType">
+<code class="sig-prename descclassname">Path.</code><code class="sig-name descname">getConvexityType</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Path" title="skia.Path">skia.Path</a></span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="skia.PathConvexityType.html#skia.PathConvexityType" title="skia.PathConvexityType">skia.PathConvexityType</a><a class="headerlink" href="#skia.Path.getConvexityType" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the comvexity type, computing if needed.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="skia.Path.getConvexityTypeOrUnknown">
+<code class="sig-prename descclassname">Path.</code><code class="sig-name descname">getConvexityTypeOrUnknown</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Path" title="skia.Path">skia.Path</a></span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="skia.PathConvexityType.html#skia.PathConvexityType" title="skia.PathConvexityType">skia.PathConvexityType</a><a class="headerlink" href="#skia.Path.getConvexityTypeOrUnknown" title="Permalink to this definition">¶</a></dt>
+<dd><p>If the path’s convexity is already known, return it, else return kUnknown.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="skia.Path.getFillType">
+<code class="sig-prename descclassname">Path.</code><code class="sig-name descname">getFillType</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Path" title="skia.Path">skia.Path</a></span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="skia.PathFillType.html#skia.PathFillType" title="skia.PathFillType">skia.PathFillType</a><a class="headerlink" href="#skia.Path.getFillType" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns SkPathFillType, the rule used to fill SkPath.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="skia.Path.getGenerationID">
+<code class="sig-prename descclassname">Path.</code><code class="sig-name descname">getGenerationID</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Path" title="skia.Path">skia.Path</a></span></em><span class="sig-paren">)</span> &#x2192; int<a class="headerlink" href="#skia.Path.getGenerationID" title="Permalink to this definition">¶</a></dt>
+<dd><p>(See Skia bug 1762.) Returns a non-zero, globally unique value.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="skia.Path.getLastPt">
+<code class="sig-prename descclassname">Path.</code><code class="sig-name descname">getLastPt</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Path" title="skia.Path">skia.Path</a></span></em>, <em class="sig-param"><span class="n">arg0</span><span class="p">:</span> <span class="n">SkPoint</span></em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#skia.Path.getLastPt" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns last point on SkPath in lastPt.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="skia.Path.getPoint">
+<code class="sig-prename descclassname">Path.</code><code class="sig-name descname">getPoint</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Path" title="skia.Path">skia.Path</a></span></em>, <em class="sig-param"><span class="n">arg0</span><span class="p">:</span> <span class="n">int</span></em><span class="sig-paren">)</span> &#x2192; SkPoint<a class="headerlink" href="#skia.Path.getPoint" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns SkPoint at index in SkPoint array.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="skia.Path.getPoints">
+<code class="sig-prename descclassname">Path.</code><code class="sig-name descname">getPoints</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Path" title="skia.Path">skia.Path</a></span></em>, <em class="sig-param"><span class="n">arg0</span><span class="p">:</span> <span class="n">SkPoint</span></em>, <em class="sig-param"><span class="n">arg1</span><span class="p">:</span> <span class="n">int</span></em><span class="sig-paren">)</span> &#x2192; int<a class="headerlink" href="#skia.Path.getPoints" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns number of points in SkPath.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="skia.Path.getSegmentMasks">
+<code class="sig-prename descclassname">Path.</code><code class="sig-name descname">getSegmentMasks</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Path" title="skia.Path">skia.Path</a></span></em><span class="sig-paren">)</span> &#x2192; int<a class="headerlink" href="#skia.Path.getSegmentMasks" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a mask, where each set bit corresponds to a SegmentMask constant if SkPath contains one or more verbs of that type.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="skia.Path.getVerbs">
+<code class="sig-prename descclassname">Path.</code><code class="sig-name descname">getVerbs</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Path" title="skia.Path">skia.Path</a></span></em>, <em class="sig-param"><span class="n">arg0</span><span class="p">:</span> <span class="n">int</span></em>, <em class="sig-param"><span class="n">arg1</span><span class="p">:</span> <span class="n">int</span></em><span class="sig-paren">)</span> &#x2192; int<a class="headerlink" href="#skia.Path.getVerbs" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the number of verbs in the path.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="skia.Path.incReserve">
+<code class="sig-prename descclassname">Path.</code><code class="sig-name descname">incReserve</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Path" title="skia.Path">skia.Path</a></span></em>, <em class="sig-param"><span class="n">arg0</span><span class="p">:</span> <span class="n">int</span></em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#skia.Path.incReserve" title="Permalink to this definition">¶</a></dt>
+<dd><p>Grows SkPath verb array and SkPoint array to contain extraPtCount additional SkPoint.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="skia.Path.interpolate">
+<code class="sig-prename descclassname">Path.</code><code class="sig-name descname">interpolate</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Path" title="skia.Path">skia.Path</a></span></em>, <em class="sig-param"><span class="n">arg0</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Path" title="skia.Path">skia.Path</a></span></em>, <em class="sig-param"><span class="n">arg1</span><span class="p">:</span> <span class="n">float</span></em>, <em class="sig-param"><span class="n">arg2</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Path" title="skia.Path">skia.Path</a></span></em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#skia.Path.interpolate" title="Permalink to this definition">¶</a></dt>
+<dd><p>Interpolates between SkPath with SkPoint array of equal size.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="skia.Path.isConvex">
+<code class="sig-prename descclassname">Path.</code><code class="sig-name descname">isConvex</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Path" title="skia.Path">skia.Path</a></span></em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#skia.Path.isConvex" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns true if the path is convex.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="skia.Path.isEmpty">
+<code class="sig-prename descclassname">Path.</code><code class="sig-name descname">isEmpty</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Path" title="skia.Path">skia.Path</a></span></em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#skia.Path.isEmpty" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns if SkPath is empty.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="skia.Path.isFinite">
+<code class="sig-prename descclassname">Path.</code><code class="sig-name descname">isFinite</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Path" title="skia.Path">skia.Path</a></span></em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#skia.Path.isFinite" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns true for finite SkPoint array values between negative SK_ScalarMax and positive SK_ScalarMax.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="skia.Path.isInterpolatable">
+<code class="sig-prename descclassname">Path.</code><code class="sig-name descname">isInterpolatable</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Path" title="skia.Path">skia.Path</a></span></em>, <em class="sig-param"><span class="n">arg0</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Path" title="skia.Path">skia.Path</a></span></em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#skia.Path.isInterpolatable" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns true if SkPath contain equal verbs and equal weights.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="skia.Path.isInverseFillType">
+<code class="sig-prename descclassname">Path.</code><code class="sig-name descname">isInverseFillType</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Path" title="skia.Path">skia.Path</a></span></em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#skia.Path.isInverseFillType" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns if FillType describes area outside SkPath geometry.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="skia.Path.isLastContourClosed">
+<code class="sig-prename descclassname">Path.</code><code class="sig-name descname">isLastContourClosed</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Path" title="skia.Path">skia.Path</a></span></em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#skia.Path.isLastContourClosed" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns if contour is closed.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="skia.Path.isLine">
+<code class="sig-prename descclassname">Path.</code><code class="sig-name descname">isLine</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Path" title="skia.Path">skia.Path</a></span></em>, <em class="sig-param"><span class="n">arg0</span><span class="p">:</span> <span class="n">SkPoint</span></em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#skia.Path.isLine" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns true if SkPath contains only one line; SkPath::Verb array has two entries: kMove_Verb, kLine_Verb.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="skia.Path.isOval">
+<code class="sig-prename descclassname">Path.</code><code class="sig-name descname">isOval</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Path" title="skia.Path">skia.Path</a></span></em>, <em class="sig-param"><span class="n">arg0</span><span class="p">:</span> <span class="n">SkRect</span></em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#skia.Path.isOval" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns true if this path is recognized as an oval or circle.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="skia.Path.isRRect">
+<code class="sig-prename descclassname">Path.</code><code class="sig-name descname">isRRect</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Path" title="skia.Path">skia.Path</a></span></em>, <em class="sig-param"><span class="n">arg0</span><span class="p">:</span> <span class="n">SkRRect</span></em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#skia.Path.isRRect" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns true if path is representable as SkRRect.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="skia.Path.isRect">
+<code class="sig-prename descclassname">Path.</code><code class="sig-name descname">isRect</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Path" title="skia.Path">skia.Path</a></span></em>, <em class="sig-param"><span class="n">arg0</span><span class="p">:</span> <span class="n">SkRect</span></em>, <em class="sig-param"><span class="n">arg1</span><span class="p">:</span> <span class="n">bool</span></em>, <em class="sig-param"><span class="n">arg2</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.PathDirection.html#skia.PathDirection" title="skia.PathDirection">skia.PathDirection</a></span></em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#skia.Path.isRect" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns true if SkPath is equivalent to SkRect when filled.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="skia.Path.isValid">
+<code class="sig-prename descclassname">Path.</code><code class="sig-name descname">isValid</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Path" title="skia.Path">skia.Path</a></span></em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#skia.Path.isValid" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns if SkPath data is consistent.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="skia.Path.isVolatile">
+<code class="sig-prename descclassname">Path.</code><code class="sig-name descname">isVolatile</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Path" title="skia.Path">skia.Path</a></span></em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#skia.Path.isVolatile" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns true if the path is volatile; it will not be altered or discarded by the caller after it is drawn.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="skia.Path.lineTo">
+<code class="sig-prename descclassname">Path.</code><code class="sig-name descname">lineTo</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span><span class="n">args</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#skia.Path.lineTo" title="Permalink to this definition">¶</a></dt>
+<dd><p>Overloaded function.</p>
+<ol class="arabic simple">
+<li><p>lineTo(self: skia.Path, arg0: float, arg1: float) -&gt; skia.Path</p></li>
+</ol>
+<p>Adds line from last point to (x, y).</p>
+<ol class="arabic simple" start="2">
+<li><p>lineTo(self: skia.Path, arg0: SkPoint) -&gt; skia.Path</p></li>
+</ol>
+<p>Adds line from last point to SkPoint p.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="skia.Path.moveTo">
+<code class="sig-prename descclassname">Path.</code><code class="sig-name descname">moveTo</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span><span class="n">args</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#skia.Path.moveTo" title="Permalink to this definition">¶</a></dt>
+<dd><p>Overloaded function.</p>
+<ol class="arabic simple">
+<li><p>moveTo(self: skia.Path, arg0: float, arg1: float) -&gt; skia.Path</p></li>
+</ol>
+<p>Adds beginning of contour at SkPoint (x, y).</p>
+<ol class="arabic simple" start="2">
+<li><p>moveTo(self: skia.Path, arg0: SkPoint) -&gt; skia.Path</p></li>
+</ol>
+<p>Adds beginning of contour at SkPoint p.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="skia.Path.offset">
+<code class="sig-prename descclassname">Path.</code><code class="sig-name descname">offset</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span><span class="n">args</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#skia.Path.offset" title="Permalink to this definition">¶</a></dt>
+<dd><p>Overloaded function.</p>
+<ol class="arabic simple">
+<li><p>offset(self: skia.Path, arg0: float, arg1: float, arg2: skia.Path) -&gt; None</p></li>
+</ol>
+<p>Offsets SkPoint array by (dx, dy).</p>
+<ol class="arabic simple" start="2">
+<li><p>offset(self: skia.Path, arg0: float, arg1: float) -&gt; None</p></li>
+</ol>
+<p>Offsets SkPoint array by (dx, dy).</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="skia.Path.quadTo">
+<code class="sig-prename descclassname">Path.</code><code class="sig-name descname">quadTo</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span><span class="n">args</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#skia.Path.quadTo" title="Permalink to this definition">¶</a></dt>
+<dd><p>Overloaded function.</p>
+<ol class="arabic simple">
+<li><p>quadTo(self: skia.Path, arg0: float, arg1: float, arg2: float, arg3: float) -&gt; skia.Path</p></li>
+</ol>
+<p>Adds quad from last point towards (x1, y1), to (x2, y2).</p>
+<ol class="arabic simple" start="2">
+<li><p>quadTo(self: skia.Path, arg0: SkPoint, arg1: SkPoint) -&gt; skia.Path</p></li>
+</ol>
+<p>Adds quad from last point towards SkPoint p1, to SkPoint p2.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="skia.Path.rArcTo">
+<code class="sig-prename descclassname">Path.</code><code class="sig-name descname">rArcTo</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Path" title="skia.Path">skia.Path</a></span></em>, <em class="sig-param"><span class="n">arg0</span><span class="p">:</span> <span class="n">float</span></em>, <em class="sig-param"><span class="n">arg1</span><span class="p">:</span> <span class="n">float</span></em>, <em class="sig-param"><span class="n">arg2</span><span class="p">:</span> <span class="n">float</span></em>, <em class="sig-param"><span class="n">arg3</span><span class="p">:</span> <span class="n">skia.Path.ArcSize</span></em>, <em class="sig-param"><span class="n">arg4</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.PathDirection.html#skia.PathDirection" title="skia.PathDirection">skia.PathDirection</a></span></em>, <em class="sig-param"><span class="n">arg5</span><span class="p">:</span> <span class="n">float</span></em>, <em class="sig-param"><span class="n">arg6</span><span class="p">:</span> <span class="n">float</span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="#skia.Path" title="skia.Path">skia.Path</a><a class="headerlink" href="#skia.Path.rArcTo" title="Permalink to this definition">¶</a></dt>
+<dd><p>Appends arc to SkPath, relative to last SkPath SkPoint.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="skia.Path.rConicTo">
+<code class="sig-prename descclassname">Path.</code><code class="sig-name descname">rConicTo</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Path" title="skia.Path">skia.Path</a></span></em>, <em class="sig-param"><span class="n">arg0</span><span class="p">:</span> <span class="n">float</span></em>, <em class="sig-param"><span class="n">arg1</span><span class="p">:</span> <span class="n">float</span></em>, <em class="sig-param"><span class="n">arg2</span><span class="p">:</span> <span class="n">float</span></em>, <em class="sig-param"><span class="n">arg3</span><span class="p">:</span> <span class="n">float</span></em>, <em class="sig-param"><span class="n">arg4</span><span class="p">:</span> <span class="n">float</span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="#skia.Path" title="skia.Path">skia.Path</a><a class="headerlink" href="#skia.Path.rConicTo" title="Permalink to this definition">¶</a></dt>
+<dd><p>Adds conic from last point towards vector (dx1, dy1), to vector (dx2, dy2), weighted by w.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="skia.Path.rCubicTo">
+<code class="sig-prename descclassname">Path.</code><code class="sig-name descname">rCubicTo</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Path" title="skia.Path">skia.Path</a></span></em>, <em class="sig-param"><span class="n">arg0</span><span class="p">:</span> <span class="n">float</span></em>, <em class="sig-param"><span class="n">arg1</span><span class="p">:</span> <span class="n">float</span></em>, <em class="sig-param"><span class="n">arg2</span><span class="p">:</span> <span class="n">float</span></em>, <em class="sig-param"><span class="n">arg3</span><span class="p">:</span> <span class="n">float</span></em>, <em class="sig-param"><span class="n">arg4</span><span class="p">:</span> <span class="n">float</span></em>, <em class="sig-param"><span class="n">arg5</span><span class="p">:</span> <span class="n">float</span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="#skia.Path" title="skia.Path">skia.Path</a><a class="headerlink" href="#skia.Path.rCubicTo" title="Permalink to this definition">¶</a></dt>
+<dd><p>Adds cubic from last point towards vector (dx1, dy1), then towards vector (dx2, dy2), to vector (dx3, dy3).</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="skia.Path.rLineTo">
+<code class="sig-prename descclassname">Path.</code><code class="sig-name descname">rLineTo</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Path" title="skia.Path">skia.Path</a></span></em>, <em class="sig-param"><span class="n">arg0</span><span class="p">:</span> <span class="n">float</span></em>, <em class="sig-param"><span class="n">arg1</span><span class="p">:</span> <span class="n">float</span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="#skia.Path" title="skia.Path">skia.Path</a><a class="headerlink" href="#skia.Path.rLineTo" title="Permalink to this definition">¶</a></dt>
+<dd><p>Adds line from last point to vector (dx, dy).</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="skia.Path.rMoveTo">
+<code class="sig-prename descclassname">Path.</code><code class="sig-name descname">rMoveTo</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Path" title="skia.Path">skia.Path</a></span></em>, <em class="sig-param"><span class="n">arg0</span><span class="p">:</span> <span class="n">float</span></em>, <em class="sig-param"><span class="n">arg1</span><span class="p">:</span> <span class="n">float</span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="#skia.Path" title="skia.Path">skia.Path</a><a class="headerlink" href="#skia.Path.rMoveTo" title="Permalink to this definition">¶</a></dt>
+<dd><p>Adds beginning of contour relative to last point.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="skia.Path.rQuadTo">
+<code class="sig-prename descclassname">Path.</code><code class="sig-name descname">rQuadTo</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Path" title="skia.Path">skia.Path</a></span></em>, <em class="sig-param"><span class="n">arg0</span><span class="p">:</span> <span class="n">float</span></em>, <em class="sig-param"><span class="n">arg1</span><span class="p">:</span> <span class="n">float</span></em>, <em class="sig-param"><span class="n">arg2</span><span class="p">:</span> <span class="n">float</span></em>, <em class="sig-param"><span class="n">arg3</span><span class="p">:</span> <span class="n">float</span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="#skia.Path" title="skia.Path">skia.Path</a><a class="headerlink" href="#skia.Path.rQuadTo" title="Permalink to this definition">¶</a></dt>
+<dd><p>Adds quad from last point towards vector (dx1, dy1), to vector (dx2, dy2).</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="skia.Path.readFromMemory">
+<code class="sig-prename descclassname">Path.</code><code class="sig-name descname">readFromMemory</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Path" title="skia.Path">skia.Path</a></span></em>, <em class="sig-param"><span class="n">arg0</span><span class="p">:</span> <span class="n">capsule</span></em>, <em class="sig-param"><span class="n">arg1</span><span class="p">:</span> <span class="n">int</span></em><span class="sig-paren">)</span> &#x2192; int<a class="headerlink" href="#skia.Path.readFromMemory" title="Permalink to this definition">¶</a></dt>
+<dd><p>Initializes SkPath from buffer of size length.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="skia.Path.reset">
+<code class="sig-prename descclassname">Path.</code><code class="sig-name descname">reset</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Path" title="skia.Path">skia.Path</a></span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="#skia.Path" title="skia.Path">skia.Path</a><a class="headerlink" href="#skia.Path.reset" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets SkPath to its initial state.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="skia.Path.reverseAddPath">
+<code class="sig-prename descclassname">Path.</code><code class="sig-name descname">reverseAddPath</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Path" title="skia.Path">skia.Path</a></span></em>, <em class="sig-param"><span class="n">arg0</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Path" title="skia.Path">skia.Path</a></span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="#skia.Path" title="skia.Path">skia.Path</a><a class="headerlink" href="#skia.Path.reverseAddPath" title="Permalink to this definition">¶</a></dt>
+<dd><p>Appends src to SkPath, from back to front.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="skia.Path.rewind">
+<code class="sig-prename descclassname">Path.</code><code class="sig-name descname">rewind</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Path" title="skia.Path">skia.Path</a></span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="#skia.Path" title="skia.Path">skia.Path</a><a class="headerlink" href="#skia.Path.rewind" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets SkPath to its initial state, preserving internal storage.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="skia.Path.serialize">
+<code class="sig-prename descclassname">Path.</code><code class="sig-name descname">serialize</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Path" title="skia.Path">skia.Path</a></span></em><span class="sig-paren">)</span> &#x2192; sk_sp&lt;SkData&gt;<a class="headerlink" href="#skia.Path.serialize" title="Permalink to this definition">¶</a></dt>
+<dd><p>Writes SkPath to buffer, returning the buffer written to, wrapped in SkData.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="skia.Path.setConvexityType">
+<code class="sig-prename descclassname">Path.</code><code class="sig-name descname">setConvexityType</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Path" title="skia.Path">skia.Path</a></span></em>, <em class="sig-param"><span class="n">arg0</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.PathConvexityType.html#skia.PathConvexityType" title="skia.PathConvexityType">skia.PathConvexityType</a></span></em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#skia.Path.setConvexityType" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the comvexity type, computing if needed.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="skia.Path.setFillType">
+<code class="sig-prename descclassname">Path.</code><code class="sig-name descname">setFillType</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Path" title="skia.Path">skia.Path</a></span></em>, <em class="sig-param"><span class="n">arg0</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.PathFillType.html#skia.PathFillType" title="skia.PathFillType">skia.PathFillType</a></span></em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#skia.Path.setFillType" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets FillType, the rule used to fill SkPath.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="skia.Path.setIsVolatile">
+<code class="sig-prename descclassname">Path.</code><code class="sig-name descname">setIsVolatile</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Path" title="skia.Path">skia.Path</a></span></em>, <em class="sig-param"><span class="n">arg0</span><span class="p">:</span> <span class="n">bool</span></em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#skia.Path.setIsVolatile" title="Permalink to this definition">¶</a></dt>
+<dd><p>Specifies whether SkPath is volatile; whether it will be altered or discarded by the caller after it is drawn.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="skia.Path.setLastPt">
+<code class="sig-prename descclassname">Path.</code><code class="sig-name descname">setLastPt</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span><span class="n">args</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#skia.Path.setLastPt" title="Permalink to this definition">¶</a></dt>
+<dd><p>Overloaded function.</p>
+<ol class="arabic simple">
+<li><p>setLastPt(self: skia.Path, arg0: float, arg1: float) -&gt; None</p></li>
+</ol>
+<p>Sets last point to (x, y).</p>
+<ol class="arabic simple" start="2">
+<li><p>setLastPt(self: skia.Path, arg0: SkPoint) -&gt; None</p></li>
+</ol>
+<p>Sets the last point on the path.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="skia.Path.shrinkToFit">
+<code class="sig-prename descclassname">Path.</code><code class="sig-name descname">shrinkToFit</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Path" title="skia.Path">skia.Path</a></span></em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#skia.Path.shrinkToFit" title="Permalink to this definition">¶</a></dt>
+<dd><p>Shrinks SkPath verb array and SkPoint array storage to discard unused capacity.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="skia.Path.swap">
+<code class="sig-prename descclassname">Path.</code><code class="sig-name descname">swap</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Path" title="skia.Path">skia.Path</a></span></em>, <em class="sig-param"><span class="n">arg0</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Path" title="skia.Path">skia.Path</a></span></em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#skia.Path.swap" title="Permalink to this definition">¶</a></dt>
+<dd><p>Exchanges the verb array, SkPoint array, weights, and SkPath::FillType with other.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="skia.Path.toggleInverseFillType">
+<code class="sig-prename descclassname">Path.</code><code class="sig-name descname">toggleInverseFillType</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Path" title="skia.Path">skia.Path</a></span></em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#skia.Path.toggleInverseFillType" title="Permalink to this definition">¶</a></dt>
+<dd><p>Replaces FillType with its inverse.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="skia.Path.transform">
+<code class="sig-prename descclassname">Path.</code><code class="sig-name descname">transform</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span><span class="n">args</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#skia.Path.transform" title="Permalink to this definition">¶</a></dt>
+<dd><p>Overloaded function.</p>
+<ol class="arabic simple">
+<li><p>transform(self: skia.Path, arg0: skia.Matrix, arg1: skia.Path, arg2: skia.ApplyPerspectiveClip) -&gt; None</p></li>
+</ol>
+<p>Transforms verb array, SkPoint array, and weight by matrix.</p>
+<ol class="arabic simple" start="2">
+<li><p>transform(self: skia.Path, arg0: skia.Matrix, arg1: skia.ApplyPerspectiveClip) -&gt; None</p></li>
+</ol>
+<p>Transforms verb array, SkPoint array, and weight by matrix.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="skia.Path.updateBoundsCache">
+<code class="sig-prename descclassname">Path.</code><code class="sig-name descname">updateBoundsCache</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Path" title="skia.Path">skia.Path</a></span></em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#skia.Path.updateBoundsCache" title="Permalink to this definition">¶</a></dt>
+<dd><p>Updates internal bounds so that subsequent calls to getBounds() are instantaneous.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="skia.Path.writeToMemory">
+<code class="sig-prename descclassname">Path.</code><code class="sig-name descname">writeToMemory</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Path" title="skia.Path">skia.Path</a></span></em>, <em class="sig-param"><span class="n">arg0</span><span class="p">:</span> <span class="n">capsule</span></em><span class="sig-paren">)</span> &#x2192; int<a class="headerlink" href="#skia.Path.writeToMemory" title="Permalink to this definition">¶</a></dt>
+<dd><p>Writes SkPath to buffer, returning the number of bytes written.</p>
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../index.html">skia-python</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../skia.html">skia</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="skia.AlphaType.html">AlphaType</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.ApplyPerspectiveClip.html">ApplyPerspectiveClip</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.AutoCanvasRestore.html">AutoCanvasRestore</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.BBoxHierarchy.html">BBoxHierarchy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.BackingFit.html">BackingFit</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.Bitmap.html">Bitmap</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.BlendMode.html">BlendMode</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.BlendModeCoeff.html">BlendModeCoeff</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.Budgeted.html">Budgeted</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.Canvas.html">Canvas</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.ClipOp.html">ClipOp</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.Color4f.html">Color4f</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.ColorFilter.html">ColorFilter</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.ColorInfo.html">ColorInfo</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.ColorSpace.html">ColorSpace</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.ColorType.html">ColorType</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.Data.html">Data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.DeserialProcs.html">DeserialProcs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.EncodedImageFormat.html">EncodedImageFormat</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.FilterQuality.html">FilterQuality</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.Font.html">Font</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.FontArguments.html">FontArguments</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.FontHinting.html">FontHinting</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.FontMetrics.html">FontMetrics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.FontStyle.html">FontStyle</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.GrBackendApi.html">GrBackendApi</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.GrBackendSemaphore.html">GrBackendSemaphore</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.GrBackendTexture.html">GrBackendTexture</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.GrContext.html">GrContext</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.GrFlushFlags.html">GrFlushFlags</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.GrGLBackendState.html">GrGLBackendState</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.GrGLInterface.html">GrGLInterface</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.GrMipMapped.html">GrMipMapped</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.GrProtected.html">GrProtected</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.GrRenderable.html">GrRenderable</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.GrSemaphoresSubmitted.html">GrSemaphoresSubmitted</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.GrSurfaceOrigin.html">GrSurfaceOrigin</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.IPoint.html">IPoint</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.IRect.html">IRect</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.ISize.html">ISize</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.Image.html">Image</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.ImageFilter.html">ImageFilter</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.ImageInfo.html">ImageInfo</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.M44.html">M44</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.MaskFilter.html">MaskFilter</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.Matrix.html">Matrix</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.Paint.html">Paint</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Path</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.PathConvexityType.html">PathConvexityType</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.PathDirection.html">PathDirection</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.PathEffect.html">PathEffect</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.PathFillType.html">PathFillType</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.PathSegmentMask.html">PathSegmentMask</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.PathVerb.html">PathVerb</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.Picture.html">Picture</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.PictureRecorder.html">PictureRecorder</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.PixelGeometry.html">PixelGeometry</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.Pixmap.html">Pixmap</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.Point.html">Point</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.Point3.html">Point3</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.RRect.html">RRect</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.RSXform.html">RSXform</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.Rect.html">Rect</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.Region.html">Region</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.Shader.html">Shader</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.Size.html">Size</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.Surface.html">Surface</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.SurfaceCharacterization.html">SurfaceCharacterization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.SurfaceProps.html">SurfaceProps</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.TextBlob.html">TextBlob</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.TextBlobBuilder.html">TextBlobBuilder</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.TextEncoding.html">TextEncoding</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.TileMode.html">TileMode</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.Typeface.html">Typeface</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.Vertices.html">Vertices</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.YUVColorSpace.html">YUVColorSpace</a></li>
+</ul>
+</li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  <li><a href="../skia.html">skia</a><ul>
+      <li>Previous: <a href="skia.Paint.html" title="previous chapter">Paint</a></li>
+      <li>Next: <a href="skia.PathConvexityType.html" title="next chapter">PathConvexityType</a></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2020, Kota Yamaguchi.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.0.0</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="../_sources/_generate/skia.Path.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

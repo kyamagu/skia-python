@@ -1,0 +1,509 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>Region &#8212; skia-python 0.0.1 documentation</title>
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/language_data.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Shader" href="skia.Shader.html" />
+    <link rel="prev" title="Rect" href="skia.Rect.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="region">
+<h1>Region<a class="headerlink" href="#region" title="Permalink to this headline">¶</a></h1>
+<dl class="py class">
+<dt id="skia.Region">
+<em class="property">class </em><code class="sig-name descname">Region</code><a class="headerlink" href="#skia.Region" title="Permalink to this definition">¶</a></dt>
+<dd><p>SkRegion describes the set of pixels used to clip SkCanvas.</p>
+<p>SkRegion is compact, efficiently storing a single integer rectangle, or a
+run length encoded array of rectangles. SkRegion may reduce the current
+SkCanvas clip, or may be drawn as one or more integer rectangles. SkRegion
+iterator returns the scan lines or rectangles contained by it, optionally
+intersecting a bounding rectangle.</p>
+<p class="rubric">Methods</p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Region.__init__" title="skia.Region.__init__"><code class="xref py py-obj docutils literal notranslate"><span class="pre">__init__</span></code></a></p></td>
+<td><p>Overloaded function.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.Region.computeRegionComplexity" title="skia.Region.computeRegionComplexity"><code class="xref py py-obj docutils literal notranslate"><span class="pre">computeRegionComplexity</span></code></a></p></td>
+<td><p>Returns a value that increases with the number of elements in SkRegion.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Region.contains" title="skia.Region.contains"><code class="xref py py-obj docutils literal notranslate"><span class="pre">contains</span></code></a></p></td>
+<td><p>Overloaded function.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.Region.getBoundaryPath" title="skia.Region.getBoundaryPath"><code class="xref py py-obj docutils literal notranslate"><span class="pre">getBoundaryPath</span></code></a></p></td>
+<td><p>Appends outline of SkRegion to path.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Region.getBounds" title="skia.Region.getBounds"><code class="xref py py-obj docutils literal notranslate"><span class="pre">getBounds</span></code></a></p></td>
+<td><p>Returns minimum and maximum axes values of SkIRect array.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.Region.intersects" title="skia.Region.intersects"><code class="xref py py-obj docutils literal notranslate"><span class="pre">intersects</span></code></a></p></td>
+<td><p>Overloaded function.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Region.isComplex" title="skia.Region.isComplex"><code class="xref py py-obj docutils literal notranslate"><span class="pre">isComplex</span></code></a></p></td>
+<td><p>Returns true if SkRegion is described by more than one rectangle.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.Region.isEmpty" title="skia.Region.isEmpty"><code class="xref py py-obj docutils literal notranslate"><span class="pre">isEmpty</span></code></a></p></td>
+<td><p>Returns true if SkRegion is empty.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Region.isRect" title="skia.Region.isRect"><code class="xref py py-obj docutils literal notranslate"><span class="pre">isRect</span></code></a></p></td>
+<td><p>Returns true if SkRegion is one SkIRect with positive dimensions.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.Region.op" title="skia.Region.op"><code class="xref py py-obj docutils literal notranslate"><span class="pre">op</span></code></a></p></td>
+<td><p>Overloaded function.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Region.quickContains" title="skia.Region.quickContains"><code class="xref py py-obj docutils literal notranslate"><span class="pre">quickContains</span></code></a></p></td>
+<td><p>Returns true if SkRegion is a single rectangle and contains r.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.Region.quickReject" title="skia.Region.quickReject"><code class="xref py py-obj docutils literal notranslate"><span class="pre">quickReject</span></code></a></p></td>
+<td><p>Overloaded function.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Region.readFromMemory" title="skia.Region.readFromMemory"><code class="xref py py-obj docutils literal notranslate"><span class="pre">readFromMemory</span></code></a></p></td>
+<td><p>Constructs SkRegion from buffer of size length.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.Region.set" title="skia.Region.set"><code class="xref py py-obj docutils literal notranslate"><span class="pre">set</span></code></a></p></td>
+<td><p>Sets SkRegion to src, and returns true if src bounds is not empty.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Region.setEmpty" title="skia.Region.setEmpty"><code class="xref py py-obj docutils literal notranslate"><span class="pre">setEmpty</span></code></a></p></td>
+<td><p>Constructs an empty SkRegion.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.Region.setPath" title="skia.Region.setPath"><code class="xref py py-obj docutils literal notranslate"><span class="pre">setPath</span></code></a></p></td>
+<td><p>Constructs SkRegion to match outline of path within clip.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Region.setRect" title="skia.Region.setRect"><code class="xref py py-obj docutils literal notranslate"><span class="pre">setRect</span></code></a></p></td>
+<td><p>Constructs a rectangular SkRegion matching the bounds of rect.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.Region.setRects" title="skia.Region.setRects"><code class="xref py py-obj docutils literal notranslate"><span class="pre">setRects</span></code></a></p></td>
+<td><p>Constructs SkRegion as the union of SkIRect in rects array.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Region.setRegion" title="skia.Region.setRegion"><code class="xref py py-obj docutils literal notranslate"><span class="pre">setRegion</span></code></a></p></td>
+<td><p>Constructs a copy of an existing region.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.Region.swap" title="skia.Region.swap"><code class="xref py py-obj docutils literal notranslate"><span class="pre">swap</span></code></a></p></td>
+<td><p>Exchanges SkIRect array of SkRegion and other.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Region.translate" title="skia.Region.translate"><code class="xref py py-obj docutils literal notranslate"><span class="pre">translate</span></code></a></p></td>
+<td><p>Overloaded function.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.Region.writeToMemory" title="skia.Region.writeToMemory"><code class="xref py py-obj docutils literal notranslate"><span class="pre">writeToMemory</span></code></a></p></td>
+<td><p>Writes SkRegion to buffer, and returns number of bytes written.</p></td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Attributes</p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">kDifference_Op</span></code></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">kIntersect_Op</span></code></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">kLastOp</span></code></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">kOpCnt</span></code></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">kReplace_Op</span></code></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">kReverseDifference_Op</span></code></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">kUnion_Op</span></code></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">kXOR_Op</span></code></p></td>
+<td><p></p></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<div class="section" id="methods">
+<h2>Methods<a class="headerlink" href="#methods" title="Permalink to this headline">¶</a></h2>
+<dl class="py method">
+<dt id="skia.Region.__init__">
+<code class="sig-prename descclassname">Region.</code><code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span><span class="n">args</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#skia.Region.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Overloaded function.</p>
+<ol class="arabic simple">
+<li><p>__init__(self: skia.Region) -&gt; None</p></li>
+</ol>
+<p>Constructs an empty SkRegion.</p>
+<ol class="arabic simple" start="2">
+<li><p>__init__(self: skia.Region, arg0: skia.Region) -&gt; None</p></li>
+</ol>
+<p>Constructs a copy of an existing region.</p>
+<ol class="arabic simple" start="3">
+<li><p>__init__(self: skia.Region, arg0: skia.IRect) -&gt; None</p></li>
+</ol>
+<p>Constructs a rectangular SkRegion matching the bounds of rect.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="skia.Region.computeRegionComplexity">
+<code class="sig-prename descclassname">Region.</code><code class="sig-name descname">computeRegionComplexity</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Region" title="skia.Region">skia.Region</a></span></em><span class="sig-paren">)</span> &#x2192; int<a class="headerlink" href="#skia.Region.computeRegionComplexity" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a value that increases with the number of elements in SkRegion.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="skia.Region.contains">
+<code class="sig-prename descclassname">Region.</code><code class="sig-name descname">contains</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span><span class="n">args</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#skia.Region.contains" title="Permalink to this definition">¶</a></dt>
+<dd><p>Overloaded function.</p>
+<ol class="arabic simple">
+<li><p>contains(self: skia.Region, arg0: int, arg1: int) -&gt; bool</p></li>
+</ol>
+<p>Returns true if SkIPoint (x, y) is inside SkRegion.</p>
+<ol class="arabic simple" start="2">
+<li><p>contains(self: skia.Region, arg0: skia.IRect) -&gt; bool</p></li>
+</ol>
+<p>Returns true if other is completely inside SkRegion.</p>
+<ol class="arabic simple" start="3">
+<li><p>contains(self: skia.Region, arg0: skia.Region) -&gt; bool</p></li>
+</ol>
+<p>Returns true if other is completely inside SkRegion.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="skia.Region.getBoundaryPath">
+<code class="sig-prename descclassname">Region.</code><code class="sig-name descname">getBoundaryPath</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Region" title="skia.Region">skia.Region</a></span></em>, <em class="sig-param"><span class="n">arg0</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.Path.html#skia.Path" title="skia.Path">skia.Path</a></span></em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#skia.Region.getBoundaryPath" title="Permalink to this definition">¶</a></dt>
+<dd><p>Appends outline of SkRegion to path.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="skia.Region.getBounds">
+<code class="sig-prename descclassname">Region.</code><code class="sig-name descname">getBounds</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Region" title="skia.Region">skia.Region</a></span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="skia.IRect.html#skia.IRect" title="skia.IRect">skia.IRect</a><a class="headerlink" href="#skia.Region.getBounds" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns minimum and maximum axes values of SkIRect array.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="skia.Region.intersects">
+<code class="sig-prename descclassname">Region.</code><code class="sig-name descname">intersects</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span><span class="n">args</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#skia.Region.intersects" title="Permalink to this definition">¶</a></dt>
+<dd><p>Overloaded function.</p>
+<ol class="arabic simple">
+<li><p>intersects(self: skia.Region, arg0: skia.IRect) -&gt; bool</p></li>
+</ol>
+<p>Returns true if SkRegion intersects rect.</p>
+<ol class="arabic simple" start="2">
+<li><p>intersects(self: skia.Region, arg0: skia.Region) -&gt; bool</p></li>
+</ol>
+<p>Returns true if SkRegion intersects other.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="skia.Region.isComplex">
+<code class="sig-prename descclassname">Region.</code><code class="sig-name descname">isComplex</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Region" title="skia.Region">skia.Region</a></span></em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#skia.Region.isComplex" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns true if SkRegion is described by more than one rectangle.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="skia.Region.isEmpty">
+<code class="sig-prename descclassname">Region.</code><code class="sig-name descname">isEmpty</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Region" title="skia.Region">skia.Region</a></span></em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#skia.Region.isEmpty" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns true if SkRegion is empty.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="skia.Region.isRect">
+<code class="sig-prename descclassname">Region.</code><code class="sig-name descname">isRect</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Region" title="skia.Region">skia.Region</a></span></em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#skia.Region.isRect" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns true if SkRegion is one SkIRect with positive dimensions.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="skia.Region.op">
+<code class="sig-prename descclassname">Region.</code><code class="sig-name descname">op</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span><span class="n">args</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#skia.Region.op" title="Permalink to this definition">¶</a></dt>
+<dd><p>Overloaded function.</p>
+<ol class="arabic simple">
+<li><p>op(self: skia.Region, arg0: skia.IRect, arg1: skia.Region.Op) -&gt; bool</p></li>
+</ol>
+<p>Replaces SkRegion with the result of SkRegion op rect.</p>
+<ol class="arabic simple" start="2">
+<li><p>op(self: skia.Region, arg0: skia.Region, arg1: skia.Region.Op) -&gt; bool</p></li>
+</ol>
+<p>Replaces SkRegion with the result of SkRegion op rgn.</p>
+<ol class="arabic simple" start="3">
+<li><p>op(self: skia.Region, arg0: skia.IRect, arg1: skia.Region, arg2: skia.Region.Op) -&gt; bool</p></li>
+</ol>
+<p>Replaces SkRegion with the result of rect op rgn.</p>
+<ol class="arabic simple" start="4">
+<li><p>op(self: skia.Region, arg0: skia.Region, arg1: skia.IRect, arg2: skia.Region.Op) -&gt; bool</p></li>
+</ol>
+<p>Replaces SkRegion with the result of rgn op rect.</p>
+<ol class="arabic simple" start="5">
+<li><p>op(self: skia.Region, arg0: skia.Region, arg1: skia.Region, arg2: skia.Region.Op) -&gt; bool</p></li>
+</ol>
+<p>Replaces SkRegion with the result of rgna op rgnb.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="skia.Region.quickContains">
+<code class="sig-prename descclassname">Region.</code><code class="sig-name descname">quickContains</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Region" title="skia.Region">skia.Region</a></span></em>, <em class="sig-param"><span class="n">arg0</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.IRect.html#skia.IRect" title="skia.IRect">skia.IRect</a></span></em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#skia.Region.quickContains" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns true if SkRegion is a single rectangle and contains r.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="skia.Region.quickReject">
+<code class="sig-prename descclassname">Region.</code><code class="sig-name descname">quickReject</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span><span class="n">args</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#skia.Region.quickReject" title="Permalink to this definition">¶</a></dt>
+<dd><p>Overloaded function.</p>
+<ol class="arabic simple">
+<li><p>quickReject(self: skia.Region, arg0: skia.IRect) -&gt; bool</p></li>
+</ol>
+<p>Returns true if SkRegion does not intersect rect.</p>
+<ol class="arabic simple" start="2">
+<li><p>quickReject(self: skia.Region, arg0: skia.Region) -&gt; bool</p></li>
+</ol>
+<p>Returns true if SkRegion does not intersect rgn.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="skia.Region.readFromMemory">
+<code class="sig-prename descclassname">Region.</code><code class="sig-name descname">readFromMemory</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Region" title="skia.Region">skia.Region</a></span></em>, <em class="sig-param"><span class="n">arg0</span><span class="p">:</span> <span class="n">capsule</span></em>, <em class="sig-param"><span class="n">arg1</span><span class="p">:</span> <span class="n">int</span></em><span class="sig-paren">)</span> &#x2192; int<a class="headerlink" href="#skia.Region.readFromMemory" title="Permalink to this definition">¶</a></dt>
+<dd><p>Constructs SkRegion from buffer of size length.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="skia.Region.set">
+<code class="sig-prename descclassname">Region.</code><code class="sig-name descname">set</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Region" title="skia.Region">skia.Region</a></span></em>, <em class="sig-param"><span class="n">arg0</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Region" title="skia.Region">skia.Region</a></span></em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#skia.Region.set" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets SkRegion to src, and returns true if src bounds is not empty.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="skia.Region.setEmpty">
+<code class="sig-prename descclassname">Region.</code><code class="sig-name descname">setEmpty</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Region" title="skia.Region">skia.Region</a></span></em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#skia.Region.setEmpty" title="Permalink to this definition">¶</a></dt>
+<dd><p>Constructs an empty SkRegion.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="skia.Region.setPath">
+<code class="sig-prename descclassname">Region.</code><code class="sig-name descname">setPath</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Region" title="skia.Region">skia.Region</a></span></em>, <em class="sig-param"><span class="n">arg0</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.Path.html#skia.Path" title="skia.Path">skia.Path</a></span></em>, <em class="sig-param"><span class="n">arg1</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Region" title="skia.Region">skia.Region</a></span></em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#skia.Region.setPath" title="Permalink to this definition">¶</a></dt>
+<dd><p>Constructs SkRegion to match outline of path within clip.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="skia.Region.setRect">
+<code class="sig-prename descclassname">Region.</code><code class="sig-name descname">setRect</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Region" title="skia.Region">skia.Region</a></span></em>, <em class="sig-param"><span class="n">arg0</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.IRect.html#skia.IRect" title="skia.IRect">skia.IRect</a></span></em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#skia.Region.setRect" title="Permalink to this definition">¶</a></dt>
+<dd><p>Constructs a rectangular SkRegion matching the bounds of rect.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="skia.Region.setRects">
+<code class="sig-prename descclassname">Region.</code><code class="sig-name descname">setRects</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Region" title="skia.Region">skia.Region</a></span></em>, <em class="sig-param"><span class="n">arg0</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.IRect.html#skia.IRect" title="skia.IRect">skia.IRect</a></span></em>, <em class="sig-param"><span class="n">arg1</span><span class="p">:</span> <span class="n">int</span></em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#skia.Region.setRects" title="Permalink to this definition">¶</a></dt>
+<dd><p>Constructs SkRegion as the union of SkIRect in rects array.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="skia.Region.setRegion">
+<code class="sig-prename descclassname">Region.</code><code class="sig-name descname">setRegion</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Region" title="skia.Region">skia.Region</a></span></em>, <em class="sig-param"><span class="n">arg0</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Region" title="skia.Region">skia.Region</a></span></em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#skia.Region.setRegion" title="Permalink to this definition">¶</a></dt>
+<dd><p>Constructs a copy of an existing region.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="skia.Region.swap">
+<code class="sig-prename descclassname">Region.</code><code class="sig-name descname">swap</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Region" title="skia.Region">skia.Region</a></span></em>, <em class="sig-param"><span class="n">arg0</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Region" title="skia.Region">skia.Region</a></span></em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#skia.Region.swap" title="Permalink to this definition">¶</a></dt>
+<dd><p>Exchanges SkIRect array of SkRegion and other.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="skia.Region.translate">
+<code class="sig-prename descclassname">Region.</code><code class="sig-name descname">translate</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span><span class="n">args</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#skia.Region.translate" title="Permalink to this definition">¶</a></dt>
+<dd><p>Overloaded function.</p>
+<ol class="arabic simple">
+<li><p>translate(self: skia.Region, arg0: int, arg1: int) -&gt; None</p></li>
+</ol>
+<p>Offsets SkRegion by ivector (dx, dy).</p>
+<ol class="arabic simple" start="2">
+<li><p>translate(self: skia.Region, arg0: int, arg1: int, arg2: skia.Region) -&gt; None</p></li>
+</ol>
+<p>Offsets SkRegion by ivector (dx, dy), writing result to dst.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="skia.Region.writeToMemory">
+<code class="sig-prename descclassname">Region.</code><code class="sig-name descname">writeToMemory</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Region" title="skia.Region">skia.Region</a></span></em>, <em class="sig-param"><span class="n">arg0</span><span class="p">:</span> <span class="n">capsule</span></em><span class="sig-paren">)</span> &#x2192; int<a class="headerlink" href="#skia.Region.writeToMemory" title="Permalink to this definition">¶</a></dt>
+<dd><p>Writes SkRegion to buffer, and returns number of bytes written.</p>
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../index.html">skia-python</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../skia.html">skia</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="skia.AlphaType.html">AlphaType</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.ApplyPerspectiveClip.html">ApplyPerspectiveClip</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.AutoCanvasRestore.html">AutoCanvasRestore</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.BBoxHierarchy.html">BBoxHierarchy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.BackingFit.html">BackingFit</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.Bitmap.html">Bitmap</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.BlendMode.html">BlendMode</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.BlendModeCoeff.html">BlendModeCoeff</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.Budgeted.html">Budgeted</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.Canvas.html">Canvas</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.ClipOp.html">ClipOp</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.Color4f.html">Color4f</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.ColorFilter.html">ColorFilter</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.ColorInfo.html">ColorInfo</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.ColorSpace.html">ColorSpace</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.ColorType.html">ColorType</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.Data.html">Data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.DeserialProcs.html">DeserialProcs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.EncodedImageFormat.html">EncodedImageFormat</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.FilterQuality.html">FilterQuality</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.Font.html">Font</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.FontArguments.html">FontArguments</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.FontHinting.html">FontHinting</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.FontMetrics.html">FontMetrics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.FontStyle.html">FontStyle</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.GrBackendApi.html">GrBackendApi</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.GrBackendSemaphore.html">GrBackendSemaphore</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.GrBackendTexture.html">GrBackendTexture</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.GrContext.html">GrContext</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.GrFlushFlags.html">GrFlushFlags</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.GrGLBackendState.html">GrGLBackendState</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.GrGLInterface.html">GrGLInterface</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.GrMipMapped.html">GrMipMapped</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.GrProtected.html">GrProtected</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.GrRenderable.html">GrRenderable</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.GrSemaphoresSubmitted.html">GrSemaphoresSubmitted</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.GrSurfaceOrigin.html">GrSurfaceOrigin</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.IPoint.html">IPoint</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.IRect.html">IRect</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.ISize.html">ISize</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.Image.html">Image</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.ImageFilter.html">ImageFilter</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.ImageInfo.html">ImageInfo</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.M44.html">M44</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.MaskFilter.html">MaskFilter</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.Matrix.html">Matrix</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.Paint.html">Paint</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.Path.html">Path</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.PathConvexityType.html">PathConvexityType</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.PathDirection.html">PathDirection</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.PathEffect.html">PathEffect</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.PathFillType.html">PathFillType</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.PathSegmentMask.html">PathSegmentMask</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.PathVerb.html">PathVerb</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.Picture.html">Picture</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.PictureRecorder.html">PictureRecorder</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.PixelGeometry.html">PixelGeometry</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.Pixmap.html">Pixmap</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.Point.html">Point</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.Point3.html">Point3</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.RRect.html">RRect</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.RSXform.html">RSXform</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.Rect.html">Rect</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Region</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.Shader.html">Shader</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.Size.html">Size</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.Surface.html">Surface</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.SurfaceCharacterization.html">SurfaceCharacterization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.SurfaceProps.html">SurfaceProps</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.TextBlob.html">TextBlob</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.TextBlobBuilder.html">TextBlobBuilder</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.TextEncoding.html">TextEncoding</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.TileMode.html">TileMode</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.Typeface.html">Typeface</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.Vertices.html">Vertices</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.YUVColorSpace.html">YUVColorSpace</a></li>
+</ul>
+</li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  <li><a href="../skia.html">skia</a><ul>
+      <li>Previous: <a href="skia.Rect.html" title="previous chapter">Rect</a></li>
+      <li>Next: <a href="skia.Shader.html" title="next chapter">Shader</a></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2020, Kota Yamaguchi.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.0.0</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="../_sources/_generate/skia.Region.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>
