@@ -95,6 +95,16 @@ jobs:
         yum install -y xorg-x11-server-Xvfb mesa-dri-drivers
         python -m pip install pytest numpy glfw
         xvfb-run -s "-screen 0 640x480x24" python -m pytest tests
+    - name: Build docs
+      run: |
+        python -m pip install sphinx
+        make -C docs html
+    - name: Deploy docs to gh-pages
+      if: github.event_name == 'push'
+      uses: peaceiris/actions-gh-pages@v3
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: ./docs/_build/html
   build-macos:
     runs-on: macos-latest
     strategy:
