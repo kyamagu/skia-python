@@ -8,8 +8,11 @@ import skia
     (0, 2, True, False, 0),
 ])
 def test_ISize(width, height, is_empty, is_zero, area):
-    size = skia.ISize.Make(width, height)
+    assert isinstance(skia.ISize(), skia.ISize)
+    assert isinstance(skia.ISize(width, height), skia.ISize)
+    assert isinstance(skia.ISize.Make(width, height), skia.ISize)
     size = skia.ISize.MakeEmpty()
+    assert isinstance(size, skia.ISize)
     size.set(width, height)
     assert size.isEmpty() == is_empty
     assert size.isZero() == is_zero
@@ -30,9 +33,14 @@ def test_ISize(width, height, is_empty, is_zero, area):
     (0., 2., True, False),
 ])
 def test_Size(width, height, is_empty, is_zero):
-    size = skia.Size.Make(width, height)
-    size = skia.Size.Make(skia.ISize.Make(int(width), int(height)))
+    assert isinstance(skia.Size(), skia.Size)
+    assert isinstance(skia.Size(width, height), skia.Size)
+    assert isinstance(skia.Size(skia.ISize()), skia.Size)
+    assert isinstance(skia.Size.Make(width, height), skia.Size)
+    assert isinstance(
+        skia.Size.Make(skia.ISize.Make(int(width), int(height))), skia.Size)
     size = skia.Size.MakeEmpty()
+    assert isinstance(size, skia.Size)
     size.set(width, height)
     assert size.isEmpty() == is_empty
     assert size.isZero() == is_zero

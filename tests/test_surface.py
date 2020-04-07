@@ -54,6 +54,12 @@ def test_Surface_init():
     array = np.zeros((240, 320, 4), dtype=np.uint8)
     assert isinstance(skia.Surface(array), skia.Surface)
     assert isinstance(skia.Surface.MakeRasterN32Premul(320, 240), skia.Surface)
+    assert isinstance(
+        skia.Surface.MakeRasterN32Premul(320, 240, None), skia.Surface)
+    assert isinstance(
+        skia.Surface.MakeRasterN32Premul(320, 240,
+            skia.SurfaceProps(skia.SurfaceProps.InitType.kLegacyFontHost)),
+        skia.Surface)
 
 
 def test_Surface_methods(surface):
@@ -62,10 +68,8 @@ def test_Surface_methods(surface):
     assert isinstance(surface.imageInfo(), skia.ImageInfo)
     assert isinstance(surface.getCanvas(), skia.Canvas)
     assert isinstance(surface.generationID(), int)
-    if sys.platform != 'win32':
-        # This segfault on windows VM, needs investigation.
-        assert isinstance(surface.makeSurface(
-            skia.ImageInfo.MakeN32Premul(120, 120)), skia.Surface)
+    assert isinstance(surface.makeSurface(
+        skia.ImageInfo.MakeN32Premul(120, 120)), skia.Surface)
     assert isinstance(surface.makeSurface(120, 120), skia.Surface)
     assert isinstance(surface.makeImageSnapshot(), skia.Image)
     assert isinstance(

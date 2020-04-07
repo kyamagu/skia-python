@@ -136,35 +136,48 @@ py::class_<SkImageInfo>(m, "ImageInfo", R"docstring(
         "kUnknown_SkAlphaType, a width and height of zero, and no "
         "SkColorSpace.")
     .def_static("Make",
-        (SkImageInfo (*)(int, int, SkColorType, SkAlphaType,
-            sk_sp<SkColorSpace>)) &SkImageInfo::Make,
+        py::overload_cast<int, int, SkColorType, SkAlphaType,
+            sk_sp<SkColorSpace>>(&SkImageInfo::Make),
         "Creates SkImageInfo from integral dimensions width and height, "
-        "SkColorType ct, SkAlphaType at, and optionally SkColorSpace cs.")
+        "SkColorType ct, SkAlphaType at, and optionally SkColorSpace cs.",
+        py::arg("width"), py::arg("height"), py::arg("ct"), py::arg("at"),
+        py::arg_v("cs", sk_sp<SkColorSpace>(nullptr), "skia.ColorSpace()"))
     .def_static("Make",
-        (SkImageInfo (*)(SkISize, SkColorType, SkAlphaType,
-            sk_sp<SkColorSpace>)) &SkImageInfo::Make)
+        py::overload_cast<SkISize, SkColorType, SkAlphaType,
+            sk_sp<SkColorSpace>>(&SkImageInfo::Make),
+        py::arg("dimensions"), py::arg("ct"), py::arg("at"),
+        py::arg_v("cs", sk_sp<SkColorSpace>(nullptr), "skia.ColorSpace()"))
     .def_static("Make",
-        (SkImageInfo (*)(SkISize, const SkColorInfo&)) &SkImageInfo::Make,
+        py::overload_cast<SkISize, const SkColorInfo&>(&SkImageInfo::Make),
         "Creates SkImageInfo from integral dimensions and SkColorInfo "
-        "colorInfo.")
+        "colorInfo.",
+        py::arg("dimensions"), py::arg("colorInfo"))
     // .def_static("Make",
     //     (SkImageInfo (*)(SkISize, SkColorInfo&&)) &SkImageInfo::Make)
     .def_static("MakeN32", &SkImageInfo::MakeN32,
         "Creates SkImageInfo from integral dimensions width and height, "
-        "kN32_SkColorType, SkAlphaType at, and optionally SkColorSpace cs.")
+        "kN32_SkColorType, SkAlphaType at, and optionally SkColorSpace cs.",
+        py::arg("width"), py::arg("height"), py::arg("at"),
+        py::arg_v("cs", sk_sp<SkColorSpace>(nullptr), "skia.ColorSpace()"))
+    .def_static("MakeS32", &SkImageInfo::MakeS32,
+        "Creates SkImageInfo from integral dimensions width and height, "
+        "kN32_SkColorType, SkAlphaType at, with sRGB SkColorSpace.",
+        py::arg("width"), py::arg("height"), py::arg("at"))
     .def_static("MakeN32Premul",
-        (SkImageInfo (*)(int, int, sk_sp<SkColorSpace>))
-        &SkImageInfo::MakeN32Premul,
+        py::overload_cast<int, int, sk_sp<SkColorSpace>>(
+            &SkImageInfo::MakeN32Premul),
         "Creates SkImageInfo from integral dimensions width and height, "
         "kN32_SkColorType, kPremul_SkAlphaType, with optional SkColorSpace.",
         py::arg("width"), py::arg("height"),
-        py::arg("cs") = sk_sp<SkColorSpace>(nullptr))
+        py::arg_v("cs", sk_sp<SkColorSpace>(nullptr), "skia.ColorSpace()"))
     .def_static("MakeN32Premul",
-        (SkImageInfo (*)(SkISize, sk_sp<SkColorSpace>))
-        &SkImageInfo::MakeN32Premul,
+        py::overload_cast<SkISize, sk_sp<SkColorSpace>>(
+            &SkImageInfo::MakeN32Premul),
         "Creates SkImageInfo from integral dimensions width and height, "
         "kN32_SkColorType, kPremul_SkAlphaType, with SkColorSpace set to "
-        "nullptr.")
+        "nullptr.",
+        py::arg("dimensions"),
+        py::arg_v("cs", sk_sp<SkColorSpace>(nullptr), "skia.ColorSpace()"))
     .def_static("MakeA8", (SkImageInfo (*)(int, int)) &SkImageInfo::MakeA8,
         "Creates SkImageInfo from integral dimensions width and height, "
         "kAlpha_8_SkColorType, kPremul_SkAlphaType, with SkColorSpace set to "

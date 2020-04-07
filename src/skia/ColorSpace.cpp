@@ -1,12 +1,17 @@
 #include <pybind11/pybind11.h>
 #include <skia.h>
 
-#define CONST_CALL(T, method) [](const sk_sp<T>& cs) { return cs->method(); }
+#define CONST_CALL(T, method) [](const sk_sp<T>& t){\
+    if (!t.get()) throw std::runtime_error("null pointer exception."); \
+    return t->method();\
+}
 
 namespace py = pybind11;
 
 void initColorSpace(py::module &m) {
 py::class_<sk_sp<SkColorSpace>>(m, "ColorSpace")
+    .def(py::init([] () { return sk_sp<SkColorSpace>(nullptr); }),
+        "Create a null color space.")
     // .def("toProfile", &SkColorSpace::toProfile,
     //     "Convert this color space to an skcms ICC profile struct.")
     .def("gammaCloseToSRGB", CONST_CALL(SkColorSpace, gammaCloseToSRGB),
@@ -41,11 +46,11 @@ py::class_<sk_sp<SkColorSpace>>(m, "ColorSpace")
     .def("transferFn", [] (const sk_sp<SkColorSpace>& cs, float gabcdef[7]) {
         cs->transferFn(gabcdef);
     })
-    // // .def("transferFn",
-    // //     (void (SkColorSpace::*)(skcms_TransferFunction*) const)
-    // //     &SkColorSpace::transferFn)
-    // // .def("invTransferFn", &SkColorSpace::invTransferFn)
-    // // .def("gamutTransformTo", &SkColorSpace::gamutTransformTo)
+    // .def("transferFn",
+    //     (void (SkColorSpace::*)(skcms_TransferFunction*) const)
+    //     &SkColorSpace::transferFn)
+    // .def("invTransferFn", &SkColorSpace::invTransferFn)
+    // .def("gamutTransformTo", &SkColorSpace::gamutTransformTo)
     .def("transferFnHash", CONST_CALL(SkColorSpace, transferFnHash))
     .def("hash", CONST_CALL(SkColorSpace, hash))
     .def("unique", CONST_CALL(SkColorSpace, unique))
