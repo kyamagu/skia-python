@@ -1,5 +1,6 @@
 import skia
 import pytest
+import sys
 
 
 def test_ColorInfo_init():
