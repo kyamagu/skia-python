@@ -20,23 +20,15 @@ def check(x):
 
 @pytest.mark.parametrize('args', [
     (100, 100, skia.ColorType.kRGBA_8888, skia.AlphaType.kPremul),
-    (100, 100, skia.ColorType.kRGBA_8888, skia.AlphaType.kPremul,
-        skia.ColorSpace()),
-    (100, 100, skia.ColorType.kRGBA_8888, skia.AlphaType.kPremul,
-        skia.ColorSpace.MakeSRGB()),
     (skia.ISize(100, 100), skia.ColorType.kRGBA_8888, skia.AlphaType.kPremul),
-    (skia.ISize(100, 100), skia.ColorType.kRGBA_8888, skia.AlphaType.kPremul,
-        skia.ColorSpace.MakeSRGB()),
     (skia.ISize(100, 100), skia.ColorInfo()),
 ])
 def test_ImageInfo_Make(args):
     check(skia.ImageInfo.Make(*args))
 
 
-@pytest.mark.skipif(sys.platform == 'win32', reason='FIXME: Unknown crash')
 @pytest.mark.parametrize('args', [
     (100, 100, skia.AlphaType.kPremul),
-    (100, 100, skia.AlphaType.kPremul, skia.ColorSpace.MakeSRGB()),
 ])
 def test_ImageInfo_MakeN32(args):
     check(skia.ImageInfo.MakeN32(*args))
@@ -46,13 +38,9 @@ def test_ImageInfo_MakeS32():
     check(skia.ImageInfo.MakeS32(100, 100, skia.AlphaType.kPremul))
 
 
-@pytest.mark.skipif(sys.platform == 'win32', reason='FIXME: Unknown crash')
 @pytest.mark.parametrize('args', [
     (100, 100),
-    (100, 100, skia.ColorSpace()),
-    (100, 100, skia.ColorSpace.MakeSRGB()),
     (skia.ISize(100, 100),),
-    (skia.ISize(100, 100), skia.ColorSpace.MakeSRGB()),
 ])
 def test_ImageInfo_MakeN32Premul(args):
     check(skia.ImageInfo.MakeN32Premul(*args))
