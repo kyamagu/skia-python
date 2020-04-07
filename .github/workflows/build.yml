@@ -65,13 +65,16 @@ jobs:
     - uses: actions/checkout@v2
       with:
         submodules: true
+    - name: Print submodule commits
+      run: |
+        git submodule status > submodule.txt
     - name: Install system dependency
       run: yum install -y fontconfig-devel mesa-libGL-devel
     - uses: actions/cache@v1
       id: cache
       with:
         path: skia/out/Release
-        key: manylinux2014-skia-out
+        key: manylinux2014-skia-${{ hashFiles('submodule.txt') }}
     - name: Set PATH
       run: echo "::add-path::$PWD/depot_tools"
       if: steps.cache.outputs.cache-hit != 'true'
@@ -114,11 +117,14 @@ jobs:
     - uses: actions/checkout@v2
       with:
         submodules: true
+    - name: Print submodule commits
+      run: |
+        git submodule status > submodule.txt
     - uses: actions/cache@v1
       id: cache
       with:
         path: skia/out/Release
-        key: ${{ runner.os }}-skia-out
+        key: ${{ runner.os }}-skia-${{ hashFiles('submodule.txt') }}
     - name: Set up Python 2.7
       uses: actions/setup-python@v1
       with:
@@ -161,11 +167,14 @@ jobs:
     - uses: actions/checkout@v2
       with:
         submodules: true
+    - name: Print submodule commits
+      run: |
+        git submodule status > submodule.txt
     - uses: actions/cache@v1
       id: cache
       with:
         path: skia\out\Release
-        key: ${{ runner.os }}-${{ matrix.arch }}-skia-out
+        key: ${{ runner.os }}-${{ matrix.arch }}-skia-${{ hashFiles('submodule.txt') }}
     - name: Set up Python 2.7
       uses: actions/setup-python@v1
       with:
