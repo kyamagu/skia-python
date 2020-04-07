@@ -3,6 +3,7 @@
 
 namespace py = pybind11;
 
+PYBIND11_DECLARE_HOLDER_TYPE(T, sk_sp<T>);
 
 void initImageInfo(py::module &m) {
 py::enum_<SkAlphaType>(m, "AlphaType")
