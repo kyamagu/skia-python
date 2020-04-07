@@ -3,6 +3,7 @@
 
 namespace py = pybind11;
 
+#pragma optimize("", off)
 void initImageInfo(py::module &m) {
 py::enum_<SkAlphaType>(m, "AlphaType")
     .value("kUnknown", SkAlphaType::kUnknown_SkAlphaType,
@@ -200,7 +201,6 @@ py::class_<SkImageInfo>(m, "ImageInfo", R"docstring(
         "Creates an empty SkImageInfo with kUnknown_SkColorType, "
         "kUnknown_SkAlphaType, a width and height of zero, and no "
         "SkColorSpace.")
-#pragma optimize("", off)
     .def_static("Make",
         py::overload_cast<int, int, SkColorType, SkAlphaType,
             sk_sp<SkColorSpace>>(&SkImageInfo::Make),
@@ -261,7 +261,6 @@ py::class_<SkImageInfo>(m, "ImageInfo", R"docstring(
         "Creates SkImageInfo from integral dimensions width and height set to "
         "zero, kUnknown_SkColorType, kUnknown_SkAlphaType, with SkColorSpace "
         "set to nullptr.")
-#pragma optimize("", on)
     .def_static("ByteSizeOverflowed", &SkImageInfo::ByteSizeOverflowed,
         "Returns true if byteSize equals SIZE_MAX.")
     ;
@@ -271,3 +270,4 @@ m.def("ColorTypeBytesPerPixel", &SkColorTypeBytesPerPixel);
 m.def("ColorTypeIsAlwaysOpaque", &SkColorTypeIsAlwaysOpaque);
 m.def("ColorTypeValidateAlphaType", &SkColorTypeValidateAlphaType);
 }
+#pragma optimize("", on)
