@@ -149,7 +149,11 @@ py::enum_<SkSurface::FlushFlags>(surface, "FlushFlags")
 
 surface
     .def(py::init(&SkSurface::MakeRasterN32Premul),
-        py::arg("width"), py::arg("height"), py::arg("surfaceProps") = nullptr)
+        R"docstring(
+            See :py:meth:`~MakeRasterN32Premul`
+        )docstring",
+        py::arg("width"), py::arg("height"),
+        py::arg("surfaceProps") = (const SkSurfaceProps*) nullptr)
     .def(py::init([](NumPy<uint8_t> array) {
         py::buffer_info info = array.request();
         if (info.ndim <= 1)
@@ -160,7 +164,13 @@ surface
         return SkSurface::MakeRasterDirect(
             SkImageInfo::MakeN32Premul(info.shape[1], info.shape[0], nullptr),
             info.ptr, info.strides[0]);
-    }))
+        }),
+        R"docstring(
+            Create a raster surface on numpy array. Input array must have uint8
+            with more than two dimensions. This constructor does not allocate
+            memory. Do not destroy numpy array while using this surface.
+        )docstring",
+        py::arg("array"))
     // .def("isCompatible", &SkSurface::isCompatible,
     //     "Is this surface compatible with the provided characterization?")
     .def("width", &SkSurface::width,
@@ -185,11 +195,12 @@ surface
         py::return_value_policy::reference)
     .def("makeSurface",
         py::overload_cast<const SkImageInfo&>(&SkSurface::makeSurface),
-        "Returns a compatible SkSurface, or nullptr.")
+        "Returns a compatible SkSurface, or nullptr.", py::arg("imageInfo"))
     .def("makeSurface",
         py::overload_cast<int, int>(&SkSurface::makeSurface),
         "Calls makeSurface(ImageInfo) with the same ImageInfo as this surface, "
-        "but with the specified width and height.")
+        "but with the specified width and height.",
+        py::arg("width"), py::arg("height"))
     .def("makeImageSnapshot",
         py::overload_cast<>(&SkSurface::makeImageSnapshot),
         "Returns SkImage capturing SkSurface contents.")
@@ -279,7 +290,8 @@ surface
             return SkSurface::MakeRasterDirect(
                 image_info, info.ptr, info.strides[0], surfaceProps);
         }, "Allocates raster SkSurface.",
-        py::arg("info"), py::arg("buf"), py::arg("surfaceProps") = nullptr)
+        py::arg("info"), py::arg("buf"),
+        py::arg("surfaceProps") = (const SkSurfaceProps*) nullptr)
     // .def_static("MakeRasterDirectReleaseProc",
     //     &SkSurface::MakeRasterDirectReleaseProc,
     //     "Allocates raster SkSurface.")
@@ -290,10 +302,13 @@ surface
     .def_static("MakeRaster",
         py::overload_cast<const SkImageInfo&, const SkSurfaceProps*>(
             &SkSurface::MakeRaster),
-        "Allocates raster SkSurface.")
+        "Allocates raster SkSurface.",
+        py::arg("imageInfo"),
+        py::arg("surfaceProps") = (const SkSurfaceProps*) nullptr)
     .def_static("MakeRasterN32Premul", &SkSurface::MakeRasterN32Premul,
         "Allocates raster SkSurface.",
-        py::arg("width"), py::arg("height"), py::arg("surfaceProps") = nullptr)
+        py::arg("width"), py::arg("height"),
+        py::arg("surfaceProps") = (const SkSurfaceProps*) nullptr)
     // .def_static("MakeFromBackendTexture", &SkSurface::MakeFromBackendTexture,
     //     "Wraps a GPU-backed texture into SkSurface.")
     // .def_static("MakeFromBackendRenderTarget",
@@ -306,15 +321,21 @@ surface
         py::overload_cast<GrContext*, SkBudgeted, const SkImageInfo&, int,
         GrSurfaceOrigin, const SkSurfaceProps*, bool>(
             &SkSurface::MakeRenderTarget),
-        "Returns SkSurface on GPU indicated by context.")
+        "Returns SkSurface on GPU indicated by context.",
+        py::arg("context"), py::arg("budgeted"), py::arg("imageInfo"),
+        py::arg("sampleCount"), py::arg("surfaceOrigin"),
+        py::arg("surfaceProps"), py::arg("shouldCreateWithMips") = false)
     .def_static("MakeRenderTarget",
         py::overload_cast<GrContext*, SkBudgeted, const SkImageInfo&, int,
         const SkSurfaceProps*>(&SkSurface::MakeRenderTarget),
-        "Returns SkSurface on GPU indicated by context.")
+        "Returns SkSurface on GPU indicated by context.",
+        py::arg("context"), py::arg("budgeted"), py::arg("imageInfo"),
+        py::arg("sampleCount"), py::arg("surfaceProps"))
     .def_static("MakeRenderTarget",
         py::overload_cast<GrContext*, SkBudgeted, const SkImageInfo&>(
             &SkSurface::MakeRenderTarget),
-        "Returns SkSurface on GPU indicated by context.")
+        "Returns SkSurface on GPU indicated by context.",
+        py::arg("context"), py::arg("budgeted"), py::arg("imageInfo"))
     // .def_static("MakeRenderTarget",
     //     py::overload_cast<GrRecordingContext*,
     //     const SkSurfaceCharacterization&, SkBudgeted>(

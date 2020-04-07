@@ -6,6 +6,8 @@ namespace py = pybind11;
 void initSize(py::module &m) {
 // ISize
 py::class_<SkISize>(m, "ISize")
+    .def(py::init(&SkISize::MakeEmpty))
+    .def(py::init(&SkISize::Make))
     .def("set", &SkISize::set)
     .def("isZero", &SkISize::isZero,
         "Returns true iff fWidth == 0 && fHeight == 0.")
@@ -24,6 +26,9 @@ py::class_<SkISize>(m, "ISize")
 
 // Size
 py::class_<SkSize>(m, "Size")
+    .def(py::init(&SkSize::MakeEmpty))
+    .def(py::init(py::overload_cast<SkScalar, SkScalar>(&SkSize::Make)))
+    .def(py::init(py::overload_cast<const SkISize&>(&SkSize::Make)))
     .def("set", &SkSize::set)
     .def("isZero", &SkSize::isZero,
         "Returns true iff fWidth == 0 && fHeight == 0.")
