@@ -3,10 +3,12 @@ import pytest
 import sys
 
 
+def check_colorinfo(x):
+    assert isinstance(x, skia.ColorInfo)
+
+
 def test_ColorInfo_init():
-    def _check(x):
-        assert isinstance(x, skia.ColorInfo)
-    _check(skia.ColorInfo())
+    check_colorinfo(skia.ColorInfo())
 
 
 @pytest.fixture(scope='session')
@@ -14,7 +16,7 @@ def imageinfo():
     return skia.ImageInfo.MakeN32Premul(320, 240)
 
 
-def check(x):
+def check_imageinfo(x):
     assert isinstance(x, skia.ImageInfo)
 
 
@@ -24,18 +26,18 @@ def check(x):
     (skia.ISize(100, 100), skia.ColorInfo()),
 ])
 def test_ImageInfo_Make(args):
-    check(skia.ImageInfo.Make(*args))
+    check_imageinfo(skia.ImageInfo.Make(*args))
 
 
 @pytest.mark.parametrize('args', [
     (100, 100, skia.AlphaType.kPremul),
 ])
 def test_ImageInfo_MakeN32(args):
-    check(skia.ImageInfo.MakeN32(*args))
+    check_imageinfo(skia.ImageInfo.MakeN32(*args))
 
 
 def test_ImageInfo_MakeS32():
-    check(skia.ImageInfo.MakeS32(100, 100, skia.AlphaType.kPremul))
+    check_imageinfo(skia.ImageInfo.MakeS32(100, 100, skia.AlphaType.kPremul))
 
 
 @pytest.mark.parametrize('args', [
@@ -43,7 +45,7 @@ def test_ImageInfo_MakeS32():
     (skia.ISize(100, 100),),
 ])
 def test_ImageInfo_MakeN32Premul(args):
-    check(skia.ImageInfo.MakeN32Premul(*args))
+    check_imageinfo(skia.ImageInfo.MakeN32Premul(*args))
 
 
 @pytest.mark.parametrize('args', [
@@ -51,7 +53,7 @@ def test_ImageInfo_MakeN32Premul(args):
     (skia.ISize(100, 100),),
 ])
 def test_ImageInfo_MakeA8(args):
-    check(skia.ImageInfo.MakeA8(*args))
+    check_imageinfo(skia.ImageInfo.MakeA8(*args))
 
 
 @pytest.mark.parametrize('args', [
@@ -59,4 +61,4 @@ def test_ImageInfo_MakeA8(args):
     (100, 100),
 ])
 def test_ImageInfo_MakeUnknown(args):
-    check(skia.ImageInfo.MakeUnknown(*args))
+    check_imageinfo(skia.ImageInfo.MakeUnknown(*args))
