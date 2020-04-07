@@ -54,13 +54,15 @@ jobs:
         bin/gn gen out/Release --args='is_official_build=false is_debug=false extra_cflags_cc=["-frtti"] extra_ldflags=["-lrt"]'
         ninja -C out/Release skia skia.h
         cd ..
-  build-manylinux2014:
+  build-linux:
     runs-on: ubuntu-latest
     strategy:
       matrix:
+        container:
+          - manylinux2014_x86_64
         python-version:
           - cp35-cp35m
-    container: quay.io/pypa/manylinux2014_x86_64
+    container: quay.io/pypa/${{ matrix.container }}
     steps:
     - uses: actions/checkout@v2
       with:
@@ -74,14 +76,28 @@ jobs:
       id: cache
       with:
         path: skia/out/Release
-        key: manylinux2014-skia-${{ hashFiles('submodule.txt') }}
+        key: ${{ matrix.container }}-skia-${{ hashFiles('submodule.txt') }}
     - name: Set PATH
       run: echo "::add-path::$PWD/depot_tools"
+      if: steps.cache.outputs.cache-hit != 'true'
+    - name: Build gn
+      env:
+        CC: gcc
+        CXX: g++
+        AR: ar
+        LDFLAGS: -lrt
+      run: |
+        git clone https://gn.googlesource.com/gn
+        cd gn
+        python build/gen.py
+        ninja -C out
+        cd ..
       if: steps.cache.outputs.cache-hit != 'true'
     - name: Build Skia
       run: |
         cd skia
         python tools/git-sync-deps
+        cp -f ../gn/out/gn bin/gn  # Replace gn.
         bin/gn gen out/Release --args='is_official_build=false is_debug=false extra_cflags_cc=["-frtti"] extra_ldflags=["-lrt"]'
         ninja -C out/Release skia skia.h
         cd ..
