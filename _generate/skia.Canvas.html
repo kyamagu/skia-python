@@ -371,13 +371,13 @@ raster surface. This approach may be deprecated in the future.</p>
 
 <dl class="py method">
 <dt id="skia.Canvas.accessTopLayerPixels">
-<code class="sig-prename descclassname">Canvas.</code><code class="sig-name descname">accessTopLayerPixels</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Canvas" title="skia.Canvas">skia.Canvas</a></span></em>, <em class="sig-param"><span class="n">arg0</span><span class="p">:</span> <span class="n">SkImageInfo</span></em>, <em class="sig-param"><span class="n">arg1</span><span class="p">:</span> <span class="n">int</span></em>, <em class="sig-param"><span class="n">arg2</span><span class="p">:</span> <span class="n">SkIPoint</span></em><span class="sig-paren">)</span> &#x2192; capsule<a class="headerlink" href="#skia.Canvas.accessTopLayerPixels" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">Canvas.</code><code class="sig-name descname">accessTopLayerPixels</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Canvas" title="skia.Canvas">skia.Canvas</a></span></em>, <em class="sig-param"><span class="n">arg0</span><span class="p">:</span> <span class="n">SkImageInfo</span></em>, <em class="sig-param"><span class="n">arg1</span><span class="p">:</span> <span class="n">int</span></em>, <em class="sig-param"><span class="n">arg2</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.IPoint.html#skia.IPoint" title="skia.IPoint">skia.IPoint</a></span></em><span class="sig-paren">)</span> &#x2192; capsule<a class="headerlink" href="#skia.Canvas.accessTopLayerPixels" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the pixel base address, SkImageInfo, rowBytes, and origin if the pixels can be read directly.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt id="skia.Canvas.androidFramework_setDeviceClipRestriction">
-<code class="sig-prename descclassname">Canvas.</code><code class="sig-name descname">androidFramework_setDeviceClipRestriction</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Canvas" title="skia.Canvas">skia.Canvas</a></span></em>, <em class="sig-param"><span class="n">arg0</span><span class="p">:</span> <span class="n">SkIRect</span></em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#skia.Canvas.androidFramework_setDeviceClipRestriction" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">Canvas.</code><code class="sig-name descname">androidFramework_setDeviceClipRestriction</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Canvas" title="skia.Canvas">skia.Canvas</a></span></em>, <em class="sig-param"><span class="n">arg0</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.IRect.html#skia.IRect" title="skia.IRect">skia.IRect</a></span></em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#skia.Canvas.androidFramework_setDeviceClipRestriction" title="Permalink to this definition">¶</a></dt>
 <dd><p>Sets the maximum clip rectangle, which can be set by clipRect(), clipRRect() and clipPath() and intersect the current clip with the specified rect.</p>
 </dd></dl>
 
@@ -410,11 +410,11 @@ raster surface. This approach may be deprecated in the future.</p>
 <code class="sig-prename descclassname">Canvas.</code><code class="sig-name descname">clipRRect</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span><span class="n">args</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#skia.Canvas.clipRRect" title="Permalink to this definition">¶</a></dt>
 <dd><p>Overloaded function.</p>
 <ol class="arabic simple">
-<li><p>clipRRect(self: skia.Canvas, arg0: SkRRect, arg1: skia.ClipOp, arg2: bool) -&gt; None</p></li>
+<li><p>clipRRect(self: skia.Canvas, arg0: skia.RRect, arg1: skia.ClipOp, arg2: bool) -&gt; None</p></li>
 </ol>
 <p>Replaces clip with the intersection or difference of clip and rrect, with an aliased or anti-aliased clip edge.</p>
 <ol class="arabic simple" start="2">
-<li><p>clipRRect(self: skia.Canvas, arg0: SkRRect, arg1: skia.ClipOp) -&gt; None</p></li>
+<li><p>clipRRect(self: skia.Canvas, arg0: skia.RRect, arg1: skia.ClipOp) -&gt; None</p></li>
 </ol>
 <p>Replaces clip with the intersection or difference of clip and rrect.</p>
 </dd></dl>
@@ -424,32 +424,32 @@ raster surface. This approach may be deprecated in the future.</p>
 <code class="sig-prename descclassname">Canvas.</code><code class="sig-name descname">clipRect</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span><span class="n">args</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#skia.Canvas.clipRect" title="Permalink to this definition">¶</a></dt>
 <dd><p>Overloaded function.</p>
 <ol class="arabic simple">
-<li><p>clipRect(self: skia.Canvas, arg0: SkRect, arg1: skia.ClipOp, arg2: bool) -&gt; None</p></li>
+<li><p>clipRect(self: skia.Canvas, arg0: skia.Rect, arg1: skia.ClipOp, arg2: bool) -&gt; None</p></li>
 </ol>
 <p>Replaces clip with the intersection or difference of clip and rect, with an aliased or anti-aliased clip edge.</p>
 <ol class="arabic simple" start="2">
-<li><p>clipRect(self: skia.Canvas, arg0: SkRect, arg1: skia.ClipOp) -&gt; None</p></li>
+<li><p>clipRect(self: skia.Canvas, arg0: skia.Rect, arg1: skia.ClipOp) -&gt; None</p></li>
 </ol>
 <p>Replaces clip with the intersection or difference of clip and rect.</p>
 <ol class="arabic simple" start="3">
-<li><p>clipRect(self: skia.Canvas, rect: SkRect, doAntiAlias: bool = False) -&gt; None</p></li>
+<li><p>clipRect(self: skia.Canvas, rect: skia.Rect, doAntiAlias: bool = False) -&gt; None</p></li>
 </ol>
 <p>Replaces clip with the intersection of clip and rect.</p>
 <ol class="arabic simple" start="4">
-<li><p>clipRect(self: skia.Canvas, rrect: SkRRect, doAntiAlias: bool = False) -&gt; None</p></li>
+<li><p>clipRect(self: skia.Canvas, rrect: skia.RRect, doAntiAlias: bool = False) -&gt; None</p></li>
 </ol>
 <p>Replaces clip with the intersection of clip and rrect, with an aliased or anti-aliased clip edge.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt id="skia.Canvas.clipRegion">
-<code class="sig-prename descclassname">Canvas.</code><code class="sig-name descname">clipRegion</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Canvas" title="skia.Canvas">skia.Canvas</a></span></em>, <em class="sig-param"><span class="n">arg0</span><span class="p">:</span> <span class="n">SkRegion</span></em>, <em class="sig-param"><span class="n">arg1</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.ClipOp.html#skia.ClipOp" title="skia.ClipOp">skia.ClipOp</a></span></em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#skia.Canvas.clipRegion" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">Canvas.</code><code class="sig-name descname">clipRegion</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Canvas" title="skia.Canvas">skia.Canvas</a></span></em>, <em class="sig-param"><span class="n">arg0</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.Region.html#skia.Region" title="skia.Region">skia.Region</a></span></em>, <em class="sig-param"><span class="n">arg1</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.ClipOp.html#skia.ClipOp" title="skia.ClipOp">skia.ClipOp</a></span></em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#skia.Canvas.clipRegion" title="Permalink to this definition">¶</a></dt>
 <dd><p>Replaces clip with the intersection or difference of clip and SkRegion deviceRgn.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt id="skia.Canvas.concat">
-<code class="sig-prename descclassname">Canvas.</code><code class="sig-name descname">concat</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Canvas" title="skia.Canvas">skia.Canvas</a></span></em>, <em class="sig-param"><span class="n">arg0</span><span class="p">:</span> <span class="n">SkMatrix</span></em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#skia.Canvas.concat" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">Canvas.</code><code class="sig-name descname">concat</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Canvas" title="skia.Canvas">skia.Canvas</a></span></em>, <em class="sig-param"><span class="n">arg0</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.Matrix.html#skia.Matrix" title="skia.Matrix">skia.Matrix</a></span></em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#skia.Canvas.concat" title="Permalink to this definition">¶</a></dt>
 <dd><p>Replaces SkMatrix with matrix premultiplied with existing SkMatrix.</p>
 </dd></dl>
 
@@ -458,7 +458,7 @@ raster surface. This approach may be deprecated in the future.</p>
 <code class="sig-prename descclassname">Canvas.</code><code class="sig-name descname">concat44</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span><span class="n">args</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#skia.Canvas.concat44" title="Permalink to this definition">¶</a></dt>
 <dd><p>Overloaded function.</p>
 <ol class="arabic simple">
-<li><p>concat44(self: skia.Canvas, arg0: SkM44) -&gt; None</p></li>
+<li><p>concat44(self: skia.Canvas, arg0: skia.M44) -&gt; None</p></li>
 <li><p>concat44(self: skia.Canvas, arg0: float) -&gt; None</p></li>
 </ol>
 </dd></dl>
@@ -474,18 +474,18 @@ raster surface. This approach may be deprecated in the future.</p>
 <code class="sig-prename descclassname">Canvas.</code><code class="sig-name descname">drawAnnotation</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span><span class="n">args</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#skia.Canvas.drawAnnotation" title="Permalink to this definition">¶</a></dt>
 <dd><p>Overloaded function.</p>
 <ol class="arabic simple">
-<li><p>drawAnnotation(self: skia.Canvas, arg0: SkRect, arg1: str, arg2: SkData) -&gt; None</p></li>
+<li><p>drawAnnotation(self: skia.Canvas, arg0: skia.Rect, arg1: str, arg2: skia.Data) -&gt; None</p></li>
 </ol>
 <p>Associates SkRect on SkCanvas with an annotation; a key-value pair, where the key is a null-terminated UTF-8 string, and optional value is stored as SkData.</p>
 <ol class="arabic simple" start="2">
-<li><p>drawAnnotation(self: skia.Canvas, arg0: SkRect, arg1: str, arg2: sk_sp&lt;SkData&gt;) -&gt; None</p></li>
+<li><p>drawAnnotation(self: skia.Canvas, arg0: skia.Rect, arg1: str, arg2: sk_sp&lt;SkData&gt;) -&gt; None</p></li>
 </ol>
 <p>Associates SkRect on SkCanvas when an annotation; a key-value pair, where the key is a null-terminated UTF-8 string, and optional value is stored as SkData.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt id="skia.Canvas.drawArc">
-<code class="sig-prename descclassname">Canvas.</code><code class="sig-name descname">drawArc</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Canvas" title="skia.Canvas">skia.Canvas</a></span></em>, <em class="sig-param"><span class="n">arg0</span><span class="p">:</span> <span class="n">SkRect</span></em>, <em class="sig-param"><span class="n">arg1</span><span class="p">:</span> <span class="n">float</span></em>, <em class="sig-param"><span class="n">arg2</span><span class="p">:</span> <span class="n">float</span></em>, <em class="sig-param"><span class="n">arg3</span><span class="p">:</span> <span class="n">bool</span></em>, <em class="sig-param"><span class="n">arg4</span><span class="p">:</span> <span class="n">SkPaint</span></em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#skia.Canvas.drawArc" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">Canvas.</code><code class="sig-name descname">drawArc</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Canvas" title="skia.Canvas">skia.Canvas</a></span></em>, <em class="sig-param"><span class="n">arg0</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.Rect.html#skia.Rect" title="skia.Rect">skia.Rect</a></span></em>, <em class="sig-param"><span class="n">arg1</span><span class="p">:</span> <span class="n">float</span></em>, <em class="sig-param"><span class="n">arg2</span><span class="p">:</span> <span class="n">float</span></em>, <em class="sig-param"><span class="n">arg3</span><span class="p">:</span> <span class="n">bool</span></em>, <em class="sig-param"><span class="n">arg4</span><span class="p">:</span> <span class="n">SkPaint</span></em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#skia.Canvas.drawArc" title="Permalink to this definition">¶</a></dt>
 <dd><p>Draws arc using clip, SkMatrix, and SkPaint paint.</p>
 </dd></dl>
 
@@ -494,19 +494,19 @@ raster surface. This approach may be deprecated in the future.</p>
 <code class="sig-prename descclassname">Canvas.</code><code class="sig-name descname">drawAtlas</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span><span class="n">args</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#skia.Canvas.drawAtlas" title="Permalink to this definition">¶</a></dt>
 <dd><p>Overloaded function.</p>
 <ol class="arabic simple">
-<li><p>drawAtlas(self: skia.Canvas, arg0: SkImage, arg1: SkRSXform, arg2: SkRect, arg3: int, arg4: int, arg5: skia.BlendMode, arg6: SkRect, arg7: SkPaint) -&gt; None</p></li>
+<li><p>drawAtlas(self: skia.Canvas, arg0: SkImage, arg1: skia.RSXform, arg2: skia.Rect, arg3: int, arg4: int, arg5: skia.BlendMode, arg6: skia.Rect, arg7: SkPaint) -&gt; None</p></li>
 </ol>
 <p>Draws a set of sprites from atlas, using clip, SkMatrix, and optional SkPaint paint.</p>
 <ol class="arabic simple" start="2">
-<li><p>drawAtlas(self: skia.Canvas, arg0: sk_sp&lt;SkImage&gt;, arg1: SkRSXform, arg2: SkRect, arg3: int, arg4: int, arg5: skia.BlendMode, arg6: SkRect, arg7: SkPaint) -&gt; None</p></li>
+<li><p>drawAtlas(self: skia.Canvas, arg0: sk_sp&lt;SkImage&gt;, arg1: skia.RSXform, arg2: skia.Rect, arg3: int, arg4: int, arg5: skia.BlendMode, arg6: skia.Rect, arg7: SkPaint) -&gt; None</p></li>
 </ol>
 <p>Draws a set of sprites from atlas, using clip, SkMatrix, and optional SkPaint paint.</p>
 <ol class="arabic simple" start="3">
-<li><p>drawAtlas(self: skia.Canvas, arg0: SkImage, arg1: SkRSXform, arg2: SkRect, arg3: int, arg4: SkRect, arg5: SkPaint) -&gt; None</p></li>
+<li><p>drawAtlas(self: skia.Canvas, arg0: SkImage, arg1: skia.RSXform, arg2: skia.Rect, arg3: int, arg4: skia.Rect, arg5: SkPaint) -&gt; None</p></li>
 </ol>
 <p>Draws a set of sprites from atlas, using clip, SkMatrix, and optional SkPaint paint.</p>
 <ol class="arabic simple" start="4">
-<li><p>drawAtlas(self: skia.Canvas, arg0: sk_sp&lt;SkImage&gt;, arg1: SkRSXform, arg2: SkRect, arg3: int, arg4: SkRect, arg5: SkPaint) -&gt; None</p></li>
+<li><p>drawAtlas(self: skia.Canvas, arg0: sk_sp&lt;SkImage&gt;, arg1: skia.RSXform, arg2: skia.Rect, arg3: int, arg4: skia.Rect, arg5: SkPaint) -&gt; None</p></li>
 </ol>
 <p>Draws a set of sprites from atlas, using clip, SkMatrix, and optional SkPaint paint.</p>
 </dd></dl>
@@ -522,15 +522,15 @@ raster surface. This approach may be deprecated in the future.</p>
 <code class="sig-prename descclassname">Canvas.</code><code class="sig-name descname">drawBitmapRect</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span><span class="n">args</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#skia.Canvas.drawBitmapRect" title="Permalink to this definition">¶</a></dt>
 <dd><p>Overloaded function.</p>
 <ol class="arabic simple">
-<li><p>drawBitmapRect(self: skia.Canvas, bitmap: skia.Bitmap, src: SkRect, dst: SkRect, paint: SkPaint, constraint: skia.Canvas.SrcRectConstraint = SrcRectConstraint.kStrict) -&gt; None</p></li>
+<li><p>drawBitmapRect(self: skia.Canvas, bitmap: skia.Bitmap, src: skia.Rect, dst: skia.Rect, paint: SkPaint, constraint: skia.Canvas.SrcRectConstraint = SrcRectConstraint.kStrict) -&gt; None</p></li>
 </ol>
 <p>Draws SkRect src of SkBitmap bitmap, scaled and translated to fill SkRect dst.</p>
 <ol class="arabic simple" start="2">
-<li><p>drawBitmapRect(self: skia.Canvas, bitmap: skia.Bitmap, isrc: SkIRect, dst: SkRect, paint: SkPaint, constraint: skia.Canvas.SrcRectConstraint = SrcRectConstraint.kStrict) -&gt; None</p></li>
+<li><p>drawBitmapRect(self: skia.Canvas, bitmap: skia.Bitmap, isrc: skia.IRect, dst: skia.Rect, paint: SkPaint, constraint: skia.Canvas.SrcRectConstraint = SrcRectConstraint.kStrict) -&gt; None</p></li>
 </ol>
 <p>Draws SkIRect isrc of SkBitmap bitmap, scaled and translated to fill SkRect dst.</p>
 <ol class="arabic simple" start="3">
-<li><p>drawBitmapRect(self: skia.Canvas, bitmap: skia.Bitmap, dst: SkRect, paint: SkPaint, constraint: skia.Canvas.SrcRectConstraint = SrcRectConstraint.kStrict) -&gt; None</p></li>
+<li><p>drawBitmapRect(self: skia.Canvas, bitmap: skia.Bitmap, dst: skia.Rect, paint: SkPaint, constraint: skia.Canvas.SrcRectConstraint = SrcRectConstraint.kStrict) -&gt; None</p></li>
 </ol>
 <p>Draws SkBitmap bitmap, scaled and translated to fill SkRect dst.</p>
 </dd></dl>
@@ -544,7 +544,7 @@ raster surface. This approach may be deprecated in the future.</p>
 </ol>
 <p>Draws circle at (cx, cy) with radius using clip, SkMatrix, and SkPaint paint.</p>
 <ol class="arabic simple" start="2">
-<li><p>drawCircle(self: skia.Canvas, arg0: SkPoint, arg1: float, arg2: SkPaint) -&gt; None</p></li>
+<li><p>drawCircle(self: skia.Canvas, arg0: skia.Point, arg1: float, arg2: SkPaint) -&gt; None</p></li>
 </ol>
 <p>Draws circle at center with radius using clip, SkMatrix, and SkPaint paint.</p>
 </dd></dl>
@@ -557,13 +557,13 @@ raster surface. This approach may be deprecated in the future.</p>
 
 <dl class="py method">
 <dt id="skia.Canvas.drawDRRect">
-<code class="sig-prename descclassname">Canvas.</code><code class="sig-name descname">drawDRRect</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Canvas" title="skia.Canvas">skia.Canvas</a></span></em>, <em class="sig-param"><span class="n">arg0</span><span class="p">:</span> <span class="n">SkRRect</span></em>, <em class="sig-param"><span class="n">arg1</span><span class="p">:</span> <span class="n">SkRRect</span></em>, <em class="sig-param"><span class="n">arg2</span><span class="p">:</span> <span class="n">SkPaint</span></em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#skia.Canvas.drawDRRect" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">Canvas.</code><code class="sig-name descname">drawDRRect</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Canvas" title="skia.Canvas">skia.Canvas</a></span></em>, <em class="sig-param"><span class="n">arg0</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.RRect.html#skia.RRect" title="skia.RRect">skia.RRect</a></span></em>, <em class="sig-param"><span class="n">arg1</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.RRect.html#skia.RRect" title="skia.RRect">skia.RRect</a></span></em>, <em class="sig-param"><span class="n">arg2</span><span class="p">:</span> <span class="n">SkPaint</span></em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#skia.Canvas.drawDRRect" title="Permalink to this definition">¶</a></dt>
 <dd><p>Draws SkRRect outer and inner using clip, SkMatrix, and SkPaint paint.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt id="skia.Canvas.drawIRect">
-<code class="sig-prename descclassname">Canvas.</code><code class="sig-name descname">drawIRect</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Canvas" title="skia.Canvas">skia.Canvas</a></span></em>, <em class="sig-param"><span class="n">arg0</span><span class="p">:</span> <span class="n">SkIRect</span></em>, <em class="sig-param"><span class="n">arg1</span><span class="p">:</span> <span class="n">SkPaint</span></em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#skia.Canvas.drawIRect" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">Canvas.</code><code class="sig-name descname">drawIRect</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Canvas" title="skia.Canvas">skia.Canvas</a></span></em>, <em class="sig-param"><span class="n">arg0</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.IRect.html#skia.IRect" title="skia.IRect">skia.IRect</a></span></em>, <em class="sig-param"><span class="n">arg1</span><span class="p">:</span> <span class="n">SkPaint</span></em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#skia.Canvas.drawIRect" title="Permalink to this definition">¶</a></dt>
 <dd><p>Draws SkIRect rect using clip, SkMatrix, and SkPaint paint.</p>
 </dd></dl>
 
@@ -583,7 +583,7 @@ raster surface. This approach may be deprecated in the future.</p>
 
 <dl class="py method">
 <dt id="skia.Canvas.drawImageLattice">
-<code class="sig-prename descclassname">Canvas.</code><code class="sig-name descname">drawImageLattice</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Canvas" title="skia.Canvas">skia.Canvas</a></span></em>, <em class="sig-param"><span class="n">arg0</span><span class="p">:</span> <span class="n">SkImage</span></em>, <em class="sig-param"><span class="n">arg1</span><span class="p">:</span> <span class="n">skia.Canvas.Lattice</span></em>, <em class="sig-param"><span class="n">arg2</span><span class="p">:</span> <span class="n">SkRect</span></em>, <em class="sig-param"><span class="n">arg3</span><span class="p">:</span> <span class="n">SkPaint</span></em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#skia.Canvas.drawImageLattice" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">Canvas.</code><code class="sig-name descname">drawImageLattice</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Canvas" title="skia.Canvas">skia.Canvas</a></span></em>, <em class="sig-param"><span class="n">arg0</span><span class="p">:</span> <span class="n">SkImage</span></em>, <em class="sig-param"><span class="n">arg1</span><span class="p">:</span> <span class="n">skia.Canvas.Lattice</span></em>, <em class="sig-param"><span class="n">arg2</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.Rect.html#skia.Rect" title="skia.Rect">skia.Rect</a></span></em>, <em class="sig-param"><span class="n">arg3</span><span class="p">:</span> <span class="n">SkPaint</span></em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#skia.Canvas.drawImageLattice" title="Permalink to this definition">¶</a></dt>
 <dd><p>Draws SkImage image stretched proportionally to fit into SkRect dst.</p>
 </dd></dl>
 
@@ -592,11 +592,11 @@ raster surface. This approach may be deprecated in the future.</p>
 <code class="sig-prename descclassname">Canvas.</code><code class="sig-name descname">drawImageNine</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span><span class="n">args</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#skia.Canvas.drawImageNine" title="Permalink to this definition">¶</a></dt>
 <dd><p>Overloaded function.</p>
 <ol class="arabic simple">
-<li><p>drawImageNine(self: skia.Canvas, arg0: SkImage, arg1: SkIRect, arg2: SkRect, arg3: SkPaint) -&gt; None</p></li>
+<li><p>drawImageNine(self: skia.Canvas, arg0: SkImage, arg1: skia.IRect, arg2: skia.Rect, arg3: SkPaint) -&gt; None</p></li>
 </ol>
 <p>Draws SkImage image stretched proportionally to fit into SkRect dst.</p>
 <ol class="arabic simple" start="2">
-<li><p>drawImageNine(self: skia.Canvas, arg0: sk_sp&lt;SkImage&gt;, arg1: SkIRect, arg2: SkRect, arg3: SkPaint) -&gt; None</p></li>
+<li><p>drawImageNine(self: skia.Canvas, arg0: sk_sp&lt;SkImage&gt;, arg1: skia.IRect, arg2: skia.Rect, arg3: SkPaint) -&gt; None</p></li>
 </ol>
 <p>Draws SkImage image stretched proportionally to fit into SkRect dst.</p>
 </dd></dl>
@@ -606,27 +606,27 @@ raster surface. This approach may be deprecated in the future.</p>
 <code class="sig-prename descclassname">Canvas.</code><code class="sig-name descname">drawImageRect</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span><span class="n">args</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#skia.Canvas.drawImageRect" title="Permalink to this definition">¶</a></dt>
 <dd><p>Overloaded function.</p>
 <ol class="arabic simple">
-<li><p>drawImageRect(self: skia.Canvas, image: SkImage, src: SkRect, dst: SkRect, paint: SkPaint, constraint: skia.Canvas.SrcRectConstraint = SrcRectConstraint.kStrict) -&gt; None</p></li>
+<li><p>drawImageRect(self: skia.Canvas, image: SkImage, src: skia.Rect, dst: skia.Rect, paint: SkPaint, constraint: skia.Canvas.SrcRectConstraint = SrcRectConstraint.kStrict) -&gt; None</p></li>
 </ol>
 <p>Draws SkRect src of SkImage image, scaled and translated to fill SkRect dst.</p>
 <ol class="arabic simple" start="2">
-<li><p>drawImageRect(self: skia.Canvas, image: SkImage, isrc: SkIRect, dst: SkRect, paint: SkPaint, constraint: skia.Canvas.SrcRectConstraint = SrcRectConstraint.kStrict) -&gt; None</p></li>
+<li><p>drawImageRect(self: skia.Canvas, image: SkImage, isrc: skia.IRect, dst: skia.Rect, paint: SkPaint, constraint: skia.Canvas.SrcRectConstraint = SrcRectConstraint.kStrict) -&gt; None</p></li>
 </ol>
 <p>Draws SkIRect isrc of SkImage image, scaled and translated to fill SkRect dst.</p>
 <ol class="arabic simple" start="3">
-<li><p>drawImageRect(self: skia.Canvas, arg0: SkImage, arg1: SkRect, arg2: SkPaint) -&gt; None</p></li>
+<li><p>drawImageRect(self: skia.Canvas, arg0: SkImage, arg1: skia.Rect, arg2: SkPaint) -&gt; None</p></li>
 </ol>
 <p>Draws SkImage image, scaled and translated to fill SkRect dst, using clip, SkMatrix, and optional SkPaint paint.</p>
 <ol class="arabic simple" start="4">
-<li><p>drawImageRect(self: skia.Canvas, image: sk_sp&lt;SkImage&gt;, src: SkRect, dst: SkRect, paint: SkPaint, constraint: skia.Canvas.SrcRectConstraint = SrcRectConstraint.kStrict) -&gt; None</p></li>
+<li><p>drawImageRect(self: skia.Canvas, image: sk_sp&lt;SkImage&gt;, src: skia.Rect, dst: skia.Rect, paint: SkPaint, constraint: skia.Canvas.SrcRectConstraint = SrcRectConstraint.kStrict) -&gt; None</p></li>
 </ol>
 <p>Draws SkRect src of SkImage image, scaled and translated to fill SkRect dst.</p>
 <ol class="arabic simple" start="5">
-<li><p>drawImageRect(self: skia.Canvas, image: sk_sp&lt;SkImage&gt;, isrc: SkIRect, dst: SkRect, paint: SkPaint, constraint: skia.Canvas.SrcRectConstraint = SrcRectConstraint.kStrict) -&gt; None</p></li>
+<li><p>drawImageRect(self: skia.Canvas, image: sk_sp&lt;SkImage&gt;, isrc: skia.IRect, dst: skia.Rect, paint: SkPaint, constraint: skia.Canvas.SrcRectConstraint = SrcRectConstraint.kStrict) -&gt; None</p></li>
 </ol>
 <p>Draws SkIRect isrc of SkImage image, scaled and translated to fill SkRect dst.</p>
 <ol class="arabic simple" start="6">
-<li><p>drawImageRect(self: skia.Canvas, arg0: sk_sp&lt;SkImage&gt;, arg1: SkRect, arg2: SkPaint) -&gt; None</p></li>
+<li><p>drawImageRect(self: skia.Canvas, arg0: sk_sp&lt;SkImage&gt;, arg1: skia.Rect, arg2: SkPaint) -&gt; None</p></li>
 </ol>
 <p>Draws SkImage image, scaled and translated to fill SkRect dst, using clip, SkMatrix, and optional SkPaint paint.</p>
 </dd></dl>
@@ -640,14 +640,14 @@ raster surface. This approach may be deprecated in the future.</p>
 </ol>
 <p>Draws line segment from (x0, y0) to (x1, y1) using clip, SkMatrix, and SkPaint paint.</p>
 <ol class="arabic simple" start="2">
-<li><p>drawLine(self: skia.Canvas, arg0: SkPoint, arg1: SkPoint, arg2: SkPaint) -&gt; None</p></li>
+<li><p>drawLine(self: skia.Canvas, arg0: skia.Point, arg1: skia.Point, arg2: SkPaint) -&gt; None</p></li>
 </ol>
 <p>Draws line segment from p0 to p1 using clip, SkMatrix, and SkPaint paint.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt id="skia.Canvas.drawOval">
-<code class="sig-prename descclassname">Canvas.</code><code class="sig-name descname">drawOval</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Canvas" title="skia.Canvas">skia.Canvas</a></span></em>, <em class="sig-param"><span class="n">arg0</span><span class="p">:</span> <span class="n">SkRect</span></em>, <em class="sig-param"><span class="n">arg1</span><span class="p">:</span> <span class="n">SkPaint</span></em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#skia.Canvas.drawOval" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">Canvas.</code><code class="sig-name descname">drawOval</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Canvas" title="skia.Canvas">skia.Canvas</a></span></em>, <em class="sig-param"><span class="n">arg0</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.Rect.html#skia.Rect" title="skia.Rect">skia.Rect</a></span></em>, <em class="sig-param"><span class="n">arg1</span><span class="p">:</span> <span class="n">SkPaint</span></em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#skia.Canvas.drawOval" title="Permalink to this definition">¶</a></dt>
 <dd><p>Draws oval oval using clip, SkMatrix, and SkPaint.</p>
 </dd></dl>
 
@@ -662,11 +662,11 @@ raster surface. This approach may be deprecated in the future.</p>
 <code class="sig-prename descclassname">Canvas.</code><code class="sig-name descname">drawPatch</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span><span class="n">args</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#skia.Canvas.drawPatch" title="Permalink to this definition">¶</a></dt>
 <dd><p>Overloaded function.</p>
 <ol class="arabic simple">
-<li><p>drawPatch(self: skia.Canvas, arg0: SkPoint, arg1: int, arg2: SkPoint, arg3: skia.BlendMode, arg4: SkPaint) -&gt; None</p></li>
+<li><p>drawPatch(self: skia.Canvas, arg0: skia.Point, arg1: int, arg2: skia.Point, arg3: skia.BlendMode, arg4: SkPaint) -&gt; None</p></li>
 </ol>
 <p>Draws a Coons patch: the interpolation of four cubics with shared corners, associating a color, and optionally a texture SkPoint, with each corner.</p>
 <ol class="arabic simple" start="2">
-<li><p>drawPatch(self: skia.Canvas, arg0: SkPoint, arg1: int, arg2: SkPoint, arg3: SkPaint) -&gt; None</p></li>
+<li><p>drawPatch(self: skia.Canvas, arg0: skia.Point, arg1: int, arg2: skia.Point, arg3: SkPaint) -&gt; None</p></li>
 </ol>
 <p>Draws SkPath cubic Coons patch: the interpolation of four cubics with shared corners, associating a color, and optionally a texture SkPoint, with each corner.</p>
 </dd></dl>
@@ -690,11 +690,11 @@ raster surface. This approach may be deprecated in the future.</p>
 </ol>
 <p>Draws SkPicture picture, using clip and SkMatrix.</p>
 <ol class="arabic simple" start="3">
-<li><p>drawPicture(self: skia.Canvas, arg0: SkPicture, arg1: SkMatrix, arg2: SkPaint) -&gt; None</p></li>
+<li><p>drawPicture(self: skia.Canvas, arg0: SkPicture, arg1: skia.Matrix, arg2: SkPaint) -&gt; None</p></li>
 </ol>
 <p>Draws SkPicture picture, using clip and SkMatrix; transforming picture with SkMatrix matrix, if provided; and use SkPaint paint alpha, SkColorFilter, SkImageFilter, and SkBlendMode, if provided.</p>
 <ol class="arabic simple" start="4">
-<li><p>drawPicture(self: skia.Canvas, arg0: sk_sp&lt;SkPicture&gt;, arg1: SkMatrix, arg2: SkPaint) -&gt; None</p></li>
+<li><p>drawPicture(self: skia.Canvas, arg0: sk_sp&lt;SkPicture&gt;, arg1: skia.Matrix, arg2: SkPaint) -&gt; None</p></li>
 </ol>
 <p>Draws SkPicture picture, using clip and SkMatrix; transforming picture with SkMatrix matrix, if provided; and use SkPaint paint alpha, SkColorFilter, SkImageFilter, and SkBlendMode, if provided.</p>
 </dd></dl>
@@ -708,38 +708,38 @@ raster surface. This approach may be deprecated in the future.</p>
 </ol>
 <p>Draws point at (x, y) using clip, SkMatrix and SkPaint paint.</p>
 <ol class="arabic simple" start="2">
-<li><p>drawPoint(self: skia.Canvas, arg0: SkPoint, arg1: SkPaint) -&gt; None</p></li>
+<li><p>drawPoint(self: skia.Canvas, arg0: skia.Point, arg1: SkPaint) -&gt; None</p></li>
 </ol>
 <p>Draws point p using clip, SkMatrix and SkPaint paint.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt id="skia.Canvas.drawPoints">
-<code class="sig-prename descclassname">Canvas.</code><code class="sig-name descname">drawPoints</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Canvas" title="skia.Canvas">skia.Canvas</a></span></em>, <em class="sig-param"><span class="n">arg0</span><span class="p">:</span> <span class="n">skia.Canvas.PointMode</span></em>, <em class="sig-param"><span class="n">arg1</span><span class="p">:</span> <span class="n">int</span></em>, <em class="sig-param"><span class="n">arg2</span><span class="p">:</span> <span class="n">SkPoint</span></em>, <em class="sig-param"><span class="n">arg3</span><span class="p">:</span> <span class="n">SkPaint</span></em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#skia.Canvas.drawPoints" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">Canvas.</code><code class="sig-name descname">drawPoints</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Canvas" title="skia.Canvas">skia.Canvas</a></span></em>, <em class="sig-param"><span class="n">arg0</span><span class="p">:</span> <span class="n">skia.Canvas.PointMode</span></em>, <em class="sig-param"><span class="n">arg1</span><span class="p">:</span> <span class="n">int</span></em>, <em class="sig-param"><span class="n">arg2</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.Point.html#skia.Point" title="skia.Point">skia.Point</a></span></em>, <em class="sig-param"><span class="n">arg3</span><span class="p">:</span> <span class="n">SkPaint</span></em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#skia.Canvas.drawPoints" title="Permalink to this definition">¶</a></dt>
 <dd><p>Draws pts using clip, SkMatrix and SkPaint paint.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt id="skia.Canvas.drawRRect">
-<code class="sig-prename descclassname">Canvas.</code><code class="sig-name descname">drawRRect</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Canvas" title="skia.Canvas">skia.Canvas</a></span></em>, <em class="sig-param"><span class="n">arg0</span><span class="p">:</span> <span class="n">SkRRect</span></em>, <em class="sig-param"><span class="n">arg1</span><span class="p">:</span> <span class="n">SkPaint</span></em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#skia.Canvas.drawRRect" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">Canvas.</code><code class="sig-name descname">drawRRect</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Canvas" title="skia.Canvas">skia.Canvas</a></span></em>, <em class="sig-param"><span class="n">arg0</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.RRect.html#skia.RRect" title="skia.RRect">skia.RRect</a></span></em>, <em class="sig-param"><span class="n">arg1</span><span class="p">:</span> <span class="n">SkPaint</span></em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#skia.Canvas.drawRRect" title="Permalink to this definition">¶</a></dt>
 <dd><p>Draws SkRRect rrect using clip, SkMatrix, and SkPaint paint.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt id="skia.Canvas.drawRect">
-<code class="sig-prename descclassname">Canvas.</code><code class="sig-name descname">drawRect</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Canvas" title="skia.Canvas">skia.Canvas</a></span></em>, <em class="sig-param"><span class="n">arg0</span><span class="p">:</span> <span class="n">SkRect</span></em>, <em class="sig-param"><span class="n">arg1</span><span class="p">:</span> <span class="n">SkPaint</span></em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#skia.Canvas.drawRect" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">Canvas.</code><code class="sig-name descname">drawRect</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Canvas" title="skia.Canvas">skia.Canvas</a></span></em>, <em class="sig-param"><span class="n">arg0</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.Rect.html#skia.Rect" title="skia.Rect">skia.Rect</a></span></em>, <em class="sig-param"><span class="n">arg1</span><span class="p">:</span> <span class="n">SkPaint</span></em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#skia.Canvas.drawRect" title="Permalink to this definition">¶</a></dt>
 <dd><p>Draws SkRect rect using clip, SkMatrix, and SkPaint paint.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt id="skia.Canvas.drawRegion">
-<code class="sig-prename descclassname">Canvas.</code><code class="sig-name descname">drawRegion</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Canvas" title="skia.Canvas">skia.Canvas</a></span></em>, <em class="sig-param"><span class="n">arg0</span><span class="p">:</span> <span class="n">SkRegion</span></em>, <em class="sig-param"><span class="n">arg1</span><span class="p">:</span> <span class="n">SkPaint</span></em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#skia.Canvas.drawRegion" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">Canvas.</code><code class="sig-name descname">drawRegion</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Canvas" title="skia.Canvas">skia.Canvas</a></span></em>, <em class="sig-param"><span class="n">arg0</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.Region.html#skia.Region" title="skia.Region">skia.Region</a></span></em>, <em class="sig-param"><span class="n">arg1</span><span class="p">:</span> <span class="n">SkPaint</span></em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#skia.Canvas.drawRegion" title="Permalink to this definition">¶</a></dt>
 <dd><p>Draws SkRegion region using clip, SkMatrix, and SkPaint paint.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt id="skia.Canvas.drawRoundRect">
-<code class="sig-prename descclassname">Canvas.</code><code class="sig-name descname">drawRoundRect</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Canvas" title="skia.Canvas">skia.Canvas</a></span></em>, <em class="sig-param"><span class="n">arg0</span><span class="p">:</span> <span class="n">SkRect</span></em>, <em class="sig-param"><span class="n">arg1</span><span class="p">:</span> <span class="n">float</span></em>, <em class="sig-param"><span class="n">arg2</span><span class="p">:</span> <span class="n">float</span></em>, <em class="sig-param"><span class="n">arg3</span><span class="p">:</span> <span class="n">SkPaint</span></em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#skia.Canvas.drawRoundRect" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">Canvas.</code><code class="sig-name descname">drawRoundRect</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Canvas" title="skia.Canvas">skia.Canvas</a></span></em>, <em class="sig-param"><span class="n">arg0</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.Rect.html#skia.Rect" title="skia.Rect">skia.Rect</a></span></em>, <em class="sig-param"><span class="n">arg1</span><span class="p">:</span> <span class="n">float</span></em>, <em class="sig-param"><span class="n">arg2</span><span class="p">:</span> <span class="n">float</span></em>, <em class="sig-param"><span class="n">arg3</span><span class="p">:</span> <span class="n">SkPaint</span></em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#skia.Canvas.drawRoundRect" title="Permalink to this definition">¶</a></dt>
 <dd><p>Draws SkRRect bounded by SkRect rect, with corner radii (rx, ry) using clip, SkMatrix, and SkPaint paint.</p>
 </dd></dl>
 
@@ -796,11 +796,11 @@ raster surface. This approach may be deprecated in the future.</p>
 <code class="sig-prename descclassname">Canvas.</code><code class="sig-name descname">experimental_DrawEdgeAAQuad</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span><span class="n">args</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#skia.Canvas.experimental_DrawEdgeAAQuad" title="Permalink to this definition">¶</a></dt>
 <dd><p>Overloaded function.</p>
 <ol class="arabic simple">
-<li><p>experimental_DrawEdgeAAQuad(self: skia.Canvas, arg0: SkRect, arg1: SkPoint, arg2: skia.Canvas.QuadAAFlags, arg3: SkRGBA4f&lt;(SkAlphaType)3&gt;, arg4: skia.BlendMode) -&gt; None</p></li>
+<li><p>experimental_DrawEdgeAAQuad(self: skia.Canvas, arg0: skia.Rect, arg1: skia.Point, arg2: skia.Canvas.QuadAAFlags, arg3: skia.Color4f, arg4: skia.BlendMode) -&gt; None</p></li>
 </ol>
 <p>This is an experimental API for the SkiaRenderer Chromium project, and its API will surely evolve if it is not removed outright.</p>
 <ol class="arabic simple" start="2">
-<li><p>experimental_DrawEdgeAAQuad(self: skia.Canvas, arg0: SkRect, arg1: SkPoint, arg2: skia.Canvas.QuadAAFlags, arg3: int, arg4: skia.BlendMode) -&gt; None</p></li>
+<li><p>experimental_DrawEdgeAAQuad(self: skia.Canvas, arg0: skia.Rect, arg1: skia.Point, arg2: skia.Canvas.QuadAAFlags, arg3: int, arg4: skia.BlendMode) -&gt; None</p></li>
 </ol>
 </dd></dl>
 
@@ -809,7 +809,7 @@ raster surface. This approach may be deprecated in the future.</p>
 <code class="sig-prename descclassname">Canvas.</code><code class="sig-name descname">experimental_getLocalToCamera</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span><span class="n">args</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#skia.Canvas.experimental_getLocalToCamera" title="Permalink to this definition">¶</a></dt>
 <dd><p>Overloaded function.</p>
 <ol class="arabic simple">
-<li><p>experimental_getLocalToCamera(self: skia.Canvas) -&gt; SkM44</p></li>
+<li><p>experimental_getLocalToCamera(self: skia.Canvas) -&gt; skia.M44</p></li>
 <li><p>experimental_getLocalToCamera(self: skia.Canvas, arg0: float) -&gt; None</p></li>
 </ol>
 </dd></dl>
@@ -819,7 +819,7 @@ raster surface. This approach may be deprecated in the future.</p>
 <code class="sig-prename descclassname">Canvas.</code><code class="sig-name descname">experimental_getLocalToWorld</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span><span class="n">args</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#skia.Canvas.experimental_getLocalToWorld" title="Permalink to this definition">¶</a></dt>
 <dd><p>Overloaded function.</p>
 <ol class="arabic simple">
-<li><p>experimental_getLocalToWorld(self: skia.Canvas) -&gt; SkM44</p></li>
+<li><p>experimental_getLocalToWorld(self: skia.Canvas) -&gt; skia.M44</p></li>
 <li><p>experimental_getLocalToWorld(self: skia.Canvas, arg0: float) -&gt; None</p></li>
 </ol>
 </dd></dl>
@@ -829,7 +829,7 @@ raster surface. This approach may be deprecated in the future.</p>
 <code class="sig-prename descclassname">Canvas.</code><code class="sig-name descname">experimental_saveCamera</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span><span class="n">args</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#skia.Canvas.experimental_saveCamera" title="Permalink to this definition">¶</a></dt>
 <dd><p>Overloaded function.</p>
 <ol class="arabic simple">
-<li><p>experimental_saveCamera(self: skia.Canvas, arg0: SkM44, arg1: SkM44) -&gt; int</p></li>
+<li><p>experimental_saveCamera(self: skia.Canvas, arg0: skia.M44, arg1: skia.M44) -&gt; int</p></li>
 <li><p>experimental_saveCamera(self: skia.Canvas, arg0: float, arg1: float) -&gt; int</p></li>
 </ol>
 </dd></dl>
@@ -842,7 +842,7 @@ raster surface. This approach may be deprecated in the future.</p>
 
 <dl class="py method">
 <dt id="skia.Canvas.getBaseLayerSize">
-<code class="sig-prename descclassname">Canvas.</code><code class="sig-name descname">getBaseLayerSize</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Canvas" title="skia.Canvas">skia.Canvas</a></span></em><span class="sig-paren">)</span> &#x2192; SkISize<a class="headerlink" href="#skia.Canvas.getBaseLayerSize" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">Canvas.</code><code class="sig-name descname">getBaseLayerSize</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Canvas" title="skia.Canvas">skia.Canvas</a></span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="skia.ISize.html#skia.ISize" title="skia.ISize">skia.ISize</a><a class="headerlink" href="#skia.Canvas.getBaseLayerSize" title="Permalink to this definition">¶</a></dt>
 <dd><p>Gets the size of the base or root layer in global canvas coordinates.</p>
 </dd></dl>
 
@@ -851,11 +851,11 @@ raster surface. This approach may be deprecated in the future.</p>
 <code class="sig-prename descclassname">Canvas.</code><code class="sig-name descname">getDeviceClipBounds</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span><span class="n">args</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#skia.Canvas.getDeviceClipBounds" title="Permalink to this definition">¶</a></dt>
 <dd><p>Overloaded function.</p>
 <ol class="arabic simple">
-<li><p>getDeviceClipBounds(self: skia.Canvas) -&gt; SkIRect</p></li>
+<li><p>getDeviceClipBounds(self: skia.Canvas) -&gt; skia.IRect</p></li>
 </ol>
 <p>Returns SkIRect bounds of clip, unaffected by SkMatrix.</p>
 <ol class="arabic simple" start="2">
-<li><p>getDeviceClipBounds(self: skia.Canvas, arg0: SkIRect) -&gt; bool</p></li>
+<li><p>getDeviceClipBounds(self: skia.Canvas, arg0: skia.IRect) -&gt; bool</p></li>
 </ol>
 <p>Returns SkIRect bounds of clip, unaffected by SkMatrix.</p>
 </dd></dl>
@@ -871,11 +871,11 @@ raster surface. This approach may be deprecated in the future.</p>
 <code class="sig-prename descclassname">Canvas.</code><code class="sig-name descname">getLocalClipBounds</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span><span class="n">args</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#skia.Canvas.getLocalClipBounds" title="Permalink to this definition">¶</a></dt>
 <dd><p>Overloaded function.</p>
 <ol class="arabic simple">
-<li><p>getLocalClipBounds(self: skia.Canvas) -&gt; SkRect</p></li>
+<li><p>getLocalClipBounds(self: skia.Canvas) -&gt; skia.Rect</p></li>
 </ol>
 <p>Returns bounds of clip, transformed by inverse of SkMatrix.</p>
 <ol class="arabic simple" start="2">
-<li><p>getLocalClipBounds(self: skia.Canvas, arg0: SkRect) -&gt; bool</p></li>
+<li><p>getLocalClipBounds(self: skia.Canvas, arg0: skia.Rect) -&gt; bool</p></li>
 </ol>
 <p>Returns bounds of clip, transformed by inverse of SkMatrix.</p>
 </dd></dl>
@@ -885,7 +885,7 @@ raster surface. This approach may be deprecated in the future.</p>
 <code class="sig-prename descclassname">Canvas.</code><code class="sig-name descname">getLocalToDevice</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span><span class="n">args</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#skia.Canvas.getLocalToDevice" title="Permalink to this definition">¶</a></dt>
 <dd><p>Overloaded function.</p>
 <ol class="arabic simple">
-<li><p>getLocalToDevice(self: skia.Canvas) -&gt; SkM44</p></li>
+<li><p>getLocalToDevice(self: skia.Canvas) -&gt; skia.M44</p></li>
 <li><p>getLocalToDevice(self: skia.Canvas, arg0: float) -&gt; None</p></li>
 </ol>
 </dd></dl>
@@ -910,7 +910,7 @@ raster surface. This approach may be deprecated in the future.</p>
 
 <dl class="py method">
 <dt id="skia.Canvas.getTotalMatrix">
-<code class="sig-prename descclassname">Canvas.</code><code class="sig-name descname">getTotalMatrix</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Canvas" title="skia.Canvas">skia.Canvas</a></span></em><span class="sig-paren">)</span> &#x2192; SkMatrix<a class="headerlink" href="#skia.Canvas.getTotalMatrix" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">Canvas.</code><code class="sig-name descname">getTotalMatrix</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Canvas" title="skia.Canvas">skia.Canvas</a></span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="skia.Matrix.html#skia.Matrix" title="skia.Matrix">skia.Matrix</a><a class="headerlink" href="#skia.Canvas.getTotalMatrix" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns SkMatrix.</p>
 </dd></dl>
 
@@ -949,7 +949,7 @@ raster surface. This approach may be deprecated in the future.</p>
 <code class="sig-prename descclassname">Canvas.</code><code class="sig-name descname">quickReject</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span><span class="n">args</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#skia.Canvas.quickReject" title="Permalink to this definition">¶</a></dt>
 <dd><p>Overloaded function.</p>
 <ol class="arabic simple">
-<li><p>quickReject(self: skia.Canvas, arg0: SkRect) -&gt; bool</p></li>
+<li><p>quickReject(self: skia.Canvas, arg0: skia.Rect) -&gt; bool</p></li>
 </ol>
 <p>Returns true if SkRect rect, transformed by SkMatrix, can be quickly determined to be outside of clip.</p>
 <ol class="arabic simple" start="2">
@@ -1019,18 +1019,18 @@ raster surface. This approach may be deprecated in the future.</p>
 <code class="sig-prename descclassname">Canvas.</code><code class="sig-name descname">saveLayer</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span><span class="n">args</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#skia.Canvas.saveLayer" title="Permalink to this definition">¶</a></dt>
 <dd><p>Overloaded function.</p>
 <ol class="arabic simple">
-<li><p>saveLayer(self: skia.Canvas, arg0: SkRect, arg1: SkPaint) -&gt; int</p></li>
+<li><p>saveLayer(self: skia.Canvas, arg0: skia.Rect, arg1: SkPaint) -&gt; int</p></li>
 </ol>
 <p>Saves SkMatrix and clip, and allocates a SkBitmap for subsequent drawing.</p>
 <ol class="arabic simple" start="2">
-<li><p>saveLayer(self: skia.Canvas, arg0: SkRect, arg1: SkPaint) -&gt; int</p></li>
+<li><p>saveLayer(self: skia.Canvas, arg0: skia.Rect, arg1: SkPaint) -&gt; int</p></li>
 </ol>
 <p>Saves SkMatrix and clip, and allocates a SkBitmap for subsequent drawing.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt id="skia.Canvas.saveLayerAlpha">
-<code class="sig-prename descclassname">Canvas.</code><code class="sig-name descname">saveLayerAlpha</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Canvas" title="skia.Canvas">skia.Canvas</a></span></em>, <em class="sig-param"><span class="n">arg0</span><span class="p">:</span> <span class="n">SkRect</span></em>, <em class="sig-param"><span class="n">arg1</span><span class="p">:</span> <span class="n">int</span></em><span class="sig-paren">)</span> &#x2192; int<a class="headerlink" href="#skia.Canvas.saveLayerAlpha" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">Canvas.</code><code class="sig-name descname">saveLayerAlpha</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Canvas" title="skia.Canvas">skia.Canvas</a></span></em>, <em class="sig-param"><span class="n">arg0</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.Rect.html#skia.Rect" title="skia.Rect">skia.Rect</a></span></em>, <em class="sig-param"><span class="n">arg1</span><span class="p">:</span> <span class="n">int</span></em><span class="sig-paren">)</span> &#x2192; int<a class="headerlink" href="#skia.Canvas.saveLayerAlpha" title="Permalink to this definition">¶</a></dt>
 <dd><p>Saves SkMatrix and clip, and allocates SkBitmap for subsequent drawing.</p>
 </dd></dl>
 
@@ -1042,7 +1042,7 @@ raster surface. This approach may be deprecated in the future.</p>
 
 <dl class="py method">
 <dt id="skia.Canvas.setMatrix">
-<code class="sig-prename descclassname">Canvas.</code><code class="sig-name descname">setMatrix</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Canvas" title="skia.Canvas">skia.Canvas</a></span></em>, <em class="sig-param"><span class="n">arg0</span><span class="p">:</span> <span class="n">SkMatrix</span></em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#skia.Canvas.setMatrix" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">Canvas.</code><code class="sig-name descname">setMatrix</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Canvas" title="skia.Canvas">skia.Canvas</a></span></em>, <em class="sig-param"><span class="n">arg0</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.Matrix.html#skia.Matrix" title="skia.Matrix">skia.Matrix</a></span></em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#skia.Canvas.setMatrix" title="Permalink to this definition">¶</a></dt>
 <dd><p>Replaces SkMatrix with matrix.</p>
 </dd></dl>
 

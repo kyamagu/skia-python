@@ -235,11 +235,11 @@ WebP. Supported encoding details vary with platform.</p>
 <em class="property">static </em><code class="sig-prename descclassname">Image.</code><code class="sig-name descname">DecodeToRaster</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span><span class="n">args</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#skia.Image.DecodeToRaster" title="Permalink to this definition">¶</a></dt>
 <dd><p>Overloaded function.</p>
 <ol class="arabic simple">
-<li><p>DecodeToRaster(encoded: capsule, length: int, subset: SkIRect = None) -&gt; skia.Image</p></li>
+<li><p>DecodeToRaster(encoded: capsule, length: int, subset: skia.IRect = None) -&gt; skia.Image</p></li>
 </ol>
 <p>Decode the data in encoded/length into a raster image.</p>
 <ol class="arabic simple" start="2">
-<li><p>DecodeToRaster(data: skia.Data, subset: SkIRect = None) -&gt; skia.Image</p></li>
+<li><p>DecodeToRaster(data: skia.Data, subset: skia.IRect = None) -&gt; skia.Image</p></li>
 </ol>
 </dd></dl>
 
@@ -248,11 +248,11 @@ WebP. Supported encoding details vary with platform.</p>
 <em class="property">static </em><code class="sig-prename descclassname">Image.</code><code class="sig-name descname">DecodeToTexture</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span><span class="n">args</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#skia.Image.DecodeToTexture" title="Permalink to this definition">¶</a></dt>
 <dd><p>Overloaded function.</p>
 <ol class="arabic simple">
-<li><p>DecodeToTexture(ctx: skia.GrContext, encoded: capsule, length: int, subset: SkIRect = None) -&gt; skia.Image</p></li>
+<li><p>DecodeToTexture(ctx: skia.GrContext, encoded: capsule, length: int, subset: skia.IRect = None) -&gt; skia.Image</p></li>
 </ol>
 <p>Decode the data in encoded/length into a texture-backed image.</p>
 <ol class="arabic simple" start="2">
-<li><p>DecodeToTexture(ctx: skia.GrContext, data: skia.Data, subset: SkIRect = None) -&gt; skia.Image</p></li>
+<li><p>DecodeToTexture(ctx: skia.GrContext, data: skia.Data, subset: skia.IRect = None) -&gt; skia.Image</p></li>
 </ol>
 </dd></dl>
 
@@ -270,13 +270,13 @@ WebP. Supported encoding details vary with platform.</p>
 
 <dl class="py method">
 <dt id="skia.Image.MakeFromEncoded">
-<em class="property">static </em><code class="sig-prename descclassname">Image.</code><code class="sig-name descname">MakeFromEncoded</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">arg0</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.Data.html#skia.Data" title="skia.Data">skia.Data</a></span></em>, <em class="sig-param"><span class="n">arg1</span><span class="p">:</span> <span class="n">SkIRect</span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="#skia.Image" title="skia.Image">skia.Image</a><a class="headerlink" href="#skia.Image.MakeFromEncoded" title="Permalink to this definition">¶</a></dt>
+<em class="property">static </em><code class="sig-prename descclassname">Image.</code><code class="sig-name descname">MakeFromEncoded</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">arg0</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.Data.html#skia.Data" title="skia.Data">skia.Data</a></span></em>, <em class="sig-param"><span class="n">arg1</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.IRect.html#skia.IRect" title="skia.IRect">skia.IRect</a></span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="#skia.Image" title="skia.Image">skia.Image</a><a class="headerlink" href="#skia.Image.MakeFromEncoded" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return an image backed by the encoded data, but attempt to defer decoding until the image is actually used/drawn.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt id="skia.Image.MakeFromPicture">
-<em class="property">static </em><code class="sig-prename descclassname">Image.</code><code class="sig-name descname">MakeFromPicture</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">arg0</span><span class="p">:</span> <span class="n">SkPicture</span></em>, <em class="sig-param"><span class="n">arg1</span><span class="p">:</span> <span class="n">SkISize</span></em>, <em class="sig-param"><span class="n">arg2</span><span class="p">:</span> <span class="n">SkMatrix</span></em>, <em class="sig-param"><span class="n">arg3</span><span class="p">:</span> <span class="n">SkPaint</span></em>, <em class="sig-param"><span class="n">arg4</span><span class="p">:</span> <span class="n">skia.Image.BitDepth</span></em>, <em class="sig-param"><span class="n">arg5</span><span class="p">:</span> <span class="n">SkColorSpace</span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="#skia.Image" title="skia.Image">skia.Image</a><a class="headerlink" href="#skia.Image.MakeFromPicture" title="Permalink to this definition">¶</a></dt>
+<em class="property">static </em><code class="sig-prename descclassname">Image.</code><code class="sig-name descname">MakeFromPicture</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">arg0</span><span class="p">:</span> <span class="n">SkPicture</span></em>, <em class="sig-param"><span class="n">arg1</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.ISize.html#skia.ISize" title="skia.ISize">skia.ISize</a></span></em>, <em class="sig-param"><span class="n">arg2</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.Matrix.html#skia.Matrix" title="skia.Matrix">skia.Matrix</a></span></em>, <em class="sig-param"><span class="n">arg3</span><span class="p">:</span> <span class="n">SkPaint</span></em>, <em class="sig-param"><span class="n">arg4</span><span class="p">:</span> <span class="n">skia.Image.BitDepth</span></em>, <em class="sig-param"><span class="n">arg5</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.ColorSpace.html#skia.ColorSpace" title="skia.ColorSpace">skia.ColorSpace</a></span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="#skia.Image" title="skia.Image">skia.Image</a><a class="headerlink" href="#skia.Image.MakeFromPicture" title="Permalink to this definition">¶</a></dt>
 <dd><p>Creates SkImage from picture.</p>
 </dd></dl>
 
@@ -288,7 +288,7 @@ WebP. Supported encoding details vary with platform.</p>
 
 <dl class="py method">
 <dt id="skia.Image.MakeFromTexture">
-<em class="property">static </em><code class="sig-prename descclassname">Image.</code><code class="sig-name descname">MakeFromTexture</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">arg0</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.GrContext.html#skia.GrContext" title="skia.GrContext">skia.GrContext</a></span></em>, <em class="sig-param"><span class="n">arg1</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.GrBackendTexture.html#skia.GrBackendTexture" title="skia.GrBackendTexture">skia.GrBackendTexture</a></span></em>, <em class="sig-param"><span class="n">arg2</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.GrSurfaceOrigin.html#skia.GrSurfaceOrigin" title="skia.GrSurfaceOrigin">skia.GrSurfaceOrigin</a></span></em>, <em class="sig-param"><span class="n">arg3</span><span class="p">:</span> <span class="n">SkColorType</span></em>, <em class="sig-param"><span class="n">arg4</span><span class="p">:</span> <span class="n">SkAlphaType</span></em>, <em class="sig-param"><span class="n">arg5</span><span class="p">:</span> <span class="n">SkColorSpace</span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="#skia.Image" title="skia.Image">skia.Image</a><a class="headerlink" href="#skia.Image.MakeFromTexture" title="Permalink to this definition">¶</a></dt>
+<em class="property">static </em><code class="sig-prename descclassname">Image.</code><code class="sig-name descname">MakeFromTexture</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">arg0</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.GrContext.html#skia.GrContext" title="skia.GrContext">skia.GrContext</a></span></em>, <em class="sig-param"><span class="n">arg1</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.GrBackendTexture.html#skia.GrBackendTexture" title="skia.GrBackendTexture">skia.GrBackendTexture</a></span></em>, <em class="sig-param"><span class="n">arg2</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.GrSurfaceOrigin.html#skia.GrSurfaceOrigin" title="skia.GrSurfaceOrigin">skia.GrSurfaceOrigin</a></span></em>, <em class="sig-param"><span class="n">arg3</span><span class="p">:</span> <span class="n">SkColorType</span></em>, <em class="sig-param"><span class="n">arg4</span><span class="p">:</span> <span class="n">SkAlphaType</span></em>, <em class="sig-param"><span class="n">arg5</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.ColorSpace.html#skia.ColorSpace" title="skia.ColorSpace">skia.ColorSpace</a></span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="#skia.Image" title="skia.Image">skia.Image</a><a class="headerlink" href="#skia.Image.MakeFromTexture" title="Permalink to this definition">¶</a></dt>
 <dd><p>Creates SkImage from GPU texture associated with context.</p>
 </dd></dl>
 
@@ -330,13 +330,13 @@ WebP. Supported encoding details vary with platform.</p>
 
 <dl class="py method">
 <dt id="skia.Image.bounds">
-<code class="sig-prename descclassname">Image.</code><code class="sig-name descname">bounds</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Image" title="skia.Image">skia.Image</a></span></em><span class="sig-paren">)</span> &#x2192; SkIRect<a class="headerlink" href="#skia.Image.bounds" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">Image.</code><code class="sig-name descname">bounds</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Image" title="skia.Image">skia.Image</a></span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="skia.IRect.html#skia.IRect" title="skia.IRect">skia.IRect</a><a class="headerlink" href="#skia.Image.bounds" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns SkIRect { 0, 0, width(), height() }.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt id="skia.Image.colorSpace">
-<code class="sig-prename descclassname">Image.</code><code class="sig-name descname">colorSpace</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Image" title="skia.Image">skia.Image</a></span></em><span class="sig-paren">)</span> &#x2192; SkColorSpace<a class="headerlink" href="#skia.Image.colorSpace" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">Image.</code><code class="sig-name descname">colorSpace</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Image" title="skia.Image">skia.Image</a></span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="skia.ColorSpace.html#skia.ColorSpace" title="skia.ColorSpace">skia.ColorSpace</a><a class="headerlink" href="#skia.Image.colorSpace" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns SkColorSpace, the range of colors, associated with SkImage.</p>
 </dd></dl>
 
@@ -348,7 +348,7 @@ WebP. Supported encoding details vary with platform.</p>
 
 <dl class="py method">
 <dt id="skia.Image.dimensions">
-<code class="sig-prename descclassname">Image.</code><code class="sig-name descname">dimensions</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Image" title="skia.Image">skia.Image</a></span></em><span class="sig-paren">)</span> &#x2192; SkISize<a class="headerlink" href="#skia.Image.dimensions" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">Image.</code><code class="sig-name descname">dimensions</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Image" title="skia.Image">skia.Image</a></span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="skia.ISize.html#skia.ISize" title="skia.ISize">skia.ISize</a><a class="headerlink" href="#skia.Image.dimensions" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns SkISize { width(), height() }.</p>
 </dd></dl>
 
@@ -416,13 +416,13 @@ WebP. Supported encoding details vary with platform.</p>
 
 <dl class="py method">
 <dt id="skia.Image.makeColorSpace">
-<code class="sig-prename descclassname">Image.</code><code class="sig-name descname">makeColorSpace</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Image" title="skia.Image">skia.Image</a></span></em>, <em class="sig-param"><span class="n">arg0</span><span class="p">:</span> <span class="n">SkColorSpace</span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="#skia.Image" title="skia.Image">skia.Image</a><a class="headerlink" href="#skia.Image.makeColorSpace" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">Image.</code><code class="sig-name descname">makeColorSpace</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Image" title="skia.Image">skia.Image</a></span></em>, <em class="sig-param"><span class="n">arg0</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.ColorSpace.html#skia.ColorSpace" title="skia.ColorSpace">skia.ColorSpace</a></span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="#skia.Image" title="skia.Image">skia.Image</a><a class="headerlink" href="#skia.Image.makeColorSpace" title="Permalink to this definition">¶</a></dt>
 <dd><p>Creates SkImage in target SkColorSpace.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt id="skia.Image.makeColorTypeAndColorSpace">
-<code class="sig-prename descclassname">Image.</code><code class="sig-name descname">makeColorTypeAndColorSpace</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Image" title="skia.Image">skia.Image</a></span></em>, <em class="sig-param"><span class="n">arg0</span><span class="p">:</span> <span class="n">SkColorType</span></em>, <em class="sig-param"><span class="n">arg1</span><span class="p">:</span> <span class="n">SkColorSpace</span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="#skia.Image" title="skia.Image">skia.Image</a><a class="headerlink" href="#skia.Image.makeColorTypeAndColorSpace" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">Image.</code><code class="sig-name descname">makeColorTypeAndColorSpace</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Image" title="skia.Image">skia.Image</a></span></em>, <em class="sig-param"><span class="n">arg0</span><span class="p">:</span> <span class="n">SkColorType</span></em>, <em class="sig-param"><span class="n">arg1</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.ColorSpace.html#skia.ColorSpace" title="skia.ColorSpace">skia.ColorSpace</a></span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="#skia.Image" title="skia.Image">skia.Image</a><a class="headerlink" href="#skia.Image.makeColorTypeAndColorSpace" title="Permalink to this definition">¶</a></dt>
 <dd><p>Experimental.</p>
 </dd></dl>
 
@@ -443,19 +443,19 @@ WebP. Supported encoding details vary with platform.</p>
 <code class="sig-prename descclassname">Image.</code><code class="sig-name descname">makeShader</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span><span class="n">args</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#skia.Image.makeShader" title="Permalink to this definition">¶</a></dt>
 <dd><p>Overloaded function.</p>
 <ol class="arabic simple">
-<li><p>makeShader(self: skia.Image, arg0: skia.TileMode, arg1: skia.TileMode, arg2: SkMatrix) -&gt; SkShader</p></li>
+<li><p>makeShader(self: skia.Image, arg0: skia.TileMode, arg1: skia.TileMode, arg2: skia.Matrix) -&gt; SkShader</p></li>
 </ol>
 <p>Creates SkShader from SkImage.</p>
 <ol class="arabic simple" start="2">
-<li><p>makeShader(self: skia.Image, arg0: skia.TileMode, arg1: skia.TileMode, arg2: SkMatrix) -&gt; SkShader</p></li>
-<li><p>makeShader(self: skia.Image, arg0: SkMatrix) -&gt; SkShader</p></li>
-<li><p>makeShader(self: skia.Image, arg0: SkMatrix) -&gt; SkShader</p></li>
+<li><p>makeShader(self: skia.Image, arg0: skia.TileMode, arg1: skia.TileMode, arg2: skia.Matrix) -&gt; SkShader</p></li>
+<li><p>makeShader(self: skia.Image, arg0: skia.Matrix) -&gt; SkShader</p></li>
+<li><p>makeShader(self: skia.Image, arg0: skia.Matrix) -&gt; SkShader</p></li>
 </ol>
 </dd></dl>
 
 <dl class="py method">
 <dt id="skia.Image.makeSubset">
-<code class="sig-prename descclassname">Image.</code><code class="sig-name descname">makeSubset</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Image" title="skia.Image">skia.Image</a></span></em>, <em class="sig-param"><span class="n">arg0</span><span class="p">:</span> <span class="n">SkIRect</span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="#skia.Image" title="skia.Image">skia.Image</a><a class="headerlink" href="#skia.Image.makeSubset" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">Image.</code><code class="sig-name descname">makeSubset</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Image" title="skia.Image">skia.Image</a></span></em>, <em class="sig-param"><span class="n">arg0</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.IRect.html#skia.IRect" title="skia.IRect">skia.IRect</a></span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="#skia.Image" title="skia.Image">skia.Image</a><a class="headerlink" href="#skia.Image.makeSubset" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns subset of SkImage.</p>
 </dd></dl>
 
@@ -487,7 +487,7 @@ WebP. Supported encoding details vary with platform.</p>
 
 <dl class="py method">
 <dt id="skia.Image.refColorSpace">
-<code class="sig-prename descclassname">Image.</code><code class="sig-name descname">refColorSpace</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Image" title="skia.Image">skia.Image</a></span></em><span class="sig-paren">)</span> &#x2192; SkColorSpace<a class="headerlink" href="#skia.Image.refColorSpace" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">Image.</code><code class="sig-name descname">refColorSpace</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Image" title="skia.Image">skia.Image</a></span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="skia.ColorSpace.html#skia.ColorSpace" title="skia.ColorSpace">skia.ColorSpace</a><a class="headerlink" href="#skia.Image.refColorSpace" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns a smart pointer to SkColorSpace, the range of colors, associated with SkImage.</p>
 </dd></dl>
 
@@ -499,7 +499,7 @@ WebP. Supported encoding details vary with platform.</p>
 
 <dl class="py method">
 <dt id="skia.Image.reinterpretColorSpace">
-<code class="sig-prename descclassname">Image.</code><code class="sig-name descname">reinterpretColorSpace</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Image" title="skia.Image">skia.Image</a></span></em>, <em class="sig-param"><span class="n">arg0</span><span class="p">:</span> <span class="n">SkColorSpace</span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="#skia.Image" title="skia.Image">skia.Image</a><a class="headerlink" href="#skia.Image.reinterpretColorSpace" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">Image.</code><code class="sig-name descname">reinterpretColorSpace</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Image" title="skia.Image">skia.Image</a></span></em>, <em class="sig-param"><span class="n">arg0</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.ColorSpace.html#skia.ColorSpace" title="skia.ColorSpace">skia.ColorSpace</a></span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="#skia.Image" title="skia.Image">skia.Image</a><a class="headerlink" href="#skia.Image.reinterpretColorSpace" title="Permalink to this definition">¶</a></dt>
 <dd><p>Creates a new SkImage identical to this one, but with a different SkColorSpace.</p>
 </dd></dl>
 

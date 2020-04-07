@@ -271,13 +271,13 @@ SkPixelRef to manage pixel memory; SkPixelRef is safe across threads.</p>
 
 <dl class="py method">
 <dt id="skia.Pixmap.bounds">
-<code class="sig-prename descclassname">Pixmap.</code><code class="sig-name descname">bounds</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Pixmap" title="skia.Pixmap">skia.Pixmap</a></span></em><span class="sig-paren">)</span> &#x2192; SkIRect<a class="headerlink" href="#skia.Pixmap.bounds" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">Pixmap.</code><code class="sig-name descname">bounds</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Pixmap" title="skia.Pixmap">skia.Pixmap</a></span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="skia.IRect.html#skia.IRect" title="skia.IRect">skia.IRect</a><a class="headerlink" href="#skia.Pixmap.bounds" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns SkIRect { 0, 0, width(), height() }.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt id="skia.Pixmap.colorSpace">
-<code class="sig-prename descclassname">Pixmap.</code><code class="sig-name descname">colorSpace</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Pixmap" title="skia.Pixmap">skia.Pixmap</a></span></em><span class="sig-paren">)</span> &#x2192; SkColorSpace<a class="headerlink" href="#skia.Pixmap.colorSpace" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">Pixmap.</code><code class="sig-name descname">colorSpace</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Pixmap" title="skia.Pixmap">skia.Pixmap</a></span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="skia.ColorSpace.html#skia.ColorSpace" title="skia.ColorSpace">skia.ColorSpace</a><a class="headerlink" href="#skia.Pixmap.colorSpace" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns SkColorSpace, the range of colors, associated with SkImageInfo.</p>
 </dd></dl>
 
@@ -300,7 +300,7 @@ SkPixelRef to manage pixel memory; SkPixelRef is safe across threads.</p>
 
 <dl class="py method">
 <dt id="skia.Pixmap.dimensions">
-<code class="sig-prename descclassname">Pixmap.</code><code class="sig-name descname">dimensions</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Pixmap" title="skia.Pixmap">skia.Pixmap</a></span></em><span class="sig-paren">)</span> &#x2192; SkISize<a class="headerlink" href="#skia.Pixmap.dimensions" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">Pixmap.</code><code class="sig-name descname">dimensions</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Pixmap" title="skia.Pixmap">skia.Pixmap</a></span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="skia.ISize.html#skia.ISize" title="skia.ISize">skia.ISize</a><a class="headerlink" href="#skia.Pixmap.dimensions" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return the dimensions of the pixmap (from its ImageInfo)</p>
 </dd></dl>
 
@@ -309,7 +309,7 @@ SkPixelRef to manage pixel memory; SkPixelRef is safe across threads.</p>
 <code class="sig-prename descclassname">Pixmap.</code><code class="sig-name descname">erase</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span><span class="n">args</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#skia.Pixmap.erase" title="Permalink to this definition">¶</a></dt>
 <dd><p>Overloaded function.</p>
 <ol class="arabic simple">
-<li><p>erase(self: skia.Pixmap, arg0: int, arg1: SkIRect) -&gt; bool</p></li>
+<li><p>erase(self: skia.Pixmap, arg0: int, arg1: skia.IRect) -&gt; bool</p></li>
 </ol>
 <p>Writes color to pixels bounded by subset; returns true on success.</p>
 <ol class="arabic simple" start="2">
@@ -317,14 +317,14 @@ SkPixelRef to manage pixel memory; SkPixelRef is safe across threads.</p>
 </ol>
 <p>Writes color to pixels inside bounds(); returns true on success.</p>
 <ol class="arabic simple" start="3">
-<li><p>erase(self: skia.Pixmap, arg0: skia.Color4f, arg1: SkIRect) -&gt; bool</p></li>
+<li><p>erase(self: skia.Pixmap, arg0: skia.Color4f, arg1: skia.IRect) -&gt; bool</p></li>
 </ol>
 <p>Writes color to pixels bounded by subset; returns true on success.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt id="skia.Pixmap.extractSubset">
-<code class="sig-prename descclassname">Pixmap.</code><code class="sig-name descname">extractSubset</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Pixmap" title="skia.Pixmap">skia.Pixmap</a></span></em>, <em class="sig-param"><span class="n">arg0</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Pixmap" title="skia.Pixmap">skia.Pixmap</a></span></em>, <em class="sig-param"><span class="n">arg1</span><span class="p">:</span> <span class="n">SkIRect</span></em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#skia.Pixmap.extractSubset" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">Pixmap.</code><code class="sig-name descname">extractSubset</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Pixmap" title="skia.Pixmap">skia.Pixmap</a></span></em>, <em class="sig-param"><span class="n">arg0</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Pixmap" title="skia.Pixmap">skia.Pixmap</a></span></em>, <em class="sig-param"><span class="n">arg1</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.IRect.html#skia.IRect" title="skia.IRect">skia.IRect</a></span></em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#skia.Pixmap.extractSubset" title="Permalink to this definition">¶</a></dt>
 <dd><p>Sets subset width, height, pixel address to intersection of SkPixmap with area, if intersection is not empty; and return true.</p>
 </dd></dl>
 
@@ -382,7 +382,7 @@ SkPixelRef to manage pixel memory; SkPixelRef is safe across threads.</p>
 
 <dl class="py method">
 <dt id="skia.Pixmap.refColorSpace">
-<code class="sig-prename descclassname">Pixmap.</code><code class="sig-name descname">refColorSpace</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Pixmap" title="skia.Pixmap">skia.Pixmap</a></span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="skia.ColorSpace.html#skia.ColorSpace" title="skia.ColorSpace">skia.ColorSpace</a><a class="headerlink" href="#skia.Pixmap.refColorSpace" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">Pixmap.</code><code class="sig-name descname">refColorSpace</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Pixmap" title="skia.Pixmap">skia.Pixmap</a></span></em><span class="sig-paren">)</span> &#x2192; sk_sp&lt;SkColorSpace&gt;<a class="headerlink" href="#skia.Pixmap.refColorSpace" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns smart pointer to SkColorSpace, the range of colors, associated with SkImageInfo.</p>
 </dd></dl>
 
@@ -420,7 +420,7 @@ SkPixelRef to manage pixel memory; SkPixelRef is safe across threads.</p>
 
 <dl class="py method">
 <dt id="skia.Pixmap.setColorSpace">
-<code class="sig-prename descclassname">Pixmap.</code><code class="sig-name descname">setColorSpace</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Pixmap" title="skia.Pixmap">skia.Pixmap</a></span></em>, <em class="sig-param"><span class="n">arg0</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.ColorSpace.html#skia.ColorSpace" title="skia.ColorSpace">skia.ColorSpace</a></span></em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#skia.Pixmap.setColorSpace" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">Pixmap.</code><code class="sig-name descname">setColorSpace</code><span class="sig-paren">(</span><em class="sig-param">self: skia.Pixmap</em>, <em class="sig-param">arg0: sk_sp&lt;SkColorSpace&gt;</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#skia.Pixmap.setColorSpace" title="Permalink to this definition">¶</a></dt>
 <dd><p>Changes SkColorSpace in SkImageInfo; preserves width, height, SkAlphaType, and SkColorType in SkImage, and leaves pixel address and row bytes unchanged.</p>
 </dd></dl>
 

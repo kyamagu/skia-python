@@ -411,7 +411,7 @@ first.</p>
 
 <dl class="py method">
 <dt id="skia.Matrix.MakeRectToRect">
-<em class="property">static </em><code class="sig-prename descclassname">Matrix.</code><code class="sig-name descname">MakeRectToRect</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">arg0</span><span class="p">:</span> <span class="n">SkRect</span></em>, <em class="sig-param"><span class="n">arg1</span><span class="p">:</span> <span class="n">SkRect</span></em>, <em class="sig-param"><span class="n">arg2</span><span class="p">:</span> <span class="n">skia.Matrix.ScaleToFit</span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="#skia.Matrix" title="skia.Matrix">skia.Matrix</a><a class="headerlink" href="#skia.Matrix.MakeRectToRect" title="Permalink to this definition">¶</a></dt>
+<em class="property">static </em><code class="sig-prename descclassname">Matrix.</code><code class="sig-name descname">MakeRectToRect</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">arg0</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.Rect.html#skia.Rect" title="skia.Rect">skia.Rect</a></span></em>, <em class="sig-param"><span class="n">arg1</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.Rect.html#skia.Rect" title="skia.Rect">skia.Rect</a></span></em>, <em class="sig-param"><span class="n">arg2</span><span class="p">:</span> <span class="n">skia.Matrix.ScaleToFit</span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="#skia.Matrix" title="skia.Matrix">skia.Matrix</a><a class="headerlink" href="#skia.Matrix.MakeRectToRect" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns SkMatrix set to scale and translate src SkRect to dst SkRect.</p>
 </dd></dl>
 
@@ -438,11 +438,11 @@ first.</p>
 </ol>
 <p>Sets SkMatrix to translate by (dx, dy).</p>
 <ol class="arabic simple" start="2">
-<li><p>MakeTrans(arg0: SkPoint) -&gt; skia.Matrix</p></li>
+<li><p>MakeTrans(arg0: skia.Point) -&gt; skia.Matrix</p></li>
 </ol>
 <p>Sets SkMatrix to translate by (t.x(), t.y()).</p>
 <ol class="arabic simple" start="3">
-<li><p>MakeTrans(arg0: SkIPoint) -&gt; skia.Matrix</p></li>
+<li><p>MakeTrans(arg0: skia.IPoint) -&gt; skia.Matrix</p></li>
 </ol>
 </dd></dl>
 
@@ -466,7 +466,7 @@ first.</p>
 
 <dl class="py method">
 <dt id="skia.Matrix.decomposeScale">
-<code class="sig-prename descclassname">Matrix.</code><code class="sig-name descname">decomposeScale</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Matrix" title="skia.Matrix">skia.Matrix</a></span></em>, <em class="sig-param"><span class="n">arg0</span><span class="p">:</span> <span class="n">SkSize</span></em>, <em class="sig-param"><span class="n">arg1</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Matrix" title="skia.Matrix">skia.Matrix</a></span></em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#skia.Matrix.decomposeScale" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">Matrix.</code><code class="sig-name descname">decomposeScale</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Matrix" title="skia.Matrix">skia.Matrix</a></span></em>, <em class="sig-param"><span class="n">arg0</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.Size.html#skia.Size" title="skia.Size">skia.Size</a></span></em>, <em class="sig-param"><span class="n">arg1</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Matrix" title="skia.Matrix">skia.Matrix</a></span></em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#skia.Matrix.decomposeScale" title="Permalink to this definition">¶</a></dt>
 <dd><p>Decomposes SkMatrix into scale components and whatever remains.</p>
 </dd></dl>
 
@@ -613,11 +613,11 @@ first.</p>
 <code class="sig-prename descclassname">Matrix.</code><code class="sig-name descname">mapHomogeneousPoints</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span><span class="n">args</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#skia.Matrix.mapHomogeneousPoints" title="Permalink to this definition">¶</a></dt>
 <dd><p>Overloaded function.</p>
 <ol class="arabic simple">
-<li><p>mapHomogeneousPoints(self: skia.Matrix, arg0: SkPoint3, arg1: SkPoint3, arg2: int) -&gt; None</p></li>
+<li><p>mapHomogeneousPoints(self: skia.Matrix, arg0: skia.Point3, arg1: skia.Point3, arg2: int) -&gt; None</p></li>
 </ol>
 <p>Maps src SkPoint3 array of length count to dst SkPoint3 array, which must of length count or greater.</p>
 <ol class="arabic simple" start="2">
-<li><p>mapHomogeneousPoints(self: skia.Matrix, arg0: SkPoint3, arg1: SkPoint, arg2: int) -&gt; None</p></li>
+<li><p>mapHomogeneousPoints(self: skia.Matrix, arg0: skia.Point3, arg1: skia.Point, arg2: int) -&gt; None</p></li>
 </ol>
 <p>Returns homogeneous points, starting with 2D src points (with implied w = 1).</p>
 </dd></dl>
@@ -627,11 +627,11 @@ first.</p>
 <code class="sig-prename descclassname">Matrix.</code><code class="sig-name descname">mapPoints</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span><span class="n">args</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#skia.Matrix.mapPoints" title="Permalink to this definition">¶</a></dt>
 <dd><p>Overloaded function.</p>
 <ol class="arabic simple">
-<li><p>mapPoints(self: skia.Matrix, arg0: SkPoint, arg1: SkPoint, arg2: int) -&gt; None</p></li>
+<li><p>mapPoints(self: skia.Matrix, arg0: skia.Point, arg1: skia.Point, arg2: int) -&gt; None</p></li>
 </ol>
 <p>Maps src SkPoint array of length count to dst SkPoint array of equal or greater length.</p>
 <ol class="arabic simple" start="2">
-<li><p>mapPoints(self: skia.Matrix, arg0: SkPoint, arg1: int) -&gt; None</p></li>
+<li><p>mapPoints(self: skia.Matrix, arg0: skia.Point, arg1: int) -&gt; None</p></li>
 </ol>
 <p>Maps pts SkPoint array of length count in place.</p>
 </dd></dl>
@@ -647,28 +647,28 @@ first.</p>
 <code class="sig-prename descclassname">Matrix.</code><code class="sig-name descname">mapRect</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span><span class="n">args</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#skia.Matrix.mapRect" title="Permalink to this definition">¶</a></dt>
 <dd><p>Overloaded function.</p>
 <ol class="arabic simple">
-<li><p>mapRect(self: skia.Matrix, arg0: SkRect, arg1: SkRect, arg2: skia.ApplyPerspectiveClip) -&gt; bool</p></li>
+<li><p>mapRect(self: skia.Matrix, arg0: skia.Rect, arg1: skia.Rect, arg2: skia.ApplyPerspectiveClip) -&gt; bool</p></li>
 </ol>
 <p>Sets rect to bounds of rect corners mapped by SkMatrix.</p>
 <ol class="arabic simple" start="2">
-<li><p>mapRect(self: skia.Matrix, arg0: SkRect, arg1: skia.ApplyPerspectiveClip) -&gt; bool</p></li>
+<li><p>mapRect(self: skia.Matrix, arg0: skia.Rect, arg1: skia.ApplyPerspectiveClip) -&gt; bool</p></li>
 </ol>
 <p>Sets rect to bounds of rect corners mapped by SkMatrix.</p>
 <ol class="arabic simple" start="3">
-<li><p>mapRect(self: skia.Matrix, arg0: SkRect, arg1: skia.ApplyPerspectiveClip) -&gt; SkRect</p></li>
+<li><p>mapRect(self: skia.Matrix, arg0: skia.Rect, arg1: skia.ApplyPerspectiveClip) -&gt; skia.Rect</p></li>
 </ol>
 <p>Returns bounds of src corners mapped by SkMatrix.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt id="skia.Matrix.mapRectScaleTranslate">
-<code class="sig-prename descclassname">Matrix.</code><code class="sig-name descname">mapRectScaleTranslate</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Matrix" title="skia.Matrix">skia.Matrix</a></span></em>, <em class="sig-param"><span class="n">arg0</span><span class="p">:</span> <span class="n">SkRect</span></em>, <em class="sig-param"><span class="n">arg1</span><span class="p">:</span> <span class="n">SkRect</span></em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#skia.Matrix.mapRectScaleTranslate" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">Matrix.</code><code class="sig-name descname">mapRectScaleTranslate</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Matrix" title="skia.Matrix">skia.Matrix</a></span></em>, <em class="sig-param"><span class="n">arg0</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.Rect.html#skia.Rect" title="skia.Rect">skia.Rect</a></span></em>, <em class="sig-param"><span class="n">arg1</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.Rect.html#skia.Rect" title="skia.Rect">skia.Rect</a></span></em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#skia.Matrix.mapRectScaleTranslate" title="Permalink to this definition">¶</a></dt>
 <dd><p>Sets dst to bounds of src corners mapped by SkMatrix.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt id="skia.Matrix.mapRectToQuad">
-<code class="sig-prename descclassname">Matrix.</code><code class="sig-name descname">mapRectToQuad</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Matrix" title="skia.Matrix">skia.Matrix</a></span></em>, <em class="sig-param"><span class="n">arg0</span><span class="p">:</span> <span class="n">SkPoint</span></em>, <em class="sig-param"><span class="n">arg1</span><span class="p">:</span> <span class="n">SkRect</span></em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#skia.Matrix.mapRectToQuad" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">Matrix.</code><code class="sig-name descname">mapRectToQuad</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Matrix" title="skia.Matrix">skia.Matrix</a></span></em>, <em class="sig-param"><span class="n">arg0</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.Point.html#skia.Point" title="skia.Point">skia.Point</a></span></em>, <em class="sig-param"><span class="n">arg1</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.Rect.html#skia.Rect" title="skia.Rect">skia.Rect</a></span></em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#skia.Matrix.mapRectToQuad" title="Permalink to this definition">¶</a></dt>
 <dd><p>Maps four corners of rect to dst.</p>
 </dd></dl>
 
@@ -677,11 +677,11 @@ first.</p>
 <code class="sig-prename descclassname">Matrix.</code><code class="sig-name descname">mapVector</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span><span class="n">args</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#skia.Matrix.mapVector" title="Permalink to this definition">¶</a></dt>
 <dd><p>Overloaded function.</p>
 <ol class="arabic simple">
-<li><p>mapVector(self: skia.Matrix, arg0: float, arg1: float, arg2: SkPoint) -&gt; None</p></li>
+<li><p>mapVector(self: skia.Matrix, arg0: float, arg1: float, arg2: skia.Point) -&gt; None</p></li>
 </ol>
 <p>Maps vector (dx, dy) to result.</p>
 <ol class="arabic simple" start="2">
-<li><p>mapVector(self: skia.Matrix, arg0: float, arg1: float) -&gt; SkPoint</p></li>
+<li><p>mapVector(self: skia.Matrix, arg0: float, arg1: float) -&gt; skia.Point</p></li>
 </ol>
 <p>Returns vector (dx, dy) multiplied by SkMatrix, treating SkMatrix translation as zero.</p>
 </dd></dl>
@@ -691,11 +691,11 @@ first.</p>
 <code class="sig-prename descclassname">Matrix.</code><code class="sig-name descname">mapVectors</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span><span class="n">args</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#skia.Matrix.mapVectors" title="Permalink to this definition">¶</a></dt>
 <dd><p>Overloaded function.</p>
 <ol class="arabic simple">
-<li><p>mapVectors(self: skia.Matrix, arg0: SkPoint, arg1: SkPoint, arg2: int) -&gt; None</p></li>
+<li><p>mapVectors(self: skia.Matrix, arg0: skia.Point, arg1: skia.Point, arg2: int) -&gt; None</p></li>
 </ol>
 <p>Maps src vector array of length count to vector SkPoint array of equal or greater length.</p>
 <ol class="arabic simple" start="2">
-<li><p>mapVectors(self: skia.Matrix, arg0: SkPoint, arg1: int) -&gt; None</p></li>
+<li><p>mapVectors(self: skia.Matrix, arg0: skia.Point, arg1: int) -&gt; None</p></li>
 </ol>
 <p>Maps vecs vector array of length count in place, multiplying each vector by SkMatrix, treating SkMatrix translation as zero.</p>
 </dd></dl>
@@ -705,11 +705,11 @@ first.</p>
 <code class="sig-prename descclassname">Matrix.</code><code class="sig-name descname">mapXY</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span><span class="n">args</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#skia.Matrix.mapXY" title="Permalink to this definition">¶</a></dt>
 <dd><p>Overloaded function.</p>
 <ol class="arabic simple">
-<li><p>mapXY(self: skia.Matrix, arg0: float, arg1: float, arg2: SkPoint) -&gt; None</p></li>
+<li><p>mapXY(self: skia.Matrix, arg0: float, arg1: float, arg2: skia.Point) -&gt; None</p></li>
 </ol>
 <p>Maps SkPoint (x, y) to result.</p>
 <ol class="arabic simple" start="2">
-<li><p>mapXY(self: skia.Matrix, arg0: float, arg1: float) -&gt; SkPoint</p></li>
+<li><p>mapXY(self: skia.Matrix, arg0: float, arg1: float) -&gt; skia.Point</p></li>
 </ol>
 <p>Returns SkPoint (x, y) multiplied by SkMatrix.</p>
 </dd></dl>
@@ -902,7 +902,7 @@ first.</p>
 
 <dl class="py method">
 <dt id="skia.Matrix.setPolyToPoly">
-<code class="sig-prename descclassname">Matrix.</code><code class="sig-name descname">setPolyToPoly</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Matrix" title="skia.Matrix">skia.Matrix</a></span></em>, <em class="sig-param"><span class="n">arg0</span><span class="p">:</span> <span class="n">SkPoint</span></em>, <em class="sig-param"><span class="n">arg1</span><span class="p">:</span> <span class="n">SkPoint</span></em>, <em class="sig-param"><span class="n">arg2</span><span class="p">:</span> <span class="n">int</span></em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#skia.Matrix.setPolyToPoly" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">Matrix.</code><code class="sig-name descname">setPolyToPoly</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Matrix" title="skia.Matrix">skia.Matrix</a></span></em>, <em class="sig-param"><span class="n">arg0</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.Point.html#skia.Point" title="skia.Point">skia.Point</a></span></em>, <em class="sig-param"><span class="n">arg1</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.Point.html#skia.Point" title="skia.Point">skia.Point</a></span></em>, <em class="sig-param"><span class="n">arg2</span><span class="p">:</span> <span class="n">int</span></em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#skia.Matrix.setPolyToPoly" title="Permalink to this definition">¶</a></dt>
 <dd><p>Sets SkMatrix to map src to dst.</p>
 </dd></dl>
 
@@ -914,7 +914,7 @@ first.</p>
 
 <dl class="py method">
 <dt id="skia.Matrix.setRectToRect">
-<code class="sig-prename descclassname">Matrix.</code><code class="sig-name descname">setRectToRect</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Matrix" title="skia.Matrix">skia.Matrix</a></span></em>, <em class="sig-param"><span class="n">arg0</span><span class="p">:</span> <span class="n">SkRect</span></em>, <em class="sig-param"><span class="n">arg1</span><span class="p">:</span> <span class="n">SkRect</span></em>, <em class="sig-param"><span class="n">arg2</span><span class="p">:</span> <span class="n">skia.Matrix.ScaleToFit</span></em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#skia.Matrix.setRectToRect" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">Matrix.</code><code class="sig-name descname">setRectToRect</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Matrix" title="skia.Matrix">skia.Matrix</a></span></em>, <em class="sig-param"><span class="n">arg0</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.Rect.html#skia.Rect" title="skia.Rect">skia.Rect</a></span></em>, <em class="sig-param"><span class="n">arg1</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.Rect.html#skia.Rect" title="skia.Rect">skia.Rect</a></span></em>, <em class="sig-param"><span class="n">arg2</span><span class="p">:</span> <span class="n">skia.Matrix.ScaleToFit</span></em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#skia.Matrix.setRectToRect" title="Permalink to this definition">¶</a></dt>
 <dd><p>Sets SkMatrix to scale and translate src SkRect to dst SkRect.</p>
 </dd></dl>
 
@@ -1013,7 +1013,7 @@ first.</p>
 </ol>
 <p>Sets SkMatrix to translate by (dx, dy).</p>
 <ol class="arabic simple" start="2">
-<li><p>setTranslate(self: skia.Matrix, arg0: SkPoint) -&gt; skia.Matrix</p></li>
+<li><p>setTranslate(self: skia.Matrix, arg0: skia.Point) -&gt; skia.Matrix</p></li>
 </ol>
 <p>Sets SkMatrix to translate by (dx, dy).</p>
 </dd></dl>

@@ -183,7 +183,7 @@ either of the requested dimensions are zero, then nullptr will be returned.</p>
 </ol>
 <p>Allocates raster SkSurface.</p>
 <ol class="arabic simple" start="2">
-<li><p>MakeRaster(arg0: skia.ImageInfo, arg1: skia.SurfaceProps) -&gt; skia.Surface</p></li>
+<li><p>MakeRaster(imageInfo: skia.ImageInfo, surfaceProps: skia.SurfaceProps = None) -&gt; skia.Surface</p></li>
 </ol>
 <p>Allocates raster SkSurface.</p>
 </dd></dl>
@@ -205,15 +205,15 @@ either of the requested dimensions are zero, then nullptr will be returned.</p>
 <em class="property">static </em><code class="sig-prename descclassname">Surface.</code><code class="sig-name descname">MakeRenderTarget</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span><span class="n">args</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#skia.Surface.MakeRenderTarget" title="Permalink to this definition">¶</a></dt>
 <dd><p>Overloaded function.</p>
 <ol class="arabic simple">
-<li><p>MakeRenderTarget(arg0: skia.GrContext, arg1: skia.Budgeted, arg2: skia.ImageInfo, arg3: int, arg4: skia.GrSurfaceOrigin, arg5: skia.SurfaceProps, arg6: bool) -&gt; skia.Surface</p></li>
+<li><p>MakeRenderTarget(context: skia.GrContext, budgeted: skia.Budgeted, imageInfo: skia.ImageInfo, sampleCount: int, surfaceOrigin: skia.GrSurfaceOrigin, surfaceProps: skia.SurfaceProps, shouldCreateWithMips: bool = False) -&gt; skia.Surface</p></li>
 </ol>
 <p>Returns SkSurface on GPU indicated by context.</p>
 <ol class="arabic simple" start="2">
-<li><p>MakeRenderTarget(arg0: skia.GrContext, arg1: skia.Budgeted, arg2: skia.ImageInfo, arg3: int, arg4: skia.SurfaceProps) -&gt; skia.Surface</p></li>
+<li><p>MakeRenderTarget(context: skia.GrContext, budgeted: skia.Budgeted, imageInfo: skia.ImageInfo, sampleCount: int, surfaceProps: skia.SurfaceProps) -&gt; skia.Surface</p></li>
 </ol>
 <p>Returns SkSurface on GPU indicated by context.</p>
 <ol class="arabic simple" start="3">
-<li><p>MakeRenderTarget(arg0: skia.GrContext, arg1: skia.Budgeted, arg2: skia.ImageInfo) -&gt; skia.Surface</p></li>
+<li><p>MakeRenderTarget(context: skia.GrContext, budgeted: skia.Budgeted, imageInfo: skia.ImageInfo) -&gt; skia.Surface</p></li>
 </ol>
 <p>Returns SkSurface on GPU indicated by context.</p>
 </dd></dl>
@@ -222,9 +222,19 @@ either of the requested dimensions are zero, then nullptr will be returned.</p>
 <dt id="skia.Surface.__init__">
 <code class="sig-prename descclassname">Surface.</code><code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span><span class="n">args</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#skia.Surface.__init__" title="Permalink to this definition">¶</a></dt>
 <dd><p>Overloaded function.</p>
-<ol class="arabic simple">
-<li><p>__init__(self: skia.Surface, width: int, height: int, surfaceProps: skia.SurfaceProps = None) -&gt; None</p></li>
-<li><p>__init__(self: skia.Surface, arg0: numpy.ndarray[uint8]) -&gt; None</p></li>
+<ol class="arabic">
+<li><p>__init__(self: skia.Surface, width: int, height: int, surfaceProps: skia.SurfaceProps = None) -&gt; None</p>
+<blockquote>
+<div><p>See <a class="reference internal" href="#skia.Surface.MakeRasterN32Premul" title="skia.Surface.MakeRasterN32Premul"><code class="xref py py-meth docutils literal notranslate"><span class="pre">MakeRasterN32Premul()</span></code></a></p>
+</div></blockquote>
+</li>
+<li><p>__init__(self: skia.Surface, array: numpy.ndarray[uint8]) -&gt; None</p>
+<blockquote>
+<div><p>Create a raster surface on numpy array. Input array must have uint8
+with more than two dimensions. This constructor does not allocate
+memory. Do not destroy numpy array while using this surface.</p>
+</div></blockquote>
+</li>
 </ol>
 </dd></dl>
 
@@ -304,11 +314,11 @@ either of the requested dimensions are zero, then nullptr will be returned.</p>
 <code class="sig-prename descclassname">Surface.</code><code class="sig-name descname">makeSurface</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span><span class="n">args</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#skia.Surface.makeSurface" title="Permalink to this definition">¶</a></dt>
 <dd><p>Overloaded function.</p>
 <ol class="arabic simple">
-<li><p>makeSurface(self: skia.Surface, arg0: skia.ImageInfo) -&gt; skia.Surface</p></li>
+<li><p>makeSurface(self: skia.Surface, imageInfo: skia.ImageInfo) -&gt; skia.Surface</p></li>
 </ol>
 <p>Returns a compatible SkSurface, or nullptr.</p>
 <ol class="arabic simple" start="2">
-<li><p>makeSurface(self: skia.Surface, arg0: int, arg1: int) -&gt; skia.Surface</p></li>
+<li><p>makeSurface(self: skia.Surface, width: int, height: int) -&gt; skia.Surface</p></li>
 </ol>
 <p>Calls makeSurface(ImageInfo) with the same ImageInfo as this surface, but with the specified width and height.</p>
 </dd></dl>
