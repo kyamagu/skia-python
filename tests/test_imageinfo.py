@@ -34,7 +34,7 @@ def test_ImageInfo_Make(args):
 
 @pytest.mark.parametrize('args', [
     (100, 100, skia.AlphaType.kPremul),
-    (100, 100, skia.AlphaType.kPremul, skia.ColorSpace.MakeSRGB()),
+    # (100, 100, skia.AlphaType.kPremul, skia.ColorSpace.MakeSRGB()),
 ])
 def test_ImageInfo_MakeN32(args):
     check(skia.ImageInfo.MakeN32(*args))
@@ -63,5 +63,9 @@ def test_ImageInfo_MakeA8(args):
     check(skia.ImageInfo.MakeA8(*args))
 
 
-def test_ImageInfo_MakeUnknown():
-    check(skia.ImageInfo.MakeUnknown())
+@pytest.mark.parametrize('args', [
+    tuple(),
+    (100, 100),
+])
+def test_ImageInfo_MakeUnknown(args):
+    check(skia.ImageInfo.MakeUnknown(*args))
