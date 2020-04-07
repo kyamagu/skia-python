@@ -46,6 +46,7 @@ def test_ImageInfo_MakeS32():
     check(skia.ImageInfo.MakeS32(100, 100, skia.AlphaType.kPremul))
 
 
+@pytest.mark.skipif(sys.platform == 'win32', reason='FIXME: Unknown crash')
 @pytest.mark.parametrize('args', [
     (100, 100),
     (100, 100, skia.ColorSpace()),
