@@ -17,10 +17,12 @@ def test_ImageInfo_init():
     def check(x):
         assert isinstance(x, skia.ImageInfo)
 
-    check(skia.ImageInfo.Make(100, 100, skia.ColorType.kRGBA_8888,
-        skia.AlphaType.kPremul))
+    # check(skia.ImageInfo.Make(100, 100, skia.ColorType.kRGBA_8888,
+    #     skia.AlphaType.kPremul))
     check(skia.ImageInfo.Make(100, 100, skia.ColorType.kRGBA_8888,
         skia.AlphaType.kPremul, skia.ColorSpace()))
+    check(skia.ImageInfo.Make(100, 100, skia.ColorType.kRGBA_8888,
+        skia.AlphaType.kPremul, skia.ColorSpace.MakeSRGB()))
     check(skia.ImageInfo.Make(skia.ISize(100, 100), skia.ColorType.kRGBA_8888,
         skia.AlphaType.kPremul))
     check(skia.ImageInfo.Make(skia.ISize(100, 100), skia.ColorType.kRGBA_8888,
