@@ -8,9 +8,14 @@
 
 namespace py = pybind11;
 
+using ColorSpace = sk_sp<SkColorSpace>;
+
+template class sk_sp<SkColorSpace>;  // Explicit instantiation.
+
+
 void initColorSpace(py::module &m) {
-py::class_<sk_sp<SkColorSpace>>(m, "ColorSpace")
-    .def(py::init([] () { return sk_sp<SkColorSpace>(nullptr); }),
+py::class_<ColorSpace>(m, "ColorSpace")
+    .def(py::init([] () { return ColorSpace(nullptr); }),
         "Create a null color space.")
     // .def("toProfile", &SkColorSpace::toProfile,
     //     "Convert this color space to an skcms ICC profile struct.")
@@ -39,11 +44,11 @@ py::class_<sk_sp<SkColorSpace>>(m, "ColorSpace")
         "Returns true if the color space is sRGB.")
     .def("serialize", CONST_CALL(SkColorSpace, serialize),
         "Returns nullptr on failure.")
-    .def("writeToMemory", [](const sk_sp<SkColorSpace>& cs, void* memory) {
+    .def("writeToMemory", [](const ColorSpace& cs, void* memory) {
         return cs->writeToMemory(memory);
     },
         "If memory is nullptr, returns the size required to serialize.")
-    .def("transferFn", [] (const sk_sp<SkColorSpace>& cs, float gabcdef[7]) {
+    .def("transferFn", [] (const ColorSpace& cs, float gabcdef[7]) {
         cs->transferFn(gabcdef);
     })
     // .def("transferFn",
@@ -58,7 +63,7 @@ py::class_<sk_sp<SkColorSpace>>(m, "ColorSpace")
     .def("unref", CONST_CALL(SkColorSpace, unref))
     .def("deref", CONST_CALL(SkColorSpace, deref))
     .def("refCntGreaterThan",
-        [] (const sk_sp<SkColorSpace>& cs, int32_t threadIsolatedTestCnt) {
+        [] (const ColorSpace& cs, int32_t threadIsolatedTestCnt) {
             return cs->refCntGreaterThan(threadIsolatedTestCnt);
         })
     .def_static("MakeSRGB", &SkColorSpace::MakeSRGB,
