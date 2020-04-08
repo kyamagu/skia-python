@@ -8,19 +8,32 @@ on:
     branches:
       - master
 jobs:
-  build-manylinux2010:
-    if: false
+  build-linux:
     runs-on: ubuntu-latest
-    container: quay.io/pypa/manylinux2010_x86_64
+    strategy:
+      matrix:
+        container:
+          - manylinux2014_x86_64
+        python-version:
+          - cp35-cp35m
+    container: quay.io/pypa/${{ matrix.container }}
     steps:
-    - uses: actions/checkout@v1
+    - uses: actions/checkout@v2
       with:
         submodules: true
-    - name: Set up Python 2.7
-      run: echo "::add-path::/opt/python/cp27-cp27m/bin"
+    - name: Print submodule commits
+      run: git submodule status > submodule.txt
+    - name: Install system dependency
+      run: yum install -y fontconfig-devel mesa-libGL-devel
+    - uses: actions/cache@v1
+      id: cache
+      with:
+        path: skia/out/Release
+        key: ${{ matrix.container }}-skia-${{ hashFiles('submodule.txt') }}
     - name: Set PATH
       run: echo "::add-path::$PWD/depot_tools"
-    - name: Install gn
+      if: steps.cache.outputs.cache-hit != 'true'
+    - name: Build gn
       env:
         CC: gcc
         CXX: g++
@@ -30,55 +43,14 @@ jobs:
         git clone https://gn.googlesource.com/gn
         cd gn
         python build/gen.py
-        ninja -C out
+        ninja -C out gn
         cd ..
-    - name: Install libfreetype2 and fontconfig
-      run: |
-        yum install -y freetype-devel expat-devel
-        curl -L -O https://www.freedesktop.org/software/fontconfig/release/fontconfig-2.10.93.tar.bz2
-        tar xjf fontconfig-2.10.93.tar.bz2
-        cd fontconfig-2.10.93
-        ./configure --prefix=/usr \
-                    --sysconfdir=/etc \
-                    --localstatedir=/var \
-                    --docdir=/usr/share/doc/fontconfig-2.10.93 \
-                    --disable-docs \
-                    --disable-static
-        make -j2 install
-        cd ..
-    - name: Build Skia
-      run: |
-        cd skia
-        python2 tools/git-sync-deps
-        cp -f ../gn/out/gn bin/gn  # Replace gn.
-        bin/gn gen out/Release --args='is_official_build=false is_debug=false extra_cflags_cc=["-frtti"] extra_ldflags=["-lrt"]'
-        ninja -C out/Release skia skia.h
-        cd ..
-  build-manylinux2014:
-    runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        python-version:
-          - cp35-cp35m
-    container: quay.io/pypa/manylinux2014_x86_64
-    steps:
-    - uses: actions/checkout@v2
-      with:
-        submodules: true
-    - name: Install system dependency
-      run: yum install -y fontconfig-devel mesa-libGL-devel
-    - uses: actions/cache@v1
-      id: cache
-      with:
-        path: skia/out/Release
-        key: manylinux2014-skia-out
-    - name: Set PATH
-      run: echo "::add-path::$PWD/depot_tools"
       if: steps.cache.outputs.cache-hit != 'true'
     - name: Build Skia
       run: |
         cd skia
         python tools/git-sync-deps
+        cp -f ../gn/out/gn bin/gn  # Replace gn.
         bin/gn gen out/Release --args='is_official_build=false is_debug=false extra_cflags_cc=["-frtti"] extra_ldflags=["-lrt"]'
         ninja -C out/Release skia skia.h
         cd ..
@@ -95,16 +67,6 @@ jobs:
         yum install -y xorg-x11-server-Xvfb mesa-dri-drivers
         python -m pip install pytest numpy glfw
         xvfb-run -s "-screen 0 640x480x24" python -m pytest tests
-    - name: Build docs
-      run: |
-        python -m pip install sphinx
-        make -C docs html
-    - name: Deploy docs to gh-pages
-      if: github.event_name == 'push'
-      uses: peaceiris/actions-gh-pages@v3
-      with:
-        github_token: ${{ secrets.GITHUB_TOKEN }}
-        publish_dir: ./docs/_build/html
   build-macos:
     runs-on: macos-latest
     strategy:
@@ -114,11 +76,13 @@ jobs:
     - uses: actions/checkout@v2
       with:
         submodules: true
+    - name: Print submodule commits
+      run: git submodule status > submodule.txt
     - uses: actions/cache@v1
       id: cache
       with:
         path: skia/out/Release
-        key: ${{ runner.os }}-skia-out
+        key: ${{ runner.os }}-skia-${{ hashFiles('submodule.txt') }}
     - name: Set up Python 2.7
       uses: actions/setup-python@v1
       with:
@@ -151,6 +115,16 @@ jobs:
       run: |
         python -m pip install pytest numpy pyopengl pyopengl-accelerate
         python -m pytest tests
+    - name: Build docs
+      run: |
+        python -m pip install sphinx
+        make -C docs html
+    - name: Deploy docs to gh-pages
+      if: github.event_name == 'push'
+      uses: peaceiris/actions-gh-pages@v3
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: ./docs/_build/html
   build-windows:
     runs-on: windows-latest
     strategy:
@@ -161,11 +135,13 @@ jobs:
     - uses: actions/checkout@v2
       with:
         submodules: true
+    - name: Print submodule commits
+      run: git submodule status > submodule.txt
     - uses: actions/cache@v1
       id: cache
       with:
         path: skia\out\Release
-        key: ${{ runner.os }}-${{ matrix.arch }}-skia-out
+        key: ${{ runner.os }}-${{ matrix.arch }}-skia-${{ hashFiles('submodule.txt') }}
     - name: Set up Python 2.7
       uses: actions/setup-python@v1
       with:
