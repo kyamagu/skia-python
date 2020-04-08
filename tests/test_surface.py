@@ -31,11 +31,11 @@ def test_Surface_height(surface):
     assert surface.height() == 240
 
 
-def test_Surface_getCanvas(surface):
+def test_Surface_imageInfo(surface):
     assert isinstance(surface.imageInfo(), skia.ImageInfo)
 
 
-def test_Surface_generationID(surface):
+def test_Surface_getCanvas(surface):
     assert isinstance(surface.getCanvas(), skia.Canvas)
 
 
@@ -69,7 +69,8 @@ def test_Surface_peekPixels(surface):
 
 @pytest.mark.parametrize('args', [
     (skia.Pixmap(), 0, 0),
-    # (skia.ImageInfo(), None, 0, 0, 0),
+    (np.zeros((240, 320, 4), dtype=np.uint8), 0, 0),
+    (np.zeros((240, 320, 4), dtype=np.uint8),),
     (skia.Bitmap(), 0, 0),
 ])
 def test_Surface_readPixels(surface, args):

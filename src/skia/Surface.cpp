@@ -2,10 +2,10 @@
 #include <pybind11/operators.h>
 #include <pybind11/numpy.h>
 
-const SkSurfaceProps::Flags SkSurfaceProps::kUseDistanceFieldFonts_Flag;
-
 template<typename T>
 using NumPy = py::array_t<T, py::array::c_style | py::array::forcecast>;
+
+const SkSurfaceProps::Flags SkSurfaceProps::kUseDistanceFieldFonts_Flag;
 
 void initSurface(py::module &m) {
 
@@ -215,9 +215,23 @@ surface
         py::overload_cast<const SkPixmap&, int, int>(&SkSurface::readPixels),
         "Copies SkRect of pixels to dst.")
     .def("readPixels",
-        py::overload_cast<const SkImageInfo&, void*, size_t, int, int>(
-            &SkSurface::readPixels),
-        "Copies SkRect of pixels from SkCanvas into dstPixels.")
+        // py::overload_cast<const SkImageInfo&, void*, size_t, int, int>(
+        //     &SkSurface::readPixels),
+        [] (SkSurface& surface, NumPy<uint8_t> array, int srcX, int srcY) {
+            py::buffer_info info = array.request();
+            if (info.ndim <= 1)
+                throw std::runtime_error(
+                    "Number of dimensions must be 2 or more.");
+            if (info.shape[0] == 0 || info.shape[1] == 0)
+                throw std::runtime_error(
+                    "Width and height must be greater than 0.");
+            auto imageinfo = SkImageInfo::MakeN32Premul(
+                info.shape[1], info.shape[0]);
+            return surface.readPixels(
+                imageinfo, info.ptr, info.strides[0], srcX, srcY);
+        },
+        "Copies SkRect of pixels from SkCanvas into dstPixels.",
+        py::arg("array"), py::arg("srcX") = int(0), py::arg("srcY") = int(0))
     .def("readPixels",
         py::overload_cast<const SkBitmap&, int, int>(&SkSurface::readPixels),
         "Copies SkRect of pixels from SkSurface into bitmap.")

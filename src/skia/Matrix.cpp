@@ -387,6 +387,7 @@ py::class_<SkM44>(m, "M44", R"docstring(
     Skia assumes a right-handed coordinate system: +X goes to the right +Y goes
     down +Z goes into the screen (away from the viewer)
     )docstring")
+    .def(py::init<>())
     ;
 
 // RSXform

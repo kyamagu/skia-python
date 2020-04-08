@@ -1,4 +1,8 @@
 #include "common.h"
+#include <pybind11/numpy.h>
+
+template<typename T>
+using NumPy = py::array_t<T, py::array::c_style | py::array::forcecast>;
 
 void initCanvas(py::module &m) {
 py::class_<SkAutoCanvasRestore>(m, "AutoCanvasRestore", R"docstring(
@@ -161,50 +165,80 @@ canvas.def(py::init<>(),
         "SkCanvas.",
         py::arg("info"), py::arg("props") = nullptr)
     .def("getGrContext", &SkCanvas::getGrContext,
-        "Returns GPU context of the GPU surface associated with SkCanvas.")
-    .def("getSurface", &SkCanvas::getSurface,
-        "Sometimes a canvas is owned by a surface.")
-    .def("accessTopLayerPixels", &SkCanvas::accessTopLayerPixels,
-        "Returns the pixel base address, SkImageInfo, rowBytes, and origin if "
-        "the pixels can be read directly.",
+        "Returns GPU context of the GPU surface associated with SkCanvas.",
         py::return_value_policy::reference)
+    .def("getSurface", &SkCanvas::getSurface,
+        "Sometimes a canvas is owned by a surface.",
+        py::return_value_policy::reference)
+    // .def("accessTopLayerPixels", &SkCanvas::accessTopLayerPixels,
+    //     "Returns the pixel base address, SkImageInfo, rowBytes, and origin if "
+    //     "the pixels can be read directly.",
+    //     py::return_value_policy::reference)
     // .def("accessTopRasterHandle", &SkCanvas::accessTopRasterHandle,
     //     "Returns custom context that tracks the SkMatrix and clip.")
     .def("peekPixels", &SkCanvas::peekPixels,
         "Returns true if SkCanvas has direct access to its pixels.")
     .def("readPixels",
-        (bool (SkCanvas::*)(const SkImageInfo&, void*, size_t, int, int))
-        &SkCanvas::readPixels,
-        "Copies SkRect of pixels from SkCanvas into dstPixels.")
+        // py::overload_cast<const SkImageInfo&, void*, size_t, int, int>(
+        //     &SkCanvas::readPixels),
+        [] (SkCanvas& canvas, NumPy<uint8_t> array, int srcX, int srcY) {
+            py::buffer_info info = array.request();
+            if (info.ndim <= 1)
+                throw std::runtime_error(
+                    "Number of dimensions must be 2 or more.");
+            if (info.shape[0] == 0 || info.shape[1] == 0)
+                throw std::runtime_error(
+                    "Width and height must be greater than 0.");
+            auto imageinfo = SkImageInfo::MakeN32Premul(
+                info.shape[1], info.shape[0]);
+            return canvas.readPixels(
+                imageinfo, info.ptr, info.strides[0], srcX, srcY);
+        },
+        "Copies SkRect of pixels from SkCanvas into dstPixels.",
+        py::arg("array"), py::arg("srcX") = 0, py::arg("srcY") = 0)
     .def("readPixels",
-        (bool (SkCanvas::*)(const SkPixmap&, int, int)) &SkCanvas::readPixels,
+        py::overload_cast<const SkPixmap&, int, int>(&SkCanvas::readPixels),
         "Copies SkRect of pixels from SkCanvas into pixmap.")
     .def("readPixels",
-        (bool (SkCanvas::*)(const SkBitmap&, int, int)) &SkCanvas::readPixels,
+        py::overload_cast<const SkBitmap&, int, int>(&SkCanvas::readPixels),
         "Copies SkRect of pixels from SkCanvas into bitmap.")
     .def("writePixels",
-        (bool (SkCanvas::*)(const SkImageInfo&, const void*, size_t, int, int))
-        &SkCanvas::writePixels,
-        "Copies SkRect from pixels to SkCanvas.")
+        // py::overload_cast<const SkImageInfo&, const void*, size_t, int, int>(
+        //     &SkCanvas::writePixels),
+        [] (SkCanvas& canvas, NumPy<uint8_t> array, int x, int y) {
+            py::buffer_info info = array.request();
+            if (info.ndim <= 1)
+                throw std::runtime_error(
+                    "Number of dimensions must be 2 or more.");
+            if (info.shape[0] == 0 || info.shape[1] == 0)
+                throw std::runtime_error(
+                    "Width and height must be greater than 0.");
+            auto imageinfo = SkImageInfo::MakeN32Premul(
+                info.shape[1], info.shape[0]);
+            return canvas.writePixels(
+                imageinfo, info.ptr, info.strides[0], x, y);
+        },
+        "Copies SkRect from pixels to SkCanvas.",
+        py::arg("array"), py::arg("x") = 0, py::arg("y") = 0)
     .def("writePixels",
-        (bool (SkCanvas::*)(const SkBitmap&, int, int)) &SkCanvas::writePixels,
+        py::overload_cast<const SkBitmap&, int, int>(&SkCanvas::writePixels),
         "Copies SkRect from pixels to SkCanvas.")
     .def("save", &SkCanvas::save, "Saves SkMatrix and clip.")
     .def("saveLayer",
-        (int (SkCanvas::*)(const SkRect*, const SkPaint*)) &SkCanvas::saveLayer,
+        py::overload_cast<const SkRect*, const SkPaint*>(&SkCanvas::saveLayer),
         "Saves SkMatrix and clip, and allocates a SkBitmap for subsequent "
         "drawing.")
     .def("saveLayer",
-        (int (SkCanvas::*)(const SkRect&, const SkPaint*)) &SkCanvas::saveLayer,
+        py::overload_cast<const SkRect&, const SkPaint*>(&SkCanvas::saveLayer),
         "Saves SkMatrix and clip, and allocates a SkBitmap for subsequent "
         "drawing.")
     .def("saveLayerAlpha", &SkCanvas::saveLayerAlpha,
         "Saves SkMatrix and clip, and allocates SkBitmap for subsequent "
         "drawing.")
-    // .def("saveLayer",
-    //     (int (SkCanvas::*)(const SaveLayerRec&)) &SkCanvas::saveLayer,
-    //     "Saves SkMatrix and clip, and allocates a SkBitmap for subsequent "
-    //     "drawing.")
+    .def("saveLayer",
+        py::overload_cast<const SkCanvas::SaveLayerRec&>(&SkCanvas::saveLayer),
+        "Saves SkMatrix and clip, and allocates a SkBitmap for subsequent "
+        "drawing.")
     .def("experimental_saveCamera",
         (int (SkCanvas::*)(const SkM44&, const SkM44&))
         &SkCanvas::experimental_saveCamera)
@@ -263,7 +297,7 @@ canvas.def(py::init<>(),
     .def("clipRRect",
         (void (SkCanvas::*)(const SkRRect&, SkClipOp)) &SkCanvas::clipRRect,
         "Replaces clip with the intersection or difference of clip and rrect.")
-    .def("clipRect",
+    .def("clipRRect",
         (void (SkCanvas::*)(const SkRRect&, bool)) &SkCanvas::clipRRect,
         "Replaces clip with the intersection of clip and rrect, with an "
         "aliased or anti-aliased clip edge.",
@@ -282,7 +316,8 @@ canvas.def(py::init<>(),
     // .def("clipShader", &SkCanvas::clipShader)
     .def("clipRegion", &SkCanvas::clipRegion,
         "Replaces clip with the intersection or difference of clip and "
-        "SkRegion deviceRgn.")
+        "SkRegion deviceRgn.",
+        py::arg("deviceRgn"), py::arg("op") = SkClipOp::kIntersect)
     .def("quickReject",
         (bool (SkCanvas::*)(const SkRect&) const) &SkCanvas::quickReject,
         "Returns true if SkRect rect, transformed by SkMatrix, can be quickly "
@@ -303,7 +338,8 @@ canvas.def(py::init<>(),
     .def("getDeviceClipBounds",
         (bool (SkCanvas::*)(SkIRect*) const) &SkCanvas::getDeviceClipBounds,
         "Returns SkIRect bounds of clip, unaffected by SkMatrix.")
-    .def("drawColor", &SkCanvas::drawColor, "Fills clip with color color.")
+    .def("drawColor", &SkCanvas::drawColor, "Fills clip with color color.",
+        py::arg("color"), py::arg("mode") = SkBlendMode::kSrcOver)
     .def("clear", &SkCanvas::clear,
         "Fills clip with color using SkBlendMode::kSrc")
     .def("discard", &SkCanvas::discard, "Makes SkCanvas contents undefined.")
