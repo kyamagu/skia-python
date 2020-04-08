@@ -41,6 +41,8 @@ SOURCES = [
 ]
 
 SKIA_PATH = os.getenv('SKIA_PATH', 'skia')
+SKIA_OUT_PATH = os.getenv(
+    'SKIA_OUT_PATH', os.path.join(SKIA_PATH, 'out', 'Release'))
 
 if sys.platform == 'win32':
     DEFINE_MACROS = []  # doesn't work for cl.exe
@@ -56,7 +58,7 @@ if sys.platform == 'win32':
         # 'dxgi',
         # 'd3dcompiler',
     ]
-    EXTRA_OBJECTS = [os.path.join(SKIA_PATH, 'out', 'Release', 'skia.lib')]
+    EXTRA_OBJECTS = [os.path.join(SKIA_OUT_PATH, 'skia.lib')]
     EXTRA_COMPILE_ARGS = [
         '/std:c++latest',
         '/DVERSION_INFO=%s' % __version__,
@@ -78,7 +80,7 @@ elif sys.platform == 'darwin':
     LIBRARIES = [
         'dl',
     ]
-    EXTRA_OBJECTS = [os.path.join(SKIA_PATH, 'out', 'Release', 'libskia.a')]
+    EXTRA_OBJECTS = [os.path.join(SKIA_OUT_PATH, 'libskia.a')]
     EXTRA_COMPILE_ARGS = [
         '-std=c++14',
         '-stdlib=libc++',
@@ -102,7 +104,7 @@ else:
         'GL',
         # 'GLESv2',
     ]
-    EXTRA_OBJECTS = [os.path.join(SKIA_PATH, 'out', 'Release', 'libskia.a')]
+    EXTRA_OBJECTS = [os.path.join(SKIA_OUT_PATH, 'libskia.a')]
     EXTRA_COMPILE_ARGS = [
         '-std=c++14',
         '-fvisibility=hidden',
@@ -149,7 +151,7 @@ extension = Extension(
         get_pybind_include(),
         get_pybind_include(user=True),
         SKIA_PATH,
-        os.path.join(SKIA_PATH, 'out', 'Release', 'gen'),
+        os.path.join(SKIA_OUT_PATH, 'gen'),
     ],
     define_macros=DEFINE_MACROS,
     libraries=LIBRARIES,
