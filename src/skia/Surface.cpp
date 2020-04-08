@@ -1,11 +1,6 @@
-#include <pybind11/pybind11.h>
+#include "common.h"
 #include <pybind11/operators.h>
 #include <pybind11/numpy.h>
-#include <skia.h>
-
-namespace py = pybind11;
-
-PYBIND11_DECLARE_HOLDER_TYPE(T, sk_sp<T>);
 
 const SkSurfaceProps::Flags SkSurfaceProps::kUseDistanceFieldFonts_Flag;
 

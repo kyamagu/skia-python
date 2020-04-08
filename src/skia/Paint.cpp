@@ -1,10 +1,5 @@
-#include <pybind11/pybind11.h>
+#include "common.h"
 #include <pybind11/operators.h>
-#include <skia.h>
-
-namespace py = pybind11;
-
-PYBIND11_DECLARE_HOLDER_TYPE(T, sk_sp<T>);
 
 // Static variables must be declared.
 const int SkPaint::kStyleCount;

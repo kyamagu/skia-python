@@ -1,9 +1,6 @@
-#include <pybind11/pybind11.h>
-#include <skia.h>
+#include "common.h"
 
 #define STRING(s) #s
-
-namespace py = pybind11;
 
 // Declarations.
 void initBitmap(py::module &);

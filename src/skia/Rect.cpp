@@ -1,6 +1,5 @@
-#include <pybind11/pybind11.h>
+#include "common.h"
 #include <pybind11/operators.h>
-#include <skia.h>
 #include <sstream>
 
 namespace py = pybind11;

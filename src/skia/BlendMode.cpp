@@ -1,7 +1,4 @@
-#include <pybind11/pybind11.h>
-#include <skia.h>
-
-namespace py = pybind11;
+#include "common.h"
 
 void initBlendMode(py::module &m) {
 py::enum_<SkBlendMode>(m, "BlendMode")

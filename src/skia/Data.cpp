@@ -1,9 +1,4 @@
-#include <pybind11/pybind11.h>
-#include <skia.h>
-
-namespace py = pybind11;
-
-PYBIND11_DECLARE_HOLDER_TYPE(T, sk_sp<T>, true);
+#include "common.h"
 
 template<>
 struct py::detail::has_operator_delete<SkData, void> : std::false_type {};

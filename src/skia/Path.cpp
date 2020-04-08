@@ -1,8 +1,5 @@
-#include <pybind11/pybind11.h>
+#include "common.h"
 #include <pybind11/operators.h>
-#include <skia.h>
-
-namespace py = pybind11;
 
 void initPath(py::module &m) {
 // PathTypes

@@ -1,7 +1,4 @@
-#include <pybind11/pybind11.h>
-#include <skia.h>
-
-namespace py = pybind11;
+#include "common.h"
 
 void initCanvas(py::module &m) {
 py::class_<SkAutoCanvasRestore>(m, "AutoCanvasRestore", R"docstring(
@@ -143,11 +140,14 @@ canvas.def(py::init<>(),
         "Creates an empty SkCanvas with no backing device or pixels, with a "
         "width and height of zero.")
     .def(py::init<int, int, const SkSurfaceProps*>(),
-        "Creates SkCanvas of the specified dimensions without a SkSurface.")
+        "Creates SkCanvas of the specified dimensions without a SkSurface.",
+        py::arg("width"), py::arg("height"), py::arg("props") = nullptr)
     .def(py::init<const SkBitmap&>(),
-        "Constructs a canvas that draws into bitmap.")
+        "Constructs a canvas that draws into bitmap.",
+        py::arg("bitmap"))
     .def(py::init<const SkBitmap&, const SkSurfaceProps&>(),
-        "Constructs a canvas that draws into bitmap.")
+        "Constructs a canvas that draws into bitmap.",
+        py::arg("bitmap"), py::arg("props"))
     .def("imageInfo", &SkCanvas::imageInfo, "Returns SkImageInfo for SkCanvas.")
     .def("getProps", &SkCanvas::getProps,
         "Copies SkSurfaceProps, if SkCanvas is associated with raster surface "
@@ -158,7 +158,8 @@ canvas.def(py::init<>(),
         "Gets the size of the base or root layer in global canvas coordinates.")
     .def("makeSurface", &SkCanvas::makeSurface,
         "Creates SkSurface matching info and props, and associates it with "
-        "SkCanvas.")
+        "SkCanvas.",
+        py::arg("info"), py::arg("props") = nullptr)
     .def("getGrContext", &SkCanvas::getGrContext,
         "Returns GPU context of the GPU surface associated with SkCanvas.")
     .def("getSurface", &SkCanvas::getSurface,
