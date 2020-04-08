@@ -90,7 +90,7 @@ jobs:
         git clone https://gn.googlesource.com/gn
         cd gn
         python build/gen.py
-        ninja -C out
+        ninja -C out gn
         cd ..
       if: steps.cache.outputs.cache-hit != 'true'
     - name: Build Skia
