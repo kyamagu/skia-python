@@ -3,36 +3,46 @@ from setuptools.command.build_ext import build_ext
 import os
 import sys
 
+try:
+    from numpy.distutils.ccompiler import CCompiler_compile
+    import distutils.ccompiler
+    distutils.ccompiler.CCompiler.compile = CCompiler_compile
+except ImportError:
+    pass
+
+
 __version__ = '0.0.1'
 
 
 SOURCES = [
-    'src/skia/main.cpp',
-    'src/skia/Bitmap.cpp',
-    'src/skia/BlendMode.cpp',
-    'src/skia/Canvas.cpp',
-    'src/skia/Color.cpp',
-    'src/skia/ColorSpace.cpp',
-    'src/skia/Data.cpp',
-    'src/skia/Font.cpp',
-    'src/skia/GrContext.cpp',
-    'src/skia/Image.cpp',
-    'src/skia/ImageInfo.cpp',
-    'src/skia/Matrix.cpp',
-    'src/skia/Paint.cpp',
-    'src/skia/Path.cpp',
-    'src/skia/Picture.cpp',
-    'src/skia/Pixmap.cpp',
-    'src/skia/Point.cpp',
-    'src/skia/Rect.cpp',
-    'src/skia/Region.cpp',
-    'src/skia/Size.cpp',
-    'src/skia/Surface.cpp',
-    'src/skia/TextBlob.cpp',
-    'src/skia/Vertices.cpp',
+    os.path.join('src', 'skia', 'main.cpp'),
+    os.path.join('src', 'skia', 'Bitmap.cpp'),
+    os.path.join('src', 'skia', 'BlendMode.cpp'),
+    os.path.join('src', 'skia', 'Canvas.cpp'),
+    os.path.join('src', 'skia', 'Color.cpp'),
+    os.path.join('src', 'skia', 'ColorSpace.cpp'),
+    os.path.join('src', 'skia', 'Data.cpp'),
+    os.path.join('src', 'skia', 'Font.cpp'),
+    os.path.join('src', 'skia', 'GrContext.cpp'),
+    os.path.join('src', 'skia', 'Image.cpp'),
+    os.path.join('src', 'skia', 'ImageInfo.cpp'),
+    os.path.join('src', 'skia', 'Matrix.cpp'),
+    os.path.join('src', 'skia', 'Paint.cpp'),
+    os.path.join('src', 'skia', 'Path.cpp'),
+    os.path.join('src', 'skia', 'Picture.cpp'),
+    os.path.join('src', 'skia', 'Pixmap.cpp'),
+    os.path.join('src', 'skia', 'Point.cpp'),
+    os.path.join('src', 'skia', 'Rect.cpp'),
+    os.path.join('src', 'skia', 'Region.cpp'),
+    os.path.join('src', 'skia', 'Size.cpp'),
+    os.path.join('src', 'skia', 'Surface.cpp'),
+    os.path.join('src', 'skia', 'TextBlob.cpp'),
+    os.path.join('src', 'skia', 'Vertices.cpp'),
 ]
 
 SKIA_PATH = os.getenv('SKIA_PATH', 'skia')
+SKIA_OUT_PATH = os.getenv(
+    'SKIA_OUT_PATH', os.path.join(SKIA_PATH, 'out', 'Release'))
 
 if sys.platform == 'win32':
     DEFINE_MACROS = []  # doesn't work for cl.exe
@@ -48,7 +58,7 @@ if sys.platform == 'win32':
         # 'dxgi',
         # 'd3dcompiler',
     ]
-    EXTRA_OBJECTS = [os.path.join(SKIA_PATH, 'out', 'Release', 'skia.lib')]
+    EXTRA_OBJECTS = [os.path.join(SKIA_OUT_PATH, 'skia.lib')]
     EXTRA_COMPILE_ARGS = [
         '/std:c++latest',
         '/DVERSION_INFO=%s' % __version__,
@@ -70,7 +80,7 @@ elif sys.platform == 'darwin':
     LIBRARIES = [
         'dl',
     ]
-    EXTRA_OBJECTS = [os.path.join(SKIA_PATH, 'out', 'Release', 'libskia.a')]
+    EXTRA_OBJECTS = [os.path.join(SKIA_OUT_PATH, 'libskia.a')]
     EXTRA_COMPILE_ARGS = [
         '-std=c++14',
         '-stdlib=libc++',
@@ -94,7 +104,7 @@ else:
         'GL',
         # 'GLESv2',
     ]
-    EXTRA_OBJECTS = [os.path.join(SKIA_PATH, 'out', 'Release', 'libskia.a')]
+    EXTRA_OBJECTS = [os.path.join(SKIA_OUT_PATH, 'libskia.a')]
     EXTRA_COMPILE_ARGS = [
         '-std=c++14',
         '-fvisibility=hidden',
@@ -141,7 +151,7 @@ extension = Extension(
         get_pybind_include(),
         get_pybind_include(user=True),
         SKIA_PATH,
-        os.path.join(SKIA_PATH, 'out', 'Release', 'gen'),
+        os.path.join(SKIA_OUT_PATH, 'gen'),
     ],
     define_macros=DEFINE_MACROS,
     libraries=LIBRARIES,
