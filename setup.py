@@ -3,6 +3,14 @@ from setuptools.command.build_ext import build_ext
 import os
 import sys
 
+try:
+    from numpy.distutils.ccompiler import CCompiler_compile
+    import distutils.ccompiler
+    distutils.ccompiler.CCompiler.compile = CCompiler_compile
+except ImportError:
+    pass
+
+
 __version__ = '0.0.1'
 
 
