@@ -25,13 +25,13 @@ Prerequisites:
 Install dependencies:
 
 ```bash
-apt-get install -y libfontconfig1-dev libgl-dev
+apt-get install -y libfontconfig1-dev libgl-dev libgl1-mesa-dri
 ```
 
 or,
 
 ```bash
-yum install -y fontconfig-devel mesa-libGL-devel
+yum install -y fontconfig-devel mesa-libGL-devel mesa-dri-drivers
 ```
 
 Set up `PATH` to the `depot_tools`. Note the build tools require relatively new
@@ -58,7 +58,7 @@ be set to the desired version.
 
 ```bash
 export SKIA_PATH=$PWD/skia
-python -m pip install pybind11
+python -m pip install pybind11 numpy
 python setup.py install
 ```
 
@@ -87,7 +87,7 @@ be set to the desired version.
 
 ```bash
 export SKIA_PATH=$PWD/skia
-python -m pip install pybind11
+python -m pip install pybind11 numpy
 python setup.py install
 ```
 
@@ -100,7 +100,7 @@ support is experimental.
 ## Testing
 
 ```bash
-python -m pip install pytest numpy
+python -m pip install pytest numpy glfw
 python -m pytest tests
 ```
 
