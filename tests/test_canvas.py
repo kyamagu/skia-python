@@ -425,7 +425,14 @@ def test_Canvas_drawVertices(canvas, vertices, args):
         [skia.Point(x, x) for x in range(12)],
         [skia.ColorWHITE] * 4,
         [skia.Point(x, x) for x in range(4)],
-        skia.BlendMode::kModulate,
+        skia.BlendMode.kModulate,
+        skia.Paint(),
+    ),
+    (
+        [skia.Point(x, x) for x in range(12)],
+        [skia.ColorWHITE] * 4,
+        [],
+        skia.BlendMode.kModulate,
         skia.Paint(),
     ),
 ])

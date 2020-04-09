@@ -800,19 +800,81 @@ canvas.def(py::init<>(),
     //     "Variant of 3-parameter drawVertices, using the default of Modulate "
     //     "for the blend parameter.")
     .def("drawPatch",
-        py::overload_cast<const SkPoint[12], const SkColor[4],
-            const SkPoint[4], SkBlendMode, const SkPaint&>(
-                &SkCanvas::drawPatch),
-        "Draws a Coons patch: the interpolation of four cubics with shared "
-        "corners, associating a color, and optionally a texture SkPoint, with "
-        "each corner.")
-    .def("drawPatch",
-        py::overload_cast<const SkPoint[12], const SkColor[4],
-            const SkPoint[4], const SkPaint&>(
-                &SkCanvas::drawPatch),
-        "Draws SkPath cubic Coons patch: the interpolation of four cubics with "
-        "shared corners, associating a color, and optionally a texture "
-        "SkPoint, with each corner.")
+        // py::overload_cast<const SkPoint[12], const SkColor[4],
+        //     const SkPoint[4], SkBlendMode, const SkPaint&>(
+        //         &SkCanvas::drawPatch),
+        [] (SkCanvas& canvas, py::list cubics, py::list colors,
+            py::list texCoords, SkBlendMode mode, const SkPaint& paint) {
+            if (cubics.size() != 12)
+                throw std::runtime_error("cubics must have 12 elements");
+            if (colors.size() != 4)
+                throw std::runtime_error("cubics must have 12 elements");
+            if (!(texCoords.size() == 4 || texCoords.empty()))
+                throw std::runtime_error("cubics must have 12 elements");
+
+            std::vector<SkPoint> cubics_;
+            cubics_.reserve(12);
+            for (auto item : cubics)
+                cubics_.push_back(*item.cast<const SkPoint*>());
+
+            std::vector<SkColor> colors_;
+            colors_.reserve(4);
+            for (auto item : colors)
+                colors_.push_back(item.cast<SkColor>());
+
+            std::vector<SkPoint> texCoords_;
+            if (texCoords.empty()) {
+                texCoords_.reserve(4);
+                for (auto item : texCoords)
+                    texCoords_.push_back(*item.cast<const SkPoint*>());
+            }
+
+            canvas.drawPatch(
+                &cubics_[0], &colors_[0],
+                (texCoords.empty()) ? nullptr : &texCoords_[0], mode, paint);
+        },
+        R"docstring(
+        Draws a Coons patch: the interpolation of four cubics with shared
+        corners, associating a color, and optionally a texture
+        :py:class:`Point`, with each corner.
+
+        Coons patch uses clip and :py:class:`Matrix`, paint :py:class:`Shader`,
+        :py:class:`ColorFilter`, alpha, :py:class:`ImageFilter`, and
+        :py:class:`BlendMode`. If :py:class:`Shader` is provided it is treated
+        as Coons patch texture; :py:class:`BlendMode` mode combines color colors
+        and :py:class:`Shader` if both are provided.
+
+        :py:class:`Point` array cubics specifies four :py:class:`Path` cubic
+        starting at the top-left corner, in clockwise order, sharing every
+        fourth point. The last :py:class:`Path` cubic ends at the first point.
+
+        Color array color associates colors with corners in top-left, top-right,
+        bottom-right, bottom-left order.
+
+        If paint contains :py:class:`Shader`, :py:class:`Point` array texCoords
+        maps :py:class:`Shader` as texture to corners in top-left, top-right,
+        bottom-right, bottom-left order.
+
+        :param list[skia.Point] cubics: :py:class:`Path` cubic array, sharing
+            common points (length 12)
+        :param list[int] colors: color array, one for each corner (length 4)
+        :param list[skia.Point] texCoords: :py:class:`Point` array of texture
+            coordinates, mapping :py:class:`Shader` to corners (length 4); may
+            be an empty list
+        :param mode: :py:class:`BlendMode` for colors, and for
+            :py:class:`Shader` if paint has one
+        :param paint: :py:class:`Shader`, :py:class:`ColorFilter`,
+            :py:class:`BlendMode`, used to draw
+        )docstring",
+        py::arg("cubics"), py::arg("colors"), py::arg("texCoords"),
+        py::arg("mode"), py::arg("paint"))
+    // .def("drawPatch",
+    //     py::overload_cast<const SkPoint[12], const SkColor[4],
+    //         const SkPoint[4], const SkPaint&>(
+    //             &SkCanvas::drawPatch),
+    //     "Draws SkPath cubic Coons patch: the interpolation of four cubics with "
+    //     "shared corners, associating a color, and optionally a texture "
+    //     "SkPoint, with each corner.")
     .def("drawAtlas",
         py::overload_cast<const SkImage*, const SkRSXform[], const SkRect[],
             const SkColor[], int, SkBlendMode, const SkRect*, const SkPaint*>(
