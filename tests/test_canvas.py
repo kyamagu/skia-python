@@ -418,3 +418,16 @@ def test_Canvas_drawPicture(canvas, args):
 ])
 def test_Canvas_drawVertices(canvas, vertices, args):
     canvas.drawVertices(vertices, *args)
+
+
+@pytest.mark.parametrize('args', [
+    (
+        [skia.Point(x, x) for x in range(12)],
+        [skia.ColorWHITE] * 4,
+        [skia.Point(x, x) for x in range(4)],
+        skia.BlendMode::kModulate,
+        skia.Paint(),
+    ),
+])
+def test_Canvas_drawPatch(canvas, args):
+    canvas.drawPatch(*args)
