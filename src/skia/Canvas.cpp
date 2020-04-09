@@ -1,5 +1,6 @@
 #include "common.h"
 #include <pybind11/numpy.h>
+#include <pybind11/stl.h>
 
 template<typename T>
 using NumPy = py::array_t<T, py::array::c_style | py::array::forcecast>;
@@ -416,41 +417,38 @@ canvas.def(py::init<>(),
             canvas.drawPoints(mode, points.size(), &points[0], paint);
         },
         R"docstring(
-            Draws pts using clip, :py:class:`Matrix` and :py:class:`Paint`
-            paint.
+        Draws pts using clip, :py:class:`Matrix` and :py:class:`Paint`
+        paint.
 
-            mode may be one of: :py:attr:`~Canvas.PointMode.kPoints`,
-            :py:attr:`~Canvas.PointMode.kLines`, or
-            :py:attr:`~Canvas.PointMode.kPolygon`.
+        mode may be one of: :py:attr:`~Canvas.PointMode.kPoints`,
+        :py:attr:`~Canvas.PointMode.kLines`, or
+        :py:attr:`~Canvas.PointMode.kPolygon`.
 
-            If mode is :py:attr:`kPoints`, the shape of point drawn depends on
-            paint :py:class:`Paint.Cap`. If paint is set to
-            :py:attr:`Paint.kRound`, each point draws a circle of diameter
-            :py:class:`Paint` stroke width. If paint is set to
-            :py:attr:`Paint.kSquare` or :py:attr:`Paint.kButt`, each point
-            draws a square of width and height :py:attr:`Paint` stroke width.
+        If mode is :py:attr:`kPoints`, the shape of point drawn depends on
+        paint :py:class:`Paint.Cap`. If paint is set to :py:attr:`Paint.kRound`,
+        each point draws a circle of diameter :py:class:`Paint` stroke width. If
+        paint is set to :py:attr:`Paint.kSquare` or :py:attr:`Paint.kButt`, each
+        point draws a square of width and height :py:attr:`Paint` stroke width.
 
-            If mode is :py:attr:`kLines`, each pair of points draws a line
-            segment. One line is drawn for every two points; each point is used
-            once. If count is odd, the final point is ignored.
+        If mode is :py:attr:`kLines`, each pair of points draws a line segment.
+        One line is drawn for every two points; each point is used once. If
+        count is odd, the final point is ignored.
 
-            If mode is :py:attr:`kPolygon`, each adjacent pair of points draws a
-            line segment. count minus one lines are drawn; the first and last
-            point are used once.
+        If mode is :py:attr:`kPolygon`, each adjacent pair of points draws a
+        line segment. count minus one lines are drawn; the first and last point
+        are used once.
 
-            Each line segment respects paint :py:class:`Paint.Cap` and
-            :py:class:`Paint` stroke width. :py:class:`Paint.Style` is
-            ignored, as if were set to :py:attr:`Paint.kStroke`.
+        Each line segment respects paint :py:class:`Paint.Cap` and
+        :py:class:`Paint` stroke width. :py:class:`Paint.Style` is ignored, as
+        if were set to :py:attr:`Paint.kStroke`.
 
-            Always draws each element one at a time; is not affected by
-            :py:class:`Paint.Join`, and unlike :py:meth:`drawPath`, does not
-            create a mask from all points and lines before drawing.
+        Always draws each element one at a time; is not affected by
+        :py:class:`Paint.Join`, and unlike :py:meth:`drawPath`, does not create
+        a mask from all points and lines before drawing.
 
-            :param skia.Canvas.PointMode mode: whether pts draws points or lines
-            :param Iterable[skia.Point] pts: array of points to draw
-            :param skia.Paint paint: stroke, blend, color, and so on, used to
-                draw
-
+        :param skia.Canvas.PointMode mode: whether pts draws points or lines
+        :param Iterable[skia.Point] pts: array of points to draw
+        :param skia.Paint paint: stroke, blend, color, and so on, used to draw
         )docstring",
         py::arg("mode"), py::arg("pts"), py::arg("paint"))
     .def("drawPoint",
@@ -803,35 +801,20 @@ canvas.def(py::init<>(),
         // py::overload_cast<const SkPoint[12], const SkColor[4],
         //     const SkPoint[4], SkBlendMode, const SkPaint&>(
         //         &SkCanvas::drawPatch),
-        [] (SkCanvas& canvas, py::list cubics, py::list colors,
-            py::list texCoords, SkBlendMode mode, const SkPaint& paint) {
+        [] (SkCanvas& canvas, const std::vector<SkPoint>& cubics,
+            const std::vector<SkColor>& colors,
+            const std::vector<SkPoint>& texCoords,
+            SkBlendMode mode, const SkPaint& paint) {
             if (cubics.size() != 12)
                 throw std::runtime_error("cubics must have 12 elements");
             if (colors.size() != 4)
-                throw std::runtime_error("cubics must have 12 elements");
+                throw std::runtime_error("colors must have 4 elements");
             if (!(texCoords.size() == 4 || texCoords.empty()))
-                throw std::runtime_error("cubics must have 12 elements");
-
-            std::vector<SkPoint> cubics_;
-            cubics_.reserve(12);
-            for (auto item : cubics)
-                cubics_.push_back(*item.cast<const SkPoint*>());
-
-            std::vector<SkColor> colors_;
-            colors_.reserve(4);
-            for (auto item : colors)
-                colors_.push_back(item.cast<SkColor>());
-
-            std::vector<SkPoint> texCoords_;
-            if (texCoords.empty()) {
-                texCoords_.reserve(4);
-                for (auto item : texCoords)
-                    texCoords_.push_back(*item.cast<const SkPoint*>());
-            }
+                throw std::runtime_error("texCoords must have 0 or 4 elements");
 
             canvas.drawPatch(
-                &cubics_[0], &colors_[0],
-                (texCoords.empty()) ? nullptr : &texCoords_[0], mode, paint);
+                &cubics[0], &colors[0],
+                (texCoords.empty()) ? nullptr : &texCoords[0], mode, paint);
         },
         R"docstring(
         Draws a Coons patch: the interpolation of four cubics with shared
@@ -855,10 +838,10 @@ canvas.def(py::init<>(),
         maps :py:class:`Shader` as texture to corners in top-left, top-right,
         bottom-right, bottom-left order.
 
-        :param list[skia.Point] cubics: :py:class:`Path` cubic array, sharing
+        :param List[skia.Point] cubics: :py:class:`Path` cubic array, sharing
             common points (length 12)
-        :param list[int] colors: color array, one for each corner (length 4)
-        :param list[skia.Point] texCoords: :py:class:`Point` array of texture
+        :param List[int] colors: color array, one for each corner (length 4)
+        :param List[skia.Point] texCoords: :py:class:`Point` array of texture
             coordinates, mapping :py:class:`Shader` to corners (length 4); may
             be an empty list
         :param mode: :py:class:`BlendMode` for colors, and for
@@ -876,52 +859,113 @@ canvas.def(py::init<>(),
     //     "shared corners, associating a color, and optionally a texture "
     //     "SkPoint, with each corner.")
     .def("drawAtlas",
-        py::overload_cast<const SkImage*, const SkRSXform[], const SkRect[],
-            const SkColor[], int, SkBlendMode, const SkRect*, const SkPaint*>(
-                &SkCanvas::drawAtlas),
-        "Draws a set of sprites from atlas, using clip, SkMatrix, and optional "
-        "SkPaint paint.")
-    .def("drawAtlas",
-        py::overload_cast<const sk_sp<SkImage>&, const SkRSXform[],
-            const SkRect[], const SkColor[], int, SkBlendMode, const SkRect*,
-            const SkPaint*>(&SkCanvas::drawAtlas),
-        "Draws a set of sprites from atlas, using clip, SkMatrix, and optional "
-        "SkPaint paint.")
-    .def("drawAtlas",
-        py::overload_cast<const SkImage*, const SkRSXform[], const SkRect[],
-            int, const SkRect*, const SkPaint*>(
-                &SkCanvas::drawAtlas),
-        "Draws a set of sprites from atlas, using clip, SkMatrix, and optional "
-        "SkPaint paint.")
-    .def("drawAtlas",
-        py::overload_cast<const sk_sp<SkImage>&, const SkRSXform[],
-            const SkRect[], int, const SkRect*, const SkPaint*>(
-                &SkCanvas::drawAtlas),
-        "Draws a set of sprites from atlas, using clip, SkMatrix, and optional "
-        "SkPaint paint.")
-    /*
-    .def("drawDrawable",
-        py::overload_cast<SkDrawable*, const SkMatrix*>(
-            &SkCanvas::drawDrawable),
-        "Draws SkDrawable drawable using clip and SkMatrix, concatenated with "
-        "optional matrix.")
-    .def("drawDrawable",
-        py::overload_cast<SkDrawable*, SkScalar, SkScalar>(
-            &SkCanvas::drawDrawable),
-        "Draws SkDrawable drawable using clip and SkMatrix, offset by (x, y).")
-    */
+        // py::overload_cast<const SkImage*, const SkRSXform[], const SkRect[],
+        //     const SkColor[], int, SkBlendMode, const SkRect*, const SkPaint*>(
+        //         &SkCanvas::drawAtlas),
+        [] (SkCanvas& canvas, const SkImage* atlas,
+            const std::vector<SkRSXform>& xform,
+            const std::vector<SkRect>& tex,
+            const std::vector<SkColor>& colors,
+            SkBlendMode mode, const SkRect* cullRect, const SkPaint* paint) {
+            if (xform.size() != tex.size())
+                throw std::runtime_error(
+                    "xform and tex must have the same length.");
+            if (!colors.empty() && colors.size() != xform.size())
+                throw std::runtime_error(
+                    "colors must have the same length with xform.");
+            canvas.drawAtlas(atlas, &xform[0], &tex[0],
+                (colors.empty()) ? nullptr : &colors[0],
+                xform.size(), mode, cullRect, paint);
+        },
+        R"docstring(
+        Draws a set of sprites from atlas, using clip, :py:class:`Matrix`, and
+        optional :py:class:`Paint` paint.
+
+        paint uses anti-alias, alpha, :py:class:`ColorFilter`,
+        :py:class:`ImageFilter`, and :py:class:`BlendMode` to draw, if present.
+        For each entry in the array, :py:class:`Rect` tex locates sprite in
+        atlas, and :py:class:`RSXform` xform transforms it into destination
+        space.
+
+        xform, text, and colors if present, must contain count entries. Optional
+        colors are applied for each sprite using :py:class:`BlendMode` mode,
+        treating sprite as source and colors as destination. Optional cullRect
+        is a conservative bounds of all transformed sprites. If cullRect is
+        outside of clip, canvas can skip drawing.
+
+        If atlas is `None`, this draws nothing.
+
+        :param skia.Image atlas: :py:class:`Image` containing sprites
+        :param List[skia.RSXform xform]: :py:class:`RSXform` mappings for
+            sprites in atlas
+        :param List[skia.Rect] tex: :py:class:`Rect` locations of sprites in
+            atlas
+        :param List[int] colors: one per sprite, blended with sprite using
+            :py:class:`BlendMode`; may be `None`
+        :param skia.BlendMode mode: :py:class:`BlendMode` combining colors and
+            sprites
+        :param Union[skia.Rect,NoneType] cullRect: bounds of transformed sprites
+            for efficient clipping; may be `None`
+        :param Union[skia.Paint,NoneType] paint: :py:class:`ColorFilter`,
+            :py:class:`ImageFilter`, :py:class:`BlendMode`, and so on; may be
+            `None`
+        )docstring",
+        py::arg("atlas"), py::arg("xform"), py::arg("tex"), py::arg("colors"),
+        py::arg("mode"), py::arg("cullRect") = nullptr,
+        py::arg("paint") = nullptr)
+    // .def("drawAtlas",
+    //     py::overload_cast<const sk_sp<SkImage>&, const SkRSXform[],
+    //         const SkRect[], const SkColor[], int, SkBlendMode, const SkRect*,
+    //         const SkPaint*>(&SkCanvas::drawAtlas),
+    //     "Draws a set of sprites from atlas, using clip, SkMatrix, and optional "
+    //     "SkPaint paint.")
+    // .def("drawAtlas",
+    //     py::overload_cast<const SkImage*, const SkRSXform[], const SkRect[],
+    //         int, const SkRect*, const SkPaint*>(
+    //             &SkCanvas::drawAtlas),
+    //     "Draws a set of sprites from atlas, using clip, SkMatrix, and optional "
+    //     "SkPaint paint.")
+    // .def("drawAtlas",
+    //     py::overload_cast<const sk_sp<SkImage>&, const SkRSXform[],
+    //         const SkRect[], int, const SkRect*, const SkPaint*>(
+    //             &SkCanvas::drawAtlas),
+    //     "Draws a set of sprites from atlas, using clip, SkMatrix, and optional "
+    //     "SkPaint paint.")
+    // .def("drawDrawable",
+    //     py::overload_cast<SkDrawable*, const SkMatrix*>(
+    //         &SkCanvas::drawDrawable),
+    //     "Draws SkDrawable drawable using clip and SkMatrix, concatenated with "
+    //     "optional matrix.")
+    // .def("drawDrawable",
+    //     py::overload_cast<SkDrawable*, SkScalar, SkScalar>(
+    //         &SkCanvas::drawDrawable),
+    //     "Draws SkDrawable drawable using clip and SkMatrix, offset by (x, y).")
+    // .def("drawAnnotation",
+    //     py::overload_cast<const SkRect&, const char[], SkData*>(
+    //         &SkCanvas::drawAnnotation),
+    //     "Associates SkRect on SkCanvas with an annotation; a key-value pair, "
+    //     "where the key is a null-terminated UTF-8 string, and optional value "
+    //     "is stored as SkData.")
     .def("drawAnnotation",
-        py::overload_cast<const SkRect&, const char[], SkData*>(
-            &SkCanvas::drawAnnotation),
-        "Associates SkRect on SkCanvas with an annotation; a key-value pair, "
-        "where the key is a null-terminated UTF-8 string, and optional value "
-        "is stored as SkData.")
-    .def("drawAnnotation",
-        py::overload_cast<const SkRect&, const char[], const sk_sp<SkData>&>(
-            &SkCanvas::drawAnnotation),
-        "Associates SkRect on SkCanvas when an annotation; a key-value pair, "
-        "where the key is a null-terminated UTF-8 string, and optional value "
-        "is stored as SkData.")
+        // py::overload_cast<const SkRect&, const char[], const sk_sp<SkData>&>(
+        //     &SkCanvas::drawAnnotation),
+        [] (SkCanvas& canvas, const SkRect& rect, const std::string& key,
+            const sk_sp<SkData>& value) {
+            canvas.drawAnnotation(rect, key.c_str(), value);
+        },
+        R"docstring(
+        Associates :py:class:`Rect` on :py:class:`Canvas` when an annotation; a
+        key-value pair, where the key is a null-terminated UTF-8 string, and
+        optional value is stored as :py:class:`Data`.
+
+        Only some canvas implementations, such as recording to
+        :py:class:`Picture`, or drawing to document PDF, use annotations.
+
+        :param skia.Rect rect: :py:class:`Rect` extent of canvas to annotate
+        :param str key: string used for lookup
+        :param skia.Data value: data holding value stored in annotation
+        )docstring",
+        py::arg("rect"), py::arg("key"), py::arg("value"))
     .def("isClipEmpty", &SkCanvas::isClipEmpty,
         "Returns true if clip is empty; that is, nothing will draw.")
     .def("isClipRect", &SkCanvas::isClipRect,

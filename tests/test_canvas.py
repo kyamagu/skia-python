@@ -438,3 +438,44 @@ def test_Canvas_drawVertices(canvas, vertices, args):
 ])
 def test_Canvas_drawPatch(canvas, args):
     canvas.drawPatch(*args)
+
+
+@pytest.mark.parametrize('args', [
+    (
+        [skia.RSXform(1, 0, 0, 0),],
+        [skia.Rect(100, 100),],
+        [],
+        skia.BlendMode.kModulate,
+    ),
+    (
+        [skia.RSXform(1, 0, 0, 0),],
+        [skia.Rect(100, 100),],
+        [skia.ColorWHITE],
+        skia.BlendMode.kModulate,
+        skia.Rect(100, 100),
+        skia.Paint(),
+    ),
+])
+def test_Canvas_drawAtlas(canvas, image, args):
+    canvas.drawAtlas(image, *args)
+
+
+def test_Canvas_drawAnnotation(canvas):
+    canvas.drawAnnotation(
+        skia.Rect(10, 10), 'key', skia.Data(b'\x00\x00\x00\x00'))
+
+
+def test_Canvas_isClipEmpty(canvas):
+    assert isinstance(canvas.isClipEmpty(), bool)
+
+
+def test_Canvas_isClipRect(canvas):
+    assert isinstance(canvas.isClipRect(), bool)
+
+
+def test_Canvas_getTotalMatrix(canvas):
+    assert isinstance(canvas.getTotalMatrix(), skia.Matrix)
+
+
+def test_Canvas_getLocalToDevice(canvas):
+    assert isinstance(canvas.getLocalToDevice(), skia.M44)
