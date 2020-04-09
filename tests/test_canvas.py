@@ -21,6 +21,15 @@ def bitmap():
     yield skia.Bitmap()
 
 
+@pytest.fixture(scope='session')
+def vertices():
+    return skia.Vertices(skia.Vertices.VertexMode.kTriangles, [
+        (skia.Point(0, 0), skia.Point(1, 1), skia.ColorRED),
+        (skia.Point(1, 1), skia.Point(1, 0), skia.ColorRED),
+        (skia.Point(1, 0), skia.Point(0, 0), skia.ColorRED),
+    ])
+
+
 def check_canvas(x):
     assert isinstance(x, skia.Canvas)
 
@@ -391,3 +400,21 @@ def test_Canvas_drawString(canvas):
 ])
 def test_Canvas_drawTextBlob(canvas, args):
     canvas.drawTextBlob(*args)
+
+
+@pytest.mark.parametrize('args', [
+    (skia.Picture(skia.Rect(100, 100)),),
+    (skia.Picture(skia.Rect(100, 100)), skia.Matrix(),),
+    (skia.Picture(skia.Rect(100, 100)), skia.Matrix(), skia.Paint(),),
+    (skia.Picture(skia.Rect(100, 100)), None, skia.Paint(),),
+])
+def test_Canvas_drawPicture(canvas, args):
+    canvas.drawPicture(*args)
+
+
+@pytest.mark.parametrize('args', [
+    (skia.Paint(),),
+    (skia.Paint(), skia.BlendMode.kModulate),
+])
+def test_Canvas_drawVertices(canvas, vertices, args):
+    canvas.drawVertices(vertices, *args)

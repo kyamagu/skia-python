@@ -47,6 +47,7 @@ py::class_<SkPicture, PyPicture, sk_sp<SkPicture>>(m, "Picture", R"docstring(
     as a bounding box hint. To limit SkPicture bounds, use SkCanvas clip when
     recording or drawing SkPicture.
     )docstring")
+    .def(py::init(&SkPicture::MakePlaceholder))
     .def("playback", &SkPicture::playback,
         "Replays the drawing commands on the specified canvas.")
     .def("cullRect", &SkPicture::cullRect,

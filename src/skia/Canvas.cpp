@@ -728,42 +728,77 @@ canvas.def(py::init<>(),
     //         const SkPaint&>(&SkCanvas::drawTextBlob),
     //     "Draws SkTextBlob blob at (x, y), using clip, SkMatrix, and SkPaint "
     //     "paint.")
-    .def("drawPicture",
-        py::overload_cast<const SkPicture*>(&SkCanvas::drawPicture),
-        "Draws SkPicture picture, using clip and SkMatrix.")
-    .def("drawPicture",
-        py::overload_cast<const sk_sp<SkPicture>&>(&SkCanvas::drawPicture),
-        "Draws SkPicture picture, using clip and SkMatrix.")
+    // .def("drawPicture",
+    //     py::overload_cast<const SkPicture*>(&SkCanvas::drawPicture))
+    // .def("drawPicture",
+    //     py::overload_cast<const sk_sp<SkPicture>&>(&SkCanvas::drawPicture),
+    //     "Draws SkPicture picture, using clip and SkMatrix.")
     .def("drawPicture",
         py::overload_cast<const SkPicture*, const SkMatrix*, const SkPaint*>(
             &SkCanvas::drawPicture),
-        "Draws SkPicture picture, using clip and SkMatrix; transforming "
-        "picture with SkMatrix matrix, if provided; and use SkPaint paint "
-        "alpha, SkColorFilter, SkImageFilter, and SkBlendMode, if provided.")
-    .def("drawPicture",
-        py::overload_cast<const sk_sp<SkPicture>&, const SkMatrix*,
-            const SkPaint*>(&SkCanvas::drawPicture),
-        "Draws SkPicture picture, using clip and SkMatrix; transforming "
-        "picture with SkMatrix matrix, if provided; and use SkPaint paint "
-        "alpha, SkColorFilter, SkImageFilter, and SkBlendMode, if provided.")
+        R"docstring(
+        Draws :py:class:`Picture` picture, using clip and :py:class:`Matrix`;
+        transforming picture with :py:class:`Matrix` matrix, if provided; and
+        use :py:class:`Paint` paint alpha, :py:class:`ColorFilter`,
+        :py:class:`ImageFilter`, and :py:class:`BlendMode`, if provided.
+
+        :py:class:`Picture` records a series of draw commands for later
+        playback.
+
+        matrix transformation is equivalent to: save(), concat(), drawPicture(),
+        restore(). paint use is equivalent to: saveLayer(), drawPicture(),
+        restore().
+
+        :param skia.Picture picture: recorded drawing commands to play
+        :param skia.Matrix matrix:  :py:class:`Matrix` to rotate, scale,
+            translate, and so on; may be `None`
+        :param skia.Paint paint: :py:class:`Paint` to apply transparency,
+            filtering, and so on; may be `None`
+        )docstring",
+        py::arg("picture"), py::arg("matrix") = nullptr,
+        py::arg("paint") = nullptr)
+    // .def("drawPicture",
+    //     py::overload_cast<const sk_sp<SkPicture>&, const SkMatrix*,
+    //         const SkPaint*>(&SkCanvas::drawPicture),
+    //     "Draws SkPicture picture, using clip and SkMatrix; transforming "
+    //     "picture with SkMatrix matrix, if provided; and use SkPaint paint "
+    //     "alpha, SkColorFilter, SkImageFilter, and SkBlendMode, if provided.")
     .def("drawVertices",
-        py::overload_cast<const SkVertices*, SkBlendMode, const SkPaint&>(
-            &SkCanvas::drawVertices),
-        "Draws SkVertices vertices, a triangle mesh, using clip and SkMatrix.")
-    .def("drawVertices",
-        py::overload_cast<const SkVertices*, const SkPaint&>(
-            &SkCanvas::drawVertices),
-        "Variant of 3-parameter drawVertices, using the default of Modulate "
-        "for the blend parameter.")
-    .def("drawVertices",
-        py::overload_cast<const sk_sp<SkVertices>&, SkBlendMode,
-            const SkPaint&>(&SkCanvas::drawVertices),
-        "Draws SkVertices vertices, a triangle mesh, using clip and SkMatrix.")
-    .def("drawVertices",
-        py::overload_cast<const sk_sp<SkVertices>&, const SkPaint&>(
-            &SkCanvas::drawVertices),
-        "Variant of 3-parameter drawVertices, using the default of Modulate "
-        "for the blend parameter.")
+        // py::overload_cast<const SkVertices*, SkBlendMode, const SkPaint&>(
+        //     &SkCanvas::drawVertices),
+        [] (SkCanvas& canvas, const SkVertices* vertices, const SkPaint& paint,
+            SkBlendMode mode) { canvas.drawVertices(vertices, mode, paint); },
+        R"docstring(
+        Draws :py:class:`Vertices` vertices, a triangle mesh, using clip and
+        :py:class:`Matrix`.
+
+        If vertices texs and vertices colors are defined in vertices, and
+        :py:class:`Paint` paint contains :py:class:`Shader`,
+        :py:class:`BlendMode` mode combines vertices colors with
+        :py:class:`Shader`.
+
+        :param skia.Vertices vertices: triangle mesh to draw
+        :param skia.BlendMode mode: combines vertices colors with
+            :py:class:`Shader`, if both are present
+        :param skia.Paint paint: specifies the :py:class:`Shader`, used as
+            :py:class:`Vertices` texture
+        )docstring",
+        py::arg("vertices"), py::arg("paint"),
+        py::arg("mode") = SkBlendMode::kModulate)
+    // .def("drawVertices",
+    //     py::overload_cast<const SkVertices*, const SkPaint&>(
+    //         &SkCanvas::drawVertices),
+    //     "Variant of 3-parameter drawVertices, using the default of Modulate "
+    //     "for the blend parameter.")
+    // .def("drawVertices",
+    //     py::overload_cast<const sk_sp<SkVertices>&, SkBlendMode,
+    //         const SkPaint&>(&SkCanvas::drawVertices),
+    //     "Draws SkVertices vertices, a triangle mesh, using clip and SkMatrix.")
+    // .def("drawVertices",
+    //     py::overload_cast<const sk_sp<SkVertices>&, const SkPaint&>(
+    //         &SkCanvas::drawVertices),
+    //     "Variant of 3-parameter drawVertices, using the default of Modulate "
+    //     "for the blend parameter.")
     .def("drawPatch",
         py::overload_cast<const SkPoint[12], const SkColor[4],
             const SkPoint[4], SkBlendMode, const SkPaint&>(
