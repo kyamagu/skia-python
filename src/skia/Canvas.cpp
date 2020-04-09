@@ -158,16 +158,61 @@ py::enum_<SkCanvas::Lattice::RectType>(lattice, "RectType")
     .export_values();
 
 canvas.def(py::init<>(),
-        "Creates an empty SkCanvas with no backing device or pixels, with a "
-        "width and height of zero.")
+        R"docstring(
+        Creates an empty :py:class:`Canvas` with no backing device or pixels,
+        with a width and height of zero.
+        )docstring")
     .def(py::init<int, int, const SkSurfaceProps*>(),
-        "Creates SkCanvas of the specified dimensions without a SkSurface.",
+        R"docstring(
+        Creates :py:class:`Canvas` of the specified dimensions without a
+        :py:class:`Surface`.
+
+        Used by subclasses with custom implementations for draw member
+        functions.
+
+        If props equals `None`, :py:class:`SurfaceProps` are created with
+        :py:class:`SurfaceProps.InitType` settings, which choose the pixel
+        striping direction and order. Since a platform may dynamically change
+        its direction when the device is rotated, and since a platform may have
+        multiple monitors with different characteristics, it is best not to rely
+        on this legacy behavior.
+
+        :width: zero or greater
+        :height: zero or greater
+        :props: LCD striping orientation and setting for device independent
+            fonts; may be `None`
+        )docstring",
         py::arg("width"), py::arg("height"), py::arg("props") = nullptr)
     .def(py::init<const SkBitmap&>(),
-        "Constructs a canvas that draws into bitmap.",
+        R"docstring(
+        Constructs a canvas that draws into bitmap.
+
+        Sets :py:attr:`SurfaceProps.kLegacyFontHost` in constructed
+        :py:class:`Surface`.
+
+        :py:class:`Bitmap` is copied so that subsequently editing bitmap will
+        not affect constructed :py:class:`Canvas`.
+
+        May be deprecated in the future.
+
+        :bitmap: width, height, :py:class:`ColorType`, :py:class:`AlphaType`,
+            and pixel storage of raster surface
+        )docstring",
         py::arg("bitmap"))
     .def(py::init<const SkBitmap&, const SkSurfaceProps&>(),
-        "Constructs a canvas that draws into bitmap.",
+        R"docstring(
+        Constructs a canvas that draws into bitmap.
+
+        Use props to match the device characteristics, like LCD striping.
+
+        bitmap is copied so that subsequently editing bitmap will not affect
+        constructed :py:class:`Canvas`.
+
+        :bitmap: width, height, :py:class:`ColorType`, :py:class:`AlphaType`,
+            and pixel storage of raster surface
+        :props: order and orientation of RGB striping; and whether to use device
+            independent fonts
+        )docstring",
         py::arg("bitmap"), py::arg("props"))
     .def("imageInfo", &SkCanvas::imageInfo, "Returns SkImageInfo for SkCanvas.")
     .def("getProps", &SkCanvas::getProps,
@@ -257,11 +302,11 @@ canvas.def(py::init<>(),
         "Saves SkMatrix and clip, and allocates a SkBitmap for subsequent "
         "drawing.")
     .def("experimental_saveCamera",
-        (int (SkCanvas::*)(const SkM44&, const SkM44&))
-        &SkCanvas::experimental_saveCamera)
+        py::overload_cast<const SkM44&, const SkM44&>(
+            &SkCanvas::experimental_saveCamera))
     .def("experimental_saveCamera",
-        (int (SkCanvas::*)(const SkScalar[16], const SkScalar[16]))
-        &SkCanvas::experimental_saveCamera)
+        py::overload_cast<const SkScalar[16], const SkScalar[16]>(
+            &SkCanvas::experimental_saveCamera))
     .def("restore", &SkCanvas::restore,
         "Removes changes to SkMatrix and clip since SkCanvas state was last "
         "saved.")
@@ -276,29 +321,29 @@ canvas.def(py::init<>(),
         "Translates SkMatrix by dx along the x-axis and dy along the y-axis.")
     .def("scale", &SkCanvas::scale,
         "Scales SkMatrix by sx on the x-axis and sy on the y-axis.")
-    .def("rotate", (void (SkCanvas::*)(SkScalar)) &SkCanvas::rotate,
+    .def("rotate", py::overload_cast<SkScalar>(&SkCanvas::rotate),
         "Rotates SkMatrix by degrees.")
     .def("rotate",
-        (void (SkCanvas::*)(SkScalar, SkScalar, SkScalar)) &SkCanvas::rotate,
+        py::overload_cast<SkScalar, SkScalar, SkScalar>(&SkCanvas::rotate),
         "Rotates SkMatrix by degrees about a point at (px, py).")
     .def("skew", &SkCanvas::skew,
         "Skews SkMatrix by sx on the x-axis and sy on the y-axis.")
     .def("concat", &SkCanvas::concat,
         "Replaces SkMatrix with matrix premultiplied with existing SkMatrix.")
-    .def("concat44", (void (SkCanvas::*)(const SkM44&)) &SkCanvas::concat44)
-    .def("concat44", (void (SkCanvas::*)(const SkScalar[])) &SkCanvas::concat44)
+    .def("concat44", py::overload_cast<const SkM44&>(&SkCanvas::concat44))
+    .def("concat44", py::overload_cast<const SkScalar[]>(&SkCanvas::concat44))
     .def("setMatrix", &SkCanvas::setMatrix, "Replaces SkMatrix with matrix.")
     .def("resetMatrix", &SkCanvas::resetMatrix,
         "Sets SkMatrix to the identity matrix.")
     .def("clipRect",
-        (void (SkCanvas::*)(const SkRect&, SkClipOp, bool)) &SkCanvas::clipRect,
+        py::overload_cast<const SkRect&, SkClipOp, bool>(&SkCanvas::clipRect),
         "Replaces clip with the intersection or difference of clip and rect, "
         "with an aliased or anti-aliased clip edge.")
     .def("clipRect",
-        (void (SkCanvas::*)(const SkRect&, SkClipOp)) &SkCanvas::clipRect,
+        py::overload_cast<const SkRect&, SkClipOp>(&SkCanvas::clipRect),
         "Replaces clip with the intersection or difference of clip and rect.")
     .def("clipRect",
-        (void (SkCanvas::*)(const SkRect&, bool)) &SkCanvas::clipRect,
+        py::overload_cast<const SkRect&, bool>(&SkCanvas::clipRect),
         "Replaces clip with the intersection of clip and rect.",
         py::arg("rect"), py::arg("doAntiAlias") = false)
     .def("androidFramework_setDeviceClipRestriction",
@@ -307,27 +352,26 @@ canvas.def(py::init<>(),
         "clipRRect() and clipPath() and intersect the current clip with the "
         "specified rect.")
     .def("clipRRect",
-        (void (SkCanvas::*)(const SkRRect&, SkClipOp, bool))
-        &SkCanvas::clipRRect,
+        py::overload_cast<const SkRRect&, SkClipOp, bool>(&SkCanvas::clipRRect),
         "Replaces clip with the intersection or difference of clip and rrect, "
         "with an aliased or anti-aliased clip edge.")
     .def("clipRRect",
-        (void (SkCanvas::*)(const SkRRect&, SkClipOp)) &SkCanvas::clipRRect,
+        py::overload_cast<const SkRRect&, SkClipOp>(&SkCanvas::clipRRect),
         "Replaces clip with the intersection or difference of clip and rrect.")
     .def("clipRRect",
-        (void (SkCanvas::*)(const SkRRect&, bool)) &SkCanvas::clipRRect,
+        py::overload_cast<const SkRRect&, bool>(&SkCanvas::clipRRect),
         "Replaces clip with the intersection of clip and rrect, with an "
         "aliased or anti-aliased clip edge.",
         py::arg("rrect"), py::arg("doAntiAlias") = false)
     .def("clipPath",
-        (void (SkCanvas::*)(const SkPath&, SkClipOp, bool)) &SkCanvas::clipPath,
+        py::overload_cast<const SkPath&, SkClipOp, bool>(&SkCanvas::clipPath),
         "Replaces clip with the intersection or difference of clip and path, "
         "with an aliased or anti-aliased clip edge.")
     .def("clipPath",
-        (void (SkCanvas::*)(const SkPath&, SkClipOp)) &SkCanvas::clipPath,
+        py::overload_cast<const SkPath&, SkClipOp>(&SkCanvas::clipPath),
         "Replaces clip with the intersection or difference of clip and path.")
     .def("clipPath",
-        (void (SkCanvas::*)(const SkPath&, bool)) &SkCanvas::clipPath,
+        py::overload_cast<const SkPath&, bool>(&SkCanvas::clipPath),
         "Replaces clip with the intersection of clip and path.",
         py::arg("path"), py::arg("doAntiAlias") = false)
     // .def("clipShader", &SkCanvas::clipShader)
@@ -336,24 +380,24 @@ canvas.def(py::init<>(),
         "SkRegion deviceRgn.",
         py::arg("deviceRgn"), py::arg("op") = SkClipOp::kIntersect)
     .def("quickReject",
-        (bool (SkCanvas::*)(const SkRect&) const) &SkCanvas::quickReject,
+        py::overload_cast<const SkRect&>(&SkCanvas::quickReject, py::const_),
         "Returns true if SkRect rect, transformed by SkMatrix, can be quickly "
         "determined to be outside of clip.")
     .def("quickReject",
-        (bool (SkCanvas::*)(const SkPath&) const) &SkCanvas::quickReject,
+        py::overload_cast<const SkPath&>(&SkCanvas::quickReject, py::const_),
         "Returns true if path, transformed by SkMatrix, can be quickly "
         "determined to be outside of clip.")
     .def("getLocalClipBounds",
-        (SkRect (SkCanvas::*)() const) &SkCanvas::getLocalClipBounds,
+        py::overload_cast<>(&SkCanvas::getLocalClipBounds, py::const_),
         "Returns bounds of clip, transformed by inverse of SkMatrix.")
     .def("getLocalClipBounds",
-        (bool (SkCanvas::*)(SkRect*) const) &SkCanvas::getLocalClipBounds,
+        py::overload_cast<SkRect*>(&SkCanvas::getLocalClipBounds, py::const_),
         "Returns bounds of clip, transformed by inverse of SkMatrix.")
     .def("getDeviceClipBounds",
-        (SkIRect (SkCanvas::*)() const) &SkCanvas::getDeviceClipBounds,
+        py::overload_cast<>(&SkCanvas::getDeviceClipBounds, py::const_),
         "Returns SkIRect bounds of clip, unaffected by SkMatrix.")
     .def("getDeviceClipBounds",
-        (bool (SkCanvas::*)(SkIRect*) const) &SkCanvas::getDeviceClipBounds,
+        py::overload_cast<SkIRect*>(&SkCanvas::getDeviceClipBounds, py::const_),
         "Returns SkIRect bounds of clip, unaffected by SkMatrix.")
     .def("drawColor", &SkCanvas::drawColor, "Fills clip with color color.",
         py::arg("color"), py::arg("mode") = SkBlendMode::kSrcOver)
@@ -410,21 +454,20 @@ canvas.def(py::init<>(),
         )docstring",
         py::arg("mode"), py::arg("pts"), py::arg("paint"))
     .def("drawPoint",
-        (void (SkCanvas::*)(SkScalar, SkScalar, const SkPaint&))
-        &SkCanvas::drawPoint,
+        py::overload_cast<SkScalar, SkScalar, const SkPaint&>(
+            &SkCanvas::drawPoint),
         "Draws point at (x, y) using clip, SkMatrix and SkPaint paint.")
     .def("drawPoint",
-        (void (SkCanvas::*)(SkPoint, const SkPaint&))
-        &SkCanvas::drawPoint,
+        py::overload_cast<SkPoint, const SkPaint&>(&SkCanvas::drawPoint),
         "Draws point p using clip, SkMatrix and SkPaint paint.")
     .def("drawLine",
-        (void (SkCanvas::*)(SkScalar, SkScalar, SkScalar, SkScalar,
-            const SkPaint&)) &SkCanvas::drawLine,
+        py::overload_cast<SkScalar, SkScalar, SkScalar, SkScalar,
+            const SkPaint&>(&SkCanvas::drawLine),
         "Draws line segment from (x0, y0) to (x1, y1) using clip, SkMatrix, "
         "and SkPaint paint.")
     .def("drawLine",
-        (void (SkCanvas::*)(SkPoint, SkPoint, const SkPaint&))
-        &SkCanvas::drawLine,
+        py::overload_cast<SkPoint, SkPoint, const SkPaint&>(
+            &SkCanvas::drawLine),
         "Draws line segment from p0 to p1 using clip, SkMatrix, and SkPaint "
         "paint.")
     .def("drawRect", &SkCanvas::drawRect,
@@ -441,13 +484,13 @@ canvas.def(py::init<>(),
         "Draws SkRRect outer and inner using clip, SkMatrix, and SkPaint "
         "paint.")
     .def("drawCircle",
-        (void (SkCanvas::*)(SkScalar, SkScalar, SkScalar, const SkPaint&))
-        &SkCanvas::drawCircle,
+        py::overload_cast<SkScalar, SkScalar, SkScalar, const SkPaint&>(
+            &SkCanvas::drawCircle),
         "Draws circle at (cx, cy) with radius using clip, SkMatrix, and "
         "SkPaint paint.")
     .def("drawCircle",
-        (void (SkCanvas::*)(SkPoint, SkScalar, const SkPaint&))
-        &SkCanvas::drawCircle,
+        py::overload_cast<SkPoint, SkScalar, const SkPaint&>(
+            &SkCanvas::drawCircle),
         "Draws circle at center with radius using clip, SkMatrix, and SkPaint "
         "paint.")
     .def("drawArc", &SkCanvas::drawArc,
@@ -458,226 +501,235 @@ canvas.def(py::init<>(),
     .def("drawPath", &SkCanvas::drawPath,
         "Draws SkPath path using clip, SkMatrix, and SkPaint paint.")
     .def("drawImage",
-        (void (SkCanvas::*)(const SkImage*, SkScalar, SkScalar,
-            const SkPaint*)) &SkCanvas::drawImage,
+        py::overload_cast<const SkImage*, SkScalar, SkScalar,
+            const SkPaint*>(&SkCanvas::drawImage),
         "Draws SkImage image, with its top-left corner at (left, top), using "
-        "clip, SkMatrix, and optional SkPaint paint")
+        "clip, SkMatrix, and optional SkPaint paint",
+        py::arg("image"), py::arg("left"), py::arg("top"),
+        py::arg("paint") = nullptr)
     .def("drawImage",
-        (void (SkCanvas::*)(const sk_sp<SkImage>&, SkScalar, SkScalar,
-            const SkPaint*)) &SkCanvas::drawImage,
+        py::overload_cast<const sk_sp<SkImage>&, SkScalar, SkScalar,
+            const SkPaint*>(&SkCanvas::drawImage),
         "Draws SkImage image, with its top-left corner at (left, top), using "
-        "clip, SkMatrix, and optional SkPaint paint")
+        "clip, SkMatrix, and optional SkPaint paint",
+        py::arg("image"), py::arg("left"), py::arg("top"),
+        py::arg("paint") = nullptr)
     .def("drawImageRect",
-        (void (SkCanvas::*)(const SkImage*, const SkRect&, const SkRect&,
-            const SkPaint*, SkCanvas::SrcRectConstraint))
-        &SkCanvas::drawImageRect,
+        py::overload_cast<const SkImage*, const SkRect&, const SkRect&,
+            const SkPaint*, SkCanvas::SrcRectConstraint>(
+                &SkCanvas::drawImageRect),
         "Draws SkRect src of SkImage image, scaled and translated to fill "
         "SkRect dst.",
-        py::arg("image"), py::arg("src"), py::arg("dst"), py::arg("paint"),
-        py::arg("constraint") =
+        py::arg("image"), py::arg("src"), py::arg("dst"),
+        py::arg("paint") = nullptr, py::arg("constraint") =
             SkCanvas::SrcRectConstraint::kStrict_SrcRectConstraint)
     .def("drawImageRect",
-        (void (SkCanvas::*)(const SkImage*, const SkIRect&, const SkRect&,
-            const SkPaint*, SkCanvas::SrcRectConstraint))
-        &SkCanvas::drawImageRect,
+        py::overload_cast<const SkImage*, const SkIRect&, const SkRect&,
+            const SkPaint*, SkCanvas::SrcRectConstraint>(
+            &SkCanvas::drawImageRect),
         "Draws SkIRect isrc of SkImage image, scaled and translated to fill "
         "SkRect dst.",
-        py::arg("image"), py::arg("isrc"), py::arg("dst"), py::arg("paint"),
-        py::arg("constraint") =
+        py::arg("image"), py::arg("isrc"), py::arg("dst"),
+        py::arg("paint") = nullptr, py::arg("constraint") =
             SkCanvas::SrcRectConstraint::kStrict_SrcRectConstraint)
     .def("drawImageRect",
-        (void (SkCanvas::*)(const SkImage*, const SkRect&, const SkPaint*))
-        &SkCanvas::drawImageRect,
+        py::overload_cast<const SkImage*, const SkRect&, const SkPaint*>(
+            &SkCanvas::drawImageRect),
         "Draws SkImage image, scaled and translated to fill SkRect dst, using "
-        "clip, SkMatrix, and optional SkPaint paint.")
-    .def("drawImageRect",
-        (void (SkCanvas::*)(const sk_sp<SkImage>&, const SkRect&, const SkRect&,
-            const SkPaint*, SkCanvas::SrcRectConstraint))
-        &SkCanvas::drawImageRect,
-        "Draws SkRect src of SkImage image, scaled and translated to fill "
-        "SkRect dst.",
-        py::arg("image"), py::arg("src"), py::arg("dst"), py::arg("paint"),
-        py::arg("constraint") =
-            SkCanvas::SrcRectConstraint::kStrict_SrcRectConstraint)
-    .def("drawImageRect",
-        (void (SkCanvas::*)(const sk_sp<SkImage>&, const SkIRect&,
-            const SkRect&, const SkPaint*, SkCanvas::SrcRectConstraint))
-        &SkCanvas::drawImageRect,
-        "Draws SkIRect isrc of SkImage image, scaled and translated to fill "
-        "SkRect dst.",
-        py::arg("image"), py::arg("isrc"), py::arg("dst"), py::arg("paint"),
-        py::arg("constraint") =
-            SkCanvas::SrcRectConstraint::kStrict_SrcRectConstraint)
-    .def("drawImageRect",
-        (void (SkCanvas::*)(const sk_sp<SkImage>&, const SkRect&,
-            const SkPaint*)) &SkCanvas::drawImageRect,
-        "Draws SkImage image, scaled and translated to fill SkRect dst, using "
-        "clip, SkMatrix, and optional SkPaint paint.")
+        "clip, SkMatrix, and optional SkPaint paint.",
+        py::arg("image"), py::arg("dst"), py::arg("paint") = nullptr)
+    // .def("drawImageRect",
+    //     py::overload_cast<const sk_sp<SkImage>&, const SkRect&, const SkRect&,
+    //         const SkPaint*, SkCanvas::SrcRectConstraint>(
+    //         &SkCanvas::drawImageRect),
+    //     "Draws SkRect src of SkImage image, scaled and translated to fill "
+    //     "SkRect dst.",
+    //     py::arg("image"), py::arg("src"), py::arg("dst"), py::arg("paint"),
+    //     py::arg("constraint") =
+    //         SkCanvas::SrcRectConstraint::kStrict_SrcRectConstraint)
+    // .def("drawImageRect",
+    //     py::overload_cast<const sk_sp<SkImage>&, const SkIRect&,
+    //         const SkRect&, const SkPaint*, SkCanvas::SrcRectConstraint))
+    //     &SkCanvas::drawImageRect,
+    //     "Draws SkIRect isrc of SkImage image, scaled and translated to fill "
+    //     "SkRect dst.",
+    //     py::arg("image"), py::arg("isrc"), py::arg("dst"), py::arg("paint"),
+    //     py::arg("constraint") =
+    //         SkCanvas::SrcRectConstraint::kStrict_SrcRectConstraint)
+    // .def("drawImageRect",
+    //     py::overload_cast<const sk_sp<SkImage>&, const SkRect&,
+    //         const SkPaint*>(&SkCanvas::drawImageRect),
+    //     "Draws SkImage image, scaled and translated to fill SkRect dst, using "
+    //     "clip, SkMatrix, and optional SkPaint paint.")
     .def("drawImageNine",
-        (void (SkCanvas::*)(const SkImage*, const SkIRect&, const SkRect&,
-            const SkPaint*)) &SkCanvas::drawImageNine,
-        "Draws SkImage image stretched proportionally to fit into SkRect dst.")
-    .def("drawImageNine",
-        (void (SkCanvas::*)(const sk_sp<SkImage>&, const SkIRect&,
-            const SkRect&, const SkPaint*)) &SkCanvas::drawImageNine,
-        "Draws SkImage image stretched proportionally to fit into SkRect dst.")
+        py::overload_cast<const SkImage*, const SkIRect&, const SkRect&,
+            const SkPaint*>(&SkCanvas::drawImageNine),
+        "Draws SkImage image stretched proportionally to fit into SkRect dst.",
+        py::arg("image"), py::arg("center"), py::arg("dst"),
+        py::arg("paint") = nullptr)
+    // .def("drawImageNine",
+    //     py::overload_cast<const sk_sp<SkImage>&, const SkIRect&,
+    //         const SkRect&, const SkPaint*>(&SkCanvas::drawImageNine),
+    //     "Draws SkImage image stretched proportionally to fit into SkRect dst.")
     .def("drawBitmap", &SkCanvas::drawBitmap,
         "Draws SkBitmap bitmap, with its top-left corner at (left, top), using "
-        "clip, SkMatrix, and optional SkPaint paint.")
+        "clip, SkMatrix, and optional SkPaint paint.",
+        py::arg("bitmap"), py::arg("left"), py::arg("top"),
+        py::arg("paint") = nullptr)
     .def("drawBitmapRect",
-        (void (SkCanvas::*)(const SkBitmap&, const SkRect&, const SkRect&,
-            const SkPaint*, SkCanvas::SrcRectConstraint))
-        &SkCanvas::drawBitmapRect,
+        py::overload_cast<const SkBitmap&, const SkRect&, const SkRect&,
+            const SkPaint*, SkCanvas::SrcRectConstraint>(
+                &SkCanvas::drawBitmapRect),
         "Draws SkRect src of SkBitmap bitmap, scaled and translated to fill "
         "SkRect dst.",
-        py::arg("bitmap"), py::arg("src"), py::arg("dst"), py::arg("paint"),
-        py::arg("constraint") =
+        py::arg("bitmap"), py::arg("src"), py::arg("dst"),
+        py::arg("paint") = nullptr, py::arg("constraint") =
             SkCanvas::SrcRectConstraint::kStrict_SrcRectConstraint)
     .def("drawBitmapRect",
-        (void (SkCanvas::*)(const SkBitmap&, const SkIRect&, const SkRect&,
-            const SkPaint*, SkCanvas::SrcRectConstraint))
-        &SkCanvas::drawBitmapRect,
+        py::overload_cast<const SkBitmap&, const SkIRect&, const SkRect&,
+            const SkPaint*, SkCanvas::SrcRectConstraint>(
+                &SkCanvas::drawBitmapRect),
         "Draws SkIRect isrc of SkBitmap bitmap, scaled and translated to fill "
         "SkRect dst.",
-        py::arg("bitmap"), py::arg("isrc"), py::arg("dst"), py::arg("paint"),
-        py::arg("constraint") =
+        py::arg("bitmap"), py::arg("isrc"), py::arg("dst"),
+        py::arg("paint") = nullptr, py::arg("constraint") =
             SkCanvas::SrcRectConstraint::kStrict_SrcRectConstraint)
     .def("drawBitmapRect",
-        (void (SkCanvas::*)(const SkBitmap&, const SkRect&, const SkPaint*,
-            SkCanvas::SrcRectConstraint)) &SkCanvas::drawBitmapRect,
+        py::overload_cast<const SkBitmap&, const SkRect&, const SkPaint*,
+            SkCanvas::SrcRectConstraint>(&SkCanvas::drawBitmapRect),
         "Draws SkBitmap bitmap, scaled and translated to fill SkRect dst.",
-        py::arg("bitmap"), py::arg("dst"), py::arg("paint"),
+        py::arg("bitmap"), py::arg("dst"), py::arg("paint") = nullptr,
         py::arg("constraint") =
             SkCanvas::SrcRectConstraint::kStrict_SrcRectConstraint)
-    .def("drawImageLattice", &SkCanvas::drawImageLattice,
-        "Draws SkImage image stretched proportionally to fit into SkRect dst.")
-    .def("experimental_DrawEdgeAAQuad",
-        (void (SkCanvas::*)(const SkRect&, const SkPoint[4],
-            SkCanvas::QuadAAFlags, const SkColor4f&, SkBlendMode))
-        &SkCanvas::experimental_DrawEdgeAAQuad,
-        "This is an experimental API for the SkiaRenderer Chromium project, "
-        "and its API will surely evolve if it is not removed outright.")
-    .def("experimental_DrawEdgeAAQuad",
-        (void (SkCanvas::*)(const SkRect&, const SkPoint[4],
-            SkCanvas::QuadAAFlags, SkColor, SkBlendMode))
-        &SkCanvas::experimental_DrawEdgeAAQuad)
+    // .def("drawImageLattice", &SkCanvas::drawImageLattice,
+    //     "Draws SkImage image stretched proportionally to fit into SkRect dst.")
+    // .def("experimental_DrawEdgeAAQuad",
+    //     py::overload_cast<const SkRect&, const SkPoint[4],
+    //         SkCanvas::QuadAAFlags, const SkColor4f&, SkBlendMode>(
+    //             &SkCanvas::experimental_DrawEdgeAAQuad),
+    //     "This is an experimental API for the SkiaRenderer Chromium project, "
+    //     "and its API will surely evolve if it is not removed outright.")
+    // .def("experimental_DrawEdgeAAQuad",
+    //     py::overload_cast<const SkRect&, const SkPoint[4],
+    //         SkCanvas::QuadAAFlags, SkColor, SkBlendMode>(
+    //             &SkCanvas::experimental_DrawEdgeAAQuad))
     .def("drawSimpleText", &SkCanvas::drawSimpleText,
         "Draws text, with origin at (x, y), using clip, SkMatrix, SkFont font, "
         "and SkPaint paint.")
     .def("drawString",
-        (void (SkCanvas::*)(const char[], SkScalar, SkScalar, const SkFont&,
-            const SkPaint&)) &SkCanvas::drawString,
+        py::overload_cast<const char[], SkScalar, SkScalar, const SkFont&,
+            const SkPaint&>(&SkCanvas::drawString),
         "Draws null terminated string, with origin at (x, y), using clip, "
         "SkMatrix, SkFont font, and SkPaint paint.")
     // .def("drawString",
-    //     (void (SkCanvas::*)(const SkString&, SkScalar, SkScalar, const SkFont&,
-    //         const SkPaint&)) &SkCanvas::drawString,
+    //     py::overload_cast<const SkString&, SkScalar, SkScalar, const SkFont&,
+    //         const SkPaint&>(&SkCanvas::drawString),
     //     "DDraws SkString, with origin at (x, y), using clip, SkMatrix, SkFont "
     //     "font, and SkPaint paint.")
     .def("drawTextBlob",
-        (void (SkCanvas::*)(const SkTextBlob*, SkScalar, SkScalar,
-            const SkPaint&)) &SkCanvas::drawTextBlob,
+        py::overload_cast<const SkTextBlob*, SkScalar, SkScalar,
+            const SkPaint&>(&SkCanvas::drawTextBlob),
         "Draws SkTextBlob blob at (x, y), using clip, SkMatrix, and SkPaint "
         "paint.")
     .def("drawTextBlob",
-        (void (SkCanvas::*)(const sk_sp<SkTextBlob>&, SkScalar, SkScalar,
-            const SkPaint&)) &SkCanvas::drawTextBlob,
+        py::overload_cast<const sk_sp<SkTextBlob>&, SkScalar, SkScalar,
+            const SkPaint&>(&SkCanvas::drawTextBlob),
         "Draws SkTextBlob blob at (x, y), using clip, SkMatrix, and SkPaint "
         "paint.")
     .def("drawPicture",
-        (void (SkCanvas::*)(const SkPicture*)) &SkCanvas::drawPicture,
+        py::overload_cast<const SkPicture*>(&SkCanvas::drawPicture),
         "Draws SkPicture picture, using clip and SkMatrix.")
     .def("drawPicture",
-        (void (SkCanvas::*)(const sk_sp<SkPicture>&)) &SkCanvas::drawPicture,
+        py::overload_cast<const sk_sp<SkPicture>&>(&SkCanvas::drawPicture),
         "Draws SkPicture picture, using clip and SkMatrix.")
     .def("drawPicture",
-        (void (SkCanvas::*)(const SkPicture*, const SkMatrix*, const SkPaint*))
-        &SkCanvas::drawPicture,
+        py::overload_cast<const SkPicture*, const SkMatrix*, const SkPaint*>(
+            &SkCanvas::drawPicture),
         "Draws SkPicture picture, using clip and SkMatrix; transforming "
         "picture with SkMatrix matrix, if provided; and use SkPaint paint "
         "alpha, SkColorFilter, SkImageFilter, and SkBlendMode, if provided.")
     .def("drawPicture",
-        (void (SkCanvas::*)(const sk_sp<SkPicture>&, const SkMatrix*,
-            const SkPaint*)) &SkCanvas::drawPicture,
+        py::overload_cast<const sk_sp<SkPicture>&, const SkMatrix*,
+            const SkPaint*>(&SkCanvas::drawPicture),
         "Draws SkPicture picture, using clip and SkMatrix; transforming "
         "picture with SkMatrix matrix, if provided; and use SkPaint paint "
         "alpha, SkColorFilter, SkImageFilter, and SkBlendMode, if provided.")
     .def("drawVertices",
-        (void (SkCanvas::*)(const SkVertices*, SkBlendMode, const SkPaint&))
-        &SkCanvas::drawVertices,
+        py::overload_cast<const SkVertices*, SkBlendMode, const SkPaint&>(
+            &SkCanvas::drawVertices),
         "Draws SkVertices vertices, a triangle mesh, using clip and SkMatrix.")
     .def("drawVertices",
-        (void (SkCanvas::*)(const SkVertices*, const SkPaint&))
-        &SkCanvas::drawVertices,
+        py::overload_cast<const SkVertices*, const SkPaint&>(
+            &SkCanvas::drawVertices),
         "Variant of 3-parameter drawVertices, using the default of Modulate "
         "for the blend parameter.")
     .def("drawVertices",
-        (void (SkCanvas::*)(const sk_sp<SkVertices>&, SkBlendMode,
-            const SkPaint&)) &SkCanvas::drawVertices,
+        py::overload_cast<const sk_sp<SkVertices>&, SkBlendMode,
+            const SkPaint&>(&SkCanvas::drawVertices),
         "Draws SkVertices vertices, a triangle mesh, using clip and SkMatrix.")
     .def("drawVertices",
-        (void (SkCanvas::*)(const sk_sp<SkVertices>&, const SkPaint&))
-        &SkCanvas::drawVertices,
+        py::overload_cast<const sk_sp<SkVertices>&, const SkPaint&>(
+            &SkCanvas::drawVertices),
         "Variant of 3-parameter drawVertices, using the default of Modulate "
         "for the blend parameter.")
     .def("drawPatch",
-        (void (SkCanvas::*)(const SkPoint[12], const SkColor[4],
-            const SkPoint[4], SkBlendMode, const SkPaint&))
-        &SkCanvas::drawPatch,
+        py::overload_cast<const SkPoint[12], const SkColor[4],
+            const SkPoint[4], SkBlendMode, const SkPaint&>(
+                &SkCanvas::drawPatch),
         "Draws a Coons patch: the interpolation of four cubics with shared "
         "corners, associating a color, and optionally a texture SkPoint, with "
         "each corner.")
     .def("drawPatch",
-        (void (SkCanvas::*)(const SkPoint[12], const SkColor[4],
-            const SkPoint[4], const SkPaint&))
-        &SkCanvas::drawPatch,
+        py::overload_cast<const SkPoint[12], const SkColor[4],
+            const SkPoint[4], const SkPaint&>(
+                &SkCanvas::drawPatch),
         "Draws SkPath cubic Coons patch: the interpolation of four cubics with "
         "shared corners, associating a color, and optionally a texture "
         "SkPoint, with each corner.")
     .def("drawAtlas",
-        (void (SkCanvas::*)(const SkImage*, const SkRSXform[], const SkRect[],
-            const SkColor[], int, SkBlendMode, const SkRect*, const SkPaint*))
-        &SkCanvas::drawAtlas,
+        py::overload_cast<const SkImage*, const SkRSXform[], const SkRect[],
+            const SkColor[], int, SkBlendMode, const SkRect*, const SkPaint*>(
+                &SkCanvas::drawAtlas),
         "Draws a set of sprites from atlas, using clip, SkMatrix, and optional "
         "SkPaint paint.")
     .def("drawAtlas",
-        (void (SkCanvas::*)(const sk_sp<SkImage>&, const SkRSXform[],
+        py::overload_cast<const sk_sp<SkImage>&, const SkRSXform[],
             const SkRect[], const SkColor[], int, SkBlendMode, const SkRect*,
-            const SkPaint*)) &SkCanvas::drawAtlas,
+            const SkPaint*>(&SkCanvas::drawAtlas),
         "Draws a set of sprites from atlas, using clip, SkMatrix, and optional "
         "SkPaint paint.")
     .def("drawAtlas",
-        (void (SkCanvas::*)(const SkImage*, const SkRSXform[], const SkRect[],
-            int, const SkRect*, const SkPaint*))
-        &SkCanvas::drawAtlas,
+        py::overload_cast<const SkImage*, const SkRSXform[], const SkRect[],
+            int, const SkRect*, const SkPaint*>(
+                &SkCanvas::drawAtlas),
         "Draws a set of sprites from atlas, using clip, SkMatrix, and optional "
         "SkPaint paint.")
     .def("drawAtlas",
-        (void (SkCanvas::*)(const sk_sp<SkImage>&, const SkRSXform[],
-            const SkRect[], int, const SkRect*, const SkPaint*))
-        &SkCanvas::drawAtlas,
+        py::overload_cast<const sk_sp<SkImage>&, const SkRSXform[],
+            const SkRect[], int, const SkRect*, const SkPaint*>(
+                &SkCanvas::drawAtlas),
         "Draws a set of sprites from atlas, using clip, SkMatrix, and optional "
         "SkPaint paint.")
     /*
     .def("drawDrawable",
-        (void (SkCanvas::*)(SkDrawable*, const SkMatrix*))
-        &SkCanvas::drawDrawable,
+        py::overload_cast<SkDrawable*, const SkMatrix*>(
+            &SkCanvas::drawDrawable),
         "Draws SkDrawable drawable using clip and SkMatrix, concatenated with "
         "optional matrix.")
     .def("drawDrawable",
-        (void (SkCanvas::*)(SkDrawable*, SkScalar, SkScalar))
-        &SkCanvas::drawDrawable,
+        py::overload_cast<SkDrawable*, SkScalar, SkScalar>(
+            &SkCanvas::drawDrawable),
         "Draws SkDrawable drawable using clip and SkMatrix, offset by (x, y).")
     */
     .def("drawAnnotation",
-        (void (SkCanvas::*)(const SkRect&, const char[], SkData*))
-        &SkCanvas::drawAnnotation,
+        py::overload_cast<const SkRect&, const char[], SkData*>(
+            &SkCanvas::drawAnnotation),
         "Associates SkRect on SkCanvas with an annotation; a key-value pair, "
         "where the key is a null-terminated UTF-8 string, and optional value "
         "is stored as SkData.")
     .def("drawAnnotation",
-        (void (SkCanvas::*)(const SkRect&, const char[], const sk_sp<SkData>&))
-        &SkCanvas::drawAnnotation,
+        py::overload_cast<const SkRect&, const char[], const sk_sp<SkData>&>(
+            &SkCanvas::drawAnnotation),
         "Associates SkRect on SkCanvas when an annotation; a key-value pair, "
         "where the key is a null-terminated UTF-8 string, and optional value "
         "is stored as SkData.")
@@ -687,19 +739,22 @@ canvas.def(py::init<>(),
         "Returns true if clip is SkRect and not empty.")
     .def("getTotalMatrix", &SkCanvas::getTotalMatrix, "Returns SkMatrix.")
     .def("getLocalToDevice",
-        (SkM44 (SkCanvas::*)() const) &SkCanvas::getLocalToDevice)
+        py::overload_cast<>(&SkCanvas::getLocalToDevice, py::const_))
     .def("getLocalToDevice",
-        (void (SkCanvas::*)(SkScalar[16]) const) &SkCanvas::getLocalToDevice)
+        py::overload_cast<SkScalar[16]>(
+            &SkCanvas::getLocalToDevice, py::const_))
     .def("experimental_getLocalToWorld",
-        (SkM44 (SkCanvas::*)() const) &SkCanvas::experimental_getLocalToWorld)
+        py::overload_cast<>(
+            &SkCanvas::experimental_getLocalToWorld, py::const_))
     .def("experimental_getLocalToCamera",
-        (SkM44 (SkCanvas::*)() const) &SkCanvas::experimental_getLocalToCamera)
+        py::overload_cast<>(
+            &SkCanvas::experimental_getLocalToCamera, py::const_))
     .def("experimental_getLocalToCamera",
-        (void (SkCanvas::*)(SkScalar[16]) const)
-        &SkCanvas::experimental_getLocalToCamera)
+        py::overload_cast<SkScalar[16]>(
+            &SkCanvas::experimental_getLocalToCamera, py::const_))
     .def("experimental_getLocalToWorld",
-        (void (SkCanvas::*)(SkScalar[16]) const)
-        &SkCanvas::experimental_getLocalToWorld)
+        py::overload_cast<SkScalar[16]>(
+            &SkCanvas::experimental_getLocalToWorld, py::const_))
     // Static methods.
     .def_static("MakeRasterDirect", &SkCanvas::MakeRasterDirect,
         "Allocates raster SkCanvas that will draw directly into pixels.")

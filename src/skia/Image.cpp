@@ -1,4 +1,8 @@
 #include "common.h"
+#include <pybind11/numpy.h>
+
+template<typename T>
+using NumPy = py::array_t<T, py::array::c_style | py::array::forcecast>;
 
 void initImage(py::module &m) {
 py::enum_<SkFilterQuality>(m, "FilterQuality", R"docstring(
@@ -49,7 +53,8 @@ py::enum_<SkEncodedImageFormat>(m, "EncodedImageFormat", R"docstring(
     .value("kHEIF", SkEncodedImageFormat::kHEIF)
     .export_values();
 
-py::class_<SkImage, sk_sp<SkImage>> image(m, "Image", R"docstring(
+py::class_<SkImage, sk_sp<SkImage>> image(m, "Image",
+    R"docstring(
     SkImage describes a two dimensional array of pixels to draw.
 
     The pixels may be decoded in a raster bitmap, encoded in a SkPicture or
@@ -87,6 +92,20 @@ py::enum_<SkImage::CachingHint>(image, "CachingHint")
     .export_values();
 
 image
+    .def(py::init([] (NumPy<uint8_t> array) {
+        py::buffer_info info = array.request();
+        if (info.ndim <= 1)
+            throw std::runtime_error(
+                "Number of dimensions must be 2 or more.");
+        if (info.shape[0] == 0 || info.shape[1] == 0)
+            throw std::runtime_error(
+                "Width and height must be greater than 0.");
+        auto imageinfo = SkImageInfo::MakeN32Premul(
+            info.shape[1], info.shape[0]);
+        auto data = SkData::MakeWithoutCopy(
+            info.ptr, info.shape[0] * info.strides[0]);
+        return SkImage::MakeRasterData(imageinfo, data, info.strides[0]);
+    }))
     .def("imageInfo", &SkImage::imageInfo,
         "Returns a SkImageInfo describing the width, height, color type, alpha "
         "type, and color space of the SkImage.")

@@ -11,6 +11,16 @@ def canvas(surface):
     canvas.flush()
 
 
+@pytest.fixture(scope='session')
+def image():
+    yield skia.Image(np.zeros((320, 240, 4), dtype=np.uint8))
+
+
+@pytest.fixture(scope='session')
+def bitmap():
+    yield skia.Bitmap()
+
+
 def check_canvas(x):
     assert isinstance(x, skia.Canvas)
 
@@ -248,3 +258,120 @@ def test_Canvas_drawPaint(canvas):
 def test_Canvas_drawPoints(canvas):
     points = [skia.Point(0, 0), skia.Point(1, 1)]
     canvas.drawPoints(skia.Canvas.PointMode.kPoints, points, skia.Paint())
+
+
+@pytest.mark.parametrize('args', [
+    (1, 1, skia.Paint()),
+    (skia.Point(1, 1), skia.Paint()),
+])
+def test_Canvas_drawPoint(canvas, args):
+    canvas.drawPoint(*args)
+
+
+@pytest.mark.parametrize('args', [
+    (0, 0, 1, 1, skia.Paint()),
+    (skia.Point(0, 0), skia.Point(1, 1), skia.Paint()),
+])
+def test_Canvas_drawLine(canvas, args):
+    canvas.drawLine(*args)
+
+
+def test_Canvas_drawRect(canvas):
+    canvas.drawRect(skia.Rect(10, 10), skia.Paint())
+
+
+def test_Canvas_drawIRect(canvas):
+    canvas.drawIRect(skia.IRect(10, 10), skia.Paint())
+
+
+def test_Canvas_drawRegion(canvas):
+    canvas.drawRegion(skia.Region(), skia.Paint())
+
+
+def test_Canvas_drawOval(canvas):
+    canvas.drawOval(skia.Rect(10, 10), skia.Paint())
+
+
+def test_Canvas_drawRRect(canvas):
+    canvas.drawRRect(skia.RRect(), skia.Paint())
+
+
+def test_Canvas_drawDRRect(canvas):
+    canvas.drawDRRect(skia.RRect(), skia.RRect(), skia.Paint())
+
+
+@pytest.mark.parametrize('args', [
+    (50, 50, 20, skia.Paint()),
+    (skia.Point(50, 50), 20, skia.Paint()),
+])
+def test_Canvas_drawCircle(canvas, args):
+    canvas.drawCircle(*args)
+
+
+def test_Canvas_drawArc(canvas):
+    canvas.drawArc(skia.Rect(30, 30), 0, 90, True, skia.Paint())
+
+
+def test_Canvas_drawRoundRect(canvas):
+    canvas.drawRoundRect(skia.Rect(30, 30), 3, 3, skia.Paint())
+
+
+def test_Canvas_drawPath(canvas):
+    canvas.drawPath(skia.Path(), skia.Paint())
+
+
+@pytest.mark.parametrize('args', [
+    (0, 0),
+    (0, 0, skia.Paint()),
+])
+def test_Canvas_drawImage(canvas, image, args):
+    canvas.drawImage(image, *args)
+
+
+@pytest.mark.parametrize('args', [
+    (skia.Rect(100, 100), skia.Rect(100, 100)),
+    (skia.Rect(100, 100), skia.Rect(100, 100), skia.Paint()),
+    (skia.Rect(100, 100), skia.Rect(100, 100), skia.Paint(),
+        skia.Canvas.kStrict),
+    (skia.IRect(100, 100), skia.Rect(100, 100)),
+    (skia.IRect(100, 100), skia.Rect(100, 100), skia.Paint()),
+    (skia.IRect(100, 100), skia.Rect(100, 100), skia.Paint(),
+        skia.Canvas.kStrict),
+    (skia.Rect(100, 100),),
+    (skia.Rect(100, 100), skia.Paint()),
+])
+def test_Canvas_drawImageRect(canvas, image, args):
+    canvas.drawImageRect(image, *args)
+
+
+@pytest.mark.parametrize('args', [
+    (0, 0),
+    (0, 0, skia.Paint()),
+])
+def test_Canvas_drawBitmap(canvas, bitmap, args):
+    canvas.drawBitmap(bitmap, *args)
+
+
+@pytest.mark.parametrize('args', [
+    (skia.Rect(100, 100), skia.Rect(100, 100)),
+    (skia.Rect(100, 100), skia.Rect(100, 100), skia.Paint()),
+    (skia.Rect(100, 100), skia.Rect(100, 100), skia.Paint(),
+        skia.Canvas.kStrict),
+    (skia.IRect(100, 100), skia.Rect(100, 100), skia.Paint()),
+    (skia.IRect(100, 100), skia.Rect(100, 100), skia.Paint()),
+    (skia.IRect(100, 100), skia.Rect(100, 100), skia.Paint(),
+        skia.Canvas.kStrict),
+    (skia.Rect(100, 100),),
+    (skia.Rect(100, 100), skia.Paint()),
+    (skia.Rect(100, 100), skia.Paint(), skia.Canvas.kStrict),
+])
+def test_Canvas_drawBitmapRect(canvas, bitmap, args):
+    canvas.drawBitmapRect(bitmap, *args)
+
+
+# @pytest.mark.parametrize('args', [
+#     (skia.Canvas.Lattice(), skia.Rect(100, 100)),
+#     (skia.Canvas.Lattice(), skia.Rect(100, 100), skia.Paint()),
+# ])
+# def test_Canvas_drawImageLattice(canvas, image, args):
+#     canvas.drawImageLattice(image, *args)
