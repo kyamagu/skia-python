@@ -51,6 +51,11 @@ PYBIND11_MODULE(skia, m) {
             BlendModeCoeff
             Budgeted
             Canvas
+            Canvas.SrcRectConstraint
+            Canvas.PointMode
+            Canvas.QuadAAFlags
+            Canvas.SaveLayerRec
+            Canvas.Lattice
             ClipOp
             Color4f
             ColorFilter

@@ -231,3 +231,20 @@ def test_Canvas_getDeviceClipBounds(canvas, args, kls):
 ])
 def test_Canvas_drawColor(canvas, args):
     canvas.drawColor(*args)
+
+
+def test_Canvas_clear(canvas):
+    canvas.clear(skia.ColorWHITE)
+
+
+def test_Canvas_discard(canvas):
+    canvas.discard()
+
+
+def test_Canvas_drawPaint(canvas):
+    canvas.drawPaint(skia.Paint())
+
+
+def test_Canvas_drawPoints(canvas):
+    points = [skia.Point(0, 0), skia.Point(1, 1)]
+    canvas.drawPoints(skia.Canvas.PointMode.kPoints, points, skia.Paint())
