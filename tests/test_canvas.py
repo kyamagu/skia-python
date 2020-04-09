@@ -375,3 +375,19 @@ def test_Canvas_drawBitmapRect(canvas, bitmap, args):
 # ])
 # def test_Canvas_drawImageLattice(canvas, image, args):
 #     canvas.drawImageLattice(image, *args)
+
+
+def test_Canvas_drawSimpleText(canvas):
+    canvas.drawSimpleText('foo', 0, 0, skia.Font(), skia.Paint())
+
+
+def test_Canvas_drawString(canvas):
+    canvas.drawString('foo', 0, 0, skia.Font(), skia.Paint())
+
+
+@pytest.mark.parametrize('args', [
+    (skia.TextBlob('foo', skia.Font()), 0, 0, skia.Paint(),),
+    (skia.TextBlob('foo', skia.Font()), 0, 0, skia.Paint(),),
+])
+def test_Canvas_drawTextBlob(canvas, args):
+    canvas.drawTextBlob(*args)

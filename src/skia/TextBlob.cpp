@@ -13,6 +13,25 @@ py::class_<SkTextBlob, sk_sp<SkTextBlob>>(m, "TextBlob", R"docstring(
     Each text run consists of glyphs, SkPaint, and position. Only parts of
     SkPaint related to fonts and text rendering are used by run.
     )docstring")
+    .def(py::init([](const std::string& text, const SkFont& font) {
+        return SkTextBlob::MakeFromText(text.c_str(), text.size(), font);
+    }),
+    R"docstring(
+    Creates :py:class:`TextBlob` with a single run.
+
+    `font` contains attributes used to define the run text.
+
+    This function uses the default character-to-glyph mapping from the
+    :py:class:`Typeface` in font. It does not perform typeface fallback for
+    characters not found in the :py:class:`Typeface`. It does not perform
+    kerning or other complex shaping; glyphs are positioned based on their
+    default advances.
+
+    :param str text: character code points or glyphs drawn
+    :param skia.Font font: text size, typeface, text scale, and so on, used to
+        draw
+    )docstring",
+    py::arg("text"), py::arg("font"))
     .def("bounds", &SkTextBlob::bounds,
         "Returns conservative bounding box.")
     .def("uniqueID", &SkTextBlob::uniqueID,

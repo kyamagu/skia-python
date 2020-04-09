@@ -135,7 +135,6 @@ PYBIND11_MODULE(skia, m) {
     initData(m);
 
     initBitmap(m);
-    initCanvas(m);
     initFont(m);
     initGrContext(m);
     initImage(m);
@@ -144,9 +143,11 @@ PYBIND11_MODULE(skia, m) {
     initPath(m);
     initPicture(m);
     initPixmap(m);
-    initSurface(m);
     initTextBlob(m);
     initVertices(m);
+
+    initCanvas(m);
+    initSurface(m);
 
 #ifdef VERSION_INFO
     m.attr("__version__") = STRING(VERSION_INFO);

@@ -613,14 +613,77 @@ canvas.def(py::init<>(),
     //     py::overload_cast<const SkRect&, const SkPoint[4],
     //         SkCanvas::QuadAAFlags, SkColor, SkBlendMode>(
     //             &SkCanvas::experimental_DrawEdgeAAQuad))
-    .def("drawSimpleText", &SkCanvas::drawSimpleText,
-        "Draws text, with origin at (x, y), using clip, SkMatrix, SkFont font, "
-        "and SkPaint paint.")
+    .def("drawSimpleText",
+        // &SkCanvas::drawSimpleText,
+        [] (SkCanvas& canvas, const std::string& text, SkScalar x, SkScalar y,
+            const SkFont& font, const SkPaint& paint) {
+            canvas.drawSimpleText(
+                text.c_str(), text.size(), SkTextEncoding::kUTF8, x, y, font,
+                paint);
+        },
+        R"docstring(
+        Draws text, with origin at (x, y), using clip, :py:class:`Matrix`,
+        :py:class:`Font` font, and :py:class:`Paint` paint.
+
+        This function uses the default character-to-glyph mapping from the
+        :py:class:`Typeface` in font. It does not perform typeface fallback for
+        characters not found in the :py:class:`Typeface`. It does not perform
+        kerning or other complex shaping; glyphs are positioned based on their
+        default advances.
+
+        Text size is affected by :py:class:`Matrix` and :py:class:`Font` text
+        size. Default text size is 12 point.
+
+        All elements of paint: :py:class:`PathEffect`, :py:class:`MaskFilter`,
+        :py:class:`Shader`, :py:class:`ColorFilter`, :py:class:`ImageFilter`,
+        and :py:class:`DrawLooper`; apply to text. By default, draws filled
+        black glyphs.
+
+        :param str text: character code points or glyphs drawn
+        :param float x: start of text on x-axis
+        :param float y: start of text on y-axis
+        :param skia.Font font: typeface, text size and so, used to describe the
+            text
+        :param skia.Paint paint: blend, color, and so on, used to draw
+        )docstring",
+        py::arg("text"), py::arg("x"), py::arg("y"), py::arg("font"),
+        py::arg("paint"))
     .def("drawString",
-        py::overload_cast<const char[], SkScalar, SkScalar, const SkFont&,
-            const SkPaint&>(&SkCanvas::drawString),
-        "Draws null terminated string, with origin at (x, y), using clip, "
-        "SkMatrix, SkFont font, and SkPaint paint.")
+        // py::overload_cast<const char[], SkScalar, SkScalar, const SkFont&,
+        //     const SkPaint&>(&SkCanvas::drawString),
+        [] (SkCanvas& canvas, const std::string& text, SkScalar x, SkScalar y,
+            const SkFont& font, const SkPaint& paint) {
+            canvas.drawString(text.c_str(), x, y, font, paint);
+        },
+        R"docstring(
+        Draws string, with origin at (x, y), using clip, :py:class:`Matrix`,
+        :py:class:`Font` font, and :py:class:`Paint` paint.
+
+        This function uses the default character-to-glyph mapping from the
+        :py:class:`Typeface` in font. It does not perform typeface fallback for
+        characters not found in the :py:class:`Typeface`. It does not perform
+        kerning; glyphs are positioned based on their default advances.
+
+        String `text` is encoded as UTF-8.
+
+        Text size is affected by :py:class:`Matrix` and font text size. Default
+        text size is 12 point.
+
+        All elements of paint: :py:class:`PathEffect`, :py:class:`MaskFilter`,
+        :py:class:`Shader`, :py:class:`ColorFilter`, :py:class:`ImageFilter`,
+        and :py:class:`DrawLooper`; apply to text. By default, draws filled
+        black glyphs.
+
+        :param str text: character code points drawn, ending with a char value
+            of zero
+        :param float x: start of string on x-axis
+        :param float y: start of string on y-axis
+        :param skia.Font font: typeface, text size and so, used to describe the
+            text
+        :param skia.Paint paint: blend, color, and so on, used to draw
+        )docstring",
+        py::arg("text"), py::arg("x"), py::arg("y"), py::arg("font"),
+        py::arg("paint"))
     // .def("drawString",
     //     py::overload_cast<const SkString&, SkScalar, SkScalar, const SkFont&,
     //         const SkPaint&>(&SkCanvas::drawString),
@@ -629,13 +692,42 @@ canvas.def(py::init<>(),
     .def("drawTextBlob",
         py::overload_cast<const SkTextBlob*, SkScalar, SkScalar,
             const SkPaint&>(&SkCanvas::drawTextBlob),
-        "Draws SkTextBlob blob at (x, y), using clip, SkMatrix, and SkPaint "
-        "paint.")
-    .def("drawTextBlob",
-        py::overload_cast<const sk_sp<SkTextBlob>&, SkScalar, SkScalar,
-            const SkPaint&>(&SkCanvas::drawTextBlob),
-        "Draws SkTextBlob blob at (x, y), using clip, SkMatrix, and SkPaint "
-        "paint.")
+        R"docstring(
+        Draws :py:class:`TextBlob` blob at (x, y), using clip,
+        :py:class:`Matrix`, and :py:class:`Paint` paint.
+
+        `blob` contains glyphs, their positions, and paint attributes specific
+        to text: :py:class:`Typeface`, :py:class:`Paint` text size,
+        :py:class:`Paint` text scale x, :py:class:`Paint` text skew x,
+        :py:class:`Paint`::Align, :py:class:`Paint`::Hinting, anti-alias,
+        :py:class:`Paint` fake bold, :py:class:`Paint` font embedded bitmaps,
+        :py:class:`Paint` full hinting spacing, LCD text, :py:class:`Paint`
+        linear text, and :py:class:`Paint` subpixel text.
+
+        :py:class:`TextEncoding` must be set to
+        :py:attr:`TextEncoding.kGlyphID`.
+
+        Elements of paint: anti-alias, :py:class:`BlendMode`, color including
+        alpha, :py:class:`ColorFilter`, :py:class:`Paint` dither,
+        :py:class:`DrawLooper`, :py:class:`MaskFilter`, :py:class:`PathEffect`,
+        :py:class:`Shader`, and :py:class:`Paint.Style`; apply to blob. If
+        :py:class:`Paint` contains :py:attr:`Paint.kStroke`: :py:class:`Paint`
+        iter limit, :py:class:`Paint.Cap`, :py:class:`Paint.Join`, and
+        :py:class:`Paint` stroke width; apply to :py:class:`Path` created from
+        blob.
+
+        :param skia.TextBlob blob: glyphs, positions, and their paints' text
+            size, typeface, and so on
+        :param float x: horizontal offset applied to blob
+        :param float y: vertical offset applied to blob
+        :param skia.Paint paint: blend, color, stroking, and so on, used to draw
+        )docstring",
+        py::arg("blob"), py::arg("x"), py::arg("y"), py::arg("paint"))
+    // .def("drawTextBlob",
+    //     py::overload_cast<const sk_sp<SkTextBlob>&, SkScalar, SkScalar,
+    //         const SkPaint&>(&SkCanvas::drawTextBlob),
+    //     "Draws SkTextBlob blob at (x, y), using clip, SkMatrix, and SkPaint "
+    //     "paint.")
     .def("drawPicture",
         py::overload_cast<const SkPicture*>(&SkCanvas::drawPicture),
         "Draws SkPicture picture, using clip and SkMatrix.")
