@@ -1329,4 +1329,6 @@ canvas
         py::arg("width"), py::arg("height"), py::arg("pixels"),
         py::arg("rowBytes") = 0)
     ;
+
+    m.def("MakeNullCanvas", &SkMakeNullCanvas);
 }

@@ -68,8 +68,16 @@ py::class_<SkData, sk_sp<SkData>>(m, "Data", py::buffer_protocol(),
         "the lifetime of the SkData.")
     .def_static("MakeFromMalloc", &SkData::MakeFromMalloc,
         "Create a new dataref from a pointer allocated by malloc.")
-    .def_static("MakeFromFileName", &SkData::MakeFromFileName,
-        "Create a new dataref the file with the specified path.")
+    .def_static("MakeFromFileName",
+        [] (const std::string& path) {
+            return SkData::MakeFromFileName(path.c_str());
+        },
+        R"docstring(
+        Create a new dataref the file with the specified path.
+
+        If the file cannot be opened, this returns NULL.
+        )docstring",
+        py::arg("path"))
     .def_static("MakeFromFILE", &SkData::MakeFromFILE,
         "Create a new dataref from a stdio FILE.")
     .def_static("MakeFromFD", &SkData::MakeFromFD,
