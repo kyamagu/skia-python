@@ -77,13 +77,16 @@ recording or drawing SkPicture.</p>
 <tr class="row-even"><td><p><a class="reference internal" href="#skia.Picture.ref" title="skia.Picture.ref"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ref</span></code></a></p></td>
 <td><p>Increment the reference count.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Picture.unique" title="skia.Picture.unique"><code class="xref py py-obj docutils literal notranslate"><span class="pre">unique</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Picture.serialize" title="skia.Picture.serialize"><code class="xref py py-obj docutils literal notranslate"><span class="pre">serialize</span></code></a></p></td>
+<td><p>Returns storage containing SkData describing SkPicture, using optional custom encoders.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.Picture.unique" title="skia.Picture.unique"><code class="xref py py-obj docutils literal notranslate"><span class="pre">unique</span></code></a></p></td>
 <td><p>May return true if the caller is the only owner.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#skia.Picture.uniqueID" title="skia.Picture.uniqueID"><code class="xref py py-obj docutils literal notranslate"><span class="pre">uniqueID</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Picture.uniqueID" title="skia.Picture.uniqueID"><code class="xref py py-obj docutils literal notranslate"><span class="pre">uniqueID</span></code></a></p></td>
 <td><p>Returns a non-zero value unique among SkPicture in Skia process.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Picture.unref" title="skia.Picture.unref"><code class="xref py py-obj docutils literal notranslate"><span class="pre">unref</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.Picture.unref" title="skia.Picture.unref"><code class="xref py py-obj docutils literal notranslate"><span class="pre">unref</span></code></a></p></td>
 <td><p>Decrement the reference count.</p></td>
 </tr>
 </tbody>
@@ -144,6 +147,12 @@ recording or drawing SkPicture.</p>
 <dt id="skia.Picture.ref">
 <code class="sig-prename descclassname">Picture.</code><code class="sig-name descname">ref</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Picture" title="skia.Picture">skia.Picture</a></span></em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#skia.Picture.ref" title="Permalink to this definition">¶</a></dt>
 <dd><p>Increment the reference count.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="skia.Picture.serialize">
+<code class="sig-prename descclassname">Picture.</code><code class="sig-name descname">serialize</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Picture" title="skia.Picture">skia.Picture</a></span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="skia.Data.html#skia.Data" title="skia.Data">skia.Data</a><a class="headerlink" href="#skia.Picture.serialize" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns storage containing SkData describing SkPicture, using optional custom encoders.</p>
 </dd></dl>
 
 <dl class="py method">
