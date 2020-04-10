@@ -133,7 +133,8 @@ savelayerrec
     ;
 
 py::class_<SkCanvas::Lattice> lattice(canvas, "Lattice", R"docstring(
-    SkCanvas::Lattice divides SkBitmap or SkImage into a rectangular grid.
+    :py:class:`Canvas.Lattice` divides :py:class:`Bitmap` or :py:class:`Image`
+    into a rectangular grid.
 
     Grid entries on even columns and even rows are fixed; these entries are
     always drawn at their original size if the destination is large enough. If
@@ -158,11 +159,38 @@ py::enum_<SkCanvas::Lattice::RectType>(lattice, "RectType")
     .value("kFixedColor", SkCanvas::Lattice::RectType::kFixedColor)
     .export_values();
 
-canvas.def(py::init<>(),
+canvas
+    .def(py::init<>(),
         R"docstring(
         Creates an empty :py:class:`Canvas` with no backing device or pixels,
         with a width and height of zero.
         )docstring")
+    .def(py::init([](NumPy<uint8_t> array) {
+            py::buffer_info info = array.request();
+            if (info.ndim != 3)
+                throw std::runtime_error(
+                    "Number of dimensions must be 2 or more.");
+            if (info.shape[2] < 4)
+                throw std::runtime_error("Color channels must be 4.");
+            auto canvas = SkCanvas::MakeRasterDirectN32(
+                info.shape[1], info.shape[0], static_cast<SkPMColor*>(info.ptr),
+                info.strides[0]);
+            if (!canvas)
+                throw std::runtime_error("Failed to create Canvas");
+            return canvas;
+        }),
+        R"docstring(
+        Creates raster :py:class:`Canvas` backed by NumPy array.
+
+        Subsequent :py:class:`Canvas` calls draw into pixels.
+        :py:class:`ColorType` is set to :py:attr:`ColorType.kN32`.
+        :py:class:`AlphaType` is set to :py:attr:`AlphaType.kPremul`. To access
+        pixels after drawing, call flush() or peekPixels().
+
+        :array: NumPy array of dtype = uint8 and dimensions
+            (height, width, 4).
+        )docstring",
+        py::arg("array"))
     .def(py::init<int, int, const SkSurfaceProps*>(),
         R"docstring(
         Creates :py:class:`Canvas` of the specified dimensions without a
@@ -215,23 +243,84 @@ canvas.def(py::init<>(),
             independent fonts
         )docstring",
         py::arg("bitmap"), py::arg("props"))
-    .def("imageInfo", &SkCanvas::imageInfo, "Returns SkImageInfo for SkCanvas.")
+    .def("imageInfo", &SkCanvas::imageInfo,
+        R"docstring(
+        Returns :py:class:`ImageInfo` for :py:class:`Canvas`.
+
+        If :py:class:`Canvas` is not associated with raster surface or GPU
+        surface, returned :py:class:`ColorType` is set to
+        :py:attr:`ColorType.kUnknown`.
+
+        :return: dimensions and :py:class:`ColorType` of :py:class:`Canvas`
+        )docstring")
     .def("getProps", &SkCanvas::getProps,
-        "Copies SkSurfaceProps, if SkCanvas is associated with raster surface "
-        "or GPU surface, and returns true.")
+        R"docstring(
+        Copies :py:class:`SurfaceProps`, if :py:class:`Canvas` is associated
+        with raster surface or GPU surface, and returns true.
+
+        Otherwise, returns false and leave props unchanged.
+
+        :param skia.SurfaceProps props: storage for writable SurfaceProps
+        :return: true if :py:class:`SurfaceProps` was copied
+        )docstring",
+        py::arg("props"))
     .def("flush", &SkCanvas::flush,
-        "Triggers the immediate execution of all pending draw operations.")
+        R"docstring(
+        Triggers the immediate execution of all pending draw operations.
+
+        If :py:class:`Canvas` is associated with GPU surface, resolves all
+        pending GPU operations. If :py:class:`Canvas` is associated with raster
+        surface, has no effect; raster draw operations are never deferred.
+        )docstring")
     .def("getBaseLayerSize", &SkCanvas::getBaseLayerSize,
-        "Gets the size of the base or root layer in global canvas coordinates.")
+        R"docstring(
+        Gets the size of the base or root layer in global canvas coordinates.
+
+        The origin of the base layer is always (0,0). The area available for
+        drawing may be smaller (due to clipping or saveLayer).
+
+        :return: integral width and height of base layer
+        :rtype: skia.ISize
+        )docstring")
     .def("makeSurface", &SkCanvas::makeSurface,
-        "Creates SkSurface matching info and props, and associates it with "
-        "SkCanvas.",
+        R"docstring(
+        Creates :py:class:`Surface` matching info and props, and associates it
+        with :py:class:`Canvas`.
+
+        Returns nullptr if no match found.
+
+        If props is nullptr, matches :py:class:`SurfaceProps` in
+        :py:class:`Canvas`. If props is nullptr and :py:class:`Canvas` does not
+        have :py:class:`SurfaceProps`, creates :py:class:`Surface` with default
+        :py:class:`SurfaceProps`.
+
+        :param skia.ImageInfo info: width, height, :py:class:`ColorType`,
+            :py:class:`AlphaType`, and :py:class:`ColorSpace`
+        :param skia.SurfaceProps props: :py:class:`SurfaceProps` to match; may
+            be nullptr to match :py:class:`Canvas`
+        :return: SkSurface matching info and props, or nullptr if no match is
+            available
+        :rtype: skia.Surface or None
+        )docstring",
         py::arg("info"), py::arg("props") = nullptr)
     .def("getGrContext", &SkCanvas::getGrContext,
-        "Returns GPU context of the GPU surface associated with SkCanvas.",
+        R"docstring(
+        Returns GPU context of the GPU surface associated with
+        :py:class:`Canvas`.
+
+        :return: GPU context, if available; nullptr otherwise
+        :rtype: skia.GrContext or None
+        )docstring",
         py::return_value_policy::reference)
     .def("getSurface", &SkCanvas::getSurface,
-        "Sometimes a canvas is owned by a surface.",
+        R"docstring(
+        Sometimes a canvas is owned by a surface.
+
+        If it is, getSurface() will return a bare pointer to that surface, else
+        this will return nullptr.
+
+        :rtype: skia.Surface or None
+        )docstring",
         py::return_value_policy::reference)
     // .def("accessTopLayerPixels", &SkCanvas::accessTopLayerPixels,
     //     "Returns the pixel base address, SkImageInfo, rowBytes, and origin if "
@@ -240,31 +329,177 @@ canvas.def(py::init<>(),
     // .def("accessTopRasterHandle", &SkCanvas::accessTopRasterHandle,
     //     "Returns custom context that tracks the SkMatrix and clip.")
     .def("peekPixels", &SkCanvas::peekPixels,
-        "Returns true if SkCanvas has direct access to its pixels.")
+        R"docstring(
+        Returns true if :py:class:`Canvas` has direct access to its pixels.
+
+        Pixels are readable when :py:class:`BaseDevice` is raster. Pixels are
+        not readable when :py:class:`Canvas` is returned from GPU surface,
+        returned by :py:meth:`Document.beginPage`, returned by
+        :py:meth:`PictureRecorder.beginRecording`, or :py:class:`Canvas` is
+        the base of a utility class like DebugCanvas.
+
+        pixmap is valid only while :py:class:`Canvas` is in scope and unchanged.
+        Any :py:class:`Canvas` or :py:class:`Surface` call may invalidate the
+        pixmap values.
+
+        :param skia.Pixmap pixmap: storage for pixel state if pixels are
+            readable; otherwise, ignored
+        :return: true if :py:class:`Canvas` has direct access to pixels
+        :rtype: bool
+        )docstring",
+        py::arg("pixmap"))
     .def("readPixels",
         // py::overload_cast<const SkImageInfo&, void*, size_t, int, int>(
         //     &SkCanvas::readPixels),
         [] (SkCanvas& canvas, NumPy<uint8_t> array, int srcX, int srcY) {
             py::buffer_info info = array.request();
-            if (info.ndim <= 1)
+            if (info.ndim <= 2)
                 throw std::runtime_error(
-                    "Number of dimensions must be 2 or more.");
-            if (info.shape[0] == 0 || info.shape[1] == 0)
-                throw std::runtime_error(
-                    "Width and height must be greater than 0.");
+                    "Number of dimensions must be 3 or more.");
+            if (info.shape[2] < 4)
+                throw std::runtime_error("Color channels must be 4.");
             auto imageinfo = SkImageInfo::MakeN32Premul(
                 info.shape[1], info.shape[0]);
             return canvas.readPixels(
                 imageinfo, info.ptr, info.strides[0], srcX, srcY);
         },
-        "Copies SkRect of pixels from SkCanvas into dstPixels.",
+        R"docstring(
+        Copies :py:class:`Rect` of pixels from :py:class:`Canvas` into array.
+
+        :py:class:`Matrix` and clip are ignored.
+
+        Source :py:class:`Rect` corners are (srcX, srcY) and (
+        imageInfo().width(), imageInfo().height()). Destination :py:class:`Rect`
+        corners are (0, 0) and (array.shape[1], array.shape[0]). Copies each
+        readable pixel intersecting both rectangles, without scaling, converting
+        to :py:attr:`ColorType.kN32` and :py:attr:`AlphaType.kPremul` if
+        required.
+
+        Pixels are readable when :py:class:`BaseDevice` is raster, or backed by
+        a GPU. Pixels are not readable when :py:class:`Canvas` is returned by
+        :py:meth:`Document.beginPage`, returned by
+        :py:meth:`PictureRecorder.beginRecording`, or :py:class:`Canvas` is the
+        base of a utility class like DebugCanvas.
+
+        The destination pixel storage must be allocated by the caller.
+
+        Pixel values are converted only if :py:class:`ColorType` and
+        :py:class:`AlphaType` do not match. Only pixels within both source and
+        destination rectangles are copied. array contents outside
+        :py:class:`Rect` intersection are unchanged.
+
+        Pass negative values for srcX or srcY to offset pixels across or down
+        destination.
+
+        Does not copy, and returns false if:
+
+        - Source and destination rectangles do not intersect.
+        - :py:class:`Canvas` pixels could not be converted to
+            :py:attr:`ColorType.kN32` or :py:attr:`AlphaType.kPremul`.
+        - :py:class:`Canvas` pixels are not readable; for instance,
+        - :py:class:`Canvas` is document-based.
+
+        :array: storage for pixels
+        :srcX: offset into readable pixels on x-axis; may be negative
+        :srcY: offset into readable pixels on y-axis; may be negative
+        :return: true if pixels were copied
+        )docstring",
         py::arg("array"), py::arg("srcX") = 0, py::arg("srcY") = 0)
     .def("readPixels",
         py::overload_cast<const SkPixmap&, int, int>(&SkCanvas::readPixels),
-        "Copies SkRect of pixels from SkCanvas into pixmap.")
+        R"docstring(
+        Copies :py:class:`Rect` of pixels from :py:class:`Canvas` into pixmap.
+
+        :py:class:`Matrix` and clip are ignored.
+
+        Source :py:class:`Rect` corners are (srcX, srcY) and (
+        imageInfo().width(), imageInfo().height()). Destination
+        :py:class:`Rect` corners are (0, 0) and (pixmap.width(),
+        pixmap.height()). Copies each readable pixel intersecting both
+        rectangles, without scaling, converting to pixmap.colorType() and
+        pixmap.alphaType() if required.
+
+        Pixels are readable when :py:class:`BaseDevice` is raster, or backed by
+        a GPU. Pixels are not readable when :py:class:`Canvas` is returned by
+        :py:meth:`Document.beginPage`, returned by
+        :py:meth:`PictureRecorder.beginRecording`, or :py:class:`Canvas` is the
+        base of a utility class like DebugCanvas.
+
+        Caller must allocate pixel storage in pixmap if needed.
+
+        Pixel values are converted only if :py:class:`ColorType` and
+        :py:class:`AlphaType` do not match. Only pixels within both source and
+        destination :py:class:`Rect` are copied. pixmap pixels contents outside
+        :py:class:`Rect` intersection are unchanged.
+
+        Pass negative values for srcX or srcY to offset pixels across or down
+        pixmap.
+
+        Does not copy, and returns false if:
+
+        - Source and destination rectangles do not intersect.
+        - :py:class:`Canvas` pixels could not be converted to
+            pixmap.colorType() or pixmap.alphaType().
+        - :py:class:`Canvas` pixels are not readable; for instance,
+            :py:class:`Canvas` is document-based.
+        - :py:class:`Pixmap` pixels could not be allocated.
+        - pixmap.rowBytes() is too small to contain one row of pixels.
+
+        :pixmap: storage for pixels copied from
+            :py:class:`Canvas`
+        :srcX: offset into readable pixels on x-axis; may be negative
+        :srcY: offset into readable pixels on y-axis; may be negative
+        :return: true if pixels were copied
+        )docstring",
+        py::arg("pixmap"), py::arg("srcX") = 0, py::arg("srcY") = 0)
     .def("readPixels",
         py::overload_cast<const SkBitmap&, int, int>(&SkCanvas::readPixels),
-        "Copies SkRect of pixels from SkCanvas into bitmap.")
+        R"docstring(
+        Copies :py:class:`Rect` of pixels from :py:class:`Canvas` into bitmap.
+
+        :py:class:`Matrix` and clip are ignored.
+
+        Source :py:class:`Rect` corners are (srcX, srcY) and (
+        imageInfo().width(), imageInfo().height()). Destination
+        :py:class:`Rect` corners are (0, 0) and (bitmap.width(),
+        bitmap.height()). Copies each readable pixel intersecting both
+        rectangles, without scaling, converting to bitmap.colorType() and
+        bitmap.alphaType() if required.
+
+        Pixels are readable when :py:class:`BaseDevice` is raster, or backed by
+        a GPU. Pixels are not readable when :py:class:`Canvas` is returned by
+        :py:meth:`Document.beginPage`, returned by
+        :py:meth:`PictureRecorder.beginRecording`, or :py:class:`Canvas` is the
+        base of a utility class like DebugCanvas.
+
+        Caller must allocate pixel storage in bitmap if needed.
+
+        :py:class:`Bitmap` values are converted only if :py:class:`ColorType`
+        and :py:class:`AlphaType` do not match. Only pixels within both source
+        and destination rectangles are copied. :py:class:`Bitmap` pixels outside
+        :py:class:`Rect` intersection are unchanged.
+
+        Pass negative values for srcX or srcY to offset pixels across or down
+        bitmap.
+
+        Does not copy, and returns false if:
+
+        - Source and destination rectangles do not intersect.
+        - :py:class:`Canvas` pixels could not be converted to bitmap.colorType()
+            or bitmap.alphaType().
+        - :py:class:`Canvas` pixels are not readable; for instance,
+            :py:class:`Canvas` is document-based.
+        - bitmap pixels could not be allocated.
+        - bitmap.rowBytes() is too small to contain one row of pixels.
+
+        :bitmap: storage for pixels copied from
+            :py:class:`Canvas`
+        :srcX: offset into readable pixels on x-axis; may be negative
+        :srcY: offset into readable pixels on y-axis; may be negative
+
+        :return: true if pixels were copied
+        )docstring",
+        py::arg("bitmap"), py::arg("srcX") = 0, py::arg("srcY") = 0)
     .def("writePixels",
         // py::overload_cast<const SkImageInfo&, const void*, size_t, int, int>(
         //     &SkCanvas::writePixels),
@@ -403,7 +638,15 @@ canvas.def(py::init<>(),
     .def("drawColor", &SkCanvas::drawColor, "Fills clip with color color.",
         py::arg("color"), py::arg("mode") = SkBlendMode::kSrcOver)
     .def("clear", &SkCanvas::clear,
-        "Fills clip with color using SkBlendMode::kSrc")
+        R"docstring(
+        Fills clip with color color using :py:attr:`BlendMode.kSrc`.
+
+        This has the effect of replacing all pixels contained by clip with
+        color.
+
+        :param int color: unpremultiplied ARGB
+        )docstring",
+        py::arg("color"))
     .def("discard", &SkCanvas::discard, "Makes SkCanvas contents undefined.")
     .def("drawPaint", &SkCanvas::drawPaint, "Fills clip with SkPaint paint.")
     .def("drawPoints",
@@ -973,25 +1216,117 @@ canvas.def(py::init<>(),
     .def("getTotalMatrix", &SkCanvas::getTotalMatrix, "Returns SkMatrix.")
     .def("getLocalToDevice",
         py::overload_cast<>(&SkCanvas::getLocalToDevice, py::const_))
-    .def("getLocalToDevice",
-        py::overload_cast<SkScalar[16]>(
-            &SkCanvas::getLocalToDevice, py::const_))
-    .def("experimental_getLocalToWorld",
-        py::overload_cast<>(
-            &SkCanvas::experimental_getLocalToWorld, py::const_))
-    .def("experimental_getLocalToCamera",
-        py::overload_cast<>(
-            &SkCanvas::experimental_getLocalToCamera, py::const_))
-    .def("experimental_getLocalToCamera",
-        py::overload_cast<SkScalar[16]>(
-            &SkCanvas::experimental_getLocalToCamera, py::const_))
-    .def("experimental_getLocalToWorld",
-        py::overload_cast<SkScalar[16]>(
-            &SkCanvas::experimental_getLocalToWorld, py::const_))
+    // .def("getLocalToDevice",
+    //     py::overload_cast<SkScalar[16]>(
+    //         &SkCanvas::getLocalToDevice, py::const_))
+    // .def("experimental_getLocalToWorld",
+    //     py::overload_cast<>(
+    //         &SkCanvas::experimental_getLocalToWorld, py::const_))
+    // .def("experimental_getLocalToCamera",
+    //     py::overload_cast<>(
+    //         &SkCanvas::experimental_getLocalToCamera, py::const_))
+    // .def("experimental_getLocalToCamera",
+    //     py::overload_cast<SkScalar[16]>(
+    //         &SkCanvas::experimental_getLocalToCamera, py::const_))
+    // .def("experimental_getLocalToWorld",
+    //     py::overload_cast<SkScalar[16]>(
+    //         &SkCanvas::experimental_getLocalToWorld, py::const_))
     // Static methods.
-    .def_static("MakeRasterDirect", &SkCanvas::MakeRasterDirect,
-        "Allocates raster SkCanvas that will draw directly into pixels.")
-    .def_static("MakeRasterDirectN32", &SkCanvas::MakeRasterDirectN32,
-        "Allocates raster SkCanvas specified by inline image specification.")
+    .def_static("MakeRasterDirect",
+        // &SkCanvas::MakeRasterDirect,
+        [](const SkImageInfo& image_info, py::buffer pixels, size_t rowBytes,
+            const SkSurfaceProps* surfaceProps) {
+            py::buffer_info info = pixels.request();
+            size_t given_size = (info.ndim > 0) ?
+                info.shape[0] * info.strides[0] : 0;
+            rowBytes = (rowBytes == 0) ? image_info.minRowBytes() : rowBytes;
+            auto required = rowBytes * image_info.height();
+            if (given_size < required)
+                throw std::runtime_error("Buffer is smaller than required");
+            auto canvas = SkCanvas::MakeRasterDirect(
+                image_info, info.ptr, rowBytes, surfaceProps);
+            if (!canvas)
+                throw std::runtime_error("Failed to create Canvas");
+            return canvas;
+        },
+        R"docstring(
+        Allocates raster :py:class:`Canvas` that will draw directly into pixels.
+
+        :py:class:`Canvas` is returned if all parameters are valid. Valid
+        parameters include: info dimensions are zero or positive; info contains
+        :py:class:`ColorType` and :py:class:`AlphaType` supported by raster
+        surface; pixels is buffer object of sufficient length; rowBytes is zero
+        or large enough to contain info width pixels of :py:class:`ColorType`.
+
+        Pass zero for rowBytes to compute rowBytes from info width and size of
+        pixel. If rowBytes is greater than zero, it must be equal to or greater
+        than info width times bytes required for :py:class:`ColorType`.
+
+        Pixel buffer size should be info height times computed rowBytes. Pixels
+        are not initialized. To access pixels after drawing, call flush() or
+        peekPixels().
+
+        :param skia.ImageInfo info: width, height, :py:class:`ColorType`,
+            :py:class:`AlphaType`, :py:class:`ColorSpace`, of raster surface;
+            width, or height, or both, may be zero
+        :param Union[bytes,bytearray,memoryview] pixels: destination pixels
+            buffer
+        :param int rowBytes: interval from one :py:class:`Surface` row to the
+            next, or zero
+        :param skia.SurfaceProps props: LCD striping orientation and setting for
+            device independent fonts; may be `None`
+        )docstring",
+        py::arg("image_info"), py::arg("pixels"), py::arg("rowBytes") = 0,
+        py::arg("surfaceProps") = nullptr)
+    .def_static("MakeRasterDirectN32",
+        // &SkCanvas::MakeRasterDirectN32,
+        [](int width, int height, py::buffer pixels, size_t rowBytes) {
+            py::buffer_info info = pixels.request();
+            if (width < 0 || height < 0)
+                throw std::runtime_error(
+                    "width and height must be greater than 0");
+            rowBytes = (rowBytes == 0) ? width * sizeof(SkPMColor) : rowBytes;
+            size_t given_size = (info.ndim > 0) ?
+                info.shape[0] * info.strides[0] : 0;
+            auto required = rowBytes * height;
+            if (given_size < required)
+                throw std::runtime_error("Buffer is smaller than required");
+            auto canvas = SkCanvas::MakeRasterDirectN32(
+                width, height, static_cast<SkPMColor*>(info.ptr), rowBytes);
+            if (!canvas)
+                throw std::runtime_error("Failed to create Canvas");
+            return canvas;
+        },
+        R"docstring(
+        Allocates raster :py:class:`Canvas` specified by inline image
+        specification.
+
+        Subsequent :py:class:`Canvas` calls draw into pixels.
+        :py:class:`ColorType` is set to :py:attr:`ColorType.kN32`.
+        :py:class:`AlphaType` is set to :py:attr:`AlphaType.kPremul`. To access
+        pixels after drawing, call flush() or peekPixels().
+
+        :py:class:`Canvas` is returned if all parameters are valid. Valid
+        parameters include: width and height are zero or positive; pixels is
+        buffer object with sufficient length; rowBytes is zero or large enough
+        to contain width pixels of :py:attr:`ColorType.kN32`.
+
+        Pass zero for rowBytes to compute rowBytes from width and size of pixel.
+        If rowBytes is greater than zero, it must be equal to or greater than
+        width times bytes required for :py:class:`ColorType`.
+
+        Pixel buffer size should be height times rowBytes.
+
+        :param int width: pixel column count on raster surface created; must be
+            zero or greater
+        :param int height: pixel row count on raster surface created; must be
+            zero or greater
+        :param Union[bytes,bytearray,memoryview] pixels: pointer to destination
+            pixels buffer; buffer size should be height times rowBytes
+        :param int rowBytes: interval from one :py:class:`Surface` row to the
+            next, or zero
+        )docstring",
+        py::arg("width"), py::arg("height"), py::arg("pixels"),
+        py::arg("rowBytes") = 0)
     ;
 }

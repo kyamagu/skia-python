@@ -36,6 +36,7 @@ def check_canvas(x):
 
 @pytest.mark.parametrize('args', [
     tuple(),
+    (np.zeros((16, 16, 4), dtype=np.uint8),),
     (100, 100),
     (100, 100, None),
     (100, 100, skia.SurfaceProps(skia.SurfaceProps.InitType.kLegacyFontHost)),
@@ -479,3 +480,21 @@ def test_Canvas_getTotalMatrix(canvas):
 
 def test_Canvas_getLocalToDevice(canvas):
     assert isinstance(canvas.getLocalToDevice(), skia.M44)
+
+
+@pytest.mark.parametrize('args', [
+    (skia.ImageInfo.MakeN32Premul(4, 4), bytearray(64)),
+    (skia.ImageInfo.MakeN32Premul(4, 4), bytearray(64), 16),
+    (skia.ImageInfo.MakeN32Premul(4, 4), bytearray(64), 16,
+        skia.SurfaceProps(skia.SurfaceProps.InitType.kLegacyFontHost)),
+])
+def test_Canvas_MakeRasterDirect(args):
+    check_canvas(skia.Canvas.MakeRasterDirect(*args))
+
+
+@pytest.mark.parametrize('args', [
+    (4, 4, bytearray(64), 16),
+    (4, 4, bytearray(64)),
+])
+def test_Canvas_MakeRasterDirectN32(args):
+    check_canvas(skia.Canvas.MakeRasterDirectN32(*args))
