@@ -40,3 +40,17 @@ Methods
 {%- endfor %}
 {% endif %}
 {% endblock %}
+
+{% block attributes_detail %}
+{% if attributes %}
+
+Attributes
+----------
+
+{% for item in attributes %}
+
+.. autoattribute:: {{ module }}.{{ objname }}.{{ item }}
+
+{%- endfor %}
+{% endif %}
+{% endblock %}

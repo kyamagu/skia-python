@@ -1,9 +1,6 @@
-#include <pybind11/pybind11.h>
-#include <skia.h>
+#include "common.h"
 
 #define STRING(s) #s
-
-namespace py = pybind11;
 
 // Declarations.
 void initBitmap(py::module &);
@@ -54,6 +51,11 @@ PYBIND11_MODULE(skia, m) {
             BlendModeCoeff
             Budgeted
             Canvas
+            Canvas.SrcRectConstraint
+            Canvas.PointMode
+            Canvas.QuadAAFlags
+            Canvas.SaveLayerRec
+            Canvas.Lattice
             ClipOp
             Color4f
             ColorFilter
@@ -133,7 +135,6 @@ PYBIND11_MODULE(skia, m) {
     initData(m);
 
     initBitmap(m);
-    initCanvas(m);
     initFont(m);
     initGrContext(m);
     initImage(m);
@@ -142,9 +143,11 @@ PYBIND11_MODULE(skia, m) {
     initPath(m);
     initPicture(m);
     initPixmap(m);
-    initSurface(m);
     initTextBlob(m);
     initVertices(m);
+
+    initCanvas(m);
+    initSurface(m);
 
 #ifdef VERSION_INFO
     m.attr("__version__") = STRING(VERSION_INFO);

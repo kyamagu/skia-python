@@ -1,9 +1,4 @@
-#include <pybind11/pybind11.h>
-#include <skia.h>
-
-namespace py = pybind11;
-
-PYBIND11_DECLARE_HOLDER_TYPE(T, sk_sp<T>);
+#include "common.h"
 
 void initFont(py::module &m) {
 // FontStyle

@@ -1,7 +1,4 @@
-#include <pybind11/pybind11.h>
-#include <skia.h>
-
-namespace py = pybind11;
+#include "common.h"
 
 // Static variables must be declared.
 constexpr int SkMatrix::kMScaleX;
@@ -390,6 +387,7 @@ py::class_<SkM44>(m, "M44", R"docstring(
     Skia assumes a right-handed coordinate system: +X goes to the right +Y goes
     down +Z goes into the screen (away from the viewer)
     )docstring")
+    .def(py::init<>())
     ;
 
 // RSXform
@@ -398,5 +396,29 @@ py::class_<SkRSXform>(m, "RSXform", R"docstring(
 
     [ fSCos -fSSin fTx ] [ fSSin fSCos fTy ] [ 0 0 1 ]
     )docstring")
+    .def(py::init(&SkRSXform::Make),
+        py::arg("scos"), py::arg("ssin"), py::arg("tx"), py::arg("ty"))
+    .def_static("Make",
+        &SkRSXform::Make,
+        py::arg("scos"), py::arg("ssin"), py::arg("tx"), py::arg("ty"))
+    .def_static("MakeFromRadians", &SkRSXform::MakeFromRadians,
+        py::arg("scale"), py::arg("radians"), py::arg("tx"), py::arg("ty"),
+        py::arg("ax"), py::arg("ay"))
+    .def("rectStaysRect", &SkRSXform::rectStaysRect)
+    .def("setIdentity", &SkRSXform::setIdentity)
+    .def("set", &SkRSXform::set,
+        py::arg("scos"), py::arg("ssin"), py::arg("tx"), py::arg("ty"))
+    .def("toQuad", py::overload_cast<SkScalar, SkScalar, SkPoint[4]>(
+        &SkRSXform::toQuad, py::const_),
+        py::arg("width"), py::arg("height"), py::arg("quqd"))
+    .def("toQuad", py::overload_cast<const SkSize&, SkPoint[4]>(
+        &SkRSXform::toQuad, py::const_),
+        py::arg("size"), py::arg("quqd"))
+    .def("toTriStrip", &SkRSXform::toTriStrip,
+        py::arg("width"), py::arg("height"), py::arg("strip"))
+    .def_readwrite("fSCos", &SkRSXform::fSCos)
+    .def_readwrite("fSSin", &SkRSXform::fSSin)
+    .def_readwrite("fTx", &SkRSXform::fTx)
+    .def_readwrite("fTy", &SkRSXform::fTy)
     ;
 }

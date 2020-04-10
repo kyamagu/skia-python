@@ -1,9 +1,4 @@
-#include <pybind11/pybind11.h>
-#include <skia.h>
-
-namespace py = pybind11;
-
-PYBIND11_DECLARE_HOLDER_TYPE(T, sk_sp<T>, true);
+#include "common.h"
 
 template<>
 struct py::detail::has_operator_delete<SkData, void> : std::false_type {};
@@ -27,6 +22,21 @@ py::class_<SkData, sk_sp<SkData>>(m, "Data", py::buffer_protocol(),
             { sizeof(uint8_t) }
         );
     })
+    .def(py::init([] (py::buffer b, bool copy) {
+        py::buffer_info info = b.request();
+        auto length = info.strides[0] * info.shape[0];
+        if (copy)
+            return SkData::MakeWithCopy(info.ptr, length);
+        else
+            return SkData::MakeWithoutCopy(info.ptr, length);
+    }),
+    R"docstring(
+    Create a new Data.
+
+    :param Union[bytes,bytearray,memoryview] buf: Buffer object
+    :param bool copy: Whether to copy data, default `True`.
+    )docstring",
+    py::arg("buf"), py::arg("copy") = true)
     .def("size", &SkData::size, "Returns the number of bytes stored.")
     .def("isEmpty", &SkData::isEmpty)
     .def("data", &SkData::data, "Returns the ptr to the data.",

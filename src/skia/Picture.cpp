@@ -1,9 +1,4 @@
-#include <pybind11/pybind11.h>
-#include <skia.h>
-
-namespace py = pybind11;
-
-PYBIND11_DECLARE_HOLDER_TYPE(T, sk_sp<T>, true);
+#include "common.h"
 
 class PyPicture : public SkPicture {
 public:
@@ -52,6 +47,7 @@ py::class_<SkPicture, PyPicture, sk_sp<SkPicture>>(m, "Picture", R"docstring(
     as a bounding box hint. To limit SkPicture bounds, use SkCanvas clip when
     recording or drawing SkPicture.
     )docstring")
+    .def(py::init(&SkPicture::MakePlaceholder))
     .def("playback", &SkPicture::playback,
         "Replays the drawing commands on the specified canvas.")
     .def("cullRect", &SkPicture::cullRect,
