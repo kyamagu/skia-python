@@ -79,7 +79,7 @@ instance.</p>
 <td><p>Call this when the data parameter is already const and will outlive the lifetime of the SkData.</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#skia.Data.__init__" title="skia.Data.__init__"><code class="xref py py-obj docutils literal notranslate"><span class="pre">__init__</span></code></a></p></td>
-<td><p>Initialize self.</p></td>
+<td><p>Create a new Data.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#skia.Data.copyRange" title="skia.Data.copyRange"><code class="xref py py-obj docutils literal notranslate"><span class="pre">copyRange</span></code></a></p></td>
 <td><p>Helper to copy a range of the data into a caller-provided buffer.</p></td>
@@ -182,8 +182,16 @@ instance.</p>
 
 <dl class="py method">
 <dt id="skia.Data.__init__">
-<code class="sig-prename descclassname">Data.</code><code class="sig-name descname">__init__</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#skia.Data.__init__" title="Permalink to this definition">¶</a></dt>
-<dd><p>Initialize self.  See help(type(self)) for accurate signature.</p>
+<code class="sig-prename descclassname">Data.</code><code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Data" title="skia.Data">skia.Data</a></span></em>, <em class="sig-param"><span class="n">buf</span><span class="p">:</span> <span class="n">buffer</span></em>, <em class="sig-param"><span class="n">copy</span><span class="p">:</span> <span class="n">bool</span> <span class="o">=</span> <span class="default_value">True</span></em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#skia.Data.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a new Data.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>buf</strong> (<em>Union</em><em>[</em><em>bytes</em><em>,</em><em>bytearray</em><em>,</em><em>memoryview</em><em>]</em>) – Buffer object</p></li>
+<li><p><strong>copy</strong> (<em>bool</em>) – Whether to copy data, default <cite>True</cite>.</p></li>
+</ul>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py method">
@@ -278,6 +286,11 @@ instance.</p>
 <li class="toctree-l2"><a class="reference internal" href="skia.BlendModeCoeff.html">BlendModeCoeff</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.Budgeted.html">Budgeted</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.Canvas.html">Canvas</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.Canvas.SrcRectConstraint.html">SrcRectConstraint</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.Canvas.PointMode.html">PointMode</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.Canvas.QuadAAFlags.html">QuadAAFlags</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.Canvas.SaveLayerRec.html">SaveLayerRec</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.Canvas.Lattice.html">Lattice</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.ClipOp.html">ClipOp</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.Color4f.html">Color4f</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.ColorFilter.html">ColorFilter</a></li>

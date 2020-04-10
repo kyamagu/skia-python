@@ -129,37 +129,37 @@ either of the requested dimensions are zero, then nullptr will be returned.</p>
 <col style="width: 90%" />
 </colgroup>
 <tbody>
-<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">kDiscard</span></code></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Surface.kDiscard" title="skia.Surface.kDiscard"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kDiscard</span></code></a></p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">kDiscardWrite</span></code></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.Surface.kDiscardWrite" title="skia.Surface.kDiscardWrite"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kDiscardWrite</span></code></a></p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">kFlushRead</span></code></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Surface.kFlushRead" title="skia.Surface.kFlushRead"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kFlushRead</span></code></a></p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">kFlushWrite</span></code></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.Surface.kFlushWrite" title="skia.Surface.kFlushWrite"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kFlushWrite</span></code></a></p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">kLinear</span></code></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Surface.kLinear" title="skia.Surface.kLinear"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kLinear</span></code></a></p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">kNoAccess</span></code></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.Surface.kNoAccess" title="skia.Surface.kNoAccess"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kNoAccess</span></code></a></p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">kNone_FlushFlags</span></code></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Surface.kNone_FlushFlags" title="skia.Surface.kNone_FlushFlags"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kNone_FlushFlags</span></code></a></p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">kPresent</span></code></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.Surface.kPresent" title="skia.Surface.kPresent"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kPresent</span></code></a></p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">kRetain</span></code></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Surface.kRetain" title="skia.Surface.kRetain"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kRetain</span></code></a></p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">kSrc</span></code></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.Surface.kSrc" title="skia.Surface.kSrc"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kSrc</span></code></a></p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">kSyncCpu_FlushFlag</span></code></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Surface.kSyncCpu_FlushFlag" title="skia.Surface.kSyncCpu_FlushFlag"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kSyncCpu_FlushFlag</span></code></a></p></td>
 <td><p></p></td>
 </tr>
 </tbody>
@@ -344,7 +344,7 @@ memory. Do not destroy numpy array while using this surface.</p>
 </ol>
 <p>Copies SkRect of pixels to dst.</p>
 <ol class="arabic simple" start="2">
-<li><p>readPixels(self: skia.Surface, arg0: skia.ImageInfo, arg1: capsule, arg2: int, arg3: int, arg4: int) -&gt; bool</p></li>
+<li><p>readPixels(self: skia.Surface, array: numpy.ndarray[uint8], srcX: int = 0, srcY: int = 0) -&gt; bool</p></li>
 </ol>
 <p>Copies SkRect of pixels from SkCanvas into dstPixels.</p>
 <ol class="arabic simple" start="3">
@@ -392,6 +392,64 @@ memory. Do not destroy numpy array while using this surface.</p>
 </dd></dl>
 
 </div>
+<div class="section" id="attributes">
+<h2>Attributes<a class="headerlink" href="#attributes" title="Permalink to this headline">¶</a></h2>
+<dl class="py attribute">
+<dt id="skia.Surface.kDiscard">
+<code class="sig-prename descclassname">Surface.</code><code class="sig-name descname">kDiscard</code><em class="property"> = ContentChangeMode.kDiscard</em><a class="headerlink" href="#skia.Surface.kDiscard" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="skia.Surface.kDiscardWrite">
+<code class="sig-prename descclassname">Surface.</code><code class="sig-name descname">kDiscardWrite</code><em class="property"> = BackendHandleAccess.kDiscardWrite</em><a class="headerlink" href="#skia.Surface.kDiscardWrite" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="skia.Surface.kFlushRead">
+<code class="sig-prename descclassname">Surface.</code><code class="sig-name descname">kFlushRead</code><em class="property"> = BackendHandleAccess.kFlushRead</em><a class="headerlink" href="#skia.Surface.kFlushRead" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="skia.Surface.kFlushWrite">
+<code class="sig-prename descclassname">Surface.</code><code class="sig-name descname">kFlushWrite</code><em class="property"> = BackendHandleAccess.kFlushWrite</em><a class="headerlink" href="#skia.Surface.kFlushWrite" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="skia.Surface.kLinear">
+<code class="sig-prename descclassname">Surface.</code><code class="sig-name descname">kLinear</code><em class="property"> = RescaleGamma.kLinear</em><a class="headerlink" href="#skia.Surface.kLinear" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="skia.Surface.kNoAccess">
+<code class="sig-prename descclassname">Surface.</code><code class="sig-name descname">kNoAccess</code><em class="property"> = BackendSurfaceAccess.kNoAccess</em><a class="headerlink" href="#skia.Surface.kNoAccess" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="skia.Surface.kNone_FlushFlags">
+<code class="sig-prename descclassname">Surface.</code><code class="sig-name descname">kNone_FlushFlags</code><em class="property"> = FlushFlags.kNone_FlushFlags</em><a class="headerlink" href="#skia.Surface.kNone_FlushFlags" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="skia.Surface.kPresent">
+<code class="sig-prename descclassname">Surface.</code><code class="sig-name descname">kPresent</code><em class="property"> = BackendSurfaceAccess.kPresent</em><a class="headerlink" href="#skia.Surface.kPresent" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="skia.Surface.kRetain">
+<code class="sig-prename descclassname">Surface.</code><code class="sig-name descname">kRetain</code><em class="property"> = ContentChangeMode.kRetain</em><a class="headerlink" href="#skia.Surface.kRetain" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="skia.Surface.kSrc">
+<code class="sig-prename descclassname">Surface.</code><code class="sig-name descname">kSrc</code><em class="property"> = RescaleGamma.kSrc</em><a class="headerlink" href="#skia.Surface.kSrc" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="skia.Surface.kSyncCpu_FlushFlag">
+<code class="sig-prename descclassname">Surface.</code><code class="sig-name descname">kSyncCpu_FlushFlag</code><em class="property"> = FlushFlags.kSyncCpu_FlushFlag</em><a class="headerlink" href="#skia.Surface.kSyncCpu_FlushFlag" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
 </div>
 
 
@@ -423,6 +481,11 @@ memory. Do not destroy numpy array while using this surface.</p>
 <li class="toctree-l2"><a class="reference internal" href="skia.BlendModeCoeff.html">BlendModeCoeff</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.Budgeted.html">Budgeted</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.Canvas.html">Canvas</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.Canvas.SrcRectConstraint.html">SrcRectConstraint</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.Canvas.PointMode.html">PointMode</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.Canvas.QuadAAFlags.html">QuadAAFlags</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.Canvas.SaveLayerRec.html">SaveLayerRec</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.Canvas.Lattice.html">Lattice</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.ClipOp.html">ClipOp</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.Color4f.html">Color4f</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.ColorFilter.html">ColorFilter</a></li>

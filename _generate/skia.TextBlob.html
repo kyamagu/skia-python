@@ -66,7 +66,7 @@ SkPaint related to fonts and text rendering are used by run.</p>
 <td><p>Creates SkTextBlob with a single run.</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#skia.TextBlob.__init__" title="skia.TextBlob.__init__"><code class="xref py py-obj docutils literal notranslate"><span class="pre">__init__</span></code></a></p></td>
-<td><p>Initialize self.</p></td>
+<td><p>Creates <a class="reference internal" href="#skia.TextBlob" title="skia.TextBlob"><code class="xref py py-class docutils literal notranslate"><span class="pre">TextBlob</span></code></a> with a single run.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#skia.TextBlob.bounds" title="skia.TextBlob.bounds"><code class="xref py py-obj docutils literal notranslate"><span class="pre">bounds</span></code></a></p></td>
 <td><p>Returns conservative bounding box.</p></td>
@@ -135,8 +135,23 @@ SkPaint related to fonts and text rendering are used by run.</p>
 
 <dl class="py method">
 <dt id="skia.TextBlob.__init__">
-<code class="sig-prename descclassname">TextBlob.</code><code class="sig-name descname">__init__</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#skia.TextBlob.__init__" title="Permalink to this definition">¶</a></dt>
-<dd><p>Initialize self.  See help(type(self)) for accurate signature.</p>
+<code class="sig-prename descclassname">TextBlob.</code><code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.TextBlob" title="skia.TextBlob">skia.TextBlob</a></span></em>, <em class="sig-param"><span class="n">text</span><span class="p">:</span> <span class="n">str</span></em>, <em class="sig-param"><span class="n">font</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.Font.html#skia.Font" title="skia.Font">skia.Font</a></span></em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#skia.TextBlob.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates <a class="reference internal" href="#skia.TextBlob" title="skia.TextBlob"><code class="xref py py-class docutils literal notranslate"><span class="pre">TextBlob</span></code></a> with a single run.</p>
+<p><cite>font</cite> contains attributes used to define the run text.</p>
+<p>This function uses the default character-to-glyph mapping from the
+<a class="reference internal" href="skia.Typeface.html#skia.Typeface" title="skia.Typeface"><code class="xref py py-class docutils literal notranslate"><span class="pre">Typeface</span></code></a> in font. It does not perform typeface fallback for
+characters not found in the <a class="reference internal" href="skia.Typeface.html#skia.Typeface" title="skia.Typeface"><code class="xref py py-class docutils literal notranslate"><span class="pre">Typeface</span></code></a>. It does not perform
+kerning or other complex shaping; glyphs are positioned based on their
+default advances.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>text</strong> (<em>str</em>) – character code points or glyphs drawn</p></li>
+<li><p><strong>font</strong> (<a class="reference internal" href="skia.Font.html#skia.Font" title="skia.Font"><em>skia.Font</em></a>) – text size, typeface, text scale, and so on, used to
+draw</p></li>
+</ul>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py method">
@@ -214,6 +229,11 @@ SkPaint related to fonts and text rendering are used by run.</p>
 <li class="toctree-l2"><a class="reference internal" href="skia.BlendModeCoeff.html">BlendModeCoeff</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.Budgeted.html">Budgeted</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.Canvas.html">Canvas</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.Canvas.SrcRectConstraint.html">SrcRectConstraint</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.Canvas.PointMode.html">PointMode</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.Canvas.QuadAAFlags.html">QuadAAFlags</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.Canvas.SaveLayerRec.html">SaveLayerRec</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.Canvas.Lattice.html">Lattice</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.ClipOp.html">ClipOp</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.Color4f.html">Color4f</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.ColorFilter.html">ColorFilter</a></li>

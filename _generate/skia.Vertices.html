@@ -37,7 +37,8 @@
 <dl class="py class">
 <dt id="skia.Vertices">
 <em class="property">class </em><code class="sig-name descname">Vertices</code><a class="headerlink" href="#skia.Vertices" title="Permalink to this definition">¶</a></dt>
-<dd><p>An immutable set of vertex data that can be used with SkCanvas::drawVertices.</p>
+<dd><p>An immutable set of vertex data that can be used with
+<a class="reference internal" href="skia.Canvas.html#skia.Canvas.drawVertices" title="skia.Canvas.drawVertices"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Canvas.drawVertices()</span></code></a>.</p>
 <p class="rubric">Methods</p>
 <table class="longtable docutils align-default">
 <colgroup>
@@ -52,7 +53,7 @@
 <td><p>Overloaded function.</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#skia.Vertices.__init__" title="skia.Vertices.__init__"><code class="xref py py-obj docutils literal notranslate"><span class="pre">__init__</span></code></a></p></td>
-<td><p>Initialize self.</p></td>
+<td><p>Create a vertices by copying the specified arrays.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#skia.Vertices.approximateSize" title="skia.Vertices.approximateSize"><code class="xref py py-obj docutils literal notranslate"><span class="pre">approximateSize</span></code></a></p></td>
 <td><p></p></td>
@@ -90,16 +91,16 @@
 <col style="width: 90%" />
 </colgroup>
 <tbody>
-<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">kLast_VertexMode</span></code></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Vertices.kLast" title="skia.Vertices.kLast"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kLast</span></code></a></p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">kTriangleFan_VertexMode</span></code></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.Vertices.kTriangleFan" title="skia.Vertices.kTriangleFan"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kTriangleFan</span></code></a></p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">kTriangleStrip_VertexMode</span></code></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Vertices.kTriangleStrip" title="skia.Vertices.kTriangleStrip"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kTriangleStrip</span></code></a></p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">kTriangles_VertexMode</span></code></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.Vertices.kTriangles" title="skia.Vertices.kTriangles"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kTriangles</span></code></a></p></td>
 <td><p></p></td>
 </tr>
 </tbody>
@@ -119,18 +120,27 @@
 <em class="property">static </em><code class="sig-prename descclassname">Vertices.</code><code class="sig-name descname">MakeCopy</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span><span class="n">args</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#skia.Vertices.MakeCopy" title="Permalink to this definition">¶</a></dt>
 <dd><p>Overloaded function.</p>
 <ol class="arabic simple">
-<li><p>MakeCopy(arg0: SkVertices::VertexMode, arg1: int, arg2: skia.Point, arg3: skia.Point, arg4: int, arg5: int, arg6: int) -&gt; skia.Vertices</p></li>
+<li><p>MakeCopy(arg0: skia.Vertices.VertexMode, arg1: int, arg2: skia.Point, arg3: skia.Point, arg4: int, arg5: int, arg6: int) -&gt; skia.Vertices</p></li>
 </ol>
 <p>Create a vertices by copying the specified arrays.</p>
 <ol class="arabic simple" start="2">
-<li><p>MakeCopy(arg0: SkVertices::VertexMode, arg1: int, arg2: skia.Point, arg3: skia.Point, arg4: int) -&gt; skia.Vertices</p></li>
+<li><p>MakeCopy(arg0: skia.Vertices.VertexMode, arg1: int, arg2: skia.Point, arg3: skia.Point, arg4: int) -&gt; skia.Vertices</p></li>
 </ol>
 </dd></dl>
 
 <dl class="py method">
 <dt id="skia.Vertices.__init__">
-<code class="sig-prename descclassname">Vertices.</code><code class="sig-name descname">__init__</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#skia.Vertices.__init__" title="Permalink to this definition">¶</a></dt>
-<dd><p>Initialize self.  See help(type(self)) for accurate signature.</p>
+<code class="sig-prename descclassname">Vertices.</code><code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Vertices" title="skia.Vertices">skia.Vertices</a></span></em>, <em class="sig-param"><span class="n">arg0</span><span class="p">:</span> <span class="n">skia.Vertices.VertexMode</span></em>, <em class="sig-param"><span class="n">arg1</span><span class="p">:</span> <span class="n">list</span></em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#skia.Vertices.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a vertices by copying the specified arrays.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>mode</strong> (<em>skia.Vertices.VertexMode</em>) – vertex mode</p></li>
+<li><p><strong>skia.Point</strong><strong>, </strong><strong>int</strong><strong>]</strong><strong>] </strong><strong>vertices</strong> (<em>list</em><em>[</em><em>tuple</em><em>[</em><a class="reference internal" href="skia.Point.html#skia.Point" title="skia.Point"><em>skia.Point</em></a><em>,</em>) – list of (
+position, tex, color)</p></li>
+</ul>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py method">
@@ -180,6 +190,29 @@
 <dd></dd></dl>
 
 </div>
+<div class="section" id="attributes">
+<h2>Attributes<a class="headerlink" href="#attributes" title="Permalink to this headline">¶</a></h2>
+<dl class="py attribute">
+<dt id="skia.Vertices.kLast">
+<code class="sig-prename descclassname">Vertices.</code><code class="sig-name descname">kLast</code><em class="property"> = VertexMode.kLast</em><a class="headerlink" href="#skia.Vertices.kLast" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="skia.Vertices.kTriangleFan">
+<code class="sig-prename descclassname">Vertices.</code><code class="sig-name descname">kTriangleFan</code><em class="property"> = VertexMode.kLast</em><a class="headerlink" href="#skia.Vertices.kTriangleFan" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="skia.Vertices.kTriangleStrip">
+<code class="sig-prename descclassname">Vertices.</code><code class="sig-name descname">kTriangleStrip</code><em class="property"> = VertexMode.kTriangleStrip</em><a class="headerlink" href="#skia.Vertices.kTriangleStrip" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="skia.Vertices.kTriangles">
+<code class="sig-prename descclassname">Vertices.</code><code class="sig-name descname">kTriangles</code><em class="property"> = VertexMode.kTriangles</em><a class="headerlink" href="#skia.Vertices.kTriangles" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
 </div>
 
 
@@ -211,6 +244,11 @@
 <li class="toctree-l2"><a class="reference internal" href="skia.BlendModeCoeff.html">BlendModeCoeff</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.Budgeted.html">Budgeted</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.Canvas.html">Canvas</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.Canvas.SrcRectConstraint.html">SrcRectConstraint</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.Canvas.PointMode.html">PointMode</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.Canvas.QuadAAFlags.html">QuadAAFlags</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.Canvas.SaveLayerRec.html">SaveLayerRec</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.Canvas.Lattice.html">Lattice</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.ClipOp.html">ClipOp</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.Color4f.html">Color4f</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.ColorFilter.html">ColorFilter</a></li>

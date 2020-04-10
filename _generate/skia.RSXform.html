@@ -46,8 +46,50 @@
 <col style="width: 90%" />
 </colgroup>
 <tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.RSXform.Make" title="skia.RSXform.Make"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Make</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.RSXform.MakeFromRadians" title="skia.RSXform.MakeFromRadians"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MakeFromRadians</span></code></a></p></td>
+<td><p></p></td>
+</tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#skia.RSXform.__init__" title="skia.RSXform.__init__"><code class="xref py py-obj docutils literal notranslate"><span class="pre">__init__</span></code></a></p></td>
-<td><p>Initialize self.</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.RSXform.rectStaysRect" title="skia.RSXform.rectStaysRect"><code class="xref py py-obj docutils literal notranslate"><span class="pre">rectStaysRect</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.RSXform.set" title="skia.RSXform.set"><code class="xref py py-obj docutils literal notranslate"><span class="pre">set</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.RSXform.setIdentity" title="skia.RSXform.setIdentity"><code class="xref py py-obj docutils literal notranslate"><span class="pre">setIdentity</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.RSXform.toQuad" title="skia.RSXform.toQuad"><code class="xref py py-obj docutils literal notranslate"><span class="pre">toQuad</span></code></a></p></td>
+<td><p>Overloaded function.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.RSXform.toTriStrip" title="skia.RSXform.toTriStrip"><code class="xref py py-obj docutils literal notranslate"><span class="pre">toTriStrip</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Attributes</p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.RSXform.fSCos" title="skia.RSXform.fSCos"><code class="xref py py-obj docutils literal notranslate"><span class="pre">fSCos</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.RSXform.fSSin" title="skia.RSXform.fSSin"><code class="xref py py-obj docutils literal notranslate"><span class="pre">fSSin</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.RSXform.fTx" title="skia.RSXform.fTx"><code class="xref py py-obj docutils literal notranslate"><span class="pre">fTx</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.RSXform.fTy" title="skia.RSXform.fTy"><code class="xref py py-obj docutils literal notranslate"><span class="pre">fTy</span></code></a></p></td>
+<td><p></p></td>
 </tr>
 </tbody>
 </table>
@@ -56,10 +98,72 @@
 <div class="section" id="methods">
 <h2>Methods<a class="headerlink" href="#methods" title="Permalink to this headline">¶</a></h2>
 <dl class="py method">
+<dt id="skia.RSXform.Make">
+<em class="property">static </em><code class="sig-prename descclassname">RSXform.</code><code class="sig-name descname">Make</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">scos</span><span class="p">:</span> <span class="n">float</span></em>, <em class="sig-param"><span class="n">ssin</span><span class="p">:</span> <span class="n">float</span></em>, <em class="sig-param"><span class="n">tx</span><span class="p">:</span> <span class="n">float</span></em>, <em class="sig-param"><span class="n">ty</span><span class="p">:</span> <span class="n">float</span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="#skia.RSXform" title="skia.RSXform">skia.RSXform</a><a class="headerlink" href="#skia.RSXform.Make" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="skia.RSXform.MakeFromRadians">
+<em class="property">static </em><code class="sig-prename descclassname">RSXform.</code><code class="sig-name descname">MakeFromRadians</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">scale</span><span class="p">:</span> <span class="n">float</span></em>, <em class="sig-param"><span class="n">radians</span><span class="p">:</span> <span class="n">float</span></em>, <em class="sig-param"><span class="n">tx</span><span class="p">:</span> <span class="n">float</span></em>, <em class="sig-param"><span class="n">ty</span><span class="p">:</span> <span class="n">float</span></em>, <em class="sig-param"><span class="n">ax</span><span class="p">:</span> <span class="n">float</span></em>, <em class="sig-param"><span class="n">ay</span><span class="p">:</span> <span class="n">float</span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="#skia.RSXform" title="skia.RSXform">skia.RSXform</a><a class="headerlink" href="#skia.RSXform.MakeFromRadians" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
 <dt id="skia.RSXform.__init__">
-<code class="sig-prename descclassname">RSXform.</code><code class="sig-name descname">__init__</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#skia.RSXform.__init__" title="Permalink to this definition">¶</a></dt>
-<dd><p>Initialize self.  See help(type(self)) for accurate signature.</p>
+<code class="sig-prename descclassname">RSXform.</code><code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.RSXform" title="skia.RSXform">skia.RSXform</a></span></em>, <em class="sig-param"><span class="n">scos</span><span class="p">:</span> <span class="n">float</span></em>, <em class="sig-param"><span class="n">ssin</span><span class="p">:</span> <span class="n">float</span></em>, <em class="sig-param"><span class="n">tx</span><span class="p">:</span> <span class="n">float</span></em>, <em class="sig-param"><span class="n">ty</span><span class="p">:</span> <span class="n">float</span></em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#skia.RSXform.__init__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="skia.RSXform.rectStaysRect">
+<code class="sig-prename descclassname">RSXform.</code><code class="sig-name descname">rectStaysRect</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.RSXform" title="skia.RSXform">skia.RSXform</a></span></em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#skia.RSXform.rectStaysRect" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="skia.RSXform.set">
+<code class="sig-prename descclassname">RSXform.</code><code class="sig-name descname">set</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.RSXform" title="skia.RSXform">skia.RSXform</a></span></em>, <em class="sig-param"><span class="n">scos</span><span class="p">:</span> <span class="n">float</span></em>, <em class="sig-param"><span class="n">ssin</span><span class="p">:</span> <span class="n">float</span></em>, <em class="sig-param"><span class="n">tx</span><span class="p">:</span> <span class="n">float</span></em>, <em class="sig-param"><span class="n">ty</span><span class="p">:</span> <span class="n">float</span></em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#skia.RSXform.set" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="skia.RSXform.setIdentity">
+<code class="sig-prename descclassname">RSXform.</code><code class="sig-name descname">setIdentity</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.RSXform" title="skia.RSXform">skia.RSXform</a></span></em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#skia.RSXform.setIdentity" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="skia.RSXform.toQuad">
+<code class="sig-prename descclassname">RSXform.</code><code class="sig-name descname">toQuad</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span><span class="n">args</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#skia.RSXform.toQuad" title="Permalink to this definition">¶</a></dt>
+<dd><p>Overloaded function.</p>
+<ol class="arabic simple">
+<li><p>toQuad(self: skia.RSXform, width: float, height: float, quqd: skia.Point) -&gt; None</p></li>
+<li><p>toQuad(self: skia.RSXform, size: skia.Size, quqd: skia.Point) -&gt; None</p></li>
+</ol>
 </dd></dl>
+
+<dl class="py method">
+<dt id="skia.RSXform.toTriStrip">
+<code class="sig-prename descclassname">RSXform.</code><code class="sig-name descname">toTriStrip</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.RSXform" title="skia.RSXform">skia.RSXform</a></span></em>, <em class="sig-param"><span class="n">width</span><span class="p">:</span> <span class="n">float</span></em>, <em class="sig-param"><span class="n">height</span><span class="p">:</span> <span class="n">float</span></em>, <em class="sig-param"><span class="n">strip</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.Point.html#skia.Point" title="skia.Point">skia.Point</a></span></em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#skia.RSXform.toTriStrip" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+<div class="section" id="attributes">
+<h2>Attributes<a class="headerlink" href="#attributes" title="Permalink to this headline">¶</a></h2>
+<dl class="py attribute">
+<dt id="skia.RSXform.fSCos">
+<code class="sig-prename descclassname">RSXform.</code><code class="sig-name descname">fSCos</code><a class="headerlink" href="#skia.RSXform.fSCos" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="skia.RSXform.fSSin">
+<code class="sig-prename descclassname">RSXform.</code><code class="sig-name descname">fSSin</code><a class="headerlink" href="#skia.RSXform.fSSin" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="skia.RSXform.fTx">
+<code class="sig-prename descclassname">RSXform.</code><code class="sig-name descname">fTx</code><a class="headerlink" href="#skia.RSXform.fTx" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="skia.RSXform.fTy">
+<code class="sig-prename descclassname">RSXform.</code><code class="sig-name descname">fTy</code><a class="headerlink" href="#skia.RSXform.fTy" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
 
 </div>
 </div>
@@ -93,6 +197,11 @@
 <li class="toctree-l2"><a class="reference internal" href="skia.BlendModeCoeff.html">BlendModeCoeff</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.Budgeted.html">Budgeted</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.Canvas.html">Canvas</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.Canvas.SrcRectConstraint.html">SrcRectConstraint</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.Canvas.PointMode.html">PointMode</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.Canvas.QuadAAFlags.html">QuadAAFlags</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.Canvas.SaveLayerRec.html">SaveLayerRec</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.Canvas.Lattice.html">Lattice</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.ClipOp.html">ClipOp</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.Color4f.html">Color4f</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.ColorFilter.html">ColorFilter</a></li>
