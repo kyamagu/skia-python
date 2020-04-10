@@ -55,10 +55,11 @@ py::class_<SkPicture, PyPicture, sk_sp<SkPicture>>(m, "Picture", R"docstring(
         "created.")
     .def("uniqueID", &SkPicture::uniqueID,
         "Returns a non-zero value unique among SkPicture in Skia process.")
-    // .def("serialize",
-    //     py::overload_cast<const SkSerialProcs*>(&SkPicture::serialize),
-    //     "Returns storage containing SkData describing SkPicture, using "
-    //     "optional custom encoders.")
+    .def("serialize",
+        // py::overload_cast<const SkSerialProcs*>(&SkPicture::serialize),
+        [] (SkPicture& picture) { return picture.serialize(); },
+        "Returns storage containing SkData describing SkPicture, using "
+        "optional custom encoders.")
     // .def("serialize",
     //     py::overload_cast<SkWStream*, const SkSerialProcs*>(
     //         &SkPicture::serialize),
@@ -92,6 +93,8 @@ py::class_<SkPicture, PyPicture, sk_sp<SkPicture>>(m, "Picture", R"docstring(
     .def_static("MakePlaceholder", &SkPicture::MakePlaceholder,
         "Returns a placeholder SkPicture.")
     ;
+
+py::class_<SkBBHFactory>(m, "BBHFactory");
 
 py::class_<SkBBoxHierarchy, PyBBoxHierarchy, sk_sp<SkBBoxHierarchy>>
     bboxhierarchy(m, "BBoxHierarchy");
@@ -131,28 +134,37 @@ py::enum_<SkPictureRecorder::FinishFlags>(picturerecorder, "FinishFlags");
 
 picturerecorder
     .def(py::init())
+    // .def("beginRecording",
+    //     py::overload_cast<const SkRect&, sk_sp<SkBBoxHierarchy>, uint32_t>(
+    //         &SkPictureRecorder::beginRecording),
+    //     "Returns the canvas that records the drawing commands.")
     .def("beginRecording",
-        py::overload_cast<const SkRect&, sk_sp<SkBBoxHierarchy>, uint32_t>(
+        py::overload_cast<const SkRect&, SkBBHFactory*, uint32_t>(
             &SkPictureRecorder::beginRecording),
-        "Returns the canvas that records the drawing commands.")
-    // .def("beginRecording",
-    //     py::overload_cast<const SkRect&, SkBBHFactory*, uint32_t>(
-    //         &SkPictureRecorder::beginRecording))
-    // .def("beginRecording",
-    //     py::overload_cast<SkScalar, SkScalar, SkBBHFactory*, uint32_t>(
-    //         &SkPictureRecorder::beginRecording))
+        py::arg("bounds"), py::arg("bbhFactory") = nullptr,
+        py::arg("recordFlags") = 0)
+    .def("beginRecording",
+        py::overload_cast<SkScalar, SkScalar, SkBBHFactory*, uint32_t>(
+            &SkPictureRecorder::beginRecording),
+        py::arg("width"), py::arg("height"), py::arg("bbhFactory") = nullptr,
+        py::arg("recordFlags") = 0,
+        py::return_value_policy::reference)
     .def("getRecordingCanvas", &SkPictureRecorder::getRecordingCanvas,
         "Returns the recording canvas if one is active, or NULL if recording "
-        "is not active.")
+        "is not active.",
+        py::return_value_policy::reference)
     .def("finishRecordingAsPicture",
         &SkPictureRecorder::finishRecordingAsPicture,
-        "Signal that the caller is done recording.")
+        "Signal that the caller is done recording.",
+        py::arg("endFlags") = 0)
     .def("finishRecordingAsPictureWithCull",
         &SkPictureRecorder::finishRecordingAsPictureWithCull,
         "Signal that the caller is done recording, and update the cull rect "
-        "to use for bounding box hierarchy (BBH) generation.")
+        "to use for bounding box hierarchy (BBH) generation.",
+        py::arg("cullRect"), py::arg("endFlags") = 0)
     .def("finishRecordingAsDrawable",
         &SkPictureRecorder::finishRecordingAsDrawable,
-        "Signal that the caller is done recording.")
+        "Signal that the caller is done recording.",
+        py::arg("endFlags") = 0)
     ;
 }

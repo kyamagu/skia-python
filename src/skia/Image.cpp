@@ -231,7 +231,8 @@ image
     //     "Creates SkImage from data returned by imageGenerator.")
     .def_static("MakeFromEncoded", &SkImage::MakeFromEncoded,
         "Return an image backed by the encoded data, but attempt to defer "
-        "decoding until the image is actually used/drawn.")
+        "decoding until the image is actually used/drawn.",
+        py::arg("encoded"), py::arg("subset") = nullptr)
     .def_static("DecodeToRaster",
         (sk_sp<SkImage> (*)(const void*, size_t, const SkIRect*))
         &SkImage::DecodeToRaster,
