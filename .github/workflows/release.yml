@@ -65,9 +65,9 @@ jobs:
         auditwheel repair dist/skia*.whl
     - name: Upload wheels
       uses: actions/upload-artifact@v1
-        with:
-          name: dist
-          path: dist
+      with:
+        name: dist
+        path: dist
   build-macos:
     runs-on: macos-latest
     strategy:
@@ -114,9 +114,9 @@ jobs:
         python -m pip wheel . -w dist --no-deps
     - name: Upload wheels
       uses: actions/upload-artifact@v1
-        with:
-          name: dist
-          path: dist
+      with:
+        name: dist
+        path: dist
   build-windows:
     runs-on: windows-latest
     strategy:
@@ -173,6 +173,6 @@ jobs:
         python -m pip wheel . -w dist --no-deps
     - name: Upload wheels
       uses: actions/upload-artifact@v1
-        with:
-          name: dist
-          path: dist
+      with:
+        name: dist
+        path: dist
