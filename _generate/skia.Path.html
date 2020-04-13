@@ -1,7 +1,7 @@
 
 <!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
   <head>
     <meta charset="utf-8" />
     <title>Path &#8212; skia-python 0.0.1 documentation</title>
@@ -77,7 +77,7 @@ SkPath::updateBoundsCache to make SkPath thread safe.</p>
 <td><p>Appends arc to SkPath, as the start of new contour.</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#skia.Path.addCircle" title="skia.Path.addCircle"><code class="xref py py-obj docutils literal notranslate"><span class="pre">addCircle</span></code></a></p></td>
-<td><p>Adds circle centered at (x, y) of size radius to SkPath, appending kMove_Verb, four kConic_Verb, and kClose_Verb.</p></td>
+<td><p>Adds circle centered at (x, y) of size radius to <a class="reference internal" href="#skia.Path" title="skia.Path"><code class="xref py py-class docutils literal notranslate"><span class="pre">Path</span></code></a>, appending <a class="reference internal" href="skia.PathVerb.html#skia.PathVerb.kMove" title="skia.PathVerb.kMove"><code class="xref py py-attr docutils literal notranslate"><span class="pre">PathVerb.kMove</span></code></a>, four <a class="reference internal" href="skia.PathVerb.html#skia.PathVerb.kConic" title="skia.PathVerb.kConic"><code class="xref py py-attr docutils literal notranslate"><span class="pre">PathVerb.kConic</span></code></a>, and <a class="reference internal" href="skia.PathVerb.html#skia.PathVerb.kClose" title="skia.PathVerb.kClose"><code class="xref py py-attr docutils literal notranslate"><span class="pre">PathVerb.kClose</span></code></a>.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#skia.Path.addOval" title="skia.Path.addOval"><code class="xref py py-obj docutils literal notranslate"><span class="pre">addOval</span></code></a></p></td>
 <td><p>Overloaded function.</p></td>
@@ -374,8 +374,27 @@ SkPath::updateBoundsCache to make SkPath thread safe.</p>
 
 <dl class="py method">
 <dt id="skia.Path.addCircle">
-<code class="sig-prename descclassname">Path.</code><code class="sig-name descname">addCircle</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Path" title="skia.Path">skia.Path</a></span></em>, <em class="sig-param"><span class="n">arg0</span><span class="p">:</span> <span class="n">float</span></em>, <em class="sig-param"><span class="n">arg1</span><span class="p">:</span> <span class="n">float</span></em>, <em class="sig-param"><span class="n">arg2</span><span class="p">:</span> <span class="n">float</span></em>, <em class="sig-param"><span class="n">arg3</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.PathDirection.html#skia.PathDirection" title="skia.PathDirection">skia.PathDirection</a></span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="#skia.Path" title="skia.Path">skia.Path</a><a class="headerlink" href="#skia.Path.addCircle" title="Permalink to this definition">¶</a></dt>
-<dd><p>Adds circle centered at (x, y) of size radius to SkPath, appending kMove_Verb, four kConic_Verb, and kClose_Verb.</p>
+<code class="sig-prename descclassname">Path.</code><code class="sig-name descname">addCircle</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Path" title="skia.Path">skia.Path</a></span></em>, <em class="sig-param"><span class="n">x</span><span class="p">:</span> <span class="n">float</span></em>, <em class="sig-param"><span class="n">y</span><span class="p">:</span> <span class="n">float</span></em>, <em class="sig-param"><span class="n">radius</span><span class="p">:</span> <span class="n">float</span></em>, <em class="sig-param"><span class="n">dir</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.PathDirection.html#skia.PathDirection" title="skia.PathDirection">skia.PathDirection</a></span> <span class="o">=</span> <span class="default_value">PathDirection.kCW</span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="#skia.Path" title="skia.Path">skia.Path</a><a class="headerlink" href="#skia.Path.addCircle" title="Permalink to this definition">¶</a></dt>
+<dd><p>Adds circle centered at (x, y) of size radius to <a class="reference internal" href="#skia.Path" title="skia.Path"><code class="xref py py-class docutils literal notranslate"><span class="pre">Path</span></code></a>,
+appending <a class="reference internal" href="skia.PathVerb.html#skia.PathVerb.kMove" title="skia.PathVerb.kMove"><code class="xref py py-attr docutils literal notranslate"><span class="pre">PathVerb.kMove</span></code></a>, four <a class="reference internal" href="skia.PathVerb.html#skia.PathVerb.kConic" title="skia.PathVerb.kConic"><code class="xref py py-attr docutils literal notranslate"><span class="pre">PathVerb.kConic</span></code></a>,
+and <a class="reference internal" href="skia.PathVerb.html#skia.PathVerb.kClose" title="skia.PathVerb.kClose"><code class="xref py py-attr docutils literal notranslate"><span class="pre">PathVerb.kClose</span></code></a>.</p>
+<p>Circle begins at: (x + radius, y), continuing clockwise if dir is
+<a class="reference internal" href="skia.PathDirection.html#skia.PathDirection.kCW" title="skia.PathDirection.kCW"><code class="xref py py-attr docutils literal notranslate"><span class="pre">PathDirection.kCW</span></code></a>, and counterclockwise if dir is
+<a class="reference internal" href="skia.PathDirection.html#skia.PathDirection.kCCW" title="skia.PathDirection.kCCW"><code class="xref py py-attr docutils literal notranslate"><span class="pre">PathDirection.kCCW</span></code></a>.</p>
+<p>Has no effect if radius is zero or negative.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>x</strong> (<em>float</em>) – center of circle</p></li>
+<li><p><strong>y</strong> (<em>float</em>) – center of circle</p></li>
+<li><p><strong>radius</strong> (<em>float</em>) – distance from center to edge</p></li>
+<li><p><strong>dir</strong> (<a class="reference internal" href="skia.PathDirection.html#skia.PathDirection" title="skia.PathDirection"><em>skia.PathDirection</em></a>) – <a class="reference internal" href="skia.PathDirection.html#skia.PathDirection" title="skia.PathDirection"><code class="xref py py-class docutils literal notranslate"><span class="pre">PathDirection</span></code></a> to wind circle</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference internal" href="#skia.Path" title="skia.Path"><code class="xref py py-class docutils literal notranslate"><span class="pre">Path</span></code></a></p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py method">
@@ -1122,7 +1141,7 @@ SkPath::updateBoundsCache to make SkPath thread safe.</p>
       &copy;2020, Kota Yamaguchi.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.0.0</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.0.1</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
       |
