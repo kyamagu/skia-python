@@ -330,8 +330,25 @@ path
         "Adds oval to SkPath, appending kMove_Verb, four kConic_Verb, and "
         "kClose_Verb.")
     .def("addCircle", &SkPath::addCircle,
-        "Adds circle centered at (x, y) of size radius to SkPath, appending "
-        "kMove_Verb, four kConic_Verb, and kClose_Verb.")
+        R"docstring(
+        Adds circle centered at (x, y) of size radius to :py:class:`Path`,
+        appending :py:attr:`PathVerb.kMove`, four :py:attr:`PathVerb.kConic`,
+        and :py:attr:`PathVerb.kClose`.
+
+        Circle begins at: (x + radius, y), continuing clockwise if dir is
+        :py:attr:`PathDirection.kCW`, and counterclockwise if dir is
+        :py:attr:`PathDirection.kCCW`.
+
+        Has no effect if radius is zero or negative.
+
+        :param float x: center of circle
+        :param float y: center of circle
+        :param float radius: distance from center to edge
+        :param skia.PathDirection dir: :py:class:`PathDirection` to wind circle
+        :rtype: :py:class:`Path`
+        )docstring",
+        py::arg("x"), py::arg("y"), py::arg("radius"),
+        py::arg("dir") = SkPathDirection::kCW)
     .def("addArc", &SkPath::addArc,
         "Appends arc to SkPath, as the start of new contour.")
     .def("addRoundRect",
