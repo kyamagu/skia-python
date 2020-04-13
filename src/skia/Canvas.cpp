@@ -1035,47 +1035,155 @@ canvas
         )docstring")
     .def("clipRect",
         py::overload_cast<const SkRect&, SkClipOp, bool>(&SkCanvas::clipRect),
-        "Replaces clip with the intersection or difference of clip and rect, "
-        "with an aliased or anti-aliased clip edge.")
+        R"docstring(
+        Replaces clip with the intersection or difference of clip and rect, with
+        an aliased or anti-aliased clip edge.
+
+        rect is transformed by :py:class:`Matrix` before it is combined with
+        clip.
+
+        :rect: :py:class:`Rect` to combine with clip
+        :op: :py:class:`ClipOp` to apply to clip
+        :doAntiAlias: true if clip is to be anti-aliased
+        )docstring",
+        py::arg("rect"), py::arg("op"), py::arg("doAntiAlias"))
     .def("clipRect",
         py::overload_cast<const SkRect&, SkClipOp>(&SkCanvas::clipRect),
-        "Replaces clip with the intersection or difference of clip and rect.")
+        R"docstring(
+        Replaces clip with the intersection or difference of clip and rect.
+
+        Resulting clip is aliased; pixels are fully contained by the clip. rect
+        is transformed by :py:class:`Matrix` before it is combined with clip.
+
+        :rect: :py:class:`Rect` to combine with clip
+        :op: :py:class:`ClipOp` to apply to clip
+        )docstring",
+        py::arg("rect"), py::arg("op"))
     .def("clipRect",
         py::overload_cast<const SkRect&, bool>(&SkCanvas::clipRect),
-        "Replaces clip with the intersection of clip and rect.",
+        R"docstring(
+        Replaces clip with the intersection of clip and rect.
+
+        Resulting clip is aliased; pixels are fully contained by the clip. rect
+        is transformed by :py:class:`Matrix` before it is combined with clip.
+
+        :rect: :py:class:`Rect` to combine with clip
+        :doAntiAlias: true if clip is to be anti-aliased
+        )docstring",
         py::arg("rect"), py::arg("doAntiAlias") = false)
     .def("androidFramework_setDeviceClipRestriction",
         &SkCanvas::androidFramework_setDeviceClipRestriction,
-        "Sets the maximum clip rectangle, which can be set by clipRect(), "
-        "clipRRect() and clipPath() and intersect the current clip with the "
-        "specified rect.")
+        R"docstring(
+        Sets the maximum clip rectangle, which can be set by
+        :py:meth:`clipRect`, :py:meth:`clipRRect` and :py:meth:`clipPath` and
+        intersect the current clip with the specified rect.
+
+        The maximum clip affects only future clipping operations; it is not
+        retroactive. The clip restriction is not recorded in pictures.
+
+        Pass an empty rect to disable maximum clip. This private API is for use
+        by Android framework only.
+
+        :param skia.IRect rect: maximum allowed clip in device coordinates
+        )docstring",
+        py::arg("rect"))
     .def("clipRRect",
         py::overload_cast<const SkRRect&, SkClipOp, bool>(&SkCanvas::clipRRect),
-        "Replaces clip with the intersection or difference of clip and rrect, "
-        "with an aliased or anti-aliased clip edge.")
+        R"docstring(
+        Replaces clip with the intersection or difference of clip and rrect,
+        with an aliased or anti-aliased clip edge.
+
+        rrect is transformed by :py:class:`Matrix` before it is combined with
+        clip.
+
+        :rrect: :py:class:`RRect` to combine with clip
+        :op: :py:class:`ClipOp` to apply to clip
+        :doAntiAlias: true if clip is to be anti-aliased
+        )docstring",
+        py::class("rrect"). py::class("op"), py::class("doAntiAlias"))
     .def("clipRRect",
         py::overload_cast<const SkRRect&, SkClipOp>(&SkCanvas::clipRRect),
-        "Replaces clip with the intersection or difference of clip and rrect.")
+        R"docstring(
+        Replaces clip with the intersection or difference of clip and rrect.
+
+        Resulting clip is aliased; pixels are fully contained by the clip. rrect
+        is transformed by :py:class:`Matrix` before it is combined with clip.
+
+        :rrect: :py:class:`RRect` to combine with clip
+        :op: :py:class:`ClipOp` to apply to clip
+        )docstring",
+        py::arg("rrect"), py::arg("op"))
     .def("clipRRect",
         py::overload_cast<const SkRRect&, bool>(&SkCanvas::clipRRect),
-        "Replaces clip with the intersection of clip and rrect, with an "
-        "aliased or anti-aliased clip edge.",
+        R"docstring(
+        Replaces clip with the intersection of clip and rrect, with an aliased
+        or anti-aliased clip edge.
+
+        rrect is transformed by :py:class:`Matrix` before it is combined with
+        clip.
+
+        :rrect: :py:class:`RRect` to combine with clip
+        :doAntiAlias: true if clip is to be anti-aliased
+        )docstring",
         py::arg("rrect"), py::arg("doAntiAlias") = false)
     .def("clipPath",
         py::overload_cast<const SkPath&, SkClipOp, bool>(&SkCanvas::clipPath),
-        "Replaces clip with the intersection or difference of clip and path, "
-        "with an aliased or anti-aliased clip edge.")
+        R"docstring(
+        Replaces clip with the intersection or difference of clip and path, with
+        an aliased or anti-aliased clip edge.
+
+        :py:class:`Path.FillType` determines if path describes the area inside
+        or outside its contours; and if path contour overlaps itself or another
+        path contour, whether the overlaps form part of the area. path is
+        transformed by :py:class:`Matrix` before it is combined with clip.
+
+        :path: :py:class:`Path` to combine with clip
+        :op: :py:class:`ClipOp` to apply to clip
+        :doAntiAlias: true if clip is to be anti-aliased
+        )docstring",
+        py::arg("path"), py::arg("op"), py::arg("doAntiAlias"))
     .def("clipPath",
         py::overload_cast<const SkPath&, SkClipOp>(&SkCanvas::clipPath),
-        "Replaces clip with the intersection or difference of clip and path.")
+        R"docstring(
+        Replaces clip with the intersection or difference of clip and path.
+
+        Resulting clip is aliased; pixels are fully contained by the clip.
+        :py:class:`Path.FillType` determines if path describes the area inside
+        or outside its contours; and if path contour overlaps itself or another
+        path contour, whether the overlaps form part of the area. path is
+        transformed by :py:class:`Matrix` before it is combined with clip.
+
+        :path: :py:class:`Path` to combine with clip
+        :op: :py:class:`ClipOp` to apply to clip
+        )docstring",
+        py::arg("path"), py::arg("op"), py::arg("doAntiAlias"))
     .def("clipPath",
         py::overload_cast<const SkPath&, bool>(&SkCanvas::clipPath),
-        "Replaces clip with the intersection of clip and path.",
+        R"docstring(
+        Replaces clip with the intersection of clip and path.
+
+        Resulting clip is aliased; pixels are fully contained by the clip.
+        :py:class:`Path.FillType` determines if path describes the area inside
+        or outside its contours; and if path contour overlaps itself or another
+        path contour, whether the overlaps form part of the area. path is
+        transformed by :py:class:`Matrix` before it is combined with clip.
+
+        :path: :py:class:`Path` to combine with clip
+        :doAntiAlias: true if clip is to be anti-aliased
+        )docstring",
         py::arg("path"), py::arg("doAntiAlias") = false)
     // .def("clipShader", &SkCanvas::clipShader)
     .def("clipRegion", &SkCanvas::clipRegion,
-        "Replaces clip with the intersection or difference of clip and "
-        "SkRegion deviceRgn.",
+        R"docstring(
+        Replaces clip with the intersection or difference of clip and
+        :py:class:`Region` deviceRgn.
+
+        Resulting clip is aliased; pixels are fully contained by the clip.
+        deviceRgn is unaffected by :py:class:`Matrix`.
+
+        :param skia.Region deviceRgn: :py:class:`Region` to combine with clip
+        :param skia.ClipOp op: :py:class:`ClipOp` to apply to clip
+        )docstring",
         py::arg("deviceRgn"), py::arg("op") = SkClipOp::kIntersect)
     .def("quickReject",
         py::overload_cast<const SkRect&>(&SkCanvas::quickReject, py::const_),
