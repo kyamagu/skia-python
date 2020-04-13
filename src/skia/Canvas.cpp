@@ -7,14 +7,38 @@ using NumPy = py::array_t<T, py::array::c_style | py::array::forcecast>;
 
 void initCanvas(py::module &m) {
 py::class_<SkAutoCanvasRestore>(m, "AutoCanvasRestore", R"docstring(
-    Stack helper class calls SkCanvas::restoreToCount when SkAutoCanvasRestore
-    goes out of scope.
+    Stack helper class calls :py:meth:`Canvas.restoreToCount` when
+    :py:class:`AutoCanvasRestore` goes out of scope.
 
     Use this to guarantee that the canvas is restored to a known state.
+
+    Example::
+
+        with skia.AutoCanvasRestore(canvas):
+            canvas.drawCircle(50., 50., 10., paint)
+
     )docstring")
-    .def(py::init<SkCanvas*, bool>(), "Preserves SkCanvas::save() count.")
+    .def(py::init<SkCanvas*, bool>(),
+        R"docstring(
+        Preserves :py:meth:`Canvas.save` count.
+
+        Optionally saves SkCanvas clip and SkCanvas matrix.
+
+        :param skia.Canvas canvas: :py:class:`Canvas` to guard
+        :param bool doSave: call :py:meth:`Canvas.save`
+        :return: utility to restore :py:class:`Canvas` state on destructor
+        )docstring",
+        py::arg("canvas"), py::arg("doSave") = true)
     .def("restore", &SkAutoCanvasRestore::restore,
-        "Restores SkCanvas to saved state immediately.")
+        R"docstring(
+        Restores :py:class:`Canvas` to saved state immediately.
+
+        Subsequent calls and destructor have no effect.
+        )docstring")
+    .def("__enter__", [] (SkAutoCanvasRestore& self) { return; })
+    .def("__exit__", [] (SkAutoCanvasRestore& self, py::args args) {
+        self.restore();
+    })
     ;
 
 py::enum_<SkClipOp>(m, "ClipOp")
