@@ -78,8 +78,8 @@ py::class_<SkCanvas> canvas(m, "Canvas", R"docstring(
 
     To draw to a document, obtain :py:class:`Canvas` from SVG canvas, document
     PDF, or :py:class:`PictureRecorder`. SkDocument based :py:class:`Canvas`
-    and other :py:class:`Canvas` subclasses reference SkBaseDevice describing
-    the destination.
+    and other :py:class:`Canvas` subclasses reference :py:class:`BaseDevice`
+    describing the destination.
 
     :py:class:`Canvas` can be constructed to draw to :py:class:`Bitmap` without
     first creating raster surface. This approach may be deprecated in the
@@ -90,23 +90,39 @@ py::class_<SkCanvas> canvas(m, "Canvas", R"docstring(
     .. autosummary::
         :nosignatures:
 
-        Canvas.SrcRectConstraint
-        Canvas.PointMode
-        Canvas.QuadAAFlags
-        Canvas.SaveLayerRec
-        Canvas.Lattice
+        SaveLayerFlags
+        SrcRectConstraint
+        PointMode
+        QuadAAFlags
+        SaveLayerRec
+        Lattice
 
     )docstring");
 
 py::enum_<SkCanvas::SrcRectConstraint>(canvas, "SrcRectConstraint")
-    .value("kStrict", SkCanvas::SrcRectConstraint::kStrict_SrcRectConstraint)
-    .value("kFast", SkCanvas::SrcRectConstraint::kFast_SrcRectConstraint)
+    .value("kStrict", SkCanvas::SrcRectConstraint::kStrict_SrcRectConstraint,
+        R"docstring(
+        sample only inside bounds; slower
+        )docstring")
+    .value("kFast", SkCanvas::SrcRectConstraint::kFast_SrcRectConstraint,
+        R"docstring(
+        sample outside bounds; faster
+        )docstring")
     .export_values();
 
 py::enum_<SkCanvas::PointMode>(canvas, "PointMode")
-    .value("kPoints", SkCanvas::PointMode::kPoints_PointMode)
-    .value("kLines", SkCanvas::PointMode::kLines_PointMode)
-    .value("kPolygon", SkCanvas::PointMode::kPolygon_PointMode)
+    .value("kPoints", SkCanvas::PointMode::kPoints_PointMode,
+        R"docstring(
+        draw each point separately
+        )docstring")
+    .value("kLines", SkCanvas::PointMode::kLines_PointMode,
+        R"docstring(
+        draw each pair of points as a line segment
+        )docstring")
+    .value("kPolygon", SkCanvas::PointMode::kPolygon_PointMode,
+        R"docstring(
+        draw the array of points as a open polygon
+        )docstring")
     .export_values();
 
 py::enum_<SkCanvas::QuadAAFlags>(canvas, "QuadAAFlags")
@@ -118,42 +134,121 @@ py::enum_<SkCanvas::QuadAAFlags>(canvas, "QuadAAFlags")
     .value("kAll", SkCanvas::QuadAAFlags::kAll_QuadAAFlags)
     .export_values();
 
-py::class_<SkCanvas::SaveLayerRec> savelayerrec(canvas, "SaveLayerRec",
+py::enum_<SkCanvas::SaveLayerFlagsSet>(canvas, "SaveLayerFlags")
+    .value("kInitWithPrevious",
+        SkCanvas::SaveLayerFlagsSet::kInitWithPrevious_SaveLayerFlag,
+        "initializes with previous contents")
+    .value("kMaskAgainstCoverage_EXPERIMENTAL_DONT_USE",
+        SkCanvas::SaveLayerFlagsSet::
+        kMaskAgainstCoverage_EXPERIMENTAL_DONT_USE_SaveLayerFlag,
+        "experimental: do not use")
+    .value("kF16ColorType",
+        SkCanvas::SaveLayerFlagsSet::kF16ColorType,
+        "")
+    .export_values();
+
+py::class_<SkCanvas::SaveLayerRec>(canvas, "SaveLayerRec",
     R"docstring(
     SaveLayerRec contains the state used to create the layer.
-    )docstring");
+    )docstring")
+    .def(py::init<>(),
+        R"docstring(
+        Sets :py:attr:`fBounds`, :py:attr:`fPaint`, and :py:attr:`fBackdrop` to
+        nullptr.
 
-savelayerrec
-    .def(py::init(),
-        "Sets fBounds, fPaint, and fBackdrop to nullptr.")
+        Clears :py:attr:`fSaveLayerFlags`.
+        )docstring")
     .def(py::init<const SkRect*, const SkPaint*, SkCanvas::SaveLayerFlags>(),
-        "Sets fBounds, fPaint, and fSaveLayerFlags; sets fBackdrop to nullptr.")
+        R"docstring(
+        Sets :py:attr:`fBounds`, :py:attr:`fPaint`, and
+        :py:attr:`fSaveLayerFlags`; sets :py:attr:`fBackdrop` to nullptr.
+
+        :bounds: layer dimensions; may be nullptr
+        :paint: applied to layer when overlaying prior layer;
+            may be nullptr
+        :saveLayerFlags: SaveLayerRec options to
+            modify layer
+        )docstring",
+        py::arg("bounds"), py::arg("paint"), py::arg("saveLayerFlags") = 0)
     .def(py::init<const SkRect*, const SkPaint*, const SkImageFilter*,
         SkCanvas::SaveLayerFlags>(),
-        "Sets fBounds, fPaint, fBackdrop, and fSaveLayerFlags.")
+        R"docstring(
+        Sets :py:attr:`fBounds`, :py:attr:`fPaint`, :py:attr:`fBackdrop`, and
+        :py:attr:`fSaveLayerFlags`.
+
+        :bounds: layer dimensions; may be nullptr
+        :paint: applied to layer when overlaying prior layer;
+            may be nullptr
+        :backdrop: If not null, this causes the current
+            layer to be filtered by backdrop, and then drawn into the new layer
+            (respecting the current clip). If null, the new layer is initialized
+            with transparent-black.
+        :saveLayerFlags: SaveLayerRec options to
+            modify layer
+        )docstring",
+        py::arg("bounds"), py::arg("paint"), py::arg("backdrop"),
+        py::arg("saveLayerFlags"))
     .def(py::init<const SkRect*, const SkPaint*, const SkImageFilter*,
         const SkImage*, const SkMatrix*, SkCanvas::SaveLayerFlags>(),
-        "Experimental.")
+        R"docstring(
+        Experimental.
+
+        Not ready for general use. Sets :py:attr:`fBounds`, :py:attr:`fPaint`,
+        :py:attr:`fBackdrop`, :py:attr:`fClipMask`, :py:attr:`fClipMatrix`, and
+        :py:attr:`fSaveLayerFlags`. clipMatrix uses alpha channel of image,
+        transformed by clipMatrix, to clip layer when drawn to
+        :py:class:`Canvas`.
+
+        :bounds: layer dimensions; may be nullptr
+        :paint: graphics state applied to layer when overlaying
+            prior layer; may be nullptr
+        :backdrop: If not null, this causes the current
+            layer to be filtered by backdrop, and then drawn into the new layer
+            (respecting the current clip). If null, the new layer is initialized
+            with transparent-black.
+        :clipMask: clip applied to layer; may be nullptr
+        :clipMatrix: matrix applied to clipMask; may be
+            nullptr to use identity matrix
+        :saveLayerFlags: SaveLayerRec options to
+            modify layer
+        )docstring",
+        py::arg("bounds"), py::arg("paint"), py::arg("backdrop"),
+        py::arg("clipMask"), py::arg("clipMatrix"),
+        py::arg("saveLayerFlags"))
     .def_readwrite("fBounds", &SkCanvas::SaveLayerRec::fBounds,
-        "hints at layer size limit",
+        R"docstring(
+        hints at layer size limit
+        )docstring",
         py::return_value_policy::reference)
     .def_readwrite("fPaint", &SkCanvas::SaveLayerRec::fPaint,
-        "modifies overlay",
+        R"docstring(
+        modifies overlay
+        )docstring",
         py::return_value_policy::reference)
     .def_readwrite("fBackdrop", &SkCanvas::SaveLayerRec::fBackdrop,
-        "If not null, this triggers the same initialization behavior as "
-        "setting kInitWithPrevious_SaveLayerFlag on fSaveLayerFlags: the "
-        "current layer is copied into the new layer, rather than initializing "
-        "the new layer with transparent-black.",
+        R"docstring(
+        If not null, this triggers the same initialization behavior as setting
+        :py:attr:`Canvas.SaveLayerFlags.kInitWithPrevious` on
+        :py:attr:`fSaveLayerFlags`: the current layer is copied into the new
+        layer, rather than initializing the new layer with transparent-black.
+
+        This is then filtered by fBackdrop (respecting the current clip).
+        )docstring",
         py::return_value_policy::reference)
     .def_readwrite("fClipMask", &SkCanvas::SaveLayerRec::fClipMask,
-        "clips layer with mask alpha",
+        R"docstring(
+        clips layer with mask alpha
+        )docstring",
         py::return_value_policy::reference)
     .def_readwrite("fClipMatrix", &SkCanvas::SaveLayerRec::fClipMatrix,
-        "transforms mask alpha used to clip",
+        R"docstring(
+        transforms mask alpha used to clip
+        )docstring",
         py::return_value_policy::reference)
     .def_readwrite("fSaveLayerFlags", &SkCanvas::SaveLayerRec::fSaveLayerFlags,
-        "preserves LCD text, creates with prior layer contents")
+        R"docstring(
+        preserves LCD text, creates with prior layer contents
+        )docstring")
     ;
 
 py::class_<SkCanvas::Lattice> lattice(canvas, "Lattice", R"docstring(
@@ -165,23 +260,64 @@ py::class_<SkCanvas::Lattice> lattice(canvas, "Lattice", R"docstring(
     the destination side is too small to hold the fixed entries, all fixed
     entries are proportionately scaled down to fit. The grid entries not on even
     columns and rows are scaled to fit the remaining space, if any.
+
+    .. rubric:: Classes
+
+    .. autosummary::
+        :nosignatures:
+
+        RectType
     )docstring");
 
-lattice
-    .def_readwrite("fXDivs", &SkCanvas::Lattice::fXDivs)
-    .def_readwrite("fYDivs", &SkCanvas::Lattice::fYDivs)
-    .def_readwrite("fRectTypes", &SkCanvas::Lattice::fRectTypes)
-    .def_readwrite("fXCount", &SkCanvas::Lattice::fXCount)
-    .def_readwrite("fYCount", &SkCanvas::Lattice::fYCount)
-    .def_readwrite("fBounds", &SkCanvas::Lattice::fBounds)
-    .def_readwrite("fColors", &SkCanvas::Lattice::fColors)
-    ;
-
 py::enum_<SkCanvas::Lattice::RectType>(lattice, "RectType")
-    .value("kDefault", SkCanvas::Lattice::RectType::kDefault)
-    .value("kTransparent", SkCanvas::Lattice::RectType::kTransparent)
-    .value("kFixedColor", SkCanvas::Lattice::RectType::kFixedColor)
+    .value("kDefault", SkCanvas::Lattice::RectType::kDefault,
+        R"docstring(
+        draws SkBitmap into lattice rectangle
+        )docstring")
+    .value("kTransparent", SkCanvas::Lattice::RectType::kTransparent,
+        R"docstring(
+        skips lattice rectangle by making it transparent
+        )docstring")
+    .value("kFixedColor", SkCanvas::Lattice::RectType::kFixedColor,
+        R"docstring(
+        draws one of fColors into lattice rectangle
+        )docstring")
     .export_values();
+
+lattice
+    // .def(py::init([] (std::, py::list, SkCanvas::Lattice::RectType rectType,
+    //     const SkIRect *bounds, const SkColor* colors) {
+    //     return SkCanvas::Lattice lattice;
+    // }))
+    .def_readwrite("fXDivs", &SkCanvas::Lattice::fXDivs,
+        R"docstring(
+        x-axis values dividing bitmap
+        )docstring")
+    .def_readwrite("fYDivs", &SkCanvas::Lattice::fYDivs,
+        R"docstring(
+        y-axis values dividing bitmap
+        )docstring")
+    .def_readwrite("fRectTypes", &SkCanvas::Lattice::fRectTypes,
+        R"docstring(
+        array of fill types
+        )docstring")
+    .def_readwrite("fXCount", &SkCanvas::Lattice::fXCount,
+        R"docstring(
+        number of x-coordinates
+        )docstring")
+    .def_readwrite("fYCount", &SkCanvas::Lattice::fYCount,
+        R"docstring(
+        number of y-coordinates
+        )docstring")
+    .def_readwrite("fBounds", &SkCanvas::Lattice::fBounds,
+        R"docstring(
+        source bounds to draw from
+        )docstring")
+    .def_readwrite("fColors", &SkCanvas::Lattice::fColors,
+        R"docstring(
+        array of colors
+        )docstring")
+    ;
 
 canvas
     .def(py::init<>(),
@@ -529,38 +665,224 @@ canvas
         //     &SkCanvas::writePixels),
         [] (SkCanvas& canvas, NumPy<uint8_t> array, int x, int y) {
             py::buffer_info info = array.request();
-            if (info.ndim <= 1)
+            if (info.ndim <= 2)
                 throw std::runtime_error(
-                    "Number of dimensions must be 2 or more.");
-            if (info.shape[0] == 0 || info.shape[1] == 0)
-                throw std::runtime_error(
-                    "Width and height must be greater than 0.");
+                    "Number of dimensions must be 3 or more.");
+            if (info.shape[2] < 4)
+                throw std::runtime_error("Color channels must be 4.");
             auto imageinfo = SkImageInfo::MakeN32Premul(
                 info.shape[1], info.shape[0]);
             return canvas.writePixels(
                 imageinfo, info.ptr, info.strides[0], x, y);
         },
-        "Copies SkRect from pixels to SkCanvas.",
+        R"docstring(
+        Copies :py:class:`Rect` from pixels to :py:class:`Canvas`.
+
+        :py:class:`Matrix` and clip are ignored. Source :py:class:`Rect` corners
+        are (0, 0) and (info.width(), info.height()). Destination
+        :py:class:`Rect` corners are (x, y) and (imageInfo().width(),
+        imageInfo().height()).
+
+        Copies each readable pixel intersecting both rectangles, without
+        scaling, converting to imageInfo().colorType() and
+        imageInfo().alphaType() if required.
+
+        Pixels are writable when :py:class:`BaseDevice` is raster, or backed by
+        a GPU. Pixels are not writable when :py:class:`Canvas` is returned by
+        :py:meth:`Document.beginPage`, returned by
+        :py:meth:`PictureRecorder.beginRecording`, or :py:class:`Canvas` is the
+        base of a utility class like DebugCanvas.
+
+        Pixel values are converted only if :py:class:`ColorType` and
+        :py:class:`AlphaType` do not match. Only pixels within both source and
+        destination rectangles are copied. :py:class:`Canvas` pixels outside
+        :py:class:`Rect` intersection are unchanged.
+
+        Pass negative values for x or y to offset pixels to the left or above
+        :py:class:`Canvas` pixels.
+
+        Does not copy, and returns false if:
+
+        - Source and destination rectangles do not intersect.
+        - pixels could not be converted to :py:class:`Canvas`
+            imageInfo().colorType() or imageInfo().alphaType().
+        - :py:class:`Canvas` pixels are not writable; for instance,
+            :py:class:`Canvas` is document-based.
+        - rowBytes is too small to contain one row of pixels.
+
+        :array: pixels to copy, in native 32-bit colors.
+        :x: offset into :py:class:`Canvas` writable pixels on x-axis; may be
+            negative
+        :y: offset into :py:class:`Canvas` writable pixels on y-axis; may be
+            negative
+
+        :return: true if pixels were written to :py:class:`Canvas`
+        )docstring",
         py::arg("array"), py::arg("x") = 0, py::arg("y") = 0)
     .def("writePixels",
         py::overload_cast<const SkBitmap&, int, int>(&SkCanvas::writePixels),
-        "Copies SkRect from pixels to SkCanvas.")
-    .def("save", &SkCanvas::save, "Saves SkMatrix and clip.")
+        R"docstring(
+        Copies :py:class:`Rect` from pixels to :py:class:`Canvas`.
+
+        :py:class:`Matrix` and clip are ignored. Source :py:class:`Rect` corners
+        are (0, 0) and (bitmap.width(), bitmap.height()).
+
+        Destination :py:class:`Rect` corners are (x, y) and (imageInfo().width(),
+        imageInfo().height()).
+
+        Copies each readable pixel intersecting both rectangles, without
+        scaling, converting to imageInfo().colorType() and
+        imageInfo().alphaType() if required.
+
+        Pixels are writable when :py:class:`BaseDevice` is raster, or backed by
+        a GPU. Pixels are not writable when :py:class:`Canvas` is returned by
+        :py:meth:`Document.beginPage`, returned by
+        :py:meth:`PictureRecorder.beginRecording`, or :py:class:`Canvas` is the
+        base of a utility class like DebugCanvas.
+
+        Pixel values are converted only if :py:class:`ColorType` and
+        :py:class:`AlphaType` do not match. Only pixels within both source and
+        destination rectangles are copied. :py:class:`Canvas` pixels outside
+        :py:class:`Rect` intersection are unchanged.
+
+        Pass negative values for x or y to offset pixels to the left or above
+        :py:class:`Canvas` pixels.
+
+        Does not copy, and returns false if:
+
+        - Source and destination rectangles do not intersect.
+        - bitmap does not have allocated pixels.
+        - bitmap pixels could not be converted to
+            :py:meth:`Canvas.imageInfo()`.colorType() or alphaType().
+        - :py:class:`Canvas` pixels are not writable; for instance,
+            :py:class:`Canvas` is document-based.
+        - bitmap pixels are inaccessible; for instance, bitmap wraps a texture.
+
+        :bitmap: contains pixels copied to :py:class:`Canvas`.
+        :x: offset into :py:class:`Canvas` writable pixels on x-axis; may be
+            negative
+        :y: offset into :py:class:`Canvas` writable pixels on y-axis; may be
+            negative
+
+        :return: true if pixels were written to :py:class:`Canvas`
+        )docstring",
+        py::arg("bitmap"), py::arg("x") = 0, py::arg("y") = 0)
+    .def("save", &SkCanvas::save,
+        R"docstring(
+        Saves :py:class:`Matrix` and clip.
+
+        Calling :py:meth:`restore` discards changes to :py:class:`Matrix` and
+        clip, restoring the :py:class:`Matrix` and clip to their state when
+        :py:meth:`save` was called.
+
+        :py:class:`Matrix` may be changed by :py:meth:`translate`,
+        :py:meth:`scale`, :py:meth:`rotate`, :py:meth:`skew`, :py:meth:`concat`,
+        :py:meth:`setMatrix`, and :py:meth:`resetMatrix`. Clip may be changed by
+        :py:meth:`clipRect`, :py:meth:`clipRRect`, :py:meth:`clipPath`,
+        :py:meth:`clipRegion`.
+
+        Saved :py:class:`Canvas` state is put on a stack; multiple calls to
+        :py:meth:`save` should be balance by an equal number of calls to
+        :py:meth:`restore`.
+
+        Call :py:meth:`restoreToCount` with result to restore this and
+        subsequent saves.
+
+        :return: depth of saved stack
+        )docstring")
     .def("saveLayer",
         py::overload_cast<const SkRect*, const SkPaint*>(&SkCanvas::saveLayer),
-        "Saves SkMatrix and clip, and allocates a SkBitmap for subsequent "
-        "drawing.")
-    .def("saveLayer",
-        py::overload_cast<const SkRect&, const SkPaint*>(&SkCanvas::saveLayer),
-        "Saves SkMatrix and clip, and allocates a SkBitmap for subsequent "
-        "drawing.")
+        R"docstring(
+        Saves :py:class:`Matrix` and clip, and allocates a :py:class:`Bitmap`
+        for subsequent drawing.
+
+        Calling :py:meth:`restore` discards changes to :py:class:`Matrix` and
+        clip, and draws the :py:class:`Bitmap`.
+
+        :py:class:`Matrix` may be changed by :py:meth:`translate`,
+        :py:meth:`scale`, :py:meth:`rotate`, :py:meth:`skew`, :py:meth:`concat`,
+        :py:meth:`setMatrix`, and :py:meth:`resetMatrix`. Clip may be changed by
+        :py:meth:`clipRect`, :py:meth:`clipRRect`, :py:meth:`clipPath`,
+        :py:meth:`clipRegion`.
+
+        :py:class:`Rect` bounds suggests but does not define the
+        :py:class:`Bitmap` size. To clip drawing to a specific rectangle, use
+        :py:meth:`clipRect`.
+
+        Optional :py:class:`Paint` paint applies alpha, :py:class:`ColorFilter`,
+        :py:class:`ImageFilter`, and :py:class:`BlendMode` when
+        :py:meth:`restore` is called.
+
+        Call :py:meth:`restoreToCount` with returned value to restore this and
+        subsequent saves.
+
+        :bounds: hint to limit the size of the layer; may be nullptr
+        :paint: graphics state for layer; may be nullptr
+
+        :return: depth of saved stack
+        )docstring",
+        py::arg("bounds") = nullptr, py::arg("paint") = nullptr)
+    // .def("saveLayer",
+    //     py::overload_cast<const SkRect&, const SkPaint*>(
+    //         &SkCanvas::saveLayer),
+    //     "Saves SkMatrix and clip, and allocates a SkBitmap for subsequent "
+    //     "drawing.")
     .def("saveLayerAlpha", &SkCanvas::saveLayerAlpha,
-        "Saves SkMatrix and clip, and allocates SkBitmap for subsequent "
-        "drawing.")
+        R"docstring(
+        Saves :py:class:`Matrix` and clip, and allocates a :py:class:`Bitmap`
+        for subsequent drawing.
+
+        Calling :py:meth:`restore` discards changes to :py:class:`Matrix` and
+        clip, and blends layer with alpha opacity onto prior layer.
+
+        :py:class:`Matrix` may be changed by :py:meth:`translate`,
+        :py:meth:`scale`, :py:meth:`rotate`, :py:meth:`skew`, :py:meth:`concat`,
+        :py:meth:`setMatrix`, and :py:meth:`resetMatrix`. Clip may be changed by
+        :py:meth:`clipRect`, :py:meth:`clipRRect`, :py:meth:`clipPath`,
+        :py:meth:`clipRegion`.
+
+        :py:class:`Rect` bounds suggests but does not define the
+        :py:class:`Bitmap` size. To clip drawing to a specific rectangle, use
+        :py:meth:`clipRect`.
+
+        alpha of zero is fully transparent, 255 is fully opaque.
+
+        Call :py:meth:`restoreToCount` with returned value to restore this and
+        subsequent saves.
+
+        :param skia.Rect bounds: hint to limit the size of the layer; may be
+            nullptr
+        :param int alpha: opacity of layer
+
+        :return: depth of saved stack
+        )docstring",
+        py::arg("bounds"), py::arg("alpha"))
     .def("saveLayer",
         py::overload_cast<const SkCanvas::SaveLayerRec&>(&SkCanvas::saveLayer),
-        "Saves SkMatrix and clip, and allocates a SkBitmap for subsequent "
-        "drawing.")
+        R"docstring(
+        Saves :py:class:`Matrix` and clip, and allocates a :py:class:`Bitmap`
+        for subsequent drawing.
+
+        Calling :py:meth:`restore` discards changes to :py:class:`Matrix` and
+        clip, and blends :py:class:`Bitmap` with alpha opacity onto the prior
+        layer.
+
+        :py:class:`Matrix` may be changed by :py:meth:`translate`,
+        :py:meth:`scale`, :py:meth:`rotate`, :py:meth:`skew`, :py:meth:`concat`,
+        :py:meth:`setMatrix`, and :py:meth:`resetMatrix`. Clip may be changed by
+        :py:meth:`clipRect`, :py:meth:`clipRRect`, :py:meth:`clipPath`,
+        :py:meth:`clipRegion`.
+
+        :py:class:`SaveLayerRec` contains the state used to create the layer.
+
+        Call :py:meth:`restoreToCount` with returned value to restore this and
+        subsequent saves.
+
+        :layerRec: layer state
+
+        :return: depth of save state stack before this call was made.
+        )docstring",
+        py::arg("layerRec"))
     .def("experimental_saveCamera",
         py::overload_cast<const SkM44&, const SkM44&>(
             &SkCanvas::experimental_saveCamera))
@@ -568,33 +890,149 @@ canvas
         py::overload_cast<const SkScalar[16], const SkScalar[16]>(
             &SkCanvas::experimental_saveCamera))
     .def("restore", &SkCanvas::restore,
-        "Removes changes to SkMatrix and clip since SkCanvas state was last "
-        "saved.")
+        R"docstring(
+        Removes changes to :py:class:`Matrix` and clip since :py:class:`Canvas`
+        state was last saved.
+
+        The state is removed from the stack.
+
+        Does nothing if the stack is empty.
+        )docstring")
     .def("getSaveCount", &SkCanvas::getSaveCount,
-        "Returns the number of saved states, each containing: SkMatrix and "
-        "clip.")
+        R"docstring(
+        Returns the number of saved states, each containing: :py:class:`Matrix`
+        and clip.
+
+        Equals the number of :py:meth:`save` calls less the number of
+        :py:meth:`restore` calls plus one. The save count of a new canvas is
+        one.
+
+        :return: depth of save state stack
+        )docstring")
     .def("restoreToCount", &SkCanvas::restoreToCount,
-        "Restores state to SkMatrix and clip values when save(), saveLayer(), "
-        "saveLayerPreserveLCDTextRequests(), or saveLayerAlpha() returned "
-        "saveCount.")
+        R"docstring(
+        Restores state to :py:class:`Matrix` and clip values when
+        :py:meth:`save`, :py:meth:`saveLayer`,
+        :py:meth:`saveLayerPreserveLCDTextRequests`, or
+        :py:meth:`saveLayerAlpha` returned saveCount.
+
+        Does nothing if saveCount is greater than state stack count. Restores
+        state to initial values if saveCount is less than or equal to one.
+
+        :param int saveCount: depth of state stack to restore
+        )docstring",
+        py::arg("saveCount"))
     .def("translate", &SkCanvas::translate,
-        "Translates SkMatrix by dx along the x-axis and dy along the y-axis.")
+        R"docstring(
+        Translates :py:class:`Matrix` by dx along the x-axis and dy along the
+        y-axis.
+
+        Mathematically, replaces :py:class:`Matrix` with a translation matrix
+        premultiplied with :py:class:`Matrix`.
+
+        This has the effect of moving the drawing by (dx, dy) before
+        transforming the result with :py:class:`Matrix`.
+
+        :param dx: distance to translate on x-axis
+        :param dy: distance to translate on y-axis
+        )docstring",
+        py::arg("dx"), py::arg("dy"))
     .def("scale", &SkCanvas::scale,
-        "Scales SkMatrix by sx on the x-axis and sy on the y-axis.")
+        R"docstring(
+        Scales :py:class:`Matrix` by sx on the x-axis and sy on the y-axis.
+
+        Mathematically, replaces :py:class:`Matrix` with a scale matrix
+        premultiplied with :py:class:`Matrix`.
+
+        This has the effect of scaling the drawing by (sx, sy) before
+        transforming the result with :py:class:`Matrix`.
+
+        :param float sx: amount to scale on x-axis
+        :param float sy: amount to scale on y-axis
+        )docstring",
+        py::arg("sx"), py::arg("sy"))
     .def("rotate", py::overload_cast<SkScalar>(&SkCanvas::rotate),
-        "Rotates SkMatrix by degrees.")
+        R"docstring(
+        Rotates :py:class:`Matrix` by degrees.
+
+        Positive degrees rotates clockwise.
+
+        Mathematically, replaces :py:class:`Matrix` with a rotation matrix
+        premultiplied with :py:class:`Matrix`.
+
+        This has the effect of rotating the drawing by degrees before
+        transforming the result with :py:class:`Matrix`.
+
+        :degrees: amount to rotate, in degrees
+        )docstring",
+        py::arg("degrees"))
     .def("rotate",
         py::overload_cast<SkScalar, SkScalar, SkScalar>(&SkCanvas::rotate),
-        "Rotates SkMatrix by degrees about a point at (px, py).")
+        R"docstring(
+        Rotates :py:class:`Matrix` by degrees about a point at (px, py).
+
+        Positive degrees rotates clockwise.
+
+        Mathematically, constructs a rotation matrix; premultiplies the rotation
+        matrix by a translation matrix; then replaces :py:class:`Matrix` with
+        the resulting matrix premultiplied with :py:class:`Matrix`.
+
+        This has the effect of rotating the drawing about a given point before
+        transforming the result with :py:class:`Matrix`.
+
+        :degrees: amount to rotate, in degrees
+        :px: x-axis value of the point to rotate about
+        :py: y-axis value of the point to rotate about
+        )docstring",
+        py::arg("degrees"), py::arg("px"), py::arg("py"))
     .def("skew", &SkCanvas::skew,
-        "Skews SkMatrix by sx on the x-axis and sy on the y-axis.")
+        R"docstring(
+        Skews :py:class:`Matrix` by sx on the x-axis and sy on the y-axis.
+
+        A positive value of sx skews the drawing right as y-axis values
+        increase; a positive value of sy skews the drawing down as x-axis values
+        increase.
+
+        Mathematically, replaces :py:class:`Matrix` with a skew matrix
+        premultiplied with :py:class:`Matrix`.
+
+        This has the effect of skewing the drawing by (sx, sy) before
+        transforming the result with :py:class:`Matrix`.
+
+        :param float sx: amount to skew on x-axis
+        :param float sy: amount to skew on y-axis
+        )docstring",
+        py::arg("sx"), py::arg("sy"))
     .def("concat", &SkCanvas::concat,
-        "Replaces SkMatrix with matrix premultiplied with existing SkMatrix.")
+        R"docstring(
+        Replaces :py:class:`Matrix` with matrix premultiplied with existing
+        :py:class:`Matrix`.
+
+        This has the effect of transforming the drawn geometry by matrix, before
+        transforming the result with existing :py:class:`Matrix`.
+
+        :param skia.Matrix matrix: matrix to premultiply with existing
+            :py:class:`Matrix`
+        )docstring",
+        py::arg("matrix"))
     .def("concat44", py::overload_cast<const SkM44&>(&SkCanvas::concat44))
     .def("concat44", py::overload_cast<const SkScalar[]>(&SkCanvas::concat44))
-    .def("setMatrix", &SkCanvas::setMatrix, "Replaces SkMatrix with matrix.")
+    .def("setMatrix", &SkCanvas::setMatrix,
+        R"docstring(
+        Replaces :py:class:`Matrix` with matrix.
+
+        Unlike :py:meth:`concat`, any prior matrix state is overwritten.
+
+        :param skia.Matrix matrix: matrix to copy, replacing existing
+            :py:class:`Matrix`
+        )docstring",
+        py::arg("matrix"))
     .def("resetMatrix", &SkCanvas::resetMatrix,
-        "Sets SkMatrix to the identity matrix.")
+        R"docstring(
+        Sets SkMatrix to the identity matrix.
+
+        Any prior matrix state is overwritten.
+        )docstring")
     .def("clipRect",
         py::overload_cast<const SkRect&, SkClipOp, bool>(&SkCanvas::clipRect),
         "Replaces clip with the intersection or difference of clip and rect, "
