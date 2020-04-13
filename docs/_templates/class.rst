@@ -1,4 +1,4 @@
-{{ name | escape | underline }}
+{{ fullname | replace("skia.", "") | escape | underline }}
 
 .. currentmodule:: {{ module }}
 

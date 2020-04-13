@@ -498,3 +498,15 @@ def test_Canvas_MakeRasterDirect(args):
 ])
 def test_Canvas_MakeRasterDirectN32(args):
     check_canvas(skia.Canvas.MakeRasterDirectN32(*args))
+
+
+@pytest.mark.parametrize('doSave', [True, False])
+def test_AutoCanvasRestore(canvas, doSave):
+    restorer = skia.AutoCanvasRestore(canvas, doSave);
+    restorer.restore()
+
+
+@pytest.mark.parametrize('doSave', [True, False])
+def test_AutoCanvasRestore_with(canvas, doSave):
+    with skia.AutoCanvasRestore(canvas, doSave):
+        pass

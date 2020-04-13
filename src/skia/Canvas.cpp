@@ -7,14 +7,38 @@ using NumPy = py::array_t<T, py::array::c_style | py::array::forcecast>;
 
 void initCanvas(py::module &m) {
 py::class_<SkAutoCanvasRestore>(m, "AutoCanvasRestore", R"docstring(
-    Stack helper class calls SkCanvas::restoreToCount when SkAutoCanvasRestore
-    goes out of scope.
+    Stack helper class calls :py:meth:`Canvas.restoreToCount` when
+    :py:class:`AutoCanvasRestore` goes out of scope.
 
     Use this to guarantee that the canvas is restored to a known state.
+
+    Example::
+
+        with skia.AutoCanvasRestore(canvas):
+            canvas.drawCircle(50., 50., 10., paint)
+
     )docstring")
-    .def(py::init<SkCanvas*, bool>(), "Preserves SkCanvas::save() count.")
+    .def(py::init<SkCanvas*, bool>(),
+        R"docstring(
+        Preserves :py:meth:`Canvas.save` count.
+
+        Optionally saves SkCanvas clip and SkCanvas matrix.
+
+        :param skia.Canvas canvas: :py:class:`Canvas` to guard
+        :param bool doSave: call :py:meth:`Canvas.save`
+        :return: utility to restore :py:class:`Canvas` state on destructor
+        )docstring",
+        py::arg("canvas"), py::arg("doSave") = true)
     .def("restore", &SkAutoCanvasRestore::restore,
-        "Restores SkCanvas to saved state immediately.")
+        R"docstring(
+        Restores :py:class:`Canvas` to saved state immediately.
+
+        Subsequent calls and destructor have no effect.
+        )docstring")
+    .def("__enter__", [] (SkAutoCanvasRestore& self) { return; })
+    .def("__exit__", [] (SkAutoCanvasRestore& self, py::args args) {
+        self.restore();
+    })
     ;
 
 py::enum_<SkClipOp>(m, "ClipOp")
@@ -38,8 +62,8 @@ py::class_<SkCanvas> canvas(m, "Canvas", R"docstring(
     :py:class:`Canvas` contains a stack of :py:class:`Matrix` and clip values.
 
     :py:class:`Canvas` and :py:class:`Paint` together provide the state to draw
-    into :py:class:`Surface` or SkBaseDevice. Each :py:class:`Canvas` draw call
-    transforms the geometry of the object by the concatenation of all
+    into :py:class:`Surface` or :py:class:`BaseDevice`. Each :py:class:`Canvas`
+    draw call transforms the geometry of the object by the concatenation of all
     :py:class:`Matrix` values in the stack. The transformed geometry is clipped
     by the intersection of all of clip values in the stack. The
     :py:class:`Canvas` draw calls use :py:class:`Paint` to supply drawing state
@@ -54,8 +78,8 @@ py::class_<SkCanvas> canvas(m, "Canvas", R"docstring(
 
     To draw to a document, obtain :py:class:`Canvas` from SVG canvas, document
     PDF, or :py:class:`PictureRecorder`. SkDocument based :py:class:`Canvas`
-    and other :py:class:`Canvas` subclasses reference SkBaseDevice describing
-    the destination.
+    and other :py:class:`Canvas` subclasses reference :py:class:`BaseDevice`
+    describing the destination.
 
     :py:class:`Canvas` can be constructed to draw to :py:class:`Bitmap` without
     first creating raster surface. This approach may be deprecated in the
@@ -66,23 +90,39 @@ py::class_<SkCanvas> canvas(m, "Canvas", R"docstring(
     .. autosummary::
         :nosignatures:
 
-        Canvas.SrcRectConstraint
-        Canvas.PointMode
-        Canvas.QuadAAFlags
-        Canvas.SaveLayerRec
-        Canvas.Lattice
+        SaveLayerFlags
+        SrcRectConstraint
+        PointMode
+        QuadAAFlags
+        SaveLayerRec
+        Lattice
 
     )docstring");
 
 py::enum_<SkCanvas::SrcRectConstraint>(canvas, "SrcRectConstraint")
-    .value("kStrict", SkCanvas::SrcRectConstraint::kStrict_SrcRectConstraint)
-    .value("kFast", SkCanvas::SrcRectConstraint::kFast_SrcRectConstraint)
+    .value("kStrict", SkCanvas::SrcRectConstraint::kStrict_SrcRectConstraint,
+        R"docstring(
+        sample only inside bounds; slower
+        )docstring")
+    .value("kFast", SkCanvas::SrcRectConstraint::kFast_SrcRectConstraint,
+        R"docstring(
+        sample outside bounds; faster
+        )docstring")
     .export_values();
 
 py::enum_<SkCanvas::PointMode>(canvas, "PointMode")
-    .value("kPoints", SkCanvas::PointMode::kPoints_PointMode)
-    .value("kLines", SkCanvas::PointMode::kLines_PointMode)
-    .value("kPolygon", SkCanvas::PointMode::kPolygon_PointMode)
+    .value("kPoints", SkCanvas::PointMode::kPoints_PointMode,
+        R"docstring(
+        draw each point separately
+        )docstring")
+    .value("kLines", SkCanvas::PointMode::kLines_PointMode,
+        R"docstring(
+        draw each pair of points as a line segment
+        )docstring")
+    .value("kPolygon", SkCanvas::PointMode::kPolygon_PointMode,
+        R"docstring(
+        draw the array of points as a open polygon
+        )docstring")
     .export_values();
 
 py::enum_<SkCanvas::QuadAAFlags>(canvas, "QuadAAFlags")
@@ -94,42 +134,121 @@ py::enum_<SkCanvas::QuadAAFlags>(canvas, "QuadAAFlags")
     .value("kAll", SkCanvas::QuadAAFlags::kAll_QuadAAFlags)
     .export_values();
 
-py::class_<SkCanvas::SaveLayerRec> savelayerrec(canvas, "SaveLayerRec",
+py::enum_<SkCanvas::SaveLayerFlagsSet>(canvas, "SaveLayerFlags")
+    .value("kInitWithPrevious",
+        SkCanvas::SaveLayerFlagsSet::kInitWithPrevious_SaveLayerFlag,
+        "initializes with previous contents")
+    .value("kMaskAgainstCoverage_EXPERIMENTAL_DONT_USE",
+        SkCanvas::SaveLayerFlagsSet::
+        kMaskAgainstCoverage_EXPERIMENTAL_DONT_USE_SaveLayerFlag,
+        "experimental: do not use")
+    .value("kF16ColorType",
+        SkCanvas::SaveLayerFlagsSet::kF16ColorType,
+        "")
+    .export_values();
+
+py::class_<SkCanvas::SaveLayerRec>(canvas, "SaveLayerRec",
     R"docstring(
     SaveLayerRec contains the state used to create the layer.
-    )docstring");
+    )docstring")
+    .def(py::init<>(),
+        R"docstring(
+        Sets :py:attr:`fBounds`, :py:attr:`fPaint`, and :py:attr:`fBackdrop` to
+        nullptr.
 
-savelayerrec
-    .def(py::init(),
-        "Sets fBounds, fPaint, and fBackdrop to nullptr.")
+        Clears :py:attr:`fSaveLayerFlags`.
+        )docstring")
     .def(py::init<const SkRect*, const SkPaint*, SkCanvas::SaveLayerFlags>(),
-        "Sets fBounds, fPaint, and fSaveLayerFlags; sets fBackdrop to nullptr.")
+        R"docstring(
+        Sets :py:attr:`fBounds`, :py:attr:`fPaint`, and
+        :py:attr:`fSaveLayerFlags`; sets :py:attr:`fBackdrop` to nullptr.
+
+        :bounds: layer dimensions; may be nullptr
+        :paint: applied to layer when overlaying prior layer;
+            may be nullptr
+        :saveLayerFlags: SaveLayerRec options to
+            modify layer
+        )docstring",
+        py::arg("bounds"), py::arg("paint"), py::arg("saveLayerFlags") = 0)
     .def(py::init<const SkRect*, const SkPaint*, const SkImageFilter*,
         SkCanvas::SaveLayerFlags>(),
-        "Sets fBounds, fPaint, fBackdrop, and fSaveLayerFlags.")
+        R"docstring(
+        Sets :py:attr:`fBounds`, :py:attr:`fPaint`, :py:attr:`fBackdrop`, and
+        :py:attr:`fSaveLayerFlags`.
+
+        :bounds: layer dimensions; may be nullptr
+        :paint: applied to layer when overlaying prior layer;
+            may be nullptr
+        :backdrop: If not null, this causes the current
+            layer to be filtered by backdrop, and then drawn into the new layer
+            (respecting the current clip). If null, the new layer is initialized
+            with transparent-black.
+        :saveLayerFlags: SaveLayerRec options to
+            modify layer
+        )docstring",
+        py::arg("bounds"), py::arg("paint"), py::arg("backdrop"),
+        py::arg("saveLayerFlags"))
     .def(py::init<const SkRect*, const SkPaint*, const SkImageFilter*,
         const SkImage*, const SkMatrix*, SkCanvas::SaveLayerFlags>(),
-        "Experimental.")
+        R"docstring(
+        Experimental.
+
+        Not ready for general use. Sets :py:attr:`fBounds`, :py:attr:`fPaint`,
+        :py:attr:`fBackdrop`, :py:attr:`fClipMask`, :py:attr:`fClipMatrix`, and
+        :py:attr:`fSaveLayerFlags`. clipMatrix uses alpha channel of image,
+        transformed by clipMatrix, to clip layer when drawn to
+        :py:class:`Canvas`.
+
+        :bounds: layer dimensions; may be nullptr
+        :paint: graphics state applied to layer when overlaying
+            prior layer; may be nullptr
+        :backdrop: If not null, this causes the current
+            layer to be filtered by backdrop, and then drawn into the new layer
+            (respecting the current clip). If null, the new layer is initialized
+            with transparent-black.
+        :clipMask: clip applied to layer; may be nullptr
+        :clipMatrix: matrix applied to clipMask; may be
+            nullptr to use identity matrix
+        :saveLayerFlags: SaveLayerRec options to
+            modify layer
+        )docstring",
+        py::arg("bounds"), py::arg("paint"), py::arg("backdrop"),
+        py::arg("clipMask"), py::arg("clipMatrix"),
+        py::arg("saveLayerFlags"))
     .def_readwrite("fBounds", &SkCanvas::SaveLayerRec::fBounds,
-        "hints at layer size limit",
+        R"docstring(
+        hints at layer size limit
+        )docstring",
         py::return_value_policy::reference)
     .def_readwrite("fPaint", &SkCanvas::SaveLayerRec::fPaint,
-        "modifies overlay",
+        R"docstring(
+        modifies overlay
+        )docstring",
         py::return_value_policy::reference)
     .def_readwrite("fBackdrop", &SkCanvas::SaveLayerRec::fBackdrop,
-        "If not null, this triggers the same initialization behavior as "
-        "setting kInitWithPrevious_SaveLayerFlag on fSaveLayerFlags: the "
-        "current layer is copied into the new layer, rather than initializing "
-        "the new layer with transparent-black.",
+        R"docstring(
+        If not null, this triggers the same initialization behavior as setting
+        :py:attr:`Canvas.SaveLayerFlags.kInitWithPrevious` on
+        :py:attr:`fSaveLayerFlags`: the current layer is copied into the new
+        layer, rather than initializing the new layer with transparent-black.
+
+        This is then filtered by fBackdrop (respecting the current clip).
+        )docstring",
         py::return_value_policy::reference)
     .def_readwrite("fClipMask", &SkCanvas::SaveLayerRec::fClipMask,
-        "clips layer with mask alpha",
+        R"docstring(
+        clips layer with mask alpha
+        )docstring",
         py::return_value_policy::reference)
     .def_readwrite("fClipMatrix", &SkCanvas::SaveLayerRec::fClipMatrix,
-        "transforms mask alpha used to clip",
+        R"docstring(
+        transforms mask alpha used to clip
+        )docstring",
         py::return_value_policy::reference)
     .def_readwrite("fSaveLayerFlags", &SkCanvas::SaveLayerRec::fSaveLayerFlags,
-        "preserves LCD text, creates with prior layer contents")
+        R"docstring(
+        preserves LCD text, creates with prior layer contents
+        )docstring")
     ;
 
 py::class_<SkCanvas::Lattice> lattice(canvas, "Lattice", R"docstring(
@@ -141,23 +260,64 @@ py::class_<SkCanvas::Lattice> lattice(canvas, "Lattice", R"docstring(
     the destination side is too small to hold the fixed entries, all fixed
     entries are proportionately scaled down to fit. The grid entries not on even
     columns and rows are scaled to fit the remaining space, if any.
+
+    .. rubric:: Classes
+
+    .. autosummary::
+        :nosignatures:
+
+        RectType
     )docstring");
 
-lattice
-    .def_readwrite("fXDivs", &SkCanvas::Lattice::fXDivs)
-    .def_readwrite("fYDivs", &SkCanvas::Lattice::fYDivs)
-    .def_readwrite("fRectTypes", &SkCanvas::Lattice::fRectTypes)
-    .def_readwrite("fXCount", &SkCanvas::Lattice::fXCount)
-    .def_readwrite("fYCount", &SkCanvas::Lattice::fYCount)
-    .def_readwrite("fBounds", &SkCanvas::Lattice::fBounds)
-    .def_readwrite("fColors", &SkCanvas::Lattice::fColors)
-    ;
-
 py::enum_<SkCanvas::Lattice::RectType>(lattice, "RectType")
-    .value("kDefault", SkCanvas::Lattice::RectType::kDefault)
-    .value("kTransparent", SkCanvas::Lattice::RectType::kTransparent)
-    .value("kFixedColor", SkCanvas::Lattice::RectType::kFixedColor)
+    .value("kDefault", SkCanvas::Lattice::RectType::kDefault,
+        R"docstring(
+        draws SkBitmap into lattice rectangle
+        )docstring")
+    .value("kTransparent", SkCanvas::Lattice::RectType::kTransparent,
+        R"docstring(
+        skips lattice rectangle by making it transparent
+        )docstring")
+    .value("kFixedColor", SkCanvas::Lattice::RectType::kFixedColor,
+        R"docstring(
+        draws one of fColors into lattice rectangle
+        )docstring")
     .export_values();
+
+lattice
+    // .def(py::init([] (std::, py::list, SkCanvas::Lattice::RectType rectType,
+    //     const SkIRect *bounds, const SkColor* colors) {
+    //     return SkCanvas::Lattice lattice;
+    // }))
+    .def_readwrite("fXDivs", &SkCanvas::Lattice::fXDivs,
+        R"docstring(
+        x-axis values dividing bitmap
+        )docstring")
+    .def_readwrite("fYDivs", &SkCanvas::Lattice::fYDivs,
+        R"docstring(
+        y-axis values dividing bitmap
+        )docstring")
+    .def_readwrite("fRectTypes", &SkCanvas::Lattice::fRectTypes,
+        R"docstring(
+        array of fill types
+        )docstring")
+    .def_readwrite("fXCount", &SkCanvas::Lattice::fXCount,
+        R"docstring(
+        number of x-coordinates
+        )docstring")
+    .def_readwrite("fYCount", &SkCanvas::Lattice::fYCount,
+        R"docstring(
+        number of y-coordinates
+        )docstring")
+    .def_readwrite("fBounds", &SkCanvas::Lattice::fBounds,
+        R"docstring(
+        source bounds to draw from
+        )docstring")
+    .def_readwrite("fColors", &SkCanvas::Lattice::fColors,
+        R"docstring(
+        array of colors
+        )docstring")
+    ;
 
 canvas
     .def(py::init<>(),
@@ -505,38 +665,224 @@ canvas
         //     &SkCanvas::writePixels),
         [] (SkCanvas& canvas, NumPy<uint8_t> array, int x, int y) {
             py::buffer_info info = array.request();
-            if (info.ndim <= 1)
+            if (info.ndim <= 2)
                 throw std::runtime_error(
-                    "Number of dimensions must be 2 or more.");
-            if (info.shape[0] == 0 || info.shape[1] == 0)
-                throw std::runtime_error(
-                    "Width and height must be greater than 0.");
+                    "Number of dimensions must be 3 or more.");
+            if (info.shape[2] < 4)
+                throw std::runtime_error("Color channels must be 4.");
             auto imageinfo = SkImageInfo::MakeN32Premul(
                 info.shape[1], info.shape[0]);
             return canvas.writePixels(
                 imageinfo, info.ptr, info.strides[0], x, y);
         },
-        "Copies SkRect from pixels to SkCanvas.",
+        R"docstring(
+        Copies :py:class:`Rect` from pixels to :py:class:`Canvas`.
+
+        :py:class:`Matrix` and clip are ignored. Source :py:class:`Rect` corners
+        are (0, 0) and (info.width(), info.height()). Destination
+        :py:class:`Rect` corners are (x, y) and (imageInfo().width(),
+        imageInfo().height()).
+
+        Copies each readable pixel intersecting both rectangles, without
+        scaling, converting to imageInfo().colorType() and
+        imageInfo().alphaType() if required.
+
+        Pixels are writable when :py:class:`BaseDevice` is raster, or backed by
+        a GPU. Pixels are not writable when :py:class:`Canvas` is returned by
+        :py:meth:`Document.beginPage`, returned by
+        :py:meth:`PictureRecorder.beginRecording`, or :py:class:`Canvas` is the
+        base of a utility class like DebugCanvas.
+
+        Pixel values are converted only if :py:class:`ColorType` and
+        :py:class:`AlphaType` do not match. Only pixels within both source and
+        destination rectangles are copied. :py:class:`Canvas` pixels outside
+        :py:class:`Rect` intersection are unchanged.
+
+        Pass negative values for x or y to offset pixels to the left or above
+        :py:class:`Canvas` pixels.
+
+        Does not copy, and returns false if:
+
+        - Source and destination rectangles do not intersect.
+        - pixels could not be converted to :py:class:`Canvas`
+            imageInfo().colorType() or imageInfo().alphaType().
+        - :py:class:`Canvas` pixels are not writable; for instance,
+            :py:class:`Canvas` is document-based.
+        - rowBytes is too small to contain one row of pixels.
+
+        :array: pixels to copy, in native 32-bit colors.
+        :x: offset into :py:class:`Canvas` writable pixels on x-axis; may be
+            negative
+        :y: offset into :py:class:`Canvas` writable pixels on y-axis; may be
+            negative
+
+        :return: true if pixels were written to :py:class:`Canvas`
+        )docstring",
         py::arg("array"), py::arg("x") = 0, py::arg("y") = 0)
     .def("writePixels",
         py::overload_cast<const SkBitmap&, int, int>(&SkCanvas::writePixels),
-        "Copies SkRect from pixels to SkCanvas.")
-    .def("save", &SkCanvas::save, "Saves SkMatrix and clip.")
+        R"docstring(
+        Copies :py:class:`Rect` from pixels to :py:class:`Canvas`.
+
+        :py:class:`Matrix` and clip are ignored. Source :py:class:`Rect` corners
+        are (0, 0) and (bitmap.width(), bitmap.height()).
+
+        Destination :py:class:`Rect` corners are (x, y) and (imageInfo().width(),
+        imageInfo().height()).
+
+        Copies each readable pixel intersecting both rectangles, without
+        scaling, converting to imageInfo().colorType() and
+        imageInfo().alphaType() if required.
+
+        Pixels are writable when :py:class:`BaseDevice` is raster, or backed by
+        a GPU. Pixels are not writable when :py:class:`Canvas` is returned by
+        :py:meth:`Document.beginPage`, returned by
+        :py:meth:`PictureRecorder.beginRecording`, or :py:class:`Canvas` is the
+        base of a utility class like DebugCanvas.
+
+        Pixel values are converted only if :py:class:`ColorType` and
+        :py:class:`AlphaType` do not match. Only pixels within both source and
+        destination rectangles are copied. :py:class:`Canvas` pixels outside
+        :py:class:`Rect` intersection are unchanged.
+
+        Pass negative values for x or y to offset pixels to the left or above
+        :py:class:`Canvas` pixels.
+
+        Does not copy, and returns false if:
+
+        - Source and destination rectangles do not intersect.
+        - bitmap does not have allocated pixels.
+        - bitmap pixels could not be converted to
+            :py:meth:`Canvas.imageInfo()`.colorType() or alphaType().
+        - :py:class:`Canvas` pixels are not writable; for instance,
+            :py:class:`Canvas` is document-based.
+        - bitmap pixels are inaccessible; for instance, bitmap wraps a texture.
+
+        :bitmap: contains pixels copied to :py:class:`Canvas`.
+        :x: offset into :py:class:`Canvas` writable pixels on x-axis; may be
+            negative
+        :y: offset into :py:class:`Canvas` writable pixels on y-axis; may be
+            negative
+
+        :return: true if pixels were written to :py:class:`Canvas`
+        )docstring",
+        py::arg("bitmap"), py::arg("x") = 0, py::arg("y") = 0)
+    .def("save", &SkCanvas::save,
+        R"docstring(
+        Saves :py:class:`Matrix` and clip.
+
+        Calling :py:meth:`restore` discards changes to :py:class:`Matrix` and
+        clip, restoring the :py:class:`Matrix` and clip to their state when
+        :py:meth:`save` was called.
+
+        :py:class:`Matrix` may be changed by :py:meth:`translate`,
+        :py:meth:`scale`, :py:meth:`rotate`, :py:meth:`skew`, :py:meth:`concat`,
+        :py:meth:`setMatrix`, and :py:meth:`resetMatrix`. Clip may be changed by
+        :py:meth:`clipRect`, :py:meth:`clipRRect`, :py:meth:`clipPath`,
+        :py:meth:`clipRegion`.
+
+        Saved :py:class:`Canvas` state is put on a stack; multiple calls to
+        :py:meth:`save` should be balance by an equal number of calls to
+        :py:meth:`restore`.
+
+        Call :py:meth:`restoreToCount` with result to restore this and
+        subsequent saves.
+
+        :return: depth of saved stack
+        )docstring")
     .def("saveLayer",
         py::overload_cast<const SkRect*, const SkPaint*>(&SkCanvas::saveLayer),
-        "Saves SkMatrix and clip, and allocates a SkBitmap for subsequent "
-        "drawing.")
-    .def("saveLayer",
-        py::overload_cast<const SkRect&, const SkPaint*>(&SkCanvas::saveLayer),
-        "Saves SkMatrix and clip, and allocates a SkBitmap for subsequent "
-        "drawing.")
+        R"docstring(
+        Saves :py:class:`Matrix` and clip, and allocates a :py:class:`Bitmap`
+        for subsequent drawing.
+
+        Calling :py:meth:`restore` discards changes to :py:class:`Matrix` and
+        clip, and draws the :py:class:`Bitmap`.
+
+        :py:class:`Matrix` may be changed by :py:meth:`translate`,
+        :py:meth:`scale`, :py:meth:`rotate`, :py:meth:`skew`, :py:meth:`concat`,
+        :py:meth:`setMatrix`, and :py:meth:`resetMatrix`. Clip may be changed by
+        :py:meth:`clipRect`, :py:meth:`clipRRect`, :py:meth:`clipPath`,
+        :py:meth:`clipRegion`.
+
+        :py:class:`Rect` bounds suggests but does not define the
+        :py:class:`Bitmap` size. To clip drawing to a specific rectangle, use
+        :py:meth:`clipRect`.
+
+        Optional :py:class:`Paint` paint applies alpha, :py:class:`ColorFilter`,
+        :py:class:`ImageFilter`, and :py:class:`BlendMode` when
+        :py:meth:`restore` is called.
+
+        Call :py:meth:`restoreToCount` with returned value to restore this and
+        subsequent saves.
+
+        :bounds: hint to limit the size of the layer; may be nullptr
+        :paint: graphics state for layer; may be nullptr
+
+        :return: depth of saved stack
+        )docstring",
+        py::arg("bounds") = nullptr, py::arg("paint") = nullptr)
+    // .def("saveLayer",
+    //     py::overload_cast<const SkRect&, const SkPaint*>(
+    //         &SkCanvas::saveLayer),
+    //     "Saves SkMatrix and clip, and allocates a SkBitmap for subsequent "
+    //     "drawing.")
     .def("saveLayerAlpha", &SkCanvas::saveLayerAlpha,
-        "Saves SkMatrix and clip, and allocates SkBitmap for subsequent "
-        "drawing.")
+        R"docstring(
+        Saves :py:class:`Matrix` and clip, and allocates a :py:class:`Bitmap`
+        for subsequent drawing.
+
+        Calling :py:meth:`restore` discards changes to :py:class:`Matrix` and
+        clip, and blends layer with alpha opacity onto prior layer.
+
+        :py:class:`Matrix` may be changed by :py:meth:`translate`,
+        :py:meth:`scale`, :py:meth:`rotate`, :py:meth:`skew`, :py:meth:`concat`,
+        :py:meth:`setMatrix`, and :py:meth:`resetMatrix`. Clip may be changed by
+        :py:meth:`clipRect`, :py:meth:`clipRRect`, :py:meth:`clipPath`,
+        :py:meth:`clipRegion`.
+
+        :py:class:`Rect` bounds suggests but does not define the
+        :py:class:`Bitmap` size. To clip drawing to a specific rectangle, use
+        :py:meth:`clipRect`.
+
+        alpha of zero is fully transparent, 255 is fully opaque.
+
+        Call :py:meth:`restoreToCount` with returned value to restore this and
+        subsequent saves.
+
+        :param skia.Rect bounds: hint to limit the size of the layer; may be
+            nullptr
+        :param int alpha: opacity of layer
+
+        :return: depth of saved stack
+        )docstring",
+        py::arg("bounds"), py::arg("alpha"))
     .def("saveLayer",
         py::overload_cast<const SkCanvas::SaveLayerRec&>(&SkCanvas::saveLayer),
-        "Saves SkMatrix and clip, and allocates a SkBitmap for subsequent "
-        "drawing.")
+        R"docstring(
+        Saves :py:class:`Matrix` and clip, and allocates a :py:class:`Bitmap`
+        for subsequent drawing.
+
+        Calling :py:meth:`restore` discards changes to :py:class:`Matrix` and
+        clip, and blends :py:class:`Bitmap` with alpha opacity onto the prior
+        layer.
+
+        :py:class:`Matrix` may be changed by :py:meth:`translate`,
+        :py:meth:`scale`, :py:meth:`rotate`, :py:meth:`skew`, :py:meth:`concat`,
+        :py:meth:`setMatrix`, and :py:meth:`resetMatrix`. Clip may be changed by
+        :py:meth:`clipRect`, :py:meth:`clipRRect`, :py:meth:`clipPath`,
+        :py:meth:`clipRegion`.
+
+        :py:class:`SaveLayerRec` contains the state used to create the layer.
+
+        Call :py:meth:`restoreToCount` with returned value to restore this and
+        subsequent saves.
+
+        :layerRec: layer state
+
+        :return: depth of save state stack before this call was made.
+        )docstring",
+        py::arg("layerRec"))
     .def("experimental_saveCamera",
         py::overload_cast<const SkM44&, const SkM44&>(
             &SkCanvas::experimental_saveCamera))
@@ -544,98 +890,401 @@ canvas
         py::overload_cast<const SkScalar[16], const SkScalar[16]>(
             &SkCanvas::experimental_saveCamera))
     .def("restore", &SkCanvas::restore,
-        "Removes changes to SkMatrix and clip since SkCanvas state was last "
-        "saved.")
+        R"docstring(
+        Removes changes to :py:class:`Matrix` and clip since :py:class:`Canvas`
+        state was last saved.
+
+        The state is removed from the stack.
+
+        Does nothing if the stack is empty.
+        )docstring")
     .def("getSaveCount", &SkCanvas::getSaveCount,
-        "Returns the number of saved states, each containing: SkMatrix and "
-        "clip.")
+        R"docstring(
+        Returns the number of saved states, each containing: :py:class:`Matrix`
+        and clip.
+
+        Equals the number of :py:meth:`save` calls less the number of
+        :py:meth:`restore` calls plus one. The save count of a new canvas is
+        one.
+
+        :return: depth of save state stack
+        )docstring")
     .def("restoreToCount", &SkCanvas::restoreToCount,
-        "Restores state to SkMatrix and clip values when save(), saveLayer(), "
-        "saveLayerPreserveLCDTextRequests(), or saveLayerAlpha() returned "
-        "saveCount.")
+        R"docstring(
+        Restores state to :py:class:`Matrix` and clip values when
+        :py:meth:`save`, :py:meth:`saveLayer`,
+        :py:meth:`saveLayerPreserveLCDTextRequests`, or
+        :py:meth:`saveLayerAlpha` returned saveCount.
+
+        Does nothing if saveCount is greater than state stack count. Restores
+        state to initial values if saveCount is less than or equal to one.
+
+        :param int saveCount: depth of state stack to restore
+        )docstring",
+        py::arg("saveCount"))
     .def("translate", &SkCanvas::translate,
-        "Translates SkMatrix by dx along the x-axis and dy along the y-axis.")
+        R"docstring(
+        Translates :py:class:`Matrix` by dx along the x-axis and dy along the
+        y-axis.
+
+        Mathematically, replaces :py:class:`Matrix` with a translation matrix
+        premultiplied with :py:class:`Matrix`.
+
+        This has the effect of moving the drawing by (dx, dy) before
+        transforming the result with :py:class:`Matrix`.
+
+        :param dx: distance to translate on x-axis
+        :param dy: distance to translate on y-axis
+        )docstring",
+        py::arg("dx"), py::arg("dy"))
     .def("scale", &SkCanvas::scale,
-        "Scales SkMatrix by sx on the x-axis and sy on the y-axis.")
+        R"docstring(
+        Scales :py:class:`Matrix` by sx on the x-axis and sy on the y-axis.
+
+        Mathematically, replaces :py:class:`Matrix` with a scale matrix
+        premultiplied with :py:class:`Matrix`.
+
+        This has the effect of scaling the drawing by (sx, sy) before
+        transforming the result with :py:class:`Matrix`.
+
+        :param float sx: amount to scale on x-axis
+        :param float sy: amount to scale on y-axis
+        )docstring",
+        py::arg("sx"), py::arg("sy"))
     .def("rotate", py::overload_cast<SkScalar>(&SkCanvas::rotate),
-        "Rotates SkMatrix by degrees.")
+        R"docstring(
+        Rotates :py:class:`Matrix` by degrees.
+
+        Positive degrees rotates clockwise.
+
+        Mathematically, replaces :py:class:`Matrix` with a rotation matrix
+        premultiplied with :py:class:`Matrix`.
+
+        This has the effect of rotating the drawing by degrees before
+        transforming the result with :py:class:`Matrix`.
+
+        :degrees: amount to rotate, in degrees
+        )docstring",
+        py::arg("degrees"))
     .def("rotate",
         py::overload_cast<SkScalar, SkScalar, SkScalar>(&SkCanvas::rotate),
-        "Rotates SkMatrix by degrees about a point at (px, py).")
+        R"docstring(
+        Rotates :py:class:`Matrix` by degrees about a point at (px, py).
+
+        Positive degrees rotates clockwise.
+
+        Mathematically, constructs a rotation matrix; premultiplies the rotation
+        matrix by a translation matrix; then replaces :py:class:`Matrix` with
+        the resulting matrix premultiplied with :py:class:`Matrix`.
+
+        This has the effect of rotating the drawing about a given point before
+        transforming the result with :py:class:`Matrix`.
+
+        :degrees: amount to rotate, in degrees
+        :px: x-axis value of the point to rotate about
+        :py: y-axis value of the point to rotate about
+        )docstring",
+        py::arg("degrees"), py::arg("px"), py::arg("py"))
     .def("skew", &SkCanvas::skew,
-        "Skews SkMatrix by sx on the x-axis and sy on the y-axis.")
+        R"docstring(
+        Skews :py:class:`Matrix` by sx on the x-axis and sy on the y-axis.
+
+        A positive value of sx skews the drawing right as y-axis values
+        increase; a positive value of sy skews the drawing down as x-axis values
+        increase.
+
+        Mathematically, replaces :py:class:`Matrix` with a skew matrix
+        premultiplied with :py:class:`Matrix`.
+
+        This has the effect of skewing the drawing by (sx, sy) before
+        transforming the result with :py:class:`Matrix`.
+
+        :param float sx: amount to skew on x-axis
+        :param float sy: amount to skew on y-axis
+        )docstring",
+        py::arg("sx"), py::arg("sy"))
     .def("concat", &SkCanvas::concat,
-        "Replaces SkMatrix with matrix premultiplied with existing SkMatrix.")
+        R"docstring(
+        Replaces :py:class:`Matrix` with matrix premultiplied with existing
+        :py:class:`Matrix`.
+
+        This has the effect of transforming the drawn geometry by matrix, before
+        transforming the result with existing :py:class:`Matrix`.
+
+        :param skia.Matrix matrix: matrix to premultiply with existing
+            :py:class:`Matrix`
+        )docstring",
+        py::arg("matrix"))
     .def("concat44", py::overload_cast<const SkM44&>(&SkCanvas::concat44))
     .def("concat44", py::overload_cast<const SkScalar[]>(&SkCanvas::concat44))
-    .def("setMatrix", &SkCanvas::setMatrix, "Replaces SkMatrix with matrix.")
+    .def("setMatrix", &SkCanvas::setMatrix,
+        R"docstring(
+        Replaces :py:class:`Matrix` with matrix.
+
+        Unlike :py:meth:`concat`, any prior matrix state is overwritten.
+
+        :param skia.Matrix matrix: matrix to copy, replacing existing
+            :py:class:`Matrix`
+        )docstring",
+        py::arg("matrix"))
     .def("resetMatrix", &SkCanvas::resetMatrix,
-        "Sets SkMatrix to the identity matrix.")
+        R"docstring(
+        Sets SkMatrix to the identity matrix.
+
+        Any prior matrix state is overwritten.
+        )docstring")
     .def("clipRect",
         py::overload_cast<const SkRect&, SkClipOp, bool>(&SkCanvas::clipRect),
-        "Replaces clip with the intersection or difference of clip and rect, "
-        "with an aliased or anti-aliased clip edge.")
+        R"docstring(
+        Replaces clip with the intersection or difference of clip and rect, with
+        an aliased or anti-aliased clip edge.
+
+        rect is transformed by :py:class:`Matrix` before it is combined with
+        clip.
+
+        :rect: :py:class:`Rect` to combine with clip
+        :op: :py:class:`ClipOp` to apply to clip
+        :doAntiAlias: true if clip is to be anti-aliased
+        )docstring",
+        py::arg("rect"), py::arg("op"), py::arg("doAntiAlias"))
     .def("clipRect",
         py::overload_cast<const SkRect&, SkClipOp>(&SkCanvas::clipRect),
-        "Replaces clip with the intersection or difference of clip and rect.")
+        R"docstring(
+        Replaces clip with the intersection or difference of clip and rect.
+
+        Resulting clip is aliased; pixels are fully contained by the clip. rect
+        is transformed by :py:class:`Matrix` before it is combined with clip.
+
+        :rect: :py:class:`Rect` to combine with clip
+        :op: :py:class:`ClipOp` to apply to clip
+        )docstring",
+        py::arg("rect"), py::arg("op"))
     .def("clipRect",
         py::overload_cast<const SkRect&, bool>(&SkCanvas::clipRect),
-        "Replaces clip with the intersection of clip and rect.",
+        R"docstring(
+        Replaces clip with the intersection of clip and rect.
+
+        Resulting clip is aliased; pixels are fully contained by the clip. rect
+        is transformed by :py:class:`Matrix` before it is combined with clip.
+
+        :rect: :py:class:`Rect` to combine with clip
+        :doAntiAlias: true if clip is to be anti-aliased
+        )docstring",
         py::arg("rect"), py::arg("doAntiAlias") = false)
     .def("androidFramework_setDeviceClipRestriction",
         &SkCanvas::androidFramework_setDeviceClipRestriction,
-        "Sets the maximum clip rectangle, which can be set by clipRect(), "
-        "clipRRect() and clipPath() and intersect the current clip with the "
-        "specified rect.")
+        R"docstring(
+        Sets the maximum clip rectangle, which can be set by
+        :py:meth:`clipRect`, :py:meth:`clipRRect` and :py:meth:`clipPath` and
+        intersect the current clip with the specified rect.
+
+        The maximum clip affects only future clipping operations; it is not
+        retroactive. The clip restriction is not recorded in pictures.
+
+        Pass an empty rect to disable maximum clip. This private API is for use
+        by Android framework only.
+
+        :param skia.IRect rect: maximum allowed clip in device coordinates
+        )docstring",
+        py::arg("rect"))
     .def("clipRRect",
         py::overload_cast<const SkRRect&, SkClipOp, bool>(&SkCanvas::clipRRect),
-        "Replaces clip with the intersection or difference of clip and rrect, "
-        "with an aliased or anti-aliased clip edge.")
+        R"docstring(
+        Replaces clip with the intersection or difference of clip and rrect,
+        with an aliased or anti-aliased clip edge.
+
+        rrect is transformed by :py:class:`Matrix` before it is combined with
+        clip.
+
+        :rrect: :py:class:`RRect` to combine with clip
+        :op: :py:class:`ClipOp` to apply to clip
+        :doAntiAlias: true if clip is to be anti-aliased
+        )docstring",
+        py::arg("rrect"), py::arg("op"), py::arg("doAntiAlias"))
     .def("clipRRect",
         py::overload_cast<const SkRRect&, SkClipOp>(&SkCanvas::clipRRect),
-        "Replaces clip with the intersection or difference of clip and rrect.")
+        R"docstring(
+        Replaces clip with the intersection or difference of clip and rrect.
+
+        Resulting clip is aliased; pixels are fully contained by the clip. rrect
+        is transformed by :py:class:`Matrix` before it is combined with clip.
+
+        :rrect: :py:class:`RRect` to combine with clip
+        :op: :py:class:`ClipOp` to apply to clip
+        )docstring",
+        py::arg("rrect"), py::arg("op"))
     .def("clipRRect",
         py::overload_cast<const SkRRect&, bool>(&SkCanvas::clipRRect),
-        "Replaces clip with the intersection of clip and rrect, with an "
-        "aliased or anti-aliased clip edge.",
+        R"docstring(
+        Replaces clip with the intersection of clip and rrect, with an aliased
+        or anti-aliased clip edge.
+
+        rrect is transformed by :py:class:`Matrix` before it is combined with
+        clip.
+
+        :rrect: :py:class:`RRect` to combine with clip
+        :doAntiAlias: true if clip is to be anti-aliased
+        )docstring",
         py::arg("rrect"), py::arg("doAntiAlias") = false)
     .def("clipPath",
         py::overload_cast<const SkPath&, SkClipOp, bool>(&SkCanvas::clipPath),
-        "Replaces clip with the intersection or difference of clip and path, "
-        "with an aliased or anti-aliased clip edge.")
+        R"docstring(
+        Replaces clip with the intersection or difference of clip and path, with
+        an aliased or anti-aliased clip edge.
+
+        :py:class:`Path.FillType` determines if path describes the area inside
+        or outside its contours; and if path contour overlaps itself or another
+        path contour, whether the overlaps form part of the area. path is
+        transformed by :py:class:`Matrix` before it is combined with clip.
+
+        :path: :py:class:`Path` to combine with clip
+        :op: :py:class:`ClipOp` to apply to clip
+        :doAntiAlias: true if clip is to be anti-aliased
+        )docstring",
+        py::arg("path"), py::arg("op"), py::arg("doAntiAlias"))
     .def("clipPath",
         py::overload_cast<const SkPath&, SkClipOp>(&SkCanvas::clipPath),
-        "Replaces clip with the intersection or difference of clip and path.")
+        R"docstring(
+        Replaces clip with the intersection or difference of clip and path.
+
+        Resulting clip is aliased; pixels are fully contained by the clip.
+        :py:class:`Path.FillType` determines if path describes the area inside
+        or outside its contours; and if path contour overlaps itself or another
+        path contour, whether the overlaps form part of the area. path is
+        transformed by :py:class:`Matrix` before it is combined with clip.
+
+        :path: :py:class:`Path` to combine with clip
+        :op: :py:class:`ClipOp` to apply to clip
+        )docstring",
+        py::arg("path"), py::arg("op"))
     .def("clipPath",
         py::overload_cast<const SkPath&, bool>(&SkCanvas::clipPath),
-        "Replaces clip with the intersection of clip and path.",
+        R"docstring(
+        Replaces clip with the intersection of clip and path.
+
+        Resulting clip is aliased; pixels are fully contained by the clip.
+        :py:class:`Path.FillType` determines if path describes the area inside
+        or outside its contours; and if path contour overlaps itself or another
+        path contour, whether the overlaps form part of the area. path is
+        transformed by :py:class:`Matrix` before it is combined with clip.
+
+        :path: :py:class:`Path` to combine with clip
+        :doAntiAlias: true if clip is to be anti-aliased
+        )docstring",
         py::arg("path"), py::arg("doAntiAlias") = false)
     // .def("clipShader", &SkCanvas::clipShader)
     .def("clipRegion", &SkCanvas::clipRegion,
-        "Replaces clip with the intersection or difference of clip and "
-        "SkRegion deviceRgn.",
+        R"docstring(
+        Replaces clip with the intersection or difference of clip and
+        :py:class:`Region` deviceRgn.
+
+        Resulting clip is aliased; pixels are fully contained by the clip.
+        deviceRgn is unaffected by :py:class:`Matrix`.
+
+        :param skia.Region deviceRgn: :py:class:`Region` to combine with clip
+        :param skia.ClipOp op: :py:class:`ClipOp` to apply to clip
+        )docstring",
         py::arg("deviceRgn"), py::arg("op") = SkClipOp::kIntersect)
     .def("quickReject",
         py::overload_cast<const SkRect&>(&SkCanvas::quickReject, py::const_),
-        "Returns true if SkRect rect, transformed by SkMatrix, can be quickly "
-        "determined to be outside of clip.")
+        R"docstring(
+        Returns true if :py:class:`Rect` rect, transformed by
+        :py:class:`Matrix`, can be quickly determined to be outside of clip.
+
+        May return false even though rect is outside of clip.
+
+        Use to check if an area to be drawn is clipped out, to skip subsequent
+        draw calls.
+
+        :rect: :py:class:`Rect` to compare with clip
+        :return: true if rect, transformed by :py:class:`Matrix`, does not
+            intersect clip
+        )docstring",
+        py::arg("rect"))
     .def("quickReject",
         py::overload_cast<const SkPath&>(&SkCanvas::quickReject, py::const_),
-        "Returns true if path, transformed by SkMatrix, can be quickly "
-        "determined to be outside of clip.")
+        R"docstring(
+        Returns true if path, transformed by :py:class:`Matrix`, can be
+        quickly determined to be outside of clip.
+
+        May return false even though path is outside of clip.
+
+        Use to check if an area to be drawn is clipped out, to skip subsequent
+        draw calls.
+
+        :path: :py:class:`Path` to compare with clip
+        :return: true if path, transformed by :py:class:`Matrix`, does not
+            intersect clip
+        )docstring",
+        py::arg("path"))
     .def("getLocalClipBounds",
         py::overload_cast<>(&SkCanvas::getLocalClipBounds, py::const_),
-        "Returns bounds of clip, transformed by inverse of SkMatrix.")
+        R"docstring(
+        Returns bounds of clip, transformed by inverse of :py:class:`Matrix`.
+
+        If clip is empty, return :py:meth:`Rect.MakeEmpty`, where all
+        :py:class:`Rect` sides equal zero.
+
+        :py:class:`Rect` returned is outset by one to account for partial pixel
+        coverage if clip is anti-aliased.
+
+        :return: bounds of clip in local coordinates
+        )docstring")
     .def("getLocalClipBounds",
         py::overload_cast<SkRect*>(&SkCanvas::getLocalClipBounds, py::const_),
-        "Returns bounds of clip, transformed by inverse of SkMatrix.")
+        R"docstring(
+        Returns bounds of clip, transformed by inverse of :py:class:`Matrix`.
+
+        If clip is empty, return false, and set bounds to
+        :py:meth:`Rect.MakeEmpty`, where all :py:class:`Rect` sides equal zero.
+
+        bounds is outset by one to account for partial pixel coverage if clip is
+        anti-aliased.
+
+        :bounds: :py:class:`Rect` of clip in local coordinates
+        :return: true if clip bounds is not empty
+        )docstring",
+        py::arg("bounds"))
     .def("getDeviceClipBounds",
         py::overload_cast<>(&SkCanvas::getDeviceClipBounds, py::const_),
-        "Returns SkIRect bounds of clip, unaffected by SkMatrix.")
+        R"docstring(
+        Returns :py:class:`IRect` bounds of clip, unaffected by
+        :py:class:`Matrix`.
+
+        If clip is empty, return :py:meth:`Rect.MakeEmpty`, where all
+        :py:class:`Rect` sides equal zero.
+
+        Unlike :py:meth:`getLocalClipBounds`, returned :py:class:`IRect` is not
+        outset.
+
+        :return: bounds of clip in :py:class:`BaseDevice` coordinates
+        )docstring")
     .def("getDeviceClipBounds",
         py::overload_cast<SkIRect*>(&SkCanvas::getDeviceClipBounds, py::const_),
-        "Returns SkIRect bounds of clip, unaffected by SkMatrix.")
-    .def("drawColor", &SkCanvas::drawColor, "Fills clip with color color.",
+        R"docstring(
+        Returns :py:class:`IRect` bounds of clip, unaffected by
+        :py:class:`Matrix`.
+
+        If clip is empty, return false, and set bounds to
+        :py:meth:`Rect.MakeEmpty`, where all :py:class:`Rect` sides equal zero.
+
+        Unlike :py:meth:`getLocalClipBounds`, returned :py:class:`IRect` is not
+        outset.
+
+        :param skia.Rect bounds: :py:class:`Rect` of clip in device coordinates
+        :return: bounds of clip in :py:class:`BaseDevice` coordinates
+        )docstring",
+        py::arg("bounds"))
+    .def("drawColor", &SkCanvas::drawColor,
+        R"docstring(
+        Fills clip with color color.
+
+        mode determines how ARGB is combined with destination.
+
+        :param int color: unpremultiplied ARGB
+        :param skia.BlendMode mode: :py:class:`BlendMode` used to combine source
+            color and destination
+        )docstring",
         py::arg("color"), py::arg("mode") = SkBlendMode::kSrcOver)
     .def("clear", &SkCanvas::clear,
         R"docstring(
@@ -647,16 +1296,40 @@ canvas
         :param int color: unpremultiplied ARGB
         )docstring",
         py::arg("color"))
-    .def("discard", &SkCanvas::discard, "Makes SkCanvas contents undefined.")
-    .def("drawPaint", &SkCanvas::drawPaint, "Fills clip with SkPaint paint.")
+    .def("discard", &SkCanvas::discard,
+        R"docstring(
+        Makes :py:class:`Canvas` contents undefined.
+
+        Subsequent calls that read :py:class:`Canvas` pixels, such as drawing
+        with :py:class:`BlendMode`, return undefined results. :py:meth:`discard`
+        does not change clip or :py:class:`Matrix`.
+
+        :py:meth:`discard` may do nothing, depending on the implementation of
+        :py:class:`Surface` or :py:class:`BaseDevice` that created
+        :py:class:`Canvas`.
+
+        :py:meth:`discard` allows optimized performance on subsequent draws by
+        removing cached data associated with :py:class:`Surface` or
+        :py:class:`BaseDevice`. It is not necessary to call :py:meth:`discard`
+        once done with SkCanvas; any cached data is deleted when owning
+        :py:class:`Surface` or :py:class:`BaseDevice` is deleted.
+        )docstring")
+    .def("drawPaint", &SkCanvas::drawPaint,
+        R"docstring(
+        Fills clip with :py:class:`Paint` paint.
+
+        :py:class:`Paint` components :py:class:`MaskFilter`, :py:class:`Shader`,
+        :py:class:`ColorFilter`, :py:class:`ImageFilter`, and
+        :py:class:`BlendMode` affect drawing; :py:class:`PathEffect` in paint is
+        ignored.
+
+        :param skia.Paint paint: graphics state used to fill :py:class:`Canvas`
+        )docstring",
+        py::arg("paint"))
     .def("drawPoints",
         // &SkCanvas::drawPoints,
-        [] (SkCanvas& canvas, SkCanvas::PointMode mode, py::iterable iterable,
-            const SkPaint &paint) {
-            std::vector<SkPoint> points;
-            for (auto point : iterable) {
-                points.push_back(*point.cast<SkPoint*>());
-            }
+        [] (SkCanvas& canvas, SkCanvas::PointMode mode,
+            const std::vector<SkPoint>& points, const SkPaint &paint) {
             canvas.drawPoints(mode, points.size(), &points[0], paint);
         },
         R"docstring(
@@ -697,70 +1370,345 @@ canvas
     .def("drawPoint",
         py::overload_cast<SkScalar, SkScalar, const SkPaint&>(
             &SkCanvas::drawPoint),
-        "Draws point at (x, y) using clip, SkMatrix and SkPaint paint.")
+        R"docstring(
+        Draws point at (x, y) using clip, :py:class:`Matrix` and
+        :py:class:`Paint` paint.
+
+        The shape of point drawn depends on paint :py:class:`Paint.Cap`. If
+        paint is set to :py:attr:`Paint.Cap.kRound`, draw a circle of diameter
+        :py:class:`Paint` stroke width. If paint is set to
+        :py:attr:`Paint.Cap.kSquare` or :py:class:`Paint.Cap.Butt`, draw a
+        square of width and height :py:class:`Paint` stroke width.
+        :py:class:`Paint.Style` is ignored, as if were set to
+        :py:class:`Paint.Style.kStroke`.
+
+        :x: left edge of circle or square
+        :y: top edge of circle or square
+        :paint: stroke, blend, color, and so on, used to draw
+        )docstring",
+        py::arg("x"), py::arg("y"), py::arg("paint"))
     .def("drawPoint",
         py::overload_cast<SkPoint, const SkPaint&>(&SkCanvas::drawPoint),
-        "Draws point p using clip, SkMatrix and SkPaint paint.")
+        R"docstring(
+        Draws point p using clip, :py:class:`Matrix` and :py:class:`Paint`
+        paint.
+
+        The shape of point drawn depends on paint :py:class:`Paint.Cap`. If
+        paint is set to :py:attr:`Paint.Cap.kRound`, draw a circle of diameter
+        :py:class:`Paint` stroke width. If paint is set to
+        :py:attr:`Paint.Cap.kSquare` or :py:class:`Paint.Cap.Butt`, draw a
+        square of width and height :py:class:`Paint` stroke width.
+        :py:class:`Paint.Style` is ignored, as if were set to
+        :py:class:`Paint.Style.kStroke`.
+
+        :p: top-left edge of circle or square
+        :paint: stroke, blend, color, and so on, used to draw
+        )docstring",
+        py::arg("p"), py::arg("paint"))
     .def("drawLine",
         py::overload_cast<SkScalar, SkScalar, SkScalar, SkScalar,
             const SkPaint&>(&SkCanvas::drawLine),
-        "Draws line segment from (x0, y0) to (x1, y1) using clip, SkMatrix, "
-        "and SkPaint paint.")
+        R"docstring(
+        Draws line segment from (x0, y0) to (x1, y1) using clip,
+        :py:class:`Matrix`, and :py:class:`Paint` paint.
+
+        In paint: :py:class:`Paint` stroke width describes the line thickness;
+        :py:class:`Paint.Cap` draws the end rounded or square;
+        :py:class:`Paint.Style` is ignored, as if were set to
+        :py:attr:`Paint.Style.kStroke`.
+
+        :x0: start of line segment on x-axis
+        :y0: start of line segment on y-axis
+        :x1: end of line segment on x-axis
+        :y1: end of line segment on y-axis
+        :paint: stroke, blend, color, and so on, used to draw
+        )docstring",
+        py::arg("x0"), py::arg("y0"), py::arg("x1"), py::arg("y1`"),
+        py::arg("paint"))
     .def("drawLine",
         py::overload_cast<SkPoint, SkPoint, const SkPaint&>(
             &SkCanvas::drawLine),
-        "Draws line segment from p0 to p1 using clip, SkMatrix, and SkPaint "
-        "paint.")
+        R"docstring(
+        Draws line segment from p0 to p1 using clip, :py:class:`Matrix`, and
+        :py:class:`Paint` paint.
+
+        In paint: :py:class:`Paint` stroke width describes the line thickness;
+        :py:class:`Paint.Cap` draws the end rounded or square;
+        :py:class:`Paint.Style` is ignored, as if were set to
+        :py:attr:`Paint.Style.kStroke`.
+
+        :p0: start of line segment
+        :p1: end of line segment
+        :paint: stroke, blend, color, and so on, used to draw
+        )docstring",
+        py::arg("p0"), py::arg("p1"), py::arg("paint"))
     .def("drawRect", &SkCanvas::drawRect,
-        "Draws SkRect rect using clip, SkMatrix, and SkPaint paint.")
+        R"docstring(
+        Draws :py:class:`Rect` rect using clip, :py:class:`Matrix`, and
+        :py:class:`Paint` paint.
+
+        In paint: :py:class:`Paint.Style` determines if rectangle is stroked or
+        filled; if stroked, :py:class:`Paint` stroke width describes the line
+        thickness, and :py:class:`Paint.Join` draws the corners rounded or
+        square.
+
+        :param skia.Rect rect: rectangle to draw
+        :param skia.Paint paint: stroke or fill, blend, color, and so on, used
+            to draw
+        )docstring",
+        py::arg("rect"), py::arg("paint"))
     .def("drawIRect", &SkCanvas::drawIRect,
-        "Draws SkIRect rect using clip, SkMatrix, and SkPaint paint.")
+        R"docstring(
+        Draws :py:class:`IRect` rect using clip, :py:class:`Matrix`, and
+        :py:class:`Paint` paint.
+
+        In paint: :py:class:`Paint.Style` determines if rectangle is stroked or
+        filled; if stroked, :py:class:`Paint` stroke width describes the line
+        thickness, and :py:class:`Paint.Join` draws the corners rounded or
+        square.
+
+        :param skia.IRect rect: rectangle to draw
+        :param skia.Paint paint: stroke or fill, blend, color, and so on, used
+            to draw
+        )docstring",
+        py::arg("rect"), py::arg("paint"))
     .def("drawRegion", &SkCanvas::drawRegion,
-        "Draws SkRegion region using clip, SkMatrix, and SkPaint paint.")
+        R"docstring(
+        Draws :py:class:`Region` region using clip, :py:class:`Matrix`, and
+        :py:class:`Paint` paint.
+
+        In paint: :py:class:`Paint.Style` determines if rectangle is stroked or
+        filled; if stroked, :py:class:`Paint` stroke width describes the line
+        thickness, and :py:class:`Paint.Join` draws the corners rounded or
+        square.
+
+        :param skia.Region region: region to draw
+        :param skia.Paint paint: stroke or fill, blend, color, and so on, used
+            to draw
+        )docstring",
+        py::arg("region"), py::arg("paint"))
     .def("drawOval", &SkCanvas::drawOval,
-        "Draws oval oval using clip, SkMatrix, and SkPaint.")
+        R"docstring(
+        Draws oval using clip, :py:class:`Matrix`, and :py:class:`Paint` paint.
+
+        In paint: :py:class:`Paint.Style` determines if oval is stroked or
+        filled; if stroked, :py:class:`Paint` stroke width describes the line
+        thickness, and :py:class:`Paint.Join` draws the corners rounded or
+        square.
+
+        :param skia.Rect oval: oval to draw
+        :param skia.Paint paint: stroke or fill, blend, color, and so on, used
+            to draw
+        )docstring",
+        py::arg("oval"), py::arg("paint"))
     .def("drawRRect", &SkCanvas::drawRRect,
-        "Draws SkRRect rrect using clip, SkMatrix, and SkPaint paint.")
+        R"docstring(
+        Draws :py:class:`RRect` rrect using clip, :py:class:`Matrix`, and
+        :py:class:`Paint` paint.
+
+        In paint: :py:class:`Paint.Style` determines if rrect is stroked or
+        filled; if stroked, :py:class:`Paint` stroke width describes the line
+        thickness, and :py:class:`Paint.Join` draws the corners rounded or
+        square.
+
+        rrect may represent a rectangle, circle, oval, uniformly rounded
+        rectangle, or may have any combination of positive non-square radii for
+        the four corners.
+
+        :param skia.RRect rrect: rrect to draw
+        :param skia.Paint paint: stroke or fill, blend, color, and so on, used
+            to draw
+        )docstring",
+        py::arg("rrect"), py::arg("paint"))
     .def("drawDRRect", &SkCanvas::drawDRRect,
-        "Draws SkRRect outer and inner using clip, SkMatrix, and SkPaint "
-        "paint.")
+        R"docstring(
+        Draws :py:class:`RRect` outer and inner using clip, :py:class:`Matrix`,
+        and :py:class:`Paint` paint.
+
+        outer must contain inner or the drawing is undefined. In paint:
+        :py:class:`Paint.Style` determines if :py:class:`RRect` is stroked or
+        filled; if stroked, :py:class:`Paint` stroke width describes the line
+        thickness, and :py:class:`Paint.Join` draws the corners rounded or
+        square.
+
+        GPU-backed platforms optimize drawing when both outer and inner are
+        concave and outer contains inner. These platforms may not be able to
+        draw :py:class:`Path` built with identical data as fast.
+
+        :param skia.RRect outer: :py:class:`RRect` outer bounds to draw
+        :param skia.RRect inner: :py:class:`RRect` inner bounds to draw
+        :param skia.Paint paint: stroke or fill, blend, color, and so on, used
+            to draw
+        )docstring",
+        py::arg("outer"), py::arg("inner"), py::arg("paint"))
     .def("drawCircle",
         py::overload_cast<SkScalar, SkScalar, SkScalar, const SkPaint&>(
             &SkCanvas::drawCircle),
-        "Draws circle at (cx, cy) with radius using clip, SkMatrix, and "
-        "SkPaint paint.")
+        R"docstring(
+        Draws circle at (cx, cy) with radius using clip, :py:class:`Matrix`, and
+        :py:class:`Paint` paint.
+
+        If radius is zero or less, nothing is drawn. In paint:
+        :py:class:`Paint.Style` determines if circle is stroked or filled; if
+        stroked, :py:class:`Paint` stroke width describes the line thickness.
+
+        :cx: circle center on the x-axis
+        :cy: circle center on the y-axis
+        :radius: half the diameter of circle
+        :paint: :py:class:`Paint` stroke or fill, blend, color, and so on, used
+            to draw
+        )docstring",
+        py::arg("cx"), py::arg("cy"), py::arg("radius"), py::arg("paint"))
     .def("drawCircle",
         py::overload_cast<SkPoint, SkScalar, const SkPaint&>(
             &SkCanvas::drawCircle),
-        "Draws circle at center with radius using clip, SkMatrix, and SkPaint "
-        "paint.")
+        R"docstring(
+        Draws circle at center with radius using clip, :py:class:`Matrix`, and
+        :py:class:`Paint` paint.
+
+        If radius is zero or less, nothing is drawn. In paint:
+        :py:class:`Paint.Style` determines if circle is stroked or filled; if
+        stroked, :py:class:`Paint` stroke width describes the line thickness.
+
+        :center: circle center
+        :radius: half the diameter of circle
+        :paint: :py:class:`Paint` stroke or fill, blend, color, and so on, used
+            to draw
+        )docstring",
+        py::arg("center"), py::arg("radius"), py::arg("paint"))
     .def("drawArc", &SkCanvas::drawArc,
-        "Draws arc using clip, SkMatrix, and SkPaint paint.")
+        R"docstring(
+        Draws arc using clip, :py:class:`Matrix`, and :py:class:`Paint` paint.
+
+        Arc is part of oval bounded by oval, sweeping from startAngle to
+        startAngle plus sweepAngle. startAngle and sweepAngle are in degrees.
+
+        startAngle of zero places start point at the right middle edge of oval.
+        A positive sweepAngle places arc end point clockwise from start point; a
+        negative sweepAngle places arc end point counterclockwise from start
+        point. sweepAngle may exceed 360 degrees, a full circle. If useCenter is
+        true, draw a wedge that includes lines from oval center to arc end
+        points. If useCenter is false, draw arc between end points.
+
+        If :py:class:`Rect` oval is empty or sweepAngle is zero, nothing is
+        drawn.
+
+        :param skia.Rect oval: :py:class:`Rect` bounds of oval containing arc to
+            draw
+        :param float startAngle: angle in degrees where arc begins
+        :param float sweepAngle: sweep angle in degrees; positive is clockwise
+        :param bool useCenter: if true, include the center of the oval
+        :param skia.Paint paint: :py:class:`Paint` stroke or fill, blend, color,
+            and so on, used to draw
+        )docstring",
+        py::arg("oval"), py::arg("startAngle"), py::arg("sweepAngle"),
+        py::arg("useCenter"), py::arg("paint"))
     .def("drawRoundRect", &SkCanvas::drawRoundRect,
-        "Draws SkRRect bounded by SkRect rect, with corner radii (rx, ry) "
-        "using clip, SkMatrix, and SkPaint paint.")
+        R"docstring(
+        Draws :py:class:`RRect` bounded by :py:class:`Rect` rect, with corner
+        radii (rx, ry) using clip, :py:class:`Matrix`, and :py:class:`Paint`
+        paint.
+
+        In paint: :py:class:`Paint.Style` determines if :py:class:`RRect` is
+        stroked or filled; if stroked, :py:class:`Paint` stroke width describes
+        the line thickness. If rx or ry are less than zero, they are treated as
+        if they are zero. If rx plus ry exceeds rect width or rect height, radii
+        are scaled down to fit. If rx and ry are zero, :py:class:`RRect` is
+        drawn as :py:class:`Rect` and if stroked is affected by
+        :py:class:`Paint.Join`.
+
+        :param skia.Rect rect: SkRect bounds of SkRRect to draw
+        :param float rx: axis length on x-axis of oval describing rounded
+            corners
+        :param float ry: axis length on y-axis of oval describing rounded
+            corners
+        :param skia.Paint paint: stroke, blend, color, and so on, used to draw
+        )docstring",
+        py::arg("rect"), py::arg("rx"), py::arg("ry"), py::arg("paint"))
     .def("drawPath", &SkCanvas::drawPath,
-        "Draws SkPath path using clip, SkMatrix, and SkPaint paint.")
+        R"docstring(
+        Draws :py:class:`Path` path using clip, :py:class:`Matrix`, and
+        :py:class:`Paint` paint.
+
+        :py:class:`Path` contains an array of path contour, each of which may be
+        open or closed.
+
+        In paint: :py:class:`Paint.Style` determines if :py:class:`RRect` is
+        stroked or filled: if filled, :py:class:`Path.FillType` determines
+        whether path contour describes inside or outside of fill; if stroked,
+        :py:class:`Paint` stroke width describes the line thickness,
+        :py:class:`Paint`::Cap describes line ends, and :py:class:`Paint.Join`
+        describes how corners are drawn.
+
+        :param skia.Path path: :py:class:`Path` to draw
+        :param skia.Paint paint: stroke, blend, color, and so on, used to draw
+        )docstring",
+        py::arg("path"), py::arg("paint"))
     .def("drawImage",
         py::overload_cast<const SkImage*, SkScalar, SkScalar,
             const SkPaint*>(&SkCanvas::drawImage),
-        "Draws SkImage image, with its top-left corner at (left, top), using "
-        "clip, SkMatrix, and optional SkPaint paint",
+        R"docstring(
+        Draws :py:class:`Image` image, with its top-left corner at (left, top),
+        using clip, :py:class:`Matrix`, and optional :py:class:`Paint` paint.
+
+        This is equivalent to drawImageRect() using a dst rect at (x,y) with the
+        same width and height of the image.
+
+        :image: uncompressed rectangular map of pixels
+        :left: left side of image
+        :top: top side of image
+        :paint: :py:class:`Paint` containing :py:class:`BlendMode`,
+            :py:class:`ColorFilter`, :py:class:`ImageFilter`, and so on; or
+            nullptr
+        )docstring",
         py::arg("image"), py::arg("left"), py::arg("top"),
         py::arg("paint") = nullptr)
-    .def("drawImage",
-        py::overload_cast<const sk_sp<SkImage>&, SkScalar, SkScalar,
-            const SkPaint*>(&SkCanvas::drawImage),
-        "Draws SkImage image, with its top-left corner at (left, top), using "
-        "clip, SkMatrix, and optional SkPaint paint",
-        py::arg("image"), py::arg("left"), py::arg("top"),
-        py::arg("paint") = nullptr)
+    // .def("drawImage",
+    //     py::overload_cast<const sk_sp<SkImage>&, SkScalar, SkScalar,
+    //         const SkPaint*>(&SkCanvas::drawImage),
+    //     py::arg("image"), py::arg("left"), py::arg("top"),
+    //     py::arg("paint") = nullptr)
     .def("drawImageRect",
         py::overload_cast<const SkImage*, const SkRect&, const SkRect&,
             const SkPaint*, SkCanvas::SrcRectConstraint>(
                 &SkCanvas::drawImageRect),
-        "Draws SkRect src of SkImage image, scaled and translated to fill "
-        "SkRect dst.",
+        R"docstring(
+        Draws :py:class:`Rect` src of :py:class:`Image` image, scaled and
+        translated to fill :py:class:`Rect` dst.
+
+        Additionally transform draw using clip, :py:class:`Matrix`, and optional
+        :py:class:`Paint` paint.
+
+        If :py:class:`Paint` paint is supplied, apply :py:class:`ColorFilter`,
+        alpha, :py:class:`ImageFilter`, :py:class:`BlendMode`, and
+        :py:class:`DrawLooper`. If image is :py:attr:`ColorType.kAlpha_8`,
+        apply :py:class:`Shader`. If paint contains :py:class:`MaskFilter`,
+        generate mask from image bounds.
+
+        If generated mask extends beyond image bounds, replicate image edge
+        colors, just as :py:class:`Shader` made from
+        :py:meth:`Image.makeShader` with :py:attr:`TileMode.kClamp`
+        set replicates the image edge color when it samples outside of its
+        bounds.
+
+        When using a shader or shader mask filter, its coordinate system is
+        based on the current CTM, so will reflect the dst rect geometry and is
+        equivalent to drawRect(dst). The src rect is only used to access the
+        provided image.
+
+        constraint set to :py:attr:`SrcRectConstraint.kStrict` limits
+        :py:class:`Paint` :py:class:`FilterQuality` to sample within src; set to
+        :py:attr:`SrcRectConstraint.kFast` allows sampling outside to improve
+        performance.
+
+        :image: :py:class:`Image` containing pixels, dimensions, and format
+        :src: source :py:class:`Rect` of image to draw from
+        :dst: destination :py:class:`Rect` of image to draw to
+        :paint: :py:class:`Paint` containing :py:class:`BlendMode`,
+            :py:class:`ColorFilter`, :py:class:`ImageFilter`, and so on; or
+            nullptr
+        :constraint: filter strictly within src or draw faster
+        )docstring",
         py::arg("image"), py::arg("src"), py::arg("dst"),
         py::arg("paint") = nullptr, py::arg("constraint") =
             SkCanvas::SrcRectConstraint::kStrict_SrcRectConstraint)
@@ -768,16 +1716,77 @@ canvas
         py::overload_cast<const SkImage*, const SkIRect&, const SkRect&,
             const SkPaint*, SkCanvas::SrcRectConstraint>(
             &SkCanvas::drawImageRect),
-        "Draws SkIRect isrc of SkImage image, scaled and translated to fill "
-        "SkRect dst.",
+        R"docstring(
+        Draws :py:class:`IRect` isrc of :py:class:`Image` image, scaled and
+        translated to fill :py:class:`Rect` dst.
+
+        Additionally transform draw using clip, :py:class:`Matrix`, and optional
+        :py:class:`Paint` paint.
+
+        If :py:class:`Paint` paint is supplied, apply :py:class:`ColorFilter`,
+        alpha, :py:class:`ImageFilter`, :py:class:`BlendMode`, and
+        :py:class:`DrawLooper`. If image is :py:attr:`ColorType.kAlpha_8`,
+        apply :py:class:`Shader`. If paint contains :py:class:`MaskFilter`,
+        generate mask from image bounds.
+
+        If generated mask extends beyond image bounds, replicate image edge
+        colors, just as :py:class:`Shader` made from
+        :py:meth:`Image.makeShader` with :py:attr:`TileMode.kClamp`
+        set replicates the image edge color when it samples outside of its
+        bounds.
+
+        When using a shader or shader mask filter, its coordinate system is
+        based on the current CTM, so will reflect the dst rect geometry and is
+        equivalent to drawRect(dst). The isrc rect is only used to access the
+        provided image.
+
+        constraint set to :py:attr:`SrcRectConstraint.kStrict` limits
+        :py:class:`Paint` :py:class:`FilterQuality` to sample within isrc; set
+        to :py:attr:`SrcRectConstraint.kFast` allows sampling outside to improve
+        performance.
+
+        :image: :py:class:`Image` containing pixels, dimensions, and format
+        :isrc: source :py:class:`IRect` of image to draw from
+        :dst: destination :py:class:`Rect` of image to draw to
+        :paint: :py:class:`Paint` containing :py:class:`BlendMode`,
+            :py:class:`ColorFilter`, :py:class:`ImageFilter`, and so on; or
+            nullptr
+        :constraint: filter strictly within isrc or draw faster
+        )docstring",
         py::arg("image"), py::arg("isrc"), py::arg("dst"),
         py::arg("paint") = nullptr, py::arg("constraint") =
             SkCanvas::SrcRectConstraint::kStrict_SrcRectConstraint)
     .def("drawImageRect",
         py::overload_cast<const SkImage*, const SkRect&, const SkPaint*>(
             &SkCanvas::drawImageRect),
-        "Draws SkImage image, scaled and translated to fill SkRect dst, using "
-        "clip, SkMatrix, and optional SkPaint paint.",
+        R"docstring(
+        Draws :py:class:`Image` image, scaled and translated to fill
+        :py:class:`Rect` dst, using clip, :py:class:`Matrix`, and optional
+        :py:class:`Paint` paint.
+
+        If :py:class:`Paint` paint is supplied, apply :py:class:`ColorFilter`,
+        alpha, :py:class:`ImageFilter`, :py:class:`BlendMode`, and
+        :py:class:`DrawLooper`. If image is :py:attr:`ColorType.kAlpha_8`,
+        apply :py:class:`Shader`. If paint contains :py:class:`MaskFilter`,
+        generate mask from image bounds.
+
+        If generated mask extends beyond image bounds, replicate image edge
+        colors, just as :py:class:`Shader` made from
+        :py:meth:`Image.makeShader` with :py:attr:`TileMode.kClamp`
+        set replicates the image edge color when it samples outside of its
+        bounds.
+
+        When using a shader or shader mask filter, its coordinate system is
+        based on the current CTM, so will reflect the dst rect geometry and is
+        equivalent to drawRect(dst).
+
+        :image: :py:class:`Image` containing pixels, dimensions, and format
+        :dst: destination :py:class:`Rect` of image to draw to
+        :paint: :py:class:`Paint` containing :py:class:`BlendMode`,
+            :py:class:`ColorFilter`, :py:class:`ImageFilter`, and so on; or
+            nullptr
+        :constraint: filter strictly within src or draw faster
+        )docstring",
         py::arg("image"), py::arg("dst"), py::arg("paint") = nullptr)
     // .def("drawImageRect",
     //     py::overload_cast<const sk_sp<SkImage>&, const SkRect&, const SkRect&,
@@ -805,24 +1814,110 @@ canvas
     .def("drawImageNine",
         py::overload_cast<const SkImage*, const SkIRect&, const SkRect&,
             const SkPaint*>(&SkCanvas::drawImageNine),
-        "Draws SkImage image stretched proportionally to fit into SkRect dst.",
+        R"docstring(
+        Draws :py:class:`Image` image stretched proportionally to fit into
+        :py:class:`Rect` dst.
+
+        :py:class:`IRect` center divides the image into nine sections: four
+        sides, four corners, and the center. Corners are unmodified or scaled
+        down proportionately if their sides are larger than dst; center and four
+        sides are scaled to fit remaining space, if any.
+
+        Additionally transform draw using clip, :py:class:`Matrix`, and optional
+        :py:class:`Paint` paint.
+
+        If :py:class:`Paint` paint is supplied, apply :py:class:`ColorFilter`,
+        alpha, :py:class:`ImageFilter`, :py:class:`BlendMode`, and
+        :py:class:`DrawLooper`. If image is :py:attr:`ColorType.kAlpha_8`, apply
+        :py:class:`Shader`. If paint contains :py:class:`MaskFilter`, generate
+        mask from image bounds. If paint :py:class:`FilterQuality` set to
+        :py:attr:`FilterQuality.kNone`, disable pixel filtering. For all other
+        values of paint :py:class:`FilterQuality`, use
+        :py:attr:`FilterQuality.kLow` to filter pixels. Any
+        :py:class:`MaskFilter` on paint is ignored as is paint anti-aliasing
+        state.
+
+        If generated mask extends beyond image bounds, replicate image edge
+        colors, just as :py:class:`Shader` made from :py:meth:`Image.makeShader`
+        with :py:attr:`TileMode.kClamp` set replicates the image edge color when
+        it samples outside of its bounds.
+
+        :param skia.Image image: :py:class:`Image` containing pixels,
+            dimensions, and format
+        :param skia.IRect center: :py:class:`IRect` edge of image corners and
+            sides
+        :param skia.Rect dst: destination :py:class:`Rect` of image to draw to
+        :param skia.Paint paint: :py:class:`Paint` containing
+            :py:class:`BlendMode`, :py:class:`ColorFilter`,
+            :py:class:`ImageFilter`, and so on; or nullptr
+        )docstring",
         py::arg("image"), py::arg("center"), py::arg("dst"),
         py::arg("paint") = nullptr)
     // .def("drawImageNine",
     //     py::overload_cast<const sk_sp<SkImage>&, const SkIRect&,
-    //         const SkRect&, const SkPaint*>(&SkCanvas::drawImageNine),
-    //     "Draws SkImage image stretched proportionally to fit into SkRect dst.")
+    //         const SkRect&, const SkPaint*>(&SkCanvas::drawImageNine))
     .def("drawBitmap", &SkCanvas::drawBitmap,
-        "Draws SkBitmap bitmap, with its top-left corner at (left, top), using "
-        "clip, SkMatrix, and optional SkPaint paint.",
+        R"docstring(
+        Draws :py:class:`Bitmap` bitmap, with its top-left corner at (left,
+        top), using clip, :py:class:`Matrix`, and optional :py:class:`Paint`
+        paint.
+
+        If :py:class:`Paint` paint is not nullptr, apply
+        :py:class:`ColorFilter`, alpha, :py:class:`ImageFilter`,
+        :py:class:`BlendMode`, and :py:class:`DrawLooper`. If bitmap is
+        :py:attr:`ColorType.kAlpha_8`, apply :py:class:`Shader`. If paint
+        contains :py:class:`MaskFilter`, generate mask from bitmap bounds.
+
+        If generated mask extends beyond bitmap bounds, replicate bitmap edge
+        colors, just as :py:class:`Shader` made from
+        :py:meth:`Shader.MakeBitmapShader` with :py:attr:`TileMode.kClamp` set
+        replicates the bitmap edge color when it samples outside of its bounds.
+
+        :param skia.Bitmap bitmap:  :py:class:`Bitmap` containing pixels,
+            dimensions, and format
+        :param left: left side of bitmap
+        :param top: top side of bitmap
+        :param paint: :py:class:`Paint` containing :py:class:`BlendMode`,
+            :py:class:`ColorFilter`, :py:class:`ImageFilter`, and so on; or
+            nullptr
+        )docstring",
         py::arg("bitmap"), py::arg("left"), py::arg("top"),
         py::arg("paint") = nullptr)
     .def("drawBitmapRect",
         py::overload_cast<const SkBitmap&, const SkRect&, const SkRect&,
             const SkPaint*, SkCanvas::SrcRectConstraint>(
                 &SkCanvas::drawBitmapRect),
-        "Draws SkRect src of SkBitmap bitmap, scaled and translated to fill "
-        "SkRect dst.",
+        R"docstring(
+        Draws :py:class:`Rect` src of :py:class:`Bitmap` bitmap, scaled and
+        translated to fill :py:class:`Rect` dst.
+
+        Additionally transform draw using clip, :py:class:`Matrix`, and optional
+        :py:class:`Paint` paint.
+
+        If :py:class:`Paint` paint is supplied, apply :py:class:`ColorFilter`,
+        alpha, :py:class:`ImageFilter`, :py:class:`BlendMode`,
+        and :py:class:`DrawLooper`. If bitmap is :py:attr:`ColorType.kAlpha_8`,
+        apply :py:class:`Shader`. If paint contains :py:class:`MaskFilter`,
+        generate mask from bitmap bounds.
+
+        If generated mask extends beyond bitmap bounds, replicate bitmap edge
+        colors, just as :py:class:`Shader` made from
+        :py:meth:`Shader.MakeBitmapShader` with :py:attr:`TileMode.kClamp` set
+        replicates the bitmap edge color when it samples outside of its bounds.
+
+        constraint set to :py:attr:`SrcRectConstraint.kStrict` limits
+        :py:class:`Paint` :py:class:`FilterQuality` to sample within src; set to
+        :py:attr:`SrcRectConstraint.kFast` allows sampling outside to improve
+        performance.
+
+        :bitmap: :py:class:`Bitmap` containing pixels, dimensions, and format
+        :src: source :py:class:`Rect` of image to draw from
+        :dst: destination :py:class:`Rect` of image to draw to
+        :paint: :py:class:`Paint` containing :py:class:`BlendMode`,
+            :py:class:`ColorFilter`, :py:class:`ImageFilter`, and so on; or
+            nullptr
+        :constraint: filter strictly within src or draw faster
+        )docstring",
         py::arg("bitmap"), py::arg("src"), py::arg("dst"),
         py::arg("paint") = nullptr, py::arg("constraint") =
             SkCanvas::SrcRectConstraint::kStrict_SrcRectConstraint)
@@ -830,15 +1925,74 @@ canvas
         py::overload_cast<const SkBitmap&, const SkIRect&, const SkRect&,
             const SkPaint*, SkCanvas::SrcRectConstraint>(
                 &SkCanvas::drawBitmapRect),
-        "Draws SkIRect isrc of SkBitmap bitmap, scaled and translated to fill "
-        "SkRect dst.",
+        R"docstring(
+        Draws :py:class:`IRect` isrc of :py:class:`Bitmap` bitmap, scaled and
+        translated to fill :py:class:`Rect` dst.
+
+        Additionally transform draw using clip, :py:class:`Matrix`, and optional
+        :py:class:`Paint` paint.
+
+        If :py:class:`Paint` paint is supplied, apply :py:class:`ColorFilter`,
+        alpha, :py:class:`ImageFilter`, :py:class:`BlendMode`,
+        and :py:class:`DrawLooper`. If bitmap is :py:attr:`ColorType.kAlpha_8`,
+        apply :py:class:`Shader`. If paint contains :py:class:`MaskFilter`,
+        generate mask from bitmap bounds.
+
+        If generated mask extends beyond bitmap bounds, replicate bitmap edge
+        colors, just as :py:class:`Shader` made from
+        :py:meth:`Shader.MakeBitmapShader` with :py:attr:`TileMode.kClamp` set
+        replicates the bitmap edge color when it samples outside of its bounds.
+
+        constraint set to :py:attr:`SrcRectConstraint.kStrict` limits
+        :py:class:`Paint` :py:class:`FilterQuality` to sample within isrc; set to
+        :py:attr:`SrcRectConstraint.kFast` allows sampling outside to improve
+        performance.
+
+        :bitmap: :py:class:`Bitmap` containing pixels, dimensions, and format
+        :isrc: source :py:class:`IRect` of image to draw from
+        :dst: destination :py:class:`Rect` of image to draw to
+        :paint: :py:class:`Paint` containing :py:class:`BlendMode`,
+            :py:class:`ColorFilter`, :py:class:`ImageFilter`, and so on; or
+            nullptr
+        :constraint: filter strictly within isrc or draw faster
+        )docstring",
         py::arg("bitmap"), py::arg("isrc"), py::arg("dst"),
         py::arg("paint") = nullptr, py::arg("constraint") =
             SkCanvas::SrcRectConstraint::kStrict_SrcRectConstraint)
     .def("drawBitmapRect",
         py::overload_cast<const SkBitmap&, const SkRect&, const SkPaint*,
             SkCanvas::SrcRectConstraint>(&SkCanvas::drawBitmapRect),
-        "Draws SkBitmap bitmap, scaled and translated to fill SkRect dst.",
+        R"docstring(
+        Draws :py:class:`Bitmap` bitmap, scaled and translated to fill
+        :py:class:`Rect` dst.
+
+        bitmap bounds is on integer pixel boundaries; dst may include fractional
+        boundaries. Additionally transform draw using clip, :py:class:`Matrix`,
+        and optional :py:class:`Paint` paint.
+
+        If :py:class:`Paint` paint is supplied, apply :py:class:`ColorFilter`,
+        alpha, :py:class:`ImageFilter`, :py:class:`BlendMode`,
+        and :py:class:`DrawLooper`. If bitmap is :py:attr:`ColorType.kAlpha_8`,
+        apply :py:class:`Shader`. If paint contains :py:class:`MaskFilter`,
+        generate mask from bitmap bounds.
+
+        If generated mask extends beyond bitmap bounds, replicate bitmap edge
+        colors, just as :py:class:`Shader` made from
+        :py:meth:`Shader.MakeBitmapShader` with :py:attr:`TileMode.kClamp` set
+        replicates the bitmap edge color when it samples outside of its bounds.
+
+        constraint set to :py:attr:`SrcRectConstraint.kStrict` limits
+        :py:class:`Paint` :py:class:`FilterQuality` to sample within isrc; set to
+        :py:attr:`SrcRectConstraint.kFast` allows sampling outside to improve
+        performance.
+
+        :bitmap: :py:class:`Bitmap` containing pixels, dimensions, and format
+        :dst: destination :py:class:`Rect` of image to draw to
+        :paint: :py:class:`Paint` containing :py:class:`BlendMode`,
+            :py:class:`ColorFilter`, :py:class:`ImageFilter`, and so on; or
+            nullptr
+        :constraint: filter strictly within bitmap or draw faster
+        )docstring",
         py::arg("bitmap"), py::arg("dst"), py::arg("paint") = nullptr,
         py::arg("constraint") =
             SkCanvas::SrcRectConstraint::kStrict_SrcRectConstraint)
@@ -1139,7 +2293,7 @@ canvas
         If atlas is `None`, this draws nothing.
 
         :param skia.Image atlas: :py:class:`Image` containing sprites
-        :param List[skia.RSXform xform]: :py:class:`RSXform` mappings for
+        :param List[skia.RSXform] xform: :py:class:`RSXform` mappings for
             sprites in atlas
         :param List[skia.Rect] tex: :py:class:`Rect` locations of sprites in
             atlas
@@ -1147,9 +2301,9 @@ canvas
             :py:class:`BlendMode`; may be `None`
         :param skia.BlendMode mode: :py:class:`BlendMode` combining colors and
             sprites
-        :param Union[skia.Rect,NoneType] cullRect: bounds of transformed sprites
+        :param Union[skia.Rect,None] cullRect: bounds of transformed sprites
             for efficient clipping; may be `None`
-        :param Union[skia.Paint,NoneType] paint: :py:class:`ColorFilter`,
+        :param Union[skia.Paint,None] paint: :py:class:`ColorFilter`,
             :py:class:`ImageFilter`, :py:class:`BlendMode`, and so on; may be
             `None`
         )docstring",
@@ -1198,8 +2352,8 @@ canvas
         },
         R"docstring(
         Associates :py:class:`Rect` on :py:class:`Canvas` when an annotation; a
-        key-value pair, where the key is a null-terminated UTF-8 string, and
-        optional value is stored as :py:class:`Data`.
+        key-value pair, where the key is an UTF-8 string, and optional value is
+        stored as :py:class:`Data`.
 
         Only some canvas implementations, such as recording to
         :py:class:`Picture`, or drawing to document PDF, use annotations.
@@ -1210,10 +2364,30 @@ canvas
         )docstring",
         py::arg("rect"), py::arg("key"), py::arg("value"))
     .def("isClipEmpty", &SkCanvas::isClipEmpty,
-        "Returns true if clip is empty; that is, nothing will draw.")
+        R"docstring(
+        Returns true if clip is empty; that is, nothing will draw.
+
+        May do work when called; it should not be called more often than needed.
+        However, once called, subsequent calls perform no work until clip
+        changes.
+
+        :return: true if clip is empty
+        )docstring")
     .def("isClipRect", &SkCanvas::isClipRect,
-        "Returns true if clip is SkRect and not empty.")
-    .def("getTotalMatrix", &SkCanvas::getTotalMatrix, "Returns SkMatrix.")
+        R"docstring(
+        Returns true if clip is :py:class:`Rect` and not empty.
+
+        Returns false if the clip is empty, or if it is not :py:class:`Rect`.
+
+        :return: true if clip is :py:class:`Rect` and not empty
+        )docstring")
+    .def("getTotalMatrix", &SkCanvas::getTotalMatrix,
+        R"docstring(
+        Legacy version of :py:meth:`getLocalToDevice`, which strips away any Z
+        information, and just returns a 3x3 version.
+
+        :return: 3x3 version of :py:meth:`getLocalToDevice`
+        )docstring")
     .def("getLocalToDevice",
         py::overload_cast<>(&SkCanvas::getLocalToDevice, py::const_))
     // .def("getLocalToDevice",
