@@ -4,7 +4,7 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <title>Lattice &#8212; skia-python 0.0.1 documentation</title>
+    <title>Canvas.Lattice &#8212; skia-python 0.0.1 documentation</title>
     <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
@@ -14,8 +14,8 @@
     <script src="../_static/language_data.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="ClipOp" href="skia.ClipOp.html" />
-    <link rel="prev" title="SaveLayerRec" href="skia.Canvas.SaveLayerRec.html" />
+    <link rel="next" title="Canvas.Lattice.RectType" href="skia.Canvas.Lattice.RectType.html" />
+    <link rel="prev" title="Canvas.SaveLayerRec" href="skia.Canvas.SaveLayerRec.html" />
    
   <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
   
@@ -32,8 +32,8 @@
 
           <div class="body" role="main">
             
-  <div class="section" id="lattice">
-<h1>Lattice<a class="headerlink" href="#lattice" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="canvas-lattice">
+<h1>Canvas.Lattice<a class="headerlink" href="#canvas-lattice" title="Permalink to this headline">¶</a></h1>
 <dl class="py class">
 <dt id="skia.Canvas.Lattice">
 <em class="property">class </em><code class="sig-name descname">Lattice</code><a class="headerlink" href="#skia.Canvas.Lattice" title="Permalink to this definition">¶</a></dt>
@@ -44,6 +44,18 @@ always drawn at their original size if the destination is large enough. If
 the destination side is too small to hold the fixed entries, all fixed
 entries are proportionately scaled down to fit. The grid entries not on even
 columns and rows are scaled to fit the remaining space, if any.</p>
+<p class="rubric">Classes</p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="skia.Canvas.Lattice.RectType.html#skia.Canvas.Lattice.RectType" title="skia.Canvas.Lattice.RectType"><code class="xref py py-obj docutils literal notranslate"><span class="pre">RectType</span></code></a></p></td>
+<td><p>Members:</p></td>
+</tr>
+</tbody>
+</table>
 <p class="rubric">Methods</p>
 <table class="longtable docutils align-default">
 <colgroup>
@@ -64,25 +76,25 @@ columns and rows are scaled to fit the remaining space, if any.</p>
 </colgroup>
 <tbody>
 <tr class="row-odd"><td><p><a class="reference internal" href="#skia.Canvas.Lattice.fBounds" title="skia.Canvas.Lattice.fBounds"><code class="xref py py-obj docutils literal notranslate"><span class="pre">fBounds</span></code></a></p></td>
-<td><p></p></td>
+<td><p>source bounds to draw from</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#skia.Canvas.Lattice.fColors" title="skia.Canvas.Lattice.fColors"><code class="xref py py-obj docutils literal notranslate"><span class="pre">fColors</span></code></a></p></td>
-<td><p></p></td>
+<td><p>array of colors</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#skia.Canvas.Lattice.fRectTypes" title="skia.Canvas.Lattice.fRectTypes"><code class="xref py py-obj docutils literal notranslate"><span class="pre">fRectTypes</span></code></a></p></td>
-<td><p></p></td>
+<td><p>array of fill types</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#skia.Canvas.Lattice.fXCount" title="skia.Canvas.Lattice.fXCount"><code class="xref py py-obj docutils literal notranslate"><span class="pre">fXCount</span></code></a></p></td>
-<td><p></p></td>
+<td><p>number of x-coordinates</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#skia.Canvas.Lattice.fXDivs" title="skia.Canvas.Lattice.fXDivs"><code class="xref py py-obj docutils literal notranslate"><span class="pre">fXDivs</span></code></a></p></td>
-<td><p></p></td>
+<td><p>x-axis values dividing bitmap</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#skia.Canvas.Lattice.fYCount" title="skia.Canvas.Lattice.fYCount"><code class="xref py py-obj docutils literal notranslate"><span class="pre">fYCount</span></code></a></p></td>
-<td><p></p></td>
+<td><p>number of y-coordinates</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#skia.Canvas.Lattice.fYDivs" title="skia.Canvas.Lattice.fYDivs"><code class="xref py py-obj docutils literal notranslate"><span class="pre">fYDivs</span></code></a></p></td>
-<td><p></p></td>
+<td><p>y-axis values dividing bitmap</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#skia.Canvas.Lattice.kDefault" title="skia.Canvas.Lattice.kDefault"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kDefault</span></code></a></p></td>
 <td><p></p></td>
@@ -111,37 +123,44 @@ columns and rows are scaled to fit the remaining space, if any.</p>
 <dl class="py attribute">
 <dt id="skia.Canvas.Lattice.fBounds">
 <code class="sig-prename descclassname">Lattice.</code><code class="sig-name descname">fBounds</code><a class="headerlink" href="#skia.Canvas.Lattice.fBounds" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>source bounds to draw from</p>
+</dd></dl>
 
 <dl class="py attribute">
 <dt id="skia.Canvas.Lattice.fColors">
 <code class="sig-prename descclassname">Lattice.</code><code class="sig-name descname">fColors</code><a class="headerlink" href="#skia.Canvas.Lattice.fColors" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>array of colors</p>
+</dd></dl>
 
 <dl class="py attribute">
 <dt id="skia.Canvas.Lattice.fRectTypes">
 <code class="sig-prename descclassname">Lattice.</code><code class="sig-name descname">fRectTypes</code><a class="headerlink" href="#skia.Canvas.Lattice.fRectTypes" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>array of fill types</p>
+</dd></dl>
 
 <dl class="py attribute">
 <dt id="skia.Canvas.Lattice.fXCount">
 <code class="sig-prename descclassname">Lattice.</code><code class="sig-name descname">fXCount</code><a class="headerlink" href="#skia.Canvas.Lattice.fXCount" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>number of x-coordinates</p>
+</dd></dl>
 
 <dl class="py attribute">
 <dt id="skia.Canvas.Lattice.fXDivs">
 <code class="sig-prename descclassname">Lattice.</code><code class="sig-name descname">fXDivs</code><a class="headerlink" href="#skia.Canvas.Lattice.fXDivs" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>x-axis values dividing bitmap</p>
+</dd></dl>
 
 <dl class="py attribute">
 <dt id="skia.Canvas.Lattice.fYCount">
 <code class="sig-prename descclassname">Lattice.</code><code class="sig-name descname">fYCount</code><a class="headerlink" href="#skia.Canvas.Lattice.fYCount" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>number of y-coordinates</p>
+</dd></dl>
 
 <dl class="py attribute">
 <dt id="skia.Canvas.Lattice.fYDivs">
 <code class="sig-prename descclassname">Lattice.</code><code class="sig-name descname">fYDivs</code><a class="headerlink" href="#skia.Canvas.Lattice.fYDivs" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>y-axis values dividing bitmap</p>
+</dd></dl>
 
 <dl class="py attribute">
 <dt id="skia.Canvas.Lattice.kDefault">
@@ -190,11 +209,13 @@ columns and rows are scaled to fit the remaining space, if any.</p>
 <li class="toctree-l2"><a class="reference internal" href="skia.BlendModeCoeff.html">BlendModeCoeff</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.Budgeted.html">Budgeted</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.Canvas.html">Canvas</a></li>
-<li class="toctree-l2"><a class="reference internal" href="skia.Canvas.SrcRectConstraint.html">SrcRectConstraint</a></li>
-<li class="toctree-l2"><a class="reference internal" href="skia.Canvas.PointMode.html">PointMode</a></li>
-<li class="toctree-l2"><a class="reference internal" href="skia.Canvas.QuadAAFlags.html">QuadAAFlags</a></li>
-<li class="toctree-l2"><a class="reference internal" href="skia.Canvas.SaveLayerRec.html">SaveLayerRec</a></li>
-<li class="toctree-l2 current"><a class="current reference internal" href="#">Lattice</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.Canvas.SaveLayerFlags.html">Canvas.SaveLayerFlags</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.Canvas.SrcRectConstraint.html">Canvas.SrcRectConstraint</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.Canvas.PointMode.html">Canvas.PointMode</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.Canvas.QuadAAFlags.html">Canvas.QuadAAFlags</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.Canvas.SaveLayerRec.html">Canvas.SaveLayerRec</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Canvas.Lattice</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.Canvas.Lattice.RectType.html">Canvas.Lattice.RectType</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.ClipOp.html">ClipOp</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.Color4f.html">Color4f</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.ColorFilter.html">ColorFilter</a></li>
@@ -270,8 +291,8 @@ columns and rows are scaled to fit the remaining space, if any.</p>
 <ul>
   <li><a href="../index.html">Documentation overview</a><ul>
   <li><a href="../skia.html">skia</a><ul>
-      <li>Previous: <a href="skia.Canvas.SaveLayerRec.html" title="previous chapter">SaveLayerRec</a></li>
-      <li>Next: <a href="skia.ClipOp.html" title="next chapter">ClipOp</a></li>
+      <li>Previous: <a href="skia.Canvas.SaveLayerRec.html" title="previous chapter">Canvas.SaveLayerRec</a></li>
+      <li>Next: <a href="skia.Canvas.Lattice.RectType.html" title="next chapter">Canvas.Lattice.RectType</a></li>
   </ul></li>
   </ul></li>
 </ul>

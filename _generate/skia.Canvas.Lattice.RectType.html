@@ -4,7 +4,7 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <title>ImageFilter &#8212; skia-python 0.0.1 documentation</title>
+    <title>Canvas.Lattice.RectType &#8212; skia-python 0.0.1 documentation</title>
     <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
@@ -14,8 +14,8 @@
     <script src="../_static/language_data.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="ImageInfo" href="skia.ImageInfo.html" />
-    <link rel="prev" title="Image" href="skia.Image.html" />
+    <link rel="next" title="ClipOp" href="skia.ClipOp.html" />
+    <link rel="prev" title="Canvas.Lattice" href="skia.Canvas.Lattice.html" />
    
   <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
   
@@ -32,20 +32,50 @@
 
           <div class="body" role="main">
             
-  <div class="section" id="imagefilter">
-<h1>ImageFilter<a class="headerlink" href="#imagefilter" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="canvas-lattice-recttype">
+<h1>Canvas.Lattice.RectType<a class="headerlink" href="#canvas-lattice-recttype" title="Permalink to this headline">¶</a></h1>
 <dl class="py class">
-<dt id="skia.ImageFilter">
-<em class="property">class </em><code class="sig-name descname">ImageFilter</code><a class="headerlink" href="#skia.ImageFilter" title="Permalink to this definition">¶</a></dt>
-<dd><p class="rubric">Methods</p>
+<dt id="skia.Canvas.Lattice.RectType">
+<em class="property">class </em><code class="sig-name descname">RectType</code><a class="headerlink" href="#skia.Canvas.Lattice.RectType" title="Permalink to this definition">¶</a></dt>
+<dd><p>Members:</p>
+<dl class="simple">
+<dt>kFixedColor :</dt><dd><p>draws one of fColors into lattice rectangle</p>
+</dd>
+<dt>kDefault :</dt><dd><p>draws SkBitmap into lattice rectangle</p>
+</dd>
+<dt>kTransparent :</dt><dd><p>skips lattice rectangle by making it transparent</p>
+</dd>
+</dl>
+<p class="rubric">Methods</p>
 <table class="longtable docutils align-default">
 <colgroup>
 <col style="width: 10%" />
 <col style="width: 90%" />
 </colgroup>
 <tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="#skia.ImageFilter.__init__" title="skia.ImageFilter.__init__"><code class="xref py py-obj docutils literal notranslate"><span class="pre">__init__</span></code></a></p></td>
-<td><p>Initialize self.</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Canvas.Lattice.RectType.__init__" title="skia.Canvas.Lattice.RectType.__init__"><code class="xref py py-obj docutils literal notranslate"><span class="pre">__init__</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Attributes</p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Canvas.Lattice.RectType.kDefault" title="skia.Canvas.Lattice.RectType.kDefault"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kDefault</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.Canvas.Lattice.RectType.kFixedColor" title="skia.Canvas.Lattice.RectType.kFixedColor"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kFixedColor</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Canvas.Lattice.RectType.kTransparent" title="skia.Canvas.Lattice.RectType.kTransparent"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kTransparent</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.Canvas.Lattice.RectType.name" title="skia.Canvas.Lattice.RectType.name"><code class="xref py py-obj docutils literal notranslate"><span class="pre">name</span></code></a></p></td>
+<td><p>handle) -&gt; str</p></td>
 </tr>
 </tbody>
 </table>
@@ -54,9 +84,37 @@
 <div class="section" id="methods">
 <h2>Methods<a class="headerlink" href="#methods" title="Permalink to this headline">¶</a></h2>
 <dl class="py method">
-<dt id="skia.ImageFilter.__init__">
-<code class="sig-prename descclassname">ImageFilter.</code><code class="sig-name descname">__init__</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#skia.ImageFilter.__init__" title="Permalink to this definition">¶</a></dt>
-<dd><p>Initialize self.  See help(type(self)) for accurate signature.</p>
+<dt id="skia.Canvas.Lattice.RectType.__init__">
+<code class="sig-prename descclassname">RectType.</code><code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Canvas.Lattice.RectType" title="skia.Canvas.Lattice.RectType">skia.Canvas.Lattice.RectType</a></span></em>, <em class="sig-param"><span class="n">arg0</span><span class="p">:</span> <span class="n">int</span></em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#skia.Canvas.Lattice.RectType.__init__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+<div class="section" id="attributes">
+<h2>Attributes<a class="headerlink" href="#attributes" title="Permalink to this headline">¶</a></h2>
+<dl class="py attribute">
+<dt id="skia.Canvas.Lattice.RectType.kDefault">
+<code class="sig-prename descclassname">RectType.</code><code class="sig-name descname">kDefault</code><em class="property"> = RectType.kDefault</em><a class="headerlink" href="#skia.Canvas.Lattice.RectType.kDefault" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="skia.Canvas.Lattice.RectType.kFixedColor">
+<code class="sig-prename descclassname">RectType.</code><code class="sig-name descname">kFixedColor</code><em class="property"> = RectType.kFixedColor</em><a class="headerlink" href="#skia.Canvas.Lattice.RectType.kFixedColor" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="skia.Canvas.Lattice.RectType.kTransparent">
+<code class="sig-prename descclassname">RectType.</code><code class="sig-name descname">kTransparent</code><em class="property"> = RectType.kTransparent</em><a class="headerlink" href="#skia.Canvas.Lattice.RectType.kTransparent" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="skia.Canvas.Lattice.RectType.name">
+<code class="sig-prename descclassname">RectType.</code><code class="sig-name descname">name</code><a class="headerlink" href="#skia.Canvas.Lattice.RectType.name" title="Permalink to this definition">¶</a></dt>
+<dd><p>handle) -&gt; str</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>(self</p>
+</dd>
+</dl>
 </dd></dl>
 
 </div>
@@ -97,7 +155,7 @@
 <li class="toctree-l2"><a class="reference internal" href="skia.Canvas.QuadAAFlags.html">Canvas.QuadAAFlags</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.Canvas.SaveLayerRec.html">Canvas.SaveLayerRec</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.Canvas.Lattice.html">Canvas.Lattice</a></li>
-<li class="toctree-l2"><a class="reference internal" href="skia.Canvas.Lattice.RectType.html">Canvas.Lattice.RectType</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Canvas.Lattice.RectType</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.ClipOp.html">ClipOp</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.Color4f.html">Color4f</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.ColorFilter.html">ColorFilter</a></li>
@@ -129,7 +187,7 @@
 <li class="toctree-l2"><a class="reference internal" href="skia.IRect.html">IRect</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.ISize.html">ISize</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.Image.html">Image</a></li>
-<li class="toctree-l2 current"><a class="current reference internal" href="#">ImageFilter</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.ImageFilter.html">ImageFilter</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.ImageInfo.html">ImageInfo</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.M44.html">M44</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.MaskFilter.html">MaskFilter</a></li>
@@ -173,8 +231,8 @@
 <ul>
   <li><a href="../index.html">Documentation overview</a><ul>
   <li><a href="../skia.html">skia</a><ul>
-      <li>Previous: <a href="skia.Image.html" title="previous chapter">Image</a></li>
-      <li>Next: <a href="skia.ImageInfo.html" title="next chapter">ImageInfo</a></li>
+      <li>Previous: <a href="skia.Canvas.Lattice.html" title="previous chapter">Canvas.Lattice</a></li>
+      <li>Next: <a href="skia.ClipOp.html" title="next chapter">ClipOp</a></li>
   </ul></li>
   </ul></li>
 </ul>
@@ -209,7 +267,7 @@
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
       |
-      <a href="../_sources/_generate/skia.ImageFilter.rst.txt"
+      <a href="../_sources/_generate/skia.Canvas.Lattice.RectType.rst.txt"
           rel="nofollow">Page source</a>
     </div>
 

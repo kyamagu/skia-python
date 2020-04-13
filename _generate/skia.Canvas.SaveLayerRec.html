@@ -4,7 +4,7 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <title>SaveLayerRec &#8212; skia-python 0.0.1 documentation</title>
+    <title>Canvas.SaveLayerRec &#8212; skia-python 0.0.1 documentation</title>
     <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
@@ -14,8 +14,8 @@
     <script src="../_static/language_data.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Lattice" href="skia.Canvas.Lattice.html" />
-    <link rel="prev" title="QuadAAFlags" href="skia.Canvas.QuadAAFlags.html" />
+    <link rel="next" title="Canvas.Lattice" href="skia.Canvas.Lattice.html" />
+    <link rel="prev" title="Canvas.QuadAAFlags" href="skia.Canvas.QuadAAFlags.html" />
    
   <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
   
@@ -32,8 +32,8 @@
 
           <div class="body" role="main">
             
-  <div class="section" id="savelayerrec">
-<h1>SaveLayerRec<a class="headerlink" href="#savelayerrec" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="canvas-savelayerrec">
+<h1>Canvas.SaveLayerRec<a class="headerlink" href="#canvas-savelayerrec" title="Permalink to this headline">¶</a></h1>
 <dl class="py class">
 <dt id="skia.Canvas.SaveLayerRec">
 <em class="property">class </em><code class="sig-name descname">SaveLayerRec</code><a class="headerlink" href="#skia.Canvas.SaveLayerRec" title="Permalink to this definition">¶</a></dt>
@@ -58,7 +58,7 @@
 </colgroup>
 <tbody>
 <tr class="row-odd"><td><p><a class="reference internal" href="#skia.Canvas.SaveLayerRec.fBackdrop" title="skia.Canvas.SaveLayerRec.fBackdrop"><code class="xref py py-obj docutils literal notranslate"><span class="pre">fBackdrop</span></code></a></p></td>
-<td><p>the current layer is copied into the new layer, rather than initializing the new layer with transparent-black.</p></td>
+<td><p>If not null, this triggers the same initialization behavior as setting <code class="xref py py-attr docutils literal notranslate"><span class="pre">Canvas.SaveLayerFlags.kInitWithPrevious</span></code> on <a class="reference internal" href="#skia.Canvas.SaveLayerRec.fSaveLayerFlags" title="skia.Canvas.SaveLayerRec.fSaveLayerFlags"><code class="xref py py-attr docutils literal notranslate"><span class="pre">fSaveLayerFlags</span></code></a>: the current layer is copied into the new layer, rather than initializing the new layer with transparent-black.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#skia.Canvas.SaveLayerRec.fBounds" title="skia.Canvas.SaveLayerRec.fBounds"><code class="xref py py-obj docutils literal notranslate"><span class="pre">fBounds</span></code></a></p></td>
 <td><p>hints at layer size limit</p></td>
@@ -85,22 +85,95 @@
 <dt id="skia.Canvas.SaveLayerRec.__init__">
 <code class="sig-prename descclassname">SaveLayerRec.</code><code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span><span class="n">args</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#skia.Canvas.SaveLayerRec.__init__" title="Permalink to this definition">¶</a></dt>
 <dd><p>Overloaded function.</p>
-<ol class="arabic simple">
-<li><p>__init__(self: skia.Canvas.SaveLayerRec) -&gt; None</p></li>
+<ol class="arabic">
+<li><p>__init__(self: skia.Canvas.SaveLayerRec) -&gt; None</p>
+<blockquote>
+<div><p>Sets <a class="reference internal" href="#skia.Canvas.SaveLayerRec.fBounds" title="skia.Canvas.SaveLayerRec.fBounds"><code class="xref py py-attr docutils literal notranslate"><span class="pre">fBounds</span></code></a>, <a class="reference internal" href="#skia.Canvas.SaveLayerRec.fPaint" title="skia.Canvas.SaveLayerRec.fPaint"><code class="xref py py-attr docutils literal notranslate"><span class="pre">fPaint</span></code></a>, and <a class="reference internal" href="#skia.Canvas.SaveLayerRec.fBackdrop" title="skia.Canvas.SaveLayerRec.fBackdrop"><code class="xref py py-attr docutils literal notranslate"><span class="pre">fBackdrop</span></code></a> to
+nullptr.</p>
+<p>Clears <a class="reference internal" href="#skia.Canvas.SaveLayerRec.fSaveLayerFlags" title="skia.Canvas.SaveLayerRec.fSaveLayerFlags"><code class="xref py py-attr docutils literal notranslate"><span class="pre">fSaveLayerFlags</span></code></a>.</p>
+</div></blockquote>
+</li>
+<li><p>__init__(self: skia.Canvas.SaveLayerRec, bounds: skia.Rect, paint: skia.Paint, saveLayerFlags: int = 0) -&gt; None</p>
+<blockquote>
+<div><p>Sets <a class="reference internal" href="#skia.Canvas.SaveLayerRec.fBounds" title="skia.Canvas.SaveLayerRec.fBounds"><code class="xref py py-attr docutils literal notranslate"><span class="pre">fBounds</span></code></a>, <a class="reference internal" href="#skia.Canvas.SaveLayerRec.fPaint" title="skia.Canvas.SaveLayerRec.fPaint"><code class="xref py py-attr docutils literal notranslate"><span class="pre">fPaint</span></code></a>, and
+<a class="reference internal" href="#skia.Canvas.SaveLayerRec.fSaveLayerFlags" title="skia.Canvas.SaveLayerRec.fSaveLayerFlags"><code class="xref py py-attr docutils literal notranslate"><span class="pre">fSaveLayerFlags</span></code></a>; sets <a class="reference internal" href="#skia.Canvas.SaveLayerRec.fBackdrop" title="skia.Canvas.SaveLayerRec.fBackdrop"><code class="xref py py-attr docutils literal notranslate"><span class="pre">fBackdrop</span></code></a> to nullptr.</p>
+<dl class="field-list simple">
+<dt class="field-odd">bounds</dt>
+<dd class="field-odd"><p>layer dimensions; may be nullptr</p>
+</dd>
+<dt class="field-even">paint</dt>
+<dd class="field-even"><p>applied to layer when overlaying prior layer;
+may be nullptr</p>
+</dd>
+<dt class="field-odd">saveLayerFlags</dt>
+<dd class="field-odd"><p>SaveLayerRec options to
+modify layer</p>
+</dd>
+</dl>
+</div></blockquote>
+</li>
+<li><p>__init__(self: skia.Canvas.SaveLayerRec, bounds: skia.Rect, paint: skia.Paint, backdrop: skia.ImageFilter, saveLayerFlags: int) -&gt; None</p>
+<blockquote>
+<div><p>Sets <a class="reference internal" href="#skia.Canvas.SaveLayerRec.fBounds" title="skia.Canvas.SaveLayerRec.fBounds"><code class="xref py py-attr docutils literal notranslate"><span class="pre">fBounds</span></code></a>, <a class="reference internal" href="#skia.Canvas.SaveLayerRec.fPaint" title="skia.Canvas.SaveLayerRec.fPaint"><code class="xref py py-attr docutils literal notranslate"><span class="pre">fPaint</span></code></a>, <a class="reference internal" href="#skia.Canvas.SaveLayerRec.fBackdrop" title="skia.Canvas.SaveLayerRec.fBackdrop"><code class="xref py py-attr docutils literal notranslate"><span class="pre">fBackdrop</span></code></a>, and
+<a class="reference internal" href="#skia.Canvas.SaveLayerRec.fSaveLayerFlags" title="skia.Canvas.SaveLayerRec.fSaveLayerFlags"><code class="xref py py-attr docutils literal notranslate"><span class="pre">fSaveLayerFlags</span></code></a>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">bounds</dt>
+<dd class="field-odd"><p>layer dimensions; may be nullptr</p>
+</dd>
+<dt class="field-even">paint</dt>
+<dd class="field-even"><p>applied to layer when overlaying prior layer;
+may be nullptr</p>
+</dd>
+<dt class="field-odd">backdrop</dt>
+<dd class="field-odd"><p>If not null, this causes the current
+layer to be filtered by backdrop, and then drawn into the new layer
+(respecting the current clip). If null, the new layer is initialized
+with transparent-black.</p>
+</dd>
+<dt class="field-even">saveLayerFlags</dt>
+<dd class="field-even"><p>SaveLayerRec options to
+modify layer</p>
+</dd>
+</dl>
+</div></blockquote>
+</li>
+<li><p>__init__(self: skia.Canvas.SaveLayerRec, bounds: skia.Rect, paint: skia.Paint, backdrop: skia.ImageFilter, clipMask: skia.Image, clipMatrix: skia.Matrix, saveLayerFlags: int) -&gt; None</p>
+<blockquote>
+<div><p>Experimental.</p>
+<p>Not ready for general use. Sets <a class="reference internal" href="#skia.Canvas.SaveLayerRec.fBounds" title="skia.Canvas.SaveLayerRec.fBounds"><code class="xref py py-attr docutils literal notranslate"><span class="pre">fBounds</span></code></a>, <a class="reference internal" href="#skia.Canvas.SaveLayerRec.fPaint" title="skia.Canvas.SaveLayerRec.fPaint"><code class="xref py py-attr docutils literal notranslate"><span class="pre">fPaint</span></code></a>,
+<a class="reference internal" href="#skia.Canvas.SaveLayerRec.fBackdrop" title="skia.Canvas.SaveLayerRec.fBackdrop"><code class="xref py py-attr docutils literal notranslate"><span class="pre">fBackdrop</span></code></a>, <a class="reference internal" href="#skia.Canvas.SaveLayerRec.fClipMask" title="skia.Canvas.SaveLayerRec.fClipMask"><code class="xref py py-attr docutils literal notranslate"><span class="pre">fClipMask</span></code></a>, <a class="reference internal" href="#skia.Canvas.SaveLayerRec.fClipMatrix" title="skia.Canvas.SaveLayerRec.fClipMatrix"><code class="xref py py-attr docutils literal notranslate"><span class="pre">fClipMatrix</span></code></a>, and
+<a class="reference internal" href="#skia.Canvas.SaveLayerRec.fSaveLayerFlags" title="skia.Canvas.SaveLayerRec.fSaveLayerFlags"><code class="xref py py-attr docutils literal notranslate"><span class="pre">fSaveLayerFlags</span></code></a>. clipMatrix uses alpha channel of image,
+transformed by clipMatrix, to clip layer when drawn to
+<code class="xref py py-class docutils literal notranslate"><span class="pre">Canvas</span></code>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">bounds</dt>
+<dd class="field-odd"><p>layer dimensions; may be nullptr</p>
+</dd>
+<dt class="field-even">paint</dt>
+<dd class="field-even"><p>graphics state applied to layer when overlaying
+prior layer; may be nullptr</p>
+</dd>
+<dt class="field-odd">backdrop</dt>
+<dd class="field-odd"><p>If not null, this causes the current
+layer to be filtered by backdrop, and then drawn into the new layer
+(respecting the current clip). If null, the new layer is initialized
+with transparent-black.</p>
+</dd>
+<dt class="field-even">clipMask</dt>
+<dd class="field-even"><p>clip applied to layer; may be nullptr</p>
+</dd>
+<dt class="field-odd">clipMatrix</dt>
+<dd class="field-odd"><p>matrix applied to clipMask; may be
+nullptr to use identity matrix</p>
+</dd>
+<dt class="field-even">saveLayerFlags</dt>
+<dd class="field-even"><p>SaveLayerRec options to
+modify layer</p>
+</dd>
+</dl>
+</div></blockquote>
+</li>
 </ol>
-<p>Sets fBounds, fPaint, and fBackdrop to nullptr.</p>
-<ol class="arabic simple" start="2">
-<li><p>__init__(self: skia.Canvas.SaveLayerRec, arg0: skia.Rect, arg1: skia.Paint, arg2: int) -&gt; None</p></li>
-</ol>
-<p>Sets fBounds, fPaint, and fSaveLayerFlags; sets fBackdrop to nullptr.</p>
-<ol class="arabic simple" start="3">
-<li><p>__init__(self: skia.Canvas.SaveLayerRec, arg0: skia.Rect, arg1: skia.Paint, arg2: skia.ImageFilter, arg3: int) -&gt; None</p></li>
-</ol>
-<p>Sets fBounds, fPaint, fBackdrop, and fSaveLayerFlags.</p>
-<ol class="arabic simple" start="4">
-<li><p>__init__(self: skia.Canvas.SaveLayerRec, arg0: skia.Rect, arg1: skia.Paint, arg2: skia.ImageFilter, arg3: skia.Image, arg4: skia.Matrix, arg5: int) -&gt; None</p></li>
-</ol>
-<p>Experimental.</p>
 </dd></dl>
 
 </div>
@@ -109,12 +182,11 @@
 <dl class="py attribute">
 <dt id="skia.Canvas.SaveLayerRec.fBackdrop">
 <code class="sig-prename descclassname">SaveLayerRec.</code><code class="sig-name descname">fBackdrop</code><a class="headerlink" href="#skia.Canvas.SaveLayerRec.fBackdrop" title="Permalink to this definition">¶</a></dt>
-<dd><p>the current layer is copied into the new layer, rather than initializing the new layer with transparent-black.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Type</dt>
-<dd class="field-odd"><p>If not null, this triggers the same initialization behavior as setting kInitWithPrevious_SaveLayerFlag on fSaveLayerFlags</p>
-</dd>
-</dl>
+<dd><p>If not null, this triggers the same initialization behavior as setting
+<code class="xref py py-attr docutils literal notranslate"><span class="pre">Canvas.SaveLayerFlags.kInitWithPrevious</span></code> on
+<a class="reference internal" href="#skia.Canvas.SaveLayerRec.fSaveLayerFlags" title="skia.Canvas.SaveLayerRec.fSaveLayerFlags"><code class="xref py py-attr docutils literal notranslate"><span class="pre">fSaveLayerFlags</span></code></a>: the current layer is copied into the new
+layer, rather than initializing the new layer with transparent-black.</p>
+<p>This is then filtered by fBackdrop (respecting the current clip).</p>
 </dd></dl>
 
 <dl class="py attribute">
@@ -179,11 +251,13 @@
 <li class="toctree-l2"><a class="reference internal" href="skia.BlendModeCoeff.html">BlendModeCoeff</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.Budgeted.html">Budgeted</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.Canvas.html">Canvas</a></li>
-<li class="toctree-l2"><a class="reference internal" href="skia.Canvas.SrcRectConstraint.html">SrcRectConstraint</a></li>
-<li class="toctree-l2"><a class="reference internal" href="skia.Canvas.PointMode.html">PointMode</a></li>
-<li class="toctree-l2"><a class="reference internal" href="skia.Canvas.QuadAAFlags.html">QuadAAFlags</a></li>
-<li class="toctree-l2 current"><a class="current reference internal" href="#">SaveLayerRec</a></li>
-<li class="toctree-l2"><a class="reference internal" href="skia.Canvas.Lattice.html">Lattice</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.Canvas.SaveLayerFlags.html">Canvas.SaveLayerFlags</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.Canvas.SrcRectConstraint.html">Canvas.SrcRectConstraint</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.Canvas.PointMode.html">Canvas.PointMode</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.Canvas.QuadAAFlags.html">Canvas.QuadAAFlags</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Canvas.SaveLayerRec</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.Canvas.Lattice.html">Canvas.Lattice</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.Canvas.Lattice.RectType.html">Canvas.Lattice.RectType</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.ClipOp.html">ClipOp</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.Color4f.html">Color4f</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.ColorFilter.html">ColorFilter</a></li>
@@ -259,8 +333,8 @@
 <ul>
   <li><a href="../index.html">Documentation overview</a><ul>
   <li><a href="../skia.html">skia</a><ul>
-      <li>Previous: <a href="skia.Canvas.QuadAAFlags.html" title="previous chapter">QuadAAFlags</a></li>
-      <li>Next: <a href="skia.Canvas.Lattice.html" title="next chapter">Lattice</a></li>
+      <li>Previous: <a href="skia.Canvas.QuadAAFlags.html" title="previous chapter">Canvas.QuadAAFlags</a></li>
+      <li>Next: <a href="skia.Canvas.Lattice.html" title="next chapter">Canvas.Lattice</a></li>
   </ul></li>
   </ul></li>
 </ul>
