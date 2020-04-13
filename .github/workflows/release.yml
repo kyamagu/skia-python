@@ -53,6 +53,7 @@ jobs:
         cp -f ../gn/out/gn bin/gn  # Replace gn.
         bin/gn gen out/Release --args='is_official_build=false is_debug=false extra_cflags_cc=["-frtti"] extra_ldflags=["-lrt"]'
         ninja -C out/Release skia skia.h
+        rm -rf out/Release/obj
         cd ..
       if: steps.cache.outputs.cache-hit != 'true'
     - name: Set up Python
@@ -98,6 +99,7 @@ jobs:
         python tools/git-sync-deps
         bin/gn gen out/Release --args='is_official_build=false is_debug=false extra_cflags_cc=["-frtti"]'
         ninja -C out/Release skia skia.h
+        rm -rf out/Release/obj
         cd ..
       if: steps.cache.outputs.cache-hit != 'true'
     - name: Set up Python
@@ -148,6 +150,7 @@ jobs:
         python tools\git-sync-deps
         bin\gn gen out\Release --args='is_official_build=false is_debug=false extra_cflags_cc=[\"/GR\", \"/EHsc\"] target_cpu=\"${{ matrix.arch }}\"'
         ninja -C out\Release skia skia.h
+        rm out\Release\obj -r -fo
         cd ..
       if: steps.cache.outputs.cache-hit != 'true'
     - name: Set up Python
