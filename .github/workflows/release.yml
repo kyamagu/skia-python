@@ -22,17 +22,12 @@ jobs:
       with:
         submodules: true
     - name: Install system dependencies
-      run: yum install -y fontconfig-devel mesa-libGL-devel xorg-x11-server-Xvfb mesa-dri-drivers
-    - name: Print submodule commits
-      run: git submodule status > submodule.txt
-    - uses: actions/cache@v1
-      id: cache
-      with:
-        path: skia/out/Release
-        key: ${{ matrix.container }}-skia-${{ hashFiles('submodule.txt') }}
+      run: |
+        yum install -y fontconfig-devel mesa-libGL-devel xorg-x11-server-Xvfb mesa-dri-drivers
+        yum clean all
+        rm -rf /var/cache/yum
     - name: Set PATH
       run: echo "::add-path::$PWD/depot_tools"
-      if: steps.cache.outputs.cache-hit != 'true'
     - name: Build gn
       env:
         CC: gcc
@@ -45,7 +40,6 @@ jobs:
         python build/gen.py
         ninja -C out gn
         cd ..
-      if: steps.cache.outputs.cache-hit != 'true'
     - name: Build Skia
       run: |
         cd skia
@@ -55,13 +49,12 @@ jobs:
         ninja -C out/Release skia skia.h
         rm -rf out/Release/obj
         cd ..
-      if: steps.cache.outputs.cache-hit != 'true'
     - name: Set up Python
       run: echo "::add-path::/opt/python/${{ matrix.python-version }}/bin"
     - name: Build python binding
       run: |
         python -m pip install -U pip
-        python -m pip install pybind11 numpy wheel twine
+        python -m pip install --no-cache-dir pybind11 numpy wheel twine
         python -m pip wheel . -w dist --no-deps
         auditwheel repair dist/skia*.whl
     - name: Upload wheels
@@ -78,21 +71,12 @@ jobs:
     - uses: actions/checkout@v2
       with:
         submodules: true
-    - name: Print submodule commits
-      run: git submodule status > submodule.txt
-    - uses: actions/cache@v1
-      id: cache
-      with:
-        path: skia/out/Release
-        key: ${{ runner.os }}-skia-${{ hashFiles('submodule.txt') }}
     - name: Set up Python 2.7
       uses: actions/setup-python@v1
       with:
         python-version: 2.7
-      if: steps.cache.outputs.cache-hit != 'true'
     - name: Set PATH
       run: echo "::add-path::$PWD/depot_tools"
-      if: steps.cache.outputs.cache-hit != 'true'
     - name: Build Skia
       run: |
         cd skia
@@ -101,7 +85,6 @@ jobs:
         ninja -C out/Release skia skia.h
         rm -rf out/Release/obj
         cd ..
-      if: steps.cache.outputs.cache-hit != 'true'
     - name: Set up Python
       uses: actions/setup-python@v1
       with:
@@ -112,7 +95,7 @@ jobs:
         CXX: clang++
       run: |
         python -m pip install -U pip
-        python -m pip install pybind11 numpy wheel twine
+        python -m pip install --no-cache-dir pybind11 numpy wheel twine
         python -m pip wheel . -w dist --no-deps
     - name: Upload wheels
       uses: actions/upload-artifact@v1
@@ -129,21 +112,12 @@ jobs:
     - uses: actions/checkout@v2
       with:
         submodules: true
-    - name: Print submodule commits
-      run: git submodule status > submodule.txt
-    - uses: actions/cache@v1
-      id: cache
-      with:
-        path: skia\out\Release
-        key: ${{ runner.os }}-${{ matrix.arch }}-skia-${{ hashFiles('submodule.txt') }}
     - name: Set up Python 2.7
       uses: actions/setup-python@v1
       with:
         python-version: 2.7
-      if: steps.cache.outputs.cache-hit != 'true'
     - name: Set PATH
       run: echo "::add-path::$PWD\depot_tools"
-      if: steps.cache.outputs.cache-hit != 'true'
     - name: Build Skia
       run: |
         cd skia
@@ -152,7 +126,6 @@ jobs:
         ninja -C out\Release skia skia.h
         rm out\Release\obj -r -fo
         cd ..
-      if: steps.cache.outputs.cache-hit != 'true'
     - name: Set up Python
       uses: actions/setup-python@v1
       with:
@@ -172,7 +145,7 @@ jobs:
             }
         }
         python -m pip install -U pip
-        python -m pip install pybind11 numpy wheel twine
+        python -m pip install --no-cache-dir pybind11 numpy wheel twine
         python -m pip wheel . -w dist --no-deps
     - name: Upload wheels
       uses: actions/upload-artifact@v1
