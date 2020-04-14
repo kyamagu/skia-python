@@ -114,6 +114,7 @@ else:
     ]
     EXTRA_LINK_ARGS = [
         '-Wl,--gc-sections',
+        '-Os',
     ]
 
 
