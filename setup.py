@@ -63,7 +63,6 @@ if sys.platform == 'win32':
         '/std:c++latest',
         '/DVERSION_INFO=%s' % __version__,
         '/Zc:inline',
-        '/GR',
         # Disable a bunch of warnings.
         '/wd5030',  # Warnings about unknown attributes.
         '/wd4244',  # Conversion from 'float' to 'int', possible loss of data.
@@ -114,6 +113,7 @@ else:
     ]
     EXTRA_LINK_ARGS = [
         '-Wl,--gc-sections',
+        '-O3',
     ]
 
 
