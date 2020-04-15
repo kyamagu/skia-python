@@ -2,6 +2,8 @@ import skia
 import pytest
 import numpy as np
 
+from .conftest import opengl_context, opengl_is_available
+
 
 def check_surface(x):
     assert isinstance(x, skia.Surface)
@@ -12,15 +14,6 @@ def check_surface(x):
 ])
 def test_Surface_init(args):
     check_surface(skia.Surface(*args))
-
-
-@pytest.mark.parametrize('args', [
-    (320, 240),
-    (320, 240, None),
-    (320, 240, skia.SurfaceProps(skia.SurfaceProps.InitType.kLegacyFontHost)),
-])
-def test_Surface_MakeRasterN32Premul(args):
-    check_surface(skia.Surface.MakeRasterN32Premul(*args))
 
 
 def test_Surface_width(surface):
@@ -109,3 +102,58 @@ def test_Surface_unique(surface):
 def test_Surface_ref_unref(surface):
     surface.ref()
     surface.unref()
+
+
+@pytest.mark.parametrize('args', [
+    (skia.ImageInfo.MakeN32Premul(16, 16), bytearray(16 * 16 * 4)),
+    (skia.ImageInfo.MakeN32Premul(16, 16), bytearray(16 * 16 * 4), 16 * 4),
+    (
+        skia.ImageInfo.MakeN32Premul(16, 16), bytearray(16 * 16 * 4),
+        16 * 4,
+        skia.SurfaceProps(skia.SurfaceProps.InitType.kLegacyFontHost),),
+])
+def test_Surface_MakeRasterDirect(args):
+    check_surface(skia.Surface.MakeRasterDirect(*args))
+
+
+@pytest.mark.parametrize('args', [
+    (skia.ImageInfo.MakeN32Premul(16, 16),),
+    (skia.ImageInfo.MakeN32Premul(16, 16), 16 * 4),
+    (
+        skia.ImageInfo.MakeN32Premul(16, 16),
+        16 * 4,
+        skia.SurfaceProps(skia.SurfaceProps.InitType.kLegacyFontHost),),
+])
+def test_Surface_MakeRaster(args):
+    check_surface(skia.Surface.MakeRaster(*args))
+
+
+@pytest.mark.parametrize('args', [
+    (320, 240),
+    (320, 240, skia.SurfaceProps(skia.SurfaceProps.InitType.kLegacyFontHost)),
+])
+def test_Surface_MakeRasterN32Premul(args):
+    check_surface(skia.Surface.MakeRasterN32Premul(*args))
+
+
+@pytest.mark.skipif(not opengl_is_available(),
+    reason='OpenGL is not available.')
+@pytest.mark.parametrize('args', [
+    tuple(),
+    (
+        4,
+        skia.GrSurfaceOrigin.kBottomLeft,
+        skia.SurfaceProps(skia.SurfaceProps.InitType.kLegacyFontHost),
+        True,
+    ),
+])
+def test_Surface_MakeRenderTarget(args):
+    with opengl_context():
+        context = skia.GrContext.MakeGL()
+        info = skia.ImageInfo.MakeN32Premul(320, 240)
+        check_surface(skia.Surface.MakeRenderTarget(
+            context, skia.Budgeted.kNo, info, *args))
+
+
+def test_Surface_MakeNull():
+    check_surface(skia.Surface.MakeNull(100, 100))
