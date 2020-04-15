@@ -115,8 +115,16 @@ PYBIND11_MODULE(skia, m) {
             Shader
             Size
             Surface
+            Surface.AsyncReadResult
+            Surface.ContentChangeMode
+            Surface.BackendHandleAccess
+            Surface.RescaleGamma
+            Surface.BackendSurfaceAccess
+            Surface.FlushFlags
             SurfaceCharacterization
             SurfaceProps
+            SurfaceProps.Flags
+            SurfaceProps.InitType
             TextBlob
             TextBlobBuilder
             TextEncoding
