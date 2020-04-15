@@ -14,7 +14,7 @@
     <script src="../_static/language_data.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="TextBlob" href="skia.TextBlob.html" />
+    <link rel="next" title="SurfaceProps.Flags" href="skia.SurfaceProps.Flags.html" />
     <link rel="prev" title="SurfaceCharacterization" href="skia.SurfaceCharacterization.html" />
    
   <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
@@ -37,9 +37,24 @@
 <dl class="py class">
 <dt id="skia.SurfaceProps">
 <em class="property">class </em><code class="sig-name descname">SurfaceProps</code><a class="headerlink" href="#skia.SurfaceProps" title="Permalink to this definition">¶</a></dt>
-<dd><p>Describes properties and constraints of a given SkSurface.</p>
+<dd><p>Describes properties and constraints of a given <a class="reference internal" href="skia.Surface.html#skia.Surface" title="skia.Surface"><code class="xref py py-class docutils literal notranslate"><span class="pre">Surface</span></code></a>.</p>
 <p>The rendering engine can parse these during drawing, and can sometimes
 optimize its performance (e.g. disabling an expensive feature).</p>
+<p class="rubric">Classes</p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="skia.SurfaceProps.Flags.html#skia.SurfaceProps.Flags" title="skia.SurfaceProps.Flags"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Flags</span></code></a></p></td>
+<td><p>Members:</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="skia.SurfaceProps.InitType.html#skia.SurfaceProps.InitType" title="skia.SurfaceProps.InitType"><code class="xref py py-obj docutils literal notranslate"><span class="pre">InitType</span></code></a></p></td>
+<td><p>Members:</p></td>
+</tr>
+</tbody>
+</table>
 <p class="rubric">Methods</p>
 <table class="longtable docutils align-default">
 <colgroup>
@@ -88,10 +103,10 @@ optimize its performance (e.g. disabling an expensive feature).</p>
 <code class="sig-prename descclassname">SurfaceProps.</code><code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span><span class="n">args</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#skia.SurfaceProps.__init__" title="Permalink to this definition">¶</a></dt>
 <dd><p>Overloaded function.</p>
 <ol class="arabic simple">
-<li><p>__init__(self: skia.SurfaceProps, arg0: int, arg1: skia.PixelGeometry) -&gt; None</p></li>
-<li><p>__init__(self: skia.SurfaceProps, arg0: skia.SurfaceProps.InitType) -&gt; None</p></li>
-<li><p>__init__(self: skia.SurfaceProps, arg0: int, arg1: skia.SurfaceProps.InitType) -&gt; None</p></li>
-<li><p>__init__(self: skia.SurfaceProps, arg0: skia.SurfaceProps) -&gt; None</p></li>
+<li><p>__init__(self: skia.SurfaceProps, flags: int, geometry: skia.PixelGeometry) -&gt; None</p></li>
+<li><p>__init__(self: skia.SurfaceProps, initType: skia.SurfaceProps.InitType) -&gt; None</p></li>
+<li><p>__init__(self: skia.SurfaceProps, flags: int, initType: skia.SurfaceProps.InitType) -&gt; None</p></li>
+<li><p>__init__(self: skia.SurfaceProps, props: skia.SurfaceProps) -&gt; None</p></li>
 </ol>
 </dd></dl>
 
@@ -224,8 +239,16 @@ optimize its performance (e.g. disabling an expensive feature).</p>
 <li class="toctree-l2"><a class="reference internal" href="skia.Shader.html">Shader</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.Size.html">Size</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.Surface.html">Surface</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.Surface.AsyncReadResult.html">Surface.AsyncReadResult</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.Surface.ContentChangeMode.html">Surface.ContentChangeMode</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.Surface.BackendHandleAccess.html">Surface.BackendHandleAccess</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.Surface.RescaleGamma.html">Surface.RescaleGamma</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.Surface.BackendSurfaceAccess.html">Surface.BackendSurfaceAccess</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.Surface.FlushFlags.html">Surface.FlushFlags</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.SurfaceCharacterization.html">SurfaceCharacterization</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">SurfaceProps</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.SurfaceProps.Flags.html">SurfaceProps.Flags</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.SurfaceProps.InitType.html">SurfaceProps.InitType</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.TextBlob.html">TextBlob</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.TextBlobBuilder.html">TextBlobBuilder</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.TextEncoding.html">TextEncoding</a></li>
@@ -243,7 +266,7 @@ optimize its performance (e.g. disabling an expensive feature).</p>
   <li><a href="../index.html">Documentation overview</a><ul>
   <li><a href="../skia.html">skia</a><ul>
       <li>Previous: <a href="skia.SurfaceCharacterization.html" title="previous chapter">SurfaceCharacterization</a></li>
-      <li>Next: <a href="skia.TextBlob.html" title="next chapter">TextBlob</a></li>
+      <li>Next: <a href="skia.SurfaceProps.Flags.html" title="next chapter">SurfaceProps.Flags</a></li>
   </ul></li>
   </ul></li>
 </ul>
