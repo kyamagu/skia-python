@@ -144,8 +144,8 @@ def test_Surface_MakeRasterN32Premul(args):
     (
         4,
         skia.GrSurfaceOrigin.kBottomLeft,
-        skia.SurfaceProps(skia.SurfaceProps.InitType.kLegacyFontHost),
-        True,
+        None,
+        False,
     ),
 ])
 def test_Surface_MakeRenderTarget(args):
