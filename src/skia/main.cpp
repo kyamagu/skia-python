@@ -96,6 +96,12 @@ PYBIND11_MODULE(skia, m) {
             Matrix
             Paint
             Path
+            Path.Iter
+            Path.RawIter
+            Path.ArcSize
+            Path.AddPathMode
+            Path.SegmentMask
+            Path.Verb
             PathConvexityType
             PathDirection
             PathEffect
