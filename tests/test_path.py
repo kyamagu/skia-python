@@ -2,7 +2,7 @@ import skia
 import pytest
 
 
-@pytest.fixture(scope='session')
+@pytest.fixture()
 def path():
     return skia.Path()
 
@@ -342,3 +342,60 @@ def test_Path_addOval(path, args):
 
 def test_Path_addCircle(path):
     assert isinstance(path.addCircle(50, 50, 10), skia.Path)
+
+
+def test_Path_addArc(path):
+    assert isinstance(path.addArc(skia.Rect(100, 100), 0, 90), skia.Path)
+
+
+@pytest.mark.parametrize('args', [
+    (skia.Rect(100, 100), 5, 5,),
+    (skia.Rect(100, 100), 5, 5, skia.PathDirection.kCCW),
+    (skia.Rect(100, 100), [5] * 8,),
+    (skia.Rect(100, 100), [5] * 8, skia.PathDirection.kCCW),
+])
+def test_Path_addRoundRect(path, args):
+    assert isinstance(path.addRoundRect(*args), skia.Path)
+
+
+@pytest.mark.parametrize('args', [
+    (skia.RRect.MakeRect(skia.Rect(100, 100)),),
+    (skia.RRect.MakeRect(skia.Rect(100, 100)), skia.PathDirection.kCCW, 0),
+])
+def test_Path_addRRect(path, args):
+    assert isinstance(path.addRRect(*args), skia.Path)
+
+
+def test_Path_addPoly(path):
+    assert isinstance(path.addPoly([skia.Point(10, 10)], True), skia.Path)
+
+
+@pytest.mark.parametrize('args', [
+    (skia.Path(), 0, 0),
+    (skia.Path(),),
+    (skia.Path(), skia.Matrix(),),
+])
+def test_Path_addPath(path, args):
+    assert isinstance(path.addPath(*args), skia.Path)
+
+
+def test_Path_reverseAddPath(path):
+    assert isinstance(path.reverseAddPath(skia.Path()), skia.Path)
+
+
+@pytest.mark.parametrize('args', [
+    (0, 0, skia.Path(),),
+    (0, 0,),
+])
+def test_Path_offset(path, args):
+    path.offset(*args)
+
+
+@pytest.mark.parametrize('args', [
+    (skia.Matrix(),),
+    (skia.Matrix(), skia.Path(),),
+    (skia.Matrix(), None, skia.ApplyPerspectiveClip.kYes),
+])
+def test_Path_transform(path, args):
+    path.transform(*args)
+

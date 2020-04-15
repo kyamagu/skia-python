@@ -1429,58 +1429,251 @@ path
         py::arg("x"), py::arg("y"), py::arg("radius"),
         py::arg("dir") = SkPathDirection::kCW)
     .def("addArc", &SkPath::addArc,
-        "Appends arc to SkPath, as the start of new contour.")
+        R"docstring(
+        Appends arc to :py:class:`Path`, as the start of new contour.
+
+        Arc added is part of ellipse bounded by oval, from startAngle through
+        sweepAngle. Both startAngle and sweepAngle are measured in degrees,
+        where zero degrees is aligned with the positive x-axis, and positive
+        sweeps extends arc clockwise.
+
+        If sweepAngle <= -360, or sweepAngle >= 360; and startAngle modulo 90 is
+        nearly zero, append oval instead of arc. Otherwise, sweepAngle values
+        are treated modulo 360, and arc may or may not draw depending on numeric
+        rounding.
+
+        :param skia.Rect oval: bounds of ellipse containing arc
+        :param float startAngle: starting angle of arc in degrees
+        :param float sweepAngle: sweep, in degrees. Positive is clockwise;
+            treated modulo 360
+        :return: reference to :py:class:`Path`
+        )docstring",
+        py::arg("oval"), py::arg("startAngle"), py::arg("sweepAngle"))
     .def("addRoundRect",
         py::overload_cast<const SkRect&, SkScalar, SkScalar, SkPathDirection>(
             &SkPath::addRoundRect),
-        "Appends SkRRect to SkPath, creating a new closed contour.")
+        R"docstring(
+        Appends :py:class:`RRect` to :py:class:`Path`, creating a new closed
+        contour.
+
+        :py:class:`RRect` has bounds equal to rect; each corner is 90 degrees of
+        an ellipse with radii (rx, ry). If dir is
+        :py:attr:`~skia.PathDirection.kCW`, :py:class:`RRect` starts at top-left
+        of the lower-left corner and winds clockwise. If dir is
+        :py:attr:`~skia.PathDirection.kCCW`, :py:class:`RRect` starts at the
+        bottom-left of the upper-left corner and winds counterclockwise.
+
+        If either rx or ry is too large, rx and ry are scaled uniformly until
+        the corners fit. If rx or ry is less than or equal to zero,
+        :py:meth:`addRoundRect` appends :py:class:`Rect` rect to
+        :py:class:`Path`.
+
+        After appending, :py:class:`Path` may be empty, or may contain:
+        :py:class:`Rect`, oval, or :py:class:`RRect`.
+
+        :rect: bounds of :py:class:`RRect`
+        :rx: x-axis radius of rounded corners on the :py:class:`RRect`
+        :ry: y-axis radius of rounded corners on the :py:class:`RRect`
+        :dir: :py:class:`Path`::Direction to wind :py:class:`RRect`
+        :return: reference to :py:class:`Path`
+        )docstring",
+        py::arg("rect"), py::arg("rx"), py::arg("ry"),
+        py::arg("dir") = SkPathDirection::kCW)
     .def("addRoundRect",
-        py::overload_cast<const SkRect&, const SkScalar[], SkPathDirection>(
-            &SkPath::addRoundRect),
-        "Appends SkRRect to SkPath, creating a new closed contour.")
+        // py::overload_cast<const SkRect&, const SkScalar[], SkPathDirection>(
+        //     &SkPath::addRoundRect),
+        [] (SkPath& path, const SkRect& rect,
+            const std::vector<SkScalar>& radii, SkPathDirection dir) {
+            if (radii.size() != 8)
+                throw std::runtime_error("radii must have 8 elements.");
+            return path.addRoundRect(rect, &radii[0], dir);
+        },
+        R"docstring(
+        Appends :py:class:`RRect` to :py:class:`Path`, creating a new closed
+        contour.
+
+        :py:class:`RRect` has bounds equal to rect; each corner is 90 degrees of
+        an ellipse with radii from the array.
+
+        :rect: bounds of :py:class:`RRect`
+        :radii: array of 8 :py:class:`Scalar` values, a radius pair for each
+            corner
+        :dir: :py:class:`Path`::Direction to wind :py:class:`RRect`
+        :Returns: reference to :py:class:`Path`
+        )docstring",
+        py::arg("rect"), py::arg("radii"),
+        py::arg("dir") = SkPathDirection::kCW)
     .def("addRRect",
         py::overload_cast<const SkRRect&, SkPathDirection>(&SkPath::addRRect),
-        "Adds rrect to SkPath, creating a new closed contour.")
+        R"docstring(
+        Adds rrect to :py:class:`Path`, creating a new closed contour.
+
+        If dir is :py:attr:`~skia.PathDirection.kCW`, rrect starts at top-left
+        of the lower-left corner and winds clockwise. If dir is
+        :py:attr:`~skia.PathDirection.kCCW`, rrect starts at the bottom-left of
+        the upper-left corner and winds counterclockwise.
+
+        After appending, :py:class:`Path` may be empty, or may contain:
+        :py:class:`Rect`, oval, or :py:class:`RRect`.
+
+        :rrect: bounds and radii of rounded rectangle
+        :dir: :py:class:`Path`::Direction to wind :py:class:`RRect`
+        :return: reference to :py:class:`Path`
+        )docstring",
+        py::arg("rrect"), py::arg("dir") = SkPathDirection::kCW)
     .def("addRRect",
         py::overload_cast<const SkRRect&, SkPathDirection, unsigned>(
             &SkPath::addRRect),
-        "Adds rrect to SkPath, creating a new closed contour.")
+        R"docstring(
+        Adds rrect to :py:class:`Path`, creating a new closed contour.
+
+        If dir is:py:attr:`~skia.PathDirection.kCW`, rrect winds clockwise; if
+        dir is :py:attr:`~skia.PathDirection.kCCW`, rrect winds
+        counterclockwise. start determines the first point of rrect to add.
+
+        :rrect: bounds and radii of rounded rectangle
+        :dir: :py:class:`Path`::Direction to wind :py:class:`RRect`
+        :start: index of initial point of :py:class:`RRect`
+        :return: reference to :py:class:`Path`
+        )docstring",
+        py::arg("rrect"), py::arg("dir"), py::arg("start"))
     .def("addPoly",
-        py::overload_cast<const SkPoint[], int, bool>(&SkPath::addPoly),
-        "Adds contour created from line array, adding (count - 1) line "
-        "segments.")
-    .def("addPoly",
-        py::overload_cast<const std::initializer_list<SkPoint>&, bool>(
-            &SkPath::addPoly),
-        "Adds contour created from list.")
+        [] (SkPath& path, const std::vector<SkPoint>& pts, bool close) {
+            return path.addPoly(&pts[0], pts.size(), close);
+        },
+        R"docstring(
+        Adds contour created from pts.
+
+        Contour added starts at pts[0], then adds a line for every additional
+        :py:class:`Point` in pts. If close is true, appends
+        :py:attr:`~skia.Path.Verb.kClose` to :py:class:`Path`, connecting last
+        and first :py:class:`Point` in pts.
+
+        If pts is empty, append :py:attr:`~skia.Path.Verb.kMove` to path.
+
+        :param pts: iterable of :py:class:`Point`
+        :param close: true to add line connecting contour end and start
+        :return: reference to :py:class:`Path`
+        )docstring",
+        py::arg("pts"), py::arg("close"))
     .def("addPath",
         py::overload_cast<const SkPath&, SkScalar, SkScalar,
         SkPath::AddPathMode>(&SkPath::addPath),
-        "Appends src to SkPath, offset by (dx, dy).")
+        R"docstring(
+        Appends src to :py:class:`Path`, offset by (dx, dy).
+
+        If mode is :py:attr:`~Path.AddPathMode.kAppend`, src verb array,
+        :py:class:`Point` array, and conic weights are added unaltered. If mode
+        is :py:attr:`~Path.AddPathMode.kExtend`, add line before appending
+        verbs, :py:class:`Point`, and conic weights.
+
+        :src: :py:class:`Path` verbs, :py:class:`Point`, and conic weights to
+            add
+        :dx: offset added to src :py:class:`Point` array x-axis coordinates
+        :dy: offset added to src :py:class:`Point` array y-axis coordinates
+        :mode: :py:attr:`~Path.AddPathMode.kAppend` or
+            :py:attr:`~Path.AddPathMode.kExtend`
+
+        refe:return: rence to :py:class:`Path`
+        )docstring",
+        py::arg("src"), py::arg("dx"), py::arg("dy"),
+        py::arg("mode") = SkPath::kAppend_AddPathMode)
     .def("addPath",
         py::overload_cast<const SkPath&, SkPath::AddPathMode>(&SkPath::addPath),
-        "Appends src to SkPath.")
+        R"docstring(
+        Appends src to :py:class:`Path`.
+
+        If mode is :py:attr:`~Path.AddPathMode.kAppend`, src verb array,
+        :py:class:`Point` array, and conic weights are added unaltered. If mode
+        is :py:attr:`~Path.AddPathMode.kExtend`, add line before appending
+        verbs, :py:class:`Point`, and conic weights.
+
+        :src: :py:class:`Path` verbs, :py:class:`Point`, and conic weights to
+            add
+        :mode: :py:attr:`~Path.AddPathMode.kAppend` or
+            :py:attr:`~Path.AddPathMode.kExtend`
+
+        :return: reference to :py:class:`Path`
+        )docstring",
+        py::arg("src"), py::arg("mode") = SkPath::kAppend_AddPathMode)
     .def("addPath",
         py::overload_cast<const SkPath&, const SkMatrix&, SkPath::AddPathMode>(
             &SkPath::addPath),
-        "Appends src to SkPath, transformed by matrix.")
+        R"docstring(
+        Appends src to :py:class:`Path`, transformed by matrix.
+
+        Transformed curves may have different verbs, :py:class:`Point`, and
+        conic weights.
+
+        If mode is :py:attr:`~Path.AddPathMode.kAppend`, src verb array,
+        :py:class:`Point` array, and conic weights are added unaltered. If mode
+        is :py:attr:`~Path.AddPathMode.kExtend`, add line before appending
+        verbs, :py:class:`Point`, and conic weights.
+
+        :src: :py:class:`Path` verbs, :py:class:`Point`, and conic weights to
+            add
+        :matrix: transform applied to src
+        :mode: :py:attr:`~Path.AddPathMode.kAppend` or
+            :py:attr:`~Path.AddPathMode.kExtend`
+
+        :return: reference to :py:class:`Path`
+        )docstring",
+        py::arg("src"), py::arg("matrix"),
+        py::arg("mode") = SkPath::kAppend_AddPathMode)
     .def("reverseAddPath", &SkPath::reverseAddPath,
-        "Appends src to SkPath, from back to front.")
+        R"docstring(
+        Appends src to :py:class:`Path`, from back to front.
+
+        Reversed src always appends a new contour to :py:class:`Path`.
+
+        :param src: :py:class:`Path` verbs, :py:class:`Point`, and conic weights
+            to add
+        :return: reference to :py:class:`Path`
+        )docstring",
+        py::arg("src"))
     .def("offset",
         py::overload_cast<SkScalar, SkScalar, SkPath*>(
             &SkPath::offset, py::const_),
-        "Offsets SkPoint array by (dx, dy).")
-    .def("offset",
-        py::overload_cast<SkScalar, SkScalar>(&SkPath::offset),
-        "Offsets SkPoint array by (dx, dy).")
+        R"docstring(
+        Offsets :py:class:`Point` array by (dx, dy).
+
+        Offset :py:class:`Path` replaces dst. If dst is nullptr,
+        :py:class:`Path` is replaced by offset data.
+
+        :param float dx:  offset added to :py:class:`Point` array x-axis
+            coordinates
+        :param float dy:  offset added to :py:class:`Point` array y-axis
+            coordinates
+        :param skia.Path dst: overwritten, translated copy of :py:class:`Path`;
+            may be nullptr
+        )docstring",
+        py::arg("dx"), py::arg("dy"), py::arg("dst") = nullptr)
+    // .def("offset",
+    //     py::overload_cast<SkScalar, SkScalar>(&SkPath::offset),
+    //     "Offsets SkPoint array by (dx, dy).")
     .def("transform",
         py::overload_cast<const SkMatrix&, SkPath*, SkApplyPerspectiveClip>(
             &SkPath::transform, py::const_),
-        "Transforms verb array, SkPoint array, and weight by matrix.")
-    .def("transform",
-        py::overload_cast<const SkMatrix&, SkApplyPerspectiveClip>(
-            &SkPath::transform),
-        "Transforms verb array, SkPoint array, and weight by matrix.")
+        R"docstring(
+        Transforms verb array, :py:class:`Point` array, and weight by matrix.
+
+        transform may change verbs and increase their number. Transformed
+        :py:class:`Path` replaces dst; if dst is nullptr, original data is
+        replaced.
+
+        :param skia.Matrix matrix: :py:class:`Matrix` to apply to
+            :py:class:`Path`
+        :param skia.Path dst: overwritten, transformed copy of :py:class:`Path`;
+            may be nullptr
+        :param skia.ApplyPerspectiveClip pc: whether to apply perspective
+            clipping
+        )docstring",
+        py::arg("matrix"), py::arg("dst") = nullptr,
+        py::arg("pc") = SkApplyPerspectiveClip::kYes)
+    // .def("transform",
+    //     py::overload_cast<const SkMatrix&, SkApplyPerspectiveClip>(
+    //         &SkPath::transform),
+    //     "Transforms verb array, SkPoint array, and weight by matrix.")
     .def("getLastPt", &SkPath::getLastPt,
         "Returns last point on SkPath in lastPt.")
     .def("setLastPt",
