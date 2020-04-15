@@ -142,7 +142,7 @@ def test_Surface_MakeRasterN32Premul(args):
 @pytest.mark.parametrize('args', [
     tuple(),
     (
-        4,
+        0,
         skia.GrSurfaceOrigin.kBottomLeft,
         None,
         False,
