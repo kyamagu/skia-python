@@ -315,134 +315,777 @@ py::class_<SkPath::RawIter>(path, "RawIter", R"docstring(
     ;
 
 path
-    .def(py::init<>(), "Constructs an empty SkPath.")
-    .def(py::init<const SkPath&>(), "Constructs a copy of an existing path.")
+    .def(py::init<>(), R"docstring(
+        Constructs an empty :py:class:`Path`.
+
+        By default, :py:class:`Path` has no verbs, no :py:class:`Point`, and no
+        weights. :py:class:`FillType` is set to kWinding.
+        )docstring")
+    .def(py::init<const SkPath&>(), R"docstring(
+        Constructs a copy of an existing path.
+
+        Copy constructor makes two paths identical by value. Internally, path
+        and the returned result share pointer values. The underlying verb array,
+        :py:class:`Point` array and weights are copied when modified.
+
+        Creating a :py:class:`Path` copy is very efficient and never allocates
+        memory. :py:class:`Path` are always copied by value from the interface;
+        the underlying shared pointers are not exposed.
+
+        :path: :py:class:`Path` to copy by value
+        )docstring",
+        py::arg("path"))
     .def("isInterpolatable", &SkPath::isInterpolatable,
-        "Returns true if SkPath contain equal verbs and equal weights.")
+        R"docstring(
+        Returns true if :py:class:`Path` contain equal verbs and equal weights.
+
+        If :py:class:`Path` contain one or more conics, the weights must match.
+
+        :py:meth:`conicTo` may add different verbs depending on conic weight, so
+        it is not trivial to interpolate a pair of :py:class:`Path` containing
+        conics with different conic weight values.
+
+        :param skia.Path compare: :py:class:`Path` to compare
+        :return: true if :py:class:`Path` verb array and weights are equivalent
+        )docstring",
+        py::arg("compare"))
     .def("interpolate", &SkPath::interpolate,
-        "Interpolates between SkPath with SkPoint array of equal size.")
+        R"docstring(
+        Interpolates between :py:class:`Path` with :py:class:`Point` array of
+        equal size.
+
+        Copy verb array and weights to out, and set out :py:class:`Point` array
+        to a weighted average of this :py:class:`Point` array and ending
+        :py:class:`Point` array, using the formula:
+        `(Path Point * weight) + ending Point * (1 - weight)`.
+
+        weight is most useful when between zero (ending :py:class:`Point` array)
+        and one (this Point_Array); will work with values outside of this range.
+
+        :py:meth:`interpolate` returns false and leaves out unchanged if
+        :py:class:`Point` array is not the same size as ending
+        :py:class:`Point` array. Call :py:meth:`isInterpolatable` to check
+        :py:class:`Path` compatibility prior to calling :py:meth:`interpolate`.
+
+        :param skia.Path ending: :py:class:`Point` array averaged with this
+            :py:class:`Point` array
+        :param float weight: contribution of this :py:class:`Point` array, and
+            one minus contribution of ending :py:class:`Point` array
+        :param skia.Path out: :py:class:`Path` replaced by interpolated averages
+
+        :return: true if :py:class:`Path` contain same number of
+            :py:class:`Point`
+        )docstring")
     .def("getFillType", &SkPath::getFillType,
-        "Returns SkPathFillType, the rule used to fill SkPath.")
+        R"docstring(
+        Returns :py:class:`PathFillType`, the rule used to fill
+        :py:class:`Path`.
+
+        :return: current :py:class:`PathFillType` setting
+        )docstring")
     .def("setFillType", &SkPath::setFillType,
-        "Sets FillType, the rule used to fill SkPath.")
+        R"docstring(
+        Sets FillType, the rule used to fill :py:class:`Path`.
+
+        While there is no check that ft is legal, values outside of FillType are
+        not supported.
+        )docstring",
+        py::arg("ft"))
     .def("isInverseFillType", &SkPath::isInverseFillType,
-        "Returns if FillType describes area outside SkPath geometry.")
+        R"docstring(
+        Returns if FillType describes area outside :py:class:`Path` geometry.
+
+        The inverse fill area extends indefinitely.
+
+        :return: true if FillType is
+            :py:attr:`~skia.PathFillType.kInverseWinding` or
+            :py:attr:`~skia.PathFillType.kInverseEvenOdd`
+        )docstring")
     .def("toggleInverseFillType", &SkPath::toggleInverseFillType,
-        "Replaces FillType with its inverse.")
+        R"docstring(
+        Replaces FillType with its inverse.
+
+        The inverse of FillType describes the area unmodified by the original
+        FillType.
+        )docstring")
     .def("getConvexityType", &SkPath::getConvexityType,
-        "Returns the comvexity type, computing if needed.")
+        R"docstring(
+        Returns the comvexity type, computing if needed.
+
+        Never returns :py:attr:`~PathConvexityType.kUnknown`.
+
+        :return: path's convexity type (convex or concave)
+        )docstring")
     .def("getConvexityTypeOrUnknown", &SkPath::getConvexityTypeOrUnknown,
-        "If the path's convexity is already known, return it, else return "
-        "kUnknown.")
+        R"docstring(
+        If the path's convexity is already known, return it, else return
+        :py:attr:`~PathConvexityType.kUnknown`.
+
+        If you always want to know the convexity, even if that means having to
+        compute it, call :py:meth:`getConvexityType`.
+
+        :return: known convexity, or :py:attr:`~PathConvexityType.kUnknown`
+        )docstring")
     .def("setConvexityType",
         py::overload_cast<SkPathConvexityType>(&SkPath::setConvexityType),
-        "Returns the comvexity type, computing if needed.")
-    .def("isConvex", &SkPath::isConvex, "Returns true if the path is convex.")
+        R"docstring(
+        Stores a convexity type for this path.
+
+        This is what will be returned if :py:meth:`getConvexityTypeOrUnknown` is
+        called. If you pass :py:attr:`~PathConvexityType.kUnknown`, then if
+        :py:meth:`getContexityType` is called, the real convexity will be
+        computed.
+        )docstring",
+        py::arg("convexity"))
+    .def("isConvex", &SkPath::isConvex,
+        R"docstring(
+        Returns true if the path is convex.
+
+        If necessary, it will first compute the convexity.
+        )docstring")
     .def("isOval", &SkPath::isOval,
-        "Returns true if this path is recognized as an oval or circle.")
+        R"docstring(
+        Returns true if this path is recognized as an oval or circle.
+
+        bounds receives bounds of oval.
+
+        bounds is unmodified if oval is not found.
+
+        :param skia.Rect bounds: storage for bounding :py:class:`Rect` of oval;
+            may be nullptr
+        :return: true if :py:class:`Path` is recognized as an oval or circle
+        )docstring",
+        py::arg("oval"))
     .def("isRRect", &SkPath::isRRect,
-        "Returns true if path is representable as SkRRect.")
-    .def("reset", &SkPath::reset, "Sets SkPath to its initial state.")
+        R"docstring(
+        Returns true if path is representable as :py:class:`RRect`.
+
+        Returns false if path is representable as oval, circle, or
+        :py:class:`Rect`.
+
+        rrect receives bounds of :py:class:`RRect`.
+
+        rrect is unmodified if :py:class:`RRect` is not found.
+
+        :param skia.RRect rrect: storage for bounding :py:class:`Rect` of
+            :py:class:`RRect`; may be nullptr
+        :return: true if :py:class:`Path` contains only :py:class:`RRect`
+        )docstring",
+        py::arg("rrect"))
+    .def("reset", &SkPath::reset,
+        R"docstring(
+        Sets :py:class:`Path` to its initial state.
+
+        Removes verb array, :py:class:`Point` array, and weights, and sets
+        FillType to kWinding. Internal storage associated with :py:class:`Path`
+        is released.
+
+        :return: reference to :py:class:`Path`
+        )docstring")
     .def("rewind", &SkPath::rewind,
-        "Sets SkPath to its initial state, preserving internal storage.")
-    .def("isEmpty", &SkPath::isEmpty, "Returns if SkPath is empty.")
+        R"docstring(
+        Sets :py:class:`Path` to its initial state, preserving internal storage.
+
+        Removes verb array, :py:class:`Point` array, and weights, and sets
+        FillType to kWinding. Internal storage associated with :py:class:`Path`
+        is retained.
+
+        Use :py:meth:`rewind` instead of :py:meth:`reset` if :py:class:`Path`
+        storage will be reused and performance is critical.
+
+        :return: reference to :py:class:`Path`
+        )docstring")
+    .def("isEmpty", &SkPath::isEmpty,
+        R"docstring(
+        Returns if :py:class:`Path` is empty.
+
+        Empty :py:class:`Path` may have FillType but has no :py:class:`Point`,
+        :py:class:`Path.Verb`, or conic weight. :py:class:`Path`() constructs
+        empty :py:class:`Path`; :py:meth:`reset` and :py:meth:`rewind` make
+        :py:class:`Path` empty.
+
+        :return: true if the path contains no :py:class:`Path.Verb` array
+        )docstring")
     .def("isLastContourClosed", &SkPath::isLastContourClosed,
-        "Returns if contour is closed.")
+        R"docstring(
+        Returns if contour is closed.
+
+        Contour is closed if :py:class:`Path` :py:class:`~skia.Path.Verb` array
+        was last modified by :py:meth:`close`. When stroked, closed contour
+        draws :py:class:`~skia.Paint.Join` instead of
+        :py:class:`~skia.Paint.Cap` at first and last :py:class:`Point`.
+
+        :return: true if the last contour ends with a
+            :py:attr:`~skia.Path.Verb.kClose`
+        )docstring")
     .def("isFinite", &SkPath::isFinite,
-        "Returns true for finite SkPoint array values between negative "
-        "SK_ScalarMax and positive SK_ScalarMax.")
+        R"docstring(
+        Returns true for finite :py:class:`Point` array values between negative
+        SK_ScalarMax and positive SK_ScalarMax.
+
+        Returns false for any :py:class:`Point` array value of
+        SK_ScalarInfinity, SK_ScalarNegativeInfinity, or SK_ScalarNaN.
+
+        :return: true if all :py:class:`Point` values are finite
+        )docstring")
     .def("isVolatile", &SkPath::isVolatile,
-        "Returns true if the path is volatile; it will not be altered or "
-        "discarded by the caller after it is drawn.")
+        R"docstring(
+        Returns true if the path is volatile; it will not be altered or
+        discarded by the caller after it is drawn.
+
+        :py:class:`Path` by default have volatile set false, allowing
+        :py:class:`Surface` to attach a cache of data which speeds repeated
+        drawing. If true, :py:class:`Surface` may not speed repeated drawing.
+
+        :return: true if caller will alter :py:class:`Path` after drawing
+        )docstring")
     .def("setIsVolatile", &SkPath::setIsVolatile,
-        "Specifies whether SkPath is volatile; whether it will be altered or "
-        "discarded by the caller after it is drawn.")
-    .def("isLine", &SkPath::isLine,
-        "Returns true if SkPath contains only one line; SkPath::Verb array "
-        "has two entries: kMove_Verb, kLine_Verb.")
+        R"docstring(
+        Specifies whether :py:class:`Path` is volatile; whether it will be
+        altered or discarded by the caller after it is drawn.
+
+        :py:class:`Path` by default have volatile set false, allowing
+        :py:class:`BaseDevice` to attach a cache of data which speeds repeated
+        drawing.
+
+        Mark temporary paths, discarded or modified after use, as volatile to
+        inform :py:class:`BaseDevice` that the path need not be cached.
+
+        Mark animating :py:class:`Path` volatile to improve performance. Mark
+        unchanging :py:class:`Path` non-volatile to improve repeated rendering.
+
+        raster surface :py:class:`Path` draws are affected by volatile for some
+        shadows. GPU surface :py:class:`Path` draws are affected by volatile for
+        some shadows and concave geometries.
+
+        :param bool isVolatile: true if caller will alter :py:class:`Path` after
+            drawing
+        )docstring",
+        py::arg("isVolatile"))
+    .def("isLine",
+        // &SkPath::isLine,
+        [] (const SkPath& path, SkPoint *p0, SkPoint *p1) {
+            SkPoint line[2];
+            auto result = path.isLine(line);
+            if (result) {
+                if (p0)
+                    p0->set(line[0].x(), line[0].y());
+                if (p1)
+                    p1->set(line[1].x(), line[1].y());
+            }
+            return result;
+        },
+        R"docstring(
+        Returns true if :py:class:`Path` contains only one line;
+        :py:class:`~skia.Path.Verb` array has two entries:
+        :py:attr:`~skia.Path.Verb.kMove`, :py:attr:`~skia.Path.Verb.kLine`.
+
+        If :py:class:`Path` contains one line and line is not nullptr, line is
+        set to line start point and line end point. Returns false if
+        :py:class:`Path` is not one line; line is unaltered.
+
+        :param skia.Point p0: storage for line start. May be nullptr
+        :param skia.Point p1: storage for line end. May be nullptr
+        :return: true if :py:class:`Path` contains exactly one line
+        )docstring",
+        py::arg("p0"), py::arg("p1"))
     .def("countPoints", &SkPath::countPoints,
-        "Returns the number of points in SkPath.")
+        R"docstring(
+        Returns the number of points in :py:class:`Path`.
+
+        :py:class:`Point` count is initially zero.
+
+        :return: :py:class:`Path` :py:class:`Point` array length
+        )docstring")
     .def("getPoint", &SkPath::getPoint,
-        "Returns SkPoint at index in SkPoint array.")
-    .def("getPoints", &SkPath::getPoints, "Returns number of points in SkPath.")
+        R"docstring(
+        Returns :py:class:`Point` at index in :py:class:`Point` array.
+
+        Valid range for index is 0 to countPoints() - 1. Returns (0, 0) if index
+        is out of range.
+
+        :param skia.Point index: :py:class:`Point` array element selector
+        :return: :py:class:`Point` array value or (0, 0)
+        )docstring",
+        py::arg("index"))
+    .def("getPoints",
+        [] (const SkPath& path, int max) {
+            std::vector<SkPoint> points((max == 0) ? path.countPoints() : max);
+            auto length = path.getPoints(&points[0], max);
+            if (length < max)
+                points.erase(points.begin() + length, points.end());
+            return points;
+        },
+        R"docstring(
+        Returns number of points in :py:class:`Path`.
+
+        Up to max points are copied. If max is greater than number of points,
+        excess points storage is removed. If max is zero, calls
+        :py:meth:`countPoints` to get max.
+
+        :param int max: maximum to copy; must be greater than or equal to zero
+        :return: List of :py:class:`skia.Point`
+        :rtype: List[skia.Point]
+        )docstring",
+        py::arg("max") = 0)
     .def("countVerbs", &SkPath::countVerbs,
-        "Returns the number of verbs: kMove_Verb, kLine_Verb, kQuad_Verb, "
-        "kConic_Verb, kCubic_Verb, and kClose_Verb; added to SkPath.")
-    .def("getVerbs", &SkPath::getVerbs,
-        "Returns the number of verbs in the path.")
+        R"docstring(
+        Returns the number of verbs: :py:attr:`~Path.Verb.kMove`,
+        :py:attr:`~Path.Verb.kLine`, :py:attr:`~Path.Verb.kQuad`,
+        :py:attr:`~Path.Verb.kConic`, :py:attr:`~Path.Verb.kCubic`, and
+        :py:attr:`~Path.Verb.kClose`; added to :py:class:`Path`.
+
+        :return: length of verb array
+        )docstring")
+    .def("getVerbs",
+        [] (const SkPath& path, int max) {
+            std::vector<uint8_t> verbs((max == 0) ? path.countVerbs() : max);
+            auto length = path.getVerbs(&verbs[0], max);
+            if (length < max)
+                verbs.erase(verbs.begin() + length, verbs.end());
+            return verbs;
+        },
+        R"docstring(
+        Returns verbs in the path.
+
+        Up to max verbs are copied. The verbs are copied as one byte per verb.
+
+        :param int max: maximum number to copy into verbs
+        :return: List of :py:class:`skia.Path.Verb`
+        :rtype: List[skia.Path.Verb]
+        )docstring",
+        py::arg("max") = 0)
     .def("approximateBytesUsed", &SkPath::approximateBytesUsed,
-        "Returns the approximate byte size of the SkPath in memory.")
+        R"docstring(
+        Returns the approximate byte size of the SkPath in memory.
+
+        :return: approximate size
+        )docstring")
     .def("swap", &SkPath::swap,
-        "Exchanges the verb array, SkPoint array, weights, and "
-        "SkPath::FillType with other.")
+        R"docstring(
+        Exchanges the verb array, :py:class:`Point` array, weights, and
+        :py:class:`PathFillType` with other.
+
+        Cached state is also exchanged. :py:meth:`swap` internally exchanges
+        pointers, so it is lightweight and does not allocate memory.
+
+        :param skia.Path other: :py:class:`Path` exchanged by value
+        )docstring",
+        py::arg("other"))
     .def("getBounds", &SkPath::getBounds,
-        "Returns minimum and maximum axes values of SkPoint array.")
+        R"docstring(
+        Returns minimum and maximum axes values of :py:class:`Point` array.
+
+        Returns (0, 0, 0, 0) if :py:class:`Path` contains no points. Returned
+        bounds width and height may be larger or smaller than area affected when
+        :py:class:`Path` is drawn.
+
+        :py:class:`Rect` returned includes all :py:class:`Point` added to
+        :py:class:`Path`, including :py:class:`Point` associated with
+        :py:attr:`~Path.Verb.kMove` that define empty contours.
+
+        :return: bounds of all :py:class:`Point` in :py:class:`Point` array
+        )docstring")
     .def("updateBoundsCache", &SkPath::updateBoundsCache,
-        "Updates internal bounds so that subsequent calls to getBounds() are "
-        "instantaneous.")
+        R"docstring(
+        Updates internal bounds so that subsequent calls to :py:meth:`getBounds`
+        are instantaneous.
+
+        Unaltered copies of :py:class:`Path` may also access cached bounds
+        through :py:meth:`getBounds`.
+
+        For now, identical to calling :py:meth:`getBounds` and ignoring the
+        returned value.
+
+        Call to prepare :py:class:`Path` subsequently drawn from multiple
+        threads, to avoid a race condition where each draw separately computes
+        the bounds.
+        )docstring")
     .def("computeTightBounds", &SkPath::computeTightBounds,
-        "Returns minimum and maximum axes values of the lines and curves in "
-        "SkPath.")
+        R"docstring(
+        Returns minimum and maximum axes values of the lines and curves in
+        :py:class:`Path`.
+
+        Returns (0, 0, 0, 0) if :py:class:`Path` contains no points. Returned
+        bounds width and height may be larger or smaller than area affected when
+        :py:class:`Path` is drawn.
+
+        Includes :py:class:`Point` associated with kMove_Verb that define empty
+        contours.
+
+        Behaves identically to :py:meth:`getBounds` when :py:class:`Path`
+        contains only lines. If :py:class:`Path` contains curves, computed
+        bounds includes the maximum extent of the quad, conic, or cubic; is
+        slower than :py:meth:`getBounds`; and unlike :py:meth:`getBounds`, does
+        not cache the result.
+
+        :return: tight bounds of curves in :py:class:`Path`
+        )docstring")
     .def("conservativelyContainsRect", &SkPath::conservativelyContainsRect,
-        "Returns true if rect is contained by SkPath.")
+        R"docstring(
+        Returns true if rect is contained by :py:class:`Path`.
+
+        May return false when rect is contained by :py:class:`Path`.
+
+        For now, only returns true if :py:class:`Path` has one contour and is
+        convex. rect may share points and edges with :py:class:`Path` and be
+        contained. Returns true if rect is empty, that is, it has zero width or
+        height; and the :py:class:`Point` or line described by rect is contained
+        by :py:class:`Path`.
+
+        :param skia.Rect rect: :py:class:`Rect`, line, or :py:class:`Point`
+            checked for containment
+        :return: true if rect is contained
+        )docstring",
+        py::arg("rect"))
     .def("incReserve", &SkPath::incReserve,
-        "Grows SkPath verb array and SkPoint array to contain extraPtCount "
-        "additional SkPoint.")
+        R"docstring(
+        Grows :py:class:`Path` verb array and :py:class:`Point` array to contain
+        extraPtCount additional :py:class:`Point`.
+
+        May improve performance and use less memory by reducing the number and
+        size of allocations when creating :py:class:`Path`.
+
+        :param int extraPtCount: number of additional :py:class:`Point` to
+            allocate
+        )docstring",
+        py::arg("extraPtCount"))
     .def("shrinkToFit", &SkPath::shrinkToFit,
-        "Shrinks SkPath verb array and SkPoint array storage to discard "
-        "unused capacity.")
+        R"docstring(
+        Shrinks :py:class:`Path` verb array and :py:class:`Point` array storage
+        to discard unused capacity.
+
+        May reduce the heap overhead for :py:class:`Path` known to be fully
+        constructed.
+        )docstring")
     .def("moveTo",
         py::overload_cast<SkScalar, SkScalar>(&SkPath::moveTo),
-        "Adds beginning of contour at SkPoint (x, y).")
+        R"docstring(
+        Adds beginning of contour at :py:class:`Point` (x, y).
+
+        :x: x-axis value of contour start
+        :y: y-axis value of contour start
+        :return: reference to :py:class:`Path`
+        )docstring",
+        py::arg("x"), py::arg("y"))
     .def("moveTo",
         py::overload_cast<const SkPoint&>(&SkPath::moveTo),
-        "Adds beginning of contour at SkPoint p.")
+        R"docstring(
+        Adds beginning of contour at :py:class:`Point` p.
+
+        :p: contour start
+        :return: reference to :py:class:`Path`
+        )docstring",
+        py::arg("p"))
     .def("rMoveTo", &SkPath::rMoveTo,
-        "Adds beginning of contour relative to last point.")
+        R"docstring(
+        Adds beginning of contour relative to last point.
+
+        If :py:class:`Path` is empty, starts contour at (dx, dy). Otherwise,
+        start contour at last point offset by (dx, dy). Function name stands for
+        "relative move to".
+
+        :param int dx: offset from last point to contour start on x-axis
+        :param int dy: offset from last point to contour start on y-axis
+        :return: reference to :py:class:`Path`
+        )docstring",
+        py::arg("dx"), py::arg("dy"))
     .def("lineTo",
         py::overload_cast<SkScalar, SkScalar>(&SkPath::lineTo),
-        "Adds line from last point to (x, y).")
+        R"docstring(
+        Adds line from last point to (x, y).
+
+        If :py:class:`Path` is empty, or last :py:class:`~Path.Verb` is
+        :py:attr:`~Path.Verb.kClose`, last point is set to (0, 0) before adding
+        line.
+
+        lineTo() appends :py:attr:`~Path.Verb.kMove` to verb array and (0, 0) to
+        :py:class:`Point` array, if needed. lineTo() then appends
+        :py:attr:`~Path.Verb.kLine` to verb array and (x, y) to
+        :py:class:`Point` array.
+
+        :x: end of added line on x-axis
+        :y: end of added line on y-axis
+        :return: reference to :py:class:`Path`
+        )docstring",
+        py::arg("x"), py::arg("y"))
     .def("lineTo",
         py::overload_cast<const SkPoint&>(&SkPath::lineTo),
-        "Adds line from last point to SkPoint p.")
+        R"docstring(
+        Adds line from last point to :py:class:`Point` p.
+
+        If :py:class:`Path` is empty, or last :py:class:`~Path.Verb` is
+        :py:attr:`~Path.Verb.kClose`, last point is set to (0, 0) before adding
+        line.
+
+        lineTo() appends :py:attr:`~Path.Verb.kMove` to verb array and (0, 0) to
+        :py:class:`Point` array, if needed. lineTo() then appends
+        :py:attr:`~Path.Verb.kLine` to verb array and p to :py:class:`Point`
+        array.
+
+        :p: end :py:class:`Point` of added line
+        :return: reference to :py:class:`Path`
+        )docstring",
+        py::arg("p"))
     .def("rLineTo", &SkPath::rLineTo,
-        "Adds line from last point to vector (dx, dy).")
+        R"docstring(
+        Adds line from last point to vector (dx, dy).
+
+        If :py:class:`Path` is empty, or last :py:class:`~Path.Verb` is
+        :py:attr:`~skia.Path.Verb.kClose`, last point is set to (0, 0) before
+        adding line.
+
+        Appends :py:attr:`~skia.Path.Verb.kMove` to verb array and (0, 0) to
+        :py:class:`Point` array, if needed; then appends
+        :py:attr:`~skia.Path.Verb.kLine` to verb array and line end to
+        :py:class:`Point` array. Line end is last point plus vector (dx, dy).
+        Function name stands for "relative line to".
+
+        :param float dx: offset from last point to line end on x-axis
+        :param float dy: offset from last point to line end on y-axis
+        :return: reference to :py:class:`Path`
+        )docstring")
     .def("quadTo",
         py::overload_cast<SkScalar, SkScalar, SkScalar, SkScalar>(
             &SkPath::quadTo),
-        "Adds quad from last point towards (x1, y1), to (x2, y2).")
+        R"docstring(
+        Adds quad from last point towards (x1, y1), to (x2, y2).
+
+        If :py:class:`Path` is empty, or last :py:class:`Path.Verb` is
+        :py:attr:`~skia.Path.Verb.kClose`, last point is set to (0, 0) before
+        adding quad.
+
+        Appends :py:attr:`~skia.Path.Verb.kMove` to verb array and (0, 0) to
+        :py:class:`Point` array, if needed; then appends
+        :py:attr:`~skia.Path.Verb.kQuad` to verb array; and (x1, y1), (x2, y2)
+        to :py:class:`Point` array.
+
+        :x1: control :py:class:`Point` of quad on x-axis
+        :y1: control :py:class:`Point` of quad on y-axis
+        :x2: end :py:class:`Point` of quad on x-axis
+        :y2: end :py:class:`Point` of quad on y-axis
+
+        :return: reference to :py:class:`Path`
+        )docstring",
+        py::arg("x1"), py::arg("y1"), py::arg("x2"), py::arg("y2"))
     .def("quadTo",
         py::overload_cast<const SkPoint&, const SkPoint&>(&SkPath::quadTo),
-        "Adds quad from last point towards SkPoint p1, to SkPoint p2.")
+        R"docstring(
+        Adds quad from last point towards :py:class:`Point` p1, to
+        :py:class:`Point` p2.
+
+        If :py:class:`Path` is empty, or last :py:class:`Path.Verb` is
+        :py:attr:`~skia.Path.Verb.kClose`, last point is set to (0, 0) before
+        adding quad.
+
+        Appends :py:attr:`~skia.Path.Verb.kMove` to verb array and (0, 0) to
+        :py:class:`Point` array, if needed; then appends
+        :py:attr:`~skia.Path.Verb.kQuad` to verb array; and :py:class:`Point`
+        p1, p2 to :py:class:`Point` array.
+
+        :p1: control :py:class:`Point` of added quad
+        :p2: end :py:class:`Point` of added quad
+
+        :return: reference to :py:class:`Path`
+        )docstring",
+        py::arg("p1"), py::arg("p2"))
     .def("rQuadTo", &SkPath::rQuadTo,
-        "Adds quad from last point towards vector (dx1, dy1), to vector (dx2, "
-        "dy2).")
+        R"docstring(
+        Adds quad from last point towards vector (dx1, dy1), to vector (dx2,
+        dy2).
+
+        If :py:class:`Path` is empty, or last :py:class:`~Path.Verb` is
+        :py:attr:`~skia.Path.Verb.kClose`, last point is set to (0, 0) before
+        adding quad.
+
+        Appends :py:attr:`~skia.Path.Verb.kMove` to verb array and (0, 0) to
+        :py:class:`Point` array, if needed; then appends
+        :py:attr:`~skia.Path.Verb.kQuad` to verb array;and appends quad control
+        and quad end to :py:class:`Point` array. Quad control is last point plus
+        vector (dx1, dy1). Quad end is last point plus vector (dx2, dy2).
+        Function name stands for "relative quad to".
+
+        :param float dx1: offset from last point to quad control on x-axis
+        :param float dy1: offset from last point to quad control on y-axis
+        :param float dx2: offset from last point to quad end on x-axis
+        :param float dy2: offset from last point to quad end on y-axis
+        :return: reference to :py:class:`Path`
+        )docstring",
+        py::arg("dx1"), py::arg("dy1"), py::arg("dx2"), py::arg("dy2"))
     .def("conicTo",
         py::overload_cast<SkScalar, SkScalar, SkScalar, SkScalar, SkScalar>(
             &SkPath::conicTo),
-        "Adds conic from last point towards (x1, y1), to (x2, y2), weighted "
-        "by w.")
+        R"docstring(
+        Adds conic from last point towards (x1, y1), to (x2, y2), weighted by w.
+
+        If :py:class:`Path` is empty, or last :py:class:`Path.Verb` is
+        :py:attr:`~skia.Path.Verb.kClose`, last point is set to (0, 0) before
+        adding conic.
+
+        Appends :py:attr:`~skia.Path.Verb.kMove` to verb array and (0, 0) to
+        :py:class:`Point` array, if needed.
+
+        If w is finite and not one, appends :py:attr:`~skia.Path.Verb.kConic` to
+        verb array; and (x1, y1), (x2, y2) to :py:class:`Point` array; and w to
+        conic weights.
+
+        If w is one, appends :py:attr:`~skia.Path.Verb.kQuad` to verb array, and
+        (x1, y1), (x2, y2) to :py:class:`Point` array.
+
+        If w is not finite, appends :py:attr:`~skia.Path.Verb.kLine` twice to
+        verb array, and (x1, y1), (x2, y2) to :py:class:`Point` array.
+
+        :x1: control :py:class:`Point` of conic on x-axis
+        :y1: control :py:class:`Point` of conic on y-axis
+        :x2: end :py:class:`Point` of conic on x-axis
+        :y2: end :py:class:`Point` of conic on y-axis
+        :w: weight of added conic
+
+        :return: reference to :py:class:`Path`
+        )docstring",
+        py::arg("x1"), py::arg("y1"), py::arg("x2"), py::arg("y2"),
+        py::arg("w"))
     .def("conicTo",
         py::overload_cast<const SkPoint&, const SkPoint&, SkScalar>(
             &SkPath::conicTo),
-        "Adds conic from last point towards SkPoint p1, to SkPoint p2, "
-        "weighted by w.")
+        R"docstring(
+        Adds conic from last point towards :py:class:`Point` p1, to
+        :py:class:`Point` p2, weighted by w.
+
+        If :py:class:`Path` is empty, or last :py:class:`Path.Verb` is
+        :py:attr:`~skia.Path.Verb.kClose`, last point is set to (0, 0) before
+        adding conic.
+
+        Appends :py:attr:`~skia.Path.Verb.kMove` to verb array and (0, 0) to
+        :py:class:`Point` array, if needed.
+
+        If w is finite and not one, appends :py:attr:`~skia.Path.Verb.kConic` to
+        verb array; and :py:class:`Point` p1, p2 to :py:class:`Point` array; and
+        w to conic weights.
+
+        If w is one, appends :py:attr:`~skia.Path.Verb.kQuad` to verb array, and
+        :py:class:`Point` p1, p2 to :py:class:`Point` array.
+
+        If w is not finite, appends :py:attr:`~skia.Path.Verb.kLine` twice to
+        verb array, and :py:class:`Point` p1, p2 to :py:class:`Point` array.
+
+        :p1: control :py:class:`Point` of added conic
+        :p2: end :py:class:`Point` of added conic
+        :w: weight of added conic
+        :return: reference to :py:class:`Path`
+        )docstring",
+        py::arg("p1"), py::arg("p2"), py::arg("w"))
     .def("rConicTo", &SkPath::rConicTo,
-        "Adds conic from last point towards vector (dx1, dy1), to vector "
-        "(dx2, dy2), weighted by w.")
+        R"docstring(
+        Adds conic from last point towards vector (dx1, dy1), to vector (dx2,
+        dy2), weighted by w.
+
+        If :py:class:`Path` is empty, or last :py:class:`Path`::Verb is
+        :py:attr:`~skia.Path.Verb.kClose`, last point is set to (0, 0) before
+        adding conic.
+
+        Appends :py:attr:`~skia.Path.Verb.kMove` to verb array and (0, 0) to
+        :py:class:`Point` array, if needed.
+
+        If w is finite and not one, next appends
+        :py:attr:`~skia.Path.Verb.kConic` to verb array, and w is recorded as
+        conic weight; otherwise, if w is one, appends
+        :py:attr:`~skia.Path.Verb.kQuad` to verb array; or if w is not finite,
+        appends :py:attr:`~skia.Path.Verb.kLine` twice to verb array.
+
+        In all cases appends :py:class:`Point` control and end to
+        :py:class:`Point` array. control is last point plus vector (dx1, dy1).
+        end is last point plus vector (dx2, dy2).
+
+        Function name stands for "relative conic to".
+
+        :param float dx1: offset from last point to conic control on x-axis
+        :param float dy1: offset from last point to conic control on y-axis
+        :param float dx2: offset from last point to conic end on x-axis
+        :param float dy2: offset from last point to conic end on y-axis
+        :param float w:   weight of added conic
+        :return: reference to :py:class:`Path`
+        )docstring",
+        py::arg("dx1"), py::arg("dy1"), py::arg("dx2"), py::arg("dy2"),
+        py::arg("w"))
     .def("cubicTo",
         py::overload_cast<SkScalar, SkScalar, SkScalar, SkScalar, SkScalar,
             SkScalar>(&SkPath::cubicTo),
-        "Adds cubic from last point towards (x1, y1), then towards (x2, y2), "
-        "ending at (x3, y3).")
+        R"docstring(
+        Adds cubic from last point towards (x1, y1), then towards (x2, y2),
+        ending at (x3, y3).
+
+        If :py:class:`Path` is empty, or last :py:class:`Path.Verb` is
+        :py:attr:`~skia.Path.Verb.kClose`, last point is set to (0, 0) before
+        adding cubic.
+
+        Appends :py:attr:`~skia.Path.Verb.kMove` to verb array and (0, 0) to
+        :py:class:`Point` array, if needed; then appends
+        :py:attr:`~skia.Path.Verb.kCubic` to verb array; and (x1, y1), (x2, y2),
+        (x3, y3) to :py:class:`Point` array.
+
+        :x1: first control :py:class:`Point` of cubic on x-axis
+        :y1: first control :py:class:`Point` of cubic on y-axis
+        :x2: second control :py:class:`Point` of cubic on x-axis
+        :y2: second control :py:class:`Point` of cubic on y-axis
+        :x3: end :py:class:`Point` of cubic on x-axis
+        :y3: end :py:class:`Point` of cubic on y-axis
+        :return: reference to :py:class:`Path`
+        )docstring",
+        py::arg("x1"), py::arg("y1"), py::arg("x2"), py::arg("y2"),
+        py::arg("x3"), py::arg("y3"))
     .def("cubicTo",
         py::overload_cast<const SkPoint&, const SkPoint&, const SkPoint&>(
             &SkPath::cubicTo),
-        "Adds cubic from last point towards SkPoint p1, then towards SkPoint "
-        "p2, ending at SkPoint p3.")
+        R"docstring(
+        Adds cubic from last point towards :py:class:`Point` p1, then towards
+        :py:class:`Point` p2, ending at :py:class:`Point` p3.
+
+        If :py:class:`Path` is empty, or last :py:class:`Path.Verb` is
+        :py:attr:`~skia.Path.Verb.kClose`, last point is set to (0, 0) before
+        adding cubic.
+
+        Appends :py:attr:`~skia.Path.Verb.kMove` to verb array and (0, 0) to
+        :py:class:`Point` array, if needed; then appends
+        :py:attr:`~skia.Path.Verb.kCubic` to verb array; and :py:class:`Point`
+        p1, p2, p3 to :py:class:`Point` array.
+
+        :p1: first control :py:class:`Point` of cubic
+        :p2: second control :py:class:`Point` of cubic
+        :p3: end :py:class:`Point` of cubic
+        :return: reference to :py:class:`Path`
+        )docstring",
+        py::arg("p1"), py::arg("p2"), py::arg("p3"))
     .def("rCubicTo", &SkPath::rCubicTo,
-        "Adds cubic from last point towards vector (dx1, dy1), then towards "
-        "vector (dx2, dy2), to vector (dx3, dy3).")
+        R"docstring(
+        Adds cubic from last point towards vector (dx1, dy1), then towards
+        vector (dx2, dy2), to vector (dx3, dy3).
+
+        If :py:class:`Path` is empty, or last :py:class:`Path.Verb` is
+        :py:attr:`~skia.Path.Verb.kClose`, last point is set to (0, 0) before
+        adding cubic.
+
+        Appends :py:attr:`~skia.Path.Verb.kMove` to verb array and (0, 0) to
+        :py:class:`Point` array, if needed; then appends
+        :py:attr:`~skia.Path.Verb.kCubic` to verb array; and appends cubic
+        control and cubic end to :py:class:`Point` array. Cubic control is last
+        point plus vector (dx1, dy1). Cubic end is last point plus vector (dx2,
+        dy2). Function name stands for "relative cubic to".
+
+        :param float dx1: offset from last point to first cubic control on
+            x-axis
+        :param float dy1: offset from last point to first cubic control on
+            y-axis
+        :param float dx2: offset from last point to second cubic control on
+            x-axis
+        :param float dy2: offset from last point to second cubic control on
+            y-axis
+        :param float dx3: offset from last point to cubic end on x-axis
+        :param float dy3: offset from last point to cubic end on y-axis
+        :return: reference to :py:class:`Path`
+        )docstring",
+        py::arg("dx1"), py::arg("dy1"), py::arg("dx2"), py::arg("dy2"),
+        py::arg("dx3"), py::arg("dy3"))
     .def("arcTo",
         py::overload_cast<const SkRect&, SkScalar, SkScalar, bool>(
             &SkPath::arcTo),
