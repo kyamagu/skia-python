@@ -455,7 +455,7 @@ path
             may be nullptr
         :return: true if :py:class:`Path` is recognized as an oval or circle
         )docstring",
-        py::arg("oval"))
+        py::arg("oval") = nullptr)
     .def("isRRect", &SkPath::isRRect,
         R"docstring(
         Returns true if path is representable as :py:class:`RRect`.
@@ -471,7 +471,7 @@ path
             :py:class:`RRect`; may be nullptr
         :return: true if :py:class:`Path` contains only :py:class:`RRect`
         )docstring",
-        py::arg("rrect"))
+        py::arg("rrect") = nullptr)
     .def("reset", &SkPath::reset,
         R"docstring(
         Sets :py:class:`Path` to its initial state.
@@ -588,7 +588,7 @@ path
         :param skia.Point p1: storage for line end. May be nullptr
         :return: true if :py:class:`Path` contains exactly one line
         )docstring",
-        py::arg("p0"), py::arg("p1"))
+        py::arg("p0") = nullptr, py::arg("p1") =  nullptr)
     .def("countPoints", &SkPath::countPoints,
         R"docstring(
         Returns the number of points in :py:class:`Path`.
@@ -1089,58 +1089,325 @@ path
     .def("arcTo",
         py::overload_cast<const SkRect&, SkScalar, SkScalar, bool>(
             &SkPath::arcTo),
-        "Appends arc to SkPath.")
+        R"docstring(
+        Appends arc to :py:class:`Path`.
+
+        Arc added is part of ellipse bounded by oval, from startAngle through
+        sweepAngle. Both startAngle and sweepAngle are measured in degrees,
+        where zero degrees is aligned with the positive x-axis, and positive
+        sweeps extends arc clockwise.
+
+        :py:meth:`arcTo` adds line connecting :py:class:`Path` last
+        :py:class:`Point` to initial arc :py:class:`Point` if forceMoveTo is
+        false and :py:class:`Path` is not empty. Otherwise, added contour begins
+        with first point of arc. Angles greater than -360 and less than 360 are
+        treated modulo 360.
+
+        :oval: bounds of ellipse containing arc
+        :startAngle: starting angle of arc in degrees
+        :sweepAngle: sweep, in degrees. Positive is clockwise; treated modulo
+            360
+        :forceMoveTo: true to start a new contour with arc
+        :return: reference to :py:class:`Path`
+        )docstring",
+        py::arg("oval"), py::arg("startAngle"), py::arg("sweepAngle"),
+        py::arg("forceMoveTo"))
     .def("arcTo",
         py::overload_cast<SkScalar, SkScalar, SkScalar, SkScalar, SkScalar>(
             &SkPath::arcTo),
-        "Appends arc to SkPath, after appending line if needed.")
+        R"docstring(
+        Appends arc to :py:class:`Path`, after appending line if needed.
+
+        Arc is implemented by conic weighted to describe part of circle. Arc is
+        contained by tangent from last :py:class:`Path` point to (x1, y1), and
+        tangent from (x1, y1) to (x2, y2). Arc is part of circle sized to
+        radius, positioned so it touches both tangent lines.
+
+        If last Path Point does not start Arc, :py:meth:`arcTo` appends
+        connecting Line to Path. The length of Vector from (x1, y1) to (x2, y2)
+        does not affect Arc.
+
+        Arc sweep is always less than 180 degrees. If radius is zero, or if
+        tangents are nearly parallel, :py:meth:`arcTo` appends Line from last
+        Path Point to (x1, y1).
+
+        :py:meth:`arcTo` appends at most one Line and one conic.
+        :py:meth:`arcTo` implements the functionality of PostScript arct and
+        HTML Canvas arcTo.
+
+        :x1: x-axis value common to pair of tangents
+        :y1: y-axis value common to pair of tangents
+        :x2: x-axis value end of second tangent
+        :y2: y-axis value end of second tangent
+        :radius: distance from arc to circle center
+        :return: reference to :py:class:`Path`
+        )docstring",
+        py::arg("x1"), py::arg("y1"), py::arg("x2"), py::arg("y2"),
+        py::arg("radius"))
     .def("arcTo",
         py::overload_cast<const SkPoint, const SkPoint, SkScalar>(
             &SkPath::arcTo),
-        "Appends arc to SkPath, after appending line if needed.")
+        R"docstring(
+        Appends arc to :py:class:`Path`, after appending line if needed.
+
+        Arc is implemented by conic weighted to describe part of circle. Arc is
+        contained by tangent from last :py:class:`Path` point to p1, and tangent
+        from p1 to p2. Arc is part of circle sized to radius, positioned so it
+        touches both tangent lines.
+
+        If last :py:class:`Path` :py:class:`Point` does not start arc,
+        :py:meth:`arcTo` appends connecting line to :py:class:`Path`. The length
+        of vector from p1 to p2 does not affect arc.
+
+        Arc sweep is always less than 180 degrees. If radius is zero, or if
+        tangents are nearly parallel, :py:meth:`arcTo` appends line from last
+        :py:class:`Path` :py:class:`Point` to p1.
+
+        :py:meth:`arcTo` appends at most one line and one conic.
+        :py:meth:`arcTo` implements the functionality of PostScript arct and
+        HTML Canvas arcTo.
+
+        :p1: :py:class:`Point` common to pair of tangents
+        :p2: end of second tangent
+        :radius: distance from arc to circle center
+        :return: reference to :py:class:`Path`
+        )docstring",
+        py::arg("p1"), py::arg("p2"), py::arg("radius"))
     .def("arcTo",
         py::overload_cast<SkScalar, SkScalar, SkScalar, SkPath::ArcSize,
             SkPathDirection, SkScalar, SkScalar>(&SkPath::arcTo),
-        "Appends arc to SkPath.")
+        R"docstring(
+        Appends arc to :py:class:`Path`.
+
+        Arc is implemented by one or more conics weighted to describe part of
+        oval with radii (rx, ry) rotated by xAxisRotate degrees. Arc curves from
+        last :py:class:`Path` :py:class:`Point` to (x, y), choosing one of four
+        possible routes: clockwise or counterclockwise, and smaller or larger.
+
+        Arc sweep is always less than 360 degrees. :py:meth:`arcTo` appends line
+        to (x, y) if either radii are zero, or if last :py:class:`Path`
+        :py:class:`Point` equals (x, y). :py:meth:`arcTo` scales radii (rx, ry)
+        to fit last :py:class:`Path` :py:class:`Point` and (x, y) if both are
+        greater than zero but too small.
+
+        :py:meth:`arcTo` appends up to four conic curves. :py:meth:`arcTo`
+        implements the functionality of SVG arc, although SVG sweep-flag value
+        is opposite the integer value of sweep; SVG sweep-flag uses 1 for
+        clockwise, while :py:attr:`~skia.PathDirection.kCW` cast to int is zero.
+
+        :rx: radius on x-axis before x-axis rotation
+        :ry: radius on y-axis before x-axis rotation
+        :xAxisRotate: x-axis rotation in degrees; positive values are clockwise
+        :largeArc: chooses smaller or larger arc
+        :sweep: chooses clockwise or counterclockwise arc
+        :x: end of arc
+        :y: end of arc
+        :return: reference to :py:class:`Path`
+        )docstring",
+        py::arg("rx"), py::arg("ry"), py::arg("xAxisRotate"),
+        py::arg("largeArc"), py::arg("sweep"), py::arg("x"), py::arg("y"))
     .def("arcTo",
         py::overload_cast<const SkPoint, SkScalar, SkPath::ArcSize,
             SkPathDirection, const SkPoint>(&SkPath::arcTo),
-        "Appends arc to SkPath.")
+        R"docstring(
+        Appends arc to :py:class:`Path`.
+
+        Arc is implemented by one or more conic weighted to describe part of
+        oval with radii (r.fX, r.fY) rotated by xAxisRotate degrees. Arc curves
+        from last :py:class:`Path` :py:class:`Point` to (xy.fX, xy.fY), choosing
+        one of four possible routes: clockwise or counterclockwise, and smaller
+        or larger.
+
+        Arc sweep is always less than 360 degrees. :py:meth:`arcTo` appends line
+        to xy if either radii are zero, or if last :py:class:`Path`
+        :py:class:`Point` equals (xy.fX, xy.fY). :py:meth:`arcTo` scales radii r
+        to fit last :py:class:`Path` :py:class:`Point` and xy if both are
+        greater than zero but too small to describe an arc.
+
+        :py:meth:`arcTo` appends up to four conic curves. :py:meth:`arcTo`
+        implements the functionality of SVG arc, although SVG sweep-flag value
+        is opposite the integer value of sweep; SVG sweep-flag uses 1 for
+        clockwise, while :py:attr:`~skia.PathDirection.kCW` cast to int is zero.
+
+        :r: radii on axes before x-axis rotation
+        :xAxisRotate: x-axis rotation in degrees; positive values are clockwise
+        :largeArc: chooses smaller or larger arc
+        :sweep: chooses clockwise or counterclockwise arc
+        :xy: end of arc
+        :return: reference to :py:class:`Path`
+        )docstring",
+        py::arg("r"), py::arg("xAxisRotate"), py::arg("largeArc"),
+        py::arg("sweep"), py::arg("xy"))
     .def("rArcTo", &SkPath::rArcTo,
-        "Appends arc to SkPath, relative to last SkPath SkPoint.")
+        R"docstring(
+        Appends arc to :py:class:`Path`, relative to last :py:class:`Path`
+        :py:class:`Point`.
+
+        Arc is implemented by one or more conic, weighted to describe part of
+        oval with radii (rx, ry) rotated by xAxisRotate degrees. Arc curves from
+        last :py:class:`Path` :py:class:`Point` to relative end
+        :py:class:`Point`: (dx, dy), choosing one of four possible routes:
+        clockwise or counterclockwise, and smaller or larger. If
+        :py:class:`Path` is empty, the start arc :py:class:`Point` is (0, 0).
+
+        Arc sweep is always less than 360 degrees. :py:meth:`arcTo` appends line
+        to end :py:class:`Point` if either radii are zero, or if last
+        :py:class:`Path` :py:class:`Point` equals end :py:class:`Point`.
+        :py:meth:`arcTo` scales radii (rx, ry) to fit last :py:class:`Path`
+        :py:class:`Point` and end :py:class:`Point` if both are greater than
+        zero but too small to describe an arc.
+
+        :py:meth:`arcTo` appends up to four conic curves. :py:meth:`arcTo`
+        implements the functionality of svg arc, although SVG "sweep-flag" value
+        is opposite the integer value of sweep; SVG "sweep-flag" uses 1 for
+        clockwise, while :py:attr:`~skia.PathDirection.kCW` cast to int is zero.
+
+        :param float rx:  radius before x-axis rotation
+        :param float ry:  radius before x-axis rotation
+        :param float xAxisRotate: x-axis rotation in degrees; positive values
+            are clockwise
+        :param skia.ArcSize largeArc: chooses smaller or larger arc
+        :param skia.PathDirection sweep: chooses clockwise or counterclockwise
+            arc
+        :param float dx: x-axis offset end of arc from last :py:class:`Path`
+            :py:class:`Point`
+        :param float dy: y-axis offset end of arc from last :py:class:`Path`
+            :py:class:`Point`
+        :return: reference to :py:class:`Path`
+        )docstring")
     .def("close", &SkPath::close,
-        "Appends kClose_Verb to SkPath.")
+        R"docstring(
+        Appends :py:attr:`Path.Verb.kClose` to :py:class:`Path`.
+
+        A closed contour connects the first and last :py:class:`Point` with
+        line, forming a continuous loop. Open and closed contour draw the same
+        with :py:attr:`Paint.kFill`. With :py:attr:`Paint.kStroke`, open contour
+        draws :py:class:`Paint.Cap` at contour start and end; closed contour
+        draws :py:class:`Paint.Join` at contour start and end.
+
+        :py:meth:`close` has no effect if :py:class:`Path` is empty or last
+        :py:class:`Path` :py:class:`~Path.Verb` is :py:attr:`Path.Verb.kClose`.
+
+        :return: reference to :py:class:`Path`
+        )docstring")
     .def("isRect", &SkPath::isRect,
-        "Returns true if SkPath is equivalent to SkRect when filled.")
+        R"docstring(
+        Returns true if :py:class:`Path` is equivalent to :py:class:`Rect` when
+        filled.
+
+        If false: rect, isClosed, and direction are unchanged. If true: rect,
+        isClosed, and direction are written to if not nullptr.
+
+        rect may be smaller than the :py:class:`Path` bounds. :py:class:`Path`
+        bounds may include :py:attr:`~skia.Path.Verb.kMove` points that do not
+        alter the area drawn by the returned rect.
+
+        :param rect: storage for bounds of :py:class:`Rect`; may be nullptr
+        :param isClosed: storage set to true if :py:class:`Path` is closed; may
+            be nullptr
+        :param direction: storage set to :py:class:`Rect` direction; may be
+            nullptr
+        :return: true if :py:class:`Path` contains :py:class:`Rect`
+        )docstring",
+        py::arg("rect") = nullptr, py::arg("isClosed") = nullptr,
+        py::arg("direction") = nullptr)
     .def("addRect",
         py::overload_cast<const SkRect&, SkPathDirection>(&SkPath::addRect),
-        "Adds SkRect to SkPath, appending kMove_Verb, three kLine_Verb, and "
-        "kClose_Verb, starting with top-left corner of SkRect; followed by "
-        "top-right, bottom-right, and bottom-left if dir is kCW_Direction; "
-        "or followed by bottom-left, bottom-right, and top-right if dir is "
-        "kCCW_Direction.")
+        R"docstring(
+        Adds :py:class:`Rect` to :py:class:`Path`, appending
+        :py:attr:`~skia.Path.Verb.kMove`, three
+        :py:attr:`~skia.Path.Verb.kLine`, and :py:attr:`~skia.Path.Verb.kClose`,
+        starting with top-left corner of :py:class:`Rect`; followed by
+        top-right, bottom-right, and bottom-left if dir is
+        :py:attr:`~skia.Direction.kCW`; or followed by bottom-left,
+        bottom-right, and top-right if dir is :py:attr:`~skia._Direction.kCCW`
+
+        :rect: :py:class:`Rect` to add as a closed contour
+        :dir: :py:class:`Path`::Direction to wind added contour
+        :return: reference to :py:class:`Path`
+        )docstring",
+        py::arg("rect"), py::arg("dir") = SkPathDirection::kCW)
     .def("addRect",
         py::overload_cast<const SkRect&, SkPathDirection, unsigned>(
             &SkPath::addRect),
-        "Adds SkRect to SkPath, appending kMove_Verb, three kLine_Verb, and "
-        "kClose_Verb.")
+        R"docstring(
+        Adds :py:class:`Rect` to :py:class:`Path`, appending
+        :py:attr:`~skia.Path.Verb.kMove`, three
+        :py:attr:`~skia.Path.Verb.kLine`, and k:py:attr:`~skia.Path.Verb.Close`.
+
+        If dir is :py:attr:`~skia.PathDirection.kCW`, :py:class:`Rect` corners
+        are added clockwise; if dir is :py:attr:`~skia.PathDirection.kCCW`,
+        :py:class:`Rect` corners are added counterclockwise. start determines
+        the first corner added.
+
+        :rect: :py:class:`Rect` to add as a closed contour
+        :dir: :py:class:`Path`::Direction to wind added contour
+        :start: initial corner of :py:class:`Rect` to add
+
+        :return: reference to :py:class:`Path`
+        )docstring",
+        py::arg("rect"), py::arg("dir"), py::arg("start"))
     .def("addRect",
         py::overload_cast<SkScalar, SkScalar, SkScalar, SkScalar,
         SkPathDirection>(&SkPath::addRect),
-        "Adds SkRect (left, top, right, bottom) to SkPath, appending "
-        "kMove_Verb, three kLine_Verb, and kClose_Verb, starting with "
-        "top-left corner of SkRect; followed by top-right, bottom-right, "
-        "and bottom-left if dir is kCW_Direction; or followed by bottom-left, "
-        "bottom-right, and top-right if dir is kCCW_Direction.")
+        R"docstring(
+        Adds :py:class:`Rect` (left, top, right, bottom) to :py:class:`Path`,
+        appending :py:attr:`~skia.Path.Verb.kMove`, three
+        :py:attr:`~skia.Path.Verb.kLine`, and :py:attr:`~skia.Path.Verb.kClose`,
+        starting with top-left corner of :py:class:`Rect`; followed by
+        top-right, bottom-right, and bottom-left if dir is
+        :py:attr:`~skia.PathDirection.kCW`; or followed by bottom-left,
+        bottom-right, and top-right if dir is
+        :py:attr:`~skia.PathDirection.kCCW`.
+
+        :left: smaller x-axis value of :py:class:`Rect`
+        :top: smaller y-axis value of :py:class:`Rect`
+        :right: larger x-axis value of :py:class:`Rect`
+        :bottom: larger y-axis value of :py:class:`Rect`
+        :dir: :py:class:`Path`::Direction to wind added contour
+
+        :return: reference to :py:class:`Path`
+        )docstring",
+        py::arg("left"), py::arg("top"), py::arg("right"), py::arg("bottom"),
+        py::arg("dir") = SkPathDirection::kCW)
     .def("addOval",
         py::overload_cast<const SkRect&, SkPathDirection>(&SkPath::addOval),
-        "Adds oval to path, appending kMove_Verb, four kConic_Verb, and "
-        "kClose_Verb.")
+        R"docstring(
+        Adds oval to path, appending :py:attr:`~skia.Path.Verb.kMove`, four
+        :py:attr:`~skia.Path.Verb.kConic`, and
+        :py:attr:`~skia.Path.Verb.kClose`.
+
+        Oval is upright ellipse bounded by :py:class:`Rect` oval with radii
+        equal to half oval width and half oval height. Oval begins at
+        (oval.fRight, oval.centerY()) and continues clockwise if dir is
+        :py:attr:`~skia.PathDirection.kCW`, counterclockwise if dir is
+        :py:attr:`~skia.PathDirection.kCCW`.
+
+        :oval: bounds of ellipse added
+        :dir: :py:class:`~skia.PathDirection` to wind ellipse
+        :return: reference to :py:class:`Path`
+        )docstring",
+        py::arg("oval"), py::arg("dir") = SkPathDirection::kCW)
     .def("addOval",
         py::overload_cast<const SkRect&, SkPathDirection, unsigned>(
             &SkPath::addOval),
-        "Adds oval to SkPath, appending kMove_Verb, four kConic_Verb, and "
-        "kClose_Verb.")
+        R"docstring(
+        Adds oval to path, appending :py:attr:`~skia.Path.Verb.kMove`, four
+        :py:attr:`~skia.Path.Verb.kConic`, and
+        :py:attr:`~skia.Path.Verb.kClose`.
+
+        Oval is upright ellipse bounded by :py:class:`Rect` oval with radii
+        equal to half oval width and half oval height. Oval begins at start and
+        continues clockwise if dir is kCW_Direction, counterclockwise if dir is
+        :py:attr:`~skia.PathDirection.kCW`, counterclockwise if dir is
+        :py:attr:`~skia.PathDirection.kCCW`.
+
+        :oval: bounds of ellipse added
+        :dir: :py:class:`Path`::Direction to wind ellipse
+        :start: index of initial point of ellipse
+        :return: reference to :py:class:`Path`
+        )docstring",
+        py::arg("oval"), py::arg("dir"), py::arg("start"))
     .def("addCircle", &SkPath::addCircle,
         R"docstring(
         Adds circle centered at (x, y) of size radius to :py:class:`Path`,

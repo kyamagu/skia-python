@@ -288,3 +288,57 @@ def test_Path_cubicTo(path, args):
 
 def test_Path_rCubicTo(path):
     assert isinstance(path.rCubicTo(1, 1, 1, 0, 0, 0), skia.Path)
+
+
+@pytest.mark.parametrize('args', [
+    (skia.Rect(100, 100), 0, 60, True),
+    (50, 0, 0, 50, 50),
+    (skia.Point(50, 0), skia.Point(0, 50), 50),
+    (50, 50, 0, skia.Path.ArcSize.kSmall, skia.PathDirection.kCW, 0, 50),
+    (skia.Point(50, 50), 0, skia.Path.ArcSize.kSmall, skia.PathDirection.kCW,
+        skia.Point(0, 50)),
+])
+def test_Path_arcTo(path, args):
+    assert isinstance(path.arcTo(*args), skia.Path)
+
+
+def test_Path_rArcTo(path):
+    assert isinstance(path.rArcTo(
+        50, 50, 0, skia.Path.ArcSize.kSmall, skia.PathDirection.kCW, 0, 50),
+    skia.Path)
+
+
+def test_Path_close(path):
+    assert isinstance(path.close(), skia.Path)
+
+
+@pytest.mark.parametrize('args', [
+    tuple(),
+    (skia.Rect(100, 100), False, skia.PathDirection(0)),
+])
+def test_Path_isRect(path, args):
+    assert isinstance(path.isRect(*args), bool)
+
+
+@pytest.mark.parametrize('args', [
+    (skia.Rect(100, 100),),
+    (skia.Rect(100, 100), skia.PathDirection.kCCW),
+    (skia.Rect(100, 100), skia.PathDirection.kCW, 0),
+    (0, 0, 100, 100),
+    (0, 0, 100, 100, skia.PathDirection.kCW),
+])
+def test_Path_addRect(path, args):
+    assert isinstance(path.addRect(*args), skia.Path)
+
+
+@pytest.mark.parametrize('args', [
+    (skia.Rect(100, 100),),
+    (skia.Rect(100, 100), skia.PathDirection.kCCW),
+    (skia.Rect(100, 100), skia.PathDirection.kCW, 0),
+])
+def test_Path_addOval(path, args):
+    assert isinstance(path.addOval(*args), skia.Path)
+
+
+def test_Path_addCircle(path):
+    assert isinstance(path.addCircle(50, 50, 10), skia.Path)
