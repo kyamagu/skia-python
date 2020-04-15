@@ -1,6 +1,7 @@
 import skia
 import pytest
 import numpy as np
+import sys
 
 from .conftest import opengl_context, opengl_is_available
 
@@ -136,7 +137,7 @@ def test_Surface_MakeRasterN32Premul(args):
     check_surface(skia.Surface.MakeRasterN32Premul(*args))
 
 
-@pytest.mark.skipif(not opengl_is_available(),
+@pytest.mark.skipif(not opengl_is_available() or sys.platform == 'win32',
     reason='OpenGL is not available.')
 @pytest.mark.parametrize('args', [
     tuple(),
