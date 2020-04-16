@@ -399,3 +399,73 @@ def test_Path_offset(path, args):
 def test_Path_transform(path, args):
     path.transform(*args)
 
+
+def test_Path_getLastPt(path):
+    assert isinstance(path.getLastPt(skia.Point(0, 0)), bool)
+
+
+@pytest.mark.parametrize('args', [
+    (0, 0),
+    (skia.Point(0, 0),),
+])
+def test_Path_setLastPt(path, args):
+    path.setLastPt(*args)
+
+
+def test_Path_getSegmentMasks(path):
+    assert isinstance(path.getSegmentMasks(), int)
+
+
+def test_Path_dump(path):
+    path.dump()
+
+
+def test_Path_dumpHex(path):
+    path.dumpHex()
+
+
+def test_Path_writeToMemory_readFromMemory(path):
+    buf = path.writeToMemory()
+    assert isinstance(buf, bytes)
+    assert isinstance(path.readFromMemory(buf), int)
+
+
+def test_Path_serialize(path):
+    assert isinstance(path.serialize(), skia.Data)
+
+
+def test_Path_getGenerationID(path):
+    assert isinstance(path.getGenerationID(), int)
+
+
+def test_Path_isValid(path):
+    assert isinstance(path.isValid(), bool)
+
+
+def test_Path_IsLineDegenerate(path):
+    assert isinstance(skia.Path.IsLineDegenerate(
+        skia.Point(0, 0), skia.Point(1, 1), False), bool)
+
+
+def test_Path_IsQuadDegenerate(path):
+    assert isinstance(skia.Path.IsQuadDegenerate(
+            skia.Point(0, 0), skia.Point(1, 1), skia.Point(1, 0), False), bool)
+
+
+def test_Path_IsCubicDegenerate(path):
+    assert isinstance(skia.Path.IsCubicDegenerate(
+            skia.Point(0, 0), skia.Point(1, 1), skia.Point(1, 0.5),
+            skia.Point(1, 0), False), bool)
+
+
+def test_Path_ConvertConicToQuads(path):
+    assert isinstance(skia.Path.ConvertConicToQuads(
+        skia.Point(0, 0), skia.Point(0, 1), skia.Point(1, 1), 1, 1), list)
+
+
+def test_Path_eq(path):
+    assert path == path
+
+
+def test_Path_ne(path):
+    assert not (path != path)

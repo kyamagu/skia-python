@@ -1,6 +1,7 @@
 #include "common.h"
 #include <pybind11/operators.h>
 #include <pybind11/stl.h>
+#include <pybind11/iostream.h>
 
 
 template <typename T>
@@ -1675,51 +1676,288 @@ path
     //         &SkPath::transform),
     //     "Transforms verb array, SkPoint array, and weight by matrix.")
     .def("getLastPt", &SkPath::getLastPt,
-        "Returns last point on SkPath in lastPt.")
+        R"docstring(
+        Returns last point on :py:class:`Path` in lastPt.
+
+        Returns false if :py:class:`Point` array is empty, storing (0, 0) if
+        lastPt is not nullptr.
+
+        :param skia.Point lastPt: storage for final :py:class:`Point` in
+            :py:class:`Point` array; may be nullptr
+        :return: true if :py:class:`Point` array contains one or more
+            :py:class:`Point`
+        )docstring",
+        py::arg("lastPt") = nullptr)
     .def("setLastPt",
         py::overload_cast<SkScalar, SkScalar>(&SkPath::setLastPt),
-        "Sets last point to (x, y).")
+        R"docstring(
+        Sets last point to (x, y).
+
+        If :py:class:`Point` array is empty, append
+        :py:attr:`~skia.Path.Verb.kMove` to verb array and append (x, y) to
+        :py:class:`Point` array.
+
+        :x: set x-axis value of last point
+        :y: set y-axis value of last point
+        )docstring",
+        py::arg("x"), py::arg("y"))
     .def("setLastPt",
         py::overload_cast<const SkPoint&>(&SkPath::setLastPt),
-        "Sets the last point on the path.")
+        R"docstring(
+        Sets the last point on the path.
+
+        If :py:class:`Point` array is empty, append
+        :py:attr:`~skia.Path.Verb.kMove` to verb array and append p to
+        :py:class:`Point` array.
+
+        :p: set value of last point
+        )docstring",
+        py::arg("p"))
     .def("getSegmentMasks", &SkPath::getSegmentMasks,
-        "Returns a mask, where each set bit corresponds to a SegmentMask "
-        "constant if SkPath contains one or more verbs of that type.")
+        R"docstring(
+        Returns a mask, where each set bit corresponds to a
+        :py:class:`~Path.SegmentMask` constant if :py:class:`Path` contains one
+        or more verbs of that type.
+
+        Returns zero if :py:class:`Path` contains no lines, or curves: quads,
+        conics, or cubics.
+
+        :py:meth:`getSegmentMasks` returns a cached result; it is very fast.
+
+        :return: SegmentMask bits or zero
+        )docstring")
     .def("contains", &SkPath::contains,
-        "Returns true if the point (x, y) is contained by SkPath, taking into "
-        "account FillType.")
+        R"docstring(
+        Returns true if the point (x, y) is contained by :py:class:`Path`,
+        taking into account FillType.
+
+        :param float x: x-axis value of containment test
+        :param float y: y-axis value of containment test
+        :return: true if :py:class:`Point` is in :py:class:`Path`
+        )docstring",
+        py::arg("x"), py::arg("y"))
     // .def("dump",
     //     py::overload_cast<SkWStream*, bool, bool>(&SkPath::dump),
     //     "Writes text representation of SkPath to stream.")
     .def("dump",
-        py::overload_cast<>(&SkPath::dump, py::const_),
-        "Writes text representation of SkPath to standard output.")
-    .def("dumpHex", &SkPath::dumpHex,
-        "Writes text representation of SkPath to standard output.")
-    .def("writeToMemory", &SkPath::writeToMemory,
-        "Writes SkPath to buffer, returning the number of bytes written.")
+        // py::overload_cast<>(&SkPath::dump, py::const_),
+        [] (const SkPath& path) {
+            py::scoped_ostream_redirect stream;
+            path.dump();
+        },
+        R"docstring(
+        Writes text representation of :py:class:`Path` to standard output.
+
+        The representation may be directly compiled as C++ code. Floating point
+        values are written with limited precision; it may not be possible to
+        reconstruct original :py:class:`Path` from output.
+        )docstring")
+    .def("dumpHex",
+        // &SkPath::dumpHex,
+        [] (const SkPath& path) {
+            py::scoped_ostream_redirect stream;
+            path.dumpHex();
+        },
+        R"docstring(
+        Writes text representation of :py:class:`Path` to standard output.
+
+        The representation may be directly compiled as C++ code. Floating point
+        values are written in hexadecimal to preserve their exact bit pattern.
+        The output reconstructs the original :py:class:`Path`.
+
+        Use instead of :py:meth:`dump` when submitting
+        )docstring")
+    .def("writeToMemory",
+        [] (const SkPath& path) {
+            size_t size = path.writeToMemory(nullptr);
+            std::vector<char> buffer(size);
+            path.writeToMemory(&buffer[0]);
+            return py::bytes(&buffer[0], size);
+        },
+        R"docstring(
+        Writes :py:class:`Path` to buffer, returning bytes.
+
+        Writes :py:class:`~Path.FillType`, verb array, :py:class:`Point` array,
+        conic weight, and additionally writes computed information like
+        :py:class:`~Path.Convexity` and bounds.
+
+        Use only be used in concert with :py:meth:`readFromMemory`; the format
+        used for :py:class:`Path` in memory is not guaranteed.
+
+        :return: serialized bytes
+        )docstring")
     .def("serialize", &SkPath::serialize,
-        "Writes SkPath to buffer, returning the buffer written to, wrapped in "
-        "SkData.")
-    .def("readFromMemory", &SkPath::readFromMemory,
-        "Initializes SkPath from buffer of size length.")
+        R"docstring(
+        Writes :py:class:`Path` to buffer, returning the buffer written to,
+        wrapped in :py:class:`Data`.
+
+        :py:meth:`serialize` writes :py:class:`~Path.FillType`, verb array,
+        :py:class:`Point` array, conic weight, and additionally writes computed
+        information like :py:class:`~Path.Convexity` and bounds.
+
+        :py:meth:`serialize` should only be used in concert with
+        :py:meth:`readFromMemory`. The format used for :py:class:`Path` in
+        memory is not guaranteed.
+
+        :return: :py:class:`Path` data wrapped in :py:class:`Data` buffer
+        )docstring")
+    .def("readFromMemory",
+        [] (SkPath& path, py::buffer b) {
+            auto info = b.request();
+            auto length = (info.ndim > 0) ? info.shape[0] * info.strides[0] : 0;
+            return path.readFromMemory(info.ptr, length);
+        },
+        R"docstring(
+        Initializes :py:class:`Path` from buffer of size length.
+
+        Returns zero if the buffer is data is inconsistent, or the length is too
+        small.
+
+        Reads :py:class:`Path.FillType`, verb array, :py:class:`Point` array,
+        conic weight, and additionally reads computed information like
+        :py:class:`Path.Convexity` and bounds.
+
+        Used only in concert with :py:meth:`writeToMemory`; the format used for
+        :py:class:`Path` in memory is not guaranteed.
+
+        :param Union[bytes,bytearray,memoryview] buffer: storage for
+            :py:class:`Path`
+        :return: number of bytes read, or zero on failure
+        )docstring",
+        py::arg("buffer"))
     .def("getGenerationID", &SkPath::getGenerationID,
-        "(See Skia bug 1762.) Returns a non-zero, globally unique value.")
+        R"docstring(
+        (See Skia bug 1762.) Returns a non-zero, globally unique value.
+
+        A different value is returned if verb array, :py:class:`Point` array, or
+        conic weight changes.
+
+        Setting :py:class:`Path.FillType` does not change generation identifier.
+
+        Each time the path is modified, a different generation identifier will
+        be returned. :py:class:`Path.FillType` does affect generation identifier
+        on Android framework.
+
+        :return: non-zero, globally unique value
+        )docstring")
     .def("isValid", &SkPath::isValid,
-        "Returns if SkPath data is consistent.")
+        R"docstring(
+        Returns if :py:class:`Path` data is consistent.
+
+        Corrupt :py:class:`Path` data is detected if internal values are out of
+        range or internal storage does not match array dimensions.
+
+        :return: true if :py:class:`Path` data is consistent
+        )docstring")
     .def_static("IsLineDegenerate", &SkPath::IsLineDegenerate,
-        "Tests if line between SkPoint pair is degenerate.")
+        R"docstring(
+        Tests if line between :py:class:`Point` pair is degenerate.
+
+        Line with no length or that moves a very short distance is degenerate;
+        it is treated as a point.
+
+        exact changes the equality test. If true, returns true only if p1 equals
+        p2. If false, returns true if p1 equals or nearly equals p2.
+
+        :param skia.Point p1: line start point
+        :param skia.Point p2: line end point
+        :param bool exact: if false, allow nearly equals
+        :return: true if line is degenerate; its length is effectively zero
+        )docstring",
+        py::arg("p1"), py::arg("p2"), py::arg("exact"))
     .def_static("IsQuadDegenerate", &SkPath::IsQuadDegenerate,
-        "Tests if quad is degenerate.")
+        R"docstring(
+        Tests if quad is degenerate.
+
+        Quad with no length or that moves a very short distance is degenerate;
+        it is treated as a point.
+
+        :param skia.Path p1: quad start point
+        :param skia.Path p2: quad control point
+        :param skia.Path p3: quad end point
+        :param bool exact: if true, returns true only if p1, p2, and p3 are
+            equal; if false, returns true if p1, p2, and p3 are equal or nearly
+            equal
+        :return: true if quad is degenerate; its length is effectively zero
+        )docstring",
+        py::arg("p1"), py::arg("p2"), py::arg("p3"), py::arg("exact"))
     .def_static("IsCubicDegenerate", &SkPath::IsCubicDegenerate,
-        "Tests if cubic is degenerate.")
-    .def_static("ConvertConicToQuads", &SkPath::ConvertConicToQuads,
-        "Approximates conic with quad array.")
+        R"docstring(
+        Tests if cubic is degenerate.
+
+        Cubic with no length or that moves a very short distance is degenerate; it is treated as a point.
+
+        :param skia.Path p1: cubic start point
+        :param skia.Path p2: cubic control point 1
+        :param skia.Path p3: cubic control point 2
+        :param skia.Path p4: cubic end point
+        :param bool exact: if true, returns true only if p1, p2, p3, and p4 are
+            equal; if false, returns true if p1, p2, p3, and p4 are equal or
+            nearly equal
+        :return: true if cubic is degenerate; its length is effectively zero
+        )docstring",
+        py::arg("p1"), py::arg("p2"), py::arg("p3"), py::arg("p4"),
+        py::arg("exact"))
+    .def_static("ConvertConicToQuads",
+        [] (const SkPoint& p0, const SkPoint& p1, const SkPoint& p2,
+            SkScalar w, int pow2) {
+            auto size = (1 + 2 * (1 << pow2));
+            std::vector<SkPoint> pts(size);
+            auto result = SkPath::ConvertConicToQuads(
+                p0, p1, p2, w, &pts[0], pow2);
+            if (result < size)
+                pts.erase(pts.begin() + result, pts.end());
+            return pts;
+        },
+        R"docstring(
+        Approximates conic with quad array.
+
+        Conic is constructed from start :py:class:`Point` p0, control
+        :py:class:`Point` p1, end :py:class:`Point` p2, and weight w. Maximum
+        quad count is 2 to the pow2. Every third point in array shares last
+        :py:class:`Point` of previous quad and first :py:class:`Point` of next
+        quad. Maximum possible return array size is given by:
+        (1 + 2 * (1 << pow2)) * sizeof(:py:class:`Point`).
+
+        Returns quad count used the approximation, which may be smaller than the
+        number requested.
+
+        conic weight determines the amount of influence conic control point has
+        on the curve. w less than one represents an elliptical section. w
+        greater than one represents a hyperbolic section. w equal to one
+        represents a parabolic section.
+
+        Two quad curves are sufficient to approximate an elliptical conic with a
+        sweep of up to 90 degrees; in this case, set pow2 to one.
+
+        :param skia.Point p0: conic start :py:class:`Point`
+        :param skia.Point p1: conic control :py:class:`Point`
+        :param skia.Point p2: conic end :py:class:`Point`
+        :param float w: conic weight
+        :param int pow2: quad count, as power of two, normally 0 to 5 (1 to 32
+            quad curves)
+        :return: quad array
+        :rtype: List[skia.Point]
+        )docstring",
+        py::arg("p0"), py::arg("p1"), py::arg("p2"), py::arg("w"),
+        py::arg("pow2"))
     .def(py::self == py::self,
-        "Compares a and b; returns true if SkPath::FillType, verb array, "
-        "SkPoint array, and weights are equivalent.")
+        R"docstring(
+        Compares a and b; returns true if :py:class:`Path.FillType`, verb array,
+        :py:class:`Point` array, and weights are equivalent.
+
+        :param skia.Path other: :py:class:`Path` to compare
+        :return: true if :py:class:`Path` pair are equivalent
+        )docstring",
+        py::arg("other"))
     .def(py::self != py::self,
-        "Compares a and b; returns true if SkPath::FillType, verb array, "
-        "SkPoint array, and weights are not equivalent.")
+        R"docstring(
+        Compares a and b; returns true if :py:class:`Path.FillType`, verb array,
+        :py:class:`Point` array, and weights are not equivalent.
+
+        :param skia.Path other: :py:class:`Path` to compare
+        :return: true if :py:class:`Path` pair are not equivalent
+        )docstring",
+        py::arg("other"))
     ;
 }
