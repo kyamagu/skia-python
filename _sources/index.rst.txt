@@ -12,6 +12,15 @@ across a variety of hardware and software platforms.
 
 .. _Github: https://github.com/kyamagu/skia-python
 
+Install
+-------
+
+Binary package is available on PyPI:
+
+.. code-block:: bash
+
+    pip install skia-python
+
 Supported platforms:
 
 - Linux x86_64
