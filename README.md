@@ -1,8 +1,21 @@
 # Skia python binding
 
+![Build and test](https://github.com/kyamagu/skia-python/workflows/Build%20and%20test/badge.svg)
+[![PyPI version](https://badge.fury.io/py/skia-python.svg)](https://badge.fury.io/py/skia-python)
+
 Python binding to [Skia Graphics Library](https://skia.org/).
 
 - Binding based on [pybind11](https://github.com/pybind/pybind11).
+
+Currently, the binding is under active development.
+
+## Install
+
+Binary package is available on PyPI:
+
+```bash
+pip install skia-python
+```
 
 Supported platforms:
 
@@ -10,7 +23,7 @@ Supported platforms:
 - macOS
 - Windows x86_64
 
-Currently, the binding is in under active development.
+For unsupported environment, check the [build instruction](https://kyamagu.github.io/skia-python/build.html).
 
 ## Examples
 
@@ -28,4 +41,4 @@ https://kyamagu.github.io/skia-python
 
 ## Contributing
 
-Feel free to post an issue or PR.
+Feel free to [post an issue](https://github.com/kyamagu/skia-python/issues) or [PR](https://github.com/kyamagu/skia-python/pulls).
