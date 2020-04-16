@@ -1,0 +1,179 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Usage &#8212; skia-python 0.0.1 documentation</title>
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/language_data.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Reference" href="reference.html" />
+    <link rel="prev" title="Build instruction" href="build.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="usage">
+<h1>Usage<a class="headerlink" href="#usage" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
+<p>Skia is organized around the <a class="reference internal" href="_generate/skia.Canvas.html#skia.Canvas" title="skia.Canvas"><code class="xref py py-class docutils literal notranslate"><span class="pre">Canvas</span></code></a> object. It is the host for
+the “draw” calls: <a class="reference internal" href="_generate/skia.Canvas.html#skia.Canvas.drawRect" title="skia.Canvas.drawRect"><code class="xref py py-meth docutils literal notranslate"><span class="pre">drawRect()</span></code></a>,
+<a class="reference internal" href="_generate/skia.Canvas.html#skia.Canvas.drawPath" title="skia.Canvas.drawPath"><code class="xref py py-meth docutils literal notranslate"><span class="pre">drawPath()</span></code></a>, <a class="reference internal" href="_generate/skia.Canvas.html#skia.Canvas.drawTextBlob" title="skia.Canvas.drawTextBlob"><code class="xref py py-meth docutils literal notranslate"><span class="pre">drawTextBlob()</span></code></a>, etc.
+Each of these has two components: the primitive being drawn
+(<a class="reference internal" href="_generate/skia.Rect.html#skia.Rect" title="skia.Rect"><code class="xref py py-class docutils literal notranslate"><span class="pre">Rect</span></code></a>, <a class="reference internal" href="_generate/skia.Path.html#skia.Path" title="skia.Path"><code class="xref py py-class docutils literal notranslate"><span class="pre">Path</span></code></a>, etc.) and color/style
+attributes (<a class="reference internal" href="_generate/skia.Paint.html#skia.Paint" title="skia.Paint"><code class="xref py py-class docutils literal notranslate"><span class="pre">Paint</span></code></a>):</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">canvas</span><span class="o">.</span><span class="n">drawRect</span><span class="p">(</span><span class="n">rect</span><span class="p">,</span> <span class="n">paint</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The paint holds much of the state describing how the rectangle (in this case) is
+drawn: what color it is, if it is filled or stroked, how it should blend with
+what was previously drawn.</p>
+<p>The canvas holds relatively little state. It points to the actual pixels being
+drawn, and it maintains a stack of matrices and clips. Thus in the above call,
+the canvas’ current matrix may transform the coordinates of the rectangle (
+translation, rotation, skewing, perspective), and the canvas’ current clip may
+restrict where on the canvas the rectangle will be drawn, but all other
+stylistic attributes of the drawing are controlled by the paint.</p>
+<p>Some key classes are:</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="_generate/skia.AutoCanvasRestore.html#skia.AutoCanvasRestore" title="skia.AutoCanvasRestore"><code class="xref py py-class docutils literal notranslate"><span class="pre">AutoCanvasRestore</span></code></a> - Canvas save stack manager</p></li>
+<li><p><a class="reference internal" href="_generate/skia.Bitmap.html#skia.Bitmap" title="skia.Bitmap"><code class="xref py py-class docutils literal notranslate"><span class="pre">Bitmap</span></code></a> - two-dimensional raster pixel array</p></li>
+<li><p><a class="reference internal" href="_generate/skia.BlendMode.html#skia.BlendMode" title="skia.BlendMode"><code class="xref py py-class docutils literal notranslate"><span class="pre">BlendMode</span></code></a> - pixel color arithmetic</p></li>
+<li><p><a class="reference internal" href="_generate/skia.Canvas.html#skia.Canvas" title="skia.Canvas"><code class="xref py py-class docutils literal notranslate"><span class="pre">Canvas</span></code></a> - drawing context</p></li>
+<li><p><code class="xref py py-class docutils literal notranslate"><span class="pre">Color</span></code> - color encoding using integer numbers</p></li>
+<li><p><a class="reference internal" href="_generate/skia.Font.html#skia.Font" title="skia.Font"><code class="xref py py-class docutils literal notranslate"><span class="pre">Font</span></code></a> - text style and typeface</p></li>
+<li><p><a class="reference internal" href="_generate/skia.Image.html#skia.Image" title="skia.Image"><code class="xref py py-class docutils literal notranslate"><span class="pre">Image</span></code></a> - two dimensional array of pixels to draw</p></li>
+<li><p><a class="reference internal" href="_generate/skia.ImageInfo.html#skia.ImageInfo" title="skia.ImageInfo"><code class="xref py py-class docutils literal notranslate"><span class="pre">ImageInfo</span></code></a> - pixel dimensions and characteristics</p></li>
+<li><p><a class="reference internal" href="_generate/skia.IPoint.html#skia.IPoint" title="skia.IPoint"><code class="xref py py-class docutils literal notranslate"><span class="pre">IPoint</span></code></a> - two integer coordinates</p></li>
+<li><p><a class="reference internal" href="_generate/skia.IRect.html#skia.IRect" title="skia.IRect"><code class="xref py py-class docutils literal notranslate"><span class="pre">IRect</span></code></a> - integer rectangle</p></li>
+<li><p><a class="reference internal" href="_generate/skia.Matrix.html#skia.Matrix" title="skia.Matrix"><code class="xref py py-class docutils literal notranslate"><span class="pre">Matrix</span></code></a> - 3x3 transformation matrix</p></li>
+<li><p><a class="reference internal" href="_generate/skia.Paint.html#skia.Paint" title="skia.Paint"><code class="xref py py-class docutils literal notranslate"><span class="pre">Paint</span></code></a> - color, stroke, font, effects</p></li>
+<li><p><a class="reference internal" href="_generate/skia.Path.html#skia.Path" title="skia.Path"><code class="xref py py-class docutils literal notranslate"><span class="pre">Path</span></code></a> - sequence of connected lines and curves</p></li>
+<li><p><a class="reference internal" href="_generate/skia.Picture.html#skia.Picture" title="skia.Picture"><code class="xref py py-class docutils literal notranslate"><span class="pre">Picture</span></code></a> - sequence of drawing commands</p></li>
+<li><p><a class="reference internal" href="_generate/skia.Pixmap.html#skia.Pixmap" title="skia.Pixmap"><code class="xref py py-class docutils literal notranslate"><span class="pre">Pixmap</span></code></a> - pixel map: image info and pixel address</p></li>
+<li><p><a class="reference internal" href="_generate/skia.Point.html#skia.Point" title="skia.Point"><code class="xref py py-class docutils literal notranslate"><span class="pre">Point</span></code></a> - two floating point coordinates</p></li>
+<li><p><a class="reference internal" href="_generate/skia.RRect.html#skia.RRect" title="skia.RRect"><code class="xref py py-class docutils literal notranslate"><span class="pre">RRect</span></code></a> - floating point rounded rectangle</p></li>
+<li><p><a class="reference internal" href="_generate/skia.Rect.html#skia.Rect" title="skia.Rect"><code class="xref py py-class docutils literal notranslate"><span class="pre">Rect</span></code></a> - floating point rectangle</p></li>
+<li><p><a class="reference internal" href="_generate/skia.Region.html#skia.Region" title="skia.Region"><code class="xref py py-class docutils literal notranslate"><span class="pre">Region</span></code></a> - compressed clipping mask</p></li>
+<li><p><a class="reference internal" href="_generate/skia.Surface.html#skia.Surface" title="skia.Surface"><code class="xref py py-class docutils literal notranslate"><span class="pre">Surface</span></code></a> - drawing destination</p></li>
+<li><p><a class="reference internal" href="_generate/skia.TextBlob.html#skia.TextBlob" title="skia.TextBlob"><code class="xref py py-class docutils literal notranslate"><span class="pre">TextBlob</span></code></a> - runs of glyphs</p></li>
+<li><p><a class="reference internal" href="_generate/skia.TextBlobBuilder.html#skia.TextBlobBuilder" title="skia.TextBlobBuilder"><code class="xref py py-class docutils literal notranslate"><span class="pre">TextBlobBuilder</span></code></a> - constructor for runs of glyphs</p></li>
+</ul>
+</div>
+<div class="section" id="examples">
+<h2>Examples<a class="headerlink" href="#examples" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p><a class="reference external" href="https://github.com/kyamagu/skia-python/blob/master/notebooks/Canvas-Overview.ipynb">Canvas Overview</a></p></li>
+<li><p><a class="reference external" href="https://github.com/kyamagu/skia-python/blob/master/notebooks/Canvas-Creation.ipynb">Canvas Creation</a></p></li>
+<li><p><a class="reference external" href="https://github.com/kyamagu/skia-python/blob/master/notebooks/Path-Overview.ipynb">Path Overview</a></p></li>
+</ul>
+</div>
+<div class="section" id="python-binding">
+<h2>Python binding<a class="headerlink" href="#python-binding" title="Permalink to this headline">¶</a></h2>
+<p><cite>skia-python</cite> is built upon <a class="reference external" href="https://github.com/pybind/pybind11">pybind11</a>. Python bindings are mostly plain
+conversion from <a class="reference external" href="https://api.skia.org/">Skia C++ API</a>. Function names remain the same.</p>
+<p>A few differences are:</p>
+<ul class="simple">
+<li><p>All bindings reside in <code class="docutils literal notranslate"><span class="pre">skia</span></code> module.</p></li>
+<li><p>Removes class name prefix <code class="docutils literal notranslate"><span class="pre">Sk</span></code>; e.g., <code class="docutils literal notranslate"><span class="pre">SkCanvas</span></code> is <code class="docutils literal notranslate"><span class="pre">skia.Canvas</span></code>.</p></li>
+<li><p>Some method signatures adapt to Python style; e.g, <a class="reference internal" href="_generate/skia.Surface.html#skia.Surface.__init__" title="skia.Surface.__init__"><code class="xref py py-meth docutils literal notranslate"><span class="pre">skia.Surface.__init__()</span></code></a>.</p></li>
+</ul>
+</div>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">skia-python</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="build.html">Build instruction</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Usage</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#overview">Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#examples">Examples</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#python-binding">Python binding</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="reference.html">Reference</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="build.html" title="previous chapter">Build instruction</a></li>
+      <li>Next: <a href="reference.html" title="next chapter">Reference</a></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2020, Kota Yamaguchi.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.0.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="_sources/usage.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>
