@@ -57,11 +57,12 @@ jobs:
         python -m pip install --no-cache-dir pybind11 numpy wheel twine
         python -m pip wheel . -w dist --no-deps --verbose
         auditwheel repair dist/skia*.whl -w wheelhouse
-    - name: Upload wheels
-      uses: actions/upload-artifact@v1
-      with:
-        name: ${{ matrix.container }}-${{ matrix.python-version }}
-        path: wheelhouse
+    - name: Publish to PyPI
+      env:
+        TWINE_USERNAME: ${{ secrets.PYPI_USERNAME }}
+        TWINE_PASSWORD: ${{ secrets.PYPI_PASSWORD }}
+      run: |
+        twine upload wheelhouse/*
   build-macos:
     runs-on: macos-latest
     strategy:
@@ -97,11 +98,12 @@ jobs:
         python -m pip install -U pip
         python -m pip install --no-cache-dir pybind11 numpy wheel twine
         python -m pip wheel . -w wheelhouse --no-deps
-    - name: Upload wheels
-      uses: actions/upload-artifact@v1
-      with:
-        name: macos-${{ matrix.python-version }}
-        path: wheelhouse
+    - name: Publish to PyPI
+      env:
+        TWINE_USERNAME: ${{ secrets.PYPI_USERNAME }}
+        TWINE_PASSWORD: ${{ secrets.PYPI_PASSWORD }}
+      run: |
+        twine upload wheelhouse/*
   build-windows:
     runs-on: windows-latest
     strategy:
@@ -147,8 +149,9 @@ jobs:
         python -m pip install -U pip
         python -m pip install --no-cache-dir pybind11 numpy wheel twine
         python -m pip wheel . -w wheelhouse --no-deps
-    - name: Upload wheels
-      uses: actions/upload-artifact@v1
-      with:
-        name: windows-${{ matrix.arch }}-${{ matrix.python-version }}
-        path: wheelhouse
+    - name: Publish to PyPI
+      env:
+        TWINE_USERNAME: ${{ secrets.PYPI_USERNAME }}
+        TWINE_PASSWORD: ${{ secrets.PYPI_PASSWORD }}
+      run: |
+        twine upload wheelhouse\*
