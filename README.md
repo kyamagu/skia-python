@@ -23,7 +23,7 @@ Currently, the binding is in under active development.
 https://kyamagu.github.io/skia-python
 
 - [Build instruction](https://kyamagu.github.io/skia-python/build.html)
-- [Usage](https://kyamagu.github.io/skia-python/reference.html)
+- [Usage](https://kyamagu.github.io/skia-python/usage.html)
 - [Reference](https://kyamagu.github.io/skia-python/reference.html)
 
 ## Contributing
