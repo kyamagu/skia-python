@@ -14,9 +14,9 @@ Currently, the binding is in under active development.
 
 ## Examples
 
-- [Canvas Overview](tree/master/notebooks/Canvas-Overview.ipynb)
-- [Canvas Creation](tree/master/notebooks/Canvas-Creation.ipynb)
-- [Path Overview](tree/master/notebooks/Path-Overview.ipynb)
+- [Canvas Overview](https://github.com/kyamagu/skia-python/blob/master/notebooks/Canvas-Overview.ipynb)
+- [Canvas Creation](https://github.com/kyamagu/skia-python/blob/master/notebooks/Canvas-Creation.ipynb)
+- [Path Overview](https://github.com/kyamagu/skia-python/blob/master/notebooks/Path-Overview.ipynb)
 
 ## Documentation
 
