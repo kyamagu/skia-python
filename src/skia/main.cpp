@@ -72,7 +72,9 @@ PYBIND11_MODULE(skia, m) {
             FontArguments
             FontHinting
             FontMetrics
+            FontMgr
             FontStyle
+            FontStyleSet
             GrBackendApi
             GrBackendSemaphore
             GrBackendTexture
