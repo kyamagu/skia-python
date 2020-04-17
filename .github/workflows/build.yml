@@ -130,7 +130,7 @@ jobs:
     runs-on: windows-latest
     strategy:
       matrix:
-        arch: [ x64 ]
+        arch: [ x86, x64 ]
         python-version: [3.5]
     steps:
     - uses: actions/checkout@v2
@@ -164,6 +164,7 @@ jobs:
       uses: actions/setup-python@v1
       with:
         python-version: ${{ matrix.python-version }}
+        architecture: ${{ matrix.arch }}
     - name: Build python binding
       env:
         DISTUTILS_USE_SDK: 1
