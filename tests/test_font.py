@@ -24,19 +24,22 @@ def test_FontMgr_matchFamily(fontmgr):
 
 
 def test_FontMgr_matchFamilyStyle(fontmgr):
-    assert isinstance(fontmgr.matchFamilyStyle('monospace', skia.FontStyle()),
-        skia.Typeface)
+    assert isinstance(
+        fontmgr.matchFamilyStyle('monospace', skia.FontStyle()),
+        (skia.Typeface, type(None)))
 
 
 def test_FontMgr_matchFamilyStyleCharacter(fontmgr):
-    assert isinstance(fontmgr.matchFamilyStyleCharacter(
-        'monospace', skia.FontStyle(), ['en'], ord('e')), skia.Typeface)
+    assert isinstance(
+        fontmgr.matchFamilyStyleCharacter(
+            'monospace', skia.FontStyle(), ['en'], ord('e')),
+        (skia.Typeface, type(None)))
 
 
 def test_FontMgr_matchFaceStyle(fontmgr):
     assert isinstance(
         fontmgr.matchFaceStyle(skia.Typeface.MakeDefault(), skia.FontStyle()),
-        (skia.FontStyleSet, type(None)))
+        (skia.Typeface, type(None)))
 
 
 def test_FontMgr_makeFromData(fontmgr):
