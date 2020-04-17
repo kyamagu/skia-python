@@ -60,3 +60,17 @@ def test_FontMgr_unique(fontmgr):
 def test_FontMgr_ref_unref(fontmgr):
     fontmgr.ref()
     fontmgr.unref()
+
+
+@pytest.fixture
+def fontstyleset():
+    return skia.FontStyleSet.CreateEmpty()
+
+
+def test_FontStyleSet_unique(fontstyleset):
+    assert isinstance(fontstyleset.unique(), bool)
+
+
+def test_FontStyleSet_ref_unref(fontstyleset):
+    fontstyleset.ref()
+    fontstyleset.unref()
