@@ -1,4 +1,5 @@
 #include "common.h"
+#include <pybind11/stl.h>
 
 void initFont(py::module &m) {
 // FontStyle
@@ -212,6 +213,156 @@ typeface
     // .def_static("MakeDeserialize", &SkTypeface::MakeDeserialize,
     //     "Given the data previously written by serialize(), return a new "
     //     "instance of a typeface referring to the same font.")
+    ;
+
+// FontMgr
+py::class_<SkFontStyleSet, sk_sp<SkFontStyleSet>>(m, "FontStyleSet")
+    .def("count", &SkFontStyleSet::count)
+    .def("getStyle", &SkFontStyleSet::getStyle)
+    .def("createTypeface", &SkFontStyleSet::createTypeface)
+    .def("matchStyle", &SkFontStyleSet::matchStyle)
+    .def("unique", &SkFontStyleSet::unique)
+    .def("ref", &SkFontStyleSet::ref)
+    .def("unref", &SkFontStyleSet::unref)
+    .def_static("CreateEmpty", &SkFontStyleSet::CreateEmpty)
+    ;
+
+py::class_<SkFontMgr, sk_sp<SkFontMgr>>(m, "FontMgr")
+    .def("countFamilies", &SkFontMgr::countFamilies)
+    .def("getFamilyName",
+        [] (const SkFontMgr& fontmgr, int index) {
+            SkString familyName;
+            fontmgr.getFamilyName(index, &familyName);
+            return py::str(familyName.c_str(), familyName.size());
+        },
+        py::arg("index"))
+    .def("createStyleSet",
+        [] (const SkFontMgr& fontmgr, int index) {
+            return sk_sp<SkFontStyleSet>(fontmgr.createStyleSet(index));
+        },
+        py::arg("index"))
+    .def("matchFamily",
+        [] (const SkFontMgr& fontmgr, const std::string* familyName) {
+            return sk_sp<SkFontStyleSet>(
+                fontmgr.matchFamily(
+                    (familyName) ? familyName->c_str() : nullptr));
+        },
+        R"docstring(
+        Never returns NULL; will return an empty set if the name is not found.
+
+        Passing nullptr as the parameter will return the default system family.
+        Note that most systems don't have a default system family, so passing
+        nullptr will often result in the empty set.
+
+        It is possible that this will return a style set not accessible from
+        createStyleSet(int) due to hidden or auto-activated fonts.
+        )docstring",
+        py::arg("familyName"))
+    .def("matchFamilyStyle",
+        [] (const SkFontMgr& fontmgr, const std::string& familyName,
+            const SkFontStyle& style) {
+            return sk_sp<SkTypeface>(
+                fontmgr.matchFamilyStyle(familyName.c_str(), style));
+        },
+        R"docstring(
+        Find the closest matching typeface to the specified familyName and style
+        and return a ref to it.
+
+        Will return nullptr if no 'good' match is found.
+
+        Passing |nullptr| as the parameter for |familyName| will return the
+        default system font.
+
+        It is possible that this will return a style set not accessible from
+        createStyleSet(int) or matchFamily(const char[]) due to hidden or
+        auto-activated fonts.
+        )docstring",
+        py::arg("familyName"), py::arg("style"))
+    .def("matchFamilyStyleCharacter",
+        [] (const SkFontMgr& fontmgr, const std::string& familyName,
+            const SkFontStyle& style, const std::vector<std::string>& bcp47,
+            SkUnichar character) {
+            std::vector<const char*> bcp47_(bcp47.size());
+            std::transform(bcp47.begin(), bcp47.end(), bcp47_.begin(),
+                [] (const std::string& c) { return c.c_str(); });
+            return sk_sp<SkTypeface>(
+                fontmgr.matchFamilyStyleCharacter(
+                    familyName.c_str(), style, &bcp47_[0], bcp47_.size(),
+                    character));
+        },
+        R"docstring(
+        Use the system fallback to find a typeface for the given character.
+
+        Note that bcp47 is a combination of ISO 639, 15924, and 3166-1 codes, so
+        it is fine to just pass a ISO 639 here.
+
+        Will return NULL if no family can be found for the character in the
+        system fallback.
+
+        Passing |nullptr| as the parameter for |familyName| will return the
+        default system font.
+
+        bcp47[0] is the least significant fallback, bcp47[bcp47Count-1] is the
+        most significant. If no specified bcp47 codes match, any font with the
+        requested character will be matched.
+        )docstring",
+        py::arg("familyName"), py::arg("style"), py::arg("bcp47"),
+        py::arg("character"))
+    .def("matchFaceStyle",
+        [] (const SkFontMgr& fontmgr, const SkTypeface* face,
+            const SkFontStyle& style) {
+            return sk_sp<SkTypeface>(fontmgr.matchFaceStyle(face, style));
+        },
+        py::arg("face"), py::arg("style"))
+    .def("makeFromData", &SkFontMgr::makeFromData,
+        R"docstring(
+        Create a typeface for the specified data and TTC index (pass 0 for none)
+        or NULL if the data is not recognized.
+        )docstring",
+        py::arg("data"), py::arg("ttcIndex") = 0)
+    // .def("makeFromStream", &SkFontMgr::makeFromStream)
+    // .def("makeFromStream", &SkFontMgr::makeFromStream)
+    // .def("makeFromFontData", &SkFontMgr::makeFromFontData)
+    .def("makeFromFile",
+        [] (const SkFontMgr& fontmgr, const std::string& path, int ttcIndex) {
+            return fontmgr.makeFromFile(path.c_str(), ttcIndex);
+        },
+        R"docstring(
+        Create a typeface for the specified fileName and TTC index (pass 0 for
+        none) or NULL if the file is not found, or its contents are not
+        recognized.
+        )docstring",
+        py::arg("path"), py::arg("ttcIndex") = 0)
+    .def("legacyMakeTypeface",
+        [] (const SkFontMgr& fontmgr, const std::string& familyName,
+            const SkFontStyle& style) {
+            return fontmgr.legacyMakeTypeface(familyName.c_str(), style);
+        },
+        py::arg("familyName"), py::arg("style"))
+    .def("unique", &SkFontMgr::unique,
+        R"docstring(
+        May return true if the caller is the only owner.
+
+        Ensures that all previous owner's actions are complete.
+        )docstring")
+    .def("ref", &SkFontMgr::ref,
+        R"docstring(
+        Increment the reference count.
+
+        Must be balanced by a call to unref().
+        )docstring")
+    .def("unref", &SkFontMgr::unref,
+        R"docstring(
+        Decrement the reference count.
+
+        If the reference count is 1 before the decrement, then delete the
+        object. Note that if this is the case, then the object needs to have
+        been allocated via new, and not on the stack.
+        )docstring")
+    .def_static("RefDefault", &SkFontMgr::RefDefault,
+        R"docstring(
+        Return the default fontmgr.
+        )docstring")
     ;
 
 // Font
