@@ -221,9 +221,26 @@ py::class_<SkFontStyleSet, sk_sp<SkFontStyleSet>>(m, "FontStyleSet")
     .def("getStyle", &SkFontStyleSet::getStyle)
     .def("createTypeface", &SkFontStyleSet::createTypeface)
     .def("matchStyle", &SkFontStyleSet::matchStyle)
-    .def("unique", &SkFontStyleSet::unique)
-    .def("ref", &SkFontStyleSet::ref)
-    .def("unref", &SkFontStyleSet::unref)
+    .def("unique", &SkFontStyleSet::unique,
+        R"docstring(
+        May return true if the caller is the only owner.
+
+        Ensures that all previous owner's actions are complete.
+        )docstring")
+    .def("ref", &SkFontStyleSet::ref,
+        R"docstring(
+        Increment the reference count.
+
+        Must be balanced by a call to unref().
+        )docstring")
+    .def("unref", &SkFontStyleSet::unref,
+        R"docstring(
+        Decrement the reference count.
+
+        If the reference count is 1 before the decrement, then delete the
+        object. Note that if this is the case, then the object needs to have
+        been allocated via new, and not on the stack.
+        )docstring")
     .def_static("CreateEmpty", &SkFontStyleSet::CreateEmpty)
     ;
 
@@ -270,7 +287,7 @@ py::class_<SkFontMgr, sk_sp<SkFontMgr>>(m, "FontMgr")
 
         Will return nullptr if no 'good' match is found.
 
-        Passing |nullptr| as the parameter for |familyName| will return the
+        Passing nullptr as the parameter for familyName will return the
         default system font.
 
         It is possible that this will return a style set not accessible from
@@ -299,7 +316,7 @@ py::class_<SkFontMgr, sk_sp<SkFontMgr>>(m, "FontMgr")
         Will return NULL if no family can be found for the character in the
         system fallback.
 
-        Passing |nullptr| as the parameter for |familyName| will return the
+        Passing nullptr as the parameter for familyName will return the
         default system font.
 
         bcp47[0] is the least significant fallback, bcp47[bcp47Count-1] is the
