@@ -16,6 +16,7 @@ void initImageInfo(py::module &);
 void initMatrix(py::module &);
 void initPaint(py::module &);
 void initPath(py::module &);
+void initPathEffect(py::module &);
 void initPicture(py::module &);
 void initPixmap(py::module &);
 void initPoint(py::module &);
@@ -64,10 +65,14 @@ PYBIND11_MODULE(skia, m) {
             ColorInfo
             ColorSpace
             ColorType
+            CornerPathEffect
+            DashPathEffect
             Data
             DeserialProcs
+            DiscretePathEffect
             EncodedImageFormat
             FilterQuality
+            Flattanable
             Font
             FontArguments
             FontHinting
@@ -96,6 +101,8 @@ PYBIND11_MODULE(skia, m) {
             M44
             MaskFilter
             Matrix
+            MatrixPathEffect
+            MergePathEffect
             Paint
             Path
             Path.Iter
@@ -107,6 +114,13 @@ PYBIND11_MODULE(skia, m) {
             PathConvexityType
             PathDirection
             PathEffect
+            PathEffect.DashInfo
+            PathEffect.DashType
+            PathEffect.PointData
+            PathEffect.PointData.PointFlags
+            Path1DPathEffect
+            Path1DPathEffect.Style
+            Path2DPathEffect
             PathFillType
             PathSegmentMask
             PathVerb
@@ -122,6 +136,7 @@ PYBIND11_MODULE(skia, m) {
             Region
             Shader
             Size
+            StrokePathEffect
             Surface
             Surface.AsyncReadResult
             Surface.ContentChangeMode
@@ -137,6 +152,8 @@ PYBIND11_MODULE(skia, m) {
             TextBlobBuilder
             TextEncoding
             TileMode
+            TrimPathEffect
+            TrimPathEffect.Mode
             Typeface
             Vertices
             YUVColorSpace
@@ -159,6 +176,7 @@ PYBIND11_MODULE(skia, m) {
     initImageInfo(m);
     initPaint(m);
     initPath(m);
+    initPathEffect(m);
     initPicture(m);
     initPixmap(m);
     initTextBlob(m);

@@ -29,6 +29,7 @@ SOURCES = [
     os.path.join('src', 'skia', 'Matrix.cpp'),
     os.path.join('src', 'skia', 'Paint.cpp'),
     os.path.join('src', 'skia', 'Path.cpp'),
+    os.path.join('src', 'skia', 'PathEffect.cpp'),
     os.path.join('src', 'skia', 'Picture.cpp'),
     os.path.join('src', 'skia', 'Pixmap.cpp'),
     os.path.join('src', 'skia', 'Point.cpp'),
