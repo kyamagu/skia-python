@@ -44,13 +44,13 @@ py::class_<SkMatrix> matrix(m, "Matrix", R"docstring(
     )docstring");
 
 py::enum_<SkMatrix::ScaleToFit>(matrix, "ScaleToFit")
-    .value("kFill", SkMatrix::ScaleToFit::kFill_ScaleToFit,
+    .value("kFill_ScaleToFit", SkMatrix::ScaleToFit::kFill_ScaleToFit,
         "scales in x and y to fill destination SkRect")
-    .value("kStart", SkMatrix::ScaleToFit::kStart_ScaleToFit,
+    .value("kStart_ScaleToFit", SkMatrix::ScaleToFit::kStart_ScaleToFit,
         "scales and aligns to left and top")
-    .value("kCenter", SkMatrix::ScaleToFit::kCenter_ScaleToFit,
+    .value("kCenter_ScaleToFit", SkMatrix::ScaleToFit::kCenter_ScaleToFit,
         "scales and aligns to center")
-    .value("kEnd", SkMatrix::ScaleToFit::kEnd_ScaleToFit,
+    .value("kEnd_ScaleToFit", SkMatrix::ScaleToFit::kEnd_ScaleToFit,
         "scales and aligns to right and bottom")
     .export_values();
 

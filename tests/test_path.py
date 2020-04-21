@@ -294,8 +294,8 @@ def test_Path_rCubicTo(path):
     (skia.Rect(100, 100), 0, 60, True),
     (50, 0, 0, 50, 50),
     (skia.Point(50, 0), skia.Point(0, 50), 50),
-    (50, 50, 0, skia.Path.ArcSize.kSmall, skia.PathDirection.kCW, 0, 50),
-    (skia.Point(50, 50), 0, skia.Path.ArcSize.kSmall, skia.PathDirection.kCW,
+    (50, 50, 0, skia.Path.kSmall_ArcSize, skia.PathDirection.kCW, 0, 50),
+    (skia.Point(50, 50), 0, skia.Path.kSmall_ArcSize, skia.PathDirection.kCW,
         skia.Point(0, 50)),
 ])
 def test_Path_arcTo(path, args):
@@ -304,7 +304,7 @@ def test_Path_arcTo(path, args):
 
 def test_Path_rArcTo(path):
     assert isinstance(path.rArcTo(
-        50, 50, 0, skia.Path.ArcSize.kSmall, skia.PathDirection.kCW, 0, 50),
+        50, 50, 0, skia.Path.kSmall_ArcSize, skia.PathDirection.kCW, 0, 50),
     skia.Path)
 
 

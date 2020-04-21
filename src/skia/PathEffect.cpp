@@ -22,15 +22,15 @@ py::class_<SkStrokeRec> strokerec(m, "StrokeRec",
     )docstring");
 
 py::enum_<SkStrokeRec::InitStyle>(strokerec, "InitStyle")
-    .value("kHairline", SkStrokeRec::InitStyle::kHairline_InitStyle)
-    .value("kFill", SkStrokeRec::InitStyle::kFill_InitStyle)
+    .value("kHairline_InitStyle", SkStrokeRec::InitStyle::kHairline_InitStyle)
+    .value("kFill_InitStyle", SkStrokeRec::InitStyle::kFill_InitStyle)
     .export_values();
 
 py::enum_<SkStrokeRec::Style>(strokerec, "Style")
-    .value("kHairline", SkStrokeRec::Style::kHairline_Style)
-    .value("kFill", SkStrokeRec::Style::kFill_Style)
-    .value("kStroke", SkStrokeRec::Style::kStroke_Style)
-    .value("kStrokeAndFill", SkStrokeRec::Style::kStrokeAndFill_Style)
+    .value("kHairline_Style", SkStrokeRec::Style::kHairline_Style)
+    .value("kFill_Style", SkStrokeRec::Style::kFill_Style)
+    .value("kStroke_Style", SkStrokeRec::Style::kStroke_Style)
+    .value("kStrokeAndFill_Style", SkStrokeRec::Style::kStrokeAndFill_Style)
     .export_values();
 
 strokerec
@@ -170,9 +170,12 @@ py::class_<SkPathEffect::PointData> pointdata(patheffect, "PointData",
 
 py::enum_<SkPathEffect::PointData::PointFlags>(
     pointdata, "PointFlags", py::arithmetic())
-    .value("kCircles", SkPathEffect::PointData::PointFlags::kCircles_PointFlag)
-    .value("kUsePath", SkPathEffect::PointData::PointFlags::kUsePath_PointFlag)
-    .value("kUseClip", SkPathEffect::PointData::PointFlags::kUseClip_PointFlag)
+    .value("kCircles_PointFlag",
+        SkPathEffect::PointData::PointFlags::kCircles_PointFlag)
+    .value("kUsePath_PointFlag",
+        SkPathEffect::PointData::PointFlags::kUsePath_PointFlag)
+    .value("kUseClip_PointFlag",
+        SkPathEffect::PointData::PointFlags::kUseClip_PointFlag)
     .export_values();
 
 pointdata
@@ -206,9 +209,9 @@ py::enum_<SkPathEffect::DashType>(patheffect, "DashType",
     then call asADash again with the same info and the intervals will get copied
     in.
     )docstring")
-    .value("kNone", SkPathEffect::DashType::kNone_DashType,
+    .value("kNone_DashType", SkPathEffect::DashType::kNone_DashType,
         "ignores the info parameter")
-    .value("kDash", SkPathEffect::DashType::kDash_DashType,
+    .value("kDash_DashType", SkPathEffect::DashType::kDash_DashType,
         "fills in all of the info parameter")
     .export_values();
 
@@ -358,10 +361,10 @@ py::class_<SkPath1DPathEffect, SkPathEffect, sk_sp<SkPath1DPathEffect>>
         )docstring");
 
 py::enum_<SkPath1DPathEffect::Style>(path1dpatheffect, "Style")
-    .value("kTranslate", SkPath1DPathEffect::Style::kTranslate_Style)
-    .value("kRotate", SkPath1DPathEffect::Style::kRotate_Style)
-    .value("kMorph", SkPath1DPathEffect::Style::kMorph_Style)
-    .value("kLastEnum", SkPath1DPathEffect::Style::kLastEnum_Style)
+    .value("kTranslate_Style", SkPath1DPathEffect::Style::kTranslate_Style)
+    .value("kRotate_Style", SkPath1DPathEffect::Style::kRotate_Style)
+    .value("kMorph_Style", SkPath1DPathEffect::Style::kMorph_Style)
+    .value("kLastEnum_Style", SkPath1DPathEffect::Style::kLastEnum_Style)
     .export_values();
 
 path1dpatheffect

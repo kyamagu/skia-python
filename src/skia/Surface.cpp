@@ -31,11 +31,11 @@ py::enum_<SkPixelGeometry>(m, "PixelGeometry", R"docstring(
     transformed before showing (e.g. rotated, scaled) then use
     :py:attr:`PixelGeometry.kUnknown`.
     )docstring")
-    .value("kUnknown", SkPixelGeometry::kUnknown_SkPixelGeometry)
-    .value("kRGB_H", SkPixelGeometry::kRGB_H_SkPixelGeometry)
-    .value("kBGR_H", SkPixelGeometry::kBGR_H_SkPixelGeometry)
-    .value("kRGB_V", SkPixelGeometry::kRGB_V_SkPixelGeometry)
-    .value("kBGR_V", SkPixelGeometry::kBGR_V_SkPixelGeometry)
+    .value("kUnknown_PixelGeometry", SkPixelGeometry::kUnknown_SkPixelGeometry)
+    .value("kRGB_H_PixelGeometry", SkPixelGeometry::kRGB_H_SkPixelGeometry)
+    .value("kBGR_H_PixelGeometry", SkPixelGeometry::kBGR_H_SkPixelGeometry)
+    .value("kRGB_V_PixelGeometry", SkPixelGeometry::kRGB_V_SkPixelGeometry)
+    .value("kBGR_V_PixelGeometry", SkPixelGeometry::kBGR_V_SkPixelGeometry)
     .export_values();
 
 py::class_<SkSurfaceProps> surfaceprops(m, "SurfaceProps", R"docstring(
@@ -53,13 +53,13 @@ py::class_<SkSurfaceProps> surfaceprops(m, "SurfaceProps", R"docstring(
         InitType
     )docstring");
 
-py::enum_<SkSurfaceProps::Flags>(surfaceprops, "Flags")
-    .value("kUseDeviceIndependentFonts",
+py::enum_<SkSurfaceProps::Flags>(surfaceprops, "Flags", py::arithmetic())
+    .value("kUseDeviceIndependentFonts_Flag",
         SkSurfaceProps::Flags::kUseDeviceIndependentFonts_Flag)
     .export_values();
 
 py::enum_<SkSurfaceProps::InitType>(surfaceprops, "InitType")
-    .value("kLegacyFontHost",
+    .value("kLegacyFontHost_InitType",
         SkSurfaceProps::InitType::kLegacyFontHost_InitType)
     .export_values();
 
@@ -148,20 +148,22 @@ py::class_<SkSurface::AsyncReadResult>(surface, "AsyncReadResult", R"docstring(
     )docstring");
 
 py::enum_<SkSurface::ContentChangeMode>(surface, "ContentChangeMode")
-    .value("kDiscard", SkSurface::ContentChangeMode::kDiscard_ContentChangeMode,
+    .value("kDiscard_ContentChangeMode",
+        SkSurface::ContentChangeMode::kDiscard_ContentChangeMode,
         "discards surface on change")
-    .value("kRetain", SkSurface::ContentChangeMode::kRetain_ContentChangeMode,
+    .value("kRetain_ContentChangeMode",
+        SkSurface::ContentChangeMode::kRetain_ContentChangeMode,
         "preserves surface on change")
     .export_values();
 
 py::enum_<SkSurface::BackendHandleAccess>(surface, "BackendHandleAccess")
-    .value("kFlushRead",
+    .value("kFlushRead_BackendHandleAccess",
         SkSurface::BackendHandleAccess::kFlushRead_BackendHandleAccess,
         "back-end object is readable")
-    .value("kFlushWrite",
+    .value("kFlushWrite_BackendHandleAccess",
         SkSurface::BackendHandleAccess::kFlushWrite_BackendHandleAccess,
         "back-end object is writable")
-    .value("kDiscardWrite",
+    .value("kDiscardWrite_BackendHandleAccess",
         SkSurface::BackendHandleAccess::kDiscardWrite_BackendHandleAccess,
         "back-end object must be overwritten")
     .export_values();
@@ -182,7 +184,7 @@ py::enum_<SkSurface::BackendSurfaceAccess>(surface, "BackendSurfaceAccess")
         "back-end surface will be used for presenting to screen")
     .export_values();
 
-py::enum_<SkSurface::FlushFlags>(surface, "FlushFlags")
+py::enum_<SkSurface::FlushFlags>(surface, "FlushFlags", py::arithmetic())
     .value("kNone_FlushFlags", SkSurface::FlushFlags::kNone_FlushFlags)
     .value("kSyncCpu_FlushFlag", SkSurface::FlushFlags::kSyncCpu_FlushFlag)
     .export_values();
@@ -661,7 +663,8 @@ surface
         :param surfaceProps: LCD striping orientation and setting for device
             independent fonts; may be nullptr
 
-        :return: :py:class:`Surface` if all parameters are valid; otherwise, nullptr
+        :return: :py:class:`Surface` if all parameters are valid; otherwise,
+            nullptr
         )docstring",
         py::arg("info"), py::arg("pixels"), py::arg("rowBytes") = 0,
         py::arg("surfaceProps") = nullptr)

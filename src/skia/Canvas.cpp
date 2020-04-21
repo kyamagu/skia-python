@@ -100,51 +100,52 @@ py::class_<SkCanvas> canvas(m, "Canvas", R"docstring(
     )docstring");
 
 py::enum_<SkCanvas::SrcRectConstraint>(canvas, "SrcRectConstraint")
-    .value("kStrict", SkCanvas::SrcRectConstraint::kStrict_SrcRectConstraint,
+    .value("kStrict_SrcRectConstraint",
+        SkCanvas::SrcRectConstraint::kStrict_SrcRectConstraint,
         R"docstring(
         sample only inside bounds; slower
         )docstring")
-    .value("kFast", SkCanvas::SrcRectConstraint::kFast_SrcRectConstraint,
+    .value("kFast_SrcRectConstraint",
+        SkCanvas::SrcRectConstraint::kFast_SrcRectConstraint,
         R"docstring(
         sample outside bounds; faster
         )docstring")
     .export_values();
 
 py::enum_<SkCanvas::PointMode>(canvas, "PointMode")
-    .value("kPoints", SkCanvas::PointMode::kPoints_PointMode,
+    .value("kPoints_PointMode", SkCanvas::PointMode::kPoints_PointMode,
         R"docstring(
         draw each point separately
         )docstring")
-    .value("kLines", SkCanvas::PointMode::kLines_PointMode,
+    .value("kLines_PointMode", SkCanvas::PointMode::kLines_PointMode,
         R"docstring(
         draw each pair of points as a line segment
         )docstring")
-    .value("kPolygon", SkCanvas::PointMode::kPolygon_PointMode,
+    .value("kPolygon_PointMode", SkCanvas::PointMode::kPolygon_PointMode,
         R"docstring(
         draw the array of points as a open polygon
         )docstring")
     .export_values();
 
 py::enum_<SkCanvas::QuadAAFlags>(canvas, "QuadAAFlags")
-    .value("kLeft", SkCanvas::QuadAAFlags::kLeft_QuadAAFlag)
-    .value("kTop", SkCanvas::QuadAAFlags::kTop_QuadAAFlag)
-    .value("kRight", SkCanvas::QuadAAFlags::kRight_QuadAAFlag)
-    .value("kBottom", SkCanvas::QuadAAFlags::kBottom_QuadAAFlag)
-    .value("kNone", SkCanvas::QuadAAFlags::kNone_QuadAAFlags)
-    .value("kAll", SkCanvas::QuadAAFlags::kAll_QuadAAFlags)
+    .value("kLeft_QuadAAFlag", SkCanvas::QuadAAFlags::kLeft_QuadAAFlag)
+    .value("kTop_QuadAAFlag", SkCanvas::QuadAAFlags::kTop_QuadAAFlag)
+    .value("kRight_QuadAAFlag", SkCanvas::QuadAAFlags::kRight_QuadAAFlag)
+    .value("kBottom_QuadAAFlag", SkCanvas::QuadAAFlags::kBottom_QuadAAFlag)
+    .value("kNone_QuadAAFlags", SkCanvas::QuadAAFlags::kNone_QuadAAFlags)
+    .value("kAll_QuadAAFlags", SkCanvas::QuadAAFlags::kAll_QuadAAFlags)
     .export_values();
 
 py::enum_<SkCanvas::SaveLayerFlagsSet>(canvas, "SaveLayerFlags")
-    .value("kInitWithPrevious",
+    .value("kInitWithPrevious_SaveLayerFlag",
         SkCanvas::SaveLayerFlagsSet::kInitWithPrevious_SaveLayerFlag,
         "initializes with previous contents")
-    .value("kMaskAgainstCoverage_EXPERIMENTAL_DONT_USE",
+    .value("kMaskAgainstCoverage_EXPERIMENTAL_DONT_USE_SaveLayerFlag",
         SkCanvas::SaveLayerFlagsSet::
         kMaskAgainstCoverage_EXPERIMENTAL_DONT_USE_SaveLayerFlag,
         "experimental: do not use")
     .value("kF16ColorType",
-        SkCanvas::SaveLayerFlagsSet::kF16ColorType,
-        "")
+        SkCanvas::SaveLayerFlagsSet::kF16ColorType)
     .export_values();
 
 py::class_<SkCanvas::SaveLayerRec>(canvas, "SaveLayerRec",
@@ -343,9 +344,9 @@ canvas
         Creates raster :py:class:`Canvas` backed by NumPy array.
 
         Subsequent :py:class:`Canvas` calls draw into pixels.
-        :py:class:`ColorType` is set to :py:attr:`ColorType.kN32`.
-        :py:class:`AlphaType` is set to :py:attr:`AlphaType.kPremul`. To access
-        pixels after drawing, call flush() or peekPixels().
+        :py:class:`ColorType` is set to :py:attr:`ColorType.kN32_ColorType`.
+        :py:class:`AlphaType` is set to :py:attr:`AlphaType.kPremul_AlphaType`.
+        To access pixels after drawing, call flush() or peekPixels().
 
         :array: NumPy array of dtype = uint8 and dimensions
             (height, width, 4).
@@ -409,7 +410,7 @@ canvas
 
         If :py:class:`Canvas` is not associated with raster surface or GPU
         surface, returned :py:class:`ColorType` is set to
-        :py:attr:`ColorType.kUnknown`.
+        :py:attr:`ColorType.kUnknown_ColorType`.
 
         :return: dimensions and :py:class:`ColorType` of :py:class:`Canvas`
         )docstring")
@@ -532,8 +533,8 @@ canvas
         imageInfo().width(), imageInfo().height()). Destination :py:class:`Rect`
         corners are (0, 0) and (array.shape[1], array.shape[0]). Copies each
         readable pixel intersecting both rectangles, without scaling, converting
-        to :py:attr:`ColorType.kN32` and :py:attr:`AlphaType.kPremul` if
-        required.
+        to :py:attr:`ColorType.kN32_ColorType` and
+        :py:attr:`AlphaType.kPremul_AlphaType` if required.
 
         Pixels are readable when :py:class:`BaseDevice` is raster, or backed by
         a GPU. Pixels are not readable when :py:class:`Canvas` is returned by
@@ -555,7 +556,8 @@ canvas
 
         - Source and destination rectangles do not intersect.
         - :py:class:`Canvas` pixels could not be converted to
-            :py:attr:`ColorType.kN32` or :py:attr:`AlphaType.kPremul`.
+            :py:attr:`ColorType.kN32_ColorType` or
+            :py:attr:`AlphaType.kPremul_AlphaType`.
         - :py:class:`Canvas` pixels are not readable; for instance,
         - :py:class:`Canvas` is document-based.
 
@@ -727,8 +729,8 @@ canvas
         :py:class:`Matrix` and clip are ignored. Source :py:class:`Rect` corners
         are (0, 0) and (bitmap.width(), bitmap.height()).
 
-        Destination :py:class:`Rect` corners are (x, y) and (imageInfo().width(),
-        imageInfo().height()).
+        Destination :py:class:`Rect` corners are (x, y) and
+        (imageInfo().width(), imageInfo().height()).
 
         Copies each readable pixel intersecting both rectangles, without
         scaling, converting to imageInfo().colorType() and
@@ -1681,9 +1683,9 @@ canvas
 
         If :py:class:`Paint` paint is supplied, apply :py:class:`ColorFilter`,
         alpha, :py:class:`ImageFilter`, :py:class:`BlendMode`, and
-        :py:class:`DrawLooper`. If image is :py:attr:`ColorType.kAlpha_8`,
-        apply :py:class:`Shader`. If paint contains :py:class:`MaskFilter`,
-        generate mask from image bounds.
+        :py:class:`DrawLooper`. If image is
+        :py:attr:`ColorType.kAlpha_8_ColorType`, apply :py:class:`Shader`. If
+        paint contains :py:class:`MaskFilter`, generate mask from image bounds.
 
         If generated mask extends beyond image bounds, replicate image edge
         colors, just as :py:class:`Shader` made from
@@ -1696,9 +1698,9 @@ canvas
         equivalent to drawRect(dst). The src rect is only used to access the
         provided image.
 
-        constraint set to :py:attr:`SrcRectConstraint.kStrict` limits
+        constraint set to :py:attr:`kStrict_SrcRectConstraint` limits
         :py:class:`Paint` :py:class:`FilterQuality` to sample within src; set to
-        :py:attr:`SrcRectConstraint.kFast` allows sampling outside to improve
+        :py:attr:`kFast_SrcRectConstraint` allows sampling outside to improve
         performance.
 
         :image: :py:class:`Image` containing pixels, dimensions, and format
@@ -1725,9 +1727,9 @@ canvas
 
         If :py:class:`Paint` paint is supplied, apply :py:class:`ColorFilter`,
         alpha, :py:class:`ImageFilter`, :py:class:`BlendMode`, and
-        :py:class:`DrawLooper`. If image is :py:attr:`ColorType.kAlpha_8`,
-        apply :py:class:`Shader`. If paint contains :py:class:`MaskFilter`,
-        generate mask from image bounds.
+        :py:class:`DrawLooper`. If image is
+        :py:attr:`ColorType.kAlpha_8_ColorType`, apply :py:class:`Shader`. If
+        paint contains :py:class:`MaskFilter`, generate mask from image bounds.
 
         If generated mask extends beyond image bounds, replicate image edge
         colors, just as :py:class:`Shader` made from
@@ -1740,9 +1742,9 @@ canvas
         equivalent to drawRect(dst). The isrc rect is only used to access the
         provided image.
 
-        constraint set to :py:attr:`SrcRectConstraint.kStrict` limits
+        constraint set to :py:attr:`kStrict_SrcRectConstraint` limits
         :py:class:`Paint` :py:class:`FilterQuality` to sample within isrc; set
-        to :py:attr:`SrcRectConstraint.kFast` allows sampling outside to improve
+        to :py:attr:`kFast_SrcRectConstraint` allows sampling outside to improve
         performance.
 
         :image: :py:class:`Image` containing pixels, dimensions, and format
@@ -1766,9 +1768,9 @@ canvas
 
         If :py:class:`Paint` paint is supplied, apply :py:class:`ColorFilter`,
         alpha, :py:class:`ImageFilter`, :py:class:`BlendMode`, and
-        :py:class:`DrawLooper`. If image is :py:attr:`ColorType.kAlpha_8`,
-        apply :py:class:`Shader`. If paint contains :py:class:`MaskFilter`,
-        generate mask from image bounds.
+        :py:class:`DrawLooper`. If image is
+        :py:attr:`ColorType.kAlpha_8_ColorType`, apply :py:class:`Shader`. If
+        paint contains :py:class:`MaskFilter`, generate mask from image bounds.
 
         If generated mask extends beyond image bounds, replicate image edge
         colors, just as :py:class:`Shader` made from
@@ -1828,9 +1830,10 @@ canvas
 
         If :py:class:`Paint` paint is supplied, apply :py:class:`ColorFilter`,
         alpha, :py:class:`ImageFilter`, :py:class:`BlendMode`, and
-        :py:class:`DrawLooper`. If image is :py:attr:`ColorType.kAlpha_8`, apply
-        :py:class:`Shader`. If paint contains :py:class:`MaskFilter`, generate
-        mask from image bounds. If paint :py:class:`FilterQuality` set to
+        :py:class:`DrawLooper`. If image is
+        :py:attr:`ColorType.kAlpha_8_ColorType`, apply :py:class:`Shader`. If
+        paint contains :py:class:`MaskFilter`, generate mask from image bounds.
+        If paint :py:class:`FilterQuality` set to
         :py:attr:`FilterQuality.kNone`, disable pixel filtering. For all other
         values of paint :py:class:`FilterQuality`, use
         :py:attr:`FilterQuality.kLow` to filter pixels. Any
@@ -1865,8 +1868,8 @@ canvas
         If :py:class:`Paint` paint is not nullptr, apply
         :py:class:`ColorFilter`, alpha, :py:class:`ImageFilter`,
         :py:class:`BlendMode`, and :py:class:`DrawLooper`. If bitmap is
-        :py:attr:`ColorType.kAlpha_8`, apply :py:class:`Shader`. If paint
-        contains :py:class:`MaskFilter`, generate mask from bitmap bounds.
+        :py:attr:`ColorType.kAlpha_8_ColorType`, apply :py:class:`Shader`. If
+        paint contains :py:class:`MaskFilter`, generate mask from bitmap bounds.
 
         If generated mask extends beyond bitmap bounds, replicate bitmap edge
         colors, just as :py:class:`Shader` made from
@@ -1896,18 +1899,18 @@ canvas
 
         If :py:class:`Paint` paint is supplied, apply :py:class:`ColorFilter`,
         alpha, :py:class:`ImageFilter`, :py:class:`BlendMode`,
-        and :py:class:`DrawLooper`. If bitmap is :py:attr:`ColorType.kAlpha_8`,
-        apply :py:class:`Shader`. If paint contains :py:class:`MaskFilter`,
-        generate mask from bitmap bounds.
+        and :py:class:`DrawLooper`. If bitmap is
+        :py:attr:`ColorType.kAlpha_8_ColorType`, apply :py:class:`Shader`. If
+        paint contains :py:class:`MaskFilter`, generate mask from bitmap bounds.
 
         If generated mask extends beyond bitmap bounds, replicate bitmap edge
         colors, just as :py:class:`Shader` made from
         :py:meth:`Shader.MakeBitmapShader` with :py:attr:`TileMode.kClamp` set
         replicates the bitmap edge color when it samples outside of its bounds.
 
-        constraint set to :py:attr:`SrcRectConstraint.kStrict` limits
+        constraint set to :py:attr:`kStrict_SrcRectConstraint` limits
         :py:class:`Paint` :py:class:`FilterQuality` to sample within src; set to
-        :py:attr:`SrcRectConstraint.kFast` allows sampling outside to improve
+        :py:attr:`kFast_SrcRectConstraint` allows sampling outside to improve
         performance.
 
         :bitmap: :py:class:`Bitmap` containing pixels, dimensions, and format
@@ -1934,18 +1937,18 @@ canvas
 
         If :py:class:`Paint` paint is supplied, apply :py:class:`ColorFilter`,
         alpha, :py:class:`ImageFilter`, :py:class:`BlendMode`,
-        and :py:class:`DrawLooper`. If bitmap is :py:attr:`ColorType.kAlpha_8`,
-        apply :py:class:`Shader`. If paint contains :py:class:`MaskFilter`,
-        generate mask from bitmap bounds.
+        and :py:class:`DrawLooper`. If bitmap is
+        :py:attr:`ColorType.kAlpha_8_ColorType`, apply :py:class:`Shader`. If
+        paint contains :py:class:`MaskFilter`, generate mask from bitmap bounds.
 
         If generated mask extends beyond bitmap bounds, replicate bitmap edge
         colors, just as :py:class:`Shader` made from
         :py:meth:`Shader.MakeBitmapShader` with :py:attr:`TileMode.kClamp` set
         replicates the bitmap edge color when it samples outside of its bounds.
 
-        constraint set to :py:attr:`SrcRectConstraint.kStrict` limits
-        :py:class:`Paint` :py:class:`FilterQuality` to sample within isrc; set to
-        :py:attr:`SrcRectConstraint.kFast` allows sampling outside to improve
+        constraint set to :py:attr:`kStrict_SrcRectConstraint` limits
+        :py:class:`Paint` :py:class:`FilterQuality` to sample within isrc; set
+        to :py:attr:`kFast_SrcRectConstraint` allows sampling outside to improve
         performance.
 
         :bitmap: :py:class:`Bitmap` containing pixels, dimensions, and format
@@ -1972,18 +1975,18 @@ canvas
 
         If :py:class:`Paint` paint is supplied, apply :py:class:`ColorFilter`,
         alpha, :py:class:`ImageFilter`, :py:class:`BlendMode`,
-        and :py:class:`DrawLooper`. If bitmap is :py:attr:`ColorType.kAlpha_8`,
-        apply :py:class:`Shader`. If paint contains :py:class:`MaskFilter`,
-        generate mask from bitmap bounds.
+        and :py:class:`DrawLooper`. If bitmap is
+        :py:attr:`ColorType.kAlpha_8_ColorType`, apply :py:class:`Shader`. If
+        paint contains :py:class:`MaskFilter`, generate mask from bitmap bounds.
 
         If generated mask extends beyond bitmap bounds, replicate bitmap edge
         colors, just as :py:class:`Shader` made from
         :py:meth:`Shader.MakeBitmapShader` with :py:attr:`TileMode.kClamp` set
         replicates the bitmap edge color when it samples outside of its bounds.
 
-        constraint set to :py:attr:`SrcRectConstraint.kStrict` limits
-        :py:class:`Paint` :py:class:`FilterQuality` to sample within isrc; set to
-        :py:attr:`SrcRectConstraint.kFast` allows sampling outside to improve
+        constraint set to :py:attr:`kStrict_SrcRectConstraint` limits
+        :py:class:`Paint` :py:class:`FilterQuality` to sample within isrc; set
+        to :py:attr:`kFast_SrcRectConstraint` allows sampling outside to improve
         performance.
 
         :bitmap: :py:class:`Bitmap` containing pixels, dimensions, and format
@@ -2476,14 +2479,14 @@ canvas
         specification.
 
         Subsequent :py:class:`Canvas` calls draw into pixels.
-        :py:class:`ColorType` is set to :py:attr:`ColorType.kN32`.
-        :py:class:`AlphaType` is set to :py:attr:`AlphaType.kPremul`. To access
-        pixels after drawing, call flush() or peekPixels().
+        :py:class:`ColorType` is set to :py:attr:`ColorType.kN32_ColorType`.
+        :py:class:`AlphaType` is set to :py:attr:`AlphaType.kPremul_AlphaType`.
+        To access pixels after drawing, call flush() or peekPixels().
 
         :py:class:`Canvas` is returned if all parameters are valid. Valid
         parameters include: width and height are zero or positive; pixels is
         buffer object with sufficient length; rowBytes is zero or large enough
-        to contain width pixels of :py:attr:`ColorType.kN32`.
+        to contain width pixels of :py:attr:`ColorType.kN32_ColorType`.
 
         Pass zero for rowBytes to compute rowBytes from width and size of pixel.
         If rowBytes is greater than zero, it must be equal to or greater than

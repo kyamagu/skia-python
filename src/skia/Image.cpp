@@ -9,15 +9,15 @@ py::enum_<SkFilterQuality>(m, "FilterQuality", R"docstring(
     Controls how much filtering to be done when scaling/transforming complex
     colors e.g. image.
     )docstring")
-    .value("kNone", SkFilterQuality::kNone_SkFilterQuality,
+    .value("kNone_SkFilterQuality", SkFilterQuality::kNone_SkFilterQuality,
         "fastest but lowest quality, typically nearest-neighbor")
-    .value("kLow", SkFilterQuality::kLow_SkFilterQuality,
+    .value("kLow_SkFilterQuality", SkFilterQuality::kLow_SkFilterQuality,
         "typically bilerp")
-    .value("kMedium", SkFilterQuality::kMedium_SkFilterQuality,
+    .value("kMedium_SkFilterQuality", SkFilterQuality::kMedium_SkFilterQuality,
         "typically bilerp + mipmaps for down-scaling")
-    .value("kHigh", SkFilterQuality::kHigh_SkFilterQuality,
+    .value("kHigh_SkFilterQuality", SkFilterQuality::kHigh_SkFilterQuality,
         "slowest but highest quality, typically bicubic or better")
-    .value("kLast", SkFilterQuality::kLast_SkFilterQuality)
+    .value("kLast_SkFilterQuality", SkFilterQuality::kLast_SkFilterQuality)
     .export_values();
 
 py::enum_<SkTileMode>(m, "TileMode")

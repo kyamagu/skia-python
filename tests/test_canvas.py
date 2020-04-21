@@ -23,7 +23,7 @@ def bitmap():
 
 @pytest.fixture(scope='session')
 def vertices():
-    return skia.Vertices(skia.Vertices.VertexMode.kTriangles, [
+    return skia.Vertices(skia.Vertices.kTriangles_VertexMode, [
         (skia.Point(0, 0), skia.Point(1, 1), skia.ColorRED),
         (skia.Point(1, 1), skia.Point(1, 0), skia.ColorRED),
         (skia.Point(1, 0), skia.Point(0, 0), skia.ColorRED),
@@ -39,10 +39,10 @@ def check_canvas(x):
     (np.zeros((16, 16, 4), dtype=np.uint8),),
     (100, 100),
     (100, 100, None),
-    (100, 100, skia.SurfaceProps(skia.SurfaceProps.InitType.kLegacyFontHost)),
+    (100, 100, skia.SurfaceProps(skia.SurfaceProps.kLegacyFontHost_InitType)),
     (skia.Bitmap(),),
     (skia.Bitmap(),
-        skia.SurfaceProps(skia.SurfaceProps.InitType.kLegacyFontHost)),
+        skia.SurfaceProps(skia.SurfaceProps.kLegacyFontHost_InitType)),
 ])
 def test_Canvas_init(args):
     check_canvas(skia.Canvas(*args))
@@ -53,7 +53,7 @@ def test_Canvas_imageInfo(canvas):
 
 
 def test_Canvas_getProps(canvas):
-    props = skia.SurfaceProps(skia.SurfaceProps.InitType.kLegacyFontHost)
+    props = skia.SurfaceProps(skia.SurfaceProps.kLegacyFontHost_InitType)
     assert isinstance(canvas.getProps(props), bool)
 
 
@@ -68,7 +68,7 @@ def test_Canvas_getBaseLayerSize(canvas):
 @pytest.mark.parametrize('args', [
     tuple(),
     (None,),
-    (skia.SurfaceProps(skia.SurfaceProps.InitType.kLegacyFontHost),),
+    (skia.SurfaceProps(skia.SurfaceProps.kLegacyFontHost_InitType),),
 ])
 def test_Canvas_makeSurface(canvas, args):
     assert isinstance(canvas.makeSurface(canvas.imageInfo(), *args),
@@ -267,7 +267,7 @@ def test_Canvas_drawPaint(canvas):
 
 def test_Canvas_drawPoints(canvas):
     points = [skia.Point(0, 0), skia.Point(1, 1)]
-    canvas.drawPoints(skia.Canvas.PointMode.kPoints, points, skia.Paint())
+    canvas.drawPoints(skia.Canvas.kPoints_PointMode, points, skia.Paint())
 
 
 @pytest.mark.parametrize('args', [
@@ -342,11 +342,11 @@ def test_Canvas_drawImage(canvas, image, args):
     (skia.Rect(100, 100), skia.Rect(100, 100)),
     (skia.Rect(100, 100), skia.Rect(100, 100), skia.Paint()),
     (skia.Rect(100, 100), skia.Rect(100, 100), skia.Paint(),
-        skia.Canvas.kStrict),
+        skia.Canvas.kStrict_SrcRectConstraint),
     (skia.IRect(100, 100), skia.Rect(100, 100)),
     (skia.IRect(100, 100), skia.Rect(100, 100), skia.Paint()),
     (skia.IRect(100, 100), skia.Rect(100, 100), skia.Paint(),
-        skia.Canvas.kStrict),
+        skia.Canvas.kStrict_SrcRectConstraint),
     (skia.Rect(100, 100),),
     (skia.Rect(100, 100), skia.Paint()),
 ])
@@ -366,14 +366,14 @@ def test_Canvas_drawBitmap(canvas, bitmap, args):
     (skia.Rect(100, 100), skia.Rect(100, 100)),
     (skia.Rect(100, 100), skia.Rect(100, 100), skia.Paint()),
     (skia.Rect(100, 100), skia.Rect(100, 100), skia.Paint(),
-        skia.Canvas.kStrict),
+        skia.Canvas.kStrict_SrcRectConstraint),
     (skia.IRect(100, 100), skia.Rect(100, 100), skia.Paint()),
     (skia.IRect(100, 100), skia.Rect(100, 100), skia.Paint()),
     (skia.IRect(100, 100), skia.Rect(100, 100), skia.Paint(),
-        skia.Canvas.kStrict),
+        skia.Canvas.kStrict_SrcRectConstraint),
     (skia.Rect(100, 100),),
     (skia.Rect(100, 100), skia.Paint()),
-    (skia.Rect(100, 100), skia.Paint(), skia.Canvas.kStrict),
+    (skia.Rect(100, 100), skia.Paint(), skia.Canvas.kStrict_SrcRectConstraint),
 ])
 def test_Canvas_drawBitmapRect(canvas, bitmap, args):
     canvas.drawBitmapRect(bitmap, *args)
@@ -486,7 +486,7 @@ def test_Canvas_getLocalToDevice(canvas):
     (skia.ImageInfo.MakeN32Premul(4, 4), bytearray(64)),
     (skia.ImageInfo.MakeN32Premul(4, 4), bytearray(64), 16),
     (skia.ImageInfo.MakeN32Premul(4, 4), bytearray(64), 16,
-        skia.SurfaceProps(skia.SurfaceProps.InitType.kLegacyFontHost)),
+        skia.SurfaceProps(skia.SurfaceProps.kLegacyFontHost_InitType)),
 ])
 def test_Canvas_MakeRasterDirect(args):
     check_canvas(skia.Canvas.MakeRasterDirect(*args))

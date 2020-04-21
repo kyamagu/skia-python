@@ -21,8 +21,10 @@ def check_imageinfo(x):
 
 
 @pytest.mark.parametrize('args', [
-    (100, 100, skia.ColorType.kRGBA_8888, skia.AlphaType.kPremul),
-    (skia.ISize(100, 100), skia.ColorType.kRGBA_8888, skia.AlphaType.kPremul),
+    (100, 100, skia.ColorType.kRGBA_8888_ColorType,
+        skia.AlphaType.kPremul_AlphaType),
+    (skia.ISize(100, 100), skia.ColorType.kRGBA_8888_ColorType,
+        skia.AlphaType.kPremul_AlphaType),
     (skia.ISize(100, 100), skia.ColorInfo()),
 ])
 def test_ImageInfo_Make(args):
@@ -30,14 +32,15 @@ def test_ImageInfo_Make(args):
 
 
 @pytest.mark.parametrize('args', [
-    (100, 100, skia.AlphaType.kPremul),
+    (100, 100, skia.AlphaType.kPremul_AlphaType),
 ])
 def test_ImageInfo_MakeN32(args):
     check_imageinfo(skia.ImageInfo.MakeN32(*args))
 
 
 def test_ImageInfo_MakeS32():
-    check_imageinfo(skia.ImageInfo.MakeS32(100, 100, skia.AlphaType.kPremul))
+    check_imageinfo(
+        skia.ImageInfo.MakeS32(100, 100, skia.AlphaType.kPremul_AlphaType))
 
 
 @pytest.mark.parametrize('args', [
@@ -125,11 +128,13 @@ def test_ImageInfo_makeDimensions(imageinfo):
 
 
 def test_ImageInfo_makeAlphaType(imageinfo):
-    check_imageinfo(imageinfo.makeAlphaType(skia.AlphaType.kPremul))
+    check_imageinfo(imageinfo.makeAlphaType(skia.AlphaType.kPremul_AlphaType))
 
 
 def test_ImageInfo_makeColorType(imageinfo):
-    check_imageinfo(imageinfo.makeColorType(skia.ColorType.kRGBA_8888))
+    check_imageinfo(
+        imageinfo.makeColorType(skia.ColorType.kRGBA_8888_ColorType))
+
 
 
 # def test_ImageInfo_makeColorSpace(imageinfo):

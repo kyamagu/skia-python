@@ -11,11 +11,15 @@ py::enum_<GrBackendApi>(m, "GrBackendApi", R"docstring(
     .value("kDirect3D", GrBackendApi::kDirect3D)
     .value("kDawn", GrBackendApi::kDawn)
     .value("kMock", GrBackendApi::kMock,
-        "Mock is a backend that does not draw anything. It is used for unit "
-        "tests and to measure CPU overhead.")
+        R"docstring(
+        Mock is a backend that does not draw anything. It is used for unit tests
+        and to measure CPU overhead.
+        )docstring")
     .value("kOpenGL_GrBackend", GrBackendApi::kOpenGL_GrBackend,
-        "Added here to support the legacy GrBackend enum value and clients "
-        "who referenced it using GrBackend::kOpenGL_GrBackend.")
+        R"docstring(
+        Added here to support the legacy GrBackend enum value and clients who
+        referenced it using :py:attr:`~skia.GrBackend.kOpenGL_GrBackend`.
+        )docstring")
     .export_values();
 
 py::enum_<GrMipMapped>(m, "GrMipMapped", R"docstring(
@@ -49,28 +53,40 @@ py::enum_<GrGLBackendState>(m, "GrGLBackendState", R"docstring(
     These enums are specific to the GL backend and we'd add a new set for an
     alternative backend.
     )docstring")
-    .value("kRenderTarget", GrGLBackendState::kRenderTarget_GrGLBackendState)
-    .value("kTextureBinding",
+    .value("kRenderTarget_GrGLBackendState",
+        GrGLBackendState::kRenderTarget_GrGLBackendState)
+    .value("kTextureBinding_GrGLBackendState",
         GrGLBackendState::kTextureBinding_GrGLBackendState)
-    .value("kView", GrGLBackendState::kView_GrGLBackendState)
-    .value("kBlend", GrGLBackendState::kBlend_GrGLBackendState)
-    .value("kMSAAEnable", GrGLBackendState::kMSAAEnable_GrGLBackendState)
-    .value("kVertex", GrGLBackendState::kVertex_GrGLBackendState)
-    .value("kStencil", GrGLBackendState::kStencil_GrGLBackendState)
-    .value("kPixelStore", GrGLBackendState::kPixelStore_GrGLBackendState)
-    .value("kProgram", GrGLBackendState::kProgram_GrGLBackendState)
-    .value("kFixedFunction", GrGLBackendState::kFixedFunction_GrGLBackendState)
-    .value("kMisc", GrGLBackendState::kMisc_GrGLBackendState)
-    .value("kPathRendering", GrGLBackendState::kPathRendering_GrGLBackendState)
-    .value("kALL", GrGLBackendState::kALL_GrGLBackendState)
+    .value("kView_GrGLBackendState",
+        GrGLBackendState::kView_GrGLBackendState)
+    .value("kBlend_GrGLBackendState",
+        GrGLBackendState::kBlend_GrGLBackendState)
+    .value("kMSAAEnable_GrGLBackendState",
+        GrGLBackendState::kMSAAEnable_GrGLBackendState)
+    .value("kVertex_GrGLBackendState",
+        GrGLBackendState::kVertex_GrGLBackendState)
+    .value("kStencil_GrGLBackendState",
+        GrGLBackendState::kStencil_GrGLBackendState)
+    .value("kPixelStore_GrGLBackendState",
+        GrGLBackendState::kPixelStore_GrGLBackendState)
+    .value("kProgram_GrGLBackendState",
+        GrGLBackendState::kProgram_GrGLBackendState)
+    .value("kFixedFunction_GrGLBackendState",
+        GrGLBackendState::kFixedFunction_GrGLBackendState)
+    .value("kMisc_GrGLBackendState",
+        GrGLBackendState::kMisc_GrGLBackendState)
+    .value("kPathRendering_GrGLBackendState",
+        GrGLBackendState::kPathRendering_GrGLBackendState)
+    .value("kALL_GrGLBackendState",
+        GrGLBackendState::kALL_GrGLBackendState)
     .export_values();
 
 py::enum_<GrFlushFlags>(m, "GrFlushFlags", R"docstring(
     Enum used as return value when flush with semaphores so the client knows
     whether the semaphores were submitted to GPU or not.
     )docstring")
-    .value("kNone", GrFlushFlags::kNone_GrFlushFlags)
-    .value("kSyncCpu", GrFlushFlags::kSyncCpu_GrFlushFlag)
+    .value("kNone_GrFlushFlags", GrFlushFlags::kNone_GrFlushFlags)
+    .value("kSyncCpu_GrFlushFlag", GrFlushFlags::kSyncCpu_GrFlushFlag)
     .export_values();
 
 py::enum_<GrSemaphoresSubmitted>(m, "GrSemaphoresSubmitted")
