@@ -161,16 +161,16 @@ are zero, then nullptr will be returned.</p>
 <col style="width: 90%" />
 </colgroup>
 <tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Surface.kDiscard" title="skia.Surface.kDiscard"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kDiscard</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Surface.kDiscardWrite_BackendHandleAccess" title="skia.Surface.kDiscardWrite_BackendHandleAccess"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kDiscardWrite_BackendHandleAccess</span></code></a></p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#skia.Surface.kDiscardWrite" title="skia.Surface.kDiscardWrite"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kDiscardWrite</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.Surface.kDiscard_ContentChangeMode" title="skia.Surface.kDiscard_ContentChangeMode"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kDiscard_ContentChangeMode</span></code></a></p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Surface.kFlushRead" title="skia.Surface.kFlushRead"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kFlushRead</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Surface.kFlushRead_BackendHandleAccess" title="skia.Surface.kFlushRead_BackendHandleAccess"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kFlushRead_BackendHandleAccess</span></code></a></p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#skia.Surface.kFlushWrite" title="skia.Surface.kFlushWrite"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kFlushWrite</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.Surface.kFlushWrite_BackendHandleAccess" title="skia.Surface.kFlushWrite_BackendHandleAccess"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kFlushWrite_BackendHandleAccess</span></code></a></p></td>
 <td><p></p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#skia.Surface.kLinear" title="skia.Surface.kLinear"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kLinear</span></code></a></p></td>
@@ -185,7 +185,7 @@ are zero, then nullptr will be returned.</p>
 <tr class="row-even"><td><p><a class="reference internal" href="#skia.Surface.kPresent" title="skia.Surface.kPresent"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kPresent</span></code></a></p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Surface.kRetain" title="skia.Surface.kRetain"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kRetain</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Surface.kRetain_ContentChangeMode" title="skia.Surface.kRetain_ContentChangeMode"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kRetain_ContentChangeMode</span></code></a></p></td>
 <td><p></p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#skia.Surface.kSrc" title="skia.Surface.kSrc"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kSrc</span></code></a></p></td>
@@ -283,7 +283,8 @@ independent fonts; may be nullptr</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p><a class="reference internal" href="#skia.Surface" title="skia.Surface"><code class="xref py py-class docutils literal notranslate"><span class="pre">Surface</span></code></a> if all parameters are valid; otherwise, nullptr</p>
+<dd class="field-even"><p><a class="reference internal" href="#skia.Surface" title="skia.Surface"><code class="xref py py-class docutils literal notranslate"><span class="pre">Surface</span></code></a> if all parameters are valid; otherwise,
+nullptr</p>
 </dd>
 </dl>
 </dd></dl>
@@ -297,7 +298,7 @@ pixels. Allocates and zeroes pixel memory. Pixel memory size is height
 times width times four. Pixel memory is deleted when <a class="reference internal" href="#skia.Surface" title="skia.Surface"><code class="xref py py-class docutils literal notranslate"><span class="pre">Surface</span></code></a>
 is deleted.</p>
 <p>Internally, sets <a class="reference internal" href="skia.ImageInfo.html#skia.ImageInfo" title="skia.ImageInfo"><code class="xref py py-class docutils literal notranslate"><span class="pre">ImageInfo</span></code></a> to width, height, native color
-type, and <a class="reference internal" href="skia.AlphaType.html#skia.AlphaType.kPremul" title="skia.AlphaType.kPremul"><code class="xref py py-attr docutils literal notranslate"><span class="pre">AlphaType.kPremul</span></code></a>.</p>
+type, and <code class="xref py py-attr docutils literal notranslate"><span class="pre">AlphaType.kPremul</span></code>.</p>
 <p><a class="reference internal" href="#skia.Surface" title="skia.Surface"><code class="xref py py-class docutils literal notranslate"><span class="pre">Surface</span></code></a> is returned if width and height are greater than
 zero.</p>
 <p>Use to create <a class="reference internal" href="#skia.Surface" title="skia.Surface"><code class="xref py py-class docutils literal notranslate"><span class="pre">Surface</span></code></a> that matches <code class="xref py py-class docutils literal notranslate"><span class="pre">PMColor</span></code>, the
@@ -685,7 +686,7 @@ destination.</p>
 (width(), height()). Destination <a class="reference internal" href="skia.Rect.html#skia.Rect" title="skia.Rect"><code class="xref py py-class docutils literal notranslate"><span class="pre">Rect</span></code></a> corners are (0, 0) and
 (array.shape[1], array.shape[0]). Copies each readable pixel
 intersecting both rectangles, without scaling, converting to
-<code class="xref py py-attr docutils literal notranslate"><span class="pre">ColorType.kN32</span></code> and <a class="reference internal" href="skia.AlphaType.html#skia.AlphaType.kPremul" title="skia.AlphaType.kPremul"><code class="xref py py-attr docutils literal notranslate"><span class="pre">AlphaType.kPremul</span></code></a> if required.</p>
+<code class="xref py py-attr docutils literal notranslate"><span class="pre">ColorType.kN32</span></code> and <code class="xref py py-attr docutils literal notranslate"><span class="pre">AlphaType.kPremul</span></code> if required.</p>
 <p>Pixels are readable when <code class="xref py py-class docutils literal notranslate"><span class="pre">BaseDevice</span></code> is raster, or backed by
 a GPU.</p>
 <p>The destination pixel storage must be allocated by the caller.</p>
@@ -699,7 +700,7 @@ destination.</p>
 <ul class="simple">
 <li><p>Source and destination rectangles do not intersect.</p></li>
 <li><dl class="simple">
-<dt><a class="reference internal" href="#skia.Surface" title="skia.Surface"><code class="xref py py-class docutils literal notranslate"><span class="pre">Surface</span></code></a> pixels could not be converted to</dt><dd><p><code class="xref py py-attr docutils literal notranslate"><span class="pre">ColorType.kN32</span></code> or <a class="reference internal" href="skia.AlphaType.html#skia.AlphaType.kPremul" title="skia.AlphaType.kPremul"><code class="xref py py-attr docutils literal notranslate"><span class="pre">AlphaType.kPremul</span></code></a>.</p>
+<dt><a class="reference internal" href="#skia.Surface" title="skia.Surface"><code class="xref py py-class docutils literal notranslate"><span class="pre">Surface</span></code></a> pixels could not be converted to</dt><dd><p><code class="xref py py-attr docutils literal notranslate"><span class="pre">ColorType.kN32</span></code> or <code class="xref py py-attr docutils literal notranslate"><span class="pre">AlphaType.kPremul</span></code>.</p>
 </dd>
 </dl>
 </li>
@@ -863,23 +864,23 @@ may be negative</p>
 <div class="section" id="attributes">
 <h2>Attributes<a class="headerlink" href="#attributes" title="Permalink to this headline">¶</a></h2>
 <dl class="py attribute">
-<dt id="skia.Surface.kDiscard">
-<code class="sig-prename descclassname">Surface.</code><code class="sig-name descname">kDiscard</code><em class="property"> = ContentChangeMode.kDiscard</em><a class="headerlink" href="#skia.Surface.kDiscard" title="Permalink to this definition">¶</a></dt>
+<dt id="skia.Surface.kDiscardWrite_BackendHandleAccess">
+<code class="sig-prename descclassname">Surface.</code><code class="sig-name descname">kDiscardWrite_BackendHandleAccess</code><em class="property"> = BackendHandleAccess.kDiscardWrite_BackendHandleAccess</em><a class="headerlink" href="#skia.Surface.kDiscardWrite_BackendHandleAccess" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
-<dt id="skia.Surface.kDiscardWrite">
-<code class="sig-prename descclassname">Surface.</code><code class="sig-name descname">kDiscardWrite</code><em class="property"> = BackendHandleAccess.kDiscardWrite</em><a class="headerlink" href="#skia.Surface.kDiscardWrite" title="Permalink to this definition">¶</a></dt>
+<dt id="skia.Surface.kDiscard_ContentChangeMode">
+<code class="sig-prename descclassname">Surface.</code><code class="sig-name descname">kDiscard_ContentChangeMode</code><em class="property"> = ContentChangeMode.kDiscard_ContentChangeMode</em><a class="headerlink" href="#skia.Surface.kDiscard_ContentChangeMode" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
-<dt id="skia.Surface.kFlushRead">
-<code class="sig-prename descclassname">Surface.</code><code class="sig-name descname">kFlushRead</code><em class="property"> = BackendHandleAccess.kFlushRead</em><a class="headerlink" href="#skia.Surface.kFlushRead" title="Permalink to this definition">¶</a></dt>
+<dt id="skia.Surface.kFlushRead_BackendHandleAccess">
+<code class="sig-prename descclassname">Surface.</code><code class="sig-name descname">kFlushRead_BackendHandleAccess</code><em class="property"> = BackendHandleAccess.kFlushRead_BackendHandleAccess</em><a class="headerlink" href="#skia.Surface.kFlushRead_BackendHandleAccess" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
-<dt id="skia.Surface.kFlushWrite">
-<code class="sig-prename descclassname">Surface.</code><code class="sig-name descname">kFlushWrite</code><em class="property"> = BackendHandleAccess.kFlushWrite</em><a class="headerlink" href="#skia.Surface.kFlushWrite" title="Permalink to this definition">¶</a></dt>
+<dt id="skia.Surface.kFlushWrite_BackendHandleAccess">
+<code class="sig-prename descclassname">Surface.</code><code class="sig-name descname">kFlushWrite_BackendHandleAccess</code><em class="property"> = BackendHandleAccess.kFlushWrite_BackendHandleAccess</em><a class="headerlink" href="#skia.Surface.kFlushWrite_BackendHandleAccess" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
@@ -903,8 +904,8 @@ may be negative</p>
 <dd></dd></dl>
 
 <dl class="py attribute">
-<dt id="skia.Surface.kRetain">
-<code class="sig-prename descclassname">Surface.</code><code class="sig-name descname">kRetain</code><em class="property"> = ContentChangeMode.kRetain</em><a class="headerlink" href="#skia.Surface.kRetain" title="Permalink to this definition">¶</a></dt>
+<dt id="skia.Surface.kRetain_ContentChangeMode">
+<code class="sig-prename descclassname">Surface.</code><code class="sig-name descname">kRetain_ContentChangeMode</code><em class="property"> = ContentChangeMode.kRetain_ContentChangeMode</em><a class="headerlink" href="#skia.Surface.kRetain_ContentChangeMode" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
