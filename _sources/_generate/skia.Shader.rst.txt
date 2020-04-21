@@ -12,13 +12,17 @@ Shader
    .. autosummary::
       :nosignatures:
    
+      ~Shader.Deserialize
       ~Shader.__init__
       ~Shader.asAGradient
+      ~Shader.getFlattenableType
+      ~Shader.getTypeName
       ~Shader.isAImage
       ~Shader.isOpaque
       ~Shader.makeWithColorFilter
       ~Shader.makeWithLocalMatrix
       ~Shader.ref
+      ~Shader.serialize
       ~Shader.unique
       ~Shader.unref
    
@@ -31,23 +35,24 @@ Shader
    .. autosummary::
    
       ~Shader.kColor
+      ~Shader.kColorFilter
       ~Shader.kConical
+      ~Shader.kDrawLooper
+      ~Shader.kDrawable
+      ~Shader.kImageFilter
       ~Shader.kLast
       ~Shader.kLinear
+      ~Shader.kMaskFilter
       ~Shader.kNone
+      ~Shader.kPathEffect
+      ~Shader.kPixelRef
       ~Shader.kRadial
-      ~Shader.kSkColorFilter
-      ~Shader.kSkDrawLooper
-      ~Shader.kSkDrawable
-      ~Shader.kSkImageFilter
-      ~Shader.kSkMaskFilter
-      ~Shader.kSkPathEffect
-      ~Shader.kSkPixelRef
-      ~Shader.kSkShaderBase
-      ~Shader.kSkUnused
-      ~Shader.kSkUnused2
-      ~Shader.kSkUnused4
+      ~Shader.kShaderBase
       ~Shader.kSweep
+      ~Shader.kUnused
+      ~Shader.kUnused2
+      ~Shader.kUnused3
+      ~Shader.kUnused4
    
    
 
@@ -59,9 +64,15 @@ Methods
 
 
 
+.. automethod:: skia.Shader.Deserialize
+
 .. automethod:: skia.Shader.__init__
 
 .. automethod:: skia.Shader.asAGradient
+
+.. automethod:: skia.Shader.getFlattenableType
+
+.. automethod:: skia.Shader.getTypeName
 
 .. automethod:: skia.Shader.isAImage
 
@@ -72,6 +83,8 @@ Methods
 .. automethod:: skia.Shader.makeWithLocalMatrix
 
 .. automethod:: skia.Shader.ref
+
+.. automethod:: skia.Shader.serialize
 
 .. automethod:: skia.Shader.unique
 
@@ -89,37 +102,39 @@ Attributes
 
 .. autoattribute:: skia.Shader.kColor
 
+.. autoattribute:: skia.Shader.kColorFilter
+
 .. autoattribute:: skia.Shader.kConical
+
+.. autoattribute:: skia.Shader.kDrawLooper
+
+.. autoattribute:: skia.Shader.kDrawable
+
+.. autoattribute:: skia.Shader.kImageFilter
 
 .. autoattribute:: skia.Shader.kLast
 
 .. autoattribute:: skia.Shader.kLinear
 
+.. autoattribute:: skia.Shader.kMaskFilter
+
 .. autoattribute:: skia.Shader.kNone
+
+.. autoattribute:: skia.Shader.kPathEffect
+
+.. autoattribute:: skia.Shader.kPixelRef
 
 .. autoattribute:: skia.Shader.kRadial
 
-.. autoattribute:: skia.Shader.kSkColorFilter
-
-.. autoattribute:: skia.Shader.kSkDrawLooper
-
-.. autoattribute:: skia.Shader.kSkDrawable
-
-.. autoattribute:: skia.Shader.kSkImageFilter
-
-.. autoattribute:: skia.Shader.kSkMaskFilter
-
-.. autoattribute:: skia.Shader.kSkPathEffect
-
-.. autoattribute:: skia.Shader.kSkPixelRef
-
-.. autoattribute:: skia.Shader.kSkShaderBase
-
-.. autoattribute:: skia.Shader.kSkUnused
-
-.. autoattribute:: skia.Shader.kSkUnused2
-
-.. autoattribute:: skia.Shader.kSkUnused4
+.. autoattribute:: skia.Shader.kShaderBase
 
 .. autoattribute:: skia.Shader.kSweep
+
+.. autoattribute:: skia.Shader.kUnused
+
+.. autoattribute:: skia.Shader.kUnused2
+
+.. autoattribute:: skia.Shader.kUnused3
+
+.. autoattribute:: skia.Shader.kUnused4
 
