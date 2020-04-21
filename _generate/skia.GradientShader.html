@@ -4,7 +4,7 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <title>Canvas.PointMode &#8212; skia-python 0.0.1 documentation</title>
+    <title>GradientShader &#8212; skia-python 0.0.1 documentation</title>
     <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
@@ -14,8 +14,8 @@
     <script src="../_static/language_data.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Canvas.QuadAAFlags" href="skia.Canvas.QuadAAFlags.html" />
-    <link rel="prev" title="Canvas.SrcRectConstraint" href="skia.Canvas.SrcRectConstraint.html" />
+    <link rel="next" title="GradientShader.Flags" href="skia.GradientShader.Flags.html" />
+    <link rel="prev" title="FontStyleSet" href="skia.FontStyleSet.html" />
    
   <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
   
@@ -32,29 +32,32 @@
 
           <div class="body" role="main">
             
-  <div class="section" id="canvas-pointmode">
-<h1>Canvas.PointMode<a class="headerlink" href="#canvas-pointmode" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="gradientshader">
+<h1>GradientShader<a class="headerlink" href="#gradientshader" title="Permalink to this headline">¶</a></h1>
 <dl class="py class">
-<dt id="skia.Canvas.PointMode">
-<em class="property">class </em><code class="sig-name descname">PointMode</code><a class="headerlink" href="#skia.Canvas.PointMode" title="Permalink to this definition">¶</a></dt>
-<dd><p>Members:</p>
-<dl class="simple">
-<dt>kPolygon_PointMode :</dt><dd><p>draw the array of points as a open polygon</p>
-</dd>
-<dt>kLines_PointMode :</dt><dd><p>draw each pair of points as a line segment</p>
-</dd>
-<dt>kPoints_PointMode :</dt><dd><p>draw each point separately</p>
-</dd>
-</dl>
-<p class="rubric">Methods</p>
+<dt id="skia.GradientShader">
+<em class="property">class </em><code class="sig-name descname">GradientShader</code><a class="headerlink" href="#skia.GradientShader" title="Permalink to this definition">¶</a></dt>
+<dd><p class="rubric">Methods</p>
 <table class="longtable docutils align-default">
 <colgroup>
 <col style="width: 10%" />
 <col style="width: 90%" />
 </colgroup>
 <tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Canvas.PointMode.__init__" title="skia.Canvas.PointMode.__init__"><code class="xref py py-obj docutils literal notranslate"><span class="pre">__init__</span></code></a></p></td>
-<td><p></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.GradientShader.MakeLinear" title="skia.GradientShader.MakeLinear"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MakeLinear</span></code></a></p></td>
+<td><p>Returns a shader that generates a linear gradient between the two specified points.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.GradientShader.MakeRadial" title="skia.GradientShader.MakeRadial"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MakeRadial</span></code></a></p></td>
+<td><p>Returns a shader that generates a radial gradient given the center and radius.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.GradientShader.MakeSweep" title="skia.GradientShader.MakeSweep"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MakeSweep</span></code></a></p></td>
+<td><p>Returns a shader that generates a conical gradient given two circles, or returns NULL if the inputs are invalid.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.GradientShader.MakeTwoPointConical" title="skia.GradientShader.MakeTwoPointConical"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MakeTwoPointConical</span></code></a></p></td>
+<td><p>Returns a shader that generates a conical gradient given two circles, or returns NULL if the inputs are invalid.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.GradientShader.__init__" title="skia.GradientShader.__init__"><code class="xref py py-obj docutils literal notranslate"><span class="pre">__init__</span></code></a></p></td>
+<td><p>Initialize self.</p></td>
 </tr>
 </tbody>
 </table>
@@ -65,17 +68,8 @@
 <col style="width: 90%" />
 </colgroup>
 <tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Canvas.PointMode.kLines_PointMode" title="skia.Canvas.PointMode.kLines_PointMode"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kLines_PointMode</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.GradientShader.kInterpolateColorsInPremul_Flag" title="skia.GradientShader.kInterpolateColorsInPremul_Flag"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kInterpolateColorsInPremul_Flag</span></code></a></p></td>
 <td><p></p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#skia.Canvas.PointMode.kPoints_PointMode" title="skia.Canvas.PointMode.kPoints_PointMode"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kPoints_PointMode</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Canvas.PointMode.kPolygon_PointMode" title="skia.Canvas.PointMode.kPolygon_PointMode"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kPolygon_PointMode</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#skia.Canvas.PointMode.name" title="skia.Canvas.PointMode.name"><code class="xref py py-obj docutils literal notranslate"><span class="pre">name</span></code></a></p></td>
-<td><p>handle) -&gt; str</p></td>
 </tr>
 </tbody>
 </table>
@@ -84,38 +78,88 @@
 <div class="section" id="methods">
 <h2>Methods<a class="headerlink" href="#methods" title="Permalink to this headline">¶</a></h2>
 <dl class="py method">
-<dt id="skia.Canvas.PointMode.__init__">
-<code class="sig-prename descclassname">PointMode.</code><code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Canvas.PointMode" title="skia.Canvas.PointMode">skia.Canvas.PointMode</a></span></em>, <em class="sig-param"><span class="n">arg0</span><span class="p">:</span> <span class="n">int</span></em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#skia.Canvas.PointMode.__init__" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dt id="skia.GradientShader.MakeLinear">
+<em class="property">static </em><code class="sig-prename descclassname">GradientShader.</code><code class="sig-name descname">MakeLinear</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">pts</span><span class="p">:</span> <span class="n">List<span class="p">[</span><a class="reference internal" href="skia.Point.html#skia.Point" title="skia.Point">skia.Point</a><span class="p">]</span></span></em>, <em class="sig-param"><span class="n">colors</span><span class="p">:</span> <span class="n">List<span class="p">[</span>int<span class="p">]</span></span></em>, <em class="sig-param"><span class="n">pos</span><span class="p">:</span> <span class="n">List<span class="p">[</span>float<span class="p">]</span></span></em>, <em class="sig-param"><span class="n">mode</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.TileMode.html#skia.TileMode" title="skia.TileMode">skia.TileMode</a></span> <span class="o">=</span> <span class="default_value">TileMode.kClamp</span></em>, <em class="sig-param"><span class="n">flags</span><span class="p">:</span> <span class="n">int</span> <span class="o">=</span> <span class="default_value">0</span></em>, <em class="sig-param"><span class="n">localMatrix</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.Matrix.html#skia.Matrix" title="skia.Matrix">skia.Matrix</a></span> <span class="o">=</span> <span class="default_value">None</span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="skia.Shader.html#skia.Shader" title="skia.Shader">skia.Shader</a><a class="headerlink" href="#skia.GradientShader.MakeLinear" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a shader that generates a linear gradient between the two
+specified points.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>pts</strong> (<em>List</em><em>[</em><a class="reference internal" href="skia.Point.html#skia.Point" title="skia.Point"><em>skia.Point</em></a><em>]</em>) – The start and end points for the gradient.</p></li>
+<li><p><strong>colors</strong> (<em>List</em><em>[</em><em>int</em><em>]</em>) – The array of colors, to be distributed
+between the two points</p></li>
+<li><p><strong>pos</strong> (<em>List</em><em>[</em><em>float</em><em>]</em>) – May be empty list. array of Scalars, or NULL,
+of the relative position of each corresponding color in the colors
+array. If this is NULL, the the colors are distributed evenly
+between the start and end point. If this is not null, the values
+must begin with 0, end with 1.0, and intermediate values must be
+strictly increasing.</p></li>
+<li><p><strong>mode</strong> (<a class="reference internal" href="skia.TileMode.html#skia.TileMode" title="skia.TileMode"><em>skia.TileMode</em></a>) – The tiling mode</p></li>
+<li><p><strong>localMatrix</strong> – Local matrix</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="skia.GradientShader.MakeRadial">
+<em class="property">static </em><code class="sig-prename descclassname">GradientShader.</code><code class="sig-name descname">MakeRadial</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">center</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.Point.html#skia.Point" title="skia.Point">skia.Point</a></span></em>, <em class="sig-param"><span class="n">radius</span><span class="p">:</span> <span class="n">float</span></em>, <em class="sig-param"><span class="n">colors</span><span class="p">:</span> <span class="n">List<span class="p">[</span>int<span class="p">]</span></span></em>, <em class="sig-param"><span class="n">pos</span><span class="p">:</span> <span class="n">List<span class="p">[</span>float<span class="p">]</span></span></em>, <em class="sig-param"><span class="n">mode</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.TileMode.html#skia.TileMode" title="skia.TileMode">skia.TileMode</a></span> <span class="o">=</span> <span class="default_value">TileMode.kClamp</span></em>, <em class="sig-param"><span class="n">flags</span><span class="p">:</span> <span class="n">int</span> <span class="o">=</span> <span class="default_value">0</span></em>, <em class="sig-param"><span class="n">localMatrix</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.Matrix.html#skia.Matrix" title="skia.Matrix">skia.Matrix</a></span> <span class="o">=</span> <span class="default_value">None</span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="skia.Shader.html#skia.Shader" title="skia.Shader">skia.Shader</a><a class="headerlink" href="#skia.GradientShader.MakeRadial" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a shader that generates a radial gradient given the center and
+radius.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>center</strong> (<a class="reference internal" href="skia.Point.html#skia.Point" title="skia.Point"><em>skia.Point</em></a>) – The center of the circle for this gradient</p></li>
+<li><p><strong>radius</strong> (<em>float</em>) – Must be positive. The radius of the circle for
+this gradient</p></li>
+<li><p><strong>colors</strong> (<em>List</em><em>[</em><em>int</em><em>]</em>) – The array of colors, to be distributed between
+the center and edge of the circle</p></li>
+<li><p><strong>pos</strong> (<em>List</em><em>[</em><em>float</em><em>]</em>) – May be empty list. The array of Scalars, or
+NULL, of the relative position of each corresponding color in the
+colors array. If this is NULL, the the colors are distributed evenly
+between the center and edge of the circle. If this is not null, the
+values must begin with 0, end with 1.0, and intermediate values must
+be strictly increasing.</p></li>
+<li><p><strong>mode</strong> (<a class="reference internal" href="skia.TileMode.html#skia.TileMode" title="skia.TileMode"><em>skia.TileMode</em></a>) – The tiling mode</p></li>
+<li><p><strong>localMatrix</strong> – Local matrix</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="skia.GradientShader.MakeSweep">
+<em class="property">static </em><code class="sig-prename descclassname">GradientShader.</code><code class="sig-name descname">MakeSweep</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">cx</span><span class="p">:</span> <span class="n">float</span></em>, <em class="sig-param"><span class="n">cy</span><span class="p">:</span> <span class="n">float</span></em>, <em class="sig-param"><span class="n">colors</span><span class="p">:</span> <span class="n">List<span class="p">[</span>int<span class="p">]</span></span></em>, <em class="sig-param"><span class="n">pos</span><span class="p">:</span> <span class="n">List<span class="p">[</span>float<span class="p">]</span></span></em>, <em class="sig-param"><span class="n">mode</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.TileMode.html#skia.TileMode" title="skia.TileMode">skia.TileMode</a></span> <span class="o">=</span> <span class="default_value">TileMode.kClamp</span></em>, <em class="sig-param"><span class="n">startAngle</span><span class="p">:</span> <span class="n">float</span> <span class="o">=</span> <span class="default_value">0</span></em>, <em class="sig-param"><span class="n">endAngle</span><span class="p">:</span> <span class="n">float</span> <span class="o">=</span> <span class="default_value">360</span></em>, <em class="sig-param"><span class="n">flags</span><span class="p">:</span> <span class="n">int</span> <span class="o">=</span> <span class="default_value">0</span></em>, <em class="sig-param"><span class="n">localMatrix</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.Matrix.html#skia.Matrix" title="skia.Matrix">skia.Matrix</a></span> <span class="o">=</span> <span class="default_value">None</span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="skia.Shader.html#skia.Shader" title="skia.Shader">skia.Shader</a><a class="headerlink" href="#skia.GradientShader.MakeSweep" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a shader that generates a conical gradient given two circles, or
+returns NULL if the inputs are invalid.</p>
+<p>The gradient interprets the two circles according to the following HTML
+spec.
+<a class="reference external" href="http://dev.w3.org/html5/2dcontext/#dom-context-2d-createradialgradient">http://dev.w3.org/html5/2dcontext/#dom-context-2d-createradialgradient</a></p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="skia.GradientShader.MakeTwoPointConical">
+<em class="property">static </em><code class="sig-prename descclassname">GradientShader.</code><code class="sig-name descname">MakeTwoPointConical</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">start</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.Point.html#skia.Point" title="skia.Point">skia.Point</a></span></em>, <em class="sig-param"><span class="n">startRadius</span><span class="p">:</span> <span class="n">float</span></em>, <em class="sig-param"><span class="n">end</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.Point.html#skia.Point" title="skia.Point">skia.Point</a></span></em>, <em class="sig-param"><span class="n">endRadius</span><span class="p">:</span> <span class="n">float</span></em>, <em class="sig-param"><span class="n">colors</span><span class="p">:</span> <span class="n">List<span class="p">[</span>int<span class="p">]</span></span></em>, <em class="sig-param"><span class="n">pos</span><span class="p">:</span> <span class="n">List<span class="p">[</span>float<span class="p">]</span></span></em>, <em class="sig-param"><span class="n">mode</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.TileMode.html#skia.TileMode" title="skia.TileMode">skia.TileMode</a></span> <span class="o">=</span> <span class="default_value">TileMode.kClamp</span></em>, <em class="sig-param"><span class="n">flags</span><span class="p">:</span> <span class="n">int</span> <span class="o">=</span> <span class="default_value">0</span></em>, <em class="sig-param"><span class="n">localMatrix</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.Matrix.html#skia.Matrix" title="skia.Matrix">skia.Matrix</a></span> <span class="o">=</span> <span class="default_value">None</span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="skia.Shader.html#skia.Shader" title="skia.Shader">skia.Shader</a><a class="headerlink" href="#skia.GradientShader.MakeTwoPointConical" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a shader that generates a conical gradient given two circles, or
+returns NULL if the inputs are invalid.</p>
+<p>The gradient interprets the two circles according to the following HTML
+spec.
+<a class="reference external" href="http://dev.w3.org/html5/2dcontext/#dom-context-2d-createradialgradient">http://dev.w3.org/html5/2dcontext/#dom-context-2d-createradialgradient</a></p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="skia.GradientShader.__init__">
+<code class="sig-prename descclassname">GradientShader.</code><code class="sig-name descname">__init__</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#skia.GradientShader.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Initialize self.  See help(type(self)) for accurate signature.</p>
+</dd></dl>
 
 </div>
 <div class="section" id="attributes">
 <h2>Attributes<a class="headerlink" href="#attributes" title="Permalink to this headline">¶</a></h2>
 <dl class="py attribute">
-<dt id="skia.Canvas.PointMode.kLines_PointMode">
-<code class="sig-prename descclassname">PointMode.</code><code class="sig-name descname">kLines_PointMode</code><em class="property"> = PointMode.kLines_PointMode</em><a class="headerlink" href="#skia.Canvas.PointMode.kLines_PointMode" title="Permalink to this definition">¶</a></dt>
+<dt id="skia.GradientShader.kInterpolateColorsInPremul_Flag">
+<code class="sig-prename descclassname">GradientShader.</code><code class="sig-name descname">kInterpolateColorsInPremul_Flag</code><em class="property"> = Flags.kInterpolateColorsInPremul_Flag</em><a class="headerlink" href="#skia.GradientShader.kInterpolateColorsInPremul_Flag" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
-
-<dl class="py attribute">
-<dt id="skia.Canvas.PointMode.kPoints_PointMode">
-<code class="sig-prename descclassname">PointMode.</code><code class="sig-name descname">kPoints_PointMode</code><em class="property"> = PointMode.kPoints_PointMode</em><a class="headerlink" href="#skia.Canvas.PointMode.kPoints_PointMode" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt id="skia.Canvas.PointMode.kPolygon_PointMode">
-<code class="sig-prename descclassname">PointMode.</code><code class="sig-name descname">kPolygon_PointMode</code><em class="property"> = PointMode.kPolygon_PointMode</em><a class="headerlink" href="#skia.Canvas.PointMode.kPolygon_PointMode" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt id="skia.Canvas.PointMode.name">
-<code class="sig-prename descclassname">PointMode.</code><code class="sig-name descname">name</code><a class="headerlink" href="#skia.Canvas.PointMode.name" title="Permalink to this definition">¶</a></dt>
-<dd><p>handle) -&gt; str</p>
-<dl class="field-list simple">
-<dt class="field-odd">Type</dt>
-<dd class="field-odd"><p>(self</p>
-</dd>
-</dl>
-</dd></dl>
 
 </div>
 </div>
@@ -153,7 +197,7 @@
 <li class="toctree-l2"><a class="reference internal" href="skia.Canvas.html">Canvas</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.Canvas.SaveLayerFlags.html">Canvas.SaveLayerFlags</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.Canvas.SrcRectConstraint.html">Canvas.SrcRectConstraint</a></li>
-<li class="toctree-l2 current"><a class="current reference internal" href="#">Canvas.PointMode</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.Canvas.PointMode.html">Canvas.PointMode</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.Canvas.QuadAAFlags.html">Canvas.QuadAAFlags</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.Canvas.SaveLayerRec.html">Canvas.SaveLayerRec</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.Canvas.Lattice.html">Canvas.Lattice</a></li>
@@ -179,7 +223,7 @@
 <li class="toctree-l2"><a class="reference internal" href="skia.FontMgr.html">FontMgr</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.FontStyle.html">FontStyle</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.FontStyleSet.html">FontStyleSet</a></li>
-<li class="toctree-l2"><a class="reference internal" href="skia.GradientShader.html">GradientShader</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">GradientShader</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.GradientShader.Flags.html">GradientShader.Flags</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.GrBackendApi.html">GrBackendApi</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.GrBackendSemaphore.html">GrBackendSemaphore</a></li>
@@ -270,8 +314,8 @@
 <ul>
   <li><a href="../index.html">Documentation overview</a><ul>
   <li><a href="../reference.html">Reference</a><ul>
-      <li>Previous: <a href="skia.Canvas.SrcRectConstraint.html" title="previous chapter">Canvas.SrcRectConstraint</a></li>
-      <li>Next: <a href="skia.Canvas.QuadAAFlags.html" title="next chapter">Canvas.QuadAAFlags</a></li>
+      <li>Previous: <a href="skia.FontStyleSet.html" title="previous chapter">FontStyleSet</a></li>
+      <li>Next: <a href="skia.GradientShader.Flags.html" title="next chapter">GradientShader.Flags</a></li>
   </ul></li>
   </ul></li>
 </ul>
@@ -306,7 +350,7 @@
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
       |
-      <a href="../_sources/_generate/skia.Canvas.PointMode.rst.txt"
+      <a href="../_sources/_generate/skia.GradientShader.rst.txt"
           rel="nofollow">Page source</a>
     </div>
 

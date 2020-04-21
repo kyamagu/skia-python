@@ -52,6 +52,8 @@ Reference
     FontMgr
     FontStyle
     FontStyleSet
+    GradientShader
+    GradientShader.Flags
     GrBackendApi
     GrBackendSemaphore
     GrBackendTexture
@@ -96,6 +98,7 @@ Reference
     PathFillType
     PathSegmentMask
     PathVerb
+    PerlinNoiseShader
     Picture
     PictureRecorder
     PixelGeometry
@@ -107,6 +110,7 @@ Reference
     Rect
     Region
     Shader
+    Shaders
     Size
     StrokePathEffect
     StrokeRec

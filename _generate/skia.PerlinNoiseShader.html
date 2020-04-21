@@ -4,7 +4,7 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <title>Canvas.PointMode &#8212; skia-python 0.0.1 documentation</title>
+    <title>PerlinNoiseShader &#8212; skia-python 0.0.1 documentation</title>
     <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
@@ -14,8 +14,8 @@
     <script src="../_static/language_data.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Canvas.QuadAAFlags" href="skia.Canvas.QuadAAFlags.html" />
-    <link rel="prev" title="Canvas.SrcRectConstraint" href="skia.Canvas.SrcRectConstraint.html" />
+    <link rel="next" title="Picture" href="skia.Picture.html" />
+    <link rel="prev" title="PathVerb" href="skia.PathVerb.html" />
    
   <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
   
@@ -32,20 +32,19 @@
 
           <div class="body" role="main">
             
-  <div class="section" id="canvas-pointmode">
-<h1>Canvas.PointMode<a class="headerlink" href="#canvas-pointmode" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="perlinnoiseshader">
+<h1>PerlinNoiseShader<a class="headerlink" href="#perlinnoiseshader" title="Permalink to this headline">¶</a></h1>
 <dl class="py class">
-<dt id="skia.Canvas.PointMode">
-<em class="property">class </em><code class="sig-name descname">PointMode</code><a class="headerlink" href="#skia.Canvas.PointMode" title="Permalink to this definition">¶</a></dt>
-<dd><p>Members:</p>
-<dl class="simple">
-<dt>kPolygon_PointMode :</dt><dd><p>draw the array of points as a open polygon</p>
-</dd>
-<dt>kLines_PointMode :</dt><dd><p>draw each pair of points as a line segment</p>
-</dd>
-<dt>kPoints_PointMode :</dt><dd><p>draw each point separately</p>
-</dd>
-</dl>
+<dt id="skia.PerlinNoiseShader">
+<em class="property">class </em><code class="sig-name descname">PerlinNoiseShader</code><a class="headerlink" href="#skia.PerlinNoiseShader" title="Permalink to this definition">¶</a></dt>
+<dd><p><a class="reference internal" href="#skia.PerlinNoiseShader" title="skia.PerlinNoiseShader"><code class="xref py py-class docutils literal notranslate"><span class="pre">PerlinNoiseShader</span></code></a> creates an image using the Perlin turbulence
+function.</p>
+<p>It can produce tileable noise if asked to stitch tiles and provided a tile
+size. In order to fill a large area with repeating noise, set the
+stitchTiles flag to true, and render exactly a single tile of noise. Without
+this flag, the result will contain visible seams between tiles.</p>
+<p>The algorithm used is described here:
+<a class="reference external" href="http://www.w3.org/TR/SVG/filters.html#feTurbulenceElement">http://www.w3.org/TR/SVG/filters.html#feTurbulenceElement</a></p>
 <p class="rubric">Methods</p>
 <table class="longtable docutils align-default">
 <colgroup>
@@ -53,29 +52,17 @@
 <col style="width: 90%" />
 </colgroup>
 <tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Canvas.PointMode.__init__" title="skia.Canvas.PointMode.__init__"><code class="xref py py-obj docutils literal notranslate"><span class="pre">__init__</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.PerlinNoiseShader.MakeFractalNoise" title="skia.PerlinNoiseShader.MakeFractalNoise"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MakeFractalNoise</span></code></a></p></td>
+<td><p>This will construct Perlin noise of the given type (Fractal Noise or Turbulence).</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.PerlinNoiseShader.MakeImprovedNoise" title="skia.PerlinNoiseShader.MakeImprovedNoise"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MakeImprovedNoise</span></code></a></p></td>
+<td><p>Creates an Improved Perlin Noise shader.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.PerlinNoiseShader.MakeTurbulence" title="skia.PerlinNoiseShader.MakeTurbulence"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MakeTurbulence</span></code></a></p></td>
 <td><p></p></td>
 </tr>
-</tbody>
-</table>
-<p class="rubric">Attributes</p>
-<table class="longtable docutils align-default">
-<colgroup>
-<col style="width: 10%" />
-<col style="width: 90%" />
-</colgroup>
-<tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Canvas.PointMode.kLines_PointMode" title="skia.Canvas.PointMode.kLines_PointMode"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kLines_PointMode</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#skia.Canvas.PointMode.kPoints_PointMode" title="skia.Canvas.PointMode.kPoints_PointMode"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kPoints_PointMode</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Canvas.PointMode.kPolygon_PointMode" title="skia.Canvas.PointMode.kPolygon_PointMode"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kPolygon_PointMode</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#skia.Canvas.PointMode.name" title="skia.Canvas.PointMode.name"><code class="xref py py-obj docutils literal notranslate"><span class="pre">name</span></code></a></p></td>
-<td><p>handle) -&gt; str</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.PerlinNoiseShader.__init__" title="skia.PerlinNoiseShader.__init__"><code class="xref py py-obj docutils literal notranslate"><span class="pre">__init__</span></code></a></p></td>
+<td><p>Initialize self.</p></td>
 </tr>
 </tbody>
 </table>
@@ -84,37 +71,40 @@
 <div class="section" id="methods">
 <h2>Methods<a class="headerlink" href="#methods" title="Permalink to this headline">¶</a></h2>
 <dl class="py method">
-<dt id="skia.Canvas.PointMode.__init__">
-<code class="sig-prename descclassname">PointMode.</code><code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Canvas.PointMode" title="skia.Canvas.PointMode">skia.Canvas.PointMode</a></span></em>, <em class="sig-param"><span class="n">arg0</span><span class="p">:</span> <span class="n">int</span></em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#skia.Canvas.PointMode.__init__" title="Permalink to this definition">¶</a></dt>
+<dt id="skia.PerlinNoiseShader.MakeFractalNoise">
+<em class="property">static </em><code class="sig-prename descclassname">PerlinNoiseShader.</code><code class="sig-name descname">MakeFractalNoise</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">baseFrequencyX</span><span class="p">:</span> <span class="n">float</span></em>, <em class="sig-param"><span class="n">baseFrequencyY</span><span class="p">:</span> <span class="n">float</span></em>, <em class="sig-param"><span class="n">numOctaves</span><span class="p">:</span> <span class="n">int</span></em>, <em class="sig-param"><span class="n">seed</span><span class="p">:</span> <span class="n">float</span></em>, <em class="sig-param"><span class="n">tileSize</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.ISize.html#skia.ISize" title="skia.ISize">skia.ISize</a></span> <span class="o">=</span> <span class="default_value">None</span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="skia.Shader.html#skia.Shader" title="skia.Shader">skia.Shader</a><a class="headerlink" href="#skia.PerlinNoiseShader.MakeFractalNoise" title="Permalink to this definition">¶</a></dt>
+<dd><p>This will construct Perlin noise of the given type (Fractal Noise or
+Turbulence).</p>
+<p>Both base frequencies (X and Y) have a usual range of (0..1) and must be
+non-negative.</p>
+<p>The number of octaves provided should be fairly small, with a limit of
+255 enforced. Each octave doubles the frequency, so 10 octaves would
+produce noise from baseFrequency * 1, * 2, * 4, …, * 512, which
+quickly yields insignificantly small periods and resembles regular
+unstructured noise rather than Perlin noise.</p>
+<p>If tileSize isn’t NULL or an empty size, the tileSize parameter will be
+used to modify the frequencies so that the noise will be tileable for
+the given tile size. If tileSize is NULL or an empty size, the
+frequencies will be used as is without modification.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="skia.PerlinNoiseShader.MakeImprovedNoise">
+<em class="property">static </em><code class="sig-prename descclassname">PerlinNoiseShader.</code><code class="sig-name descname">MakeImprovedNoise</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">baseFrequencyX</span><span class="p">:</span> <span class="n">float</span></em>, <em class="sig-param"><span class="n">baseFrequencyY</span><span class="p">:</span> <span class="n">float</span></em>, <em class="sig-param"><span class="n">numOctaves</span><span class="p">:</span> <span class="n">int</span></em>, <em class="sig-param"><span class="n">z</span><span class="p">:</span> <span class="n">float</span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="skia.Shader.html#skia.Shader" title="skia.Shader">skia.Shader</a><a class="headerlink" href="#skia.PerlinNoiseShader.MakeImprovedNoise" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates an Improved Perlin Noise shader.</p>
+<p>The z value is roughly equivalent to the seed of the other two types,
+but minor variations to z will only slightly change the noise.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="skia.PerlinNoiseShader.MakeTurbulence">
+<em class="property">static </em><code class="sig-prename descclassname">PerlinNoiseShader.</code><code class="sig-name descname">MakeTurbulence</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">baseFrequencyX</span><span class="p">:</span> <span class="n">float</span></em>, <em class="sig-param"><span class="n">baseFrequencyY</span><span class="p">:</span> <span class="n">float</span></em>, <em class="sig-param"><span class="n">numOctaves</span><span class="p">:</span> <span class="n">int</span></em>, <em class="sig-param"><span class="n">seed</span><span class="p">:</span> <span class="n">float</span></em>, <em class="sig-param"><span class="n">tileSize</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.ISize.html#skia.ISize" title="skia.ISize">skia.ISize</a></span> <span class="o">=</span> <span class="default_value">None</span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="skia.Shader.html#skia.Shader" title="skia.Shader">skia.Shader</a><a class="headerlink" href="#skia.PerlinNoiseShader.MakeTurbulence" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
-</div>
-<div class="section" id="attributes">
-<h2>Attributes<a class="headerlink" href="#attributes" title="Permalink to this headline">¶</a></h2>
-<dl class="py attribute">
-<dt id="skia.Canvas.PointMode.kLines_PointMode">
-<code class="sig-prename descclassname">PointMode.</code><code class="sig-name descname">kLines_PointMode</code><em class="property"> = PointMode.kLines_PointMode</em><a class="headerlink" href="#skia.Canvas.PointMode.kLines_PointMode" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt id="skia.Canvas.PointMode.kPoints_PointMode">
-<code class="sig-prename descclassname">PointMode.</code><code class="sig-name descname">kPoints_PointMode</code><em class="property"> = PointMode.kPoints_PointMode</em><a class="headerlink" href="#skia.Canvas.PointMode.kPoints_PointMode" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt id="skia.Canvas.PointMode.kPolygon_PointMode">
-<code class="sig-prename descclassname">PointMode.</code><code class="sig-name descname">kPolygon_PointMode</code><em class="property"> = PointMode.kPolygon_PointMode</em><a class="headerlink" href="#skia.Canvas.PointMode.kPolygon_PointMode" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt id="skia.Canvas.PointMode.name">
-<code class="sig-prename descclassname">PointMode.</code><code class="sig-name descname">name</code><a class="headerlink" href="#skia.Canvas.PointMode.name" title="Permalink to this definition">¶</a></dt>
-<dd><p>handle) -&gt; str</p>
-<dl class="field-list simple">
-<dt class="field-odd">Type</dt>
-<dd class="field-odd"><p>(self</p>
-</dd>
-</dl>
+<dl class="py method">
+<dt id="skia.PerlinNoiseShader.__init__">
+<code class="sig-prename descclassname">PerlinNoiseShader.</code><code class="sig-name descname">__init__</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#skia.PerlinNoiseShader.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Initialize self.  See help(type(self)) for accurate signature.</p>
 </dd></dl>
 
 </div>
@@ -153,7 +143,7 @@
 <li class="toctree-l2"><a class="reference internal" href="skia.Canvas.html">Canvas</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.Canvas.SaveLayerFlags.html">Canvas.SaveLayerFlags</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.Canvas.SrcRectConstraint.html">Canvas.SrcRectConstraint</a></li>
-<li class="toctree-l2 current"><a class="current reference internal" href="#">Canvas.PointMode</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.Canvas.PointMode.html">Canvas.PointMode</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.Canvas.QuadAAFlags.html">Canvas.QuadAAFlags</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.Canvas.SaveLayerRec.html">Canvas.SaveLayerRec</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.Canvas.Lattice.html">Canvas.Lattice</a></li>
@@ -225,7 +215,7 @@
 <li class="toctree-l2"><a class="reference internal" href="skia.PathFillType.html">PathFillType</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.PathSegmentMask.html">PathSegmentMask</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.PathVerb.html">PathVerb</a></li>
-<li class="toctree-l2"><a class="reference internal" href="skia.PerlinNoiseShader.html">PerlinNoiseShader</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">PerlinNoiseShader</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.Picture.html">Picture</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.PictureRecorder.html">PictureRecorder</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.PixelGeometry.html">PixelGeometry</a></li>
@@ -270,8 +260,8 @@
 <ul>
   <li><a href="../index.html">Documentation overview</a><ul>
   <li><a href="../reference.html">Reference</a><ul>
-      <li>Previous: <a href="skia.Canvas.SrcRectConstraint.html" title="previous chapter">Canvas.SrcRectConstraint</a></li>
-      <li>Next: <a href="skia.Canvas.QuadAAFlags.html" title="next chapter">Canvas.QuadAAFlags</a></li>
+      <li>Previous: <a href="skia.PathVerb.html" title="previous chapter">PathVerb</a></li>
+      <li>Next: <a href="skia.Picture.html" title="next chapter">Picture</a></li>
   </ul></li>
   </ul></li>
 </ul>
@@ -306,7 +296,7 @@
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
       |
-      <a href="../_sources/_generate/skia.Canvas.PointMode.rst.txt"
+      <a href="../_sources/_generate/skia.PerlinNoiseShader.rst.txt"
           rel="nofollow">Page source</a>
     </div>
 

@@ -52,10 +52,12 @@ Some key classes are:
 Examples
 --------
 
+- `Showcase`_
 - `Canvas Overview`_
 - `Canvas Creation`_
 - `Path Overview`_
 
+.. _Showcase: https://github.com/kyamagu/skia-python/blob/master/notebooks/Showcase.ipynb
 .. _Canvas Overview: https://github.com/kyamagu/skia-python/blob/master/notebooks/Canvas-Overview.ipynb
 .. _Canvas Creation: https://github.com/kyamagu/skia-python/blob/master/notebooks/Canvas-Creation.ipynb
 .. _Path Overview: https://github.com/kyamagu/skia-python/blob/master/notebooks/Path-Overview.ipynb

@@ -14,7 +14,7 @@
     <script src="../_static/language_data.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Size" href="skia.Size.html" />
+    <link rel="next" title="Shaders" href="skia.Shaders.html" />
     <link rel="prev" title="Region" href="skia.Region.html" />
    
   <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
@@ -43,6 +43,21 @@ shader, then the shader’s color(s) are use instead, but they are modulated
 by the paint’s alpha. This makes it easy to create a shader once (e.g.
 bitmap tiling or gradient) and then change its transparency w/o having to
 modify the original shader… only the paint’s alpha needs to be modified.</p>
+<p class="rubric">Classes</p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">GradientInfo</span></code></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">GradientType</span></code></p></td>
+<td><p>If the shader subclass can be represented as a gradient, asAGradient returns</p></td>
+</tr>
+</tbody>
+</table>
 <p class="rubric">Methods</p>
 <table class="longtable docutils align-default">
 <colgroup>
@@ -69,7 +84,7 @@ modify the original shader… only the paint’s alpha needs to be modified.</p>
 <td><p>Overloaded function.</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#skia.Shader.isOpaque" title="skia.Shader.isOpaque"><code class="xref py py-obj docutils literal notranslate"><span class="pre">isOpaque</span></code></a></p></td>
-<td><p>Returns true if the shader is guaranteed to produce only opaque colors, subject to the SkPaint using the shader to apply an opaque alpha value.</p></td>
+<td><p>Returns true if the shader is guaranteed to produce only opaque colors, subject to the <a class="reference internal" href="skia.Paint.html#skia.Paint" title="skia.Paint"><code class="xref py py-class docutils literal notranslate"><span class="pre">Paint</span></code></a> using the shader to apply an opaque alpha value.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#skia.Shader.makeWithColorFilter" title="skia.Shader.makeWithColorFilter"><code class="xref py py-obj docutils literal notranslate"><span class="pre">makeWithColorFilter</span></code></a></p></td>
 <td><p>Create a new shader that produces the same colors as invoking this shader and then applying the colorfilter.</p></td>
@@ -78,16 +93,16 @@ modify the original shader… only the paint’s alpha needs to be modified.</p>
 <td><p>Return a shader that will apply the specified localMatrix to this shader.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#skia.Shader.ref" title="skia.Shader.ref"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ref</span></code></a></p></td>
-<td><p>Increment the reference count.</p></td>
+<td><p></p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#skia.Shader.serialize" title="skia.Shader.serialize"><code class="xref py py-obj docutils literal notranslate"><span class="pre">serialize</span></code></a></p></td>
 <td><p></p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#skia.Shader.unique" title="skia.Shader.unique"><code class="xref py py-obj docutils literal notranslate"><span class="pre">unique</span></code></a></p></td>
-<td><p>May return true if the caller is the only owner.</p></td>
+<td><p></p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#skia.Shader.unref" title="skia.Shader.unref"><code class="xref py py-obj docutils literal notranslate"><span class="pre">unref</span></code></a></p></td>
-<td><p>Decrement the reference count.</p></td>
+<td><p></p></td>
 </tr>
 </tbody>
 </table>
@@ -174,7 +189,7 @@ modify the original shader… only the paint’s alpha needs to be modified.</p>
 
 <dl class="py method">
 <dt id="skia.Shader.asAGradient">
-<code class="sig-prename descclassname">Shader.</code><code class="sig-name descname">asAGradient</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Shader" title="skia.Shader">skia.Shader</a></span></em>, <em class="sig-param"><span class="n">arg0</span><span class="p">:</span> <span class="n">skia.Shader.GradientInfo</span></em><span class="sig-paren">)</span> &#x2192; skia.Shader.GradientType<a class="headerlink" href="#skia.Shader.asAGradient" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">Shader.</code><code class="sig-name descname">asAGradient</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Shader" title="skia.Shader">skia.Shader</a></span></em>, <em class="sig-param"><span class="n">info</span><span class="p">:</span> <span class="n">skia.Shader.GradientInfo</span></em><span class="sig-paren">)</span> &#x2192; skia.Shader.GradientType<a class="headerlink" href="#skia.Shader.asAGradient" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
@@ -193,11 +208,15 @@ modify the original shader… only the paint’s alpha needs to be modified.</p>
 <dt id="skia.Shader.isAImage">
 <code class="sig-prename descclassname">Shader.</code><code class="sig-name descname">isAImage</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span><span class="n">args</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#skia.Shader.isAImage" title="Permalink to this definition">¶</a></dt>
 <dd><p>Overloaded function.</p>
-<ol class="arabic simple">
-<li><p>isAImage(self: skia.Shader, arg0: skia.Matrix, arg1: skia.TileMode) -&gt; skia.Image</p></li>
-</ol>
-<p>Iff this shader is backed by a single SkImage, return its ptr (the caller must ref this if they want to keep it longer than the lifetime of the shader).</p>
-<ol class="arabic simple" start="2">
+<ol class="arabic">
+<li><p>isAImage(self: skia.Shader, localMatrix: skia.Matrix, xy: List[skia.TileMode] = None) -&gt; skia.Image</p>
+<blockquote>
+<div><p>Iff this shader is backed by a single <a class="reference internal" href="skia.Image.html#skia.Image" title="skia.Image"><code class="xref py py-class docutils literal notranslate"><span class="pre">Image</span></code></a>, return its ptr
+(the caller must ref this if they want to keep it longer than the
+lifetime of the shader).</p>
+<p>If not, return nullptr.</p>
+</div></blockquote>
+</li>
 <li><p>isAImage(self: skia.Shader) -&gt; bool</p></li>
 </ol>
 </dd></dl>
@@ -205,26 +224,32 @@ modify the original shader… only the paint’s alpha needs to be modified.</p>
 <dl class="py method">
 <dt id="skia.Shader.isOpaque">
 <code class="sig-prename descclassname">Shader.</code><code class="sig-name descname">isOpaque</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Shader" title="skia.Shader">skia.Shader</a></span></em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#skia.Shader.isOpaque" title="Permalink to this definition">¶</a></dt>
-<dd><p>Returns true if the shader is guaranteed to produce only opaque colors, subject to the SkPaint using the shader to apply an opaque alpha value.</p>
+<dd><p>Returns true if the shader is guaranteed to produce only opaque colors,
+subject to the <a class="reference internal" href="skia.Paint.html#skia.Paint" title="skia.Paint"><code class="xref py py-class docutils literal notranslate"><span class="pre">Paint</span></code></a> using the shader to apply an opaque
+alpha value.</p>
+<p>Subclasses should override this to allow some optimizations.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt id="skia.Shader.makeWithColorFilter">
-<code class="sig-prename descclassname">Shader.</code><code class="sig-name descname">makeWithColorFilter</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Shader" title="skia.Shader">skia.Shader</a></span></em>, <em class="sig-param"><span class="n">arg0</span><span class="p">:</span> <span class="n">SkColorFilter</span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="#skia.Shader" title="skia.Shader">skia.Shader</a><a class="headerlink" href="#skia.Shader.makeWithColorFilter" title="Permalink to this definition">¶</a></dt>
-<dd><p>Create a new shader that produces the same colors as invoking this shader and then applying the colorfilter.</p>
+<code class="sig-prename descclassname">Shader.</code><code class="sig-name descname">makeWithColorFilter</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Shader" title="skia.Shader">skia.Shader</a></span></em>, <em class="sig-param"><span class="n">colorFilter</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.ColorFilter.html#skia.ColorFilter" title="skia.ColorFilter">skia.ColorFilter</a></span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="#skia.Shader" title="skia.Shader">skia.Shader</a><a class="headerlink" href="#skia.Shader.makeWithColorFilter" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a new shader that produces the same colors as invoking this
+shader and then applying the colorfilter.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt id="skia.Shader.makeWithLocalMatrix">
-<code class="sig-prename descclassname">Shader.</code><code class="sig-name descname">makeWithLocalMatrix</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Shader" title="skia.Shader">skia.Shader</a></span></em>, <em class="sig-param"><span class="n">arg0</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.Matrix.html#skia.Matrix" title="skia.Matrix">skia.Matrix</a></span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="#skia.Shader" title="skia.Shader">skia.Shader</a><a class="headerlink" href="#skia.Shader.makeWithLocalMatrix" title="Permalink to this definition">¶</a></dt>
-<dd><p>Return a shader that will apply the specified localMatrix to this shader.</p>
+<code class="sig-prename descclassname">Shader.</code><code class="sig-name descname">makeWithLocalMatrix</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Shader" title="skia.Shader">skia.Shader</a></span></em>, <em class="sig-param"><span class="n">matrix</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.Matrix.html#skia.Matrix" title="skia.Matrix">skia.Matrix</a></span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="#skia.Shader" title="skia.Shader">skia.Shader</a><a class="headerlink" href="#skia.Shader.makeWithLocalMatrix" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a shader that will apply the specified localMatrix to this
+shader.</p>
+<p>The specified matrix will be applied before any matrix associated with
+this shader.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt id="skia.Shader.ref">
-<code class="sig-prename descclassname">Shader.</code><code class="sig-name descname">ref</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Shader" title="skia.Shader">skia.Shader</a></span></em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#skia.Shader.ref" title="Permalink to this definition">¶</a></dt>
-<dd><p>Increment the reference count.</p>
-</dd></dl>
+<code class="sig-prename descclassname">Shader.</code><code class="sig-name descname">ref</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.Flattanable.html#skia.Flattanable" title="skia.Flattanable">skia.Flattanable</a></span></em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#skia.Shader.ref" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
 
 <dl class="py method">
 <dt id="skia.Shader.serialize">
@@ -233,15 +258,13 @@ modify the original shader… only the paint’s alpha needs to be modified.</p>
 
 <dl class="py method">
 <dt id="skia.Shader.unique">
-<code class="sig-prename descclassname">Shader.</code><code class="sig-name descname">unique</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Shader" title="skia.Shader">skia.Shader</a></span></em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#skia.Shader.unique" title="Permalink to this definition">¶</a></dt>
-<dd><p>May return true if the caller is the only owner.</p>
-</dd></dl>
+<code class="sig-prename descclassname">Shader.</code><code class="sig-name descname">unique</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.Flattanable.html#skia.Flattanable" title="skia.Flattanable">skia.Flattanable</a></span></em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#skia.Shader.unique" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
 
 <dl class="py method">
 <dt id="skia.Shader.unref">
-<code class="sig-prename descclassname">Shader.</code><code class="sig-name descname">unref</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Shader" title="skia.Shader">skia.Shader</a></span></em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#skia.Shader.unref" title="Permalink to this definition">¶</a></dt>
-<dd><p>Decrement the reference count.</p>
-</dd></dl>
+<code class="sig-prename descclassname">Shader.</code><code class="sig-name descname">unref</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.Flattanable.html#skia.Flattanable" title="skia.Flattanable">skia.Flattanable</a></span></em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#skia.Shader.unref" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
 
 </div>
 <div class="section" id="attributes">
@@ -403,6 +426,8 @@ modify the original shader… only the paint’s alpha needs to be modified.</p>
 <li class="toctree-l2"><a class="reference internal" href="skia.FontMgr.html">FontMgr</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.FontStyle.html">FontStyle</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.FontStyleSet.html">FontStyleSet</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.GradientShader.html">GradientShader</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.GradientShader.Flags.html">GradientShader.Flags</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.GrBackendApi.html">GrBackendApi</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.GrBackendSemaphore.html">GrBackendSemaphore</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.GrBackendTexture.html">GrBackendTexture</a></li>
@@ -447,6 +472,7 @@ modify the original shader… only the paint’s alpha needs to be modified.</p>
 <li class="toctree-l2"><a class="reference internal" href="skia.PathFillType.html">PathFillType</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.PathSegmentMask.html">PathSegmentMask</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.PathVerb.html">PathVerb</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.PerlinNoiseShader.html">PerlinNoiseShader</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.Picture.html">Picture</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.PictureRecorder.html">PictureRecorder</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.PixelGeometry.html">PixelGeometry</a></li>
@@ -458,6 +484,7 @@ modify the original shader… only the paint’s alpha needs to be modified.</p>
 <li class="toctree-l2"><a class="reference internal" href="skia.Rect.html">Rect</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.Region.html">Region</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">Shader</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.Shaders.html">Shaders</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.Size.html">Size</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.StrokePathEffect.html">StrokePathEffect</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.StrokeRec.html">StrokeRec</a></li>
@@ -491,7 +518,7 @@ modify the original shader… only the paint’s alpha needs to be modified.</p>
   <li><a href="../index.html">Documentation overview</a><ul>
   <li><a href="../reference.html">Reference</a><ul>
       <li>Previous: <a href="skia.Region.html" title="previous chapter">Region</a></li>
-      <li>Next: <a href="skia.Size.html" title="next chapter">Size</a></li>
+      <li>Next: <a href="skia.Shaders.html" title="next chapter">Shaders</a></li>
   </ul></li>
   </ul></li>
 </ul>
