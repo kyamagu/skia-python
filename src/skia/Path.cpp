@@ -81,6 +81,23 @@ m.def("PathFillType_IsEvenOdd", &SkPathFillType_IsEvenOdd);
 m.def("PathFillType_IsInverse", &SkPathFillType_IsInverse);
 m.def("PathFillType_ConvertToNonInverse", &SkPathFillType_ConvertToNonInverse);
 
+
+py::enum_<SkPathOp>(m, "PathOp", R"docstring(
+    The logical operations that can be performed when combining two paths.
+    )docstring")
+    .value("kDifference", SkPathOp::kDifference_SkPathOp,
+        "subtract the op path from the first path")
+    .value("kIntersect", SkPathOp::kIntersect_SkPathOp,
+        "intersect the two paths")
+    .value("kUnion", SkPathOp::kUnion_SkPathOp,
+        "union (inclusive-or) the two paths")
+    .value("kXOR", SkPathOp::kXOR_SkPathOp,
+        "exclusive-or the two paths")
+    .value("kReverseDifference", SkPathOp::kReverseDifference_SkPathOp,
+        "subtract the first path from the op path")
+    .export_values();
+
+
 // Path
 py::class_<SkPath> path(m, "Path", R"docstring(
     :py:class:`Path` contain geometry.

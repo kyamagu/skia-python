@@ -6,6 +6,25 @@ const int SkPaint::kStyleCount;
 const int SkPaint::kCapCount;
 const int SkPaint::kJoinCount;
 
+
+class PyFlattanable : public SkFlattenable {
+    using SkFlattenable::SkFlattenable;
+    Factory getFactory() const override {
+        PYBIND11_OVERLOAD_PURE(
+            Factory,
+            SkFlattenable,
+            getFactory,
+        );
+    }
+    const char* getTypeName() const override {
+        PYBIND11_OVERLOAD_PURE(const char*, SkFlattenable, getTypeName);
+    }
+    Type getFlattenableType() const override {
+        PYBIND11_OVERLOAD_PURE(Type, SkFlattenable, getFlattenableType);
+    }
+};
+
+
 void initPaint(py::module &m) {
 // Paint
 py::class_<SkPaint> paint(m, "Paint", R"docstring(
@@ -189,9 +208,61 @@ paint
         "Compares a and b, and returns true if a and b are not equivalent.")
     ;
 
+py::class_<SkFlattenable, PyFlattanable, sk_sp<SkFlattenable>> flattanable(
+    m, "Flattanable",
+    R"docstring(
+    :py:class:`Flattenable` is the base class for objects that need to be
+    flattened into a data stream for either transport or as part of the key to
+    the font cache.
+    )docstring");
+
+py::enum_<SkFlattenable::Type>(flattanable, "Type")
+    .value("kColorFilter", SkFlattenable::Type::kSkColorFilter_Type)
+    .value("kDrawable", SkFlattenable::Type::kSkDrawable_Type)
+    .value("kDrawLooper", SkFlattenable::Type::kSkDrawLooper_Type)
+    .value("kImageFilter", SkFlattenable::Type::kSkImageFilter_Type)
+    .value("kMaskFilter", SkFlattenable::Type::kSkMaskFilter_Type)
+    .value("kPathEffect", SkFlattenable::Type::kSkPathEffect_Type)
+    .value("kPixelRef", SkFlattenable::Type::kSkPixelRef_Type)
+    .value("kUnused4", SkFlattenable::Type::kSkUnused_Type4)
+    .value("kShaderBase", SkFlattenable::Type::kSkShaderBase_Type)
+    .value("kUnused", SkFlattenable::Type::kSkUnused_Type)
+    .value("kUnused2", SkFlattenable::Type::kSkUnused_Type2)
+    .value("kUnused3", SkFlattenable::Type::kSkUnused_Type3)
+    .export_values();
+
+flattanable
+    // .def("getFactory", &SkFlattenable::getFactory)
+    .def("getTypeName", &SkFlattenable::getTypeName,
+        R"docstring(
+        Returns the name of the object's class.
+
+        Implemented in :py:class:`~skia.Drawable`.
+        )docstring")
+    // .def("flatten", &SkFlattenable::flatten)
+    .def("getFlattenableType", &SkFlattenable::getFlattenableType)
+    .def("serialize",
+        [] (const SkFlattenable& flattanable) {
+            return flattanable.serialize();
+        })
+    .def("unique", &SkFlattenable::unique)
+    .def("ref", &SkFlattenable::ref)
+    .def("unref", &SkFlattenable::unref)
+    // .def_static("NameToFactory", &SkFlattenable::NameToFactory)
+    // .def_static("FactoryToName", &SkFlattenable::FactoryToName)
+    // .def_static("Register", &SkFlattenable::Register)
+    .def_static("Deserialize",
+        [] (SkFlattenable::Type type, py::buffer b) {
+            auto info = b.request();
+            size_t size = (info.ndim) ? info.shape[0] * info.strides[0] : 0;
+            return SkFlattenable::Deserialize(type, info.ptr, size);
+        })
+    ;
+
 // Shader
 // TODO: Need a wrapper class for pure virtual functions.
-py::class_<SkShader, sk_sp<SkShader>> shader(m, "Shader", R"docstring(
+py::class_<SkShader, sk_sp<SkShader>, SkFlattenable> shader(
+    m, "Shader", R"docstring(
     Shaders specify the source color(s) for what is being drawn.
 
     If a paint has no shader, then the paint's color is used. If the paint has a
@@ -222,21 +293,6 @@ py::enum_<SkShader::GradientType>(shader, "GradientType", R"docstring(
     .value("kSweep", SkShader::GradientType::kSweep_GradientType)
     .value("kConical", SkShader::GradientType::kConical_GradientType)
     .value("kLast", SkShader::GradientType::kLast_GradientType)
-    .export_values();
-
-py::enum_<SkShader::Type>(shader, "Type")
-    .value("kSkColorFilter", SkShader::Type::kSkColorFilter_Type)
-    .value("kSkDrawable", SkShader::Type::kSkDrawable_Type)
-    .value("kSkDrawLooper", SkShader::Type::kSkDrawLooper_Type)
-    .value("kSkImageFilter", SkShader::Type::kSkImageFilter_Type)
-    .value("kSkMaskFilter", SkShader::Type::kSkMaskFilter_Type)
-    .value("kSkPathEffect", SkShader::Type::kSkPathEffect_Type)
-    .value("kSkPixelRef", SkShader::Type::kSkPixelRef_Type)
-    .value("kSkUnused4", SkShader::Type::kSkUnused_Type4)
-    .value("kSkShaderBase", SkShader::Type::kSkShaderBase_Type)
-    .value("kSkUnused", SkShader::Type::kSkUnused_Type)
-    .value("kSkUnused2", SkShader::Type::kSkUnused_Type2)
-    // .value("kSkUnused3", SkShader::Type::kSkUnused_Type3)
     .export_values();
 
 shader
@@ -282,8 +338,6 @@ shader
     ;
 // ColorFilter
 py::class_<SkColorFilter, sk_sp<SkColorFilter>>(m, "ColorFilter");
-// PathEffect
-py::class_<SkPathEffect, sk_sp<SkPathEffect>>(m, "PathEffect");
 // MaskFilter
 py::class_<SkMaskFilter, sk_sp<SkMaskFilter>>(m, "MaskFilter");
 // ImageFilter

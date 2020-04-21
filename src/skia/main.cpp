@@ -16,6 +16,7 @@ void initImageInfo(py::module &);
 void initMatrix(py::module &);
 void initPaint(py::module &);
 void initPath(py::module &);
+void initPathEffect(py::module &);
 void initPicture(py::module &);
 void initPixmap(py::module &);
 void initPoint(py::module &);
@@ -29,117 +30,7 @@ void initVertices(py::module &);
 // Main entry point.
 PYBIND11_MODULE(skia, m) {
     m.doc() = R"docstring(
-        skia
-        ----
-
-        Python Skia binding.
-
-        .. currentmodule:: skia
-
-        .. autosummary::
-            :toctree: _generate
-            :nosignatures:
-            :template: class.rst
-
-            AlphaType
-            ApplyPerspectiveClip
-            AutoCanvasRestore
-            BBoxHierarchy
-            BackingFit
-            Bitmap
-            BlendMode
-            BlendModeCoeff
-            Budgeted
-            Canvas
-            Canvas.SaveLayerFlags
-            Canvas.SrcRectConstraint
-            Canvas.PointMode
-            Canvas.QuadAAFlags
-            Canvas.SaveLayerRec
-            Canvas.Lattice
-            Canvas.Lattice.RectType
-            ClipOp
-            Color4f
-            ColorFilter
-            ColorInfo
-            ColorSpace
-            ColorType
-            Data
-            DeserialProcs
-            EncodedImageFormat
-            FilterQuality
-            Font
-            FontArguments
-            FontHinting
-            FontMetrics
-            FontMgr
-            FontStyle
-            FontStyleSet
-            GrBackendApi
-            GrBackendSemaphore
-            GrBackendTexture
-            GrContext
-            GrFlushFlags
-            GrGLBackendState
-            GrGLInterface
-            GrMipMapped
-            GrProtected
-            GrRenderable
-            GrSemaphoresSubmitted
-            GrSurfaceOrigin
-            IPoint
-            IRect
-            ISize
-            Image
-            ImageFilter
-            ImageInfo
-            M44
-            MaskFilter
-            Matrix
-            Paint
-            Path
-            Path.Iter
-            Path.RawIter
-            Path.ArcSize
-            Path.AddPathMode
-            Path.SegmentMask
-            Path.Verb
-            PathConvexityType
-            PathDirection
-            PathEffect
-            PathFillType
-            PathSegmentMask
-            PathVerb
-            Picture
-            PictureRecorder
-            PixelGeometry
-            Pixmap
-            Point
-            Point3
-            RRect
-            RSXform
-            Rect
-            Region
-            Shader
-            Size
-            Surface
-            Surface.AsyncReadResult
-            Surface.ContentChangeMode
-            Surface.BackendHandleAccess
-            Surface.RescaleGamma
-            Surface.BackendSurfaceAccess
-            Surface.FlushFlags
-            SurfaceCharacterization
-            SurfaceProps
-            SurfaceProps.Flags
-            SurfaceProps.InitType
-            TextBlob
-            TextBlobBuilder
-            TextEncoding
-            TileMode
-            Typeface
-            Vertices
-            YUVColorSpace
+    Python Skia binding module.
     )docstring";
 
     initBlendMode(m);
@@ -159,6 +50,7 @@ PYBIND11_MODULE(skia, m) {
     initImageInfo(m);
     initPaint(m);
     initPath(m);
+    initPathEffect(m);
     initPicture(m);
     initPixmap(m);
     initTextBlob(m);
