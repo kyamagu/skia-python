@@ -4,25 +4,121 @@
 #include "include/effects/SkTrimPathEffect.h"
 
 
-// Wrap DashInfo for bare pointer used for fIntervals.
-struct PyDashInfo : public SkPathEffect::DashInfo {
-    std::vector<SkScalar> intervals_;
-};
-
-// Wrap PointData for bare pointer used for fPoints.
-class PyPointData : public SkPathEffect::PointData {
-public:
-    PyPointData() : SkPathEffect::PointData::PointData() {
-        this->fPoints = &this->points_[0];
-    }
-
-    std::vector<SkPoint> points_;
-};
+const int SkStrokeRec::kStyleCount;
 
 
 void initPathEffect(py::module &m) {
-py::class_<SkPathEffect, sk_sp<SkPathEffect>, SkFlattenable> patheffect(
-    m, "PathEffect",
+// StrokeRec
+py::class_<SkStrokeRec> strokerec(m, "StrokeRec",
+    R"docstring(
+
+    .. rubric:: Classes
+
+    .. autosummary::
+        :nosignatures:
+
+        ~skia.StrokeRec.InitStyle
+        ~skia.StrokeRec.Style
+    )docstring");
+
+py::enum_<SkStrokeRec::InitStyle>(strokerec, "InitStyle")
+    .value("kHairline", SkStrokeRec::InitStyle::kHairline_InitStyle)
+    .value("kFill", SkStrokeRec::InitStyle::kFill_InitStyle)
+    .export_values();
+
+py::enum_<SkStrokeRec::Style>(strokerec, "Style")
+    .value("kHairline", SkStrokeRec::Style::kHairline_Style)
+    .value("kFill", SkStrokeRec::Style::kFill_Style)
+    .value("kStroke", SkStrokeRec::Style::kStroke_Style)
+    .value("kStrokeAndFill", SkStrokeRec::Style::kStrokeAndFill_Style)
+    .export_values();
+
+strokerec
+    .def(py::init<SkStrokeRec::InitStyle>(), py::arg("style"))
+    .def(py::init<const SkPaint&, SkPaint::Style, SkScalar>(),
+        py::arg("paint"), py::arg("style"), py::arg("resScale") = 1)
+    .def(py::init<const SkPaint&, SkScalar>(),
+        py::arg("paint"), py::arg("resScale") = 1)
+    .def("getStyle", &SkStrokeRec::getStyle)
+    .def("getWidth", &SkStrokeRec::getWidth)
+    .def("getMiter", &SkStrokeRec::getMiter)
+    .def("getCap", &SkStrokeRec::getCap)
+    .def("getJoin", &SkStrokeRec::getJoin)
+    .def("isHairlineStyle", &SkStrokeRec::isHairlineStyle)
+    .def("isFillStyle", &SkStrokeRec::isFillStyle)
+    .def("setFillStyle", &SkStrokeRec::setFillStyle)
+    .def("setHairlineStyle", &SkStrokeRec::setHairlineStyle)
+    .def("setStrokeStyle", &SkStrokeRec::setStrokeStyle,
+        R"docstring(
+        Specify the strokewidth, and optionally if you want stroke + fill.
+
+        Note, if width==0, then this request is taken to mean:
+        strokeAndFill==true -> new style will be Fill strokeAndFill==false ->
+        new style will be Hairline
+        )docstring",
+        py::arg("width"), py::arg("strokeAndFill") = false)
+    .def("setStrokeParams", &SkStrokeRec::setStrokeParams,
+        py::arg("cap"), py::arg("join"), py::arg("miterLimit"))
+    .def("getResScale", &SkStrokeRec::getResScale)
+    .def("setResScale", &SkStrokeRec::setResScale, py::arg("rs"))
+    .def("needToApply", &SkStrokeRec::needToApply,
+        R"docstring(
+        Returns true if this specifes any thick stroking, i.e.
+
+        :py:meth:`applyToPath` will return true.
+        )docstring")
+    .def("applyToPath", &SkStrokeRec::applyToPath,
+        R"docstring(
+        Apply these stroke parameters to the src path, returning the result in
+        dst.
+
+        If there was no change (i.e. style == hairline or fill) this returns
+        false and dst is unchanged. Otherwise returns true and the result is
+        stored in dst.
+
+        src and dst may be the same path.
+        )docstring",
+        py::arg("dst"), py::arg("src"))
+    .def("applyToPaint", &SkStrokeRec::applyToPaint,
+        R"docstring(
+        Apply these stroke parameters to a paint.
+        )docstring",
+        py::arg("paint"))
+    .def("getInflationRadius", &SkStrokeRec::getInflationRadius,
+        R"docstring(
+        Gives a conservative value for the outset that should applied to a
+        geometries bounds to account for any inflation due to applying this
+        strokeRec to the geometry.
+        )docstring")
+    .def("hasEqualEffect", &SkStrokeRec::hasEqualEffect,
+        R"docstring(
+        Compare if two SkStrokeRecs have an equal effect on a path.
+
+        Equal SkStrokeRecs produce equal paths. Equality of produced paths does
+        not take the ResScale parameter into account.
+        )docstring",
+        py::arg("other"))
+    .def_static("GetInflationRadius",
+        py::overload_cast<const SkPaint&, SkPaint::Style>(
+            &SkStrokeRec::GetInflationRadius),
+        R"docstring(
+        Equivalent to: :py:class:`StrokeRec` rec(paint, style);
+        rec.getInflationRadius(); This does not account for other effects on the
+        paint (i.e. path effect).
+        )docstring",
+        py::arg("paint"), py::arg("style"))
+    .def_static("GetInflationRadius",
+        py::overload_cast<SkPaint::Join, SkScalar, SkPaint::Cap, SkScalar>(
+            &SkStrokeRec::GetInflationRadius),
+        py::arg("join"), py::arg("miterLimit"), py::arg("cap"),
+        py::arg("strokeWidth"))
+    .def_readonly_static("kStyleCount", &SkStrokeRec::kStyleCount)
+    ;
+
+
+// PathEffect
+py::class_<SkPathEffect, sk_sp<SkPathEffect>, SkFlattenable>
+    patheffect(m, "PathEffect",
     R"docstring(
     :py:class:`PathEffect` is the base class for objects in the
     :py:class:`Paint` that affect the geometry of a drawing primitive before it
@@ -39,39 +135,28 @@ py::class_<SkPathEffect, sk_sp<SkPathEffect>, SkFlattenable> patheffect(
         ~PathEffect.PointData
     )docstring");
 
-py::class_<PyDashInfo>(patheffect, "DashInfo")
+py::class_<SkPathEffect::DashInfo>(patheffect, "DashInfo")
     .def(py::init<>())
-    .def(py::init([] (const std::vector<SkScalar>& intervals, SkScalar phase) {
-        auto info = PyDashInfo();
-        info.intervals_.assign(intervals.begin(), intervals.end());
-        info.fIntervals = (info.intervals_.empty()) ?
-            nullptr : &info.intervals_[0];
-        info.fCount = info.intervals_.size();
-        info.fPhase = phase;
-        return info;
-    }))
-    .def_property("fIntervals",
-        [] (const PyDashInfo& info) { return info.intervals_; },
-        [] (PyDashInfo& info, const std::vector<SkScalar>& intervals) {
-            info.intervals_.assign(intervals.begin(), intervals.end());
-            info.fIntervals = (info.intervals_.empty()) ?
-                nullptr : &info.intervals_[0];
-            info.fCount = info.intervals_.size();
+    .def_property_readonly("fIntervals",
+        [] (const SkPathEffect::DashInfo& info) {
+            return std::vector<SkScalar>(
+                info.fIntervals, info.fIntervals + info.fCount);
         },
         R"docstring(
         Length of on/off intervals for dashed lines.
         )docstring")
-    .def_readonly("fCount", &PyDashInfo::fCount,
+    .def_readonly("fCount", &SkPathEffect::DashInfo::fCount,
         R"docstring(
         Number of intervals in the dash. Should be even number.
         )docstring")
-    .def_readwrite("fPhase", &PyDashInfo::fPhase,
+    .def_readonly("fPhase", &SkPathEffect::DashInfo::fPhase,
         R"docstring(
         Offset into the dashed interval pattern.
         )docstring")
     ;
 
-py::class_<PyPointData> pointdata(patheffect, "PointData", R"docstring(
+py::class_<SkPathEffect::PointData> pointdata(patheffect, "PointData",
+    R"docstring(
     :py:class:`PointData` aggregates all the information needed to draw the
     point primitives returned by an asPoints call.
 
@@ -92,19 +177,18 @@ py::enum_<SkPathEffect::PointData::PointFlags>(
 
 pointdata
     .def(py::init<>())
-    .def_readwrite("fFlags", &PyPointData::fFlags)
-    .def_property("fPoints",
-        [] (const PyPointData& data) { return data.points_; },
-        [] (PyPointData* data, const std::vector<SkPoint>& points) {
-            data->points_.assign(points.begin(), points.end());
-            data->fNumPoints = data->points_.size();
+    .def_readonly("fFlags", &SkPathEffect::PointData::fFlags)
+    .def_property_readonly("fPoints",
+        [] (const SkPathEffect::PointData& data) {
+            return std::vector<SkPoint>(
+                data.fPoints, data.fPoints + data.fNumPoints);
         })
-    .def_readonly("fNumPoints", &PyPointData::fNumPoints)
-    .def_readwrite("fSize", &PyPointData::fSize)
-    .def_readwrite("fClipRect", &PyPointData::fClipRect)
-    .def_readwrite("fPath", &PyPointData::fPath)
-    .def_readwrite("fFirst", &PyPointData::fFirst)
-    .def_readwrite("fLast", &PyPointData::fLast)
+    .def_readonly("fNumPoints", &SkPathEffect::PointData::fNumPoints)
+    .def_readonly("fSize", &SkPathEffect::PointData::fSize)
+    .def_readonly("fClipRect", &SkPathEffect::PointData::fClipRect)
+    .def_readonly("fPath", &SkPathEffect::PointData::fPath)
+    .def_readonly("fFirst", &SkPathEffect::PointData::fFirst)
+    .def_readonly("fLast", &SkPathEffect::PointData::fLast)
     ;
 
 py::enum_<SkPathEffect::DashType>(patheffect, "DashType",
@@ -192,7 +276,13 @@ patheffect
         )docstring")
     .def_static("RegisterFlattenables", &SkPathEffect::RegisterFlattenables)
     .def_static("GetFlattenableType", &SkPathEffect::GetFlattenableType)
-    .def_static("Deserialize", &SkPathEffect::Deserialize)
+    .def_static("Deserialize",
+        [] (py::buffer b) {
+            auto info = b.request();
+            size_t size = (info.ndim) ? info.shape[0] * info.strides[0] : 0;
+            return SkPathEffect::Deserialize(info.ptr, size);
+        },
+        py::arg("data"))
     ;
 
 py::class_<SkDiscretePathEffect, SkPathEffect, sk_sp<SkDiscretePathEffect>>(

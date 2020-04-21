@@ -1,4 +1,132 @@
 Reference
----------
+=========
 
 .. automodule:: skia
+
+.. currentmodule:: skia
+
+.. rubric:: Classes
+
+.. autosummary::
+    :toctree: _generate
+    :nosignatures:
+    :template: class.rst
+
+    .. rubric:: Classes
+
+    AlphaType
+    ApplyPerspectiveClip
+    AutoCanvasRestore
+    BBoxHierarchy
+    BackingFit
+    Bitmap
+    BlendMode
+    BlendModeCoeff
+    Budgeted
+    Canvas
+    Canvas.SaveLayerFlags
+    Canvas.SrcRectConstraint
+    Canvas.PointMode
+    Canvas.QuadAAFlags
+    Canvas.SaveLayerRec
+    Canvas.Lattice
+    Canvas.Lattice.RectType
+    ClipOp
+    Color4f
+    ColorFilter
+    ColorInfo
+    ColorSpace
+    ColorType
+    CornerPathEffect
+    DashPathEffect
+    Data
+    DeserialProcs
+    DiscretePathEffect
+    EncodedImageFormat
+    FilterQuality
+    Flattanable
+    Font
+    FontArguments
+    FontHinting
+    FontMetrics
+    FontMgr
+    FontStyle
+    FontStyleSet
+    GrBackendApi
+    GrBackendSemaphore
+    GrBackendTexture
+    GrContext
+    GrFlushFlags
+    GrGLBackendState
+    GrGLInterface
+    GrMipMapped
+    GrProtected
+    GrRenderable
+    GrSemaphoresSubmitted
+    GrSurfaceOrigin
+    IPoint
+    IRect
+    ISize
+    Image
+    ImageFilter
+    ImageInfo
+    M44
+    MaskFilter
+    Matrix
+    MatrixPathEffect
+    MergePathEffect
+    Paint
+    Path
+    Path.Iter
+    Path.RawIter
+    Path.ArcSize
+    Path.AddPathMode
+    Path.SegmentMask
+    Path.Verb
+    PathConvexityType
+    PathDirection
+    PathEffect
+    PathEffect.DashInfo
+    PathEffect.DashType
+    PathEffect.PointData
+    PathEffect.PointData.PointFlags
+    Path1DPathEffect
+    Path1DPathEffect.Style
+    Path2DPathEffect
+    PathFillType
+    PathSegmentMask
+    PathVerb
+    Picture
+    PictureRecorder
+    PixelGeometry
+    Pixmap
+    Point
+    Point3
+    RRect
+    RSXform
+    Rect
+    Region
+    Shader
+    Size
+    StrokePathEffect
+    StrokeRec
+    Surface
+    Surface.AsyncReadResult
+    Surface.ContentChangeMode
+    Surface.BackendHandleAccess
+    Surface.RescaleGamma
+    Surface.BackendSurfaceAccess
+    Surface.FlushFlags
+    SurfaceCharacterization
+    SurfaceProps
+    SurfaceProps.Flags
+    SurfaceProps.InitType
+    TextBlob
+    TextBlobBuilder
+    TextEncoding
+    TileMode
+    TrimPathEffect
+    TrimPathEffect.Mode
+    Typeface
+    Vertices
+    YUVColorSpace

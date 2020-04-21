@@ -9,13 +9,13 @@ const int SkPaint::kJoinCount;
 
 class PyFlattanable : public SkFlattenable {
     using SkFlattenable::SkFlattenable;
-    // Factory getFactory() const override {
-    //     PYBIND11_OVERLOAD_PURE(
-    //         Factory,
-    //         SkFlattenable,
-    //         getFactory,
-    //     );
-    // }
+    Factory getFactory() const override {
+        PYBIND11_OVERLOAD_PURE(
+            Factory,
+            SkFlattenable,
+            getFactory,
+        );
+    }
     const char* getTypeName() const override {
         PYBIND11_OVERLOAD_PURE(const char*, SkFlattenable, getTypeName);
     }
@@ -217,18 +217,18 @@ py::class_<SkFlattenable, PyFlattanable, sk_sp<SkFlattenable>> flattanable(
     )docstring");
 
 py::enum_<SkFlattenable::Type>(flattanable, "Type")
-    .value("kSkColorFilter", SkShader::Type::kSkColorFilter_Type)
-    .value("kSkDrawable", SkShader::Type::kSkDrawable_Type)
-    .value("kSkDrawLooper", SkShader::Type::kSkDrawLooper_Type)
-    .value("kSkImageFilter", SkShader::Type::kSkImageFilter_Type)
-    .value("kSkMaskFilter", SkShader::Type::kSkMaskFilter_Type)
-    .value("kSkPathEffect", SkShader::Type::kSkPathEffect_Type)
-    .value("kSkPixelRef", SkShader::Type::kSkPixelRef_Type)
-    .value("kSkUnused4", SkShader::Type::kSkUnused_Type4)
-    .value("kSkShaderBase", SkShader::Type::kSkShaderBase_Type)
-    .value("kSkUnused", SkShader::Type::kSkUnused_Type)
-    .value("kSkUnused2", SkShader::Type::kSkUnused_Type2)
-    .value("kSkUnused3", SkShader::Type::kSkUnused_Type3)
+    .value("kColorFilter", SkFlattenable::Type::kSkColorFilter_Type)
+    .value("kDrawable", SkFlattenable::Type::kSkDrawable_Type)
+    .value("kDrawLooper", SkFlattenable::Type::kSkDrawLooper_Type)
+    .value("kImageFilter", SkFlattenable::Type::kSkImageFilter_Type)
+    .value("kMaskFilter", SkFlattenable::Type::kSkMaskFilter_Type)
+    .value("kPathEffect", SkFlattenable::Type::kSkPathEffect_Type)
+    .value("kPixelRef", SkFlattenable::Type::kSkPixelRef_Type)
+    .value("kUnused4", SkFlattenable::Type::kSkUnused_Type4)
+    .value("kShaderBase", SkFlattenable::Type::kSkShaderBase_Type)
+    .value("kUnused", SkFlattenable::Type::kSkUnused_Type)
+    .value("kUnused2", SkFlattenable::Type::kSkUnused_Type2)
+    .value("kUnused3", SkFlattenable::Type::kSkUnused_Type3)
     .export_values();
 
 flattanable
@@ -241,14 +241,22 @@ flattanable
         )docstring")
     // .def("flatten", &SkFlattenable::flatten)
     .def("getFlattenableType", &SkFlattenable::getFlattenableType)
-    // .def("serialize", &SkFlattenable::serialize)
+    .def("serialize",
+        [] (const SkFlattenable& flattanable) {
+            return flattanable.serialize();
+        })
     .def("unique", &SkFlattenable::unique)
     .def("ref", &SkFlattenable::ref)
     .def("unref", &SkFlattenable::unref)
     // .def_static("NameToFactory", &SkFlattenable::NameToFactory)
     // .def_static("FactoryToName", &SkFlattenable::FactoryToName)
     // .def_static("Register", &SkFlattenable::Register)
-    // .def_static("Deserialize", &SkFlattenable::Deserialize)
+    .def_static("Deserialize",
+        [] (SkFlattenable::Type type, py::buffer b) {
+            auto info = b.request();
+            size_t size = (info.ndim) ? info.shape[0] * info.strides[0] : 0;
+            return SkFlattenable::Deserialize(type, info.ptr, size);
+        })
     ;
 
 // Shader

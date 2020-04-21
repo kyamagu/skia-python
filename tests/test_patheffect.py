@@ -2,12 +2,101 @@ import skia
 import pytest
 
 
+@pytest.fixture
+def strokerec():
+    return skia.StrokeRec(skia.StrokeRec.InitStyle.kHairline)
+
+
 @pytest.mark.parametrize('args', [
-    tuple(),
-    ([1.0, 2.0,], 1.0),
+    (skia.StrokeRec.InitStyle.kHairline,),
+    (skia.Paint(), skia.Paint.Style.kStroke),
+    (skia.Paint(), skia.Paint.Style.kStroke, 1),
+    (skia.Paint(),),
+    (skia.Paint(), 1),
 ])
-def test_PathEffect_DashInfo_init(args):
-    assert isinstance(skia.PathEffect.DashInfo(*args), skia.PathEffect.DashInfo)
+def test_StrokeRec_init(args):
+    assert isinstance(skia.StrokeRec(*args), skia.StrokeRec)
+
+
+def test_StrokeRec_getStyle(strokerec):
+    assert isinstance(strokerec.getStyle(), skia.StrokeRec.Style)
+
+
+def test_StrokeRec_getWidth(strokerec):
+    assert isinstance(strokerec.getWidth(), float)
+
+
+def test_StrokeRec_getMiter(strokerec):
+    assert isinstance(strokerec.getMiter(), float)
+
+
+def test_StrokeRec_getCap(strokerec):
+    assert isinstance(strokerec.getCap(), skia.Paint.Cap)
+
+
+def test_StrokeRec_getJoin(strokerec):
+    assert isinstance(strokerec.getJoin(), skia.Paint.Join)
+
+
+def test_StrokeRec_isHairlineStyle(strokerec):
+    assert isinstance(strokerec.isHairlineStyle(), bool)
+
+
+def test_StrokeRec_isFillStyle(strokerec):
+    assert isinstance(strokerec.isFillStyle(), bool)
+
+
+def test_StrokeRec_setFillStyle(strokerec):
+    strokerec.setFillStyle()
+
+
+def test_StrokeRec_setHairlineStyle(strokerec):
+    strokerec.setHairlineStyle()
+
+
+def test_StrokeRec_setStrokeStyle(strokerec):
+    strokerec.setStrokeStyle(1., True)
+
+
+def test_StrokeRec_setStrokeParams(strokerec):
+    strokerec.setStrokeParams(skia.Paint.Cap.kButt, skia.Paint.Join.kMiter, 1)
+
+
+def test_StrokeRec_getResScale(strokerec):
+    assert isinstance(strokerec.getResScale(), float)
+
+
+def test_StrokeRec_setResScale(strokerec):
+    strokerec.setResScale(1.)
+
+
+def test_StrokeRec_needToApply(strokerec):
+    assert isinstance(strokerec.needToApply(), bool)
+
+
+def test_StrokeRec_applyToPath(strokerec):
+    assert isinstance(strokerec.applyToPath(skia.Path(), skia.Path()), bool)
+
+
+def test_StrokeRec_applyToPaint(strokerec):
+    strokerec.applyToPaint(skia.Paint())
+
+
+def test_StrokeRec_getInflationRadius(strokerec):
+    assert isinstance(strokerec.getInflationRadius(), float)
+
+
+def test_StrokeRec_hasEqualEffect(strokerec):
+    assert isinstance(strokerec.hasEqualEffect(
+        skia.StrokeRec(skia.StrokeRec.InitStyle.kHairline)), bool)
+
+
+@pytest.mark.parametrize('args', [
+    (skia.Paint(), skia.Paint.Style.kStroke,),
+    (skia.Paint.Join.kMiter, 1, skia.Paint.Cap.kButt, 1),
+])
+def test_StrokeRec_GetInflationRadius(args):
+    assert isinstance(skia.StrokeRec.GetInflationRadius(*args), float)
 
 
 @pytest.fixture
@@ -16,18 +105,15 @@ def patheffect_dashinfo():
 
 
 def test_PathEffect_DashInfo_fIntervals(patheffect_dashinfo):
-    patheffect_dashinfo.fIntervals = [1.0, 2.0]
     assert isinstance(patheffect_dashinfo.fIntervals, list)
-    assert patheffect_dashinfo.fCount == 2
+
+
+def test_PathEffect_DashInfo_fCount(patheffect_dashinfo):
+    assert isinstance(patheffect_dashinfo.fCount, int)
 
 
 def test_PathEffect_DashInfo_fPhase(patheffect_dashinfo):
-    patheffect_dashinfo.fPhase = 2.0
-    assert patheffect_dashinfo.fPhase == 2.0
-
-
-def test_PathEffect_PointData_init():
-    assert isinstance(skia.PathEffect.PointData(), skia.PathEffect.PointData)
+    assert isinstance(patheffect_dashinfo.fPhase, float)
 
 
 @pytest.fixture
@@ -36,16 +122,15 @@ def patheffect_pointdata():
 
 
 def test_PathEffect_PointData_fFlags(patheffect_pointdata):
-    patheffect_pointdata.fFlags = skia.PathEffect.PointData.PointFlags.kCircles
-    assert (patheffect_pointdata.fFlags ==
-        skia.PathEffect.PointData.PointFlags.kCircles)
+    assert isinstance(patheffect_pointdata.fFlags, int)
 
 
 def test_PathEffect_PointData_fPoints(patheffect_pointdata):
-    patheffect_pointdata.fPoints = [skia.Point(0, 0)]
     assert isinstance(patheffect_pointdata.fPoints, list)
-    assert patheffect_pointdata.fPoints[0] == skia.Point(0, 0)
-    assert patheffect_pointdata.fNumPoints == 1
+
+
+def test_PathEffect_PointData_fNumPoints(patheffect_pointdata):
+    assert isinstance(patheffect_pointdata.fNumPoints, int)
 
 
 def test_PathEffect_PointData_fSize(patheffect_pointdata):
@@ -68,12 +153,56 @@ def test_PathEffect_PointData_fLast(patheffect_pointdata):
     assert isinstance(patheffect_pointdata.fLast, skia.Path)
 
 
-def test_DiscretePathEffect_Make():
-    assert isinstance(skia.DiscretePathEffect.Make(4.0, 1.0), skia.PathEffect)
+@pytest.fixture
+def patheffect():
+    return skia.DashPathEffect.Make([2., 1.], 0)
+
+
+def test_PathEffect_filterPath(patheffect):
+    dst = skia.Path()
+    src = skia.Path()
+    src.addCircle(10, 10, 5)
+    rec = skia.StrokeRec(skia.StrokeRec.InitStyle.kHairline)
+    assert isinstance(patheffect.filterPath(dst, src, rec, None), bool)
+
+
+def test_PathEffect_computeFastBounds(patheffect):
+    patheffect.computeFastBounds(skia.Rect(100, 100), skia.Rect(100, 100))
+
+
+def test_PathEffect_asPoints(patheffect):
+    results = skia.PathEffect.PointData()
+    path = skia.Path()
+    path.addCircle(10, 10, 5)
+    rec = skia.StrokeRec(skia.StrokeRec.InitStyle.kHairline)
+    matrix = skia.Matrix()
+    assert isinstance(
+        patheffect.asPoints(results, path, rec, matrix, None), bool)
+
+
+def test_PathEffect_asADash(patheffect):
+    dashinfo = skia.PathEffect.DashInfo()
+    assert isinstance(patheffect.asADash(dashinfo), skia.PathEffect.DashType)
+
+
+def test_PathEffect_Deserialize(patheffect):
+    data = patheffect.serialize()
+    assert isinstance(data, skia.Data)
+    effect = skia.PathEffect.Deserialize(data)
+    assert isinstance(effect, skia.PathEffect)
+
+
+def test_PathEffect_GetFlattenableType():
+    assert isinstance(
+        skia.PathEffect.GetFlattenableType(), skia.Flattanable.Type)
 
 
 def test_DashPathEffect_Make():
     assert isinstance(skia.DashPathEffect.Make([2., 1.], 0), skia.PathEffect)
+
+
+def test_DiscretePathEffect_Make():
+    assert isinstance(skia.DiscretePathEffect.Make(4.0, 1.0), skia.PathEffect)
 
 
 def test_CornerPathEffect_Make():
