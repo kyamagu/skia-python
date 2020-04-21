@@ -6,35 +6,35 @@ void initFont(py::module &m) {
 py::class_<SkFontStyle> fontstyle(m, "FontStyle");
 
 py::enum_<SkFontStyle::Weight>(fontstyle, "Weight")
-    .value("kInvisible", SkFontStyle::Weight::kInvisible_Weight)
-    .value("kThin", SkFontStyle::Weight::kThin_Weight)
-    .value("kExtraLight", SkFontStyle::Weight::kExtraLight_Weight)
-    .value("kLight", SkFontStyle::Weight::kLight_Weight)
-    .value("kNormal", SkFontStyle::Weight::kNormal_Weight)
-    .value("kMedium", SkFontStyle::Weight::kMedium_Weight)
-    .value("kSemiBold", SkFontStyle::Weight::kSemiBold_Weight)
-    .value("kBold", SkFontStyle::Weight::kBold_Weight)
-    .value("kExtraBold", SkFontStyle::Weight::kExtraBold_Weight)
-    .value("kBlack", SkFontStyle::Weight::kBlack_Weight)
-    .value("kExtraBlack", SkFontStyle::Weight::kExtraBlack_Weight)
+    .value("kInvisible_Weight", SkFontStyle::Weight::kInvisible_Weight)
+    .value("kThin_Weight", SkFontStyle::Weight::kThin_Weight)
+    .value("kExtraLight_Weight", SkFontStyle::Weight::kExtraLight_Weight)
+    .value("kLight_Weight", SkFontStyle::Weight::kLight_Weight)
+    .value("kNormal_Weight", SkFontStyle::Weight::kNormal_Weight)
+    .value("kMedium_Weight", SkFontStyle::Weight::kMedium_Weight)
+    .value("kSemiBold_Weight", SkFontStyle::Weight::kSemiBold_Weight)
+    .value("kBold_Weight", SkFontStyle::Weight::kBold_Weight)
+    .value("kExtraBold_Weight", SkFontStyle::Weight::kExtraBold_Weight)
+    .value("kBlack_Weight", SkFontStyle::Weight::kBlack_Weight)
+    .value("kExtraBlack_Weight", SkFontStyle::Weight::kExtraBlack_Weight)
     .export_values();
 
 py::enum_<SkFontStyle::Width>(fontstyle, "Width")
-    .value("kUltraCondensed", SkFontStyle::Width::kUltraCondensed_Width)
-    .value("kExtraCondensed", SkFontStyle::Width::kExtraCondensed_Width)
-    .value("kCondensed", SkFontStyle::Width::kCondensed_Width)
-    .value("kSemiCondensed", SkFontStyle::Width::kSemiCondensed_Width)
-    .value("kNormal", SkFontStyle::Width::kNormal_Width)
-    .value("kSemiExpanded", SkFontStyle::Width::kSemiExpanded_Width)
-    .value("kExpanded", SkFontStyle::Width::kExpanded_Width)
-    .value("kExtraExpanded", SkFontStyle::Width::kExtraExpanded_Width)
-    .value("kUltraExpanded", SkFontStyle::Width::kUltraExpanded_Width)
+    .value("kUltraCondensed_Width", SkFontStyle::Width::kUltraCondensed_Width)
+    .value("kExtraCondensed_Width", SkFontStyle::Width::kExtraCondensed_Width)
+    .value("kCondensed_Width", SkFontStyle::Width::kCondensed_Width)
+    .value("kSemiCondensed_Width", SkFontStyle::Width::kSemiCondensed_Width)
+    .value("kNormal_Width", SkFontStyle::Width::kNormal_Width)
+    .value("kSemiExpanded_Width", SkFontStyle::Width::kSemiExpanded_Width)
+    .value("kExpanded_Width", SkFontStyle::Width::kExpanded_Width)
+    .value("kExtraExpanded_Width", SkFontStyle::Width::kExtraExpanded_Width)
+    .value("kUltraExpanded_Width", SkFontStyle::Width::kUltraExpanded_Width)
     .export_values();
 
 py::enum_<SkFontStyle::Slant>(fontstyle, "Slant")
-    .value("kUpright", SkFontStyle::Slant::kUpright_Slant)
-    .value("kItalic", SkFontStyle::Slant::kItalic_Slant)
-    .value("kOblique", SkFontStyle::Slant::kOblique_Slant)
+    .value("kUpright_Slant", SkFontStyle::Slant::kUpright_Slant)
+    .value("kItalic_Slant", SkFontStyle::Slant::kItalic_Slant)
+    .value("kOblique_Slant", SkFontStyle::Slant::kOblique_Slant)
     .export_values();
 
 fontstyle
@@ -552,16 +552,16 @@ py::enum_<SkFontMetrics::FontMetricsFlags>(fontmetrics, "FontMetricsFlags",
     Fonts with embedded bitmaps may not have valid underline or strikeout
     metrics.
     )docstring")
-    .value("kUnderlineThicknessIsValid",
+    .value("kUnderlineThicknessIsValid_Flag",
         SkFontMetrics::FontMetricsFlags::kUnderlineThicknessIsValid_Flag,
         "set if fUnderlineThickness is valid")
-    .value("kUnderlinePositionIsValid",
+    .value("kUnderlinePositionIsValid_Flag",
         SkFontMetrics::FontMetricsFlags::kUnderlinePositionIsValid_Flag,
         "set if fUnderlinePosition is valid")
-    .value("kStrikeoutThicknessIsValid",
+    .value("kStrikeoutThicknessIsValid_Flag",
         SkFontMetrics::FontMetricsFlags::kStrikeoutThicknessIsValid_Flag,
         "set if fStrikeoutThickness is valid")
-    .value("kStrikeoutPositionIsValid",
+    .value("kStrikeoutPositionIsValid_Flag",
         SkFontMetrics::FontMetricsFlags::kStrikeoutPositionIsValid_Flag,
         "set if fStrikeoutPosition is valid")
     .export_values();

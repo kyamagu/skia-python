@@ -325,28 +325,28 @@ py::class_<SkRRect> rrect(m, "RRect", R"docstring(
     )docstring");
 
 py::enum_<SkRRect::Type>(rrect, "Type")
-    .value("kEmpty", SkRRect::Type::kEmpty_Type, "zero width or height")
-    .value("kRect", SkRRect::Type::kRect_Type,
+    .value("kEmpty_Type", SkRRect::Type::kEmpty_Type, "zero width or height")
+    .value("kRect_Type", SkRRect::Type::kRect_Type,
         "non-zero width and height, and zeroed radii")
-    .value("kOval", SkRRect::Type::kOval_Type,
+    .value("kOval_Type", SkRRect::Type::kOval_Type,
         "non-zero width and height filled with radii")
-    .value("kSimple", SkRRect::Type::kSimple_Type,
+    .value("kSimple_Type", SkRRect::Type::kSimple_Type,
         "non-zero width and height with equal radii")
-    .value("kNinePatch", SkRRect::Type::kNinePatch_Type,
+    .value("kNinePatch_Type", SkRRect::Type::kNinePatch_Type,
         "non-zero width and height with axis-aligned radii")
-    .value("kComplex", SkRRect::Type::kComplex_Type,
+    .value("kComplex_Type", SkRRect::Type::kComplex_Type,
         "non-zero width and height with arbitrary radii")
     .value("kLastType", SkRRect::Type::kLastType, "largest Type value")
     .export_values();
 
 py::enum_<SkRRect::Corner>(rrect, "Corner")
-    .value("kUpperLeft", SkRRect::Corner::kUpperLeft_Corner,
+    .value("kUpperLeft_Corner", SkRRect::Corner::kUpperLeft_Corner,
         "index of top-left corner radii")
-    .value("kUpperRight", SkRRect::Corner::kUpperRight_Corner,
+    .value("kUpperRight_Corner", SkRRect::Corner::kUpperRight_Corner,
         "index of top-right corner radii")
-    .value("kLowerRight", SkRRect::Corner::kLowerRight_Corner,
+    .value("kLowerRight_Corner", SkRRect::Corner::kLowerRight_Corner,
         "index of bottom-right corner radii")
-    .value("kLowerLeft", SkRRect::Corner::kLowerLeft_Corner,
+    .value("kLowerLeft_Corner", SkRRect::Corner::kLowerLeft_Corner,
         "index of bottom-left corner radii")
     .export_values();
 

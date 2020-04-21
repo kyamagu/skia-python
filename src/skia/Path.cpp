@@ -59,10 +59,14 @@ py::enum_<SkPathDirection>(m, "PathDirection")
     .export_values();
 
 py::enum_<SkPathSegmentMask>(m, "PathSegmentMask")
-    .value("kLine", SkPathSegmentMask::kLine_SkPathSegmentMask)
-    .value("kQuad", SkPathSegmentMask::kQuad_SkPathSegmentMask)
-    .value("kConic", SkPathSegmentMask::kConic_SkPathSegmentMask)
-    .value("kCubic", SkPathSegmentMask::kCubic_SkPathSegmentMask)
+    .value("kLine_PathSegmentMask",
+        SkPathSegmentMask::kLine_SkPathSegmentMask)
+    .value("kQuad_PathSegmentMask",
+        SkPathSegmentMask::kQuad_SkPathSegmentMask)
+    .value("kConic_PathSegmentMask",
+        SkPathSegmentMask::kConic_SkPathSegmentMask)
+    .value("kCubic_PathSegmentMask",
+        SkPathSegmentMask::kCubic_SkPathSegmentMask)
     .export_values();
 
 py::enum_<SkPathVerb>(m, "PathVerb")
@@ -85,15 +89,20 @@ m.def("PathFillType_ConvertToNonInverse", &SkPathFillType_ConvertToNonInverse);
 py::enum_<SkPathOp>(m, "PathOp", R"docstring(
     The logical operations that can be performed when combining two paths.
     )docstring")
-    .value("kDifference", SkPathOp::kDifference_SkPathOp,
+    .value("kDifference_PathOp",
+        SkPathOp::kDifference_SkPathOp,
         "subtract the op path from the first path")
-    .value("kIntersect", SkPathOp::kIntersect_SkPathOp,
+    .value("kIntersect_PathOp",
+        SkPathOp::kIntersect_SkPathOp,
         "intersect the two paths")
-    .value("kUnion", SkPathOp::kUnion_SkPathOp,
+    .value("kUnion_PathOp",
+        SkPathOp::kUnion_SkPathOp,
         "union (inclusive-or) the two paths")
-    .value("kXOR", SkPathOp::kXOR_SkPathOp,
+    .value("kXOR_PathOp",
+        SkPathOp::kXOR_SkPathOp,
         "exclusive-or the two paths")
-    .value("kReverseDifference", SkPathOp::kReverseDifference_SkPathOp,
+    .value("kReverseDifference_PathOp",
+        SkPathOp::kReverseDifference_SkPathOp,
         "subtract the first path from the op path")
     .export_values();
 
@@ -135,32 +144,34 @@ py::class_<SkPath> path(m, "Path", R"docstring(
     )docstring");
 
 py::enum_<SkPath::ArcSize>(path, "ArcSize")
-    .value("kSmall", SkPath::ArcSize::kSmall_ArcSize, "smaller of arc pair")
-    .value("kLarge", SkPath::ArcSize::kLarge_ArcSize, "larger of arc pair")
+    .value("kSmall_ArcSize", SkPath::ArcSize::kSmall_ArcSize,
+        "smaller of arc pair")
+    .value("kLarge_ArcSize", SkPath::ArcSize::kLarge_ArcSize,
+        "larger of arc pair")
     .export_values();
 
 py::enum_<SkPath::AddPathMode>(path, "AddPathMode")
-    .value("kAppend", SkPath::AddPathMode::kAppend_AddPathMode,
+    .value("kAppend_AddPathMode", SkPath::AddPathMode::kAppend_AddPathMode,
         "appended to destination unaltered")
-    .value("kExtend", SkPath::AddPathMode::kExtend_AddPathMode,
+    .value("kExtend_AddPathMode", SkPath::AddPathMode::kExtend_AddPathMode,
         "add line if prior contour is not closed")
     .export_values();
 
 py::enum_<SkPath::SegmentMask>(path, "SegmentMask")
-    .value("kLine", SkPath::SegmentMask::kLine_SegmentMask)
-    .value("kQuad", SkPath::SegmentMask::kQuad_SegmentMask)
-    .value("kConic", SkPath::SegmentMask::kConic_SegmentMask)
-    .value("kCubic", SkPath::SegmentMask::kCubic_SegmentMask)
+    .value("kLine_SegmentMask", SkPath::SegmentMask::kLine_SegmentMask)
+    .value("kQuad_SegmentMask", SkPath::SegmentMask::kQuad_SegmentMask)
+    .value("kConic_SegmentMask", SkPath::SegmentMask::kConic_SegmentMask)
+    .value("kCubic_SegmentMask", SkPath::SegmentMask::kCubic_SegmentMask)
     .export_values();
 
 py::enum_<SkPath::Verb>(path, "Verb")
-    .value("kMove", SkPath::Verb::kMove_Verb)
-    .value("kLine", SkPath::Verb::kLine_Verb)
-    .value("kQuad", SkPath::Verb::kQuad_Verb)
-    .value("kConic", SkPath::Verb::kConic_Verb)
-    .value("kCubic", SkPath::Verb::kCubic_Verb)
-    .value("kClose", SkPath::Verb::kClose_Verb)
-    .value("kDone", SkPath::Verb::kDone_Verb)
+    .value("kMove_Verb", SkPath::Verb::kMove_Verb)
+    .value("kLine_Verb", SkPath::Verb::kLine_Verb)
+    .value("kQuad_Verb", SkPath::Verb::kQuad_Verb)
+    .value("kConic_Verb", SkPath::Verb::kConic_Verb)
+    .value("kCubic_Verb", SkPath::Verb::kCubic_Verb)
+    .value("kClose_Verb", SkPath::Verb::kClose_Verb)
+    .value("kDone_Verb", SkPath::Verb::kDone_Verb)
     .export_values();
 
 py::class_<SkPath::Iter>(path, "Iter", R"docstring(
@@ -174,8 +185,8 @@ py::class_<SkPath::Iter>(path, "Iter", R"docstring(
         R"docstring(
         Initializes :py:class:`Iter` with an empty :py:class:`Path`.
 
-        next() on :py:class:`Iter` returns :py:attr:`~skia.Path.Verb.kDone`. Call
-        setPath to initialize :py:class:`Iter` at a later time.
+        next() on :py:class:`Iter` returns :py:attr:`~skia.Path.kDone_Verb`.
+        Call setPath to initialize :py:class:`Iter` at a later time.
 
         :return: :py:class:`Iter` of empty SkPath
         )docstring")
@@ -185,12 +196,12 @@ py::class_<SkPath::Iter>(path, "Iter", R"docstring(
         :py:class:`Point` array, and conic weight in path.
 
         If forceClose is true, :py:class:`Iter` will add
-        :py:attr:`~skia.Path.Verb.kLine` and :py:attr:`~skia.Path.Verb.kClose`
+        :py:attr:`~skia.Path.kLine_Verb` and :py:attr:`~skia.Path.kClose_Verb`
         after each open contour. path is not altered.
 
         :path: :py:class:`Path` to iterate
         :forceClose: true if open contours generate
-            :py:attr:`~skia.Path.Verb.kClose`
+            :py:attr:`~skia.Path.kClose_Verb`
 
         :return: :py:class:`Iter` of path
         )docstring",
@@ -201,12 +212,12 @@ py::class_<SkPath::Iter>(path, "Iter", R"docstring(
         :py:class:`Point` array, and conic weight in path.
 
         If forceClose is true, :py:class:`Iter` will add
-        :py:attr:`~skia.Path.Verb.kLine` and :py:attr:`~skia.Path.Verb.kClose`
+        :py:attr:`~skia.Path.kLine_Verb` and :py:attr:`~skia.Path.kClose_Verb`
         after each open contour. path is not altered.
 
         :param skia.Path path: :py:class:`Path` to iterate
         :param bool forceClose: true if open contours generate
-            :py:attr:`~skia.Path.Verb.kClose`
+            :py:attr:`~skia.Path.kClose_Verb`
         )docstring",
         py::arg("path"), py::arg("forceClose"))
     .def("next", &Iter_next<SkPath::Iter>,
@@ -214,7 +225,7 @@ py::class_<SkPath::Iter>(path, "Iter", R"docstring(
         Returns next :py:class:`~skia.Path.Verb` in verb array, and advances
         :py:class:`Iter`.
 
-        When verb array is exhausted, returns :py:attr:`~skia.Path.Verb.kDone`.
+        When verb array is exhausted, returns :py:attr:`~skia.Path.kDone_Verb`.
 
         Zero to four :py:class:`Point` are stored in pts, depending on the
         returned :py:class:`~skia.Path.Verb`.
@@ -227,36 +238,36 @@ py::class_<SkPath::Iter>(path, "Iter", R"docstring(
     .def("conicWeight", &SkPath::Iter::conicWeight,
         R"docstring(
         Returns conic weight if :py:meth:`next` returned
-        :py:attr:`~skia.Path.Verb.kConic`.
+        :py:attr:`~skia.Path.kConic_Verb`.
 
         If :py:meth:`next` has not been called, or :py:meth:`next` did not
-        return :py:attr:`~skia.Path.Verb.kConic`, result is undefined.
+        return :py:attr:`~skia.Path.kConic_Verb`, result is undefined.
 
         :return: conic weight for conic :py:class:`Point` returned by
             :py:meth:`next`
         )docstring")
     .def("isCloseLine", &SkPath::Iter::isCloseLine,
         R"docstring(
-        Returns true if last:py:attr:`~skia.Path.Verb.kLine` returned by
-        :py:meth:`next` was generated by :py:attr:`~skia.Path.Verb.kClose`.
+        Returns true if last:py:attr:`~skia.Path.kLine_Verb` returned by
+        :py:meth:`next` was generated by :py:attr:`~skia.Path.kClose_Verb`.
 
         When true, the end point returned by :py:meth:`next` is also the start
         point of contour.
 
         If :py:meth:`next` has not been called, or :py:meth:`next` did not
-        return :py:attr:`~skia.Path.Verb.kLine`, result is undefined.
+        return :py:attr:`~skia.Path.kLine_Verb`, result is undefined.
 
-        :return: true if last :py:attr:`~skia.Path.Verb.kLine` was generated by
-            :py:attr:`~skia.Path.Verb.kClose`
+        :return: true if last :py:attr:`~skia.Path.kLine_Verb` was generated by
+            :py:attr:`~skia.Path.kClose_Verb`
         )docstring")
     .def("isClosedContour", &SkPath::Iter::isClosedContour,
         R"docstring(
         Returns true if subsequent calls to :py:meth:`next` return
-        :py:attr:`~skia.Path.Verb.kClose` before returning
-        :py:attr:`~skia.Path.Verb.kMove`.
+        :py:attr:`~skia.Path.kClose_Verb` before returning
+        :py:attr:`~skia.Path.kMove_Verb`.
 
         if true, contour :py:class:`Iter` is processing may end with
-        :py:attr:`~skia.Path.Verb.kClose`, or :py:class:`Iter` may have been
+        :py:attr:`~skia.Path.kClose_Verb`, or :py:class:`Iter` may have been
         initialized with force close set to true.
 
         :return: true if contour is closed
@@ -275,7 +286,7 @@ py::class_<SkPath::RawIter>(path, "RawIter", R"docstring(
         Initializes :py:class:`RawIter` with an empty :py:class:`Path`.
 
         :py:meth:`next` on :py:class:`RawIter` returns
-        :py:attr:`~skia.Path.Verb.kDone`. Call :py:meth:`setPath` to initialize
+        :py:attr:`~skia.Path.kDone_Verb`. Call :py:meth:`setPath` to initialize
         :py:class:`RawIter` at a later time.
 
         :return: :py:class:`RawIter` of empty :py:class:`Path`
@@ -302,7 +313,7 @@ py::class_<SkPath::RawIter>(path, "RawIter", R"docstring(
         Returns next :py:class:`~skia.Path.Verb` in verb array, and advances
         :py:class:`RawIter`.
 
-        When verb array is exhausted, returns :py:attr:`~skia.Path.Verb.kDone`.
+        When verb array is exhausted, returns :py:attr:`~skia.Path.kDone_Verb`.
 
         Zero to four :py:class:`Point` are stored in pts, depending on the
         returned :py:class:`~skia.Path.Verb`.
@@ -322,10 +333,10 @@ py::class_<SkPath::RawIter>(path, "RawIter", R"docstring(
     .def("conicWeight", &SkPath::RawIter::conicWeight,
         R"docstring(
         Returns conic weight if :py:meth:`next` returned
-        :py:attr:`~skia.Path.Verb.kConic`.
+        :py:attr:`~skia.Path.kConic_Verb`.
 
         If :py:meth:`next` has not been called, or :py:meth:`next` did not
-        return :py:attr:`~skia.Path.Verb.kConic`, result is undefined.
+        return :py:attr:`~skia.Path.kConic_Verb`, result is undefined.
 
         :return: conic weight for conic :py:class:`Point` returned by
             :py:meth:`next`
@@ -534,7 +545,7 @@ path
         :py:class:`~skia.Paint.Cap` at first and last :py:class:`Point`.
 
         :return: true if the last contour ends with a
-            :py:attr:`~skia.Path.Verb.kClose`
+            :py:attr:`~skia.Path.kClose_Verb`
         )docstring")
     .def("isFinite", &SkPath::isFinite,
         R"docstring(
@@ -596,7 +607,7 @@ path
         R"docstring(
         Returns true if :py:class:`Path` contains only one line;
         :py:class:`~skia.Path.Verb` array has two entries:
-        :py:attr:`~skia.Path.Verb.kMove`, :py:attr:`~skia.Path.Verb.kLine`.
+        :py:attr:`~skia.Path.kMove_Verb`, :py:attr:`~skia.Path.kLine_Verb`.
 
         If :py:class:`Path` contains one line and line is not nullptr, line is
         set to line start point and line end point. Returns false if
@@ -648,10 +659,10 @@ path
         py::arg("max") = 0)
     .def("countVerbs", &SkPath::countVerbs,
         R"docstring(
-        Returns the number of verbs: :py:attr:`~Path.Verb.kMove`,
-        :py:attr:`~Path.Verb.kLine`, :py:attr:`~Path.Verb.kQuad`,
-        :py:attr:`~Path.Verb.kConic`, :py:attr:`~Path.Verb.kCubic`, and
-        :py:attr:`~Path.Verb.kClose`; added to :py:class:`Path`.
+        Returns the number of verbs: :py:attr:`~Path.kMove_Verb`,
+        :py:attr:`~Path.kLine_Verb`, :py:attr:`~Path.kQuad_Verb`,
+        :py:attr:`~Path.kConic_Verb`, :py:attr:`~Path.kCubic_Verb`, and
+        :py:attr:`~Path.kClose_Verb`; added to :py:class:`Path`.
 
         :return: length of verb array
         )docstring")
@@ -700,7 +711,7 @@ path
 
         :py:class:`Rect` returned includes all :py:class:`Point` added to
         :py:class:`Path`, including :py:class:`Point` associated with
-        :py:attr:`~Path.Verb.kMove` that define empty contours.
+        :py:attr:`~Path.kMove_Verb` that define empty contours.
 
         :return: bounds of all :py:class:`Point` in :py:class:`Point` array
         )docstring")
@@ -814,12 +825,12 @@ path
         Adds line from last point to (x, y).
 
         If :py:class:`Path` is empty, or last :py:class:`~Path.Verb` is
-        :py:attr:`~Path.Verb.kClose`, last point is set to (0, 0) before adding
+        :py:attr:`~Path.kClose_Verb`, last point is set to (0, 0) before adding
         line.
 
-        lineTo() appends :py:attr:`~Path.Verb.kMove` to verb array and (0, 0) to
+        lineTo() appends :py:attr:`~Path.kMove_Verb` to verb array and (0, 0) to
         :py:class:`Point` array, if needed. lineTo() then appends
-        :py:attr:`~Path.Verb.kLine` to verb array and (x, y) to
+        :py:attr:`~Path.kLine_Verb` to verb array and (x, y) to
         :py:class:`Point` array.
 
         :x: end of added line on x-axis
@@ -833,12 +844,12 @@ path
         Adds line from last point to :py:class:`Point` p.
 
         If :py:class:`Path` is empty, or last :py:class:`~Path.Verb` is
-        :py:attr:`~Path.Verb.kClose`, last point is set to (0, 0) before adding
+        :py:attr:`~Path.kClose_Verb`, last point is set to (0, 0) before adding
         line.
 
-        lineTo() appends :py:attr:`~Path.Verb.kMove` to verb array and (0, 0) to
+        lineTo() appends :py:attr:`~Path.kMove_Verb` to verb array and (0, 0) to
         :py:class:`Point` array, if needed. lineTo() then appends
-        :py:attr:`~Path.Verb.kLine` to verb array and p to :py:class:`Point`
+        :py:attr:`~Path.kLine_Verb` to verb array and p to :py:class:`Point`
         array.
 
         :p: end :py:class:`Point` of added line
@@ -850,12 +861,12 @@ path
         Adds line from last point to vector (dx, dy).
 
         If :py:class:`Path` is empty, or last :py:class:`~Path.Verb` is
-        :py:attr:`~skia.Path.Verb.kClose`, last point is set to (0, 0) before
+        :py:attr:`~skia.Path.kClose_Verb`, last point is set to (0, 0) before
         adding line.
 
-        Appends :py:attr:`~skia.Path.Verb.kMove` to verb array and (0, 0) to
+        Appends :py:attr:`~skia.Path.kMove_Verb` to verb array and (0, 0) to
         :py:class:`Point` array, if needed; then appends
-        :py:attr:`~skia.Path.Verb.kLine` to verb array and line end to
+        :py:attr:`~skia.Path.kLine_Verb` to verb array and line end to
         :py:class:`Point` array. Line end is last point plus vector (dx, dy).
         Function name stands for "relative line to".
 
@@ -870,12 +881,12 @@ path
         Adds quad from last point towards (x1, y1), to (x2, y2).
 
         If :py:class:`Path` is empty, or last :py:class:`Path.Verb` is
-        :py:attr:`~skia.Path.Verb.kClose`, last point is set to (0, 0) before
+        :py:attr:`~skia.Path.kClose_Verb`, last point is set to (0, 0) before
         adding quad.
 
-        Appends :py:attr:`~skia.Path.Verb.kMove` to verb array and (0, 0) to
+        Appends :py:attr:`~skia.Path.kMove_Verb` to verb array and (0, 0) to
         :py:class:`Point` array, if needed; then appends
-        :py:attr:`~skia.Path.Verb.kQuad` to verb array; and (x1, y1), (x2, y2)
+        :py:attr:`~skia.Path.kQuad_Verb` to verb array; and (x1, y1), (x2, y2)
         to :py:class:`Point` array.
 
         :x1: control :py:class:`Point` of quad on x-axis
@@ -893,12 +904,12 @@ path
         :py:class:`Point` p2.
 
         If :py:class:`Path` is empty, or last :py:class:`Path.Verb` is
-        :py:attr:`~skia.Path.Verb.kClose`, last point is set to (0, 0) before
+        :py:attr:`~skia.Path.kClose_Verb`, last point is set to (0, 0) before
         adding quad.
 
-        Appends :py:attr:`~skia.Path.Verb.kMove` to verb array and (0, 0) to
+        Appends :py:attr:`~skia.Path.kMove_Verb` to verb array and (0, 0) to
         :py:class:`Point` array, if needed; then appends
-        :py:attr:`~skia.Path.Verb.kQuad` to verb array; and :py:class:`Point`
+        :py:attr:`~skia.Path.kQuad_Verb` to verb array; and :py:class:`Point`
         p1, p2 to :py:class:`Point` array.
 
         :p1: control :py:class:`Point` of added quad
@@ -913,12 +924,12 @@ path
         dy2).
 
         If :py:class:`Path` is empty, or last :py:class:`~Path.Verb` is
-        :py:attr:`~skia.Path.Verb.kClose`, last point is set to (0, 0) before
+        :py:attr:`~skia.Path.kClose_Verb`, last point is set to (0, 0) before
         adding quad.
 
-        Appends :py:attr:`~skia.Path.Verb.kMove` to verb array and (0, 0) to
+        Appends :py:attr:`~skia.Path.kMove_Verb` to verb array and (0, 0) to
         :py:class:`Point` array, if needed; then appends
-        :py:attr:`~skia.Path.Verb.kQuad` to verb array;and appends quad control
+        :py:attr:`~skia.Path.kQuad_Verb` to verb array;and appends quad control
         and quad end to :py:class:`Point` array. Quad control is last point plus
         vector (dx1, dy1). Quad end is last point plus vector (dx2, dy2).
         Function name stands for "relative quad to".
@@ -937,20 +948,20 @@ path
         Adds conic from last point towards (x1, y1), to (x2, y2), weighted by w.
 
         If :py:class:`Path` is empty, or last :py:class:`Path.Verb` is
-        :py:attr:`~skia.Path.Verb.kClose`, last point is set to (0, 0) before
+        :py:attr:`~skia.Path.kClose_Verb`, last point is set to (0, 0) before
         adding conic.
 
-        Appends :py:attr:`~skia.Path.Verb.kMove` to verb array and (0, 0) to
+        Appends :py:attr:`~skia.Path.kMove_Verb` to verb array and (0, 0) to
         :py:class:`Point` array, if needed.
 
-        If w is finite and not one, appends :py:attr:`~skia.Path.Verb.kConic` to
+        If w is finite and not one, appends :py:attr:`~skia.Path.kConic_Verb` to
         verb array; and (x1, y1), (x2, y2) to :py:class:`Point` array; and w to
         conic weights.
 
-        If w is one, appends :py:attr:`~skia.Path.Verb.kQuad` to verb array, and
+        If w is one, appends :py:attr:`~skia.Path.kQuad_Verb` to verb array, and
         (x1, y1), (x2, y2) to :py:class:`Point` array.
 
-        If w is not finite, appends :py:attr:`~skia.Path.Verb.kLine` twice to
+        If w is not finite, appends :py:attr:`~skia.Path.kLine_Verb` twice to
         verb array, and (x1, y1), (x2, y2) to :py:class:`Point` array.
 
         :x1: control :py:class:`Point` of conic on x-axis
@@ -971,20 +982,20 @@ path
         :py:class:`Point` p2, weighted by w.
 
         If :py:class:`Path` is empty, or last :py:class:`Path.Verb` is
-        :py:attr:`~skia.Path.Verb.kClose`, last point is set to (0, 0) before
+        :py:attr:`~skia.Path.kClose_Verb`, last point is set to (0, 0) before
         adding conic.
 
-        Appends :py:attr:`~skia.Path.Verb.kMove` to verb array and (0, 0) to
+        Appends :py:attr:`~skia.Path.kMove_Verb` to verb array and (0, 0) to
         :py:class:`Point` array, if needed.
 
-        If w is finite and not one, appends :py:attr:`~skia.Path.Verb.kConic` to
+        If w is finite and not one, appends :py:attr:`~skia.Path.kConic_Verb` to
         verb array; and :py:class:`Point` p1, p2 to :py:class:`Point` array; and
         w to conic weights.
 
-        If w is one, appends :py:attr:`~skia.Path.Verb.kQuad` to verb array, and
+        If w is one, appends :py:attr:`~skia.Path.kQuad_Verb` to verb array, and
         :py:class:`Point` p1, p2 to :py:class:`Point` array.
 
-        If w is not finite, appends :py:attr:`~skia.Path.Verb.kLine` twice to
+        If w is not finite, appends :py:attr:`~skia.Path.kLine_Verb` twice to
         verb array, and :py:class:`Point` p1, p2 to :py:class:`Point` array.
 
         :p1: control :py:class:`Point` of added conic
@@ -999,17 +1010,17 @@ path
         dy2), weighted by w.
 
         If :py:class:`Path` is empty, or last :py:class:`Path`::Verb is
-        :py:attr:`~skia.Path.Verb.kClose`, last point is set to (0, 0) before
+        :py:attr:`~skia.Path.kClose_Verb`, last point is set to (0, 0) before
         adding conic.
 
-        Appends :py:attr:`~skia.Path.Verb.kMove` to verb array and (0, 0) to
+        Appends :py:attr:`~skia.Path.kMove_Verb` to verb array and (0, 0) to
         :py:class:`Point` array, if needed.
 
         If w is finite and not one, next appends
-        :py:attr:`~skia.Path.Verb.kConic` to verb array, and w is recorded as
+        :py:attr:`~skia.Path.kConic_Verb` to verb array, and w is recorded as
         conic weight; otherwise, if w is one, appends
-        :py:attr:`~skia.Path.Verb.kQuad` to verb array; or if w is not finite,
-        appends :py:attr:`~skia.Path.Verb.kLine` twice to verb array.
+        :py:attr:`~skia.Path.kQuad_Verb` to verb array; or if w is not finite,
+        appends :py:attr:`~skia.Path.kLine_Verb` twice to verb array.
 
         In all cases appends :py:class:`Point` control and end to
         :py:class:`Point` array. control is last point plus vector (dx1, dy1).
@@ -1034,12 +1045,12 @@ path
         ending at (x3, y3).
 
         If :py:class:`Path` is empty, or last :py:class:`Path.Verb` is
-        :py:attr:`~skia.Path.Verb.kClose`, last point is set to (0, 0) before
+        :py:attr:`~skia.Path.kClose_Verb`, last point is set to (0, 0) before
         adding cubic.
 
-        Appends :py:attr:`~skia.Path.Verb.kMove` to verb array and (0, 0) to
+        Appends :py:attr:`~skia.Path.kMove_Verb` to verb array and (0, 0) to
         :py:class:`Point` array, if needed; then appends
-        :py:attr:`~skia.Path.Verb.kCubic` to verb array; and (x1, y1), (x2, y2),
+        :py:attr:`~skia.Path.kCubic_Verb` to verb array; and (x1, y1), (x2, y2),
         (x3, y3) to :py:class:`Point` array.
 
         :x1: first control :py:class:`Point` of cubic on x-axis
@@ -1060,12 +1071,12 @@ path
         :py:class:`Point` p2, ending at :py:class:`Point` p3.
 
         If :py:class:`Path` is empty, or last :py:class:`Path.Verb` is
-        :py:attr:`~skia.Path.Verb.kClose`, last point is set to (0, 0) before
+        :py:attr:`~skia.Path.kClose_Verb`, last point is set to (0, 0) before
         adding cubic.
 
-        Appends :py:attr:`~skia.Path.Verb.kMove` to verb array and (0, 0) to
+        Appends :py:attr:`~skia.Path.kMove_Verb` to verb array and (0, 0) to
         :py:class:`Point` array, if needed; then appends
-        :py:attr:`~skia.Path.Verb.kCubic` to verb array; and :py:class:`Point`
+        :py:attr:`~skia.Path.kCubic_Verb` to verb array; and :py:class:`Point`
         p1, p2, p3 to :py:class:`Point` array.
 
         :p1: first control :py:class:`Point` of cubic
@@ -1080,12 +1091,12 @@ path
         vector (dx2, dy2), to vector (dx3, dy3).
 
         If :py:class:`Path` is empty, or last :py:class:`Path.Verb` is
-        :py:attr:`~skia.Path.Verb.kClose`, last point is set to (0, 0) before
+        :py:attr:`~skia.Path.kClose_Verb`, last point is set to (0, 0) before
         adding cubic.
 
-        Appends :py:attr:`~skia.Path.Verb.kMove` to verb array and (0, 0) to
+        Appends :py:attr:`~skia.Path.kMove_Verb` to verb array and (0, 0) to
         :py:class:`Point` array, if needed; then appends
-        :py:attr:`~skia.Path.Verb.kCubic` to verb array; and appends cubic
+        :py:attr:`~skia.Path.kCubic_Verb` to verb array; and appends cubic
         control and cubic end to :py:class:`Point` array. Cubic control is last
         point plus vector (dx1, dy1). Cubic end is last point plus vector (dx2,
         dy2). Function name stands for "relative cubic to".
@@ -1299,9 +1310,9 @@ path
 
         A closed contour connects the first and last :py:class:`Point` with
         line, forming a continuous loop. Open and closed contour draw the same
-        with :py:attr:`Paint.kFill`. With :py:attr:`Paint.kStroke`, open contour
-        draws :py:class:`Paint.Cap` at contour start and end; closed contour
-        draws :py:class:`Paint.Join` at contour start and end.
+        with :py:attr:`Paint.kFill_Style`. With :py:attr:`Paint.kStroke_Style`,
+        open contour draws :py:class:`Paint.Cap` at contour start and end;
+        closed contour draws :py:class:`Paint.Join` at contour start and end.
 
         :py:meth:`close` has no effect if :py:class:`Path` is empty or last
         :py:class:`Path` :py:class:`~Path.Verb` is :py:attr:`Path.Verb.kClose`.
@@ -1317,7 +1328,7 @@ path
         isClosed, and direction are written to if not nullptr.
 
         rect may be smaller than the :py:class:`Path` bounds. :py:class:`Path`
-        bounds may include :py:attr:`~skia.Path.Verb.kMove` points that do not
+        bounds may include :py:attr:`~skia.Path.kMove_Verb` points that do not
         alter the area drawn by the returned rect.
 
         :param rect: storage for bounds of :py:class:`Rect`; may be nullptr
@@ -1333,8 +1344,8 @@ path
         py::overload_cast<const SkRect&, SkPathDirection>(&SkPath::addRect),
         R"docstring(
         Adds :py:class:`Rect` to :py:class:`Path`, appending
-        :py:attr:`~skia.Path.Verb.kMove`, three
-        :py:attr:`~skia.Path.Verb.kLine`, and :py:attr:`~skia.Path.Verb.kClose`,
+        :py:attr:`~skia.Path.kMove_Verb`, three
+        :py:attr:`~skia.Path.kLine_Verb`, and :py:attr:`~skia.Path.kClose_Verb`,
         starting with top-left corner of :py:class:`Rect`; followed by
         top-right, bottom-right, and bottom-left if dir is
         :py:attr:`~skia.Direction.kCW`; or followed by bottom-left,
@@ -1350,8 +1361,8 @@ path
             &SkPath::addRect),
         R"docstring(
         Adds :py:class:`Rect` to :py:class:`Path`, appending
-        :py:attr:`~skia.Path.Verb.kMove`, three
-        :py:attr:`~skia.Path.Verb.kLine`, and k:py:attr:`~skia.Path.Verb.Close`.
+        :py:attr:`~skia.Path.kMove_Verb`, three
+        :py:attr:`~skia.Path.kLine_Verb`, and k:py:attr:`~skia.Path.Verb.Close`.
 
         If dir is :py:attr:`~skia.PathDirection.kCW`, :py:class:`Rect` corners
         are added clockwise; if dir is :py:attr:`~skia.PathDirection.kCCW`,
@@ -1370,8 +1381,8 @@ path
         SkPathDirection>(&SkPath::addRect),
         R"docstring(
         Adds :py:class:`Rect` (left, top, right, bottom) to :py:class:`Path`,
-        appending :py:attr:`~skia.Path.Verb.kMove`, three
-        :py:attr:`~skia.Path.Verb.kLine`, and :py:attr:`~skia.Path.Verb.kClose`,
+        appending :py:attr:`~skia.Path.kMove_Verb`, three
+        :py:attr:`~skia.Path.kLine_Verb`, and :py:attr:`~skia.Path.kClose_Verb`,
         starting with top-left corner of :py:class:`Rect`; followed by
         top-right, bottom-right, and bottom-left if dir is
         :py:attr:`~skia.PathDirection.kCW`; or followed by bottom-left,
@@ -1391,9 +1402,9 @@ path
     .def("addOval",
         py::overload_cast<const SkRect&, SkPathDirection>(&SkPath::addOval),
         R"docstring(
-        Adds oval to path, appending :py:attr:`~skia.Path.Verb.kMove`, four
-        :py:attr:`~skia.Path.Verb.kConic`, and
-        :py:attr:`~skia.Path.Verb.kClose`.
+        Adds oval to path, appending :py:attr:`~skia.Path.kMove_Verb`, four
+        :py:attr:`~skia.Path.kConic_Verb`, and
+        :py:attr:`~skia.Path.kClose_Verb`.
 
         Oval is upright ellipse bounded by :py:class:`Rect` oval with radii
         equal to half oval width and half oval height. Oval begins at
@@ -1410,9 +1421,9 @@ path
         py::overload_cast<const SkRect&, SkPathDirection, unsigned>(
             &SkPath::addOval),
         R"docstring(
-        Adds oval to path, appending :py:attr:`~skia.Path.Verb.kMove`, four
-        :py:attr:`~skia.Path.Verb.kConic`, and
-        :py:attr:`~skia.Path.Verb.kClose`.
+        Adds oval to path, appending :py:attr:`~skia.Path.kMove_Verb`, four
+        :py:attr:`~skia.Path.kConic_Verb`, and
+        :py:attr:`~skia.Path.kClose_Verb`.
 
         Oval is upright ellipse bounded by :py:class:`Rect` oval with radii
         equal to half oval width and half oval height. Oval begins at start and
@@ -1564,10 +1575,10 @@ path
 
         Contour added starts at pts[0], then adds a line for every additional
         :py:class:`Point` in pts. If close is true, appends
-        :py:attr:`~skia.Path.Verb.kClose` to :py:class:`Path`, connecting last
+        :py:attr:`~skia.Path.kClose_Verb` to :py:class:`Path`, connecting last
         and first :py:class:`Point` in pts.
 
-        If pts is empty, append :py:attr:`~skia.Path.Verb.kMove` to path.
+        If pts is empty, append :py:attr:`~skia.Path.kMove_Verb` to path.
 
         :param pts: iterable of :py:class:`Point`
         :param close: true to add line connecting contour end and start
@@ -1580,17 +1591,17 @@ path
         R"docstring(
         Appends src to :py:class:`Path`, offset by (dx, dy).
 
-        If mode is :py:attr:`~Path.AddPathMode.kAppend`, src verb array,
+        If mode is :py:attr:`~Path.kAppend_AddPathMode`, src verb array,
         :py:class:`Point` array, and conic weights are added unaltered. If mode
-        is :py:attr:`~Path.AddPathMode.kExtend`, add line before appending
+        is :py:attr:`~Path.kExtend_AddPathMode`, add line before appending
         verbs, :py:class:`Point`, and conic weights.
 
         :src: :py:class:`Path` verbs, :py:class:`Point`, and conic weights to
             add
         :dx: offset added to src :py:class:`Point` array x-axis coordinates
         :dy: offset added to src :py:class:`Point` array y-axis coordinates
-        :mode: :py:attr:`~Path.AddPathMode.kAppend` or
-            :py:attr:`~Path.AddPathMode.kExtend`
+        :mode: :py:attr:`~Path.kAppend_AddPathMode` or
+            :py:attr:`~Path.kExtend_AddPathMode`
 
         refe:return: rence to :py:class:`Path`
         )docstring",
@@ -1601,15 +1612,15 @@ path
         R"docstring(
         Appends src to :py:class:`Path`.
 
-        If mode is :py:attr:`~Path.AddPathMode.kAppend`, src verb array,
+        If mode is :py:attr:`~Path.kAppend_AddPathMode`, src verb array,
         :py:class:`Point` array, and conic weights are added unaltered. If mode
-        is :py:attr:`~Path.AddPathMode.kExtend`, add line before appending
+        is :py:attr:`~Path.kExtend_AddPathMode`, add line before appending
         verbs, :py:class:`Point`, and conic weights.
 
         :src: :py:class:`Path` verbs, :py:class:`Point`, and conic weights to
             add
-        :mode: :py:attr:`~Path.AddPathMode.kAppend` or
-            :py:attr:`~Path.AddPathMode.kExtend`
+        :mode: :py:attr:`~Path.kAppend_AddPathMode` or
+            :py:attr:`~Path.kExtend_AddPathMode`
 
         :return: reference to :py:class:`Path`
         )docstring",
@@ -1623,16 +1634,16 @@ path
         Transformed curves may have different verbs, :py:class:`Point`, and
         conic weights.
 
-        If mode is :py:attr:`~Path.AddPathMode.kAppend`, src verb array,
+        If mode is :py:attr:`~Path.kAppend_AddPathMode`, src verb array,
         :py:class:`Point` array, and conic weights are added unaltered. If mode
-        is :py:attr:`~Path.AddPathMode.kExtend`, add line before appending
+        is :py:attr:`~Path.kExtend_AddPathMode`, add line before appending
         verbs, :py:class:`Point`, and conic weights.
 
         :src: :py:class:`Path` verbs, :py:class:`Point`, and conic weights to
             add
         :matrix: transform applied to src
-        :mode: :py:attr:`~Path.AddPathMode.kAppend` or
-            :py:attr:`~Path.AddPathMode.kExtend`
+        :mode: :py:attr:`~Path.kAppend_AddPathMode` or
+            :py:attr:`~Path.kExtend_AddPathMode`
 
         :return: reference to :py:class:`Path`
         )docstring",
@@ -1711,7 +1722,7 @@ path
         Sets last point to (x, y).
 
         If :py:class:`Point` array is empty, append
-        :py:attr:`~skia.Path.Verb.kMove` to verb array and append (x, y) to
+        :py:attr:`~skia.Path.kMove_Verb` to verb array and append (x, y) to
         :py:class:`Point` array.
 
         :x: set x-axis value of last point
@@ -1724,7 +1735,7 @@ path
         Sets the last point on the path.
 
         If :py:class:`Point` array is empty, append
-        :py:attr:`~skia.Path.Verb.kMove` to verb array and append p to
+        :py:attr:`~skia.Path.kMove_Verb` to verb array and append p to
         :py:class:`Point` array.
 
         :p: set value of last point
@@ -1902,7 +1913,8 @@ path
         R"docstring(
         Tests if cubic is degenerate.
 
-        Cubic with no length or that moves a very short distance is degenerate; it is treated as a point.
+        Cubic with no length or that moves a very short distance is degenerate;
+        it is treated as a point.
 
         :param skia.Path p1: cubic start point
         :param skia.Path p2: cubic control point 1

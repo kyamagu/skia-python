@@ -42,28 +42,30 @@ py::class_<SkPaint> paint(m, "Paint", R"docstring(
     )docstring");
 
 py::enum_<SkPaint::Style>(paint, "Style")
-    .value("kFill", SkPaint::Style::kFill_Style, "set to fill geometry")
-    .value("kStroke", SkPaint::Style::kStroke_Style, "set to stroke geometry")
-    .value("kStrokeAndFill", SkPaint::Style::kStrokeAndFill_Style,
+    .value("kFill_Style", SkPaint::Style::kFill_Style,
+        "set to fill geometry")
+    .value("kStroke_Style", SkPaint::Style::kStroke_Style,
+        "set to stroke geometry")
+    .value("kStrokeAndFill_Style", SkPaint::Style::kStrokeAndFill_Style,
         "sets to stroke and fill geometry")
     .export_values();
 
 py::enum_<SkPaint::Cap>(paint, "Cap")
-    .value("kButt", SkPaint::Cap::kButt_Cap, "no stroke extension")
-    .value("kRound", SkPaint::Cap::kRound_Cap, "adds circle")
-    .value("kSquare", SkPaint::Cap::kSquare_Cap, "adds square")
-    .value("kLast", SkPaint::Cap::kLast_Cap, "largest Cap value")
-    .value("kDefault", SkPaint::Cap::kDefault_Cap,
+    .value("kButt_Cap", SkPaint::Cap::kButt_Cap, "no stroke extension")
+    .value("kRound_Cap", SkPaint::Cap::kRound_Cap, "adds circle")
+    .value("kSquare_Cap", SkPaint::Cap::kSquare_Cap, "adds square")
+    .value("kLast_Cap", SkPaint::Cap::kLast_Cap, "largest Cap value")
+    .value("kDefault_Cap", SkPaint::Cap::kDefault_Cap,
         "equivalent to kButt_Cap")
     .export_values();
 
 py::enum_<SkPaint::Join>(paint, "Join")
-    .value("kMiter", SkPaint::Join::kMiter_Join, "extends to miter limit")
-    .value("kRound", SkPaint::Join::kRound_Join, "adds circle")
-    .value("kBevel", SkPaint::Join::kBevel_Join, "connects outside edges")
-    .value("kLast", SkPaint::Join::kLast_Join,
+    .value("kMiter_Join", SkPaint::Join::kMiter_Join, "extends to miter limit")
+    .value("kRound_Join", SkPaint::Join::kRound_Join, "adds circle")
+    .value("kBevel_Join", SkPaint::Join::kBevel_Join, "connects outside edges")
+    .value("kLast_Join", SkPaint::Join::kLast_Join,
         "equivalent to the largest value for Join")
-    .value("kDefault", SkPaint::Join::kDefault_Join,
+    .value("kDefault_Join", SkPaint::Join::kDefault_Join,
         "equivalent to kMiter_Join")
     .export_values();
 
@@ -100,7 +102,9 @@ paint
     .def("getColor", &SkPaint::getColor,
         "Retrieves alpha and RGB, unpremultiplied, packed into 32 bits.")
     .def("getColor4f", &SkPaint::getColor4f,
-        "Retrieves alpha and RGB, unpremultiplied, as four floating point values.")
+        R"docstring(
+        Retrieves alpha and RGB, unpremultiplied, as four floating point values.
+        )docstring")
     .def("setColor", py::overload_cast<SkColor>(&SkPaint::setColor),
         "Sets alpha and RGB used when stroking and filling.")
     .def("setColor",
@@ -217,18 +221,18 @@ py::class_<SkFlattenable, PyFlattanable, sk_sp<SkFlattenable>> flattanable(
     )docstring");
 
 py::enum_<SkFlattenable::Type>(flattanable, "Type")
-    .value("kColorFilter", SkFlattenable::Type::kSkColorFilter_Type)
-    .value("kDrawable", SkFlattenable::Type::kSkDrawable_Type)
-    .value("kDrawLooper", SkFlattenable::Type::kSkDrawLooper_Type)
-    .value("kImageFilter", SkFlattenable::Type::kSkImageFilter_Type)
-    .value("kMaskFilter", SkFlattenable::Type::kSkMaskFilter_Type)
-    .value("kPathEffect", SkFlattenable::Type::kSkPathEffect_Type)
-    .value("kPixelRef", SkFlattenable::Type::kSkPixelRef_Type)
-    .value("kUnused4", SkFlattenable::Type::kSkUnused_Type4)
-    .value("kShaderBase", SkFlattenable::Type::kSkShaderBase_Type)
-    .value("kUnused", SkFlattenable::Type::kSkUnused_Type)
-    .value("kUnused2", SkFlattenable::Type::kSkUnused_Type2)
-    .value("kUnused3", SkFlattenable::Type::kSkUnused_Type3)
+    .value("kColorFilter_Type", SkFlattenable::Type::kSkColorFilter_Type)
+    .value("kDrawable_Type", SkFlattenable::Type::kSkDrawable_Type)
+    .value("kDrawLooper_Type", SkFlattenable::Type::kSkDrawLooper_Type)
+    .value("kImageFilter_Type", SkFlattenable::Type::kSkImageFilter_Type)
+    .value("kMaskFilter_Type", SkFlattenable::Type::kSkMaskFilter_Type)
+    .value("kPathEffect_Type", SkFlattenable::Type::kSkPathEffect_Type)
+    .value("kPixelRef_Type", SkFlattenable::Type::kSkPixelRef_Type)
+    .value("kUnused_Type4", SkFlattenable::Type::kSkUnused_Type4)
+    .value("kShaderBase_Type", SkFlattenable::Type::kSkShaderBase_Type)
+    .value("kUnused_Type", SkFlattenable::Type::kSkUnused_Type)
+    .value("kUnused_Type2", SkFlattenable::Type::kSkUnused_Type2)
+    .value("kUnused_Type3", SkFlattenable::Type::kSkUnused_Type3)
     .export_values();
 
 flattanable
@@ -286,13 +290,20 @@ py::enum_<SkShader::GradientType>(shader, "GradientType", R"docstring(
     If the shader subclass can be represented as a gradient, asAGradient returns
     the matching GradientType enum (or kNone_GradientType if it cannot).
     )docstring")
-    .value("kNone", SkShader::GradientType::kNone_GradientType)
-    .value("kColor", SkShader::GradientType::kColor_GradientType)
-    .value("kLinear", SkShader::GradientType::kLinear_GradientType)
-    .value("kRadial", SkShader::GradientType::kRadial_GradientType)
-    .value("kSweep", SkShader::GradientType::kSweep_GradientType)
-    .value("kConical", SkShader::GradientType::kConical_GradientType)
-    .value("kLast", SkShader::GradientType::kLast_GradientType)
+    .value("kNone_GradientType",
+        SkShader::GradientType::kNone_GradientType)
+    .value("kColor_GradientType",
+        SkShader::GradientType::kColor_GradientType)
+    .value("kLinear_GradientType",
+        SkShader::GradientType::kLinear_GradientType)
+    .value("kRadial_GradientType",
+        SkShader::GradientType::kRadial_GradientType)
+    .value("kSweep_GradientType",
+        SkShader::GradientType::kSweep_GradientType)
+    .value("kConical_GradientType",
+        SkShader::GradientType::kConical_GradientType)
+    .value("kLast_GradientType",
+        SkShader::GradientType::kLast_GradientType)
     .export_values();
 
 shader

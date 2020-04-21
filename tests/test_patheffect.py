@@ -4,13 +4,13 @@ import pytest
 
 @pytest.fixture
 def strokerec():
-    return skia.StrokeRec(skia.StrokeRec.InitStyle.kHairline)
+    return skia.StrokeRec(skia.StrokeRec.kHairline_InitStyle)
 
 
 @pytest.mark.parametrize('args', [
-    (skia.StrokeRec.InitStyle.kHairline,),
-    (skia.Paint(), skia.Paint.Style.kStroke),
-    (skia.Paint(), skia.Paint.Style.kStroke, 1),
+    (skia.StrokeRec.kHairline_InitStyle,),
+    (skia.Paint(), skia.Paint.kStroke_Style),
+    (skia.Paint(), skia.Paint.kStroke_Style, 1),
     (skia.Paint(),),
     (skia.Paint(), 1),
 ])
@@ -59,7 +59,7 @@ def test_StrokeRec_setStrokeStyle(strokerec):
 
 
 def test_StrokeRec_setStrokeParams(strokerec):
-    strokerec.setStrokeParams(skia.Paint.Cap.kButt, skia.Paint.Join.kMiter, 1)
+    strokerec.setStrokeParams(skia.Paint.kButt_Cap, skia.Paint.kMiter_Join, 1)
 
 
 def test_StrokeRec_getResScale(strokerec):
@@ -88,12 +88,12 @@ def test_StrokeRec_getInflationRadius(strokerec):
 
 def test_StrokeRec_hasEqualEffect(strokerec):
     assert isinstance(strokerec.hasEqualEffect(
-        skia.StrokeRec(skia.StrokeRec.InitStyle.kHairline)), bool)
+        skia.StrokeRec(skia.StrokeRec.kHairline_InitStyle)), bool)
 
 
 @pytest.mark.parametrize('args', [
-    (skia.Paint(), skia.Paint.Style.kStroke,),
-    (skia.Paint.Join.kMiter, 1, skia.Paint.Cap.kButt, 1),
+    (skia.Paint(), skia.Paint.kStroke_Style,),
+    (skia.Paint.kMiter_Join, 1, skia.Paint.kButt_Cap, 1),
 ])
 def test_StrokeRec_GetInflationRadius(args):
     assert isinstance(skia.StrokeRec.GetInflationRadius(*args), float)
@@ -162,7 +162,7 @@ def test_PathEffect_filterPath(patheffect):
     dst = skia.Path()
     src = skia.Path()
     src.addCircle(10, 10, 5)
-    rec = skia.StrokeRec(skia.StrokeRec.InitStyle.kHairline)
+    rec = skia.StrokeRec(skia.StrokeRec.kHairline_InitStyle)
     assert isinstance(patheffect.filterPath(dst, src, rec, None), bool)
 
 
@@ -174,7 +174,7 @@ def test_PathEffect_asPoints(patheffect):
     results = skia.PathEffect.PointData()
     path = skia.Path()
     path.addCircle(10, 10, 5)
-    rec = skia.StrokeRec(skia.StrokeRec.InitStyle.kHairline)
+    rec = skia.StrokeRec(skia.StrokeRec.kHairline_InitStyle)
     matrix = skia.Matrix()
     assert isinstance(
         patheffect.asPoints(results, path, rec, matrix, None), bool)
@@ -214,7 +214,7 @@ def test_Path1DPathEffect_Make():
     path.addCircle(10, 10, 5)
     assert isinstance(
         skia.Path1DPathEffect.Make(
-            path, 1., 0., skia.Path1DPathEffect.Style.kTranslate),
+            path, 1., 0., skia.Path1DPathEffect.kTranslate_Style),
         skia.PathEffect)
 
 
@@ -230,7 +230,7 @@ def test_MergePathEffect_Make():
         skia.MergePathEffect.Make(
             skia.CornerPathEffect.Make(4.0),
             skia.DiscretePathEffect.Make(4.0, 1.0),
-            skia.PathOp.kUnion), skia.PathEffect)
+            skia.PathOp.kUnion_PathOp), skia.PathEffect)
 
 
 def test_MatrixPathEffect_Make():
@@ -246,7 +246,7 @@ def test_MatrixPathEffect_MakeTranslate():
 def test_StrokePathEffect_Make():
     assert isinstance(
         skia.StrokePathEffect.Make(
-            3, skia.Paint.Join.kMiter, skia.Paint.Cap.kButt), skia.PathEffect)
+            3, skia.Paint.kMiter_Join, skia.Paint.kButt_Cap), skia.PathEffect)
 
 
 def test_TrimPathEffect_Make():

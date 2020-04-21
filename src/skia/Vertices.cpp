@@ -10,10 +10,14 @@ py::class_<SkVertices, sk_sp<SkVertices>> vertices(m, "Vertices", R"docstring(
     )docstring");
 
 py::enum_<SkVertices::VertexMode>(vertices, "VertexMode")
-    .value("kTriangles", SkVertices::VertexMode::kTriangles_VertexMode)
-    .value("kTriangleStrip", SkVertices::VertexMode::kTriangleStrip_VertexMode)
-    .value("kTriangleFan", SkVertices::VertexMode::kTriangleFan_VertexMode)
-    .value("kLast", SkVertices::VertexMode::kLast_VertexMode)
+    .value("kTriangles_VertexMode",
+        SkVertices::VertexMode::kTriangles_VertexMode)
+    .value("kTriangleStrip_VertexMode",
+        SkVertices::VertexMode::kTriangleStrip_VertexMode)
+    .value("kTriangleFan_VertexMode",
+        SkVertices::VertexMode::kTriangleFan_VertexMode)
+    .value("kLast_VertexMode",
+        SkVertices::VertexMode::kLast_VertexMode)
     .export_values()
     ;
 
