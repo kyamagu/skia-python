@@ -27,6 +27,7 @@ For unsupported environment, check the [build instruction](https://kyamagu.githu
 
 ## Examples
 
+- [Showcase](https://github.com/kyamagu/skia-python/blob/master/notebooks/Showcase.ipynb)
 - [Canvas Overview](https://github.com/kyamagu/skia-python/blob/master/notebooks/Canvas-Overview.ipynb)
 - [Canvas Creation](https://github.com/kyamagu/skia-python/blob/master/notebooks/Canvas-Creation.ipynb)
 - [Path Overview](https://github.com/kyamagu/skia-python/blob/master/notebooks/Path-Overview.ipynb)
