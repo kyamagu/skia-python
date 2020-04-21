@@ -63,7 +63,7 @@ py::class_<SkColor4f>(m, "Color4f", R"docstring(
     ;
 
 m.def("ColorSetRGB",
-    [] (U8CPU r, U8CPU g, U8CPU, U8CPU b) {
+    [] (U8CPU r, U8CPU g, U8CPU b) {
         return SkColorSetARGB(0xFF, r, g, b);
     },
     "Returns color value from 8-bit component values, with alpha set "

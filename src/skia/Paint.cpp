@@ -28,17 +28,17 @@ class PyFlattanable : public SkFlattenable {
 void initPaint(py::module &m) {
 // Paint
 py::class_<SkPaint> paint(m, "Paint", R"docstring(
-    SkPaint controls options applied when drawing.
+    :py:class:`Paint` controls options applied when drawing.
 
-    SkPaint collects all options outside of the SkCanvas clip and SkCanvas
-    matrix.
+    :py:class:`Paint` collects all options outside of the :py:class:`Canvas`
+    clip and :py:class:`Canvas` matrix.
 
     Various options apply to strokes and fills, and images.
 
-    SkPaint collects effects and filters that describe single-pass and
+    :py:class:`Paint` collects effects and filters that describe single-pass and
     multiple-pass algorithms that alter the drawing geometry, color, and
-    transparency. For instance, SkPaint does not directly implement dashing or
-    blur, but contains the objects that do so.
+    transparency. For instance, :py:class:`Paint` does not directly implement
+    dashing or blur, but contains the objects that do so.
     )docstring");
 
 py::enum_<SkPaint::Style>(paint, "Style")
@@ -261,91 +261,6 @@ flattanable
             size_t size = (info.ndim) ? info.shape[0] * info.strides[0] : 0;
             return SkFlattenable::Deserialize(type, info.ptr, size);
         })
-    ;
-
-// Shader
-// TODO: Need a wrapper class for pure virtual functions.
-py::class_<SkShader, sk_sp<SkShader>, SkFlattenable> shader(
-    m, "Shader", R"docstring(
-    Shaders specify the source color(s) for what is being drawn.
-
-    If a paint has no shader, then the paint's color is used. If the paint has a
-    shader, then the shader's color(s) are use instead, but they are modulated
-    by the paint's alpha. This makes it easy to create a shader once (e.g.
-    bitmap tiling or gradient) and then change its transparency w/o having to
-    modify the original shader... only the paint's alpha needs to be modified.
-    )docstring");
-
-py::class_<SkShader::GradientInfo>(shader, "GradientInfo")
-    .def_readwrite("fColorCount", &SkShader::GradientInfo::fColorCount)
-    .def_readwrite("fColors", &SkShader::GradientInfo::fColors)
-    .def_readwrite("fColorOffsets", &SkShader::GradientInfo::fColorOffsets)
-    // .def_readwrite("fPoint", &SkShader::GradientInfo::fPoint)
-    // .def_readwrite("fRadius", &SkShader::GradientInfo::fRadius)
-    .def_readwrite("fTileMode", &SkShader::GradientInfo::fTileMode)
-    .def_readwrite("fGradientFlags", &SkShader::GradientInfo::fGradientFlags)
-    ;
-
-py::enum_<SkShader::GradientType>(shader, "GradientType", R"docstring(
-    If the shader subclass can be represented as a gradient, asAGradient returns
-    the matching GradientType enum (or kNone_GradientType if it cannot).
-    )docstring")
-    .value("kNone_GradientType",
-        SkShader::GradientType::kNone_GradientType)
-    .value("kColor_GradientType",
-        SkShader::GradientType::kColor_GradientType)
-    .value("kLinear_GradientType",
-        SkShader::GradientType::kLinear_GradientType)
-    .value("kRadial_GradientType",
-        SkShader::GradientType::kRadial_GradientType)
-    .value("kSweep_GradientType",
-        SkShader::GradientType::kSweep_GradientType)
-    .value("kConical_GradientType",
-        SkShader::GradientType::kConical_GradientType)
-    .value("kLast_GradientType",
-        SkShader::GradientType::kLast_GradientType)
-    .export_values();
-
-shader
-    .def("isOpaque", &SkShader::isOpaque,
-        "Returns true if the shader is guaranteed to produce only opaque "
-        "colors, subject to the SkPaint using the shader to apply an opaque "
-        "alpha value.")
-    .def("isAImage",
-        py::overload_cast<SkMatrix*, SkTileMode[2]>(
-            &SkShader::isAImage, py::const_),
-        "Iff this shader is backed by a single SkImage, return its ptr (the "
-        "caller must ref this if they want to keep it longer than the lifetime "
-        "of the shader).")
-    .def("isAImage", py::overload_cast<>(&SkShader::isAImage, py::const_))
-    .def("asAGradient", &SkShader::asAGradient)
-    .def("makeWithLocalMatrix", &SkShader::makeWithLocalMatrix,
-        "Return a shader that will apply the specified localMatrix to this "
-        "shader.")
-    .def("makeWithColorFilter", &SkShader::makeWithColorFilter,
-        "Create a new shader that produces the same colors as invoking this "
-        "shader and then applying the colorfilter.")
-    // .def("getFactory", &SkShader::getFactory,
-    //     "Implement this to return a factory function pointer that can be "
-    //     "called to recreate your class given a buffer (previously written to "
-    //     "by your override of flatten().")
-    // .def("getTypeName", &SkShader::getTypeName,
-    //     "Returns the name of the object's class.")
-    // .def("flatten", &SkShader::flatten,
-    //     "Override this if your subclass needs to record data that it will "
-    //     "need to recreate itself from its CreateProc (returned by "
-    //     "getFactory())")
-    // .def("getFlattenableType", &SkShader::getFlattenableType)
-    // .def("serialize",
-    //     py::overload_cast<const SkSerialProcs*>(
-    //         &SkShader::serialize, py::const_))
-    // .def("serialize",
-    //     py::overload_cast<void*, size_t, const SkSerialProcs*>(
-    //         &SkShader::serialize, py::const_))
-    .def("unique", &SkShader::unique,
-        "May return true if the caller is the only owner.")
-    .def("ref", &SkShader::ref, "Increment the reference count.")
-    .def("unref", &SkShader::unref, "Decrement the reference count.")
     ;
 // ColorFilter
 py::class_<SkColorFilter, sk_sp<SkColorFilter>>(m, "ColorFilter");
