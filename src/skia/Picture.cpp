@@ -33,7 +33,8 @@ public:
 };
 
 void initPicture(py::module &m) {
-py::class_<SkPicture, PyPicture, sk_sp<SkPicture>>(m, "Picture", R"docstring(
+py::class_<SkPicture, PyPicture, sk_sp<SkPicture>, SkRefCnt>(
+    m, "Picture", R"docstring(
     SkPicture records drawing commands made to SkCanvas.
 
     The command stream may be played in whole or in part at a later time.
@@ -75,12 +76,6 @@ py::class_<SkPicture, PyPicture, sk_sp<SkPicture>>(m, "Picture", R"docstring(
     .def("makeShader",
         py::overload_cast<SkTileMode, SkTileMode, const SkMatrix*>(
             &SkPicture::makeShader, py::const_))
-    .def("unique", &SkPicture::unique,
-        "May return true if the caller is the only owner.")
-    .def("ref", &SkPicture::ref,
-        "Increment the reference count.")
-    .def("unref", &SkPicture::unref,
-        "Decrement the reference count.")
     // .def_static("MakeFromStream", &SkPicture::MakeFromStream,
     //     "Recreates SkPicture that was serialized into a stream.")
     // .def_static("MakeFromData",
@@ -96,7 +91,7 @@ py::class_<SkPicture, PyPicture, sk_sp<SkPicture>>(m, "Picture", R"docstring(
 
 py::class_<SkBBHFactory>(m, "BBHFactory");
 
-py::class_<SkBBoxHierarchy, PyBBoxHierarchy, sk_sp<SkBBoxHierarchy>>
+py::class_<SkBBoxHierarchy, PyBBoxHierarchy, sk_sp<SkBBoxHierarchy>, SkRefCnt>
     bboxhierarchy(m, "BBoxHierarchy");
 
 py::class_<SkBBoxHierarchy::Metadata>(bboxhierarchy, "Metadata")
@@ -115,12 +110,6 @@ bboxhierarchy
         "that query.")
     .def("bytesUsed", &SkBBoxHierarchy::bytesUsed,
         "Return approximate size in memory of this.")
-    .def("unique", &SkBBoxHierarchy::unique,
-        "May return true if the caller is the only owner.")
-    .def("ref", &SkBBoxHierarchy::ref,
-        "Increment the reference count.")
-    .def("unref", &SkBBoxHierarchy::unref,
-        "Decrement the reference count.")
     ;
 
 py::class_<SkPictureRecorder> picturerecorder(m, "PictureRecorder");

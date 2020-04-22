@@ -91,7 +91,8 @@ fontarguments
         &SkFontArguments::getVariationDesignPosition)
     ;
 
-py::class_<SkTypeface, sk_sp<SkTypeface>> typeface(m, "Typeface", R"docstring(
+py::class_<SkTypeface, sk_sp<SkTypeface>, SkRefCnt> typeface(
+    m, "Typeface", R"docstring(
     The SkTypeface class specifies the typeface and intrinsic style of a font.
 
     This is used in the paint, along with optionally algorithmic settings like
@@ -216,35 +217,15 @@ typeface
     ;
 
 // FontMgr
-py::class_<SkFontStyleSet, sk_sp<SkFontStyleSet>>(m, "FontStyleSet")
+py::class_<SkFontStyleSet, sk_sp<SkFontStyleSet>, SkRefCnt>(m, "FontStyleSet")
     .def("count", &SkFontStyleSet::count)
     .def("getStyle", &SkFontStyleSet::getStyle)
     .def("createTypeface", &SkFontStyleSet::createTypeface)
     .def("matchStyle", &SkFontStyleSet::matchStyle)
-    .def("unique", &SkFontStyleSet::unique,
-        R"docstring(
-        May return true if the caller is the only owner.
-
-        Ensures that all previous owner's actions are complete.
-        )docstring")
-    .def("ref", &SkFontStyleSet::ref,
-        R"docstring(
-        Increment the reference count.
-
-        Must be balanced by a call to unref().
-        )docstring")
-    .def("unref", &SkFontStyleSet::unref,
-        R"docstring(
-        Decrement the reference count.
-
-        If the reference count is 1 before the decrement, then delete the
-        object. Note that if this is the case, then the object needs to have
-        been allocated via new, and not on the stack.
-        )docstring")
     .def_static("CreateEmpty", &SkFontStyleSet::CreateEmpty)
     ;
 
-py::class_<SkFontMgr, sk_sp<SkFontMgr>>(m, "FontMgr")
+py::class_<SkFontMgr, sk_sp<SkFontMgr>, SkRefCnt>(m, "FontMgr")
     .def("countFamilies", &SkFontMgr::countFamilies)
     .def("getFamilyName",
         [] (const SkFontMgr& fontmgr, int index) {
@@ -356,26 +337,6 @@ py::class_<SkFontMgr, sk_sp<SkFontMgr>>(m, "FontMgr")
             return fontmgr.legacyMakeTypeface(familyName.c_str(), style);
         },
         py::arg("familyName"), py::arg("style"))
-    .def("unique", &SkFontMgr::unique,
-        R"docstring(
-        May return true if the caller is the only owner.
-
-        Ensures that all previous owner's actions are complete.
-        )docstring")
-    .def("ref", &SkFontMgr::ref,
-        R"docstring(
-        Increment the reference count.
-
-        Must be balanced by a call to unref().
-        )docstring")
-    .def("unref", &SkFontMgr::unref,
-        R"docstring(
-        Decrement the reference count.
-
-        If the reference count is 1 before the decrement, then delete the
-        object. Note that if this is the case, then the object needs to have
-        been allocated via new, and not on the stack.
-        )docstring")
     .def_static("RefDefault", &SkFontMgr::RefDefault,
         R"docstring(
         Return the default fontmgr.

@@ -212,9 +212,8 @@ paint
         "Compares a and b, and returns true if a and b are not equivalent.")
     ;
 
-py::class_<SkFlattenable, PyFlattanable, sk_sp<SkFlattenable>> flattanable(
-    m, "Flattanable",
-    R"docstring(
+py::class_<SkFlattenable, PyFlattanable, sk_sp<SkFlattenable>, SkRefCnt>
+    flattanable(m, "Flattanable", R"docstring(
     :py:class:`Flattenable` is the base class for objects that need to be
     flattened into a data stream for either transport or as part of the key to
     the font cache.
@@ -249,9 +248,6 @@ flattanable
         [] (const SkFlattenable& flattanable) {
             return flattanable.serialize();
         })
-    .def("unique", &SkFlattenable::unique)
-    .def("ref", &SkFlattenable::ref)
-    .def("unref", &SkFlattenable::unref)
     // .def_static("NameToFactory", &SkFlattenable::NameToFactory)
     // .def_static("FactoryToName", &SkFlattenable::FactoryToName)
     // .def_static("Register", &SkFlattenable::Register)
@@ -263,9 +259,12 @@ flattanable
         })
     ;
 // ColorFilter
-py::class_<SkColorFilter, sk_sp<SkColorFilter>>(m, "ColorFilter");
+py::class_<SkColorFilter, sk_sp<SkColorFilter>, SkFlattenable>(
+    m, "ColorFilter");
 // MaskFilter
-py::class_<SkMaskFilter, sk_sp<SkMaskFilter>>(m, "MaskFilter");
+py::class_<SkMaskFilter, sk_sp<SkMaskFilter>, SkFlattenable>(
+    m, "MaskFilter");
 // ImageFilter
-py::class_<SkImageFilter, sk_sp<SkImageFilter>>(m, "ImageFilter");
+py::class_<SkImageFilter, sk_sp<SkImageFilter>, SkFlattenable>(
+    m, "ImageFilter");
 }
