@@ -34,6 +34,7 @@ SOURCES = [
     os.path.join('src', 'skia', 'Pixmap.cpp'),
     os.path.join('src', 'skia', 'Point.cpp'),
     os.path.join('src', 'skia', 'Rect.cpp'),
+    os.path.join('src', 'skia', 'RefCnt.cpp'),
     os.path.join('src', 'skia', 'Region.cpp'),
     os.path.join('src', 'skia', 'Size.cpp'),
     os.path.join('src', 'skia', 'Shader.cpp'),

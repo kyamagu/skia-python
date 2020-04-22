@@ -53,7 +53,7 @@ py::enum_<SkEncodedImageFormat>(m, "EncodedImageFormat", R"docstring(
     .value("kHEIF", SkEncodedImageFormat::kHEIF)
     .export_values();
 
-py::class_<SkImage, sk_sp<SkImage>> image(m, "Image",
+py::class_<SkImage, sk_sp<SkImage>, SkRefCnt> image(m, "Image",
     R"docstring(
     SkImage describes a two dimensional array of pixels to draw.
 
@@ -215,10 +215,6 @@ image
     .def("reinterpretColorSpace", &SkImage::reinterpretColorSpace,
         "Creates a new SkImage identical to this one, but with a different "
         "SkColorSpace.")
-    .def("unique", &SkImage::unique,
-        "May return true if the caller is the only owner.")
-    .def("ref", &SkImage::ref, "Increment the reference count.")
-    .def("unref", &SkImage::unref, "Decrement the reference count.")
     .def_static("MakeRasterCopy", &SkImage::MakeRasterCopy,
         "Creates SkImage from SkPixmap and copy of pixels.")
     .def_static("MakeRasterData", &SkImage::MakeRasterData,

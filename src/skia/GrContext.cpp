@@ -111,15 +111,17 @@ py::class_<GrBackendTexture>(m, "GrBackendTexture")
     .def("isValid", &GrBackendTexture::isValid)
     ;
 
-py::class_<sk_sp<const GrGLInterface>>(m, "GrGLInterface")
+py::class_<GrGLInterface, sk_sp<GrGLInterface>, SkRefCnt>(
+    m, "GrGLInterface")
     .def(py::init([] {
-        auto interface = GrGLMakeNativeInterface();
+        sk_sp<const GrGLInterface> interface = GrGLMakeNativeInterface();
         if (!interface.get())
             throw std::runtime_error("null pointer exception.");
-        return interface;
+        const GrGLInterface* ptr = interface.release();
+        return const_cast<GrGLInterface*>(ptr);
     }));
 
-py::class_<GrContext, sk_sp<GrContext>>(m, "GrContext")
+py::class_<GrContext, sk_sp<GrContext>, SkRefCnt>(m, "GrContext")
     .def("resetContext", &GrContext::resetContext,
         "The GrContext normally assumes that no outsider is setting state "
         "within the underlying 3D API's context/device/whatever.")

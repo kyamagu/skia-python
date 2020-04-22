@@ -21,6 +21,7 @@ void initPicture(py::module &);
 void initPixmap(py::module &);
 void initPoint(py::module &);
 void initRect(py::module &);
+void initRefCnt(py::module &);
 void initRegion(py::module &);
 void initShader(py::module &);
 void initSize(py::module &);
@@ -33,6 +34,8 @@ PYBIND11_MODULE(skia, m) {
     m.doc() = R"docstring(
     Python Skia binding module.
     )docstring";
+
+    initRefCnt(m);
 
     initBlendMode(m);
     initColor(m);
