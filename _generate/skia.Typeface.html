@@ -118,17 +118,26 @@ appears when drawn (and measured).</p>
 <tr class="row-odd"><td><p><a class="reference internal" href="#skia.Typeface.makeClone" title="skia.Typeface.makeClone"><code class="xref py py-obj docutils literal notranslate"><span class="pre">makeClone</span></code></a></p></td>
 <td><p>Return a new typeface based on this typeface but parameterized as specified in the SkFontArguments.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#skia.Typeface.serialize" title="skia.Typeface.serialize"><code class="xref py py-obj docutils literal notranslate"><span class="pre">serialize</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.Typeface.ref" title="skia.Typeface.ref"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ref</span></code></a></p></td>
+<td><p>Increment the reference count.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Typeface.serialize" title="skia.Typeface.serialize"><code class="xref py py-obj docutils literal notranslate"><span class="pre">serialize</span></code></a></p></td>
 <td><p>Same as serialize(SkWStream*, …) but returns the serialized data in SkData, instead of writing it to a stream.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Typeface.unicharToGlyph" title="skia.Typeface.unicharToGlyph"><code class="xref py py-obj docutils literal notranslate"><span class="pre">unicharToGlyph</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.Typeface.unicharToGlyph" title="skia.Typeface.unicharToGlyph"><code class="xref py py-obj docutils literal notranslate"><span class="pre">unicharToGlyph</span></code></a></p></td>
 <td><p>Return the glyphID that corresponds to the specified unicode code-point (in UTF32 encoding).</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#skia.Typeface.unicharsToGlyphs" title="skia.Typeface.unicharsToGlyphs"><code class="xref py py-obj docutils literal notranslate"><span class="pre">unicharsToGlyphs</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Typeface.unicharsToGlyphs" title="skia.Typeface.unicharsToGlyphs"><code class="xref py py-obj docutils literal notranslate"><span class="pre">unicharsToGlyphs</span></code></a></p></td>
 <td><p>Given an array of UTF32 character codes, return their corresponding glyph IDs.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.Typeface.unique" title="skia.Typeface.unique"><code class="xref py py-obj docutils literal notranslate"><span class="pre">unique</span></code></a></p></td>
+<td><p>May return true if the caller is the only owner.</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#skia.Typeface.uniqueID" title="skia.Typeface.uniqueID"><code class="xref py py-obj docutils literal notranslate"><span class="pre">uniqueID</span></code></a></p></td>
 <td><p>Return a 32bit value for this typeface, unique for the underlying font data.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.Typeface.unref" title="skia.Typeface.unref"><code class="xref py py-obj docutils literal notranslate"><span class="pre">unref</span></code></a></p></td>
+<td><p>Decrement the reference count.</p></td>
 </tr>
 </tbody>
 </table>
@@ -293,6 +302,13 @@ appears when drawn (and measured).</p>
 </dd></dl>
 
 <dl class="py method">
+<dt id="skia.Typeface.ref">
+<code class="sig-prename descclassname">Typeface.</code><code class="sig-name descname">ref</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n">skia.RefCntBase</span></em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#skia.Typeface.ref" title="Permalink to this definition">¶</a></dt>
+<dd><p>Increment the reference count.</p>
+<p>Must be balanced by a call to <a class="reference internal" href="#skia.Typeface.unref" title="skia.Typeface.unref"><code class="xref py py-meth docutils literal notranslate"><span class="pre">unref()</span></code></a>.</p>
+</dd></dl>
+
+<dl class="py method">
 <dt id="skia.Typeface.serialize">
 <code class="sig-prename descclassname">Typeface.</code><code class="sig-name descname">serialize</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Typeface" title="skia.Typeface">skia.Typeface</a></span></em>, <em class="sig-param"><span class="n">behavior</span><span class="p">:</span> <span class="n">skia.Typeface.SerializeBehavior</span> <span class="o">=</span> <span class="default_value">SerializeBehavior.kIncludeDataIfLocal</span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="skia.Data.html#skia.Data" title="skia.Data">skia.Data</a><a class="headerlink" href="#skia.Typeface.serialize" title="Permalink to this definition">¶</a></dt>
 <dd><p>Same as serialize(SkWStream*, …) but returns the serialized data in SkData, instead of writing it to a stream.</p>
@@ -311,9 +327,25 @@ appears when drawn (and measured).</p>
 </dd></dl>
 
 <dl class="py method">
+<dt id="skia.Typeface.unique">
+<code class="sig-prename descclassname">Typeface.</code><code class="sig-name descname">unique</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n">skia.RefCntBase</span></em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#skia.Typeface.unique" title="Permalink to this definition">¶</a></dt>
+<dd><p>May return true if the caller is the only owner.</p>
+<p>Ensures that all previous owner’s actions are complete.</p>
+</dd></dl>
+
+<dl class="py method">
 <dt id="skia.Typeface.uniqueID">
 <code class="sig-prename descclassname">Typeface.</code><code class="sig-name descname">uniqueID</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Typeface" title="skia.Typeface">skia.Typeface</a></span></em><span class="sig-paren">)</span> &#x2192; int<a class="headerlink" href="#skia.Typeface.uniqueID" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return a 32bit value for this typeface, unique for the underlying font data.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="skia.Typeface.unref">
+<code class="sig-prename descclassname">Typeface.</code><code class="sig-name descname">unref</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n">skia.RefCntBase</span></em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#skia.Typeface.unref" title="Permalink to this definition">¶</a></dt>
+<dd><p>Decrement the reference count.</p>
+<p>If the reference count is 1 before the decrement, then delete the
+object. Note that if this is the case, then the object needs to have
+been allocated via new, and not on the stack.</p>
 </dd></dl>
 
 </div>

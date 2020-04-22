@@ -86,16 +86,16 @@ can turn sharp corners into various treatments (e.g. rounded corners)</p>
 <td><p>Returns the name of the object’s class.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#skia.CornerPathEffect.ref" title="skia.CornerPathEffect.ref"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ref</span></code></a></p></td>
-<td><p></p></td>
+<td><p>Increment the reference count.</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#skia.CornerPathEffect.serialize" title="skia.CornerPathEffect.serialize"><code class="xref py py-obj docutils literal notranslate"><span class="pre">serialize</span></code></a></p></td>
 <td><p></p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#skia.CornerPathEffect.unique" title="skia.CornerPathEffect.unique"><code class="xref py py-obj docutils literal notranslate"><span class="pre">unique</span></code></a></p></td>
-<td><p></p></td>
+<td><p>May return true if the caller is the only owner.</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#skia.CornerPathEffect.unref" title="skia.CornerPathEffect.unref"><code class="xref py py-obj docutils literal notranslate"><span class="pre">unref</span></code></a></p></td>
-<td><p></p></td>
+<td><p>Decrement the reference count.</p></td>
 </tr>
 </tbody>
 </table>
@@ -247,8 +247,10 @@ resulting stroke-rec to dst and then draw.</p>
 
 <dl class="py method">
 <dt id="skia.CornerPathEffect.ref">
-<code class="sig-prename descclassname">CornerPathEffect.</code><code class="sig-name descname">ref</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.Flattanable.html#skia.Flattanable" title="skia.Flattanable">skia.Flattanable</a></span></em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#skia.CornerPathEffect.ref" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<code class="sig-prename descclassname">CornerPathEffect.</code><code class="sig-name descname">ref</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n">skia.RefCntBase</span></em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#skia.CornerPathEffect.ref" title="Permalink to this definition">¶</a></dt>
+<dd><p>Increment the reference count.</p>
+<p>Must be balanced by a call to <a class="reference internal" href="#skia.CornerPathEffect.unref" title="skia.CornerPathEffect.unref"><code class="xref py py-meth docutils literal notranslate"><span class="pre">unref()</span></code></a>.</p>
+</dd></dl>
 
 <dl class="py method">
 <dt id="skia.CornerPathEffect.serialize">
@@ -257,13 +259,19 @@ resulting stroke-rec to dst and then draw.</p>
 
 <dl class="py method">
 <dt id="skia.CornerPathEffect.unique">
-<code class="sig-prename descclassname">CornerPathEffect.</code><code class="sig-name descname">unique</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.Flattanable.html#skia.Flattanable" title="skia.Flattanable">skia.Flattanable</a></span></em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#skia.CornerPathEffect.unique" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<code class="sig-prename descclassname">CornerPathEffect.</code><code class="sig-name descname">unique</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n">skia.RefCntBase</span></em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#skia.CornerPathEffect.unique" title="Permalink to this definition">¶</a></dt>
+<dd><p>May return true if the caller is the only owner.</p>
+<p>Ensures that all previous owner’s actions are complete.</p>
+</dd></dl>
 
 <dl class="py method">
 <dt id="skia.CornerPathEffect.unref">
-<code class="sig-prename descclassname">CornerPathEffect.</code><code class="sig-name descname">unref</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.Flattanable.html#skia.Flattanable" title="skia.Flattanable">skia.Flattanable</a></span></em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#skia.CornerPathEffect.unref" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<code class="sig-prename descclassname">CornerPathEffect.</code><code class="sig-name descname">unref</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n">skia.RefCntBase</span></em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#skia.CornerPathEffect.unref" title="Permalink to this definition">¶</a></dt>
+<dd><p>Decrement the reference count.</p>
+<p>If the reference count is 1 before the decrement, then delete the
+object. Note that if this is the case, then the object needs to have
+been allocated via new, and not on the stack.</p>
+</dd></dl>
 
 </div>
 <div class="section" id="attributes">

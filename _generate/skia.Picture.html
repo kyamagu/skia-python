@@ -145,8 +145,9 @@ recording or drawing SkPicture.</p>
 
 <dl class="py method">
 <dt id="skia.Picture.ref">
-<code class="sig-prename descclassname">Picture.</code><code class="sig-name descname">ref</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Picture" title="skia.Picture">skia.Picture</a></span></em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#skia.Picture.ref" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">Picture.</code><code class="sig-name descname">ref</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n">skia.RefCntBase</span></em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#skia.Picture.ref" title="Permalink to this definition">¶</a></dt>
 <dd><p>Increment the reference count.</p>
+<p>Must be balanced by a call to <a class="reference internal" href="#skia.Picture.unref" title="skia.Picture.unref"><code class="xref py py-meth docutils literal notranslate"><span class="pre">unref()</span></code></a>.</p>
 </dd></dl>
 
 <dl class="py method">
@@ -157,8 +158,9 @@ recording or drawing SkPicture.</p>
 
 <dl class="py method">
 <dt id="skia.Picture.unique">
-<code class="sig-prename descclassname">Picture.</code><code class="sig-name descname">unique</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Picture" title="skia.Picture">skia.Picture</a></span></em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#skia.Picture.unique" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">Picture.</code><code class="sig-name descname">unique</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n">skia.RefCntBase</span></em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#skia.Picture.unique" title="Permalink to this definition">¶</a></dt>
 <dd><p>May return true if the caller is the only owner.</p>
+<p>Ensures that all previous owner’s actions are complete.</p>
 </dd></dl>
 
 <dl class="py method">
@@ -169,8 +171,11 @@ recording or drawing SkPicture.</p>
 
 <dl class="py method">
 <dt id="skia.Picture.unref">
-<code class="sig-prename descclassname">Picture.</code><code class="sig-name descname">unref</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Picture" title="skia.Picture">skia.Picture</a></span></em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#skia.Picture.unref" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">Picture.</code><code class="sig-name descname">unref</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n">skia.RefCntBase</span></em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#skia.Picture.unref" title="Permalink to this definition">¶</a></dt>
 <dd><p>Decrement the reference count.</p>
+<p>If the reference count is 1 before the decrement, then delete the
+object. Note that if this is the case, then the object needs to have
+been allocated via new, and not on the stack.</p>
 </dd></dl>
 
 </div>
