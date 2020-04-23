@@ -30,8 +30,9 @@ def test_Shader_makeWithLocalMatrix(shader):
     assert isinstance(shader.makeWithLocalMatrix(skia.Matrix()), skia.Shader)
 
 
-# def test_Shader_makeWithColorFilter(shader):
-#     assert isinstance(shader.makeWithColorFilter(skia.Matrix()), skia.Shader)
+def test_Shader_makeWithColorFilter(shader):
+    assert isinstance(
+        shader.makeWithColorFilter(skia.LumaColorFilter.Make()), skia.Shader)
 
 
 def test_Shaders_Empty():

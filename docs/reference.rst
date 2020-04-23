@@ -34,6 +34,7 @@ Reference
     ClipOp
     Color4f
     ColorFilter
+    ColorFilter.Flags
     ColorInfo
     ColorSpace
     ColorType
@@ -72,12 +73,17 @@ Reference
     Image
     ImageFilter
     ImageInfo
+    LumaColorFilter
     M44
     MaskFilter
     Matrix
     MatrixPathEffect
     MergePathEffect
+    OverdrawColorFilter
     Paint
+    Paint.Style
+    Paint.Cap
+    Paint.Join
     Path
     Path.Iter
     Path.RawIter
@@ -125,6 +131,7 @@ Reference
     SurfaceProps
     SurfaceProps.Flags
     SurfaceProps.InitType
+    TableColorFilter
     TextBlob
     TextBlobBuilder
     TextEncoding

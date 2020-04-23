@@ -2,6 +2,7 @@ from setuptools import setup, Extension
 from setuptools.command.build_ext import build_ext
 import os
 import sys
+import glob
 
 try:
     from numpy.distutils.ccompiler import CCompiler_compile
@@ -12,36 +13,6 @@ except ImportError:
 
 
 __version__ = '0.0.1'
-
-
-SOURCES = [
-    os.path.join('src', 'skia', 'main.cpp'),
-    os.path.join('src', 'skia', 'Bitmap.cpp'),
-    os.path.join('src', 'skia', 'BlendMode.cpp'),
-    os.path.join('src', 'skia', 'Canvas.cpp'),
-    os.path.join('src', 'skia', 'Color.cpp'),
-    os.path.join('src', 'skia', 'ColorSpace.cpp'),
-    os.path.join('src', 'skia', 'Data.cpp'),
-    os.path.join('src', 'skia', 'Font.cpp'),
-    os.path.join('src', 'skia', 'GrContext.cpp'),
-    os.path.join('src', 'skia', 'Image.cpp'),
-    os.path.join('src', 'skia', 'ImageInfo.cpp'),
-    os.path.join('src', 'skia', 'Matrix.cpp'),
-    os.path.join('src', 'skia', 'Paint.cpp'),
-    os.path.join('src', 'skia', 'Path.cpp'),
-    os.path.join('src', 'skia', 'PathEffect.cpp'),
-    os.path.join('src', 'skia', 'Picture.cpp'),
-    os.path.join('src', 'skia', 'Pixmap.cpp'),
-    os.path.join('src', 'skia', 'Point.cpp'),
-    os.path.join('src', 'skia', 'Rect.cpp'),
-    os.path.join('src', 'skia', 'RefCnt.cpp'),
-    os.path.join('src', 'skia', 'Region.cpp'),
-    os.path.join('src', 'skia', 'Size.cpp'),
-    os.path.join('src', 'skia', 'Shader.cpp'),
-    os.path.join('src', 'skia', 'Surface.cpp'),
-    os.path.join('src', 'skia', 'TextBlob.cpp'),
-    os.path.join('src', 'skia', 'Vertices.cpp'),
-]
 
 SKIA_PATH = os.getenv('SKIA_PATH', 'skia')
 SKIA_OUT_PATH = os.getenv(
@@ -148,7 +119,7 @@ class BuildExt(build_ext):
 
 extension = Extension(
     'skia',
-    SOURCES,
+    sources=list(glob.glob(os.path.join('src', 'skia', '*.cpp'))),
     include_dirs=[
         # Path to pybind11 headers
         get_pybind_include(),
