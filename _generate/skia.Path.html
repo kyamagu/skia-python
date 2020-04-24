@@ -15,7 +15,7 @@
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="Path.Iter" href="skia.Path.Iter.html" />
-    <link rel="prev" title="Paint" href="skia.Paint.html" />
+    <link rel="prev" title="Paint.Join" href="skia.Paint.Join.html" />
    
   <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
   
@@ -1137,8 +1137,8 @@ clockwise, while <a class="reference internal" href="skia.PathDirection.html#ski
 <p>A closed contour connects the first and last <a class="reference internal" href="skia.Point.html#skia.Point" title="skia.Point"><code class="xref py py-class docutils literal notranslate"><span class="pre">Point</span></code></a> with
 line, forming a continuous loop. Open and closed contour draw the same
 with <a class="reference internal" href="skia.Paint.html#skia.Paint.kFill_Style" title="skia.Paint.kFill_Style"><code class="xref py py-attr docutils literal notranslate"><span class="pre">Paint.kFill_Style</span></code></a>. With <a class="reference internal" href="skia.Paint.html#skia.Paint.kStroke_Style" title="skia.Paint.kStroke_Style"><code class="xref py py-attr docutils literal notranslate"><span class="pre">Paint.kStroke_Style</span></code></a>,
-open contour draws <code class="xref py py-class docutils literal notranslate"><span class="pre">Paint.Cap</span></code> at contour start and end;
-closed contour draws <code class="xref py py-class docutils literal notranslate"><span class="pre">Paint.Join</span></code> at contour start and end.</p>
+open contour draws <a class="reference internal" href="skia.Paint.Cap.html#skia.Paint.Cap" title="skia.Paint.Cap"><code class="xref py py-class docutils literal notranslate"><span class="pre">Paint.Cap</span></code></a> at contour start and end;
+closed contour draws <a class="reference internal" href="skia.Paint.Join.html#skia.Paint.Join" title="skia.Paint.Join"><code class="xref py py-class docutils literal notranslate"><span class="pre">Paint.Join</span></code></a> at contour start and end.</p>
 <p><a class="reference internal" href="#skia.Path.close" title="skia.Path.close"><code class="xref py py-meth docutils literal notranslate"><span class="pre">close()</span></code></a> has no effect if <a class="reference internal" href="#skia.Path" title="skia.Path"><code class="xref py py-class docutils literal notranslate"><span class="pre">Path</span></code></a> is empty or last
 <a class="reference internal" href="#skia.Path" title="skia.Path"><code class="xref py py-class docutils literal notranslate"><span class="pre">Path</span></code></a> <a class="reference internal" href="skia.Path.Verb.html#skia.Path.Verb" title="skia.Path.Verb"><code class="xref py py-class docutils literal notranslate"><span class="pre">Verb</span></code></a> is <code class="xref py py-attr docutils literal notranslate"><span class="pre">Path.Verb.kClose</span></code>.</p>
 <dl class="field-list simple">
@@ -1683,8 +1683,8 @@ conics with different conic weight values.</p>
 <dd><p>Returns if contour is closed.</p>
 <p>Contour is closed if <a class="reference internal" href="#skia.Path" title="skia.Path"><code class="xref py py-class docutils literal notranslate"><span class="pre">Path</span></code></a> <a class="reference internal" href="skia.Path.Verb.html#skia.Path.Verb" title="skia.Path.Verb"><code class="xref py py-class docutils literal notranslate"><span class="pre">Verb</span></code></a> array
 was last modified by <a class="reference internal" href="#skia.Path.close" title="skia.Path.close"><code class="xref py py-meth docutils literal notranslate"><span class="pre">close()</span></code></a>. When stroked, closed contour
-draws <code class="xref py py-class docutils literal notranslate"><span class="pre">Join</span></code> instead of
-<code class="xref py py-class docutils literal notranslate"><span class="pre">Cap</span></code> at first and last <a class="reference internal" href="skia.Point.html#skia.Point" title="skia.Point"><code class="xref py py-class docutils literal notranslate"><span class="pre">Point</span></code></a>.</p>
+draws <a class="reference internal" href="skia.Paint.Join.html#skia.Paint.Join" title="skia.Paint.Join"><code class="xref py py-class docutils literal notranslate"><span class="pre">Join</span></code></a> instead of
+<a class="reference internal" href="skia.Paint.Cap.html#skia.Paint.Cap" title="skia.Paint.Cap"><code class="xref py py-class docutils literal notranslate"><span class="pre">Cap</span></code></a> at first and last <a class="reference internal" href="skia.Point.html#skia.Point" title="skia.Point"><code class="xref py py-class docutils literal notranslate"><span class="pre">Point</span></code></a>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
 <dd class="field-odd"><p>true if the last contour ends with a
@@ -2529,6 +2529,7 @@ used for <a class="reference internal" href="#skia.Path" title="skia.Path"><code
 <li class="toctree-l2"><a class="reference internal" href="skia.ClipOp.html">ClipOp</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.Color4f.html">Color4f</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.ColorFilter.html">ColorFilter</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.ColorFilter.Flags.html">ColorFilter.Flags</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.ColorInfo.html">ColorInfo</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.ColorSpace.html">ColorSpace</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.ColorType.html">ColorType</a></li>
@@ -2567,12 +2568,17 @@ used for <a class="reference internal" href="#skia.Path" title="skia.Path"><code
 <li class="toctree-l2"><a class="reference internal" href="skia.Image.html">Image</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.ImageFilter.html">ImageFilter</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.ImageInfo.html">ImageInfo</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.LumaColorFilter.html">LumaColorFilter</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.M44.html">M44</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.MaskFilter.html">MaskFilter</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.Matrix.html">Matrix</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.MatrixPathEffect.html">MatrixPathEffect</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.MergePathEffect.html">MergePathEffect</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.OverdrawColorFilter.html">OverdrawColorFilter</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.Paint.html">Paint</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.Paint.Style.html">Paint.Style</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.Paint.Cap.html">Paint.Cap</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.Paint.Join.html">Paint.Join</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">Path</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.Path.Iter.html">Path.Iter</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.Path.RawIter.html">Path.RawIter</a></li>
@@ -2620,6 +2626,7 @@ used for <a class="reference internal" href="#skia.Path" title="skia.Path"><code
 <li class="toctree-l2"><a class="reference internal" href="skia.SurfaceProps.html">SurfaceProps</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.SurfaceProps.Flags.html">SurfaceProps.Flags</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.SurfaceProps.InitType.html">SurfaceProps.InitType</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.TableColorFilter.html">TableColorFilter</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.TextBlob.html">TextBlob</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.TextBlobBuilder.html">TextBlobBuilder</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.TextEncoding.html">TextEncoding</a></li>
@@ -2638,7 +2645,7 @@ used for <a class="reference internal" href="#skia.Path" title="skia.Path"><code
 <ul>
   <li><a href="../index.html">Documentation overview</a><ul>
   <li><a href="../reference.html">Reference</a><ul>
-      <li>Previous: <a href="skia.Paint.html" title="previous chapter">Paint</a></li>
+      <li>Previous: <a href="skia.Paint.Join.html" title="previous chapter">Paint.Join</a></li>
       <li>Next: <a href="skia.Path.Iter.html" title="next chapter">Path.Iter</a></li>
   </ul></li>
   </ul></li>

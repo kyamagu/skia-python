@@ -39,7 +39,6 @@
 <em class="property">class </em><code class="sig-name descname">Color4f</code><a class="headerlink" href="#skia.Color4f" title="Permalink to this definition">¶</a></dt>
 <dd><p>RGBA color value, holding four floating point components.</p>
 <p>Color components are always in a known order, and are unpremultiplied.</p>
-<p>This is a specialization of SkRGBA4f.</p>
 <p class="rubric">Methods</p>
 <table class="longtable docutils align-default">
 <colgroup>
@@ -47,8 +46,14 @@
 <col style="width: 90%" />
 </colgroup>
 <tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Color4f.FromBytes_RGBA" title="skia.Color4f.FromBytes_RGBA"><code class="xref py py-obj docutils literal notranslate"><span class="pre">FromBytes_RGBA</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.Color4f.FromColor" title="skia.Color4f.FromColor"><code class="xref py py-obj docutils literal notranslate"><span class="pre">FromColor</span></code></a></p></td>
+<td><p>Returns closest <code class="xref py py-class docutils literal notranslate"><span class="pre">RGBA4f</span></code> to <code class="xref py py-class docutils literal notranslate"><span class="pre">Color</span></code>.</p></td>
+</tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#skia.Color4f.__init__" title="skia.Color4f.__init__"><code class="xref py py-obj docutils literal notranslate"><span class="pre">__init__</span></code></a></p></td>
-<td><p>Initialize self.</p></td>
+<td><p></p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#skia.Color4f.fitsInBytes" title="skia.Color4f.fitsInBytes"><code class="xref py py-obj docutils literal notranslate"><span class="pre">fitsInBytes</span></code></a></p></td>
 <td><p>Returns true if all channels are in [0, 1].</p></td>
@@ -62,7 +67,7 @@
 <tr class="row-odd"><td><p><a class="reference internal" href="#skia.Color4f.toBytes_RGBA" title="skia.Color4f.toBytes_RGBA"><code class="xref py py-obj docutils literal notranslate"><span class="pre">toBytes_RGBA</span></code></a></p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#skia.Color4f.toSkColor" title="skia.Color4f.toSkColor"><code class="xref py py-obj docutils literal notranslate"><span class="pre">toSkColor</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.Color4f.toColor" title="skia.Color4f.toColor"><code class="xref py py-obj docutils literal notranslate"><span class="pre">toColor</span></code></a></p></td>
 <td><p>Returns closest SkColor to SkRGBA4f.</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#skia.Color4f.vec" title="skia.Color4f.vec"><code class="xref py py-obj docutils literal notranslate"><span class="pre">vec</span></code></a></p></td>
@@ -120,10 +125,29 @@
 <div class="section" id="methods">
 <h2>Methods<a class="headerlink" href="#methods" title="Permalink to this headline">¶</a></h2>
 <dl class="py method">
-<dt id="skia.Color4f.__init__">
-<code class="sig-prename descclassname">Color4f.</code><code class="sig-name descname">__init__</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#skia.Color4f.__init__" title="Permalink to this definition">¶</a></dt>
-<dd><p>Initialize self.  See help(type(self)) for accurate signature.</p>
+<dt id="skia.Color4f.FromBytes_RGBA">
+<em class="property">static </em><code class="sig-prename descclassname">Color4f.</code><code class="sig-name descname">FromBytes_RGBA</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">arg0</span><span class="p">:</span> <span class="n">int</span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="#skia.Color4f" title="skia.Color4f">skia.Color4f</a><a class="headerlink" href="#skia.Color4f.FromBytes_RGBA" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="skia.Color4f.FromColor">
+<em class="property">static </em><code class="sig-prename descclassname">Color4f.</code><code class="sig-name descname">FromColor</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">color</span><span class="p">:</span> <span class="n">int</span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="#skia.Color4f" title="skia.Color4f">skia.Color4f</a><a class="headerlink" href="#skia.Color4f.FromColor" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns closest <code class="xref py py-class docutils literal notranslate"><span class="pre">RGBA4f</span></code> to <code class="xref py py-class docutils literal notranslate"><span class="pre">Color</span></code>.</p>
+<p>Only allowed if <code class="xref py py-class docutils literal notranslate"><span class="pre">RGBA4f</span></code> is unpremultiplied.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Color</dt>
+<dd class="field-odd"><p>Color with Alpha, red, blue, and green components</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">Color</span></code> as <code class="xref py py-class docutils literal notranslate"><span class="pre">RGBA4f</span></code></p>
+</dd>
+</dl>
 </dd></dl>
+
+<dl class="py method">
+<dt id="skia.Color4f.__init__">
+<code class="sig-prename descclassname">Color4f.</code><code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Color4f" title="skia.Color4f">skia.Color4f</a></span></em>, <em class="sig-param"><span class="n">color</span><span class="p">:</span> <span class="n">int</span></em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#skia.Color4f.__init__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
 
 <dl class="py method">
 <dt id="skia.Color4f.fitsInBytes">
@@ -148,8 +172,8 @@
 <dd></dd></dl>
 
 <dl class="py method">
-<dt id="skia.Color4f.toSkColor">
-<code class="sig-prename descclassname">Color4f.</code><code class="sig-name descname">toSkColor</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Color4f" title="skia.Color4f">skia.Color4f</a></span></em><span class="sig-paren">)</span> &#x2192; int<a class="headerlink" href="#skia.Color4f.toSkColor" title="Permalink to this definition">¶</a></dt>
+<dt id="skia.Color4f.toColor">
+<code class="sig-prename descclassname">Color4f.</code><code class="sig-name descname">toColor</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Color4f" title="skia.Color4f">skia.Color4f</a></span></em><span class="sig-paren">)</span> &#x2192; int<a class="headerlink" href="#skia.Color4f.toColor" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns closest SkColor to SkRGBA4f.</p>
 </dd></dl>
 
@@ -270,6 +294,7 @@
 <li class="toctree-l2"><a class="reference internal" href="skia.ClipOp.html">ClipOp</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">Color4f</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.ColorFilter.html">ColorFilter</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.ColorFilter.Flags.html">ColorFilter.Flags</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.ColorInfo.html">ColorInfo</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.ColorSpace.html">ColorSpace</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.ColorType.html">ColorType</a></li>
@@ -308,12 +333,17 @@
 <li class="toctree-l2"><a class="reference internal" href="skia.Image.html">Image</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.ImageFilter.html">ImageFilter</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.ImageInfo.html">ImageInfo</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.LumaColorFilter.html">LumaColorFilter</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.M44.html">M44</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.MaskFilter.html">MaskFilter</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.Matrix.html">Matrix</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.MatrixPathEffect.html">MatrixPathEffect</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.MergePathEffect.html">MergePathEffect</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.OverdrawColorFilter.html">OverdrawColorFilter</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.Paint.html">Paint</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.Paint.Style.html">Paint.Style</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.Paint.Cap.html">Paint.Cap</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.Paint.Join.html">Paint.Join</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.Path.html">Path</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.Path.Iter.html">Path.Iter</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.Path.RawIter.html">Path.RawIter</a></li>
@@ -361,6 +391,7 @@
 <li class="toctree-l2"><a class="reference internal" href="skia.SurfaceProps.html">SurfaceProps</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.SurfaceProps.Flags.html">SurfaceProps.Flags</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.SurfaceProps.InitType.html">SurfaceProps.InitType</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.TableColorFilter.html">TableColorFilter</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.TextBlob.html">TextBlob</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.TextBlobBuilder.html">TextBlobBuilder</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.TextEncoding.html">TextEncoding</a></li>

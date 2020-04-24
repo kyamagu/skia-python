@@ -14,8 +14,8 @@
     <script src="../_static/language_data.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Path" href="skia.Path.html" />
-    <link rel="prev" title="MergePathEffect" href="skia.MergePathEffect.html" />
+    <link rel="next" title="Paint.Style" href="skia.Paint.Style.html" />
+    <link rel="prev" title="OverdrawColorFilter" href="skia.OverdrawColorFilter.html" />
    
   <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
   
@@ -45,6 +45,24 @@ clip and <a class="reference internal" href="skia.Canvas.html#skia.Canvas" title
 multiple-pass algorithms that alter the drawing geometry, color, and
 transparency. For instance, <a class="reference internal" href="#skia.Paint" title="skia.Paint"><code class="xref py py-class docutils literal notranslate"><span class="pre">Paint</span></code></a> does not directly implement
 dashing or blur, but contains the objects that do so.</p>
+<p class="rubric">Classes</p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="skia.Paint.Style.html#skia.Paint.Style" title="skia.Paint.Style"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Style</span></code></a></p></td>
+<td><p>Members:</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="skia.Paint.Cap.html#skia.Paint.Cap" title="skia.Paint.Cap"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Cap</span></code></a></p></td>
+<td><p>Members:</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="skia.Paint.Join.html#skia.Paint.Join" title="skia.Paint.Join"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Join</span></code></a></p></td>
+<td><p>Members:</p></td>
+</tr>
+</tbody>
+</table>
 <p class="rubric">Methods</p>
 <table class="longtable docutils align-default">
 <colgroup>
@@ -56,16 +74,16 @@ dashing or blur, but contains the objects that do so.</p>
 <td><p>Overloaded function.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#skia.Paint.canComputeFastBounds" title="skia.Paint.canComputeFastBounds"><code class="xref py py-obj docutils literal notranslate"><span class="pre">canComputeFastBounds</span></code></a></p></td>
-<td><p>(to be made private) Returns true if SkPaint does not include elements requiring extensive computation to compute SkBaseDevice bounds of drawn geometry.</p></td>
+<td><p>(to be made private) Returns true if <a class="reference internal" href="#skia.Paint" title="skia.Paint"><code class="xref py py-class docutils literal notranslate"><span class="pre">Paint</span></code></a> does not include elements requiring extensive computation to compute <code class="xref py py-class docutils literal notranslate"><span class="pre">BaseDevice</span></code> bounds of drawn geometry.</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#skia.Paint.computeFastBounds" title="skia.Paint.computeFastBounds"><code class="xref py py-obj docutils literal notranslate"><span class="pre">computeFastBounds</span></code></a></p></td>
-<td><p>(to be made private) Only call this if canComputeFastBounds() returned true.</p></td>
+<td><p>(to be made private) Only call this if <a class="reference internal" href="#skia.Paint.canComputeFastBounds" title="skia.Paint.canComputeFastBounds"><code class="xref py py-meth docutils literal notranslate"><span class="pre">canComputeFastBounds()</span></code></a> returned true.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#skia.Paint.computeFastStrokeBounds" title="skia.Paint.computeFastStrokeBounds"><code class="xref py py-obj docutils literal notranslate"><span class="pre">computeFastStrokeBounds</span></code></a></p></td>
 <td><p>(to be made private)</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#skia.Paint.doComputeFastBounds" title="skia.Paint.doComputeFastBounds"><code class="xref py py-obj docutils literal notranslate"><span class="pre">doComputeFastBounds</span></code></a></p></td>
-<td><p>(to be made private) Computes the bounds, overriding the SkPaint SkPaint::Style.</p></td>
+<td><p>(to be made private) Computes the bounds, overriding the <a class="reference internal" href="#skia.Paint" title="skia.Paint"><code class="xref py py-class docutils literal notranslate"><span class="pre">Paint</span></code></a> <a class="reference internal" href="skia.Paint.Style.html#skia.Paint.Style" title="skia.Paint.Style"><code class="xref py py-class docutils literal notranslate"><span class="pre">Paint.Style</span></code></a>.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#skia.Paint.getAlpha" title="skia.Paint.getAlpha"><code class="xref py py-obj docutils literal notranslate"><span class="pre">getAlpha</span></code></a></p></td>
 <td><p></p></td>
@@ -74,7 +92,7 @@ dashing or blur, but contains the objects that do so.</p>
 <td><p>Retrieves alpha from the color used when stroking and filling.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#skia.Paint.getBlendMode" title="skia.Paint.getBlendMode"><code class="xref py py-obj docutils literal notranslate"><span class="pre">getBlendMode</span></code></a></p></td>
-<td><p>Returns SkBlendMode.</p></td>
+<td><p>Returns <a class="reference internal" href="skia.BlendMode.html#skia.BlendMode" title="skia.BlendMode"><code class="xref py py-class docutils literal notranslate"><span class="pre">BlendMode</span></code></a>.</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#skia.Paint.getColor" title="skia.Paint.getColor"><code class="xref py py-obj docutils literal notranslate"><span class="pre">getColor</span></code></a></p></td>
 <td><p>Retrieves alpha and RGB, unpremultiplied, packed into 32 bits.</p></td>
@@ -83,25 +101,25 @@ dashing or blur, but contains the objects that do so.</p>
 <td><p>Retrieves alpha and RGB, unpremultiplied, as four floating point values.</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#skia.Paint.getColorFilter" title="skia.Paint.getColorFilter"><code class="xref py py-obj docutils literal notranslate"><span class="pre">getColorFilter</span></code></a></p></td>
-<td><p>Returns SkColorFilter if set, or nullptr.</p></td>
+<td><p>Returns <a class="reference internal" href="skia.ColorFilter.html#skia.ColorFilter" title="skia.ColorFilter"><code class="xref py py-class docutils literal notranslate"><span class="pre">ColorFilter</span></code></a> if set, or nullptr.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#skia.Paint.getFillPath" title="skia.Paint.getFillPath"><code class="xref py py-obj docutils literal notranslate"><span class="pre">getFillPath</span></code></a></p></td>
-<td><p>Overloaded function.</p></td>
+<td><p>Returns the filled equivalent of the stroked path.</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#skia.Paint.getFilterQuality" title="skia.Paint.getFilterQuality"><code class="xref py py-obj docutils literal notranslate"><span class="pre">getFilterQuality</span></code></a></p></td>
-<td><p>Returns SkFilterQuality, the image filtering level.</p></td>
+<td><p>Returns <a class="reference internal" href="skia.FilterQuality.html#skia.FilterQuality" title="skia.FilterQuality"><code class="xref py py-class docutils literal notranslate"><span class="pre">FilterQuality</span></code></a>, the image filtering level.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#skia.Paint.getHash" title="skia.Paint.getHash"><code class="xref py py-obj docutils literal notranslate"><span class="pre">getHash</span></code></a></p></td>
-<td><p>Returns a hash generated from SkPaint values and pointers.</p></td>
+<td><p>Returns a hash generated from <a class="reference internal" href="#skia.Paint" title="skia.Paint"><code class="xref py py-class docutils literal notranslate"><span class="pre">Paint</span></code></a> values and pointers.</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#skia.Paint.getImageFilter" title="skia.Paint.getImageFilter"><code class="xref py py-obj docutils literal notranslate"><span class="pre">getImageFilter</span></code></a></p></td>
-<td><p>Returns SkImageFilter if set, or nullptr.</p></td>
+<td><p>Returns <a class="reference internal" href="skia.ImageFilter.html#skia.ImageFilter" title="skia.ImageFilter"><code class="xref py py-class docutils literal notranslate"><span class="pre">ImageFilter</span></code></a> if set, or nullptr.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#skia.Paint.getMaskFilter" title="skia.Paint.getMaskFilter"><code class="xref py py-obj docutils literal notranslate"><span class="pre">getMaskFilter</span></code></a></p></td>
-<td><p>Returns SkMaskFilter if set, or nullptr.</p></td>
+<td><p>Returns <a class="reference internal" href="skia.MaskFilter.html#skia.MaskFilter" title="skia.MaskFilter"><code class="xref py py-class docutils literal notranslate"><span class="pre">MaskFilter</span></code></a> if set, or nullptr.</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#skia.Paint.getPathEffect" title="skia.Paint.getPathEffect"><code class="xref py py-obj docutils literal notranslate"><span class="pre">getPathEffect</span></code></a></p></td>
-<td><p>Returns SkPathEffect if set, or nullptr.</p></td>
+<td><p>Returns <a class="reference internal" href="skia.PathEffect.html#skia.PathEffect" title="skia.PathEffect"><code class="xref py py-class docutils literal notranslate"><span class="pre">PathEffect</span></code></a> if set, or nullptr.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#skia.Paint.getShader" title="skia.Paint.getShader"><code class="xref py py-obj docutils literal notranslate"><span class="pre">getShader</span></code></a></p></td>
 <td><p>Returns optional colors used when filling a path, such as a gradient.</p></td>
@@ -122,34 +140,34 @@ dashing or blur, but contains the objects that do so.</p>
 <td><p>Returns whether the geometry is filled, stroked, or filled and stroked.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#skia.Paint.isAntiAlias" title="skia.Paint.isAntiAlias"><code class="xref py py-obj docutils literal notranslate"><span class="pre">isAntiAlias</span></code></a></p></td>
-<td><p>Returns true if pixels on the active edges of SkPath may be drawn with partial transparency.</p></td>
+<td><p>Returns true if pixels on the active edges of <a class="reference internal" href="skia.Path.html#skia.Path" title="skia.Path"><code class="xref py py-class docutils literal notranslate"><span class="pre">Path</span></code></a> may be drawn with partial transparency.</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#skia.Paint.isDither" title="skia.Paint.isDither"><code class="xref py py-obj docutils literal notranslate"><span class="pre">isDither</span></code></a></p></td>
 <td><p>Returns true if color error may be distributed to smooth color transition.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#skia.Paint.isSrcOver" title="skia.Paint.isSrcOver"><code class="xref py py-obj docutils literal notranslate"><span class="pre">isSrcOver</span></code></a></p></td>
-<td><p>Returns true if SkBlendMode is SkBlendMode::kSrcOver, the default.</p></td>
+<td><p>Returns true if <a class="reference internal" href="skia.BlendMode.html#skia.BlendMode" title="skia.BlendMode"><code class="xref py py-class docutils literal notranslate"><span class="pre">BlendMode</span></code></a> is <a class="reference internal" href="skia.BlendMode.html#skia.BlendMode.kSrcOver" title="skia.BlendMode.kSrcOver"><code class="xref py py-attr docutils literal notranslate"><span class="pre">BlendMode.kSrcOver</span></code></a>, the default.</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#skia.Paint.nothingToDraw" title="skia.Paint.nothingToDraw"><code class="xref py py-obj docutils literal notranslate"><span class="pre">nothingToDraw</span></code></a></p></td>
-<td><p>Returns true if SkPaint prevents all drawing; otherwise, the SkPaint may or may not allow drawing.</p></td>
+<td><p>Returns true if <a class="reference internal" href="#skia.Paint" title="skia.Paint"><code class="xref py py-class docutils literal notranslate"><span class="pre">Paint</span></code></a> prevents all drawing; otherwise, the <a class="reference internal" href="#skia.Paint" title="skia.Paint"><code class="xref py py-class docutils literal notranslate"><span class="pre">Paint</span></code></a> may or may not allow drawing.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#skia.Paint.refColorFilter" title="skia.Paint.refColorFilter"><code class="xref py py-obj docutils literal notranslate"><span class="pre">refColorFilter</span></code></a></p></td>
-<td><p>Returns SkColorFilter if set, or nullptr.</p></td>
+<td><p>Returns <a class="reference internal" href="skia.ColorFilter.html#skia.ColorFilter" title="skia.ColorFilter"><code class="xref py py-class docutils literal notranslate"><span class="pre">ColorFilter</span></code></a> if set, or nullptr.</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#skia.Paint.refImageFilter" title="skia.Paint.refImageFilter"><code class="xref py py-obj docutils literal notranslate"><span class="pre">refImageFilter</span></code></a></p></td>
-<td><p>Returns SkImageFilter if set, or nullptr.</p></td>
+<td><p>Returns <a class="reference internal" href="skia.ImageFilter.html#skia.ImageFilter" title="skia.ImageFilter"><code class="xref py py-class docutils literal notranslate"><span class="pre">ImageFilter</span></code></a> if set, or nullptr.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#skia.Paint.refMaskFilter" title="skia.Paint.refMaskFilter"><code class="xref py py-obj docutils literal notranslate"><span class="pre">refMaskFilter</span></code></a></p></td>
-<td><p>Returns SkMaskFilter if set, or nullptr.</p></td>
+<td><p>Returns <a class="reference internal" href="skia.MaskFilter.html#skia.MaskFilter" title="skia.MaskFilter"><code class="xref py py-class docutils literal notranslate"><span class="pre">MaskFilter</span></code></a> if set, or nullptr.</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#skia.Paint.refPathEffect" title="skia.Paint.refPathEffect"><code class="xref py py-obj docutils literal notranslate"><span class="pre">refPathEffect</span></code></a></p></td>
-<td><p>Returns SkPathEffect if set, or nullptr.</p></td>
+<td><p>Returns <a class="reference internal" href="skia.PathEffect.html#skia.PathEffect" title="skia.PathEffect"><code class="xref py py-class docutils literal notranslate"><span class="pre">PathEffect</span></code></a> if set, or nullptr.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#skia.Paint.refShader" title="skia.Paint.refShader"><code class="xref py py-obj docutils literal notranslate"><span class="pre">refShader</span></code></a></p></td>
 <td><p>Returns optional colors used when filling a path, such as a gradient.</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#skia.Paint.reset" title="skia.Paint.reset"><code class="xref py py-obj docutils literal notranslate"><span class="pre">reset</span></code></a></p></td>
-<td><p>Sets all SkPaint contents to their initial values.</p></td>
+<td><p>Sets all <a class="reference internal" href="#skia.Paint" title="skia.Paint"><code class="xref py py-class docutils literal notranslate"><span class="pre">Paint</span></code></a> contents to their initial values.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#skia.Paint.setARGB" title="skia.Paint.setARGB"><code class="xref py py-obj docutils literal notranslate"><span class="pre">setARGB</span></code></a></p></td>
 <td><p>Sets color used when drawing solid fills.</p></td>
@@ -164,31 +182,31 @@ dashing or blur, but contains the objects that do so.</p>
 <td><p>Requests, but does not require, that edge pixels draw opaque or with partial transparency.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#skia.Paint.setBlendMode" title="skia.Paint.setBlendMode"><code class="xref py py-obj docutils literal notranslate"><span class="pre">setBlendMode</span></code></a></p></td>
-<td><p>Sets SkBlendMode to mode.</p></td>
+<td><p>Sets <a class="reference internal" href="skia.BlendMode.html#skia.BlendMode" title="skia.BlendMode"><code class="xref py py-class docutils literal notranslate"><span class="pre">BlendMode</span></code></a> to mode.</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#skia.Paint.setColor" title="skia.Paint.setColor"><code class="xref py py-obj docutils literal notranslate"><span class="pre">setColor</span></code></a></p></td>
-<td><p>Overloaded function.</p></td>
+<td><p>Sets alpha and RGB used when stroking and filling.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#skia.Paint.setColor4f" title="skia.Paint.setColor4f"><code class="xref py py-obj docutils literal notranslate"><span class="pre">setColor4f</span></code></a></p></td>
-<td><p></p></td>
+<td><p>Sets alpha and RGB used when stroking and filling.</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#skia.Paint.setColorFilter" title="skia.Paint.setColorFilter"><code class="xref py py-obj docutils literal notranslate"><span class="pre">setColorFilter</span></code></a></p></td>
-<td><p>Sets SkColorFilter to filter, decreasing SkRefCnt of the previous SkColorFilter.</p></td>
+<td><p>Sets <a class="reference internal" href="skia.ColorFilter.html#skia.ColorFilter" title="skia.ColorFilter"><code class="xref py py-class docutils literal notranslate"><span class="pre">ColorFilter</span></code></a> to filter, decreasing <code class="xref py py-class docutils literal notranslate"><span class="pre">RefCnt</span></code> of the previous <a class="reference internal" href="skia.ColorFilter.html#skia.ColorFilter" title="skia.ColorFilter"><code class="xref py py-class docutils literal notranslate"><span class="pre">ColorFilter</span></code></a>.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#skia.Paint.setDither" title="skia.Paint.setDither"><code class="xref py py-obj docutils literal notranslate"><span class="pre">setDither</span></code></a></p></td>
 <td><p>Requests, but does not require, to distribute color error.</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#skia.Paint.setFilterQuality" title="skia.Paint.setFilterQuality"><code class="xref py py-obj docutils literal notranslate"><span class="pre">setFilterQuality</span></code></a></p></td>
-<td><p>Sets SkFilterQuality, the image filtering level.</p></td>
+<td><p>Sets <a class="reference internal" href="skia.FilterQuality.html#skia.FilterQuality" title="skia.FilterQuality"><code class="xref py py-class docutils literal notranslate"><span class="pre">FilterQuality</span></code></a>, the image filtering level.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#skia.Paint.setImageFilter" title="skia.Paint.setImageFilter"><code class="xref py py-obj docutils literal notranslate"><span class="pre">setImageFilter</span></code></a></p></td>
-<td><p>Sets SkImageFilter to imageFilter, decreasing SkRefCnt of the previous SkImageFilter.</p></td>
+<td><p>Sets <a class="reference internal" href="skia.ImageFilter.html#skia.ImageFilter" title="skia.ImageFilter"><code class="xref py py-class docutils literal notranslate"><span class="pre">ImageFilter</span></code></a> to imageFilter, decreasing <code class="xref py py-class docutils literal notranslate"><span class="pre">RefCnt</span></code> of the previous <a class="reference internal" href="skia.ImageFilter.html#skia.ImageFilter" title="skia.ImageFilter"><code class="xref py py-class docutils literal notranslate"><span class="pre">ImageFilter</span></code></a>.</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#skia.Paint.setMaskFilter" title="skia.Paint.setMaskFilter"><code class="xref py py-obj docutils literal notranslate"><span class="pre">setMaskFilter</span></code></a></p></td>
-<td><p>Sets SkMaskFilter to maskFilter, decreasing SkRefCnt of the previous SkMaskFilter.</p></td>
+<td><p>Sets <a class="reference internal" href="skia.MaskFilter.html#skia.MaskFilter" title="skia.MaskFilter"><code class="xref py py-class docutils literal notranslate"><span class="pre">MaskFilter</span></code></a> to maskFilter, decreasing <code class="xref py py-class docutils literal notranslate"><span class="pre">RefCnt</span></code> of the previous <a class="reference internal" href="skia.MaskFilter.html#skia.MaskFilter" title="skia.MaskFilter"><code class="xref py py-class docutils literal notranslate"><span class="pre">MaskFilter</span></code></a>.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#skia.Paint.setPathEffect" title="skia.Paint.setPathEffect"><code class="xref py py-obj docutils literal notranslate"><span class="pre">setPathEffect</span></code></a></p></td>
-<td><p>Sets SkPathEffect to pathEffect, decreasing SkRefCnt of the previous SkPathEffect.</p></td>
+<td><p>Sets <a class="reference internal" href="skia.PathEffect.html#skia.PathEffect" title="skia.PathEffect"><code class="xref py py-class docutils literal notranslate"><span class="pre">PathEffect</span></code></a> to pathEffect, decreasing <code class="xref py py-class docutils literal notranslate"><span class="pre">RefCnt</span></code> of the previous <a class="reference internal" href="skia.PathEffect.html#skia.PathEffect" title="skia.PathEffect"><code class="xref py py-class docutils literal notranslate"><span class="pre">PathEffect</span></code></a>.</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#skia.Paint.setShader" title="skia.Paint.setShader"><code class="xref py py-obj docutils literal notranslate"><span class="pre">setShader</span></code></a></p></td>
 <td><p>Sets optional colors used when filling a path, such as a gradient.</p></td>
@@ -275,42 +293,118 @@ dashing or blur, but contains the objects that do so.</p>
 <dt id="skia.Paint.__init__">
 <code class="sig-prename descclassname">Paint.</code><code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span><span class="n">args</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#skia.Paint.__init__" title="Permalink to this definition">¶</a></dt>
 <dd><p>Overloaded function.</p>
-<ol class="arabic simple">
-<li><p>__init__(self: skia.Paint) -&gt; None</p></li>
+<ol class="arabic">
+<li><p>__init__(self: skia.Paint) -&gt; None</p>
+<blockquote>
+<div><p>Constructs <a class="reference internal" href="#skia.Paint" title="skia.Paint"><code class="xref py py-class docutils literal notranslate"><span class="pre">Paint</span></code></a> with default values.</p>
+</div></blockquote>
+</li>
+<li><p>__init__(self: skia.Paint, color: skia.Color4f, colorSpace: skia.ColorSpace = None) -&gt; None</p>
+<blockquote>
+<div><p>Constructs <a class="reference internal" href="#skia.Paint" title="skia.Paint"><code class="xref py py-class docutils literal notranslate"><span class="pre">Paint</span></code></a> with default values and the given color.</p>
+<p>Sets alpha and RGB used when stroking and filling. The color is four
+floating point values, unpremultiplied. The color values are interpreted
+as being in the colorSpace. If colorSpace is nullptr, then color is
+assumed to be in the sRGB color space.</p>
+<dl class="field-list simple">
+<dt class="field-odd">color</dt>
+<dd class="field-odd"><p>unpremultiplied RGBA</p>
+</dd>
+<dt class="field-even">colorSpace</dt>
+<dd class="field-even"><p><a class="reference internal" href="skia.ColorSpace.html#skia.ColorSpace" title="skia.ColorSpace"><code class="xref py py-class docutils literal notranslate"><span class="pre">ColorSpace</span></code></a> describing the
+encoding of color</p>
+</dd>
+</dl>
+</div></blockquote>
+</li>
+<li><p>__init__(self: skia.Paint, paint: skia.Paint) -&gt; None</p>
+<blockquote>
+<div><p>Makes a shallow copy of <a class="reference internal" href="#skia.Paint" title="skia.Paint"><code class="xref py py-class docutils literal notranslate"><span class="pre">Paint</span></code></a>.</p>
+<p><a class="reference internal" href="skia.PathEffect.html#skia.PathEffect" title="skia.PathEffect"><code class="xref py py-class docutils literal notranslate"><span class="pre">PathEffect</span></code></a>, <a class="reference internal" href="skia.Shader.html#skia.Shader" title="skia.Shader"><code class="xref py py-class docutils literal notranslate"><span class="pre">Shader</span></code></a>, <a class="reference internal" href="skia.MaskFilter.html#skia.MaskFilter" title="skia.MaskFilter"><code class="xref py py-class docutils literal notranslate"><span class="pre">MaskFilter</span></code></a>,
+<a class="reference internal" href="skia.ColorFilter.html#skia.ColorFilter" title="skia.ColorFilter"><code class="xref py py-class docutils literal notranslate"><span class="pre">ColorFilter</span></code></a>, and <a class="reference internal" href="skia.ImageFilter.html#skia.ImageFilter" title="skia.ImageFilter"><code class="xref py py-class docutils literal notranslate"><span class="pre">ImageFilter</span></code></a> are shared between
+the original paint and the copy. Objects containing <code class="xref py py-class docutils literal notranslate"><span class="pre">RefCnt</span></code>
+increment their references by one.</p>
+<p>The referenced objects <a class="reference internal" href="skia.PathEffect.html#skia.PathEffect" title="skia.PathEffect"><code class="xref py py-class docutils literal notranslate"><span class="pre">PathEffect</span></code></a>, <a class="reference internal" href="skia.Shader.html#skia.Shader" title="skia.Shader"><code class="xref py py-class docutils literal notranslate"><span class="pre">Shader</span></code></a>,
+<a class="reference internal" href="skia.MaskFilter.html#skia.MaskFilter" title="skia.MaskFilter"><code class="xref py py-class docutils literal notranslate"><span class="pre">MaskFilter</span></code></a>, <a class="reference internal" href="skia.ColorFilter.html#skia.ColorFilter" title="skia.ColorFilter"><code class="xref py py-class docutils literal notranslate"><span class="pre">ColorFilter</span></code></a>, and
+<a class="reference internal" href="skia.ImageFilter.html#skia.ImageFilter" title="skia.ImageFilter"><code class="xref py py-class docutils literal notranslate"><span class="pre">ImageFilter</span></code></a> cannot be modified after they are created. This
+prevents objects with <code class="xref py py-class docutils literal notranslate"><span class="pre">RefCnt</span></code> from being modified once
+<a class="reference internal" href="#skia.Paint" title="skia.Paint"><code class="xref py py-class docutils literal notranslate"><span class="pre">Paint</span></code></a> refers to them.</p>
+<dl class="field-list simple">
+<dt class="field-odd">paint</dt>
+<dd class="field-odd"><p>original to copy</p>
+</dd>
+</dl>
+</div></blockquote>
+</li>
 </ol>
-<p>Constructs SkPaint with default values.</p>
-<ol class="arabic simple" start="2">
-<li><p>__init__(self: skia.Paint, arg0: skia.Color4f, arg1: skia.ColorSpace) -&gt; None</p></li>
-</ol>
-<p>Constructs SkPaint with default values and the given color.</p>
-<ol class="arabic simple" start="3">
-<li><p>__init__(self: skia.Paint, arg0: skia.Paint) -&gt; None</p></li>
-</ol>
-<p>Makes a shallow copy of SkPaint.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt id="skia.Paint.canComputeFastBounds">
 <code class="sig-prename descclassname">Paint.</code><code class="sig-name descname">canComputeFastBounds</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Paint" title="skia.Paint">skia.Paint</a></span></em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#skia.Paint.canComputeFastBounds" title="Permalink to this definition">¶</a></dt>
-<dd><p>(to be made private) Returns true if SkPaint does not include elements requiring extensive computation to compute SkBaseDevice bounds of drawn geometry.</p>
+<dd><p>(to be made private) Returns true if <a class="reference internal" href="#skia.Paint" title="skia.Paint"><code class="xref py py-class docutils literal notranslate"><span class="pre">Paint</span></code></a> does not include
+elements requiring extensive computation to compute
+<code class="xref py py-class docutils literal notranslate"><span class="pre">BaseDevice</span></code> bounds of drawn geometry.</p>
+<p>For instance, <a class="reference internal" href="#skia.Paint" title="skia.Paint"><code class="xref py py-class docutils literal notranslate"><span class="pre">Paint</span></code></a> with <a class="reference internal" href="skia.PathEffect.html#skia.PathEffect" title="skia.PathEffect"><code class="xref py py-class docutils literal notranslate"><span class="pre">PathEffect</span></code></a> always
+returns false.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>true if <a class="reference internal" href="#skia.Paint" title="skia.Paint"><code class="xref py py-class docutils literal notranslate"><span class="pre">Paint</span></code></a> allows for fast computation of bounds</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py method">
 <dt id="skia.Paint.computeFastBounds">
-<code class="sig-prename descclassname">Paint.</code><code class="sig-name descname">computeFastBounds</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Paint" title="skia.Paint">skia.Paint</a></span></em>, <em class="sig-param"><span class="n">arg0</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.Rect.html#skia.Rect" title="skia.Rect">skia.Rect</a></span></em>, <em class="sig-param"><span class="n">arg1</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.Rect.html#skia.Rect" title="skia.Rect">skia.Rect</a></span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="skia.Rect.html#skia.Rect" title="skia.Rect">skia.Rect</a><a class="headerlink" href="#skia.Paint.computeFastBounds" title="Permalink to this definition">¶</a></dt>
-<dd><p>(to be made private) Only call this if canComputeFastBounds() returned true.</p>
+<code class="sig-prename descclassname">Paint.</code><code class="sig-name descname">computeFastBounds</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Paint" title="skia.Paint">skia.Paint</a></span></em>, <em class="sig-param"><span class="n">orig</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.Rect.html#skia.Rect" title="skia.Rect">skia.Rect</a></span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="skia.Rect.html#skia.Rect" title="skia.Rect">skia.Rect</a><a class="headerlink" href="#skia.Paint.computeFastBounds" title="Permalink to this definition">¶</a></dt>
+<dd><p>(to be made private) Only call this if <a class="reference internal" href="#skia.Paint.canComputeFastBounds" title="skia.Paint.canComputeFastBounds"><code class="xref py py-meth docutils literal notranslate"><span class="pre">canComputeFastBounds()</span></code></a>
+returned true.</p>
+<p>This takes a raw rectangle (the raw bounds of a shape), and adjusts it
+for stylistic effects in the paint (e.g. stroking). It returns the
+adjusted bounds that can then be used for <a class="reference internal" href="skia.Canvas.html#skia.Canvas.quickReject" title="skia.Canvas.quickReject"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Canvas.quickReject()</span></code></a>
+tests.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>orig</strong> – geometry modified by <a class="reference internal" href="#skia.Paint" title="skia.Paint"><code class="xref py py-class docutils literal notranslate"><span class="pre">Paint</span></code></a> when drawn</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>fast computed bounds</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py method">
 <dt id="skia.Paint.computeFastStrokeBounds">
-<code class="sig-prename descclassname">Paint.</code><code class="sig-name descname">computeFastStrokeBounds</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Paint" title="skia.Paint">skia.Paint</a></span></em>, <em class="sig-param"><span class="n">arg0</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.Rect.html#skia.Rect" title="skia.Rect">skia.Rect</a></span></em>, <em class="sig-param"><span class="n">arg1</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.Rect.html#skia.Rect" title="skia.Rect">skia.Rect</a></span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="skia.Rect.html#skia.Rect" title="skia.Rect">skia.Rect</a><a class="headerlink" href="#skia.Paint.computeFastStrokeBounds" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">Paint.</code><code class="sig-name descname">computeFastStrokeBounds</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Paint" title="skia.Paint">skia.Paint</a></span></em>, <em class="sig-param"><span class="n">orig</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.Rect.html#skia.Rect" title="skia.Rect">skia.Rect</a></span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="skia.Rect.html#skia.Rect" title="skia.Rect">skia.Rect</a><a class="headerlink" href="#skia.Paint.computeFastStrokeBounds" title="Permalink to this definition">¶</a></dt>
 <dd><p>(to be made private)</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>orig</strong> – geometry modified by SkPaint when drawn</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>fast computed bounds</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py method">
 <dt id="skia.Paint.doComputeFastBounds">
-<code class="sig-prename descclassname">Paint.</code><code class="sig-name descname">doComputeFastBounds</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Paint" title="skia.Paint">skia.Paint</a></span></em>, <em class="sig-param"><span class="n">arg0</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.Rect.html#skia.Rect" title="skia.Rect">skia.Rect</a></span></em>, <em class="sig-param"><span class="n">arg1</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.Rect.html#skia.Rect" title="skia.Rect">skia.Rect</a></span></em>, <em class="sig-param"><span class="n">arg2</span><span class="p">:</span> <span class="n">skia.Paint.Style</span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="skia.Rect.html#skia.Rect" title="skia.Rect">skia.Rect</a><a class="headerlink" href="#skia.Paint.doComputeFastBounds" title="Permalink to this definition">¶</a></dt>
-<dd><p>(to be made private) Computes the bounds, overriding the SkPaint SkPaint::Style.</p>
+<code class="sig-prename descclassname">Paint.</code><code class="sig-name descname">doComputeFastBounds</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Paint" title="skia.Paint">skia.Paint</a></span></em>, <em class="sig-param"><span class="n">orig</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.Rect.html#skia.Rect" title="skia.Rect">skia.Rect</a></span></em>, <em class="sig-param"><span class="n">style</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.Paint.Style.html#skia.Paint.Style" title="skia.Paint.Style">skia.Paint.Style</a></span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="skia.Rect.html#skia.Rect" title="skia.Rect">skia.Rect</a><a class="headerlink" href="#skia.Paint.doComputeFastBounds" title="Permalink to this definition">¶</a></dt>
+<dd><p>(to be made private) Computes the bounds, overriding the
+<a class="reference internal" href="#skia.Paint" title="skia.Paint"><code class="xref py py-class docutils literal notranslate"><span class="pre">Paint</span></code></a> <a class="reference internal" href="skia.Paint.Style.html#skia.Paint.Style" title="skia.Paint.Style"><code class="xref py py-class docutils literal notranslate"><span class="pre">Paint.Style</span></code></a>.</p>
+<p>This can be used to account for additional width required by stroking
+orig, without altering <a class="reference internal" href="skia.Paint.Style.html#skia.Paint.Style" title="skia.Paint.Style"><code class="xref py py-class docutils literal notranslate"><span class="pre">Paint.Style</span></code></a> set to fill.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>orig</strong> – geometry modified by <a class="reference internal" href="#skia.Paint" title="skia.Paint"><code class="xref py py-class docutils literal notranslate"><span class="pre">Paint</span></code></a> when drawn</p></li>
+<li><p><strong>style</strong> – overrides <a class="reference internal" href="skia.Paint.Style.html#skia.Paint.Style" title="skia.Paint.Style"><code class="xref py py-class docutils literal notranslate"><span class="pre">Paint.Style</span></code></a></p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>fast computed bounds</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py method">
@@ -322,91 +416,168 @@ dashing or blur, but contains the objects that do so.</p>
 <dt id="skia.Paint.getAlphaf">
 <code class="sig-prename descclassname">Paint.</code><code class="sig-name descname">getAlphaf</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Paint" title="skia.Paint">skia.Paint</a></span></em><span class="sig-paren">)</span> &#x2192; float<a class="headerlink" href="#skia.Paint.getAlphaf" title="Permalink to this definition">¶</a></dt>
 <dd><p>Retrieves alpha from the color used when stroking and filling.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>alpha ranging from zero, fully transparent, to 255, fully
+opaque</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py method">
 <dt id="skia.Paint.getBlendMode">
 <code class="sig-prename descclassname">Paint.</code><code class="sig-name descname">getBlendMode</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Paint" title="skia.Paint">skia.Paint</a></span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="skia.BlendMode.html#skia.BlendMode" title="skia.BlendMode">skia.BlendMode</a><a class="headerlink" href="#skia.Paint.getBlendMode" title="Permalink to this definition">¶</a></dt>
-<dd><p>Returns SkBlendMode.</p>
+<dd><p>Returns <a class="reference internal" href="skia.BlendMode.html#skia.BlendMode" title="skia.BlendMode"><code class="xref py py-class docutils literal notranslate"><span class="pre">BlendMode</span></code></a>.</p>
+<p>By default, returns <a class="reference internal" href="skia.BlendMode.html#skia.BlendMode.kSrcOver" title="skia.BlendMode.kSrcOver"><code class="xref py py-attr docutils literal notranslate"><span class="pre">BlendMode.kSrcOver</span></code></a>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>mode used to combine source color with destination color</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py method">
 <dt id="skia.Paint.getColor">
 <code class="sig-prename descclassname">Paint.</code><code class="sig-name descname">getColor</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Paint" title="skia.Paint">skia.Paint</a></span></em><span class="sig-paren">)</span> &#x2192; int<a class="headerlink" href="#skia.Paint.getColor" title="Permalink to this definition">¶</a></dt>
 <dd><p>Retrieves alpha and RGB, unpremultiplied, packed into 32 bits.</p>
+<p>Use helpers <code class="xref py py-func docutils literal notranslate"><span class="pre">ColorGetA()</span></code>, <code class="xref py py-func docutils literal notranslate"><span class="pre">ColorGetR()</span></code>,
+<code class="xref py py-func docutils literal notranslate"><span class="pre">ColorGetG()</span></code>, and <code class="xref py py-func docutils literal notranslate"><span class="pre">ColorGetB()</span></code> to extract a color
+component.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>unpremultiplied ARGB</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py method">
 <dt id="skia.Paint.getColor4f">
 <code class="sig-prename descclassname">Paint.</code><code class="sig-name descname">getColor4f</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Paint" title="skia.Paint">skia.Paint</a></span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="skia.Color4f.html#skia.Color4f" title="skia.Color4f">skia.Color4f</a><a class="headerlink" href="#skia.Paint.getColor4f" title="Permalink to this definition">¶</a></dt>
 <dd><p>Retrieves alpha and RGB, unpremultiplied, as four floating point values.</p>
+<p>RGB are are extended sRGB values (sRGB gamut, and encoded with the sRGB
+transfer function).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>unpremultiplied RGBA</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py method">
 <dt id="skia.Paint.getColorFilter">
 <code class="sig-prename descclassname">Paint.</code><code class="sig-name descname">getColorFilter</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Paint" title="skia.Paint">skia.Paint</a></span></em><span class="sig-paren">)</span> &#x2192; SkColorFilter<a class="headerlink" href="#skia.Paint.getColorFilter" title="Permalink to this definition">¶</a></dt>
-<dd><p>Returns SkColorFilter if set, or nullptr.</p>
+<dd><p>Returns <a class="reference internal" href="skia.ColorFilter.html#skia.ColorFilter" title="skia.ColorFilter"><code class="xref py py-class docutils literal notranslate"><span class="pre">ColorFilter</span></code></a> if set, or nullptr.</p>
+<p>Does not alter <a class="reference internal" href="skia.ColorFilter.html#skia.ColorFilter" title="skia.ColorFilter"><code class="xref py py-class docutils literal notranslate"><span class="pre">ColorFilter</span></code></a> <code class="xref py py-class docutils literal notranslate"><span class="pre">RefCnt</span></code>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p><a class="reference internal" href="skia.ColorFilter.html#skia.ColorFilter" title="skia.ColorFilter"><code class="xref py py-class docutils literal notranslate"><span class="pre">ColorFilter</span></code></a> if previously set, nullptr otherwise</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py method">
 <dt id="skia.Paint.getFillPath">
-<code class="sig-prename descclassname">Paint.</code><code class="sig-name descname">getFillPath</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span><span class="n">args</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#skia.Paint.getFillPath" title="Permalink to this definition">¶</a></dt>
-<dd><p>Overloaded function.</p>
-<ol class="arabic simple">
-<li><p>getFillPath(self: skia.Paint, arg0: SkPath, arg1: SkPath, arg2: skia.Rect, arg3: float) -&gt; bool</p></li>
-</ol>
-<p>Returns the filled equivalent of the stroked path.</p>
-<ol class="arabic simple" start="2">
-<li><p>getFillPath(self: skia.Paint, arg0: SkPath, arg1: SkPath) -&gt; bool</p></li>
-</ol>
-<p>Returns the filled equivalent of the stroked path.</p>
+<code class="sig-prename descclassname">Paint.</code><code class="sig-name descname">getFillPath</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Paint" title="skia.Paint">skia.Paint</a></span></em>, <em class="sig-param"><span class="n">src</span><span class="p">:</span> <span class="n">SkPath</span></em>, <em class="sig-param"><span class="n">dst</span><span class="p">:</span> <span class="n">SkPath</span></em>, <em class="sig-param"><span class="n">cullRect</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.Rect.html#skia.Rect" title="skia.Rect">skia.Rect</a></span> <span class="o">=</span> <span class="default_value">None</span></em>, <em class="sig-param"><span class="n">resScale</span><span class="p">:</span> <span class="n">float</span> <span class="o">=</span> <span class="default_value">1</span></em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#skia.Paint.getFillPath" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the filled equivalent of the stroked path.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>src</strong> – <a class="reference internal" href="skia.Path.html#skia.Path" title="skia.Path"><code class="xref py py-class docutils literal notranslate"><span class="pre">Path</span></code></a> read to create a filled version</p></li>
+<li><p><strong>dst</strong> – resulting <a class="reference internal" href="skia.Path.html#skia.Path" title="skia.Path"><code class="xref py py-class docutils literal notranslate"><span class="pre">Path</span></code></a>; may be the same as src, but may
+not be nullptr</p></li>
+<li><p><strong>cullRect</strong> – optional limit passed to <a class="reference internal" href="skia.PathEffect.html#skia.PathEffect" title="skia.PathEffect"><code class="xref py py-class docutils literal notranslate"><span class="pre">PathEffect</span></code></a></p></li>
+<li><p><strong>resScale</strong> – if &gt; 1, increase precision, else if (0 &lt; resScale &lt; 1)
+reduce precision to favor speed and size</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>true if the path represents style fill, or false if it
+represents hairline</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py method">
 <dt id="skia.Paint.getFilterQuality">
 <code class="sig-prename descclassname">Paint.</code><code class="sig-name descname">getFilterQuality</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Paint" title="skia.Paint">skia.Paint</a></span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="skia.FilterQuality.html#skia.FilterQuality" title="skia.FilterQuality">skia.FilterQuality</a><a class="headerlink" href="#skia.Paint.getFilterQuality" title="Permalink to this definition">¶</a></dt>
-<dd><p>Returns SkFilterQuality, the image filtering level.</p>
+<dd><p>Returns <a class="reference internal" href="skia.FilterQuality.html#skia.FilterQuality" title="skia.FilterQuality"><code class="xref py py-class docutils literal notranslate"><span class="pre">FilterQuality</span></code></a>, the image filtering level.</p>
+<p>A lower setting draws faster; a higher setting looks better when the
+image is scaled.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt id="skia.Paint.getHash">
 <code class="sig-prename descclassname">Paint.</code><code class="sig-name descname">getHash</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Paint" title="skia.Paint">skia.Paint</a></span></em><span class="sig-paren">)</span> &#x2192; int<a class="headerlink" href="#skia.Paint.getHash" title="Permalink to this definition">¶</a></dt>
-<dd><p>Returns a hash generated from SkPaint values and pointers.</p>
+<dd><p>Returns a hash generated from <a class="reference internal" href="#skia.Paint" title="skia.Paint"><code class="xref py py-class docutils literal notranslate"><span class="pre">Paint</span></code></a> values and pointers.</p>
+<p>Identical hashes guarantee that the paints are equivalent, but differing
+hashes do not guarantee that the paints have differing contents.</p>
+<p>If operator <code class="xref py py-meth docutils literal notranslate"><span class="pre">__eq__()</span></code> returns true for two paints, their hashes
+are also equal.</p>
+<p>The hash returned is platform and implementation specific.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>a shallow hash</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py method">
 <dt id="skia.Paint.getImageFilter">
 <code class="sig-prename descclassname">Paint.</code><code class="sig-name descname">getImageFilter</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Paint" title="skia.Paint">skia.Paint</a></span></em><span class="sig-paren">)</span> &#x2192; SkImageFilter<a class="headerlink" href="#skia.Paint.getImageFilter" title="Permalink to this definition">¶</a></dt>
-<dd><p>Returns SkImageFilter if set, or nullptr.</p>
+<dd><p>Returns <a class="reference internal" href="skia.ImageFilter.html#skia.ImageFilter" title="skia.ImageFilter"><code class="xref py py-class docutils literal notranslate"><span class="pre">ImageFilter</span></code></a> if set, or nullptr.</p>
+<p>Does not alter <a class="reference internal" href="skia.ImageFilter.html#skia.ImageFilter" title="skia.ImageFilter"><code class="xref py py-class docutils literal notranslate"><span class="pre">ImageFilter</span></code></a> <code class="xref py py-class docutils literal notranslate"><span class="pre">RefCnt</span></code>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p><a class="reference internal" href="skia.ImageFilter.html#skia.ImageFilter" title="skia.ImageFilter"><code class="xref py py-class docutils literal notranslate"><span class="pre">ImageFilter</span></code></a> if previously set, nullptr otherwise</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py method">
 <dt id="skia.Paint.getMaskFilter">
 <code class="sig-prename descclassname">Paint.</code><code class="sig-name descname">getMaskFilter</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Paint" title="skia.Paint">skia.Paint</a></span></em><span class="sig-paren">)</span> &#x2192; SkMaskFilter<a class="headerlink" href="#skia.Paint.getMaskFilter" title="Permalink to this definition">¶</a></dt>
-<dd><p>Returns SkMaskFilter if set, or nullptr.</p>
+<dd><p>Returns <a class="reference internal" href="skia.MaskFilter.html#skia.MaskFilter" title="skia.MaskFilter"><code class="xref py py-class docutils literal notranslate"><span class="pre">MaskFilter</span></code></a> if set, or nullptr.</p>
+<p>Does not alter <a class="reference internal" href="skia.MaskFilter.html#skia.MaskFilter" title="skia.MaskFilter"><code class="xref py py-class docutils literal notranslate"><span class="pre">MaskFilter</span></code></a> <code class="xref py py-class docutils literal notranslate"><span class="pre">RefCnt</span></code>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p><a class="reference internal" href="skia.MaskFilter.html#skia.MaskFilter" title="skia.MaskFilter"><code class="xref py py-class docutils literal notranslate"><span class="pre">MaskFilter</span></code></a> if previously set, nullptr otherwise</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py method">
 <dt id="skia.Paint.getPathEffect">
 <code class="sig-prename descclassname">Paint.</code><code class="sig-name descname">getPathEffect</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Paint" title="skia.Paint">skia.Paint</a></span></em><span class="sig-paren">)</span> &#x2192; SkPathEffect<a class="headerlink" href="#skia.Paint.getPathEffect" title="Permalink to this definition">¶</a></dt>
-<dd><p>Returns SkPathEffect if set, or nullptr.</p>
+<dd><p>Returns <a class="reference internal" href="skia.PathEffect.html#skia.PathEffect" title="skia.PathEffect"><code class="xref py py-class docutils literal notranslate"><span class="pre">PathEffect</span></code></a> if set, or nullptr.</p>
+<p>Does not alter <a class="reference internal" href="skia.PathEffect.html#skia.PathEffect" title="skia.PathEffect"><code class="xref py py-class docutils literal notranslate"><span class="pre">PathEffect</span></code></a> <code class="xref py py-class docutils literal notranslate"><span class="pre">RefCnt</span></code>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p><a class="reference internal" href="skia.PathEffect.html#skia.PathEffect" title="skia.PathEffect"><code class="xref py py-class docutils literal notranslate"><span class="pre">PathEffect</span></code></a> if previously set, nullptr otherwise</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py method">
 <dt id="skia.Paint.getShader">
 <code class="sig-prename descclassname">Paint.</code><code class="sig-name descname">getShader</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Paint" title="skia.Paint">skia.Paint</a></span></em><span class="sig-paren">)</span> &#x2192; SkShader<a class="headerlink" href="#skia.Paint.getShader" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns optional colors used when filling a path, such as a gradient.</p>
+<p>Does not alter <a class="reference internal" href="skia.Shader.html#skia.Shader" title="skia.Shader"><code class="xref py py-class docutils literal notranslate"><span class="pre">Shader</span></code></a> <code class="xref py py-class docutils literal notranslate"><span class="pre">RefCnt</span></code>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p><a class="reference internal" href="skia.Shader.html#skia.Shader" title="skia.Shader"><code class="xref py py-class docutils literal notranslate"><span class="pre">Shader</span></code></a> if previously set, nullptr otherwise</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py method">
 <dt id="skia.Paint.getStrokeCap">
-<code class="sig-prename descclassname">Paint.</code><code class="sig-name descname">getStrokeCap</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Paint" title="skia.Paint">skia.Paint</a></span></em><span class="sig-paren">)</span> &#x2192; skia.Paint.Cap<a class="headerlink" href="#skia.Paint.getStrokeCap" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">Paint.</code><code class="sig-name descname">getStrokeCap</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Paint" title="skia.Paint">skia.Paint</a></span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="skia.Paint.Cap.html#skia.Paint.Cap" title="skia.Paint.Cap">skia.Paint.Cap</a><a class="headerlink" href="#skia.Paint.getStrokeCap" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the geometry drawn at the beginning and end of strokes.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt id="skia.Paint.getStrokeJoin">
-<code class="sig-prename descclassname">Paint.</code><code class="sig-name descname">getStrokeJoin</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Paint" title="skia.Paint">skia.Paint</a></span></em><span class="sig-paren">)</span> &#x2192; skia.Paint.Join<a class="headerlink" href="#skia.Paint.getStrokeJoin" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">Paint.</code><code class="sig-name descname">getStrokeJoin</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Paint" title="skia.Paint">skia.Paint</a></span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="skia.Paint.Join.html#skia.Paint.Join" title="skia.Paint.Join">skia.Paint.Join</a><a class="headerlink" href="#skia.Paint.getStrokeJoin" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the geometry drawn at the corners of strokes.</p>
 </dd></dl>
 
@@ -414,198 +585,385 @@ dashing or blur, but contains the objects that do so.</p>
 <dt id="skia.Paint.getStrokeMiter">
 <code class="sig-prename descclassname">Paint.</code><code class="sig-name descname">getStrokeMiter</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Paint" title="skia.Paint">skia.Paint</a></span></em><span class="sig-paren">)</span> &#x2192; float<a class="headerlink" href="#skia.Paint.getStrokeMiter" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the limit at which a sharp corner is drawn beveled.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>zero and greater miter limit</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py method">
 <dt id="skia.Paint.getStrokeWidth">
 <code class="sig-prename descclassname">Paint.</code><code class="sig-name descname">getStrokeWidth</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Paint" title="skia.Paint">skia.Paint</a></span></em><span class="sig-paren">)</span> &#x2192; float<a class="headerlink" href="#skia.Paint.getStrokeWidth" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the thickness of the pen used by SkPaint to outline the shape.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>zero for hairline, greater than zero for pen thickness</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py method">
 <dt id="skia.Paint.getStyle">
-<code class="sig-prename descclassname">Paint.</code><code class="sig-name descname">getStyle</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Paint" title="skia.Paint">skia.Paint</a></span></em><span class="sig-paren">)</span> &#x2192; skia.Paint.Style<a class="headerlink" href="#skia.Paint.getStyle" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">Paint.</code><code class="sig-name descname">getStyle</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Paint" title="skia.Paint">skia.Paint</a></span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="skia.Paint.Style.html#skia.Paint.Style" title="skia.Paint.Style">skia.Paint.Style</a><a class="headerlink" href="#skia.Paint.getStyle" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns whether the geometry is filled, stroked, or filled and stroked.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt id="skia.Paint.isAntiAlias">
 <code class="sig-prename descclassname">Paint.</code><code class="sig-name descname">isAntiAlias</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Paint" title="skia.Paint">skia.Paint</a></span></em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#skia.Paint.isAntiAlias" title="Permalink to this definition">¶</a></dt>
-<dd><p>Returns true if pixels on the active edges of SkPath may be drawn with partial transparency.</p>
+<dd><p>Returns true if pixels on the active edges of <a class="reference internal" href="skia.Path.html#skia.Path" title="skia.Path"><code class="xref py py-class docutils literal notranslate"><span class="pre">Path</span></code></a> may be
+drawn with partial transparency.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>antialiasing state</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py method">
 <dt id="skia.Paint.isDither">
 <code class="sig-prename descclassname">Paint.</code><code class="sig-name descname">isDither</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Paint" title="skia.Paint">skia.Paint</a></span></em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#skia.Paint.isDither" title="Permalink to this definition">¶</a></dt>
-<dd><p>Returns true if color error may be distributed to smooth color transition.</p>
+<dd><p>Returns true if color error may be distributed to smooth color
+transition.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>dithering state</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py method">
 <dt id="skia.Paint.isSrcOver">
 <code class="sig-prename descclassname">Paint.</code><code class="sig-name descname">isSrcOver</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Paint" title="skia.Paint">skia.Paint</a></span></em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#skia.Paint.isSrcOver" title="Permalink to this definition">¶</a></dt>
-<dd><p>Returns true if SkBlendMode is SkBlendMode::kSrcOver, the default.</p>
+<dd><p>Returns true if <a class="reference internal" href="skia.BlendMode.html#skia.BlendMode" title="skia.BlendMode"><code class="xref py py-class docutils literal notranslate"><span class="pre">BlendMode</span></code></a> is <a class="reference internal" href="skia.BlendMode.html#skia.BlendMode.kSrcOver" title="skia.BlendMode.kSrcOver"><code class="xref py py-attr docutils literal notranslate"><span class="pre">BlendMode.kSrcOver</span></code></a>,
+the default.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>true if <a class="reference internal" href="skia.BlendMode.html#skia.BlendMode" title="skia.BlendMode"><code class="xref py py-class docutils literal notranslate"><span class="pre">BlendMode</span></code></a> is <a class="reference internal" href="skia.BlendMode.html#skia.BlendMode.kSrcOver" title="skia.BlendMode.kSrcOver"><code class="xref py py-attr docutils literal notranslate"><span class="pre">BlendMode.kSrcOver</span></code></a></p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py method">
 <dt id="skia.Paint.nothingToDraw">
 <code class="sig-prename descclassname">Paint.</code><code class="sig-name descname">nothingToDraw</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Paint" title="skia.Paint">skia.Paint</a></span></em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#skia.Paint.nothingToDraw" title="Permalink to this definition">¶</a></dt>
-<dd><p>Returns true if SkPaint prevents all drawing; otherwise, the SkPaint may or may not allow drawing.</p>
+<dd><p>Returns true if <a class="reference internal" href="#skia.Paint" title="skia.Paint"><code class="xref py py-class docutils literal notranslate"><span class="pre">Paint</span></code></a> prevents all drawing; otherwise, the
+<a class="reference internal" href="#skia.Paint" title="skia.Paint"><code class="xref py py-class docutils literal notranslate"><span class="pre">Paint</span></code></a> may or may not allow drawing.</p>
+<p>Returns true if, for example, <a class="reference internal" href="skia.BlendMode.html#skia.BlendMode" title="skia.BlendMode"><code class="xref py py-class docutils literal notranslate"><span class="pre">BlendMode</span></code></a> combined with alpha
+computes a new alpha of zero.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>true if <a class="reference internal" href="#skia.Paint" title="skia.Paint"><code class="xref py py-class docutils literal notranslate"><span class="pre">Paint</span></code></a> prevents all drawing</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py method">
 <dt id="skia.Paint.refColorFilter">
 <code class="sig-prename descclassname">Paint.</code><code class="sig-name descname">refColorFilter</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Paint" title="skia.Paint">skia.Paint</a></span></em><span class="sig-paren">)</span> &#x2192; SkColorFilter<a class="headerlink" href="#skia.Paint.refColorFilter" title="Permalink to this definition">¶</a></dt>
-<dd><p>Returns SkColorFilter if set, or nullptr.</p>
+<dd><p>Returns <a class="reference internal" href="skia.ColorFilter.html#skia.ColorFilter" title="skia.ColorFilter"><code class="xref py py-class docutils literal notranslate"><span class="pre">ColorFilter</span></code></a> if set, or nullptr.</p>
+<p>Increases <a class="reference internal" href="skia.ColorFilter.html#skia.ColorFilter" title="skia.ColorFilter"><code class="xref py py-class docutils literal notranslate"><span class="pre">ColorFilter</span></code></a> <code class="xref py py-class docutils literal notranslate"><span class="pre">RefCnt</span></code> by one.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p><a class="reference internal" href="skia.ColorFilter.html#skia.ColorFilter" title="skia.ColorFilter"><code class="xref py py-class docutils literal notranslate"><span class="pre">ColorFilter</span></code></a> if set, or nullptr</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py method">
 <dt id="skia.Paint.refImageFilter">
 <code class="sig-prename descclassname">Paint.</code><code class="sig-name descname">refImageFilter</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Paint" title="skia.Paint">skia.Paint</a></span></em><span class="sig-paren">)</span> &#x2192; SkImageFilter<a class="headerlink" href="#skia.Paint.refImageFilter" title="Permalink to this definition">¶</a></dt>
-<dd><p>Returns SkImageFilter if set, or nullptr.</p>
+<dd><p>Returns <a class="reference internal" href="skia.ImageFilter.html#skia.ImageFilter" title="skia.ImageFilter"><code class="xref py py-class docutils literal notranslate"><span class="pre">ImageFilter</span></code></a> if set, or nullptr.</p>
+<p>Increases <a class="reference internal" href="skia.ImageFilter.html#skia.ImageFilter" title="skia.ImageFilter"><code class="xref py py-class docutils literal notranslate"><span class="pre">ImageFilter</span></code></a> <code class="xref py py-class docutils literal notranslate"><span class="pre">RefCnt</span></code> by one.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p><a class="reference internal" href="skia.ImageFilter.html#skia.ImageFilter" title="skia.ImageFilter"><code class="xref py py-class docutils literal notranslate"><span class="pre">ImageFilter</span></code></a> if previously set, nullptr otherwise</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py method">
 <dt id="skia.Paint.refMaskFilter">
 <code class="sig-prename descclassname">Paint.</code><code class="sig-name descname">refMaskFilter</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Paint" title="skia.Paint">skia.Paint</a></span></em><span class="sig-paren">)</span> &#x2192; SkMaskFilter<a class="headerlink" href="#skia.Paint.refMaskFilter" title="Permalink to this definition">¶</a></dt>
-<dd><p>Returns SkMaskFilter if set, or nullptr.</p>
+<dd><p>Returns <a class="reference internal" href="skia.MaskFilter.html#skia.MaskFilter" title="skia.MaskFilter"><code class="xref py py-class docutils literal notranslate"><span class="pre">MaskFilter</span></code></a> if set, or nullptr.</p>
+<p>Increases <a class="reference internal" href="skia.MaskFilter.html#skia.MaskFilter" title="skia.MaskFilter"><code class="xref py py-class docutils literal notranslate"><span class="pre">MaskFilter</span></code></a> <code class="xref py py-class docutils literal notranslate"><span class="pre">RefCnt</span></code> by one.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p><a class="reference internal" href="skia.MaskFilter.html#skia.MaskFilter" title="skia.MaskFilter"><code class="xref py py-class docutils literal notranslate"><span class="pre">MaskFilter</span></code></a> if previously set, nullptr otherwise</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py method">
 <dt id="skia.Paint.refPathEffect">
 <code class="sig-prename descclassname">Paint.</code><code class="sig-name descname">refPathEffect</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Paint" title="skia.Paint">skia.Paint</a></span></em><span class="sig-paren">)</span> &#x2192; SkPathEffect<a class="headerlink" href="#skia.Paint.refPathEffect" title="Permalink to this definition">¶</a></dt>
-<dd><p>Returns SkPathEffect if set, or nullptr.</p>
+<dd><p>Returns <a class="reference internal" href="skia.PathEffect.html#skia.PathEffect" title="skia.PathEffect"><code class="xref py py-class docutils literal notranslate"><span class="pre">PathEffect</span></code></a> if set, or nullptr.</p>
+<p>Increases <a class="reference internal" href="skia.PathEffect.html#skia.PathEffect" title="skia.PathEffect"><code class="xref py py-class docutils literal notranslate"><span class="pre">PathEffect</span></code></a> <code class="xref py py-class docutils literal notranslate"><span class="pre">RefCnt</span></code> by one.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p><a class="reference internal" href="skia.PathEffect.html#skia.PathEffect" title="skia.PathEffect"><code class="xref py py-class docutils literal notranslate"><span class="pre">PathEffect</span></code></a> if previously set, nullptr otherwise</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py method">
 <dt id="skia.Paint.refShader">
 <code class="sig-prename descclassname">Paint.</code><code class="sig-name descname">refShader</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Paint" title="skia.Paint">skia.Paint</a></span></em><span class="sig-paren">)</span> &#x2192; SkShader<a class="headerlink" href="#skia.Paint.refShader" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns optional colors used when filling a path, such as a gradient.</p>
+<p>Increases <a class="reference internal" href="skia.Shader.html#skia.Shader" title="skia.Shader"><code class="xref py py-class docutils literal notranslate"><span class="pre">Shader</span></code></a> <code class="xref py py-class docutils literal notranslate"><span class="pre">RefCnt</span></code> by one.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p><a class="reference internal" href="skia.Shader.html#skia.Shader" title="skia.Shader"><code class="xref py py-class docutils literal notranslate"><span class="pre">Shader</span></code></a> if previously set, nullptr otherwise</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py method">
 <dt id="skia.Paint.reset">
 <code class="sig-prename descclassname">Paint.</code><code class="sig-name descname">reset</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Paint" title="skia.Paint">skia.Paint</a></span></em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#skia.Paint.reset" title="Permalink to this definition">¶</a></dt>
-<dd><p>Sets all SkPaint contents to their initial values.</p>
+<dd><p>Sets all <a class="reference internal" href="#skia.Paint" title="skia.Paint"><code class="xref py py-class docutils literal notranslate"><span class="pre">Paint</span></code></a> contents to their initial values.</p>
+<p>This is equivalent to replacing <a class="reference internal" href="#skia.Paint" title="skia.Paint"><code class="xref py py-class docutils literal notranslate"><span class="pre">Paint</span></code></a> with the result of
+<a class="reference internal" href="#skia.Paint.__init__" title="skia.Paint.__init__"><code class="xref py py-meth docutils literal notranslate"><span class="pre">__init__()</span></code></a> without arguments.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt id="skia.Paint.setARGB">
-<code class="sig-prename descclassname">Paint.</code><code class="sig-name descname">setARGB</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Paint" title="skia.Paint">skia.Paint</a></span></em>, <em class="sig-param"><span class="n">arg0</span><span class="p">:</span> <span class="n">int</span></em>, <em class="sig-param"><span class="n">arg1</span><span class="p">:</span> <span class="n">int</span></em>, <em class="sig-param"><span class="n">arg2</span><span class="p">:</span> <span class="n">int</span></em>, <em class="sig-param"><span class="n">arg3</span><span class="p">:</span> <span class="n">int</span></em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#skia.Paint.setARGB" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">Paint.</code><code class="sig-name descname">setARGB</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Paint" title="skia.Paint">skia.Paint</a></span></em>, <em class="sig-param"><span class="n">a</span><span class="p">:</span> <span class="n">int</span></em>, <em class="sig-param"><span class="n">r</span><span class="p">:</span> <span class="n">int</span></em>, <em class="sig-param"><span class="n">g</span><span class="p">:</span> <span class="n">int</span></em>, <em class="sig-param"><span class="n">b</span><span class="p">:</span> <span class="n">int</span></em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#skia.Paint.setARGB" title="Permalink to this definition">¶</a></dt>
 <dd><p>Sets color used when drawing solid fills.</p>
+<p>The color components range from 0 to 255. The color is unpremultiplied;
+alpha sets the transparency independent of RGB.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>a</strong> (<em>int</em>) – amount of alpha, from fully transparent (0) to fully
+opaque (255)</p></li>
+<li><p><strong>r</strong> (<em>int</em>) – amount of red, from no red (0) to full red (255)</p></li>
+<li><p><strong>g</strong> (<em>int</em>) – amount of green, from no green (0) to full green (255)</p></li>
+<li><p><strong>b</strong> (<em>int</em>) – amount of blue, from no blue (0) to full blue (255)</p></li>
+</ul>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py method">
 <dt id="skia.Paint.setAlpha">
-<code class="sig-prename descclassname">Paint.</code><code class="sig-name descname">setAlpha</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Paint" title="skia.Paint">skia.Paint</a></span></em>, <em class="sig-param"><span class="n">arg0</span><span class="p">:</span> <span class="n">int</span></em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#skia.Paint.setAlpha" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">Paint.</code><code class="sig-name descname">setAlpha</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Paint" title="skia.Paint">skia.Paint</a></span></em>, <em class="sig-param"><span class="n">a</span><span class="p">:</span> <span class="n">int</span></em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#skia.Paint.setAlpha" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
 <dt id="skia.Paint.setAlphaf">
-<code class="sig-prename descclassname">Paint.</code><code class="sig-name descname">setAlphaf</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Paint" title="skia.Paint">skia.Paint</a></span></em>, <em class="sig-param"><span class="n">arg0</span><span class="p">:</span> <span class="n">float</span></em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#skia.Paint.setAlphaf" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">Paint.</code><code class="sig-name descname">setAlphaf</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Paint" title="skia.Paint">skia.Paint</a></span></em>, <em class="sig-param"><span class="n">a</span><span class="p">:</span> <span class="n">float</span></em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#skia.Paint.setAlphaf" title="Permalink to this definition">¶</a></dt>
 <dd><p>Replaces alpha, leaving RGB unchanged.</p>
+<p>An out of range value triggers an assert in the debug build. a is a
+value from 0.0 to 1.0. a set to zero makes color fully transparent; a
+set to 1.0 makes color fully opaque.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>a</strong> (<em>float</em>) – alpha component of color</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py method">
 <dt id="skia.Paint.setAntiAlias">
-<code class="sig-prename descclassname">Paint.</code><code class="sig-name descname">setAntiAlias</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Paint" title="skia.Paint">skia.Paint</a></span></em>, <em class="sig-param"><span class="n">arg0</span><span class="p">:</span> <span class="n">bool</span></em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#skia.Paint.setAntiAlias" title="Permalink to this definition">¶</a></dt>
-<dd><p>Requests, but does not require, that edge pixels draw opaque or with partial transparency.</p>
+<code class="sig-prename descclassname">Paint.</code><code class="sig-name descname">setAntiAlias</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Paint" title="skia.Paint">skia.Paint</a></span></em>, <em class="sig-param"><span class="n">aa</span><span class="p">:</span> <span class="n">bool</span></em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#skia.Paint.setAntiAlias" title="Permalink to this definition">¶</a></dt>
+<dd><p>Requests, but does not require, that edge pixels draw opaque or with
+partial transparency.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>aa</strong> (<em>bool</em>) – setting for antialiasing</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py method">
 <dt id="skia.Paint.setBlendMode">
-<code class="sig-prename descclassname">Paint.</code><code class="sig-name descname">setBlendMode</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Paint" title="skia.Paint">skia.Paint</a></span></em>, <em class="sig-param"><span class="n">arg0</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.BlendMode.html#skia.BlendMode" title="skia.BlendMode">skia.BlendMode</a></span></em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#skia.Paint.setBlendMode" title="Permalink to this definition">¶</a></dt>
-<dd><p>Sets SkBlendMode to mode.</p>
+<code class="sig-prename descclassname">Paint.</code><code class="sig-name descname">setBlendMode</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Paint" title="skia.Paint">skia.Paint</a></span></em>, <em class="sig-param"><span class="n">mode</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.BlendMode.html#skia.BlendMode" title="skia.BlendMode">skia.BlendMode</a></span></em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#skia.Paint.setBlendMode" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets <a class="reference internal" href="skia.BlendMode.html#skia.BlendMode" title="skia.BlendMode"><code class="xref py py-class docutils literal notranslate"><span class="pre">BlendMode</span></code></a> to mode.</p>
+<p>Does not check for valid input.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>mode</strong> (<a class="reference internal" href="skia.BlendMode.html#skia.BlendMode" title="skia.BlendMode"><em>skia.BlendMode</em></a>) – <a class="reference internal" href="skia.BlendMode.html#skia.BlendMode" title="skia.BlendMode"><code class="xref py py-class docutils literal notranslate"><span class="pre">BlendMode</span></code></a> used to combine source
+color and destination</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py method">
 <dt id="skia.Paint.setColor">
-<code class="sig-prename descclassname">Paint.</code><code class="sig-name descname">setColor</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span><span class="n">args</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#skia.Paint.setColor" title="Permalink to this definition">¶</a></dt>
-<dd><p>Overloaded function.</p>
-<ol class="arabic simple">
-<li><p>setColor(self: skia.Paint, arg0: int) -&gt; None</p></li>
-</ol>
-<p>Sets alpha and RGB used when stroking and filling.</p>
-<ol class="arabic simple" start="2">
-<li><p>setColor(self: skia.Paint, arg0: skia.Color4f, arg1: skia.ColorSpace) -&gt; None</p></li>
-</ol>
-<p>Sets alpha and RGB used when stroking and filling.</p>
+<code class="sig-prename descclassname">Paint.</code><code class="sig-name descname">setColor</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Paint" title="skia.Paint">skia.Paint</a></span></em>, <em class="sig-param"><span class="n">color</span><span class="p">:</span> <span class="n">int</span></em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#skia.Paint.setColor" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets alpha and RGB used when stroking and filling.</p>
+<p>The color is a 32-bit value, unpremultiplied, packing 8-bit components
+for alpha, red, blue, and green.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>color</strong> (<em>int</em>) – unpremultiplied ARGB</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py method">
 <dt id="skia.Paint.setColor4f">
-<code class="sig-prename descclassname">Paint.</code><code class="sig-name descname">setColor4f</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Paint" title="skia.Paint">skia.Paint</a></span></em>, <em class="sig-param"><span class="n">arg0</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.Color4f.html#skia.Color4f" title="skia.Color4f">skia.Color4f</a></span></em>, <em class="sig-param"><span class="n">arg1</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.ColorSpace.html#skia.ColorSpace" title="skia.ColorSpace">skia.ColorSpace</a></span></em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#skia.Paint.setColor4f" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<code class="sig-prename descclassname">Paint.</code><code class="sig-name descname">setColor4f</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Paint" title="skia.Paint">skia.Paint</a></span></em>, <em class="sig-param"><span class="n">color</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.Color4f.html#skia.Color4f" title="skia.Color4f">skia.Color4f</a></span></em>, <em class="sig-param"><span class="n">colorSpace</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.ColorSpace.html#skia.ColorSpace" title="skia.ColorSpace">skia.ColorSpace</a></span> <span class="o">=</span> <span class="default_value">None</span></em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#skia.Paint.setColor4f" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets alpha and RGB used when stroking and filling.</p>
+<p>The color is four floating point values, unpremultiplied. The color
+values are interpreted as being in the colorSpace. If colorSpace is
+nullptr, then color is assumed to be in the sRGB color space.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>color</strong> (<a class="reference internal" href="skia.Color4f.html#skia.Color4f" title="skia.Color4f"><em>skia.Color4f</em></a>) – unpremultiplied RGBA</p></li>
+<li><p><strong>colorSpace</strong> (<a class="reference internal" href="skia.ColorSpace.html#skia.ColorSpace" title="skia.ColorSpace"><em>skia.ColorSpace</em></a>) – <a class="reference internal" href="skia.ColorSpace.html#skia.ColorSpace" title="skia.ColorSpace"><code class="xref py py-class docutils literal notranslate"><span class="pre">ColorSpace</span></code></a> describing the
+encoding of color</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="py method">
 <dt id="skia.Paint.setColorFilter">
-<code class="sig-prename descclassname">Paint.</code><code class="sig-name descname">setColorFilter</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Paint" title="skia.Paint">skia.Paint</a></span></em>, <em class="sig-param"><span class="n">arg0</span><span class="p">:</span> <span class="n">SkColorFilter</span></em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#skia.Paint.setColorFilter" title="Permalink to this definition">¶</a></dt>
-<dd><p>Sets SkColorFilter to filter, decreasing SkRefCnt of the previous SkColorFilter.</p>
+<code class="sig-prename descclassname">Paint.</code><code class="sig-name descname">setColorFilter</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Paint" title="skia.Paint">skia.Paint</a></span></em>, <em class="sig-param"><span class="n">colorFilter</span><span class="p">:</span> <span class="n">SkColorFilter</span></em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#skia.Paint.setColorFilter" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets <a class="reference internal" href="skia.ColorFilter.html#skia.ColorFilter" title="skia.ColorFilter"><code class="xref py py-class docutils literal notranslate"><span class="pre">ColorFilter</span></code></a> to filter, decreasing <code class="xref py py-class docutils literal notranslate"><span class="pre">RefCnt</span></code> of
+the previous <a class="reference internal" href="skia.ColorFilter.html#skia.ColorFilter" title="skia.ColorFilter"><code class="xref py py-class docutils literal notranslate"><span class="pre">ColorFilter</span></code></a>.</p>
+<p>Pass nullptr to clear <a class="reference internal" href="skia.ColorFilter.html#skia.ColorFilter" title="skia.ColorFilter"><code class="xref py py-class docutils literal notranslate"><span class="pre">ColorFilter</span></code></a>.</p>
+<p>Increments filter <code class="xref py py-class docutils literal notranslate"><span class="pre">RefCnt</span></code> by one.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>colorFilter</strong> (<a class="reference internal" href="skia.ColorFilter.html#skia.ColorFilter" title="skia.ColorFilter"><em>skia.ColorFilter</em></a>) – <a class="reference internal" href="skia.ColorFilter.html#skia.ColorFilter" title="skia.ColorFilter"><code class="xref py py-class docutils literal notranslate"><span class="pre">ColorFilter</span></code></a> to apply to
+subsequent draw</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py method">
 <dt id="skia.Paint.setDither">
-<code class="sig-prename descclassname">Paint.</code><code class="sig-name descname">setDither</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Paint" title="skia.Paint">skia.Paint</a></span></em>, <em class="sig-param"><span class="n">arg0</span><span class="p">:</span> <span class="n">bool</span></em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#skia.Paint.setDither" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">Paint.</code><code class="sig-name descname">setDither</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Paint" title="skia.Paint">skia.Paint</a></span></em>, <em class="sig-param"><span class="n">dither</span><span class="p">:</span> <span class="n">bool</span></em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#skia.Paint.setDither" title="Permalink to this definition">¶</a></dt>
 <dd><p>Requests, but does not require, to distribute color error.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>dither</strong> (<em>bool</em>) – dither  setting for ditering</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py method">
 <dt id="skia.Paint.setFilterQuality">
-<code class="sig-prename descclassname">Paint.</code><code class="sig-name descname">setFilterQuality</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Paint" title="skia.Paint">skia.Paint</a></span></em>, <em class="sig-param"><span class="n">arg0</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.FilterQuality.html#skia.FilterQuality" title="skia.FilterQuality">skia.FilterQuality</a></span></em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#skia.Paint.setFilterQuality" title="Permalink to this definition">¶</a></dt>
-<dd><p>Sets SkFilterQuality, the image filtering level.</p>
+<code class="sig-prename descclassname">Paint.</code><code class="sig-name descname">setFilterQuality</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Paint" title="skia.Paint">skia.Paint</a></span></em>, <em class="sig-param"><span class="n">quality</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.FilterQuality.html#skia.FilterQuality" title="skia.FilterQuality">skia.FilterQuality</a></span></em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#skia.Paint.setFilterQuality" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets <a class="reference internal" href="skia.FilterQuality.html#skia.FilterQuality" title="skia.FilterQuality"><code class="xref py py-class docutils literal notranslate"><span class="pre">FilterQuality</span></code></a>, the image filtering level.</p>
+<p>A lower setting draws faster; a higher setting looks better when the
+image is scaled. Does not check to see if quality is valid.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>quality</strong> (<a class="reference internal" href="skia.FilterQuality.html#skia.FilterQuality" title="skia.FilterQuality"><em>skia.FilterQuality</em></a>) – filter quality</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py method">
 <dt id="skia.Paint.setImageFilter">
-<code class="sig-prename descclassname">Paint.</code><code class="sig-name descname">setImageFilter</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Paint" title="skia.Paint">skia.Paint</a></span></em>, <em class="sig-param"><span class="n">arg0</span><span class="p">:</span> <span class="n">SkImageFilter</span></em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#skia.Paint.setImageFilter" title="Permalink to this definition">¶</a></dt>
-<dd><p>Sets SkImageFilter to imageFilter, decreasing SkRefCnt of the previous SkImageFilter.</p>
+<code class="sig-prename descclassname">Paint.</code><code class="sig-name descname">setImageFilter</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Paint" title="skia.Paint">skia.Paint</a></span></em>, <em class="sig-param"><span class="n">imageFilter</span><span class="p">:</span> <span class="n">SkImageFilter</span></em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#skia.Paint.setImageFilter" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets <a class="reference internal" href="skia.ImageFilter.html#skia.ImageFilter" title="skia.ImageFilter"><code class="xref py py-class docutils literal notranslate"><span class="pre">ImageFilter</span></code></a> to imageFilter, decreasing
+<code class="xref py py-class docutils literal notranslate"><span class="pre">RefCnt</span></code> of the previous <a class="reference internal" href="skia.ImageFilter.html#skia.ImageFilter" title="skia.ImageFilter"><code class="xref py py-class docutils literal notranslate"><span class="pre">ImageFilter</span></code></a>.</p>
+<p>Pass nullptr to clear <a class="reference internal" href="skia.ImageFilter.html#skia.ImageFilter" title="skia.ImageFilter"><code class="xref py py-class docutils literal notranslate"><span class="pre">ImageFilter</span></code></a>, and remove
+<a class="reference internal" href="skia.ImageFilter.html#skia.ImageFilter" title="skia.ImageFilter"><code class="xref py py-class docutils literal notranslate"><span class="pre">ImageFilter</span></code></a> effect on drawing.</p>
+<p>Increments imageFilter <code class="xref py py-class docutils literal notranslate"><span class="pre">RefCnt</span></code> by one.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>imageFilter</strong> (<a class="reference internal" href="skia.ImageFilter.html#skia.ImageFilter" title="skia.ImageFilter"><em>skia.ImageFilter</em></a>) – how <a class="reference internal" href="skia.Image.html#skia.Image" title="skia.Image"><code class="xref py py-class docutils literal notranslate"><span class="pre">Image</span></code></a> is sampled
+when transformed</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py method">
 <dt id="skia.Paint.setMaskFilter">
-<code class="sig-prename descclassname">Paint.</code><code class="sig-name descname">setMaskFilter</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Paint" title="skia.Paint">skia.Paint</a></span></em>, <em class="sig-param"><span class="n">arg0</span><span class="p">:</span> <span class="n">SkMaskFilter</span></em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#skia.Paint.setMaskFilter" title="Permalink to this definition">¶</a></dt>
-<dd><p>Sets SkMaskFilter to maskFilter, decreasing SkRefCnt of the previous SkMaskFilter.</p>
+<code class="sig-prename descclassname">Paint.</code><code class="sig-name descname">setMaskFilter</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Paint" title="skia.Paint">skia.Paint</a></span></em>, <em class="sig-param"><span class="n">maskFilter</span><span class="p">:</span> <span class="n">SkMaskFilter</span></em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#skia.Paint.setMaskFilter" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets <a class="reference internal" href="skia.MaskFilter.html#skia.MaskFilter" title="skia.MaskFilter"><code class="xref py py-class docutils literal notranslate"><span class="pre">MaskFilter</span></code></a> to maskFilter, decreasing <code class="xref py py-class docutils literal notranslate"><span class="pre">RefCnt</span></code>
+of the previous <a class="reference internal" href="skia.MaskFilter.html#skia.MaskFilter" title="skia.MaskFilter"><code class="xref py py-class docutils literal notranslate"><span class="pre">MaskFilter</span></code></a>.</p>
+<p>Pass nullptr to clear <a class="reference internal" href="skia.MaskFilter.html#skia.MaskFilter" title="skia.MaskFilter"><code class="xref py py-class docutils literal notranslate"><span class="pre">MaskFilter</span></code></a> and leave
+<a class="reference internal" href="skia.MaskFilter.html#skia.MaskFilter" title="skia.MaskFilter"><code class="xref py py-class docutils literal notranslate"><span class="pre">MaskFilter</span></code></a> effect on mask alpha unaltered.</p>
+<p>Increments maskFilter <code class="xref py py-class docutils literal notranslate"><span class="pre">RefCnt</span></code> by one.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>maskFilter</strong> (<a class="reference internal" href="skia.MaskFilter.html#skia.MaskFilter" title="skia.MaskFilter"><em>skia.MaskFilter</em></a>) – modifies clipping mask generated from
+drawn geometry</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py method">
 <dt id="skia.Paint.setPathEffect">
-<code class="sig-prename descclassname">Paint.</code><code class="sig-name descname">setPathEffect</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Paint" title="skia.Paint">skia.Paint</a></span></em>, <em class="sig-param"><span class="n">arg0</span><span class="p">:</span> <span class="n">SkPathEffect</span></em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#skia.Paint.setPathEffect" title="Permalink to this definition">¶</a></dt>
-<dd><p>Sets SkPathEffect to pathEffect, decreasing SkRefCnt of the previous SkPathEffect.</p>
+<code class="sig-prename descclassname">Paint.</code><code class="sig-name descname">setPathEffect</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Paint" title="skia.Paint">skia.Paint</a></span></em>, <em class="sig-param"><span class="n">pathEffect</span><span class="p">:</span> <span class="n">SkPathEffect</span></em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#skia.Paint.setPathEffect" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets <a class="reference internal" href="skia.PathEffect.html#skia.PathEffect" title="skia.PathEffect"><code class="xref py py-class docutils literal notranslate"><span class="pre">PathEffect</span></code></a> to pathEffect, decreasing <code class="xref py py-class docutils literal notranslate"><span class="pre">RefCnt</span></code>
+of the previous <a class="reference internal" href="skia.PathEffect.html#skia.PathEffect" title="skia.PathEffect"><code class="xref py py-class docutils literal notranslate"><span class="pre">PathEffect</span></code></a>.</p>
+<p>Pass nullptr to leave the path geometry unaltered.</p>
+<p>Increments pathEffect <code class="xref py py-class docutils literal notranslate"><span class="pre">RefCnt</span></code> by one.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>pathEffect</strong> (<a class="reference internal" href="skia.PathEffect.html#skia.PathEffect" title="skia.PathEffect"><em>skia.PathEffect</em></a>) – replace <a class="reference internal" href="skia.Path.html#skia.Path" title="skia.Path"><code class="xref py py-class docutils literal notranslate"><span class="pre">Path</span></code></a> with a
+modification when drawn</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py method">
 <dt id="skia.Paint.setShader">
-<code class="sig-prename descclassname">Paint.</code><code class="sig-name descname">setShader</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Paint" title="skia.Paint">skia.Paint</a></span></em>, <em class="sig-param"><span class="n">arg0</span><span class="p">:</span> <span class="n">SkShader</span></em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#skia.Paint.setShader" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">Paint.</code><code class="sig-name descname">setShader</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Paint" title="skia.Paint">skia.Paint</a></span></em>, <em class="sig-param"><span class="n">shader</span><span class="p">:</span> <span class="n">SkShader</span></em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#skia.Paint.setShader" title="Permalink to this definition">¶</a></dt>
 <dd><p>Sets optional colors used when filling a path, such as a gradient.</p>
+<p>Sets <a class="reference internal" href="skia.Shader.html#skia.Shader" title="skia.Shader"><code class="xref py py-class docutils literal notranslate"><span class="pre">Shader</span></code></a> to shader, decreasing <code class="xref py py-class docutils literal notranslate"><span class="pre">RefCnt</span></code> of the
+previous <a class="reference internal" href="skia.Shader.html#skia.Shader" title="skia.Shader"><code class="xref py py-class docutils literal notranslate"><span class="pre">Shader</span></code></a>. Increments shader <code class="xref py py-class docutils literal notranslate"><span class="pre">RefCnt</span></code> by
+one.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>shader</strong> (<a class="reference internal" href="skia.Shader.html#skia.Shader" title="skia.Shader"><em>skia.Shader</em></a>) – how geometry is filled with color; if
+nullptr, color is used instead</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py method">
 <dt id="skia.Paint.setStrokeCap">
-<code class="sig-prename descclassname">Paint.</code><code class="sig-name descname">setStrokeCap</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Paint" title="skia.Paint">skia.Paint</a></span></em>, <em class="sig-param"><span class="n">arg0</span><span class="p">:</span> <span class="n">skia.Paint.Cap</span></em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#skia.Paint.setStrokeCap" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">Paint.</code><code class="sig-name descname">setStrokeCap</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Paint" title="skia.Paint">skia.Paint</a></span></em>, <em class="sig-param"><span class="n">cap</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.Paint.Cap.html#skia.Paint.Cap" title="skia.Paint.Cap">skia.Paint.Cap</a></span></em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#skia.Paint.setStrokeCap" title="Permalink to this definition">¶</a></dt>
 <dd><p>Sets the geometry drawn at the beginning and end of strokes.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt id="skia.Paint.setStrokeJoin">
-<code class="sig-prename descclassname">Paint.</code><code class="sig-name descname">setStrokeJoin</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Paint" title="skia.Paint">skia.Paint</a></span></em>, <em class="sig-param"><span class="n">arg0</span><span class="p">:</span> <span class="n">skia.Paint.Join</span></em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#skia.Paint.setStrokeJoin" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">Paint.</code><code class="sig-name descname">setStrokeJoin</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Paint" title="skia.Paint">skia.Paint</a></span></em>, <em class="sig-param"><span class="n">join</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.Paint.Join.html#skia.Paint.Join" title="skia.Paint.Join">skia.Paint.Join</a></span></em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#skia.Paint.setStrokeJoin" title="Permalink to this definition">¶</a></dt>
 <dd><p>Sets the geometry drawn at the corners of strokes.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt id="skia.Paint.setStrokeMiter">
-<code class="sig-prename descclassname">Paint.</code><code class="sig-name descname">setStrokeMiter</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Paint" title="skia.Paint">skia.Paint</a></span></em>, <em class="sig-param"><span class="n">arg0</span><span class="p">:</span> <span class="n">float</span></em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#skia.Paint.setStrokeMiter" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">Paint.</code><code class="sig-name descname">setStrokeMiter</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Paint" title="skia.Paint">skia.Paint</a></span></em>, <em class="sig-param"><span class="n">miter</span><span class="p">:</span> <span class="n">float</span></em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#skia.Paint.setStrokeMiter" title="Permalink to this definition">¶</a></dt>
 <dd><p>Sets the limit at which a sharp corner is drawn beveled.</p>
+<p>Valid values are zero and greater. Has no effect if miter is less than zero.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>miter</strong> (<em>float</em>) – zero and greater miter limit</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py method">
 <dt id="skia.Paint.setStrokeWidth">
-<code class="sig-prename descclassname">Paint.</code><code class="sig-name descname">setStrokeWidth</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Paint" title="skia.Paint">skia.Paint</a></span></em>, <em class="sig-param"><span class="n">arg0</span><span class="p">:</span> <span class="n">float</span></em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#skia.Paint.setStrokeWidth" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">Paint.</code><code class="sig-name descname">setStrokeWidth</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Paint" title="skia.Paint">skia.Paint</a></span></em>, <em class="sig-param"><span class="n">width</span><span class="p">:</span> <span class="n">float</span></em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#skia.Paint.setStrokeWidth" title="Permalink to this definition">¶</a></dt>
 <dd><p>Sets the thickness of the pen used by the paint to outline the shape.</p>
+<p>Has no effect if width is less than zero.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>width</strong> (<em>float</em>) – zero thickness for hairline; greater than zero for
+pen thickness</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py method">
 <dt id="skia.Paint.setStyle">
-<code class="sig-prename descclassname">Paint.</code><code class="sig-name descname">setStyle</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Paint" title="skia.Paint">skia.Paint</a></span></em>, <em class="sig-param"><span class="n">arg0</span><span class="p">:</span> <span class="n">skia.Paint.Style</span></em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#skia.Paint.setStyle" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">Paint.</code><code class="sig-name descname">setStyle</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Paint" title="skia.Paint">skia.Paint</a></span></em>, <em class="sig-param"><span class="n">style</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.Paint.Style.html#skia.Paint.Style" title="skia.Paint.Style">skia.Paint.Style</a></span></em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#skia.Paint.setStyle" title="Permalink to this definition">¶</a></dt>
 <dd><p>Sets whether the geometry is filled, stroked, or filled and stroked.</p>
+<p>Has no effect if style is not a legal <a class="reference internal" href="skia.Paint.Style.html#skia.Paint.Style" title="skia.Paint.Style"><code class="xref py py-class docutils literal notranslate"><span class="pre">Paint.Style</span></code></a> value.</p>
 </dd></dl>
 
 </div>
@@ -618,7 +976,7 @@ dashing or blur, but contains the objects that do so.</p>
 
 <dl class="py attribute">
 <dt id="skia.Paint.kButt_Cap">
-<code class="sig-prename descclassname">Paint.</code><code class="sig-name descname">kButt_Cap</code><em class="property"> = Cap.kDefault_Cap</em><a class="headerlink" href="#skia.Paint.kButt_Cap" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">Paint.</code><code class="sig-name descname">kButt_Cap</code><em class="property"> = Cap.kButt_Cap</em><a class="headerlink" href="#skia.Paint.kButt_Cap" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
@@ -628,7 +986,7 @@ dashing or blur, but contains the objects that do so.</p>
 
 <dl class="py attribute">
 <dt id="skia.Paint.kDefault_Cap">
-<code class="sig-prename descclassname">Paint.</code><code class="sig-name descname">kDefault_Cap</code><em class="property"> = Cap.kDefault_Cap</em><a class="headerlink" href="#skia.Paint.kDefault_Cap" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">Paint.</code><code class="sig-name descname">kDefault_Cap</code><em class="property"> = Cap.kButt_Cap</em><a class="headerlink" href="#skia.Paint.kDefault_Cap" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
@@ -735,6 +1093,7 @@ dashing or blur, but contains the objects that do so.</p>
 <li class="toctree-l2"><a class="reference internal" href="skia.ClipOp.html">ClipOp</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.Color4f.html">Color4f</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.ColorFilter.html">ColorFilter</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.ColorFilter.Flags.html">ColorFilter.Flags</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.ColorInfo.html">ColorInfo</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.ColorSpace.html">ColorSpace</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.ColorType.html">ColorType</a></li>
@@ -773,12 +1132,17 @@ dashing or blur, but contains the objects that do so.</p>
 <li class="toctree-l2"><a class="reference internal" href="skia.Image.html">Image</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.ImageFilter.html">ImageFilter</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.ImageInfo.html">ImageInfo</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.LumaColorFilter.html">LumaColorFilter</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.M44.html">M44</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.MaskFilter.html">MaskFilter</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.Matrix.html">Matrix</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.MatrixPathEffect.html">MatrixPathEffect</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.MergePathEffect.html">MergePathEffect</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.OverdrawColorFilter.html">OverdrawColorFilter</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">Paint</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.Paint.Style.html">Paint.Style</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.Paint.Cap.html">Paint.Cap</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.Paint.Join.html">Paint.Join</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.Path.html">Path</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.Path.Iter.html">Path.Iter</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.Path.RawIter.html">Path.RawIter</a></li>
@@ -826,6 +1190,7 @@ dashing or blur, but contains the objects that do so.</p>
 <li class="toctree-l2"><a class="reference internal" href="skia.SurfaceProps.html">SurfaceProps</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.SurfaceProps.Flags.html">SurfaceProps.Flags</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.SurfaceProps.InitType.html">SurfaceProps.InitType</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.TableColorFilter.html">TableColorFilter</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.TextBlob.html">TextBlob</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.TextBlobBuilder.html">TextBlobBuilder</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.TextEncoding.html">TextEncoding</a></li>
@@ -844,8 +1209,8 @@ dashing or blur, but contains the objects that do so.</p>
 <ul>
   <li><a href="../index.html">Documentation overview</a><ul>
   <li><a href="../reference.html">Reference</a><ul>
-      <li>Previous: <a href="skia.MergePathEffect.html" title="previous chapter">MergePathEffect</a></li>
-      <li>Next: <a href="skia.Path.html" title="next chapter">Path</a></li>
+      <li>Previous: <a href="skia.OverdrawColorFilter.html" title="previous chapter">OverdrawColorFilter</a></li>
+      <li>Next: <a href="skia.Paint.Style.html" title="next chapter">Paint.Style</a></li>
   </ul></li>
   </ul></li>
 </ul>

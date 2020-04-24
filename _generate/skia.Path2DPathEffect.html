@@ -164,7 +164,7 @@
 
 <dl class="py method">
 <dt id="skia.Path2DPathEffect.Make">
-<em class="property">static </em><code class="sig-prename descclassname">Path2DPathEffect.</code><code class="sig-name descname">Make</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">matrix</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.Matrix.html#skia.Matrix" title="skia.Matrix">skia.Matrix</a></span></em>, <em class="sig-param"><span class="n">path</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.Path.html#skia.Path" title="skia.Path">skia.Path</a></span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="skia.PathEffect.html#skia.PathEffect" title="skia.PathEffect">skia.PathEffect</a><a class="headerlink" href="#skia.Path2DPathEffect.Make" title="Permalink to this definition">¶</a></dt>
+<em class="property">static </em><code class="sig-prename descclassname">Path2DPathEffect.</code><code class="sig-name descname">Make</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">matrix</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.Matrix.html#skia.Matrix" title="skia.Matrix">skia.Matrix</a></span></em>, <em class="sig-param"><span class="n">path</span><span class="p">:</span> <span class="n">SkPath</span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="skia.PathEffect.html#skia.PathEffect" title="skia.PathEffect">skia.PathEffect</a><a class="headerlink" href="#skia.Path2DPathEffect.Make" title="Permalink to this definition">¶</a></dt>
 <dd><p>Stamp the specified path to fill the shape, using the matrix to define
 the latice.</p>
 </dd></dl>
@@ -203,7 +203,7 @@ original path, and returns a path with the sum of these.</p>
 
 <dl class="py method">
 <dt id="skia.Path2DPathEffect.asPoints">
-<code class="sig-prename descclassname">Path2DPathEffect.</code><code class="sig-name descname">asPoints</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.PathEffect.html#skia.PathEffect" title="skia.PathEffect">skia.PathEffect</a></span></em>, <em class="sig-param"><span class="n">results</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.PathEffect.PointData.html#skia.PathEffect.PointData" title="skia.PathEffect.PointData">skia.PathEffect.PointData</a></span></em>, <em class="sig-param"><span class="n">src</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.Path.html#skia.Path" title="skia.Path">skia.Path</a></span></em>, <em class="sig-param"><span class="n">stroke_rec</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.StrokeRec.html#skia.StrokeRec" title="skia.StrokeRec">skia.StrokeRec</a></span></em>, <em class="sig-param"><span class="n">matrix</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.Matrix.html#skia.Matrix" title="skia.Matrix">skia.Matrix</a></span></em>, <em class="sig-param"><span class="n">cullR</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.Rect.html#skia.Rect" title="skia.Rect">skia.Rect</a></span></em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#skia.Path2DPathEffect.asPoints" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">Path2DPathEffect.</code><code class="sig-name descname">asPoints</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.PathEffect.html#skia.PathEffect" title="skia.PathEffect">skia.PathEffect</a></span></em>, <em class="sig-param"><span class="n">results</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.PathEffect.PointData.html#skia.PathEffect.PointData" title="skia.PathEffect.PointData">skia.PathEffect.PointData</a></span></em>, <em class="sig-param"><span class="n">src</span><span class="p">:</span> <span class="n">SkPath</span></em>, <em class="sig-param"><span class="n">stroke_rec</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.StrokeRec.html#skia.StrokeRec" title="skia.StrokeRec">skia.StrokeRec</a></span></em>, <em class="sig-param"><span class="n">matrix</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.Matrix.html#skia.Matrix" title="skia.Matrix">skia.Matrix</a></span></em>, <em class="sig-param"><span class="n">cullR</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.Rect.html#skia.Rect" title="skia.Rect">skia.Rect</a></span></em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#skia.Path2DPathEffect.asPoints" title="Permalink to this definition">¶</a></dt>
 <dd><p>Does applying this path effect to ‘src’ yield a set of points? If so,
 optionally return the points in ‘results’.</p>
 </dd></dl>
@@ -217,7 +217,7 @@ optionally return the points in ‘results’.</p>
 
 <dl class="py method">
 <dt>
-<code class="sig-name descname">Path2DPathEffect.filterPath(self: skia.PathEffect, dst: skia.Path, dst: skia.Path, stroke_rec: skia.StrokeRec, cullR: skia.Rect) -&gt; bool</code></dt>
+<code class="sig-name descname">Path2DPathEffect.filterPath(self: skia.PathEffect, dst: SkPath, dst: SkPath, stroke_rec: skia.StrokeRec, cullR: skia.Rect) -&gt; bool</code></dt>
 <dd><p>Given a src path (input) and a stroke-rec (input and output), apply this
 effect to the src path, returning the new path in dst, and return true.</p>
 <p>If this effect cannot be applied, return false and ignore dst and
@@ -388,6 +388,7 @@ been allocated via new, and not on the stack.</p>
 <li class="toctree-l2"><a class="reference internal" href="skia.ClipOp.html">ClipOp</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.Color4f.html">Color4f</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.ColorFilter.html">ColorFilter</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.ColorFilter.Flags.html">ColorFilter.Flags</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.ColorInfo.html">ColorInfo</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.ColorSpace.html">ColorSpace</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.ColorType.html">ColorType</a></li>
@@ -426,12 +427,17 @@ been allocated via new, and not on the stack.</p>
 <li class="toctree-l2"><a class="reference internal" href="skia.Image.html">Image</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.ImageFilter.html">ImageFilter</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.ImageInfo.html">ImageInfo</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.LumaColorFilter.html">LumaColorFilter</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.M44.html">M44</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.MaskFilter.html">MaskFilter</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.Matrix.html">Matrix</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.MatrixPathEffect.html">MatrixPathEffect</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.MergePathEffect.html">MergePathEffect</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.OverdrawColorFilter.html">OverdrawColorFilter</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.Paint.html">Paint</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.Paint.Style.html">Paint.Style</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.Paint.Cap.html">Paint.Cap</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.Paint.Join.html">Paint.Join</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.Path.html">Path</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.Path.Iter.html">Path.Iter</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.Path.RawIter.html">Path.RawIter</a></li>
@@ -479,6 +485,7 @@ been allocated via new, and not on the stack.</p>
 <li class="toctree-l2"><a class="reference internal" href="skia.SurfaceProps.html">SurfaceProps</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.SurfaceProps.Flags.html">SurfaceProps.Flags</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.SurfaceProps.InitType.html">SurfaceProps.InitType</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.TableColorFilter.html">TableColorFilter</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.TextBlob.html">TextBlob</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.TextBlobBuilder.html">TextBlobBuilder</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.TextEncoding.html">TextEncoding</a></li>
