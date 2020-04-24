@@ -1,6 +1,17 @@
 #include "common.h"
+#include <pybind11/stl.h>
 
 const int SkOverdrawColorFilter::kNumColors;
+
+py::object ColorFilterAsAColorMode(SkColorFilter& colorFilter) {
+    SkColor color;
+    SkBlendMode mode;
+    auto result = colorFilter.asColorMode(&color, &mode);
+    if (result)
+        return py::make_tuple(color, mode);
+    else
+        return py::none();
+}
 
 void initColorFilter(py::module &m) {
 py::class_<SkColorFilter, sk_sp<SkColorFilter>, SkFlattenable> colorfilter(
@@ -29,19 +40,56 @@ py::enum_<SkColorFilter::Flags>(colorfilter, "Flags", py::arithmetic())
     .export_values();
 
 colorfilter
-    .def("asColorMode", &SkColorFilter::asColorMode)
-    .def("asAColorMode", &SkColorFilter::asAColorMode)
-    .def("asAColorMatrix", &SkColorFilter::asAColorMatrix)
+    .def("asColorMode", &ColorFilterAsAColorMode)
+    .def("asAColorMode", &ColorFilterAsAColorMode,
+        R"docstring(
+        If the filter can be represented by a source color plus Mode, this
+        returns color and mode appropriately.
+
+        If not, this returns None.
+
+        :rtype: Tuple[int,skia.BlendMode] or None
+        )docstring")
+    .def("asAColorMatrix",
+        [] (SkColorFilter& colorFilter) -> py::object {
+            std::vector<float> matrix(20);
+            if (colorFilter.asAColorMatrix(&matrix[0]))
+                return py::cast(matrix);
+            else
+                return py::none();
+        },
+        R"docstring(
+        If the filter can be represented by a 5x4 matrix, this returns list of
+        floats appropriately.
+
+        If not, this returns None.
+
+        :rtype: List[float] or None
+        )docstring")
     // .def("appendStages", &SkColorFilter::appendStages)
     // .def("program", &SkColorFilter::program)
-    .def("getFlags", &SkColorFilter::getFlags)
-    .def("filterColor", &SkColorFilter::filterColor)
-    .def("filterColor4f", &SkColorFilter::filterColor4f)
+    .def("getFlags", &SkColorFilter::getFlags,
+        R"docstring(
+        Returns the flags for this filter.
+
+        Override in subclasses to return custom flags.
+        )docstring")
+    .def("filterColor", &SkColorFilter::filterColor, py::arg("color"))
+    .def("filterColor4f", &SkColorFilter::filterColor4f,
+        R"docstring(
+        Converts the src color (in src colorspace), into the dst colorspace,
+        then applies this filter to it, returning the filtered color in the dst
+        colorspace.
+        )docstring",
+        py::arg("srcColor"), py::arg("srcCS"), py::arg("dstCS"))
     // .def("makeComposed", &SkColorFilter::makeComposed)
     .def("affectsTransparentBlack", &SkColorFilter::affectsTransparentBlack)
     .def_static("Deserialize",
-        py::overload_cast<const void*, size_t, const SkDeserialProcs*>(
-            &SkColorFilter::Deserialize))
+        [] (py::buffer b) {
+            auto info = b.request();
+            return SkColorFilter::Deserialize(
+                info.ptr, info.shape[0] * info.strides[0]);
+        })
     ;
 
 py::class_<SkLumaColorFilter, sk_sp<SkLumaColorFilter>, SkColorFilter>(
