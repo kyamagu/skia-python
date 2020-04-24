@@ -82,7 +82,19 @@ colorfilter
         colorspace.
         )docstring",
         py::arg("srcColor"), py::arg("srcCS"), py::arg("dstCS"))
-    // .def("makeComposed", &SkColorFilter::makeComposed)
+    .def("makeComposed",
+        [] (SkColorFilter& colorFilter, const SkColorFilter& inner) {
+            auto data = inner.serialize();
+            return colorFilter.makeComposed(
+                SkColorFilter::Deserialize(data->data(), data->size()));
+        },
+        R"docstring(
+        Construct a colorfilter whose effect is to first apply the inner filter
+        and then apply this filter, applied to the output of the inner filter.
+
+        result = this(inner(...))
+        )docstring",
+        py::arg("inner"))
     .def("affectsTransparentBlack", &SkColorFilter::affectsTransparentBlack)
     .def_static("Deserialize",
         [] (py::buffer b) {
