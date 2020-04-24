@@ -16,14 +16,12 @@ void initImageInfo(py::module &);
 void initMatrix(py::module &);
 void initPaint(py::module &);
 void initPath(py::module &);
-void initPathEffect(py::module &);
 void initPicture(py::module &);
 void initPixmap(py::module &);
 void initPoint(py::module &);
 void initRect(py::module &);
 void initRefCnt(py::module &);
 void initRegion(py::module &);
-void initShader(py::module &);
 void initSize(py::module &);
 void initSurface(py::module &);
 void initTextBlob(py::module &);
@@ -54,10 +52,8 @@ PYBIND11_MODULE(skia, m) {
     initImageInfo(m);
     initPaint(m);
     initPath(m);
-    initPathEffect(m);
     initPicture(m);
     initPixmap(m);
-    initShader(m);
     initTextBlob(m);
     initVertices(m);
 
