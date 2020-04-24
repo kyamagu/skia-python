@@ -153,5 +153,93 @@ def test_Paint_setColorFilter(paint):
     paint.setColorFilter(skia.LumaColorFilter.Make())
 
 
+def test_Paint_getBlendMode(paint):
+    assert isinstance(paint.getBlendMode(), skia.BlendMode)
 
 
+def test_Paint_isSrcOver(paint):
+    assert isinstance(paint.isSrcOver(), bool)
+
+
+def test_Paint_setBlendMode(paint):
+    paint.setBlendMode(skia.BlendMode.kOverlay)
+
+
+def test_Paint_getPathEffect(paint):
+    assert isinstance(paint.getPathEffect(), (skia.PathEffect, type(None)))
+
+
+def test_Paint_refPathEffect(paint):
+    assert isinstance(paint.refPathEffect(), (skia.PathEffect, type(None)))
+
+
+def test_Paint_setPathEffect(paint):
+    paint.setPathEffect(skia.CornerPathEffect.Make(4.0))
+
+
+def test_Paint_getMaskFilter(paint):
+    assert isinstance(paint.getMaskFilter(), (skia.MaskFilter, type(None)))
+
+
+def test_Paint_refMaskFilter(paint):
+    assert isinstance(paint.refMaskFilter(), (skia.MaskFilter, type(None)))
+
+
+# def test_Paint_setMaskFilter(paint):
+#     paint.setMaskFilter(skia.CornerMaskFilter.Make(4.0))
+
+
+def test_Paint_getImageFilter(paint):
+    assert isinstance(paint.getImageFilter(), (skia.ImageFilter, type(None)))
+
+
+def test_Paint_refImageFilter(paint):
+    assert isinstance(paint.refImageFilter(), (skia.ImageFilter, type(None)))
+
+
+# def test_Paint_setImageFilter(paint):
+#     paint.setImageFilter(skia.CornerImageFilter.Make(4.0))
+
+
+def test_Paint_nothingToDraw(paint):
+    assert isinstance(paint.nothingToDraw(), bool)
+
+
+def test_Paint_canComputeFastBounds(paint):
+    assert isinstance(paint.canComputeFastBounds(), bool)
+
+
+def test_Paint_computeFastBounds(paint):
+    paint.setStyle(skia.Paint.kStroke_Style)
+    paint.setStrokeWidth(4)
+    paint.setColor(0xFFFFFFFF)
+    if paint.canComputeFastBounds():
+        assert isinstance(paint.computeFastBounds(skia.Rect(10, 10)), skia.Rect)
+
+
+def test_Paint_computeFastStrokeBounds(paint):
+    paint.setStyle(skia.Paint.kStroke_Style)
+    paint.setStrokeWidth(4)
+    paint.setColor(0xFFFFFFFF)
+    if paint.canComputeFastBounds():
+        assert isinstance(
+            paint.computeFastStrokeBounds(skia.Rect(10, 10)), skia.Rect)
+
+
+def test_Paint_doComputeFastBounds(paint):
+    paint.setStyle(skia.Paint.kStroke_Style)
+    paint.setStrokeWidth(4)
+    paint.setColor(0xFFFFFFFF)
+    if paint.canComputeFastBounds():
+        assert isinstance(paint.doComputeFastBounds(
+            skia.Rect(10, 10), skia.Paint.kStroke_Style), skia.Rect)
+
+
+def test_Paint_eq(paint):
+    assert paint == paint
+
+
+def test_Paint_ne(paint):
+    paint2 = skia.Paint()
+    paint2.setColor(0xFFFFFFFF)
+    assert paint != paint2

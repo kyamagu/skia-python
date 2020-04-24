@@ -358,7 +358,14 @@ paint
 
         :return: :py:class:`Shader` if previously set, nullptr otherwise
         )docstring")
-    .def("setShader", &SkPaint::setShader,
+    .def("setShader",
+        [] (SkPaint& paint, const SkShader& shader) {
+            auto data = shader.serialize();
+            auto clone = SkShader::Deserialize(
+                shader.getFlattenableType(), data->data(), data->size());
+            paint.setShader(sk_sp<SkShader>(
+                reinterpret_cast<SkShader*>(clone.release())));
+        },
         R"docstring(
         Sets optional colors used when filling a path, such as a gradient.
 
@@ -387,7 +394,12 @@ paint
 
         :return: :py:class:`ColorFilter` if set, or nullptr
         )docstring")
-    .def("setColorFilter", &SkPaint::setColorFilter,
+    .def("setColorFilter",
+        [] (SkPaint& paint, const SkColorFilter& colorFilter) {
+            auto data = colorFilter.serialize();
+            paint.setColorFilter(
+                SkColorFilter::Deserialize(data->data(), data->size()));
+        },
         R"docstring(
         Sets :py:class:`ColorFilter` to filter, decreasing :py:class:`RefCnt` of
         the previous :py:class:`ColorFilter`.
@@ -400,57 +412,228 @@ paint
             subsequent draw
         )docstring",
         py::arg("colorFilter"))
-    .def("getBlendMode", &SkPaint::getBlendMode, "Returns SkBlendMode.")
+    .def("getBlendMode", &SkPaint::getBlendMode,
+        R"docstring(
+        Returns :py:class:`BlendMode`.
+
+        By default, returns :py:attr:`BlendMode.kSrcOver`.
+
+        :return: mode used to combine source color with destination color
+        )docstring")
     .def("isSrcOver", &SkPaint::isSrcOver,
-        "Returns true if SkBlendMode is SkBlendMode::kSrcOver, the default.")
+        R"docstring(
+        Returns true if :py:class:`BlendMode` is :py:attr:`BlendMode.kSrcOver`,
+        the default.
+
+        :return: true if :py:class:`BlendMode` is :py:attr:`BlendMode.kSrcOver`
+        )docstring")
     .def("setBlendMode", &SkPaint::setBlendMode,
-        "Sets SkBlendMode to mode.")
+        R"docstring(
+        Sets :py:class:`BlendMode` to mode.
+
+        Does not check for valid input.
+
+        :param skia.BlendMode mode: :py:class:`BlendMode` used to combine source
+            color and destination
+        )docstring",
+        py::arg("mode"))
     .def("getPathEffect", &SkPaint::getPathEffect,
-        "Returns SkPathEffect if set, or nullptr.",
+        R"docstring(
+        Returns :py:class:`PathEffect` if set, or nullptr.
+
+        Does not alter :py:class:`PathEffect` :py:class:`RefCnt`.
+
+        :return: :py:class:`PathEffect` if previously set, nullptr otherwise
+        )docstring",
         py::return_value_policy::reference)
     .def("refPathEffect", &SkPaint::refPathEffect,
-        "Returns SkPathEffect if set, or nullptr.")
-    .def("setPathEffect", &SkPaint::setPathEffect,
-        "Sets SkPathEffect to pathEffect, decreasing SkRefCnt of the previous "
-        "SkPathEffect.")
+        R"docstring(
+        Returns :py:class:`PathEffect` if set, or nullptr.
+
+        Increases :py:class:`PathEffect` :py:class:`RefCnt` by one.
+
+        :return: :py:class:`PathEffect` if previously set, nullptr otherwise
+        )docstring")
+    .def("setPathEffect",
+        [] (SkPaint& paint, const SkPathEffect& pathEffect) {
+            auto data = pathEffect.serialize();
+            paint.setPathEffect(
+                SkPathEffect::Deserialize(data->data(), data->size()));
+        },
+        R"docstring(
+        Sets :py:class:`PathEffect` to pathEffect, decreasing :py:class:`RefCnt`
+        of the previous :py:class:`PathEffect`.
+
+        Pass nullptr to leave the path geometry unaltered.
+
+        Increments pathEffect :py:class:`RefCnt` by one.
+
+        :param skia.PathEffect pathEffect: replace :py:class:`Path` with a
+            modification when drawn
+        )docstring",
+        py::arg("pathEffect"))
     .def("getMaskFilter", &SkPaint::getMaskFilter,
-        "Returns SkMaskFilter if set, or nullptr.",
+        R"docstring(
+        Returns :py:class:`MaskFilter` if set, or nullptr.
+
+        Does not alter :py:class:`MaskFilter` :py:class:`RefCnt`.
+
+        :return: :py:class:`MaskFilter` if previously set, nullptr otherwise
+        )docstring",
         py::return_value_policy::reference)
     .def("refMaskFilter", &SkPaint::refMaskFilter,
-        "Returns SkMaskFilter if set, or nullptr.")
-    .def("setMaskFilter", &SkPaint::setMaskFilter,
-        "Sets SkMaskFilter to maskFilter, decreasing SkRefCnt of the previous "
-        "SkMaskFilter.")
+        R"docstring(
+        Returns :py:class:`MaskFilter` if set, or nullptr.
+
+        Increases :py:class:`MaskFilter` :py:class:`RefCnt` by one.
+
+        :return: :py:class:`MaskFilter` if previously set, nullptr otherwise
+        )docstring")
+    .def("setMaskFilter",
+        [] (SkPaint& paint, const SkMaskFilter& maskFilter) {
+            auto data = maskFilter.serialize();
+            paint.setMaskFilter(
+                SkMaskFilter::Deserialize(data->data(), data->size()));
+        },
+        R"docstring(
+        Sets :py:class:`MaskFilter` to maskFilter, decreasing :py:class:`RefCnt`
+        of the previous :py:class:`MaskFilter`.
+
+        Pass nullptr to clear :py:class:`MaskFilter` and leave
+        :py:class:`MaskFilter` effect on mask alpha unaltered.
+
+        Increments maskFilter :py:class:`RefCnt` by one.
+
+        :param skia.MaskFilter maskFilter: modifies clipping mask generated from
+            drawn geometry
+        )docstring",
+        py::arg("maskFilter"))
     .def("getImageFilter", &SkPaint::getImageFilter,
-        "Returns SkImageFilter if set, or nullptr.",
+        R"docstring(
+        Returns :py:class:`ImageFilter` if set, or nullptr.
+
+        Does not alter :py:class:`ImageFilter` :py:class:`RefCnt`.
+
+        :return: :py:class:`ImageFilter` if previously set, nullptr otherwise
+        )docstring",
         py::return_value_policy::reference)
     .def("refImageFilter", &SkPaint::refImageFilter,
-        "Returns SkImageFilter if set, or nullptr.")
+        R"docstring(
+        Returns :py:class:`ImageFilter` if set, or nullptr.
+
+        Increases :py:class:`ImageFilter` :py:class:`RefCnt` by one.
+
+        :return: :py:class:`ImageFilter` if previously set, nullptr otherwise
+        )docstring")
     .def("setImageFilter", &SkPaint::setImageFilter,
-        "Sets SkImageFilter to imageFilter, decreasing SkRefCnt of the "
-        "previous SkImageFilter.")
+        R"docstring(
+        Sets :py:class:`ImageFilter` to imageFilter, decreasing
+        :py:class:`RefCnt` of the previous :py:class:`ImageFilter`.
+
+        Pass nullptr to clear :py:class:`ImageFilter`, and remove
+        :py:class:`ImageFilter` effect on drawing.
+
+        Increments imageFilter :py:class:`RefCnt` by one.
+
+        :param skia.ImageFilter imageFilter: how :py:class:`Image` is sampled
+            when transformed
+        )docstring",
+        py::arg("imageFilter"))
     .def("nothingToDraw", &SkPaint::nothingToDraw,
-        "Returns true if SkPaint prevents all drawing; otherwise, the SkPaint "
-        "may or may not allow drawing.")
+        R"docstring(
+        Returns true if :py:class:`Paint` prevents all drawing; otherwise, the
+        :py:class:`Paint` may or may not allow drawing.
+
+        Returns true if, for example, :py:class:`BlendMode` combined with alpha
+        computes a new alpha of zero.
+
+        :return: true if :py:class:`Paint` prevents all drawing
+        )docstring")
     .def("canComputeFastBounds", &SkPaint::canComputeFastBounds,
-        "(to be made private) Returns true if SkPaint does not include "
-        "elements requiring extensive computation to compute SkBaseDevice "
-        "bounds of drawn geometry.")
-    .def("computeFastBounds", &SkPaint::computeFastBounds,
-        "(to be made private) Only call this if canComputeFastBounds() "
-        "returned true.")
-    .def("computeFastStrokeBounds", &SkPaint::computeFastStrokeBounds,
-        "(to be made private)")
-    .def("doComputeFastBounds", &SkPaint::doComputeFastBounds,
-        "(to be made private) Computes the bounds, overriding the SkPaint "
-        "SkPaint::Style.")
+        R"docstring(
+        (to be made private) Returns true if :py:class:`Paint` does not include
+        elements requiring extensive computation to compute
+        :py:class:`BaseDevice` bounds of drawn geometry.
+
+        For instance, :py:class:`Paint` with :py:class:`PathEffect` always
+        returns false.
+
+        :return: true if :py:class:`Paint` allows for fast computation of bounds
+        )docstring")
+    .def("computeFastBounds",
+        [] (const SkPaint& paint, const SkRect& orig) {
+            SkRect storage;
+            return paint.computeFastBounds(orig, &storage);
+        },
+        R"docstring(
+        (to be made private) Only call this if :py:meth:`canComputeFastBounds`
+        returned true.
+
+        This takes a raw rectangle (the raw bounds of a shape), and adjusts it
+        for stylistic effects in the paint (e.g. stroking). It returns the
+        adjusted bounds that can then be used for :py:meth:`Canvas.quickReject`
+        tests.
+
+        :param orig:     geometry modified by :py:class:`Paint` when drawn
+        :return:         fast computed bounds
+        )docstring",
+        py::arg("orig"))
+    .def("computeFastStrokeBounds",
+        [] (const SkPaint& paint, const SkRect& orig) {
+            SkRect storage;
+            return paint.computeFastStrokeBounds(orig, &storage);
+        },
+        R"docstring(
+        (to be made private)
+
+        :param orig:    geometry modified by SkPaint when drawn
+        :return:        fast computed bounds
+        )docstring",
+        py::arg("orig"))
+    .def("doComputeFastBounds",
+        [] (const SkPaint& paint, const SkRect& orig, SkPaint::Style style) {
+            SkRect storage;
+            return paint.doComputeFastBounds(orig, &storage, style);
+        },
+        R"docstring(
+        (to be made private) Computes the bounds, overriding the
+        :py:class:`Paint` :py:class:`Paint.Style`.
+
+        This can be used to account for additional width required by stroking
+        orig, without altering :py:class:`Paint.Style` set to fill.
+
+        :param orig:    geometry modified by :py:class:`Paint` when drawn
+        :param style:   overrides :py:class:`Paint.Style`
+        :return:        fast computed bounds
+        )docstring",
+        py::arg("orig"), py::arg("style"))
     .def_readonly_static("kStyleCount", &SkPaint::kStyleCount)
     .def_readonly_static("kCapCount", &SkPaint::kCapCount)
     .def_readonly_static("kJoinCount", &SkPaint::kJoinCount)
     .def(py::self == py::self,
-        "Compares a and b, and returns true if a and b are equivalent.")
+        R"docstring(
+        Compares a and b, and returns true if a and b are equivalent.
+
+        May return false if :py:class:`PathEffect`, :py:class:`Shader`,
+        :py:class:`MaskFilter`, :py:class:`ColorFilter`, or
+        :py:class:`ImageFilter` have identical contents but different pointers.
+
+        :param other: :py:class:`Paint` to compare
+        :return: true if :py:class:`Paint` pair are equivalent
+        )docstring",
+        py::arg("other"))
     .def(py::self != py::self,
-        "Compares a and b, and returns true if a and b are not equivalent.")
+        R"docstring(
+        Compares a and b, and returns true if a and b are not equivalent.
+
+        May return true if :py:class:`PathEffect`, :py:class:`Shader`,
+        :py:class:`MaskFilter`, :py:class:`ColorFilter`, or
+        :py:class:`ImageFilter` have identical contents but different pointers.
+
+        :param other: :py:class:`Paint` to compare
+        :return: true if :py:class:`Paint` pair are not equivalent
+        )docstring",
+        py::arg("other"))
     ;
 
 py::class_<SkFlattenable, PyFlattanable, sk_sp<SkFlattenable>, SkRefCnt>
