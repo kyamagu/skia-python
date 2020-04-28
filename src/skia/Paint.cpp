@@ -5,6 +5,7 @@
 void initColorFilter(py::module &);
 void initPathEffect(py::module &);
 void initShader(py::module &);
+void initMaskFilter(py::module &);
 
 // Static variables must be declared.
 const int SkPaint::kStyleCount;
@@ -686,10 +687,7 @@ flattanable
 initColorFilter(m);
 initPathEffect(m);
 initShader(m);
-
-// MaskFilter
-py::class_<SkMaskFilter, sk_sp<SkMaskFilter>, SkFlattenable>(
-    m, "MaskFilter");
+initMaskFilter(m);
 // ImageFilter
 py::class_<SkImageFilter, sk_sp<SkImageFilter>, SkFlattenable>(
     m, "ImageFilter");

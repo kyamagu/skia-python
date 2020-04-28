@@ -19,6 +19,15 @@ py::class_<SkShader, sk_sp<SkShader>, SkFlattenable> shader(
 
         ~skia.Shader.GradientInfo
         ~skia.Shader.GradientType
+
+    .. rubric:: Subclasses
+
+    .. autosummary::
+        :nosignatures:
+
+        ~skia.Shaders
+        ~skia.GradientShader
+        ~skia.PerlinNoiseShader
     )docstring");
 
 py::class_<SkShader::GradientInfo>(shader, "GradientInfo")
@@ -143,6 +152,16 @@ shader
         shader and then applying the colorfilter.
         )docstring",
         py::arg("colorFilter"))
+    .def_static("Deserialize",
+        [] (py::buffer b) {
+            auto info = b.request();
+            auto shader = SkShader::Deserialize(
+                SkFlattenable::Type::kSkShaderBase_Type, info.ptr,
+                info.shape[0] * info.strides[0]);
+            return sk_sp<SkShader>(
+                reinterpret_cast<SkShader*>(shader.release()));
+        },
+        py::arg("data"))
     ;
 
 py::class_<SkShaders>(m, "Shaders")
