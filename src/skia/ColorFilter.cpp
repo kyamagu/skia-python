@@ -33,6 +33,15 @@ py::class_<SkColorFilter, sk_sp<SkColorFilter>, SkFlattenable> colorfilter(
 
         ~ColorFilter.Flags
 
+    .. rubric:: Subclasses
+
+    .. autosummary::
+        :nosignatures:
+
+        ~skia.LumaColorFilter
+        ~skia.OverdrawColorFilter
+        ~skia.TableColorFilter
+
     )docstring");
 
 py::enum_<SkColorFilter::Flags>(colorfilter, "Flags", py::arithmetic())
@@ -101,7 +110,8 @@ colorfilter
             auto info = b.request();
             return SkColorFilter::Deserialize(
                 info.ptr, info.shape[0] * info.strides[0]);
-        })
+        },
+        py::arg("data"))
     ;
 
 py::class_<SkLumaColorFilter, sk_sp<SkLumaColorFilter>, SkColorFilter>(

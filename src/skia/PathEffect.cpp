@@ -133,6 +133,21 @@ py::class_<SkPathEffect, sk_sp<SkPathEffect>, SkFlattenable>
 
         ~PathEffect.DashInfo
         ~PathEffect.PointData
+
+    .. rubric:: Subclasses
+
+    .. autosummary::
+        :nosignatures:
+
+        ~skia.DiscretePathEffect
+        ~skia.DashPathEffect
+        ~skia.CornerPathEffect
+        ~skia.Path1DPathEffect
+        ~skia.Path2DPathEffect
+        ~skia.MergePathEffect
+        ~skia.MatrixPathEffect
+        ~skia.StrokePathEffect
+        ~skia.TrimPathEffect
     )docstring");
 
 py::class_<SkPathEffect::DashInfo>(patheffect, "DashInfo")
