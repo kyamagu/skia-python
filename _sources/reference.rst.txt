@@ -22,6 +22,7 @@ Reference
     Bitmap
     BlendMode
     BlendModeCoeff
+    BlurStyle
     Budgeted
     Canvas
     Canvas.SaveLayerFlags
@@ -38,6 +39,7 @@ Reference
     ColorInfo
     ColorSpace
     ColorType
+    ConvergeMode
     CornerPathEffect
     DashPathEffect
     Data
@@ -116,6 +118,7 @@ Reference
     Rect
     Region
     Shader
+    ShaderMaskFilter
     Shaders
     Size
     StrokePathEffect
@@ -132,6 +135,7 @@ Reference
     SurfaceProps.Flags
     SurfaceProps.InitType
     TableColorFilter
+    TableMaskFilter
     TextBlob
     TextBlobBuilder
     TextEncoding

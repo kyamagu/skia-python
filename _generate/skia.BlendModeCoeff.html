@@ -14,7 +14,7 @@
     <script src="../_static/language_data.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Budgeted" href="skia.Budgeted.html" />
+    <link rel="next" title="BlurStyle" href="skia.BlurStyle.html" />
     <link rel="prev" title="BlendMode" href="skia.BlendMode.html" />
    
   <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
@@ -47,16 +47,16 @@ the src or dst alpha, or functions of the src or dst color.</p>
 <p>Members:</p>
 <blockquote>
 <div><p>kCoeffCount</p>
-<p>kDA : dst alpha</p>
+<p>kISA : inverse src alpha</p>
+<p>kIDC : inverse dst color</p>
+<p>kIDA : inverse dst alpha</p>
+<p>kISC : inverse src color</p>
+<p>kZero : 0</p>
 <p>kDC : dst color</p>
 <p>kOne : 1</p>
-<p>kSC : src color</p>
-<p>kZero : 0</p>
-<p>kIDA : inverse dst alpha</p>
-<p>kIDC : inverse dst color</p>
+<p>kDA : dst alpha</p>
 <p>kSA : src alpha</p>
-<p>kISA : inverse src alpha</p>
-<p>kISC : inverse src color</p>
+<p>kSC : src color</p>
 </div></blockquote>
 <p class="rubric">Methods</p>
 <table class="longtable docutils align-default">
@@ -225,6 +225,7 @@ the src or dst alpha, or functions of the src or dst color.</p>
 <li class="toctree-l2"><a class="reference internal" href="skia.Bitmap.html">Bitmap</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.BlendMode.html">BlendMode</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">BlendModeCoeff</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.BlurStyle.html">BlurStyle</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.Budgeted.html">Budgeted</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.Canvas.html">Canvas</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.Canvas.SaveLayerFlags.html">Canvas.SaveLayerFlags</a></li>
@@ -241,6 +242,7 @@ the src or dst alpha, or functions of the src or dst color.</p>
 <li class="toctree-l2"><a class="reference internal" href="skia.ColorInfo.html">ColorInfo</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.ColorSpace.html">ColorSpace</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.ColorType.html">ColorType</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.ConvergeMode.html">ConvergeMode</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.CornerPathEffect.html">CornerPathEffect</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.DashPathEffect.html">DashPathEffect</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.Data.html">Data</a></li>
@@ -319,6 +321,7 @@ the src or dst alpha, or functions of the src or dst color.</p>
 <li class="toctree-l2"><a class="reference internal" href="skia.Rect.html">Rect</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.Region.html">Region</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.Shader.html">Shader</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.ShaderMaskFilter.html">ShaderMaskFilter</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.Shaders.html">Shaders</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.Size.html">Size</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.StrokePathEffect.html">StrokePathEffect</a></li>
@@ -335,6 +338,7 @@ the src or dst alpha, or functions of the src or dst color.</p>
 <li class="toctree-l2"><a class="reference internal" href="skia.SurfaceProps.Flags.html">SurfaceProps.Flags</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.SurfaceProps.InitType.html">SurfaceProps.InitType</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.TableColorFilter.html">TableColorFilter</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.TableMaskFilter.html">TableMaskFilter</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.TextBlob.html">TextBlob</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.TextBlobBuilder.html">TextBlobBuilder</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.TextEncoding.html">TextEncoding</a></li>
@@ -354,7 +358,7 @@ the src or dst alpha, or functions of the src or dst color.</p>
   <li><a href="../index.html">Documentation overview</a><ul>
   <li><a href="../reference.html">Reference</a><ul>
       <li>Previous: <a href="skia.BlendMode.html" title="previous chapter">BlendMode</a></li>
-      <li>Next: <a href="skia.Budgeted.html" title="next chapter">Budgeted</a></li>
+      <li>Next: <a href="skia.BlurStyle.html" title="next chapter">BlurStyle</a></li>
   </ul></li>
   </ul></li>
 </ul>
@@ -385,7 +389,7 @@ the src or dst alpha, or functions of the src or dst color.</p>
       &copy;2020, Kota Yamaguchi.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.0.2</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.0.3</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
       |

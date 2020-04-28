@@ -14,7 +14,7 @@
     <script src="../_static/language_data.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Shaders" href="skia.Shaders.html" />
+    <link rel="next" title="ShaderMaskFilter" href="skia.ShaderMaskFilter.html" />
     <link rel="prev" title="Region" href="skia.Region.html" />
    
   <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
@@ -55,6 +55,24 @@ modify the original shader… only the paint’s alpha needs to be modified.</p>
 </tr>
 <tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">GradientType</span></code></p></td>
 <td><p>If the shader subclass can be represented as a gradient, asAGradient returns</p></td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Subclasses</p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="skia.Shaders.html#skia.Shaders" title="skia.Shaders"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Shaders</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="skia.GradientShader.html#skia.GradientShader" title="skia.GradientShader"><code class="xref py py-obj docutils literal notranslate"><span class="pre">GradientShader</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="skia.PerlinNoiseShader.html#skia.PerlinNoiseShader" title="skia.PerlinNoiseShader"><code class="xref py py-obj docutils literal notranslate"><span class="pre">PerlinNoiseShader</span></code></a></p></td>
+<td><p><a class="reference internal" href="skia.PerlinNoiseShader.html#skia.PerlinNoiseShader" title="skia.PerlinNoiseShader"><code class="xref py py-class docutils literal notranslate"><span class="pre">PerlinNoiseShader</span></code></a> creates an image using the Perlin turbulence function.</p></td>
 </tr>
 </tbody>
 </table>
@@ -178,7 +196,7 @@ modify the original shader… only the paint’s alpha needs to be modified.</p>
 <h2>Methods<a class="headerlink" href="#methods" title="Permalink to this headline">¶</a></h2>
 <dl class="py method">
 <dt id="skia.Shader.Deserialize">
-<em class="property">static </em><code class="sig-prename descclassname">Shader.</code><code class="sig-name descname">Deserialize</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">arg0</span><span class="p">:</span> <span class="n">skia.Flattanable.Type</span></em>, <em class="sig-param"><span class="n">arg1</span><span class="p">:</span> <span class="n">buffer</span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="skia.Flattanable.html#skia.Flattanable" title="skia.Flattanable">skia.Flattanable</a><a class="headerlink" href="#skia.Shader.Deserialize" title="Permalink to this definition">¶</a></dt>
+<em class="property">static </em><code class="sig-prename descclassname">Shader.</code><code class="sig-name descname">Deserialize</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">data</span><span class="p">:</span> <span class="n">buffer</span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="#skia.Shader" title="skia.Shader">skia.Shader</a><a class="headerlink" href="#skia.Shader.Deserialize" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
@@ -404,6 +422,7 @@ been allocated via new, and not on the stack.</p>
 <li class="toctree-l2"><a class="reference internal" href="skia.Bitmap.html">Bitmap</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.BlendMode.html">BlendMode</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.BlendModeCoeff.html">BlendModeCoeff</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.BlurStyle.html">BlurStyle</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.Budgeted.html">Budgeted</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.Canvas.html">Canvas</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.Canvas.SaveLayerFlags.html">Canvas.SaveLayerFlags</a></li>
@@ -420,6 +439,7 @@ been allocated via new, and not on the stack.</p>
 <li class="toctree-l2"><a class="reference internal" href="skia.ColorInfo.html">ColorInfo</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.ColorSpace.html">ColorSpace</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.ColorType.html">ColorType</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.ConvergeMode.html">ConvergeMode</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.CornerPathEffect.html">CornerPathEffect</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.DashPathEffect.html">DashPathEffect</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.Data.html">Data</a></li>
@@ -498,6 +518,7 @@ been allocated via new, and not on the stack.</p>
 <li class="toctree-l2"><a class="reference internal" href="skia.Rect.html">Rect</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.Region.html">Region</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">Shader</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.ShaderMaskFilter.html">ShaderMaskFilter</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.Shaders.html">Shaders</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.Size.html">Size</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.StrokePathEffect.html">StrokePathEffect</a></li>
@@ -514,6 +535,7 @@ been allocated via new, and not on the stack.</p>
 <li class="toctree-l2"><a class="reference internal" href="skia.SurfaceProps.Flags.html">SurfaceProps.Flags</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.SurfaceProps.InitType.html">SurfaceProps.InitType</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.TableColorFilter.html">TableColorFilter</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.TableMaskFilter.html">TableMaskFilter</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.TextBlob.html">TextBlob</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.TextBlobBuilder.html">TextBlobBuilder</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.TextEncoding.html">TextEncoding</a></li>
@@ -533,7 +555,7 @@ been allocated via new, and not on the stack.</p>
   <li><a href="../index.html">Documentation overview</a><ul>
   <li><a href="../reference.html">Reference</a><ul>
       <li>Previous: <a href="skia.Region.html" title="previous chapter">Region</a></li>
-      <li>Next: <a href="skia.Shaders.html" title="next chapter">Shaders</a></li>
+      <li>Next: <a href="skia.ShaderMaskFilter.html" title="next chapter">ShaderMaskFilter</a></li>
   </ul></li>
   </ul></li>
 </ul>
@@ -564,7 +586,7 @@ been allocated via new, and not on the stack.</p>
       &copy;2020, Kota Yamaguchi.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.0.2</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.0.3</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
       |
