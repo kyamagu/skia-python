@@ -38,6 +38,8 @@ py::class_<SkColorFilter, sk_sp<SkColorFilter>, SkFlattenable> colorfilter(
     .. autosummary::
         :nosignatures:
 
+        ~skia.ColorFilters
+        ~skia.ColorMatrixFilter
         ~skia.LumaColorFilter
         ~skia.OverdrawColorFilter
         ~skia.TableColorFilter
@@ -93,9 +95,8 @@ colorfilter
         py::arg("srcColor"), py::arg("srcCS"), py::arg("dstCS"))
     .def("makeComposed",
         [] (SkColorFilter& colorFilter, const SkColorFilter& inner) {
-            auto data = inner.serialize();
             return colorFilter.makeComposed(
-                SkColorFilter::Deserialize(data->data(), data->size()));
+                CloneFlattenable<SkColorFilter>(inner));
         },
         R"docstring(
         Construct a colorfilter whose effect is to first apply the inner filter
@@ -112,6 +113,55 @@ colorfilter
                 info.ptr, info.shape[0] * info.strides[0]);
         },
         py::arg("data"))
+    ;
+
+py::class_<SkColorFilters>(m, "ColorFilters")
+    .def_static("Compose",
+        [] (const SkColorFilter& outer, const SkColorFilter& inner) {
+            return SkColorFilters::Compose(
+                CloneFlattenable<SkColorFilter>(outer),
+                CloneFlattenable<SkColorFilter>(inner));
+        },
+        py::arg("outer"), py::arg("inner"))
+    .def_static("Blend", &SkColorFilters::Blend, py::arg("c"), py::arg("mode"))
+    // .def_static("Matrix",
+    //     py::overload_cast<const SkColorMatrix&>(&SkColorFilters::Matrix))
+    .def_static("Matrix",
+        [] (const std::vector<float>& rowMajor) {
+            if (rowMajor.size() != 20)
+                throw std::runtime_error("Input must have 20 elements.");
+            return SkColorFilters::Matrix(&rowMajor[0]);
+        },
+        py::arg("rowMajor"))
+    .def_static("HSLAMatrix",
+        [] (const std::vector<float>& rowMajor) {
+            if (rowMajor.size() != 20)
+                throw std::runtime_error("Input must have 20 elements.");
+            return SkColorFilters::HSLAMatrix(&rowMajor[0]);
+        },
+        py::arg("rowMajor"))
+    .def_static("LinearToSRGBGamma", &SkColorFilters::LinearToSRGBGamma)
+    .def_static("SRGBToLinearGamma", &SkColorFilters::SRGBToLinearGamma)
+    .def_static("Lerp",
+        [] (float t, const SkColorFilter& dst, const SkColorFilter& src) {
+            return SkColorFilters::Lerp(
+                t, CloneFlattenable<SkColorFilter>(dst),
+                CloneFlattenable<SkColorFilter>(src));
+        },
+        py::arg("t"), py::arg("dst"), py::arg("src"))
+    ;
+
+py::class_<SkColorMatrixFilter, sk_sp<SkColorMatrixFilter>, SkColorFilter>(
+    m, "ColorMatrixFilter")
+    .def_static("MakeLightingFilter", &SkColorMatrixFilter::MakeLightingFilter,
+        R"docstring(
+        Create a colorfilter that multiplies the RGB channels by one color, and
+        then adds a second color, pinning the result for each component to
+        [0..255].
+
+        The alpha components of the mul and add arguments are ignored.
+        )docstring",
+        py::arg("mul"), py::arg("add"))
     ;
 
 py::class_<SkLumaColorFilter, sk_sp<SkLumaColorFilter>, SkColorFilter>(
