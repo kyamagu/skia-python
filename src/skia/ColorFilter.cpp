@@ -1,5 +1,6 @@
 #include "common.h"
 #include <pybind11/stl.h>
+#include <include/effects/SkHighContrastFilter.h>
 
 const int SkOverdrawColorFilter::kNumColors;
 
@@ -40,6 +41,7 @@ py::class_<SkColorFilter, sk_sp<SkColorFilter>, SkFlattenable> colorfilter(
 
         ~skia.ColorFilters
         ~skia.ColorMatrixFilter
+        ~skia.HighContrastFilter
         ~skia.LumaColorFilter
         ~skia.OverdrawColorFilter
         ~skia.TableColorFilter
@@ -115,6 +117,11 @@ colorfilter
         py::arg("data"))
     ;
 
+py::class_<SkColorMatrix>(m, "ColorMatrix")
+    .def(py::init<>())
+    // TODO: Implement me!
+    ;
+
 py::class_<SkColorFilters>(m, "ColorFilters")
     .def_static("Compose",
         [] (const SkColorFilter& outer, const SkColorFilter& inner) {
@@ -162,6 +169,60 @@ py::class_<SkColorMatrixFilter, sk_sp<SkColorMatrixFilter>, SkColorFilter>(
         The alpha components of the mul and add arguments are ignored.
         )docstring",
         py::arg("mul"), py::arg("add"))
+    ;
+
+py::class_<SkHighContrastConfig> highcontrastconfig(m, "HighContrastConfig",
+    R"docstring(
+    Configuration struct for :py:class:`HighContrastFilter`.
+
+    Provides transformations to improve contrast for users with low vision.
+    )docstring");
+
+py::enum_<SkHighContrastConfig::InvertStyle>(highcontrastconfig, "InvertStyle")
+    .value("kNoInvert",
+        SkHighContrastConfig::InvertStyle::kNoInvert)
+    .value("kInvertBrightness",
+        SkHighContrastConfig::InvertStyle::kInvertBrightness)
+    .value("kInvertLightness",
+        SkHighContrastConfig::InvertStyle::kInvertLightness)
+    .value("kLast",
+        SkHighContrastConfig::InvertStyle::kLast)
+    .export_values();
+
+highcontrastconfig
+    .def(py::init<>())
+    .def(py::init<bool, SkHighContrastConfig::InvertStyle, SkScalar>(),
+        py::arg("grayscale"), py::arg("invertStyle"), py::arg("contrast"))
+    .def("isValid", &SkHighContrastConfig::isValid)
+    .def_readwrite("fGrayscale", &SkHighContrastConfig::fGrayscale)
+    .def_readwrite("fInvertStyle", &SkHighContrastConfig::fInvertStyle)
+    .def_readwrite("fContrast", &SkHighContrastConfig::fContrast)
+    ;
+
+py::class_<SkHighContrastFilter>(m, "HighContrastFilter",
+    R"docstring(
+    Color filter that provides transformations to improve contrast for users
+    with low vision.
+
+    Applies the following transformations in this order. Each of these can be
+    configured using :py:class:`HighContrastConfig`.
+
+     - Conversion to grayscale
+     - Color inversion (either in RGB or HSL space)
+     - Increasing the resulting contrast.
+
+    Calling :py:meth:`HighContrastFilter.Make` will return nullptr if the config
+    is not valid, e.g. if you try to call it with a contrast outside the range
+    of -1.0 to 1.0.
+
+    .. rubric:: Classes
+
+    .. autosummary::
+        :nosignatures:
+
+        ~skia.HighContrastConfig
+    )docstring")
+    .def_static("Make", &SkHighContrastFilter::Make)
     ;
 
 py::class_<SkLumaColorFilter, sk_sp<SkLumaColorFilter>, SkColorFilter>(

@@ -84,6 +84,41 @@ py::class_<SkColor4f>(m, "Color4f", R"docstring(
 
 py::implicitly_convertible<SkColor, SkColor4f>();
 
+py::enum_<SkColorChannel>(m, "ColorChannel",
+    R"docstring(
+    Describes different color channels one can manipulate.
+    )docstring")
+    .value("kR", SkColorChannel::kR)
+    .value("kG", SkColorChannel::kG)
+    .value("kB", SkColorChannel::kB)
+    .value("kA", SkColorChannel::kA)
+    .value("kLastEnum", SkColorChannel::kLastEnum)
+    .export_values();
+
+py::enum_<SkColorChannelFlag>(m, "ColorChannelFlag", py::arithmetic(),
+    R"docstring(
+    Used to represent the channels available in a color type or texture format
+    as a mask.
+    )docstring")
+    .value("kRed_SkColorChannelFlag",
+        SkColorChannelFlag::kRed_SkColorChannelFlag)
+    .value("kGreen_SkColorChannelFlag",
+        SkColorChannelFlag::kGreen_SkColorChannelFlag)
+    .value("kBlue_SkColorChannelFlag",
+        SkColorChannelFlag::kBlue_SkColorChannelFlag)
+    .value("kAlpha_SkColorChannelFlag",
+        SkColorChannelFlag::kAlpha_SkColorChannelFlag)
+    .value("kGray_SkColorChannelFlag",
+        SkColorChannelFlag::kGray_SkColorChannelFlag)
+    .value("kRG_SkColorChannelFlags",
+        SkColorChannelFlag::kRG_SkColorChannelFlags)
+    .value("kRGB_SkColorChannelFlags",
+        SkColorChannelFlag::kRGB_SkColorChannelFlags)
+    .value("kRGBA_SkColorChannelFlags",
+        SkColorChannelFlag::kRGBA_SkColorChannelFlags)
+    .export_values();
+
+
 m.def("ColorSetRGB",
     [] (U8CPU r, U8CPU g, U8CPU b) {
         return SkColorSetARGB(0xFF, r, g, b);
