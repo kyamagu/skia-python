@@ -101,6 +101,21 @@ py::class_<SkMaskFilter, sk_sp<SkMaskFilter>, SkFlattenable>(
         py::arg("data"))
     ;
 
+
+py::class_<SkBlurMaskFilter>(m, "BlurMaskFilter")
+    // .def_static("MakeEmboss",
+    //     [] (SkScalar blurSigma, const std::vector<SkScalar>& direction,
+    //         SkScalar ambient, SkScalar specular) {
+    //         if (direction.size() != 3)
+    //             throw std::runtime_error("direction must have 3 elements.");
+    //         return SkBlurMaskFilter::MakeEmboss(
+    //             blurSigma, &direction[0], ambient, specular);
+    //     },
+    //     py::arg("blurSigma"), py::arg("direction"), py::arg("ambient"),
+    //     py::arg("specular"))
+    ;
+
+
 py::class_<SkShaderMaskFilter>(m, "ShaderMaskFilter")
     .def_static("Make",
         [] (const SkShader& shader) {

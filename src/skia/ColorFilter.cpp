@@ -1,5 +1,6 @@
 #include "common.h"
 #include <pybind11/stl.h>
+#include <include/effects/SkHighContrastFilter.h>
 
 const int SkOverdrawColorFilter::kNumColors;
 
@@ -38,6 +39,9 @@ py::class_<SkColorFilter, sk_sp<SkColorFilter>, SkFlattenable> colorfilter(
     .. autosummary::
         :nosignatures:
 
+        ~skia.ColorFilters
+        ~skia.ColorMatrixFilter
+        ~skia.HighContrastFilter
         ~skia.LumaColorFilter
         ~skia.OverdrawColorFilter
         ~skia.TableColorFilter
@@ -93,9 +97,8 @@ colorfilter
         py::arg("srcColor"), py::arg("srcCS"), py::arg("dstCS"))
     .def("makeComposed",
         [] (SkColorFilter& colorFilter, const SkColorFilter& inner) {
-            auto data = inner.serialize();
             return colorFilter.makeComposed(
-                SkColorFilter::Deserialize(data->data(), data->size()));
+                CloneFlattenable<SkColorFilter>(inner));
         },
         R"docstring(
         Construct a colorfilter whose effect is to first apply the inner filter
@@ -112,6 +115,114 @@ colorfilter
                 info.ptr, info.shape[0] * info.strides[0]);
         },
         py::arg("data"))
+    ;
+
+py::class_<SkColorMatrix>(m, "ColorMatrix")
+    .def(py::init<>())
+    // TODO: Implement me!
+    ;
+
+py::class_<SkColorFilters>(m, "ColorFilters")
+    .def_static("Compose",
+        [] (const SkColorFilter& outer, const SkColorFilter& inner) {
+            return SkColorFilters::Compose(
+                CloneFlattenable<SkColorFilter>(outer),
+                CloneFlattenable<SkColorFilter>(inner));
+        },
+        py::arg("outer"), py::arg("inner"))
+    .def_static("Blend", &SkColorFilters::Blend, py::arg("c"), py::arg("mode"))
+    // .def_static("Matrix",
+    //     py::overload_cast<const SkColorMatrix&>(&SkColorFilters::Matrix))
+    .def_static("Matrix",
+        [] (const std::vector<float>& rowMajor) {
+            if (rowMajor.size() != 20)
+                throw std::runtime_error("Input must have 20 elements.");
+            return SkColorFilters::Matrix(&rowMajor[0]);
+        },
+        py::arg("rowMajor"))
+    .def_static("HSLAMatrix",
+        [] (const std::vector<float>& rowMajor) {
+            if (rowMajor.size() != 20)
+                throw std::runtime_error("Input must have 20 elements.");
+            return SkColorFilters::HSLAMatrix(&rowMajor[0]);
+        },
+        py::arg("rowMajor"))
+    .def_static("LinearToSRGBGamma", &SkColorFilters::LinearToSRGBGamma)
+    .def_static("SRGBToLinearGamma", &SkColorFilters::SRGBToLinearGamma)
+    .def_static("Lerp",
+        [] (float t, const SkColorFilter& dst, const SkColorFilter& src) {
+            return SkColorFilters::Lerp(
+                t, CloneFlattenable<SkColorFilter>(dst),
+                CloneFlattenable<SkColorFilter>(src));
+        },
+        py::arg("t"), py::arg("dst"), py::arg("src"))
+    ;
+
+py::class_<SkColorMatrixFilter, sk_sp<SkColorMatrixFilter>, SkColorFilter>(
+    m, "ColorMatrixFilter")
+    .def_static("MakeLightingFilter", &SkColorMatrixFilter::MakeLightingFilter,
+        R"docstring(
+        Create a colorfilter that multiplies the RGB channels by one color, and
+        then adds a second color, pinning the result for each component to
+        [0..255].
+
+        The alpha components of the mul and add arguments are ignored.
+        )docstring",
+        py::arg("mul"), py::arg("add"))
+    ;
+
+py::class_<SkHighContrastConfig> highcontrastconfig(m, "HighContrastConfig",
+    R"docstring(
+    Configuration struct for :py:class:`HighContrastFilter`.
+
+    Provides transformations to improve contrast for users with low vision.
+    )docstring");
+
+py::enum_<SkHighContrastConfig::InvertStyle>(highcontrastconfig, "InvertStyle")
+    .value("kNoInvert",
+        SkHighContrastConfig::InvertStyle::kNoInvert)
+    .value("kInvertBrightness",
+        SkHighContrastConfig::InvertStyle::kInvertBrightness)
+    .value("kInvertLightness",
+        SkHighContrastConfig::InvertStyle::kInvertLightness)
+    .value("kLast",
+        SkHighContrastConfig::InvertStyle::kLast)
+    .export_values();
+
+highcontrastconfig
+    .def(py::init<>())
+    .def(py::init<bool, SkHighContrastConfig::InvertStyle, SkScalar>(),
+        py::arg("grayscale"), py::arg("invertStyle"), py::arg("contrast"))
+    .def("isValid", &SkHighContrastConfig::isValid)
+    .def_readwrite("fGrayscale", &SkHighContrastConfig::fGrayscale)
+    .def_readwrite("fInvertStyle", &SkHighContrastConfig::fInvertStyle)
+    .def_readwrite("fContrast", &SkHighContrastConfig::fContrast)
+    ;
+
+py::class_<SkHighContrastFilter>(m, "HighContrastFilter",
+    R"docstring(
+    Color filter that provides transformations to improve contrast for users
+    with low vision.
+
+    Applies the following transformations in this order. Each of these can be
+    configured using :py:class:`HighContrastConfig`.
+
+     - Conversion to grayscale
+     - Color inversion (either in RGB or HSL space)
+     - Increasing the resulting contrast.
+
+    Calling :py:meth:`HighContrastFilter.Make` will return nullptr if the config
+    is not valid, e.g. if you try to call it with a contrast outside the range
+    of -1.0 to 1.0.
+
+    .. rubric:: Classes
+
+    .. autosummary::
+        :nosignatures:
+
+        ~skia.HighContrastConfig
+    )docstring")
+    .def_static("Make", &SkHighContrastFilter::Make)
     ;
 
 py::class_<SkLumaColorFilter, sk_sp<SkLumaColorFilter>, SkColorFilter>(

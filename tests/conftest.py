@@ -72,3 +72,13 @@ def surface(request):
                 context, skia.Budgeted.kNo, info)
     else:
         yield skia.Surface(320, 240)
+
+
+@pytest.fixture(scope='session')
+def image():
+    import os
+    root_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    image_path = os.path.join(
+        root_dir, 'skia', 'resources', 'images', 'color_wheel.png')
+    data = skia.Data.MakeFromFileName(image_path)
+    return skia.Image.MakeFromEncoded(data)

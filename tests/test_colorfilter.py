@@ -49,6 +49,54 @@ def test_ColorFilter_Deserialize(colorfilter):
         skia.ColorFilter.Deserialize(colorfilter.serialize()), skia.ColorFilter)
 
 
+def test_ColorFilters_Compose(colorfilter):
+    assert isinstance(
+        skia.ColorFilters.Compose(colorfilter, colorfilter),
+        skia.ColorFilter)
+
+
+def test_ColorFilters_Blend():
+    assert isinstance(
+        skia.ColorFilters.Blend(0xFF000000, skia.BlendMode.kSrc),
+        skia.ColorFilter)
+
+
+def test_ColorFilters_Matrix():
+    assert isinstance(
+        skia.ColorFilters.Matrix(range(20)),
+        skia.ColorFilter)
+
+
+def test_ColorFilters_HSLAMatrix():
+    assert isinstance(
+        skia.ColorFilters.HSLAMatrix(range(20)),
+        skia.ColorFilter)
+
+
+def test_ColorFilters_LinearToSRGBGamma():
+    assert isinstance(
+        skia.ColorFilters.LinearToSRGBGamma(),
+        skia.ColorFilter)
+
+
+def test_ColorFilters_SRGBToLinearGamma():
+    assert isinstance(
+        skia.ColorFilters.SRGBToLinearGamma(),
+        skia.ColorFilter)
+
+
+def test_ColorFilters_Lerp(colorfilter):
+    assert isinstance(
+        skia.ColorFilters.Lerp(0.5, colorfilter, colorfilter),
+        skia.ColorFilter)
+
+
+def test_ColorMatrixFilter_MakeLightingFilter():
+    assert isinstance(
+        skia.ColorMatrixFilter.MakeLightingFilter(0xFF010101, 0xFF000000),
+        skia.ColorFilter)
+
+
 def test_LumaColorFilter_Make():
     assert isinstance(skia.LumaColorFilter.Make(), skia.ColorFilter)
 
