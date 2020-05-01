@@ -13,9 +13,19 @@ ImageFilter
       :nosignatures:
    
       ~ImageFilter.Deserialize
+      ~ImageFilter.MakeMatrixFilter
       ~ImageFilter.__init__
+      ~ImageFilter.asAColorFilter
+      ~ImageFilter.asColorFilter
+      ~ImageFilter.canComputeFastBounds
+      ~ImageFilter.computeFastBounds
+      ~ImageFilter.countInputs
+      ~ImageFilter.filterBounds
       ~ImageFilter.getFlattenableType
+      ~ImageFilter.getInput
       ~ImageFilter.getTypeName
+      ~ImageFilter.isColorFilterNode
+      ~ImageFilter.makeWithLocalMatrix
       ~ImageFilter.ref
       ~ImageFilter.serialize
       ~ImageFilter.unique
@@ -32,10 +42,12 @@ ImageFilter
       ~ImageFilter.kColorFilter_Type
       ~ImageFilter.kDrawLooper_Type
       ~ImageFilter.kDrawable_Type
+      ~ImageFilter.kForward_MapDirection
       ~ImageFilter.kImageFilter_Type
       ~ImageFilter.kMaskFilter_Type
       ~ImageFilter.kPathEffect_Type
       ~ImageFilter.kPixelRef_Type
+      ~ImageFilter.kReverse_MapDirection
       ~ImageFilter.kShaderBase_Type
       ~ImageFilter.kUnused_Type
       ~ImageFilter.kUnused_Type2
@@ -54,11 +66,31 @@ Methods
 
 .. automethod:: skia.ImageFilter.Deserialize
 
+.. automethod:: skia.ImageFilter.MakeMatrixFilter
+
 .. automethod:: skia.ImageFilter.__init__
+
+.. automethod:: skia.ImageFilter.asAColorFilter
+
+.. automethod:: skia.ImageFilter.asColorFilter
+
+.. automethod:: skia.ImageFilter.canComputeFastBounds
+
+.. automethod:: skia.ImageFilter.computeFastBounds
+
+.. automethod:: skia.ImageFilter.countInputs
+
+.. automethod:: skia.ImageFilter.filterBounds
 
 .. automethod:: skia.ImageFilter.getFlattenableType
 
+.. automethod:: skia.ImageFilter.getInput
+
 .. automethod:: skia.ImageFilter.getTypeName
+
+.. automethod:: skia.ImageFilter.isColorFilterNode
+
+.. automethod:: skia.ImageFilter.makeWithLocalMatrix
 
 .. automethod:: skia.ImageFilter.ref
 
@@ -84,6 +116,8 @@ Attributes
 
 .. autoattribute:: skia.ImageFilter.kDrawable_Type
 
+.. autoattribute:: skia.ImageFilter.kForward_MapDirection
+
 .. autoattribute:: skia.ImageFilter.kImageFilter_Type
 
 .. autoattribute:: skia.ImageFilter.kMaskFilter_Type
@@ -91,6 +125,8 @@ Attributes
 .. autoattribute:: skia.ImageFilter.kPathEffect_Type
 
 .. autoattribute:: skia.ImageFilter.kPixelRef_Type
+
+.. autoattribute:: skia.ImageFilter.kReverse_MapDirection
 
 .. autoattribute:: skia.ImageFilter.kShaderBase_Type
 

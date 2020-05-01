@@ -36,6 +36,7 @@ Reference
     Color4f
     ColorFilter
     ColorFilter.Flags
+    ColorFilters
     ColorInfo
     ColorSpace
     ColorType
@@ -44,8 +45,12 @@ Reference
     DashPathEffect
     Data
     DeserialProcs
+    DilateImageFilter
     DiscretePathEffect
+    DisplacementMapEffect
+    DropShadowImageFilter
     EncodedImageFormat
+    ErodeImageFilter
     FilterQuality
     Flattanable
     Font
@@ -69,23 +74,30 @@ Reference
     GrRenderable
     GrSemaphoresSubmitted
     GrSurfaceOrigin
+    HighContrastConfig
+    HighContrastFilter
     IPoint
     IRect
     ISize
     Image
     ImageFilter
+    ImageFilters
     ImageInfo
+    LightingImageFilter
     LumaColorFilter
     M44
+    MagnifierImageFilter
     MaskFilter
     Matrix
     MatrixPathEffect
     MergePathEffect
+    OffsetImageFilter
     OverdrawColorFilter
     Paint
     Paint.Style
     Paint.Cap
     Paint.Join
+    PaintImageFilter
     Path
     Path.Iter
     Path.RawIter
@@ -139,9 +151,11 @@ Reference
     TextBlob
     TextBlobBuilder
     TextEncoding
+    TileImageFilter
     TileMode
     TrimPathEffect
     TrimPathEffect.Mode
     Typeface
     Vertices
+    XfermodeImageFilter
     YUVColorSpace
