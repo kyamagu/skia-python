@@ -37,25 +37,28 @@
 <dl class="py class">
 <dt id="skia.Bitmap">
 <em class="property">class </em><code class="sig-name descname">Bitmap</code><a class="headerlink" href="#skia.Bitmap" title="Permalink to this definition">¶</a></dt>
-<dd><p>SkBitmap describes a two-dimensional raster pixel array.</p>
-<p>SkBitmap is built on SkImageInfo, containing integer width and height,
-SkColorType and SkAlphaType describing the pixel format, and
-SkColorSpace describing the range of colors. SkBitmap points to
-SkPixelRef, which describes the physical array of pixels. SkImageInfo
-bounds may be located anywhere fully inside SkPixelRef bounds.</p>
-<p>SkBitmap can be drawn using SkCanvas. SkBitmap can be a drawing
-destination for SkCanvas draw member functions. SkBitmap flexibility
-as a pixel container limits some optimizations available to the target
-platform.</p>
-<p>If pixel array is primarily read-only, use SkImage for better
-performance. If pixel array is primarily written to, use SkSurface for
-better performance.</p>
-<p>Declaring SkBitmap const prevents altering SkImageInfo: the SkBitmap
-height, width, and so on cannot change. It does not affect SkPixelRef:
-a caller may write its pixels. Declaring SkBitmap const affects
-SkBitmap configuration, not its contents.</p>
-<p>SkBitmap is not thread safe. Each thread must have its own copy of
-SkBitmap fields, although threads may share the underlying pixel array.</p>
+<dd><p><a class="reference internal" href="#skia.Bitmap" title="skia.Bitmap"><code class="xref py py-class docutils literal notranslate"><span class="pre">Bitmap</span></code></a> describes a two-dimensional raster pixel array.</p>
+<p><a class="reference internal" href="#skia.Bitmap" title="skia.Bitmap"><code class="xref py py-class docutils literal notranslate"><span class="pre">Bitmap</span></code></a> is built on <a class="reference internal" href="skia.ImageInfo.html#skia.ImageInfo" title="skia.ImageInfo"><code class="xref py py-class docutils literal notranslate"><span class="pre">ImageInfo</span></code></a>, containing integer
+width and height, <a class="reference internal" href="skia.ColorType.html#skia.ColorType" title="skia.ColorType"><code class="xref py py-class docutils literal notranslate"><span class="pre">ColorType</span></code></a> and <a class="reference internal" href="skia.AlphaType.html#skia.AlphaType" title="skia.AlphaType"><code class="xref py py-class docutils literal notranslate"><span class="pre">AlphaType</span></code></a> describing
+the pixel format, and <a class="reference internal" href="skia.ColorSpace.html#skia.ColorSpace" title="skia.ColorSpace"><code class="xref py py-class docutils literal notranslate"><span class="pre">ColorSpace</span></code></a> describing the range of colors.
+<a class="reference internal" href="#skia.Bitmap" title="skia.Bitmap"><code class="xref py py-class docutils literal notranslate"><span class="pre">Bitmap</span></code></a> points to <code class="xref py py-class docutils literal notranslate"><span class="pre">PixelRef</span></code>, which describes the
+physical array of pixels. <a class="reference internal" href="skia.ImageInfo.html#skia.ImageInfo" title="skia.ImageInfo"><code class="xref py py-class docutils literal notranslate"><span class="pre">ImageInfo</span></code></a> bounds may be located
+anywhere fully inside <code class="xref py py-class docutils literal notranslate"><span class="pre">PixelRef</span></code> bounds.</p>
+<p><a class="reference internal" href="#skia.Bitmap" title="skia.Bitmap"><code class="xref py py-class docutils literal notranslate"><span class="pre">Bitmap</span></code></a> can be drawn using <a class="reference internal" href="skia.Canvas.html#skia.Canvas" title="skia.Canvas"><code class="xref py py-class docutils literal notranslate"><span class="pre">Canvas</span></code></a>.
+<a class="reference internal" href="#skia.Bitmap" title="skia.Bitmap"><code class="xref py py-class docutils literal notranslate"><span class="pre">Bitmap</span></code></a> can be a drawing destination for <a class="reference internal" href="skia.Canvas.html#skia.Canvas" title="skia.Canvas"><code class="xref py py-class docutils literal notranslate"><span class="pre">Canvas</span></code></a> draw
+member functions. <a class="reference internal" href="#skia.Bitmap" title="skia.Bitmap"><code class="xref py py-class docutils literal notranslate"><span class="pre">Bitmap</span></code></a> flexibility as a pixel container limits
+some optimizations available to the target platform.</p>
+<p>If pixel array is primarily read-only, use <a class="reference internal" href="skia.Image.html#skia.Image" title="skia.Image"><code class="xref py py-class docutils literal notranslate"><span class="pre">Image</span></code></a> for better
+performance. If pixel array is primarily written to, use
+<a class="reference internal" href="skia.Surface.html#skia.Surface" title="skia.Surface"><code class="xref py py-class docutils literal notranslate"><span class="pre">Surface</span></code></a> for better performance.</p>
+<p>Declaring <a class="reference internal" href="#skia.Bitmap" title="skia.Bitmap"><code class="xref py py-class docutils literal notranslate"><span class="pre">Bitmap</span></code></a> const prevents altering
+<a class="reference internal" href="skia.ImageInfo.html#skia.ImageInfo" title="skia.ImageInfo"><code class="xref py py-class docutils literal notranslate"><span class="pre">ImageInfo</span></code></a>: the <a class="reference internal" href="#skia.Bitmap" title="skia.Bitmap"><code class="xref py py-class docutils literal notranslate"><span class="pre">Bitmap</span></code></a> height, width, and so on
+cannot change. It does not affect <code class="xref py py-class docutils literal notranslate"><span class="pre">PixelRef</span></code>: a caller may write
+its pixels. Declaring <a class="reference internal" href="#skia.Bitmap" title="skia.Bitmap"><code class="xref py py-class docutils literal notranslate"><span class="pre">Bitmap</span></code></a> const affects <a class="reference internal" href="#skia.Bitmap" title="skia.Bitmap"><code class="xref py py-class docutils literal notranslate"><span class="pre">Bitmap</span></code></a>
+configuration, not its contents.</p>
+<p><a class="reference internal" href="#skia.Bitmap" title="skia.Bitmap"><code class="xref py py-class docutils literal notranslate"><span class="pre">Bitmap</span></code></a> is not thread safe. Each thread must have its own copy of
+<a class="reference internal" href="#skia.Bitmap" title="skia.Bitmap"><code class="xref py py-class docutils literal notranslate"><span class="pre">Bitmap</span></code></a> fields, although threads may share the underlying pixel
+array.</p>
 <p class="rubric">Methods</p>
 <table class="longtable docutils align-default">
 <colgroup>
