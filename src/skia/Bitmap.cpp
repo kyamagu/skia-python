@@ -2,30 +2,33 @@
 
 void initBitmap(py::module &m) {
 py::class_<SkBitmap>(m, "Bitmap", py::buffer_protocol(), R"docstring(
-        SkBitmap describes a two-dimensional raster pixel array.
+    :py:class:`Bitmap` describes a two-dimensional raster pixel array.
 
-        SkBitmap is built on SkImageInfo, containing integer width and height,
-        SkColorType and SkAlphaType describing the pixel format, and
-        SkColorSpace describing the range of colors. SkBitmap points to
-        SkPixelRef, which describes the physical array of pixels. SkImageInfo
-        bounds may be located anywhere fully inside SkPixelRef bounds.
+    :py:class:`Bitmap` is built on :py:class:`ImageInfo`, containing integer
+    width and height, :py:class:`ColorType` and :py:class:`AlphaType` describing
+    the pixel format, and :py:class:`ColorSpace` describing the range of colors.
+    :py:class:`Bitmap` points to :py:class:`PixelRef`, which describes the
+    physical array of pixels. :py:class:`ImageInfo` bounds may be located
+    anywhere fully inside :py:class:`PixelRef` bounds.
 
-        SkBitmap can be drawn using SkCanvas. SkBitmap can be a drawing
-        destination for SkCanvas draw member functions. SkBitmap flexibility
-        as a pixel container limits some optimizations available to the target
-        platform.
+    :py:class:`Bitmap` can be drawn using :py:class:`Canvas`.
+    :py:class:`Bitmap` can be a drawing destination for :py:class:`Canvas` draw
+    member functions. :py:class:`Bitmap` flexibility as a pixel container limits
+    some optimizations available to the target platform.
 
-        If pixel array is primarily read-only, use SkImage for better
-        performance. If pixel array is primarily written to, use SkSurface for
-        better performance.
+    If pixel array is primarily read-only, use :py:class:`Image` for better
+    performance. If pixel array is primarily written to, use
+    :py:class:`Surface` for better performance.
 
-        Declaring SkBitmap const prevents altering SkImageInfo: the SkBitmap
-        height, width, and so on cannot change. It does not affect SkPixelRef:
-        a caller may write its pixels. Declaring SkBitmap const affects
-        SkBitmap configuration, not its contents.
+    Declaring :py:class:`Bitmap` const prevents altering
+    :py:class:`ImageInfo`: the :py:class:`Bitmap` height, width, and so on
+    cannot change. It does not affect :py:class:`PixelRef`: a caller may write
+    its pixels. Declaring :py:class:`Bitmap` const affects :py:class:`Bitmap`
+    configuration, not its contents.
 
-        SkBitmap is not thread safe. Each thread must have its own copy of
-        SkBitmap fields, although threads may share the underlying pixel array.
+    :py:class:`Bitmap` is not thread safe. Each thread must have its own copy of
+    :py:class:`Bitmap` fields, although threads may share the underlying pixel
+    array.
     )docstring")
     .def_buffer([](SkBitmap &d) -> py::buffer_info {
         return py::buffer_info(

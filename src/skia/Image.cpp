@@ -55,22 +55,25 @@ py::enum_<SkEncodedImageFormat>(m, "EncodedImageFormat", R"docstring(
 
 py::class_<SkImage, sk_sp<SkImage>, SkRefCnt> image(m, "Image",
     R"docstring(
-    SkImage describes a two dimensional array of pixels to draw.
+    :py:class:`Image` describes a two dimensional array of pixels to draw.
 
-    The pixels may be decoded in a raster bitmap, encoded in a SkPicture or
-    compressed data stream, or located in GPU memory as a GPU texture.
+    The pixels may be decoded in a raster bitmap, encoded in a
+    :py:class:`Picture` or compressed data stream, or located in GPU memory as a
+    GPU texture.
 
-    SkImage cannot be modified after it is created. SkImage may allocate
-    additional storage as needed; for instance, an encoded SkImage may decode
-    when drawn.
+    :py:class:`Image` cannot be modified after it is created. :py:class:`Image`
+    may allocate additional storage as needed; for instance, an encoded
+    :py:class:`Image` may decode when drawn.
 
-    SkImage width and height are greater than zero. Creating an SkImage with
-    zero width or height returns SkImage equal to nullptr.
+    :py:class:`Image` width and height are greater than zero. Creating an
+    :py:class:`Image` with zero width or height returns :py:class:`Image` equal
+    to nullptr.
 
-    SkImage may be created from SkBitmap, SkPixmap, SkSurface, SkPicture,
-    encoded streams, GPU texture, YUV_ColorSpace data, or hardware buffer.
-    Encoded streams supported include BMP, GIF, HEIF, ICO, JPEG, PNG, WBMP,
-    WebP. Supported encoding details vary with platform.
+    :py:class:`Image` may be created from :py:class:`Bitmap`,
+    :py:class:`Pixmap`, :py:class:`Surface`, :py:class:`Picture`, encoded
+    streams, GPU texture, YUV_ColorSpace data, or hardware buffer. Encoded
+    streams supported include BMP, GIF, HEIF, ICO, JPEG, PNG, WBMP, WebP.
+    Supported encoding details vary with platform.
     )docstring");
 
 py::enum_<SkImage::CompressionType>(image, "CompressionType")

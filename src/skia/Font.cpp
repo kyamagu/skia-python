@@ -93,7 +93,8 @@ fontarguments
 
 py::class_<SkTypeface, sk_sp<SkTypeface>, SkRefCnt> typeface(
     m, "Typeface", R"docstring(
-    The SkTypeface class specifies the typeface and intrinsic style of a font.
+    The :py:class:`Typeface` class specifies the typeface and intrinsic style of
+    a font.
 
     This is used in the paint, along with optionally algorithmic settings like
     textSize, textSkewX, textScaleX, kFakeBoldText_Mask, to specify how text
@@ -359,7 +360,7 @@ py::enum_<SkTextEncoding>(m, "TextEncoding")
     .export_values();
 
 py::class_<SkFont> font(m, "Font", R"docstring(
-    SkFont controls options applied when drawing and measuring text.
+    :py:class:`Font` controls options applied when drawing and measuring text.
     )docstring");
 
 py::enum_<SkFont::Edging>(font, "Edging", R"docstring(
