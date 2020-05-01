@@ -271,3 +271,66 @@ def test_ImageFilters_SpotLitSpecular():
     assert isinstance(skia.ImageFilters.SpotLitSpecular(
         skia.Point3(1, 0, 1), skia.Point3(-1, 0, -1), 1.2, 60, 0xFFFFFFFF, 1.,
         1., 1.), skia.ImageFilter)
+
+
+def test_LightingImageFilter_MakeDistantLitDiffuse():
+    assert isinstance(skia.LightingImageFilter.MakeDistantLitDiffuse(
+        skia.Point3(1, 0, 1), 0xFFFFFFFF, 1., 1.), skia.ImageFilter)
+
+
+def test_LightingImageFilter_MakePointLitDiffuse():
+    assert isinstance(skia.LightingImageFilter.MakePointLitDiffuse(
+        skia.Point3(1, 0, 1), 0xFFFFFFFF, 1., 1.), skia.ImageFilter)
+
+
+def test_LightingImageFilter_MakeSpotLitDiffuse():
+    assert isinstance(skia.LightingImageFilter.MakeSpotLitDiffuse(
+        skia.Point3(1, 0, 1), skia.Point3(-1, 0, -1), 1.2, 60, 0xFFFFFFFF, 1.,
+        1.), skia.ImageFilter)
+
+
+def test_LightingImageFilter_MakeDistantLitSpecular():
+    assert isinstance(skia.LightingImageFilter.MakeDistantLitSpecular(
+        skia.Point3(1, 0, 1), 0xFFFFFFFF, 1., 1., 1.), skia.ImageFilter)
+
+
+def test_LightingImageFilter_MakePointLitSpecular():
+    assert isinstance(skia.LightingImageFilter.MakePointLitSpecular(
+        skia.Point3(1, 0, 1), 0xFFFFFFFF, 1., 1., 1.), skia.ImageFilter)
+
+
+def test_LightingImageFilter_MakeSpotLitSpecular():
+    assert isinstance(skia.LightingImageFilter.MakeSpotLitSpecular(
+        skia.Point3(1, 0, 1), skia.Point3(-1, 0, -1), 1.2, 60, 0xFFFFFFFF, 1.,
+        1., 1.), skia.ImageFilter)
+
+
+def test_MagnifierImageFilter_Make():
+    assert isinstance(
+        skia.MagnifierImageFilter.Make(skia.Rect(100, 100), 1.),
+        skia.ImageFilter)
+
+
+def test_OffsetImageFilter_Make():
+    assert isinstance(skia.OffsetImageFilter.Make(0, 0), skia.ImageFilter)
+
+
+def test_PaintImageFilter_Make():
+    assert isinstance(
+        skia.PaintImageFilter.Make(skia.Paint()), skia.ImageFilter)
+
+
+# def test_PictureImageFilter_Make():
+#     picture = skia.Picture.MakePlaceholder(skia.Rect(100, 100))
+#     assert isinstance(skia.PictureImageFilter.Make(picture), skia.ImageFilter)
+
+
+def test_TileImageFilter_Make():
+    assert isinstance(
+        skia.TileImageFilter.Make(skia.Rect(10, 10), skia.Rect(100, 100)),
+        skia.ImageFilter)
+
+
+def test_XfermodeImageFilter_Make():
+    assert isinstance(
+        skia.XfermodeImageFilter.Make(skia.BlendMode.kSrc), skia.ImageFilter)

@@ -1037,21 +1037,89 @@ py::class_<SkImageFilters>(m, "ImageFilters")
 
 py::class_<SkLightingImageFilter>(m, "LightingImageFilter")
     .def_static("MakeDistantLitDiffuse",
-        &SkLightingImageFilter::MakeDistantLitDiffuse)
+        [] (const SkPoint3& direction, SkColor lightColor,
+            SkScalar surfaceScale, SkScalar kd, const SkImageFilter* input,
+            const SkImageFilter::CropRect* cropRect) {
+            return SkLightingImageFilter::MakeDistantLitDiffuse(
+                direction, lightColor, surfaceScale, kd,
+                CLONE(input), cropRect);
+        },
+        py::arg("direction"), py::arg("lightColor"), py::arg("surfaceScale"),
+        py::arg("kd"), py::arg("input") = nullptr,
+        py::arg("cropRect") = nullptr)
     .def_static("MakePointLitDiffuse",
-        &SkLightingImageFilter::MakePointLitDiffuse)
+        [] (const SkPoint3& location, SkColor lightColor,
+            SkScalar surfaceScale, SkScalar kd, const SkImageFilter* input,
+            const SkImageFilter::CropRect* cropRect) {
+            return SkLightingImageFilter::MakePointLitDiffuse(
+                location, lightColor, surfaceScale, kd,
+                CLONE(input), cropRect);
+        },
+        py::arg("location"), py::arg("lightColor"), py::arg("surfaceScale"),
+        py::arg("kd"), py::arg("input") = nullptr,
+        py::arg("cropRect") = nullptr)
     .def_static("MakeSpotLitDiffuse",
-        &SkLightingImageFilter::MakeSpotLitDiffuse)
+        [] (const SkPoint3& location, const SkPoint3& target,
+            SkScalar falloffExponent, SkScalar cutoffAngle, SkColor lightColor,
+            SkScalar surfaceScale, SkScalar kd, const SkImageFilter* input,
+            const SkImageFilter::CropRect* cropRect) {
+            return SkLightingImageFilter::MakeSpotLitDiffuse(
+                location, target, falloffExponent, cutoffAngle, lightColor,
+                surfaceScale, kd, CLONE(input), cropRect);
+        },
+        py::arg("location"), py::arg("target"), py::arg("falloffExponent"),
+        py::arg("cutoffAngle"), py::arg("lightColor"), py::arg("surfaceScale"),
+        py::arg("kd"), py::arg("input") = nullptr,
+        py::arg("cropRect") = nullptr)
     .def_static("MakeDistantLitSpecular",
-        &SkLightingImageFilter::MakeDistantLitSpecular)
+        [] (const SkPoint3& direction, SkColor lightColor,
+            SkScalar surfaceScale, SkScalar ks, SkScalar shininess,
+            const SkImageFilter* input,
+            const SkImageFilter::CropRect* cropRect) {
+            return SkLightingImageFilter::MakeDistantLitSpecular(
+                direction, lightColor, surfaceScale, ks, shininess,
+                CLONE(input), cropRect);
+        },
+        py::arg("direction"), py::arg("lightColor"), py::arg("surfaceScale"),
+        py::arg("ks"), py::arg("shininess"), py::arg("input") = nullptr,
+        py::arg("cropRect") = nullptr)
     .def_static("MakePointLitSpecular",
-        &SkLightingImageFilter::MakePointLitSpecular)
+        [] (const SkPoint3& location, SkColor lightColor,
+            SkScalar surfaceScale, SkScalar ks, SkScalar shininess,
+            const SkImageFilter* input,
+            const SkImageFilter::CropRect* cropRect) {
+            return SkLightingImageFilter::MakePointLitSpecular(
+                location, lightColor, surfaceScale, ks, shininess,
+                CLONE(input), cropRect);
+        },
+        py::arg("location"), py::arg("lightColor"), py::arg("surfaceScale"),
+        py::arg("ks"), py::arg("shininess"), py::arg("input") = nullptr,
+        py::arg("cropRect") = nullptr)
     .def_static("MakeSpotLitSpecular",
-        &SkLightingImageFilter::MakeSpotLitSpecular)
+        [] (const SkPoint3& location, const SkPoint3& target,
+            SkScalar falloffExponent, SkScalar cutoffAngle, SkColor lightColor,
+            SkScalar surfaceScale, SkScalar ks, SkScalar shininess,
+            const SkImageFilter* input,
+            const SkImageFilter::CropRect* cropRect) {
+            return SkLightingImageFilter::MakeSpotLitSpecular(
+                location, target, falloffExponent, cutoffAngle, lightColor,
+                surfaceScale, ks, shininess, CLONE(input), cropRect);
+        },
+        py::arg("location"), py::arg("target"), py::arg("falloffExponent"),
+        py::arg("cutoffAngle"), py::arg("lightColor"), py::arg("surfaceScale"),
+        py::arg("ks"), py::arg("shininess"), py::arg("input") = nullptr,
+        py::arg("cropRect") = nullptr)
     ;
 
 py::class_<SkMagnifierImageFilter>(m, "MagnifierImageFilter")
-    .def_static("Make", &SkMagnifierImageFilter::Make)
+    .def_static("Make",
+        [] (const SkRect& srcRect, SkScalar inset, const SkImageFilter* input,
+            const SkImageFilter::CropRect* cropRect) {
+            return SkMagnifierImageFilter::Make(
+                srcRect, inset, CLONE(input), cropRect);
+        },
+        py::arg("srcRect"), py::arg("inset"), py::arg("input") = nullptr,
+        py::arg("cropRect") = nullptr)
     ;
 
 // py::class_<SkMatrixConvolutionImageFilter>(m, "MatrixConvolutionImageFilter")
@@ -1067,11 +1135,19 @@ py::class_<SkMagnifierImageFilter>(m, "MagnifierImageFilter")
 //     ;
 
 py::class_<SkOffsetImageFilter>(m, "OffsetImageFilter")
-    .def_static("Make", &SkOffsetImageFilter::Make)
+    .def_static("Make",
+        [] (SkScalar dx, SkScalar dy, const SkImageFilter* input,
+            const SkImageFilter::CropRect* cropRect) {
+            return SkOffsetImageFilter::Make(
+                dx, dy, CLONE(input), cropRect);
+        },
+        py::arg("dx"), py::arg("dy"), py::arg("input") = nullptr,
+        py::arg("cropRect") = nullptr)
     ;
 
 py::class_<SkPaintImageFilter>(m, "PaintImageFilter")
-    .def_static("Make", &SkPaintImageFilter::Make)
+    .def_static("Make", &SkPaintImageFilter::Make,
+        py::arg("paint"), py::arg("cropRect") = nullptr)
     ;
 
 // py::class_<SkPictureImageFilter>(m, "PictureImageFilter")
@@ -1079,13 +1155,37 @@ py::class_<SkPaintImageFilter>(m, "PaintImageFilter")
 //     ;
 
 py::class_<SkTileImageFilter>(m, "TileImageFilter")
-    .def_static("Make", &SkTileImageFilter::Make)
+    .def_static("Make",
+        [] (const SkRect& src, const SkRect& dst, const SkImageFilter* input) {
+            return SkTileImageFilter::Make(src, dst, CLONE(input));
+        },
+        R"docstring(
+        Create a tile image filter.
+
+        :param skia.Rect src: Defines the pixels to tile
+        :param skia.Rect dst: Defines the pixels where tiles are drawn
+        :param skia.ImageFilter input: Input from which the subregion defined by
+            srcRect will be tiled
+        )docstring",
+        py::arg("src"), py::arg("dst"), py::arg("input") = nullptr)
     ;
 
-py::class_<SkXfermodeImageFilter>(m, "XfermodeImageFilter")
+py::class_<SkXfermodeImageFilter>(m, "XfermodeImageFilter",
+    R"docstring(
+    This filter takes a :py:class:`BlendMode`, and uses it to composite the
+    foreground over the background.
+
+    If foreground or background is NULL, the input bitmap (src) is used instead.
+    DEPRECATED: Use :py:meth:`ImageFilters.XferMode`
+    )docstring")
     .def_static("Make",
-        py::overload_cast<SkBlendMode, sk_sp<SkImageFilter>,
-        sk_sp<SkImageFilter>, const SkImageFilter::CropRect*>(
-            &SkXfermodeImageFilter::Make))
+        [] (SkBlendMode mode, const SkImageFilter* background,
+            const SkImageFilter* foreground,
+            const SkImageFilter::CropRect* cropRect) {
+            return SkXfermodeImageFilter::Make(
+                mode, CLONE(background), CLONE(foreground), cropRect);
+        },
+        py::arg("mode"), py::arg("background") = nullptr,
+        py::arg("foreground") = nullptr, py::arg("cropRect") = nullptr)
     ;
 }
