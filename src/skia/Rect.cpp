@@ -9,13 +9,13 @@ constexpr size_t SkRRect::kSizeInMemory;
 void initRect(py::module &m) {
 // IRect
 py::class_<SkIRect>(m, "IRect", R"docstring(
-    SkIRect holds four 32-bit integer coordinates describing the upper and lower
-    bounds of a rectangle.
+    :py:class:`IRect` holds four 32-bit integer coordinates describing the upper
+    and lower bounds of a rectangle.
 
-    SkIRect may be created from outer bounds or from position, width, and
-    height. SkIRect describes an area; if its right is less than or equal to its
-    left, or if its bottom is less than or equal to its top, it is considered
-    empty.
+    :py:class:`IRect` may be created from outer bounds or from position, width,
+    and height. :py:class:`IRect` describes an area; if its right is less than
+    or equal to its left, or if its bottom is less than or equal to its top, it
+    is considered empty.
     )docstring")
     // Python additions.
     .def(py::init(&SkIRect::MakeEmpty))
@@ -128,12 +128,13 @@ py::class_<SkIRect>(m, "IRect", R"docstring(
 
 // Rect
 py::class_<SkRect>(m, "Rect", R"docstring(
-    SkRect holds four SkScalar coordinates describing the upper and lower bounds
-    of a rectangle.
+    :py:class:`Rect` holds four float coordinates describing the upper and lower
+    bounds of a rectangle.
 
-    SkRect may be created from outer bounds or from position, width, and height.
-    SkRect describes an area; if its right is less than or equal to its left, or
-    if its bottom is less than or equal to its top, it is considered empty.
+    :py:class:`Rect` may be created from outer bounds or from position, width,
+    and height. :py:class:`Rect` describes an area; if its right is less than or
+    equal to its left, or if its bottom is less than or equal to its top, it is
+    considered empty.
     )docstring")
     // Python additions.
     .def(py::init(&SkRect::MakeEmpty))
@@ -307,21 +308,21 @@ py::class_<SkRect>(m, "Rect", R"docstring(
     ;
 
 py::class_<SkRRect> rrect(m, "RRect", R"docstring(
-    SkRRect describes a rounded rectangle with a bounds and a pair of radii for
-    each corner.
+    :py:class:`RRect` describes a rounded rectangle with a bounds and a pair of
+    radii for each corner.
 
-    The bounds and radii can be set so that SkRRect describes: a rectangle with
-    sharp corners; a circle; an oval; or a rectangle with one or more rounded
-    corners.
+    The bounds and radii can be set so that :py:class:`RRect` describes: a
+    rectangle with sharp corners; a circle; an oval; or a rectangle with one or
+    more rounded corners.
 
-    SkRRect allows implementing CSS properties that describe rounded corners.
-    SkRRect may have up to eight different radii, one for each axis on each of
-    its four corners.
+    :py:class:`RRect` allows implementing CSS properties that describe rounded
+    corners. :py:class:`RRect` may have up to eight different radii, one for
+    each axis on each of its four corners.
 
-    SkRRect may modify the provided parameters when initializing bounds and
-    radii. If either axis radii is zero or less: radii are stored as zero;
-    corner is square. If corner curves overlap, radii are proportionally reduced
-    to fit within bounds.
+    :py:class:`RRect` may modify the provided parameters when initializing
+    bounds and radii. If either axis radii is zero or less: radii are stored as
+    zero; corner is square. If corner curves overlap, radii are proportionally
+    reduced to fit within bounds.
     )docstring");
 
 py::enum_<SkRRect::Type>(rrect, "Type")

@@ -4,7 +4,7 @@
 void initPoint(py::module &m) {
 // IPoint
 py::class_<SkIPoint>(m, "IPoint", R"docstring(
-    SkIPoint holds two 32-bit integer coordinates.
+    :py:class:`IPoint` holds two 32-bit integer coordinates.
     )docstring")
     .def(py::init(&SkIPoint::Make), "Sets fX to x, fY to y.")
     .def("x", &SkIPoint::x, "Returns x-axis value of SkIPoint.")
@@ -35,7 +35,7 @@ py::class_<SkIPoint>(m, "IPoint", R"docstring(
 
 // Point
 py::class_<SkPoint>(m, "Point", R"docstring(
-    SkPoint holds two 32-bit floating point coordinates.
+    :py:class:`Point` holds two 32-bit floating point coordinates.
     )docstring")
     .def(py::init(&SkPoint::Make), "Sets fX to x, fY to y.")
     .def("x", &SkPoint::x, "Returns x-axis value of SkPoint or vector.")

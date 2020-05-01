@@ -27,20 +27,21 @@ py::enum_<SkApplyPerspectiveClip>(m, "ApplyPerspectiveClip")
 
 // Matrix
 py::class_<SkMatrix> matrix(m, "Matrix", R"docstring(
-    SkMatrix holds a 3x3 matrix for transforming coordinates.
+    :py:class:`Matrix` holds a 3x3 matrix for transforming coordinates.
 
-    This allows mapping SkPoint and vectors with translation, scaling, skewing,
-    rotation, and perspective.
+    This allows mapping :py:class:`Point` and vectors with translation, scaling,
+    skewing, rotation, and perspective.
 
-    SkMatrix elements are in row major order. SkMatrix does not have a
-    constructor, so it must be explicitly initialized. setIdentity() initializes
-    SkMatrix so it has no effect. setTranslate(), setScale(), setSkew(),
-    setRotate(), set9 and setAll() initializes all SkMatrix elements with the
-    corresponding mapping.
+    :py:class:`Matrix` elements are in row major order. :py:class:`Matrix` does
+    not have a constructor, so it must be explicitly initialized.
+    :py:meth:`setIdentity` initializes :py:class:`Matrix` so it has no effect.
+    :py:meth:`setTranslate`, :py:meth:`setScale`, :py:meth:`setSkew`,
+    :py:meth:`setRotate`, :py:meth:`set9` and :py:meth:`setAll` initializes all
+    :py:class:`Matrix` elements with the corresponding mapping.
 
-    SkMatrix includes a hidden variable that classifies the type of matrix to
-    improve performance. SkMatrix is not thread safe unless getType() is called
-    first.
+    :py:class:`Matrix` includes a hidden variable that classifies the type of
+    matrix to improve performance. :py:class:`Matrix` is not thread safe unless
+    getType() is called first.
     )docstring");
 
 py::enum_<SkMatrix::ScaleToFit>(matrix, "ScaleToFit")
@@ -68,7 +69,7 @@ py::enum_<SkMatrix::TypeMask>(matrix, "TypeMask")
     .export_values();
 
 matrix
-    .def(py::init<>(), "Creates an identity SkMatrix.")
+    .def(py::init<>(), "Creates an identity :py:class:`Matrix`.")
     .def("getType", &SkMatrix::getType,
         "Returns a bit field describing the transformations the matrix may "
         "perform.")
@@ -382,7 +383,7 @@ matrix
 
 // M44
 py::class_<SkM44>(m, "M44", R"docstring(
-    4x4 matrix used by SkCanvas and other parts of Skia.
+    4x4 matrix used by :py:class:`Canvas` and other parts of Skia.
 
     Skia assumes a right-handed coordinate system: +X goes to the right +Y goes
     down +Z goes into the screen (away from the viewer)

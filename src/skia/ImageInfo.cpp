@@ -76,10 +76,12 @@ py::enum_<SkYUVColorSpace>(m, "YUVColorSpace")
 py::class_<SkColorInfo>(m, "ColorInfo", R"docstring(
     Describes pixel and encoding.
 
-    SkImageInfo can be created from SkColorInfo by providing dimensions.
+    :py:class:`ImageInfo` can be created from :py:class:`ColorInfo` by providing
+    dimensions.
 
     It encodes how pixel bits describe alpha, transparency; color components
-    red, blue, and green; and SkColorSpace, the range and linearity of colors.
+    red, blue, and green; and :py:class:`ColorSpace`, the range and linearity of
+    colors.
     )docstring")
     .def(py::init<>(),
         "Creates an SkColorInfo with kUnknown_SkColorType, "
@@ -122,14 +124,17 @@ py::class_<SkColorInfo>(m, "ColorInfo", R"docstring(
 py::class_<SkImageInfo>(m, "ImageInfo", R"docstring(
     Describes pixel dimensions and encoding.
 
-    SkBitmap, SkImage, PixMap, and SkSurface can be created from SkImageInfo.
-    SkImageInfo can be retrieved from SkBitmap and SkPixmap, but not from
-    SkImage and SkSurface. For example, SkImage and SkSurface implementations
-    may defer pixel depth, so may not completely specify SkImageInfo.
+    :py:class:`Bitmap`, :py:class:`Image`, PixMap, and :py:class:`Surface` can
+    be created from :py:class:`ImageInfo`. :py:class:`ImageInfo` can be
+    retrieved from :py:class:`Bitmap` and :py:class:`Pixmap`, but not from
+    :py:class:`Image` and :py:class:`Surface`. For example, :py:class:`Image`
+    and :py:class:`Surface` implementations may defer pixel depth, so may not
+    completely specify :py:class:`ImageInfo`.
 
-    SkImageInfo contains dimensions, the pixel integral width and height. It
-    encodes how pixel bits describe alpha, transparency; color components red,
-    blue, and green; and SkColorSpace, the range and linearity of colors.
+    :py:class:`ImageInfo` contains dimensions, the pixel integral width and
+    height. It encodes how pixel bits describe alpha, transparency; color
+    components red, blue, and green; and :py:class:`ColorSpace`, the range and
+    linearity of colors.
     )docstring")
     .def(py::init<>())
     .def("width", &SkImageInfo::width, "Returns pixel count in each row.")

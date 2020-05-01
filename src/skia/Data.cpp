@@ -6,11 +6,11 @@ struct py::detail::has_operator_delete<SkData, void> : std::false_type {};
 void initData(py::module &m) {
 py::class_<SkData, sk_sp<SkData>>(m, "Data", py::buffer_protocol(),
     R"docstring(
-    SkData holds an immutable data buffer.
+    :py:class:`Data` holds an immutable data buffer.
 
     Not only is the data immutable, but the actual ptr that is returned (by
-    data() or bytes()) is guaranteed to always be the same for the life of this
-    instance.
+    :py:meth:`data` or :py:meth:`bytes`) is guaranteed to always be the same for
+    the life of this instance.
     )docstring")
     .def_buffer([](SkData &d) -> py::buffer_info {
         return py::buffer_info(

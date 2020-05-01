@@ -22,30 +22,31 @@ py::enum_<SkVertices::VertexMode>(vertices, "VertexMode")
     ;
 
 vertices
-    .def(py::init([] (SkVertices::VertexMode mode, py::list data) {
-        auto size = data.size();
-        std::vector<SkPoint> positions;
-        std::vector<SkPoint> texs;
-        std::vector<SkColor> colors;
-        positions.reserve(size);
-        texs.reserve(size);
-        colors.reserve(size);
-        for (auto item : data) {
-            auto tuple = item.cast<py::tuple>();
-            positions.push_back(*(tuple[0].cast<const SkPoint*>()));
-            texs.push_back(*(tuple[1].cast<const SkPoint*>()));
-            colors.push_back(tuple[2].cast<const SkColor>());
-        }
-        return SkVertices::MakeCopy(
-            mode, size, &positions[0], &texs[0], &colors[0]);
-    }),
-    R"docstring(
+    .def(py::init(
+        [] (SkVertices::VertexMode mode, py::list data) {
+            auto size = data.size();
+            std::vector<SkPoint> positions;
+            std::vector<SkPoint> texs;
+            std::vector<SkColor> colors;
+            positions.reserve(size);
+            texs.reserve(size);
+            colors.reserve(size);
+            for (auto item : data) {
+                auto tuple = item.cast<py::tuple>();
+                positions.push_back(*(tuple[0].cast<const SkPoint*>()));
+                texs.push_back(*(tuple[1].cast<const SkPoint*>()));
+                colors.push_back(tuple[2].cast<const SkColor>());
+            }
+            return SkVertices::MakeCopy(
+                mode, size, &positions[0], &texs[0], &colors[0]);
+        }),
+        R"docstring(
         Create a vertices by copying the specified arrays.
 
         :param skia.Vertices.VertexMode mode: vertex mode
         :param list[tuple[skia.Point, skia.Point, int]] vertices: list of (
             position, tex, color)
-    )docstring")
+        )docstring")
     .def("uniqueID", &SkVertices::uniqueID)
     .def("bounds", &SkVertices::bounds)
     .def("approximateSize", &SkVertices::approximateSize)

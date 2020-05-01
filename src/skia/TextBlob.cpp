@@ -8,10 +8,12 @@ void initTextBlob(py::module &m) {
 py::class_<SkDeserialProcs>(m, "DeserialProcs");
 
 py::class_<SkTextBlob, sk_sp<SkTextBlob>>(m, "TextBlob", R"docstring(
-    SkTextBlob combines multiple text runs into an immutable container.
+    :py:class:`TextBlob` combines multiple text runs into an immutable
+    container.
 
-    Each text run consists of glyphs, SkPaint, and position. Only parts of
-    SkPaint related to fonts and text rendering are used by run.
+    Each text run consists of glyphs, :py:class:`Paint`, and position. Only
+    parts of :py:class:`Paint` related to fonts and text rendering are used by
+    run.
     )docstring")
     .def(py::init([](const std::string& text, const SkFont& font) {
         return SkTextBlob::MakeFromText(text.c_str(), text.size(), font);
@@ -75,7 +77,7 @@ py::class_<SkTextBlob, sk_sp<SkTextBlob>>(m, "TextBlob", R"docstring(
     ;
 
 py::class_<SkTextBlobBuilder> textblobbuilder(m, "TextBlobBuilder", R"docstring(
-    Helper class for constructing SkTextBlob.
+    Helper class for constructing :py:class:`TextBlob`.
     )docstring");
 
 py::class_<SkTextBlobBuilder::RunBuffer>(textblobbuilder, "RunBuffer",
@@ -101,7 +103,7 @@ py::class_<SkTextBlobBuilder::RunBuffer>(textblobbuilder, "RunBuffer",
     ;
 
 textblobbuilder
-    .def(py::init(), "Constructs empty SkTextBlobBuilder.")
+    .def(py::init(), "Constructs empty :py:class:`TextBlobBuilder`.")
     .def("make", &SkTextBlobBuilder::make,
         "Returns SkTextBlob built from runs of glyphs added by builder.")
     .def("allocRun", &SkTextBlobBuilder::allocRun,

@@ -2,17 +2,20 @@
 
 void initPixmap(py::module &m) {
 py::class_<SkPixmap>(m, "Pixmap", R"docstring(
-    SkPixmap provides a utility to pair SkImageInfo with pixels and row bytes.
+    :py:class:`Pixmap` provides a utility to pair :py:class:`ImageInfo` with
+    pixels and row bytes.
 
-    SkPixmap is a low level class which provides convenience functions to access
-    raster destinations. SkCanvas can not draw SkPixmap, nor does SkPixmap
-    provide a direct drawing destination.
+    :py:class:`Pixmap` is a low level class which provides convenience functions
+    to access raster destinations. :py:class:`Canvas` can not draw
+    :py:class:`Pixmap`, nor does :py:class:`Pixmap` provide a direct drawing
+    destination.
 
-    Use SkBitmap to draw pixels referenced by SkPixmap; use SkSurface to draw
-    into pixels referenced by SkPixmap.
+    Use :py:class:`Bitmap` to draw pixels referenced by :py:class:`Pixmap`; use
+    :py:class:`Surface` to draw into pixels referenced by :py:class:`Pixmap`.
 
-    SkPixmap does not try to manage the lifetime of the pixel memory. Use
-    SkPixelRef to manage pixel memory; SkPixelRef is safe across threads.
+    :py:class:`Pixmap` does not try to manage the lifetime of the pixel memory.
+    Use :py:class:`PixelRef` to manage pixel memory; :py:class:`PixelRef` is
+    safe across threads.
     )docstring")
     .def(py::init<>(),
         "Creates an empty SkPixmap without pixels, with "
