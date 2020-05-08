@@ -71,10 +71,14 @@ py::class_<SkFontArguments::VariationPosition::Coordinate>(
     ;
 
 variationposition
-    .def_readwrite("coordinates",
-        &SkFontArguments::VariationPosition::coordinates,
-        py::return_value_policy::reference)
-    .def_readwrite("coordinateCount",
+    .def_property_readonly("coordinates",
+        [] (const SkFontArguments::VariationPosition& vp) {
+            auto coords = py::list(vp.coordinateCount);
+            for (int i = 0; i < vp.coordinateCount; ++i)
+                coords[i] = py::cast(vp.coordinates[i]);
+            return coords;
+        })
+    .def_readonly("coordinateCount",
         &SkFontArguments::VariationPosition::coordinateCount)
     ;
 
@@ -107,6 +111,8 @@ py::enum_<SkTypeface::SerializeBehavior>(typeface, "SerializeBehavior",
     R"docstring(
     A typeface can serialize just a descriptor (names, etc.), or it can also
     include the actual font data (which can be large).
+
+    This enum controls how serialize() decides what to serialize.
     )docstring")
     .value("kDoIncludeData", SkTypeface::SerializeBehavior::kDoIncludeData)
     .value("kDontIncludeData", SkTypeface::SerializeBehavior::kDontIncludeData)
@@ -116,26 +122,80 @@ py::enum_<SkTypeface::SerializeBehavior>(typeface, "SerializeBehavior",
 
 typeface
     .def("fontStyle", &SkTypeface::fontStyle,
-        "Returns the typeface's intrinsic style attributes.")
+        R"docstring(
+        Returns the typeface's intrinsic style attributes.
+        )docstring")
     .def("isBold", &SkTypeface::isBold,
-        "Returns true if style() has the kBold bit set.")
+        R"docstring(
+        Returns true if style() has the kBold bit set.
+        )docstring")
     .def("isItalic", &SkTypeface::isBold,
-        "Returns true if style() has the kItalic bit set.")
+        R"docstring(
+        Returns true if style() has the kItalic bit set.
+        )docstring")
     .def("isFixedPitch", &SkTypeface::isFixedPitch,
-        "Returns true if the typeface claims to be fixed-pitch.")
-    .def("getVariationDesignPosition", &SkTypeface::getVariationDesignPosition,
-        "Copy into 'coordinates' (allocated by the caller) the design "
-        "variation coordinates.")
+        R"docstring(
+        Returns true if the typeface claims to be fixed-pitch.
+        )docstring")
+    .def("getVariationDesignPosition",
+        [] (const SkTypeface& typeface, int coordinateCount) {
+            std::vector<SkFontArguments::VariationPosition::Coordinate>
+                coords(coordinateCount);
+            auto count = typeface.getVariationDesignPosition(
+                &coords[0], coords.size());
+            if (count == -1)
+                throw std::runtime_error("Failed to get");
+            else if (count > int(coords.size()))
+                coords.erase(coords.begin() + count, coords.end());
+            return coords;
+        },
+        R"docstring(
+        Returns the design variation coordinates.
+
+        :param int coordinateCount: the maximum number of entries to get.
+        :return: list of coordinates
+        :rtype: List[skia.FontArguments.VariationPosition.Coordinate]
+        )docstring",
+        py::arg("coordinateCount") = 10)
     .def("getVariationDesignParameters",
-        &SkTypeface::getVariationDesignParameters,
-        "Copy into 'parameters' (allocated by the caller) the design "
-        "variation parameters.")
+        [] (const SkTypeface& typeface, int parameterCount) {
+            std::vector<SkFontParameters::Variation::Axis>
+                params(parameterCount);
+            auto count = typeface.getVariationDesignParameters(
+                &params[0], params.size());
+            if (count == -1)
+                throw std::runtime_error("Failed to get");
+            else if (count > int(params.size()))
+                params.erase(params.begin() + count, params.end());
+            return params;
+        },
+        R"docstring(
+        Returns the design variation parameters.
+
+        :param int parameterCount: the maximum number of entries to get.
+        :return: list of parameters
+        :rtype: List[skia.FontArguments.VariationPosition.Axis]
+        )docstring",
+        py::arg("parameterCount") = 10)
     .def("uniqueID", &SkTypeface::uniqueID,
-        "Return a 32bit value for this typeface, unique for the underlying "
-        "font data.")
+        R"docstring(
+        Return a 32bit value for this typeface, unique for the underlying font
+        data.
+
+        Will never return 0.
+        )docstring")
     .def("makeClone", &SkTypeface::makeClone,
-        "Return a new typeface based on this typeface but parameterized as "
-        "specified in the SkFontArguments.")
+        R"docstring(
+        Return a new typeface based on this typeface but parameterized as
+        specified in the :py:class:`FontArguments`.
+
+        If the :py:class:`FontArguments` does not supply an argument for a
+        parameter in the font then the value from this typeface will be used as
+        the value for that argument. If the cloned typeface would be exaclty the
+        same as this typeface then this typeface may be ref'ed and returned. May
+        return nullptr on failure.
+        )docstring",
+        py::arg("fontArguments"))
     // .def("serialize",
     //     (void (SkTypeface::*)(SkWStream*, SkTypeface::SerializeBehavior) const)
     //     &SkTypeface::serialize,
@@ -144,10 +204,12 @@ typeface
     //     py::arg("stream"), py::arg("behavior") =
     //         SkTypeface::SerializeBehavior::kIncludeDataIfLocal)
     .def("serialize",
-        (sk_sp<SkData> (SkTypeface::*)(SkTypeface::SerializeBehavior) const)
-        &SkTypeface::serialize,
-        "Same as serialize(SkWStream*, ...) but returns the serialized data in "
-        "SkData, instead of writing it to a stream.",
+        py::overload_cast<SkTypeface::SerializeBehavior>(
+            &SkTypeface::serialize, py::const_),
+        R"docstring(
+        Returns a unique signature to a stream, sufficient to reconstruct a
+        typeface referencing the same font when Deserialize is called.
+        )docstring",
         py::arg("behavior") =
             SkTypeface::SerializeBehavior::kIncludeDataIfLocal)
     .def("unicharsToGlyphs", &SkTypeface::unicharsToGlyphs,

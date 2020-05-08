@@ -2,6 +2,82 @@ import skia
 import pytest
 
 
+@pytest.fixture
+def fontstyle():
+    return skia.FontStyle()
+
+
+def test_FontStyle_weight(fontstyle):
+    assert isinstance(fontstyle.weight(), int)
+
+
+def test_FontStyle_width(fontstyle):
+    assert isinstance(fontstyle.width(), int)
+
+
+def test_FontStyle_slant(fontstyle):
+    assert isinstance(fontstyle.slant(), skia.FontStyle.Slant)
+
+
+def test_FontStyle_Normal(fontstyle):
+    assert isinstance(fontstyle.Normal(), skia.FontStyle)
+
+
+def test_FontStyle_Bold(fontstyle):
+    assert isinstance(fontstyle.Bold(), skia.FontStyle)
+
+
+def test_FontStyle_Italic(fontstyle):
+    assert isinstance(fontstyle.Italic(), skia.FontStyle)
+
+
+def test_FontStyle_BoldItalic(fontstyle):
+    assert isinstance(fontstyle.BoldItalic(), skia.FontStyle)
+
+
+@pytest.fixture
+def typeface(fontmgr):
+    return fontmgr.matchFamilyStyle('Arial', skia.FontStyle())
+
+
+def test_Typeface_fontStyle(typeface):
+    assert isinstance(typeface.fontStyle(), skia.FontStyle)
+
+
+def test_Typeface_isBold(typeface):
+    assert isinstance(typeface.isBold(), bool)
+
+
+def test_Typeface_isItalic(typeface):
+    assert isinstance(typeface.isItalic(), bool)
+
+
+def test_Typeface_isFixedPitch(typeface):
+    assert isinstance(typeface.isFixedPitch(), bool)
+
+
+@pytest.mark.skip(reason='Fix me!')
+def test_Typeface_getVariationDesignPosition(typeface):
+    assert isinstance(typeface.getVariationDesignPosition(), list)
+
+
+@pytest.mark.skip(reason='Fix me!')
+def test_Typeface_getVariationDesignParameters(typeface):
+    assert isinstance(typeface.getVariationDesignParameters(), list)
+
+
+def test_Typeface_uniqueID(typeface):
+    assert isinstance(typeface.uniqueID(), int)
+
+
+def test_Typeface_makeClone(typeface):
+    assert isinstance(typeface.makeClone(skia.FontArguments()), skia.Typeface)
+
+
+def test_Typeface_serialize(typeface):
+    assert isinstance(typeface.serialize(), skia.Data)
+
+
 @pytest.fixture()
 def fontmgr():
     return skia.FontMgr.RefDefault()
