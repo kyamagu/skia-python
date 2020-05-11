@@ -78,6 +78,102 @@ def test_Typeface_serialize(typeface):
     assert isinstance(typeface.serialize(), skia.Data)
 
 
+def test_Typeface_unicharsToGlyphs(typeface):
+    assert isinstance(typeface.unicharsToGlyphs([ord('b'), ord('x')]), list)
+
+
+def test_Typeface_unicharToGlyph(typeface):
+    assert isinstance(typeface.unicharToGlyph(ord('b')), int)
+
+
+def test_Typeface_countGlyphs(typeface):
+    assert isinstance(typeface.countGlyphs(), int)
+
+
+def test_Typeface_countTables(typeface):
+    assert isinstance(typeface.countTables(), int)
+
+
+def test_Typeface_getTableTags(typeface):
+    assert isinstance(typeface.getTableTags(), list)
+
+
+def test_Typeface_getTableSize(typeface):
+    assert isinstance(typeface.getTableSize(0), int)
+
+
+def test_Typeface_getTableData(typeface):
+    assert isinstance(typeface.getTableData(0), bytes)
+
+
+def test_Typeface_copyTableData(typeface):
+    assert isinstance(typeface.copyTableData(0), (skia.Data, type(None)))
+
+
+def test_Typeface_getUnitsPerEm(typeface):
+    assert isinstance(typeface.getUnitsPerEm(), int)
+
+
+def test_Typeface_getKerningPairAdjustments(typeface):
+    assert isinstance(
+        typeface.getKerningPairAdjustments([0]), (list, type(None)))
+
+
+def test_Typeface_getFamilyNames(typeface):
+    result = typeface.getFamilyNames()
+    assert isinstance(result, list)
+    for item in result:
+        assert isinstance(item, tuple)
+
+
+def test_Typeface_getFamilyName(typeface):
+    assert isinstance(typeface.getFamilyName(), str)
+
+
+def test_Typeface_getBounds(typeface):
+    assert isinstance(typeface.getBounds(), skia.Rect)
+
+
+def test_Typeface_UniqueID(typeface):
+    assert isinstance(skia.Typeface.UniqueID(typeface), int)
+
+
+def test_Typeface_Equal(typeface):
+    assert isinstance(skia.Typeface.Equal(typeface, typeface), bool)
+
+
+def test_Typeface_MakeDefault(typeface):
+    assert isinstance(skia.Typeface.MakeDefault(), skia.Typeface)
+
+
+def test_Typeface_MakeFromName(typeface):
+    assert isinstance(
+        skia.Typeface.MakeFromName('Arial', skia.FontStyle()), skia.Typeface)
+
+
+@pytest.mark.parametrize('args', [
+    ('foo',),
+    ('foo', 0,),
+])
+def test_Typeface_MakeFromFile(typeface, args):
+    assert isinstance(
+        skia.Typeface.MakeFromFile(*args), (skia.Typeface, type(None)))
+
+
+@pytest.mark.parametrize('args', [
+    (skia.Data.MakeEmpty(),),
+    (skia.Data.MakeEmpty(), 0,),
+])
+def test_Typeface_MakeFromData(typeface, args):
+    assert isinstance(
+        skia.Typeface.MakeFromData(*args), (skia.Typeface, type(None)))
+
+
+def test_Typeface_MakeDeserialize(typeface):
+    assert isinstance(
+        skia.Typeface.MakeDeserialize(typeface.serialize()), skia.Typeface)
+
+
 @pytest.fixture()
 def fontmgr():
     return skia.FontMgr.RefDefault()

@@ -212,71 +212,237 @@ typeface
         )docstring",
         py::arg("behavior") =
             SkTypeface::SerializeBehavior::kIncludeDataIfLocal)
-    .def("unicharsToGlyphs", &SkTypeface::unicharsToGlyphs,
-        "Given an array of UTF32 character codes, return their corresponding "
-        "glyph IDs.")
+    .def("unicharsToGlyphs",
+        [] (const SkTypeface& typeface, const std::vector<SkUnichar>& chars) {
+            std::vector<SkGlyphID> glyphs(chars.size());
+            typeface.unicharsToGlyphs(&chars[0], chars.size(), &glyphs[0]);
+            return glyphs;
+        },
+        R"docstring(
+        Given an array of UTF32 character codes, return their corresponding
+        glyph IDs.
+
+        :param chars: the array of UTF32 chars.
+        :return: the corresponding glyph IDs for each character.
+        )docstring",
+        py::arg("chars"))
     .def("unicharToGlyph", &SkTypeface::unicharToGlyph,
-        "Return the glyphID that corresponds to the specified unicode "
-        "code-point (in UTF32 encoding).")
+        R"docstring(
+        Return the glyphID that corresponds to the specified unicode code-point
+        (in UTF32 encoding).
+
+        If the unichar is not supported, returns 0.
+
+        This is a short-cut for calling :py:meth:`unicharsToGlyphs`.
+        )docstring",
+        py::arg("unichar"))
     .def("countGlyphs", &SkTypeface::countGlyphs,
-        "Return the number of glyphs in the typeface.")
+        R"docstring(
+        Return the number of glyphs in the typeface.
+        )docstring")
     .def("countTables", &SkTypeface::countTables,
-        "Return the number of tables in the font.")
-    .def("getTableTags", &SkTypeface::getTableTags,
-        "Copy into tags[] (allocated by the caller) the list of table tags in "
-        "the font, and return the number.")
+        R"docstring(
+        Return the number of tables in the font.
+        )docstring")
+    .def("getTableTags",
+        [] (const SkTypeface& typeface) {
+            std::vector<SkFontTableTag> tags(typeface.countTables());
+            size_t size = typeface.getTableTags(&tags[0]);
+            if (size < tags.size())
+                throw std::runtime_error("Failed to get table tags.");
+            return tags;
+        },
+        R"docstring(
+        Returns the list of table tags in the font.
+        )docstring")
     .def("getTableSize", &SkTypeface::getTableSize,
-        "Given a table tag, return the size of its contents, or 0 if not "
-        "present.")
-    .def("getTableData", &SkTypeface::getTableData,
-        "Given a table tag, return the size of its contents, or 0 if not "
-        "present.")
+        R"docstring(
+        Given a table tag, return the size of its contents, or 0 if not present.
+        )docstring",
+        py::arg("tag"))
+    .def("getTableData",
+        [] (const SkTypeface& typeface, SkFontTableTag tag) {
+            size_t size = typeface.getTableSize(tag);
+            std::vector<char> data(size);
+            auto written = typeface.getTableData(tag, 0, data.size(), &data[0]);
+            if (written == 0 && size > 0)
+                throw std::runtime_error("Failed to get table data.");
+            return py::bytes(&data[0], data.size());
+        },
+        R"docstring(
+        Returns the contents of a table.
+
+        Note that the contents of the table will be in their native endian order
+        (which for most truetype tables is big endian). If the table tag is not
+        found, or there is an error copying the data, then 0 is returned. If
+        this happens, it is possible that some or all of the memory pointed to
+        by data may have been written to, even though an error has occured.
+
+        :param tag: The table tag whose contents are to be copied.
+        :return: table contents
+        )docstring",
+        py::arg("tag"))
     .def("copyTableData", &SkTypeface::copyTableData,
-        "Return an immutable copy of the requested font table, or nullptr if "
-        "that table was not found.")
+        R"docstring(
+        Return an immutable copy of the requested font table, or nullptr if that
+        table was not found.
+
+        This can sometimes be faster than calling :py:meth:`getTableData` twice:
+        once to find the length, and then again to copy the data.
+
+        :param tag: The table tag whose contents are to be copied
+        :return: an immutable copy of the table's data, or nullptr.
+        )docstring",
+        py::arg("tag"))
     .def("getUnitsPerEm", &SkTypeface::getUnitsPerEm,
-        "Return the units-per-em value for this typeface, or zero if there is "
-        "an error.")
-    .def("getKerningPairAdjustments", &SkTypeface::getKerningPairAdjustments,
-        "Given a run of glyphs, return the associated horizontal adjustments.")
-    // .def("createFamilyNameIterator", &SkTypeface::createFamilyNameIterator,
-    //     "Returns an iterator which will attempt to enumerate all of the "
-    //     "family names specified by the font.")
-    // .def("getFamilyName", &SkTypeface::getFamilyName,
-    //     "Return the family name for this typeface.")
+        R"docstring(
+        Return the units-per-em value for this typeface, or zero if there is an
+        error.
+        )docstring")
+    .def("getKerningPairAdjustments",
+        [] (const SkTypeface& typeface,
+            const std::vector<SkGlyphID>& glyphs) -> py::object {
+            std::vector<int32_t> adjustments(glyphs.size() - 1);
+            auto result = typeface.getKerningPairAdjustments(
+                &glyphs[0], glyphs.size(), &adjustments[0]);
+            if (!result) {
+                // Kerning is not supported for this typeface.
+                return py::none();
+            }
+            return py::cast(adjustments);
+        },
+        R"docstring(
+        Given a run of glyphs, return the associated horizontal adjustments.
+
+        Adjustments are in "design units", which are integers relative to the
+        typeface's units per em (see getUnitsPerEm).
+
+        Some typefaces are known to never support kerning. If the typeface does
+        not support kerning, then this method will return None (no kerning) for
+        all possible glyph runs.
+        )docstring",
+        py::arg("glyphs"))
+    .def("getFamilyNames",
+        [] (const SkTypeface& typeface) {
+            SkTypeface::LocalizedString name;
+            py::list results;
+            auto it = typeface.createFamilyNameIterator();
+            if (!it)
+                throw std::runtime_error("Null pointer exception");
+            while (it->next(&name)) {
+                auto fString = py::str(
+                    name.fString.c_str(), name.fString.size());
+                auto fLanguage = py::str(
+                    name.fLanguage.c_str(), name.fLanguage.size());
+                results.append(py::make_tuple(fString, fLanguage));
+            }
+            it->unref();
+            return results;
+        },
+        R"docstring(
+        Returns a list of (family name, language) pairs specified by the font.
+        )docstring")
+    .def("getFamilyName",
+        [] (const SkTypeface& typeface) {
+            SkString name;
+            typeface.getFamilyName(&name);
+            return py::str(name.c_str(), name.size());
+        },
+        R"docstring(
+        Return the family name for this typeface.
+
+        It will always be returned encoded as UTF8, but the language of the name
+        is whatever the host platform chooses.
+        )docstring")
     // .def("openStream", &SkTypeface::openStream,
     //     "Return a stream for the contents of the font data, or NULL on "
     //     "failure.")
     // .def("makeFontData", &SkTypeface::makeFontData,
-    //     "Return the font data, or nullptr on failure.")
+    //     R"docstring(
+    //     Return the font data, or nullptr on failure.
+    //     )docstring")
     // .def("createScalerContext", &SkTypeface::createScalerContext,
     //     "Return a scalercontext for the given descriptor.")
     .def("getBounds", &SkTypeface::getBounds,
-        "Return a rectangle (scaled to 1-pt) that represents the union of the "
-        "bounds of all of the glyphs, but each one positioned at (0,).")
+        R"docstring(
+        Return a rectangle (scaled to 1-pt) that represents the union of the
+        bounds of all of the glyphs, but each one positioned at (0,).
+
+        This may be conservatively large, and will not take into account any
+        hinting or other size-specific adjustments.
+        )docstring")
     // .def("filterRec", &SkTypeface::filterRec)
     // .def("getFontDescriptor", &SkTypeface::getFontDescriptor)
     .def_static("UniqueID", &SkTypeface::UniqueID,
-        "Return the uniqueID for the specified typeface.")
+        R"docstring(
+        Return the uniqueID for the specified typeface.
+
+        If the face is null, resolve it to the default font and return its
+        uniqueID. Will never return 0.
+        )docstring",
+        py::arg("typeface"))
     .def_static("Equal", &SkTypeface::Equal,
-        "Returns true if the two typefaces reference the same underlying font, "
-        "handling either being null (treating null as the default font)")
+        R"docstring(
+        Returns true if the two typefaces reference the same underlying font,
+        handling either being null (treating null as the default font)
+        )docstring")
     .def_static("MakeDefault", &SkTypeface::MakeDefault,
-        "Returns the default normal typeface, which is never nullptr.")
-    .def_static("MakeFromName", &SkTypeface::MakeFromName,
-        "Creates a new reference to the typeface that most closely matches the "
-        "requested familyName and fontStyle.")
-    .def_static("MakeFromFile", &SkTypeface::MakeFromFile,
-        "Return a new typeface given a file.")
+        R"docstring(
+        Returns the default normal typeface, which is never nullptr.
+        )docstring")
+    .def_static("MakeFromName",
+        [] (const std::string* familyName, const SkFontStyle& fontStyle) {
+            return SkTypeface::MakeFromName(
+                (familyName) ? familyName->c_str() : nullptr, fontStyle);
+        },
+        R"docstring(
+        Creates a new reference to the typeface that most closely matches the
+        requested familyName and fontStyle.
+
+        This method allows extended font face specifiers as in the
+        :py:class:`FontStyle` type. Will never return null.
+
+        :param familyName:  May be NULL. The name of the font family.
+        :param fontStyle:   The style of the typeface.
+        :return: reference to the closest-matching typeface.
+        )docstring",
+        py::arg("familyName"), py::arg("fontStyle"))
+    .def_static("MakeFromFile",
+        [] (const std::string& path, int index) {
+            return SkTypeface::MakeFromFile(&path[0], index);
+        },
+        R"docstring(
+        Return a new typeface given a file.
+
+        If the file does not exist, or is not a valid font file, returns
+        nullptr.
+        )docstring",
+        py::arg("path"), py::arg("index") = 0)
     // .def_static("MakeFromStream", &SkTypeface::MakeFromStream,
     //     "Return a new typeface given a stream.")
     .def_static("MakeFromData", &SkTypeface::MakeFromData,
-        "Return a new typeface given a SkData.")
+        R"docstring(
+        Return a new typeface given a :py:class:`Data`.
+
+        If the data is null, or is not a valid font file, returns nullptr.
+
+        Use :py:meth:`MakeDeserialize` for the result of :py:meth:`serialize`.
+        )docstring",
+        py::arg("data"), py::arg("index") = 0)
     // .def_static("MakeFromFontData", &SkTypeface::MakeFromFontData,
     //     "Return a new typeface given font data and configuration.")
-    // .def_static("MakeDeserialize", &SkTypeface::MakeDeserialize,
-    //     "Given the data previously written by serialize(), return a new "
-    //     "instance of a typeface referring to the same font.")
+    .def_static("MakeDeserialize",
+        [] (const sk_sp<SkData>& data) {
+            SkMemoryStream stream(data);
+            return SkTypeface::MakeDeserialize(&stream);
+        },
+        R"docstring(
+        Given the data previously written by :py:meth:`serialize`, return a new
+        instance of a typeface referring to the same font.
+
+        If that font is not available, return nullptr.
+        )docstring",
+        py::arg("dats"))
     ;
 
 // FontMgr
@@ -434,7 +600,7 @@ py::enum_<SkFont::Edging>(font, "Edging", R"docstring(
     .export_values();
 
 font
-    .def(py::init<>(), "Constructs SkFont with default values.")
+    .def(py::init<>(), "Constructs :py:class:`Font` with default values.")
     .def(py::init<sk_sp<SkTypeface>, SkScalar>(),
         "Constructs SkFont with default values with SkTypeface and size in "
         "points.")
