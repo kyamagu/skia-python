@@ -151,4 +151,4 @@ Once skia-python is installed, sphinx documentation can be built:
 .. code-block:: bash
 
     python -m pip install sphinx
-    make -C docs html
+    python setup.py build_sphinx
