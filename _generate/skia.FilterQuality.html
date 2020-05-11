@@ -4,7 +4,7 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <title>FilterQuality &#8212; skia-python 0.0.1 documentation</title>
+    <title>FilterQuality &#8212; skia-python 0.0.2 documentation</title>
     <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
@@ -43,11 +43,11 @@ colors e.g. image.</p>
 </div></blockquote>
 <p>Members:</p>
 <blockquote>
-<div><p>kLast_FilterQuality</p>
-<p>kLow_FilterQuality : typically bilerp</p>
-<p>kMedium_FilterQuality : typically bilerp + mipmaps for down-scaling</p>
+<div><p>kNone_FilterQuality : fastest but lowest quality, typically nearest-neighbor</p>
 <p>kHigh_FilterQuality : slowest but highest quality, typically bicubic or better</p>
-<p>kNone_FilterQuality : fastest but lowest quality, typically nearest-neighbor</p>
+<p>kLow_FilterQuality : typically bilerp</p>
+<p>kLast_FilterQuality</p>
+<p>kMedium_FilterQuality : typically bilerp + mipmaps for down-scaling</p>
 </div></blockquote>
 <p class="rubric">Methods</p>
 <table class="longtable docutils align-default">
@@ -102,12 +102,12 @@ colors e.g. image.</p>
 <h2>Attributes<a class="headerlink" href="#attributes" title="Permalink to this headline">¶</a></h2>
 <dl class="py attribute">
 <dt id="skia.FilterQuality.kHigh_FilterQuality">
-<code class="sig-prename descclassname">FilterQuality.</code><code class="sig-name descname">kHigh_FilterQuality</code><em class="property"> = FilterQuality.kLast_FilterQuality</em><a class="headerlink" href="#skia.FilterQuality.kHigh_FilterQuality" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">FilterQuality.</code><code class="sig-name descname">kHigh_FilterQuality</code><em class="property"> = FilterQuality.kHigh_FilterQuality</em><a class="headerlink" href="#skia.FilterQuality.kHigh_FilterQuality" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt id="skia.FilterQuality.kLast_FilterQuality">
-<code class="sig-prename descclassname">FilterQuality.</code><code class="sig-name descname">kLast_FilterQuality</code><em class="property"> = FilterQuality.kLast_FilterQuality</em><a class="headerlink" href="#skia.FilterQuality.kLast_FilterQuality" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">FilterQuality.</code><code class="sig-name descname">kLast_FilterQuality</code><em class="property"> = FilterQuality.kHigh_FilterQuality</em><a class="headerlink" href="#skia.FilterQuality.kLast_FilterQuality" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
@@ -200,11 +200,19 @@ colors e.g. image.</p>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">FilterQuality</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.Flattanable.html">Flattanable</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.Font.html">Font</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.Font.Edging.html">Font.Edging</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.FontArguments.html">FontArguments</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.FontArguments.VariationPosition.html">FontArguments.VariationPosition</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.FontArguments.VariationPosition.Coordinate.html">FontArguments.VariationPosition.Coordinate</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.FontArguments.VariationPosition.Coordinates.html">FontArguments.VariationPosition.Coordinates</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.FontHinting.html">FontHinting</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.FontMetrics.html">FontMetrics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.FontMetrics.FontMetricsFlags.html">FontMetrics.FontMetricsFlags</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.FontMgr.html">FontMgr</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.FontStyle.html">FontStyle</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.FontStyle.Weight.html">FontStyle.Weight</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.FontStyle.Width.html">FontStyle.Width</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.FontStyle.Slant.html">FontStyle.Slant</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.FontStyleSet.html">FontStyleSet</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.GradientShader.html">GradientShader</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.GradientShader.Flags.html">GradientShader.Flags</a></li>
@@ -302,6 +310,7 @@ colors e.g. image.</p>
 <li class="toctree-l2"><a class="reference internal" href="skia.TrimPathEffect.html">TrimPathEffect</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.TrimPathEffect.Mode.html">TrimPathEffect.Mode</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.Typeface.html">Typeface</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.Typeface.SerializeBehavior.html">Typeface.SerializeBehavior</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.Vertices.html">Vertices</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.XfermodeImageFilter.html">XfermodeImageFilter</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.YUVColorSpace.html">YUVColorSpace</a></li>

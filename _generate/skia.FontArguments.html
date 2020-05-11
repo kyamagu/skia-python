@@ -4,7 +4,7 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <title>FontArguments &#8212; skia-python 0.0.1 documentation</title>
+    <title>FontArguments &#8212; skia-python 0.0.2 documentation</title>
     <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
@@ -14,8 +14,8 @@
     <script src="../_static/language_data.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="FontHinting" href="skia.FontHinting.html" />
-    <link rel="prev" title="Font" href="skia.Font.html" />
+    <link rel="next" title="FontArguments.VariationPosition" href="skia.FontArguments.VariationPosition.html" />
+    <link rel="prev" title="Font.Edging" href="skia.Font.Edging.html" />
    
   <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
   
@@ -38,6 +38,24 @@
 <dt id="skia.FontArguments">
 <em class="property">class </em><code class="sig-name descname">FontArguments</code><a class="headerlink" href="#skia.FontArguments" title="Permalink to this definition">¶</a></dt>
 <dd><p>Represents a set of actual arguments for a font.</p>
+<p class="rubric">Classes</p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="skia.FontArguments.VariationPosition.html#skia.FontArguments.VariationPosition" title="skia.FontArguments.VariationPosition"><code class="xref py py-obj docutils literal notranslate"><span class="pre">VariationPosition</span></code></a></p></td>
+<td><p>Container of coordinates.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="skia.FontArguments.VariationPosition.Coordinate.html#skia.FontArguments.VariationPosition.Coordinate" title="skia.FontArguments.VariationPosition.Coordinate"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Coordinate</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="skia.FontArguments.VariationPosition.Coordinates.html#skia.FontArguments.VariationPosition.Coordinates" title="skia.FontArguments.VariationPosition.Coordinates"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Coordinates</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+</tbody>
+</table>
 <p class="rubric">Methods</p>
 <table class="longtable docutils align-default">
 <colgroup>
@@ -48,23 +66,17 @@
 <tr class="row-odd"><td><p><a class="reference internal" href="#skia.FontArguments.__init__" title="skia.FontArguments.__init__"><code class="xref py py-obj docutils literal notranslate"><span class="pre">__init__</span></code></a></p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#skia.FontArguments.getAxes" title="skia.FontArguments.getAxes"><code class="xref py py-obj docutils literal notranslate"><span class="pre">getAxes</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.FontArguments.getCollectionIndex" title="skia.FontArguments.getCollectionIndex"><code class="xref py py-obj docutils literal notranslate"><span class="pre">getCollectionIndex</span></code></a></p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#skia.FontArguments.getCollectionIndex" title="skia.FontArguments.getCollectionIndex"><code class="xref py py-obj docutils literal notranslate"><span class="pre">getCollectionIndex</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#skia.FontArguments.getVariationDesignPosition" title="skia.FontArguments.getVariationDesignPosition"><code class="xref py py-obj docutils literal notranslate"><span class="pre">getVariationDesignPosition</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#skia.FontArguments.setAxes" title="skia.FontArguments.setAxes"><code class="xref py py-obj docutils literal notranslate"><span class="pre">setAxes</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.FontArguments.getVariationDesignPosition" title="skia.FontArguments.getVariationDesignPosition"><code class="xref py py-obj docutils literal notranslate"><span class="pre">getVariationDesignPosition</span></code></a></p></td>
 <td><p></p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#skia.FontArguments.setCollectionIndex" title="skia.FontArguments.setCollectionIndex"><code class="xref py py-obj docutils literal notranslate"><span class="pre">setCollectionIndex</span></code></a></p></td>
-<td><p></p></td>
+<td><p>Specify the index of the desired font.</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#skia.FontArguments.setVariationDesignPosition" title="skia.FontArguments.setVariationDesignPosition"><code class="xref py py-obj docutils literal notranslate"><span class="pre">setVariationDesignPosition</span></code></a></p></td>
-<td><p></p></td>
+<td><p>Specify a position in the variation design space.</p></td>
 </tr>
 </tbody>
 </table>
@@ -78,34 +90,36 @@
 <dd></dd></dl>
 
 <dl class="py method">
-<dt id="skia.FontArguments.getAxes">
-<code class="sig-prename descclassname">FontArguments.</code><code class="sig-name descname">getAxes</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.FontArguments" title="skia.FontArguments">skia.FontArguments</a></span></em>, <em class="sig-param"><span class="n">arg0</span><span class="p">:</span> <span class="n">int</span></em><span class="sig-paren">)</span> &#x2192; skia.FontArguments.Axis<a class="headerlink" href="#skia.FontArguments.getAxes" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py method">
 <dt id="skia.FontArguments.getCollectionIndex">
 <code class="sig-prename descclassname">FontArguments.</code><code class="sig-name descname">getCollectionIndex</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.FontArguments" title="skia.FontArguments">skia.FontArguments</a></span></em><span class="sig-paren">)</span> &#x2192; int<a class="headerlink" href="#skia.FontArguments.getCollectionIndex" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
 <dt id="skia.FontArguments.getVariationDesignPosition">
-<code class="sig-prename descclassname">FontArguments.</code><code class="sig-name descname">getVariationDesignPosition</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.FontArguments" title="skia.FontArguments">skia.FontArguments</a></span></em><span class="sig-paren">)</span> &#x2192; skia.FontArguments.VariationPosition<a class="headerlink" href="#skia.FontArguments.getVariationDesignPosition" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py method">
-<dt id="skia.FontArguments.setAxes">
-<code class="sig-prename descclassname">FontArguments.</code><code class="sig-name descname">setAxes</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.FontArguments" title="skia.FontArguments">skia.FontArguments</a></span></em>, <em class="sig-param"><span class="n">arg0</span><span class="p">:</span> <span class="n">skia.FontArguments.Axis</span></em>, <em class="sig-param"><span class="n">arg1</span><span class="p">:</span> <span class="n">int</span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="#skia.FontArguments" title="skia.FontArguments">skia.FontArguments</a><a class="headerlink" href="#skia.FontArguments.setAxes" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">FontArguments.</code><code class="sig-name descname">getVariationDesignPosition</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.FontArguments" title="skia.FontArguments">skia.FontArguments</a></span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="skia.FontArguments.VariationPosition.html#skia.FontArguments.VariationPosition" title="skia.FontArguments.VariationPosition">skia.FontArguments.VariationPosition</a><a class="headerlink" href="#skia.FontArguments.getVariationDesignPosition" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
 <dt id="skia.FontArguments.setCollectionIndex">
-<code class="sig-prename descclassname">FontArguments.</code><code class="sig-name descname">setCollectionIndex</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.FontArguments" title="skia.FontArguments">skia.FontArguments</a></span></em>, <em class="sig-param"><span class="n">arg0</span><span class="p">:</span> <span class="n">int</span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="#skia.FontArguments" title="skia.FontArguments">skia.FontArguments</a><a class="headerlink" href="#skia.FontArguments.setCollectionIndex" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<code class="sig-prename descclassname">FontArguments.</code><code class="sig-name descname">setCollectionIndex</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.FontArguments" title="skia.FontArguments">skia.FontArguments</a></span></em>, <em class="sig-param"><span class="n">collectionIndex</span><span class="p">:</span> <span class="n">int</span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="#skia.FontArguments" title="skia.FontArguments">skia.FontArguments</a><a class="headerlink" href="#skia.FontArguments.setCollectionIndex" title="Permalink to this definition">¶</a></dt>
+<dd><p>Specify the index of the desired font.</p>
+<p>Font formats like ttc, dfont, cff, cid, pfr, t42, t1, and fon may
+actually be indexed collections of fonts.</p>
+</dd></dl>
 
 <dl class="py method">
 <dt id="skia.FontArguments.setVariationDesignPosition">
-<code class="sig-prename descclassname">FontArguments.</code><code class="sig-name descname">setVariationDesignPosition</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.FontArguments" title="skia.FontArguments">skia.FontArguments</a></span></em>, <em class="sig-param"><span class="n">arg0</span><span class="p">:</span> <span class="n">skia.FontArguments.VariationPosition</span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="#skia.FontArguments" title="skia.FontArguments">skia.FontArguments</a><a class="headerlink" href="#skia.FontArguments.setVariationDesignPosition" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<code class="sig-prename descclassname">FontArguments.</code><code class="sig-name descname">setVariationDesignPosition</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.FontArguments" title="skia.FontArguments">skia.FontArguments</a></span></em>, <em class="sig-param"><span class="n">position</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.FontArguments.VariationPosition.html#skia.FontArguments.VariationPosition" title="skia.FontArguments.VariationPosition">skia.FontArguments.VariationPosition</a></span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="#skia.FontArguments" title="skia.FontArguments">skia.FontArguments</a><a class="headerlink" href="#skia.FontArguments.setVariationDesignPosition" title="Permalink to this definition">¶</a></dt>
+<dd><p>Specify a position in the variation design space.</p>
+<p>Any axis not specified will use the default value. Any specified axis
+not actually present in the font will be ignored.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>position</strong> – not copied. The value must remain valid for life of
+<a class="reference internal" href="#skia.FontArguments" title="skia.FontArguments"><code class="xref py py-class docutils literal notranslate"><span class="pre">FontArguments</span></code></a>.</p>
+</dd>
+</dl>
+</dd></dl>
 
 </div>
 </div>
@@ -171,11 +185,19 @@
 <li class="toctree-l2"><a class="reference internal" href="skia.FilterQuality.html">FilterQuality</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.Flattanable.html">Flattanable</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.Font.html">Font</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.Font.Edging.html">Font.Edging</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">FontArguments</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.FontArguments.VariationPosition.html">FontArguments.VariationPosition</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.FontArguments.VariationPosition.Coordinate.html">FontArguments.VariationPosition.Coordinate</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.FontArguments.VariationPosition.Coordinates.html">FontArguments.VariationPosition.Coordinates</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.FontHinting.html">FontHinting</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.FontMetrics.html">FontMetrics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.FontMetrics.FontMetricsFlags.html">FontMetrics.FontMetricsFlags</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.FontMgr.html">FontMgr</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.FontStyle.html">FontStyle</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.FontStyle.Weight.html">FontStyle.Weight</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.FontStyle.Width.html">FontStyle.Width</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.FontStyle.Slant.html">FontStyle.Slant</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.FontStyleSet.html">FontStyleSet</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.GradientShader.html">GradientShader</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.GradientShader.Flags.html">GradientShader.Flags</a></li>
@@ -273,6 +295,7 @@
 <li class="toctree-l2"><a class="reference internal" href="skia.TrimPathEffect.html">TrimPathEffect</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.TrimPathEffect.Mode.html">TrimPathEffect.Mode</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.Typeface.html">Typeface</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.Typeface.SerializeBehavior.html">Typeface.SerializeBehavior</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.Vertices.html">Vertices</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.XfermodeImageFilter.html">XfermodeImageFilter</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.YUVColorSpace.html">YUVColorSpace</a></li>
@@ -285,8 +308,8 @@
 <ul>
   <li><a href="../index.html">Documentation overview</a><ul>
   <li><a href="../reference.html">Reference</a><ul>
-      <li>Previous: <a href="skia.Font.html" title="previous chapter">Font</a></li>
-      <li>Next: <a href="skia.FontHinting.html" title="next chapter">FontHinting</a></li>
+      <li>Previous: <a href="skia.Font.Edging.html" title="previous chapter">Font.Edging</a></li>
+      <li>Next: <a href="skia.FontArguments.VariationPosition.html" title="next chapter">FontArguments.VariationPosition</a></li>
   </ul></li>
   </ul></li>
 </ul>
