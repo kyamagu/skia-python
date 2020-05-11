@@ -11,7 +11,7 @@ try:
 except ImportError:
     pass
 
-
+NAME = 'skia-python'
 __version__ = '0.0.2'
 
 SKIA_PATH = os.getenv('SKIA_PATH', 'skia')
@@ -138,7 +138,7 @@ extension = Extension(
 
 
 setup(
-    name='skia-python',
+    name=NAME,
     version=__version__,
     author='Kota Yamaguchi',
     author_email='KotaYamaguchi1984@gmail.com',
@@ -149,5 +149,14 @@ setup(
     install_requires=['pybind11>=2.4'],
     setup_requires=['pybind11>=2.4'],
     cmdclass={'build_ext': BuildExt},
+    command_options={
+        'build_sphinx': {
+            'project': ('setup.py', NAME),
+            'version': ('setup.py', __version__),
+            'release': ('setup.py', __version__),
+            'source_dir': ('setup.py', 'docs'),
+            'build_dir': ('setup.py', 'docs/_build'),
+        },
+    },
     zip_safe=False,
 )

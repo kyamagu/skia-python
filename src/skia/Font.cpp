@@ -1,9 +1,33 @@
 #include "common.h"
 #include <pybind11/stl.h>
+#include <pybind11/stl_bind.h>
+#include <pybind11/iostream.h>
+
+using Coordinate = SkFontArguments::VariationPosition::Coordinate;
+
+PYBIND11_MAKE_OPAQUE(std::vector<Coordinate>);
+
+void SetVariationPositionCoordinates(
+    SkFontArguments::VariationPosition& vp,
+    const std::vector<Coordinate>& coords) {
+    vp.coordinates = &coords[0];
+    vp.coordinateCount = coords.size();
+}
+
 
 void initFont(py::module &m) {
 // FontStyle
-py::class_<SkFontStyle> fontstyle(m, "FontStyle");
+py::class_<SkFontStyle> fontstyle(m, "FontStyle",
+    R"docstring(
+    .. rubric:: Classes
+
+    .. autosummary::
+        :nosignatures:
+
+        ~FontStyle.Weight
+        ~FontStyle.Width
+        ~FontStyle.Slant
+    )docstring");
 
 py::enum_<SkFontStyle::Weight>(fontstyle, "Weight")
     .value("kInvisible_Weight", SkFontStyle::Weight::kInvisible_Weight)
@@ -52,45 +76,92 @@ fontstyle
 // Typeface
 py::class_<SkFontArguments> fontarguments(m, "FontArguments", R"docstring(
     Represents a set of actual arguments for a font.
+
+    .. rubric:: Classes
+
+    .. autosummary::
+        :nosignatures:
+
+        ~skia.FontArguments.VariationPosition
+        ~skia.FontArguments.VariationPosition.Coordinate
+        ~skia.FontArguments.VariationPosition.Coordinates
     )docstring");
 
-py::class_<SkFontArguments::Axis>(fontarguments, "Axis")
-    .def_readwrite("fStyleValue", &SkFontArguments::Axis::fStyleValue)
-    .def_readwrite("fTag", &SkFontArguments::Axis::fTag)
-    ;
+// py::class_<SkFontArguments::Axis>(fontarguments, "Axis")
+//     .def_readwrite("fStyleValue", &SkFontArguments::Axis::fStyleValue)
+//     .def_readwrite("fTag", &SkFontArguments::Axis::fTag)
+//     ;
 
-py::class_<SkFontArguments::VariationPosition>
-    variationposition(fontarguments, "VariationPosition");
+py::class_<SkFontArguments::VariationPosition> variationposition(
+    fontarguments, "VariationPosition",
+    R"docstring(
+    Container of coordinates.
 
-py::class_<SkFontArguments::VariationPosition::Coordinate>(
+    .. rubric:: Classes
+
+    .. autosummary::
+        :nosignatures:
+
+        ~skia.FontArguments.VariationPosition.Coordinate
+        ~skia.FontArguments.VariationPosition.Coordinates
+    )docstring");
+
+py::class_<Coordinate>(
     variationposition, "Coordinate")
-    .def_readwrite("axis",
-        &SkFontArguments::VariationPosition::Coordinate::axis)
-    .def_readwrite("value",
-        &SkFontArguments::VariationPosition::Coordinate::value)
+    .def(py::init(
+        [] (SkFourByteTag axis, float value) {
+            return Coordinate({axis, value});
+        }),
+        py::arg("axis"), py::arg("value"))
+    .def_readwrite("axis", &Coordinate::axis)
+    .def_readwrite("value", &Coordinate::value)
     ;
+
+py::bind_vector<std::vector<Coordinate>>(variationposition, "Coordinates");
 
 variationposition
-    .def_property_readonly("coordinates",
+    .def(py::init(
+        [] (const std::vector<Coordinate>& coordinates) {
+            SkFontArguments::VariationPosition vp;
+            SetVariationPositionCoordinates(vp, coordinates);
+            return vp;
+        }),
+        py::arg("coordinates"))
+    .def_property("coordinates",
         [] (const SkFontArguments::VariationPosition& vp) {
-            auto coords = py::list(vp.coordinateCount);
-            for (int i = 0; i < vp.coordinateCount; ++i)
-                coords[i] = py::cast(vp.coordinates[i]);
-            return coords;
-        })
+            return std::vector<Coordinate>(
+                vp.coordinates, vp.coordinates + vp.coordinateCount);
+        },
+        &SetVariationPositionCoordinates)
     .def_readonly("coordinateCount",
         &SkFontArguments::VariationPosition::coordinateCount)
     ;
 
 fontarguments
     .def(py::init<>())
-    .def("setCollectionIndex", &SkFontArguments::setCollectionIndex)
-    .def("setAxes", &SkFontArguments::setAxes)
+    .def("setCollectionIndex", &SkFontArguments::setCollectionIndex,
+        R"docstring(
+        Specify the index of the desired font.
+
+        Font formats like ttc, dfont, cff, cid, pfr, t42, t1, and fon may
+        actually be indexed collections of fonts.
+        )docstring",
+        py::arg("collectionIndex"))
+    // .def("setAxes", &SkFontArguments::setAxes)
     .def("setVariationDesignPosition",
-        &SkFontArguments::setVariationDesignPosition)
+        &SkFontArguments::setVariationDesignPosition,
+        R"docstring(
+        Specify a position in the variation design space.
+
+        Any axis not specified will use the default value. Any specified axis
+        not actually present in the font will be ignored.
+
+        :param position: not copied. The value must remain valid for life of
+            :py:class:`FontArguments`.
+        )docstring",
+        py::arg("position"))
     .def("getCollectionIndex", &SkFontArguments::getCollectionIndex)
-    .def("getAxes", &SkFontArguments::getAxes,
-        py::return_value_policy::reference)
+    // .def("getAxes", &SkFontArguments::getAxes)
     .def("getVariationDesignPosition",
         &SkFontArguments::getVariationDesignPosition)
     ;
@@ -105,6 +176,13 @@ py::class_<SkTypeface, sk_sp<SkTypeface>, SkRefCnt> typeface(
     appears when drawn (and measured).
 
     Typeface objects are immutable, and so they can be shared between threads.
+
+    .. rubric:: Classes
+
+    .. autosummary::
+        :nosignatures:
+
+        ~Typeface.SerializeBehavior
     )docstring");
 
 py::enum_<SkTypeface::SerializeBehavior>(typeface, "SerializeBehavior",
@@ -196,13 +274,7 @@ typeface
         return nullptr on failure.
         )docstring",
         py::arg("fontArguments"))
-    // .def("serialize",
-    //     (void (SkTypeface::*)(SkWStream*, SkTypeface::SerializeBehavior) const)
-    //     &SkTypeface::serialize,
-    //     "Write a unique signature to a stream, sufficient to reconstruct a "
-    //     "typeface referencing the same font when Deserialize is called.",
-    //     py::arg("stream"), py::arg("behavior") =
-    //         SkTypeface::SerializeBehavior::kIncludeDataIfLocal)
+    // .def("serialize", &SkTypeface::serialize)
     .def("serialize",
         py::overload_cast<SkTypeface::SerializeBehavior>(
             &SkTypeface::serialize, py::const_),
@@ -222,7 +294,7 @@ typeface
         Given an array of UTF32 character codes, return their corresponding
         glyph IDs.
 
-        :param chars: the array of UTF32 chars.
+        :param List[int] chars: the array of UTF32 chars.
         :return: the corresponding glyph IDs for each character.
         )docstring",
         py::arg("chars"))
@@ -278,7 +350,7 @@ typeface
         this happens, it is possible that some or all of the memory pointed to
         by data may have been written to, even though an error has occured.
 
-        :param tag: The table tag whose contents are to be copied.
+        :param int tag: The table tag whose contents are to be copied.
         :return: table contents
         )docstring",
         py::arg("tag"))
@@ -402,8 +474,8 @@ typeface
         This method allows extended font face specifiers as in the
         :py:class:`FontStyle` type. Will never return null.
 
-        :param familyName:  May be NULL. The name of the font family.
-        :param fontStyle:   The style of the typeface.
+        :param str familyName: May be NULL. The name of the font family.
+        :param skia.FontStyle fontStyle: The style of the typeface.
         :return: reference to the closest-matching typeface.
         )docstring",
         py::arg("familyName"), py::arg("fontStyle"))
@@ -589,6 +661,13 @@ py::enum_<SkTextEncoding>(m, "TextEncoding")
 
 py::class_<SkFont> font(m, "Font", R"docstring(
     :py:class:`Font` controls options applied when drawing and measuring text.
+
+    .. rubric:: Classes
+
+    .. autosummary::
+        :nosignatures:
+
+        ~Font.Edging
     )docstring");
 
 py::enum_<SkFont::Edging>(font, "Edging", R"docstring(
@@ -600,138 +679,522 @@ py::enum_<SkFont::Edging>(font, "Edging", R"docstring(
     .export_values();
 
 font
-    .def(py::init<>(), "Constructs :py:class:`Font` with default values.")
+    .def(py::init<>(),
+        R"docstring(
+        Constructs :py:class:`Font` with default values.
+        )docstring")
     .def(py::init<sk_sp<SkTypeface>, SkScalar>(),
-        "Constructs SkFont with default values with SkTypeface and size in "
-        "points.")
+        R"docstring(
+        Constructs :py:class:`Font` with default values with
+        :py:class:`Typeface` and size in points.
+
+        :param skia.Typeface typeface: font and style used to draw and measure
+            text
+        :param float size: typographic height of text
+        )docstring",
+        py::arg("typeface"), py::arg("size"))
     .def(py::init<sk_sp<SkTypeface>>(),
-        "Constructs SkFont with default values with SkTypeface.")
+        R"docstring(
+        Constructs :py:class:`Font` with default values with
+        :py:class:`Typeface`.
+
+        :param skia.Typeface typeface: font and style used to draw and measure
+            text
+        )docstring",
+        py::arg("typeface"))
     .def(py::init<sk_sp<SkTypeface>, SkScalar, SkScalar, SkScalar>(),
-        "Constructs SkFont with default values with SkTypeface and size in "
-        "points, horizontal scale, and horizontal skew.")
+        R"docstring(
+        Constructs :py:class:`Font` with default values with
+        :py:class:`Typeface` and size in points, horizontal scale, and
+        horizontal skew.
+
+        Horizontal scale emulates condensed and expanded fonts. Horizontal skew
+        emulates oblique fonts.
+
+        :param skia.Typeface typeface: font and style used to draw and measure
+            text
+        :param float size: typographic height of text
+        :param float scaleX: text horizontal scale
+        :param float skewX: additional shear on x-axis relative to y-axis
+        )docstring",
+        py::arg("typeface"), py::arg("size"), py::arg("scaleX"),
+        py::arg("skewX"))
     .def("__eq__", &SkFont::operator==,
-        "Compares SkFont and font, and returns true if they are equivalent.",
+        R"docstring(
+        Compares :py:class:`Font` and font, and returns true if they are
+        equivalent.
+
+        May return false if :py:class:`Typeface` has identical contents but
+        different pointers.
+        )docstring",
         py::is_operator())
     .def("__ne__", &SkFont::operator!=,
-        "Compares SkFont and font, and returns true if they are not "
-        "equivalent.", py::is_operator())
+        R"docstring(
+        Compares :py:class:`Font` and font, and returns true if they are not
+        equivalent.
+
+        May return true if :py:class:`Typeface` has identical contents but
+        different pointers.
+        )docstring",
+        py::is_operator())
     .def("isForceAutoHinting", &SkFont::isForceAutoHinting,
-        "If true, instructs the font manager to always hint glyphs.")
+        R"docstring(
+        If true, instructs the font manager to always hint glyphs.
+
+        Returned value is only meaningful if platform uses FreeType as the font
+        manager.
+
+        :return: true if all glyphs are hinted
+        )docstring")
     .def("isEmbeddedBitmaps", &SkFont::isEmbeddedBitmaps,
-        "Returns true if font engine may return glyphs from font bitmaps "
-        "instead of from outlines.")
+        R"docstring(
+        Returns true if font engine may return glyphs from font bitmaps instead
+        of from outlines.
+
+        :return: true if glyphs may be font bitmaps
+        )docstring")
     .def("isSubpixel", &SkFont::isSubpixel,
-        "Returns true if glyphs may be drawn at sub-pixel offsets.")
+        R"docstring(
+        Returns true if glyphs may be drawn at sub-pixel offsets.
+
+        :return: true if glyphs may be drawn at sub-pixel offsets.
+        )docstring")
     .def("isLinearMetrics", &SkFont::isLinearMetrics,
-        "Returns true if font and glyph metrics are requested to be linearly "
-        "scalable.")
+        R"docstring(
+        Returns true if font and glyph metrics are requested to be linearly
+        scalable.
+
+        :return: true if font and glyph metrics are requested to be linearly
+            scalable.
+        )docstring")
     .def("isEmbolden", &SkFont::isEmbolden,
-        "Returns true if glyphs may be drawn at sub-pixel offsets.")
+        R"docstring(
+        Returns true if bold is approximated by increasing the stroke width when
+        creating glyph bitmaps from outlines.
+
+        :return: bold is approximated through stroke width
+        )docstring")
     .def("isBaselineSnap", &SkFont::isBaselineSnap,
-        "Returns true if baselines will be snapped to pixel positions when the "
-        "current transformation matrix is axis aligned.")
+        R"docstring(
+        Returns true if baselines will be snapped to pixel positions when the
+        current transformation matrix is axis aligned.
+
+        :return: baselines may be snapped to pixels
+        )docstring")
     .def("setForceAutoHinting", &SkFont::setForceAutoHinting,
-        "Sets whether to always hint glyphs.")
+        R"docstring(
+        Sets whether to always hint glyphs.
+
+        If forceAutoHinting is set, instructs the font manager to always hint
+        glyphs.
+
+        Only affects platforms that use FreeType as the font manager.
+
+        :param bool forceAutoHinting: setting to always hint glyphs
+        )docstring",
+        py::arg("forceAutoHinting"))
     .def("setEmbeddedBitmaps", &SkFont::setEmbeddedBitmaps,
-        "Requests, but does not require, to use bitmaps in fonts instead of "
-        "outlines.")
+        R"docstring(
+        Requests, but does not require, to use bitmaps in fonts instead of
+        outlines.
+
+        :param bool embeddedBitmaps setting to use bitmaps in fonts
+        )docstring",
+        py::arg("embeddedBitmaps"))
     .def("setSubpixel", &SkFont::setSubpixel,
-        "Requests, but does not require, that glyphs respect sub-pixel "
-        "positioning.")
+        R"docstring(
+        Requests, but does not require, that glyphs respect sub-pixel
+        positioning.
+
+        :param bool subpixel: setting for sub-pixel positioning
+        )docstring",
+        py::arg("subpixel"))
     .def("setLinearMetrics", &SkFont::setLinearMetrics,
-        "Requests, but does not require, linearly scalable font and glyph "
-        "metrics.")
+        R"docstring(
+        Requests, but does not require, linearly scalable font and glyph
+        metrics.
+
+        For outline fonts 'true' means font and glyph metrics should ignore
+        hinting and rounding. Note that some bitmap formats may not be able to
+        scale linearly and will ignore this flag.
+
+        :param bool linearMetrics: setting for linearly scalable font and glyph
+            metrics.
+        )docstring",
+        py::arg("linearMetrics"))
     .def("setEmbolden", &SkFont::setEmbolden,
-        "Increases stroke width when creating glyph bitmaps to approximate a "
-        "bold typeface.")
+        R"docstring(
+        Increases stroke width when creating glyph bitmaps to approximate a bold
+        typeface.
+
+        :param bool embolden: setting for bold approximation
+        )docstring",
+        py::arg("embolden"))
     .def("setBaselineSnap", &SkFont::setBaselineSnap,
-        "Requests that baselines be snapped to pixels when the current "
-        "transformation matrix is axis aligned.")
+        R"docstring(
+        Requests that baselines be snapped to pixels when the current
+        transformation matrix is axis aligned.
+
+        :param bool baselineSnap: setting for baseline snapping to pixels
+        )docstring",
+        py::arg("baselineSnap"))
     .def("getEdging", &SkFont::getEdging,
-        "Whether edge pixels draw opaque or with partial transparency.")
+        R"docstring(
+        Whether edge pixels draw opaque or with partial transparency.
+        )docstring")
     .def("setEdging", &SkFont::setEdging,
-        "Requests, but does not require, that edge pixels draw opaque or with "
-        "partial transparency.")
+        R"docstring(
+        Requests, but does not require, that edge pixels draw opaque or with
+        partial transparency.
+        )docstring",
+        py::arg("edging"))
     .def("setHinting", &SkFont::setHinting,
-        "Sets level of glyph outline adjustment.")
+        R"docstring(
+        Sets level of glyph outline adjustment.
+
+        Does not check for valid values of hintingLevel.
+        )docstring",
+        py::arg("hintingLevel"))
     .def("getHinting", &SkFont::getHinting,
-        "Returns level of glyph outline adjustment.")
+        R"docstring(
+        Returns level of glyph outline adjustment.
+        )docstring")
     .def("makeWithSize", &SkFont::makeWithSize,
-        "Returns a font with the same attributes of this font, but with the "
-        "specified size.")
+        R"docstring(
+        Returns a font with the same attributes of this font, but with the
+        specified size.
+
+        Returns nullptr if size is less than zero, infinite, or NaN.
+
+        :param float size: typographic height of text
+        )docstring",
+        py::arg("size"))
     .def("getTypeface", &SkFont::getTypeface,
-        "Returns SkTypeface if set, or nullptr.",
+        R"docstring(
+        Returns :py:class:`Typeface` if set, or nullptr.
+
+        :return: :py:class:`Typeface` if previously set, nullptr otherwise
+        )docstring",
         py::return_value_policy::reference)
     .def("getTypefaceOrDefault", &SkFont::getTypefaceOrDefault,
-        "Returns SkTypeface if set, or the default typeface.",
+        R"docstring(
+        Returns :py:class:`Typeface` if set, or the default typeface.
+
+        :return: :py:class:`Typeface` if previously set or, a pointer to the
+            default typeface if not previously set.
+        )docstring",
         py::return_value_policy::reference)
-    .def("getSize", &SkFont::getSize, "Returns text size in points.")
-    .def("getScaleX", &SkFont::getScaleX, "Returns text scale on x-axis.")
-    .def("getSkewX", &SkFont::getSkewX, "Returns text skew on x-axis.")
+    .def("getSize", &SkFont::getSize,
+        R"docstring(
+        Returns text size in points.
+
+        :return: typographic height of text
+        )docstring")
+    .def("getScaleX", &SkFont::getScaleX,
+        R"docstring(
+        Returns text scale on x-axis.
+
+        Default value is 1.
+
+        :return: text horizontal scale
+        )docstring")
+    .def("getSkewX", &SkFont::getSkewX,
+        R"docstring(
+        Returns text skew on x-axis.
+
+        Default value is zero.
+
+        :return: additional shear on x-axis relative to y-axis
+        )docstring")
     .def("refTypeface", &SkFont::refTypeface,
-        "Increases SkTypeface SkRefCnt by one.")
+        R"docstring(
+        Increases :py:class:`Typeface` :py:class:`RefCnt` by one.
+
+        :return: :py:class:`Typeface` if previously set, nullptr otherwise
+        )docstring")
     .def("refTypefaceOrDefault", &SkFont::refTypefaceOrDefault,
-        "Increases SkTypeface SkRefCnt by one.")
+        R"docstring(
+        Increases :py:class:`Typeface` :py:class:`RefCnt` by one.
+
+        :return: :py:class:`Typeface` if previously set or, a pointer to the
+            default typeface if not previously set.
+        )docstring")
     .def("setTypeface", &SkFont::setTypeface,
-        "Sets SkTypeface to typeface, decreasing SkRefCnt of the previous "
-        "SkTypeface.")
-    .def("setSize", &SkFont::setSize, "Sets text size in points.")
-    .def("setScaleX", &SkFont::setScaleX, "Sets text scale on x-axis.")
-    .def("setSkewX", &SkFont::setSkewX, " Sets text skew on x-axis.")
-    .def("textToGlyphs", &SkFont::textToGlyphs,
-        "Converts text into glyph indices.")
+        R"docstring(
+        Sets :py:class:`Typeface` to typeface, decreasing :py:class:`RefCnt` of
+        the previous :py:class:`Typeface`.
+
+        Pass nullptr to clear :py:class:`Typeface` and use the default typeface.
+        Increments tf :py:class:`RefCnt` by one.
+
+        :param typeface: font and style used to draw text
+        )docstring",
+        py::arg("typeface"))
+    .def("setSize", &SkFont::setSize,
+        R"docstring(
+        Sets text size in points.
+
+        Has no effect if textSize is not greater than or equal to zero.
+
+        :param float textSize: typographic height of text
+        )docstring",
+        py::arg("textSize"))
+    .def("setScaleX", &SkFont::setScaleX,
+        R"docstring(
+        Sets text scale on x-axis.
+
+        Default value is 1.
+
+        :param float scaleX: text horizontal scale
+        )docstring",
+        py::arg("scaleX"))
+    .def("setSkewX", &SkFont::setSkewX,
+        R"docstring(
+        Sets text skew on x-axis.
+
+        Default value is zero.
+
+        :param float skewX: additional shear on x-axis relative to y-axis
+        )docstring",
+        py::arg("skewX"))
+    .def("textToGlyphs",
+        [] (const SkFont& font, const std::string& text,
+            SkTextEncoding encoding) {
+            int count = font.countText(&text[0], text.size(), encoding);
+            std::vector<SkGlyphID> glyphs(count);
+            font.textToGlyphs(
+                &text[0], text.size(), encoding, &glyphs[0], glyphs.size());
+            return glyphs;
+        },
+        R"docstring(
+        Converts text into glyph indices.
+
+        Returns the number of glyph indices represented by text.
+        :py:class:`TextEncoding` specifies how text represents characters or
+        glyphs.
+
+        Does not check text for valid character codes or valid glyph indices.
+
+        If encoding is :py:attr:`TextEncoding.kUTF8` and text contains an
+        invalid UTF-8 sequence, empty array is returned.
+
+        When encoding is :py:attr:`TextEncoding.kUTF8`,
+        :py:attr:`TextEncoding.kUTF16`, or :py:attr:`TextEncoding.kUTF32`; then
+        each Unicode codepoint is mapped to a single glyph. This function uses
+        the default character-to-glyph mapping from the :py:class:`Typeface` and
+        maps characters not found in the :py:class:`Typeface` to zero.
+
+        :param str text: character storage encoded with :py:class:`TextEncoding`
+        :param skia.TextEncoding encoding: text encoding
+        :return: glyphs represented by text
+        )docstring",
+        py::arg("text"), py::arg("encoding") = SkTextEncoding::kUTF8)
     .def("unicharToGlyph", &SkFont::unicharToGlyph,
-        "Returns glyph index for Unicode character.")
-    .def("unicharsToGlyphs", &SkFont::unicharsToGlyphs)
-    .def("countText", &SkFont::countText,
-        "Returns number of glyphs represented by text.")
+        R"docstring(
+        Returns glyph index for Unicode character.
+
+        If the character is not supported by the :py:class:`Typeface`, returns
+        0.
+
+        :param int uni: Unicode character
+        )docstring",
+        py::arg("uni"))
+    .def("unicharsToGlyphs",
+        [] (const SkFont& font, const std::vector<SkUnichar>& uni) {
+            std::vector<SkGlyphID> glyphs(uni.size());
+            font.unicharsToGlyphs(&uni[0], uni.size(), &glyphs[0]);
+            return glyphs;
+        },
+        py::arg("uni"))
+    .def("countText",
+        [] (const SkFont& font, const std::string& text,
+            SkTextEncoding encoding) {
+            return font.countText(&text[0], text.size(), encoding);
+        },
+        R"docstring(
+        Returns number of glyphs represented by text.
+
+        If encoding is :py:attr:`TextEncoding.kUTF8`,
+        :py:attr:`TextEncoding.kUTF16`, or :py:attr:`TextEncoding.kUTF32`; then
+        each Unicode codepoint is mapped to a single glyph.
+
+        :param str text: character storage encoded with :py:class:`TextEncoding`
+        :param skia.TextEncoding encoding: text encoding
+        )docstring",
+        py::arg("text"), py::arg("encoding") = SkTextEncoding::kUTF8)
     .def("measureText",
-        (SkScalar (SkFont::*)(const void*, size_t, SkTextEncoding, SkRect*)
-            const) &SkFont::measureText,
-        "Returns the advance width of text.",
-        py::arg("text"), py::arg("byteLength"), py::arg("encoding"),
-        py::arg("bounds") = nullptr)
-    .def("measureText",
-        (SkScalar (SkFont::*)(const void*, size_t, SkTextEncoding, SkRect*,
-            const SkPaint*) const) &SkFont::measureText,
-        "Returns the advance width of text.")
+        [] (const SkFont& font, const std::string& text,
+            SkTextEncoding encoding, SkRect* bounds, const SkPaint* paint) {
+            return font.measureText(
+                &text[0], text.size(), encoding, bounds, paint);
+        },
+        R"docstring(
+        Returns the advance width of text.
+
+        The advance is the normal distance to move before drawing additional
+        text. Returns the bounding box of text if bounds is not nullptr. paint
+        stroke width or :py:class:`PathEffect` may modify the advance with.
+
+        :param str text: character storage encoded with :py:class:`TextEncoding`
+        :param skia.TextEncoding encoding: text encoding
+        :param skia.Rect bounds: returns bounding box relative to (0, 0) if not
+            nullptr
+        :param skia.Paint paint: optional; may be nullptr
+        :return: the advance width of text
+        )docstring",
+        py::arg("text"), py::arg("encoding") = SkTextEncoding::kUTF8,
+        py::arg("bounds") = nullptr, py::arg("paint") = nullptr)
     .def("getWidths",
-        (void  (SkFont::*)(const SkGlyphID[], int, SkScalar[], SkRect[]) const)
-        &SkFont::getWidths,
-        "DEPRECATED Retrieves the advance and bounds for each glyph in glyphs.")
-    .def("getWidths",
-        (void  (SkFont::*)(const SkGlyphID[], int, SkScalar[], std::nullptr_t)
-            const) &SkFont::getWidths)
-    .def("getWidths",
-        (void  (SkFont::*)(const SkGlyphID[], int, SkScalar[]) const)
-        &SkFont::getWidths,
-        "Retrieves the advance and bounds for each glyph in glyphs.")
-    .def("getWidthsBounds", &SkFont::getWidthsBounds,
-        "Retrieves the advance and bounds for each glyph in glyphs.")
-    .def("getBounds", &SkFont::getBounds,
-        "Retrieves the bounds for each glyph in glyphs.")
-    .def("getPos", &SkFont::getPos,
-        "Retrieves the positions for each glyph, beginning at the specified "
-        "origin.")
-    .def("getXPos", &SkFont::getXPos,
-        "Retrieves the x-positions for each glyph, beginning at the specified "
-        "origin.")
+        [] (const SkFont& font, const std::vector<SkGlyphID>& glyphs) {
+            std::vector<SkScalar> width(glyphs.size());
+            font.getWidths(&glyphs[0], glyphs.size(), &width[0]);
+            return width;
+        },
+        R"docstring(
+        Retrieves the advance and bounds for each glyph in glyphs.
+
+        :param List[int] glyphs: array of glyph indices to be measured
+        :rtype: List[float]
+        )docstring",
+        py::arg("glyphs"))
+    .def("getWidthsBounds",
+        [] (const SkFont& font, const std::vector<SkGlyphID>& glyphs,
+            const SkPaint* paint) {
+            std::vector<SkScalar> width(glyphs.size());
+            std::vector<SkRect> bounds(glyphs.size());
+            font.getWidthsBounds(
+                &glyphs[0], glyphs.size(), &width[0], &bounds[0], paint);
+            return py::make_tuple(width, bounds);
+        },
+        R"docstring(
+        Retrieves the advance and bounds for each glyph in glyphs.
+
+        :param List[int] glyphs: array of glyph indices to be measured
+        :param skia.Paint paint: optional, specifies stroking,
+            :py:class:`PathEffect` and :py:class:`MaskFilter`
+        :return: Widths and bounds array
+        :rtype: Tuple[List[float],List[skia.Rect]]
+        )docstring",
+        py::arg("glyphs"), py::arg("paint") = nullptr)
+    .def("getBounds",
+        [] (const SkFont& font, const std::vector<SkGlyphID>& glyphs,
+            const SkPaint* paint) {
+            std::vector<SkRect> bounds(glyphs.size());
+            font.getBounds(&glyphs[0], glyphs.size(), &bounds[0], paint);
+            return bounds;
+        },
+        R"docstring(
+        Retrieves the bounds for each glyph in glyphs.
+
+        If paint is not nullptr, its stroking, :py:class:`PathEffect`, and
+        :py:class:`MaskFilter` fields are respected.
+
+        :param List[int] glyphs: array of glyph indices to be measured
+        :param skia.Paint paint: optional, specifies stroking,
+            :py:class:`PathEffect`, and :py:class:`MaskFilter`
+        :return: bounds for each glyph relative to (0, 0)
+        :rtype: List[skia.Rect]
+        )docstring",
+        py::arg("glyphs"), py::arg("paint") = nullptr)
+    .def("getPos",
+        [] (const SkFont& font, const std::vector<SkGlyphID>& glyphs,
+            const SkPoint& origin) {
+            std::vector<SkPoint> pos(glyphs.size());
+            font.getPos(&glyphs[0], glyphs.size(), &pos[0], origin);
+            return pos;
+        },
+        R"docstring(
+        Retrieves the positions for each glyph, beginning at the specified
+        origin.
+
+        :param List[int] glyphs: array of glyph indices to be positioned
+        :param skia.Point origin: location of the first glyph. Defaults to
+            (0, 0).
+        :return: glyphs positions
+        )docstring",
+        py::arg("glyphs"),
+        py::arg_v("origin", SkPoint::Make(0, 0), "skia.Point(0, 0)"))
+    .def("getXPos",
+        [] (const SkFont& font, const std::vector<SkGlyphID>& glyphs,
+            const SkScalar& origin) {
+            std::vector<SkScalar> xpos(glyphs.size());
+            font.getXPos(&glyphs[0], glyphs.size(), &xpos[0], origin);
+            return xpos;
+        },
+        R"docstring(
+        Retrieves the x-positions for each glyph, beginning at the specified
+        origin.
+
+        :param List[int] glyphs: array of glyph indices to be positioned
+        :param skia.Point origin: location of the first glyph. Defaults to 0.
+        :return: glyphs x-positions
+        )docstring",
+        py::arg("glyphs"), py::arg("origin") = 0)
     .def("getPath", &SkFont::getPath,
-        "Modifies path to be the outline of the glyph.")
-    .def("getPaths", &SkFont::getPaths,
-        "Returns path corresponding to glyph array.")
-    .def("getMetrics", &SkFont::getMetrics,
-        "Returns SkFontMetrics associated with SkTypeface.")
+        R"docstring(
+        Modifies path to be the outline of the glyph.
+
+        If the glyph has an outline, modifies path to be the glyph's outline and
+        returns true. The glyph outline may be empty. Degenerate contours in the
+        glyph outline will be skipped. If glyph is described by a bitmap,
+        returns false and ignores path parameter.
+
+        :param int glyphID: index of glyph
+        :param skia.Path path: pointer to existing :py:class:`Path`
+        :return: true if glyphID is described by path
+        )docstring",
+        py::arg("glyphID"), py::arg("path"))
+    // .def("getPaths", &SkFont::getPaths)
+    .def("getMetrics",
+        [] (const SkFont& font) {
+            SkFontMetrics metrics;
+            font.getMetrics(&metrics);
+            return metrics;
+        },
+        R"docstring(
+        Returns :py:class:`FontMetrics` associated with :py:class:`Typeface`.
+
+        Results are scaled by text size but does not take into account
+        dimensions required by text scale, text skew, fake bold, style stroke,
+        and :py:class:`PathEffect`.
+
+        :rtype: :py:class:`FontMetrics`
+        )docstring")
     .def("getSpacing", &SkFont::getSpacing,
-        "Returns the recommended spacing between lines: the sum of metrics "
-        "descent, ascent, and leading.")
-    .def("dump", &SkFont::dump, "Dumps fields of the font to SkDebugf.")
+        R"docstring(
+        Returns the recommended spacing between lines: the sum of metrics
+        descent, ascent, and leading.
+
+        Result is scaled by text size but does not take into account dimensions
+        required by stroking and :py:class:`PathEffect`. Returns the same result
+        as :py:meth:`getMetrics`.
+
+        :return: recommended spacing between lines
+        )docstring")
+    .def("dump",
+        [] (const SkFont& font) {
+            py::scoped_ostream_redirect stream;
+            font.dump();
+        },
+        R"docstring(
+        Dumps fields of the font to SkDebugf.
+
+        May change its output over time, so clients should not rely on this for
+        anything specific. Used to aid in debugging.
+        )docstring")
     ;
 
 py::class_<SkFontMetrics> fontmetrics(m, "FontMetrics", R"docstring(
-    The metrics of an SkFont.
+    The metrics of an :py:class:`Font`.
 
     The metric values are consistent with the Skia y-down coordinate system.
+
+    .. rubric:: Classes
+
+    .. autosummary::
+        :nosignatures:
+
+        ~FontMetrics.FontMetricsFlags
     )docstring");
 
 py::enum_<SkFontMetrics::FontMetricsFlags>(fontmetrics, "FontMetricsFlags",
@@ -741,7 +1204,7 @@ py::enum_<SkFontMetrics::FontMetricsFlags>(fontmetrics, "FontMetricsFlags",
 
     Fonts with embedded bitmaps may not have valid underline or strikeout
     metrics.
-    )docstring")
+    )docstring", py::arithmetic())
     .value("kUnderlineThicknessIsValid_Flag",
         SkFontMetrics::FontMetricsFlags::kUnderlineThicknessIsValid_Flag,
         "set if fUnderlineThickness is valid")
@@ -757,53 +1220,122 @@ py::enum_<SkFontMetrics::FontMetricsFlags>(fontmetrics, "FontMetricsFlags",
     .export_values();
 
 fontmetrics
+    .def(py::init<>())
     .def("hasUnderlineThickness", &SkFontMetrics::hasUnderlineThickness,
-        "Returns true if SkFontMetrics has a valid underline thickness, and "
-        "sets thickness to that value.")
+        R"docstring(
+        Returns true if :py:class:`FontMetrics` has a valid underline thickness,
+        and sets thickness to that value.
+
+        If the underline thickness is not valid, return false, and ignore
+        thickness.
+
+        :param thickness: storage for underline width
+        :return: true if font specifies underline width
+        )docstring",
+        py::arg("thickness"))
     .def("hasUnderlinePosition", &SkFontMetrics::hasUnderlinePosition,
-        "Returns true if SkFontMetrics has a valid underline position, and "
-        "sets position to that value.")
+        R"docstring(
+        Returns true if :py:class:`FontMetrics` has a valid underline position,
+        and sets position to that value.
+
+        If the underline position is not valid, return false, and ignore
+        position.
+
+        :param float position: storage for underline position
+        :return: true if font specifies underline position
+        )docstring",
+        py::arg("position"))
     .def("hasStrikeoutThickness", &SkFontMetrics::hasStrikeoutThickness,
-        "Returns true if SkFontMetrics has a valid strikeout thickness, and "
-        "sets thickness to that value.")
+        R"docstring(
+        Returns true if :py:class:`FontMetrics` has a valid strikeout thickness,
+        and sets thickness to that value.
+
+        If the underline thickness is not valid, return false, and ignore
+        thickness.
+
+        :param float thickness: storage for strikeout width
+        :return: true if font specifies strikeout width
+        )docstring",
+        py::arg("thickness"))
     .def("hasStrikeoutPosition", &SkFontMetrics::hasStrikeoutPosition,
-        "Returns true if SkFontMetrics has a valid strikeout position, and "
-        "sets position to that value.")
+        R"docstring(
+        Returns true if :py:class:`FontMetrics` has a valid strikeout position,
+        and sets position to that value.
+
+        If the underline position is not valid, return false, and ignore
+        position.
+
+        :param float position: storage for strikeout position
+        :return: true if font specifies strikeout position
+        )docstring",
+        py::arg("position"))
     .def_readwrite("fFlags", &SkFontMetrics::fFlags,
-        "FontMetricsFlags indicating which metrics are valid.")
+        R"docstring(
+        FontMetricsFlags indicating which metrics are valid.
+        )docstring")
     .def_readwrite("fTop", &SkFontMetrics::fTop,
-        "greatest extent above origin of any glyph bounding box, typically "
-        "negative; deprecated with variable fonts")
+        R"docstring(
+        greatest extent above origin of any glyph bounding box, typically
+        negative; deprecated with variable fonts
+        )docstring")
     .def_readwrite("fAscent", &SkFontMetrics::fAscent,
-        "distance to reserve above baseline, typically negative")
+        R"docstring(
+        distance to reserve above baseline, typically negative
+        )docstring")
     .def_readwrite("fDescent", &SkFontMetrics::fDescent,
-        "distance to reserve below baseline, typically positive")
+        R"docstring(
+        distance to reserve below baseline, typically positive
+        )docstring")
     .def_readwrite("fBottom", &SkFontMetrics::fBottom,
-        "greatest extent below origin of any glyph bounding box, typically "
-        "positive; deprecated with variable fonts")
+        R"docstring(
+        greatest extent below origin of any glyph bounding box, typically
+        positive; deprecated with variable fonts
+        )docstring")
     .def_readwrite("fLeading", &SkFontMetrics::fLeading,
-        "distance to add between lines, typically positive or zero")
+        R"docstring(
+        distance to add between lines, typically positive or zero
+        )docstring")
     .def_readwrite("fAvgCharWidth", &SkFontMetrics::fAvgCharWidth,
-        "average character width, zero if unknown")
+        R"docstring(
+        average character width, zero if unknown
+        )docstring")
     .def_readwrite("fMaxCharWidth", &SkFontMetrics::fMaxCharWidth,
-        "maximum character width, zero if unknown")
+        R"docstring(
+        maximum character width, zero if unknown
+        )docstring")
     .def_readwrite("fXMin", &SkFontMetrics::fXMin,
-        "greatest extent to left of origin of any glyph bounding box, "
-        "typically negative; deprecated with variable fonts")
+        R"docstring(
+        greatest extent to left of origin of any glyph bounding box, typically
+        negative; deprecated with variable fonts
+        )docstring")
     .def_readwrite("fXMax", &SkFontMetrics::fXMax,
-        "greatest extent to right of origin of any glyph bounding box, "
-        "typically positive; deprecated with variable fonts")
+        R"docstring(
+        greatest extent to right of origin of any glyph bounding box, typically
+        positive; deprecated with variable fonts
+        )docstring")
     .def_readwrite("fXHeight", &SkFontMetrics::fXHeight,
-        "height of lower-case 'x', zero if unknown, typically negative")
+        R"docstring(
+        height of lower-case 'x', zero if unknown, typically negative
+        )docstring")
     .def_readwrite("fCapHeight", &SkFontMetrics::fCapHeight,
-        "height of an upper-case letter, zero if unknown, typically negative")
+        R"docstring(
+        height of an upper-case letter, zero if unknown, typically negative
+        )docstring")
     .def_readwrite("fUnderlineThickness", &SkFontMetrics::fUnderlineThickness,
-        "underline thickness")
+        R"docstring(
+        underline thickness
+        )docstring")
     .def_readwrite("fUnderlinePosition", &SkFontMetrics::fUnderlinePosition,
-        "distance from baseline to top of stroke, typically positive")
+        R"docstring(
+        distance from baseline to top of stroke, typically positive
+        )docstring")
     .def_readwrite("fStrikeoutThickness", &SkFontMetrics::fStrikeoutThickness,
-        "strikeout thickness")
+        R"docstring(
+        strikeout thickness
+        )docstring")
     .def_readwrite("fStrikeoutPosition", &SkFontMetrics::fStrikeoutPosition,
-        "distance from baseline to bottom of stroke, typically negative")
+        R"docstring(
+        distance from baseline to bottom of stroke, typically negative
+        )docstring")
     ;
 }

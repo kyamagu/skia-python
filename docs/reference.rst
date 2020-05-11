@@ -54,11 +54,19 @@ Reference
     FilterQuality
     Flattanable
     Font
+    Font.Edging
     FontArguments
+    FontArguments.VariationPosition
+    FontArguments.VariationPosition.Coordinate
+    FontArguments.VariationPosition.Coordinates
     FontHinting
     FontMetrics
+    FontMetrics.FontMetricsFlags
     FontMgr
     FontStyle
+    FontStyle.Weight
+    FontStyle.Width
+    FontStyle.Slant
     FontStyleSet
     GradientShader
     GradientShader.Flags
@@ -156,6 +164,7 @@ Reference
     TrimPathEffect
     TrimPathEffect.Mode
     Typeface
+    Typeface.SerializeBehavior
     Vertices
     XfermodeImageFilter
     YUVColorSpace
