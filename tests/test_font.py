@@ -64,7 +64,7 @@ def test_FontArguments_getVariationDesignPosition(fontarguments):
 
 @pytest.fixture
 def typeface(fontmgr):
-    return fontmgr.matchFamilyStyle('Arial', skia.FontStyle())
+    return fontmgr.matchFamilyStyle(None, skia.FontStyle())
 
 
 def test_Typeface_fontStyle(typeface):

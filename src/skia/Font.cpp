@@ -558,10 +558,12 @@ py::class_<SkFontMgr, sk_sp<SkFontMgr>, SkRefCnt>(m, "FontMgr")
         )docstring",
         py::arg("familyName"))
     .def("matchFamilyStyle",
-        [] (const SkFontMgr& fontmgr, const std::string& familyName,
+        [] (const SkFontMgr& fontmgr, const py::object& familyName,
             const SkFontStyle& style) {
             return sk_sp<SkTypeface>(
-                fontmgr.matchFamilyStyle(familyName.c_str(), style));
+                fontmgr.matchFamilyStyle(
+                    (familyName.is_none()) ? nullptr :
+                    familyName.cast<std::string>().c_str(), style));
         },
         R"docstring(
         Find the closest matching typeface to the specified familyName and style
