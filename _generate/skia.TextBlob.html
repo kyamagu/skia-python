@@ -14,7 +14,7 @@
     <script src="../_static/language_data.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="TextBlobBuilder" href="skia.TextBlobBuilder.html" />
+    <link rel="next" title="TextBlob.Iter" href="skia.TextBlob.Iter.html" />
     <link rel="prev" title="TableMaskFilter" href="skia.TableMaskFilter.html" />
    
   <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
@@ -42,6 +42,21 @@ container.</p>
 <p>Each text run consists of glyphs, <a class="reference internal" href="skia.Paint.html#skia.Paint" title="skia.Paint"><code class="xref py py-class docutils literal notranslate"><span class="pre">Paint</span></code></a>, and position. Only
 parts of <a class="reference internal" href="skia.Paint.html#skia.Paint" title="skia.Paint"><code class="xref py py-class docutils literal notranslate"><span class="pre">Paint</span></code></a> related to fonts and text rendering are used by
 run.</p>
+<p class="rubric">Classes</p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="skia.TextBlob.Iter.html#skia.TextBlob.Iter" title="skia.TextBlob.Iter"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Iter</span></code></a></p></td>
+<td><p>Iterator for <a class="reference internal" href="skia.TextBlob.Iter.Run.html#skia.TextBlob.Iter.Run" title="skia.TextBlob.Iter.Run"><code class="xref py py-class docutils literal notranslate"><span class="pre">Run</span></code></a>.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="skia.TextBlob.Iter.Run.html#skia.TextBlob.Iter.Run" title="skia.TextBlob.Iter.Run"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Run</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+</tbody>
+</table>
 <p class="rubric">Methods</p>
 <table class="longtable docutils align-default">
 <colgroup>
@@ -50,10 +65,10 @@ run.</p>
 </colgroup>
 <tbody>
 <tr class="row-odd"><td><p><a class="reference internal" href="#skia.TextBlob.Deserialize" title="skia.TextBlob.Deserialize"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Deserialize</span></code></a></p></td>
-<td><p>Recreates SkTextBlob that was serialized into data.</p></td>
+<td><p>Recreates <a class="reference internal" href="#skia.TextBlob" title="skia.TextBlob"><code class="xref py py-class docutils literal notranslate"><span class="pre">TextBlob</span></code></a> that was serialized into data.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#skia.TextBlob.MakeFromPosText" title="skia.TextBlob.MakeFromPosText"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MakeFromPosText</span></code></a></p></td>
-<td><p>Returns a textblob built from a single run of text with positions.</p></td>
+<td><p>Returns a textblob built from a single run of text with x-positions and a single y value.</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#skia.TextBlob.MakeFromPosTextH" title="skia.TextBlob.MakeFromPosTextH"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MakeFromPosTextH</span></code></a></p></td>
 <td><p>Returns a textblob built from a single run of text with x-positions and a single y value.</p></td>
@@ -62,10 +77,10 @@ run.</p>
 <td><p></p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#skia.TextBlob.MakeFromString" title="skia.TextBlob.MakeFromString"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MakeFromString</span></code></a></p></td>
-<td><p>Creates SkTextBlob with a single run.</p></td>
+<td><p>Creates <a class="reference internal" href="#skia.TextBlob" title="skia.TextBlob"><code class="xref py py-class docutils literal notranslate"><span class="pre">TextBlob</span></code></a> with a single run.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#skia.TextBlob.MakeFromText" title="skia.TextBlob.MakeFromText"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MakeFromText</span></code></a></p></td>
-<td><p>Creates SkTextBlob with a single run.</p></td>
+<td><p>Creates <a class="reference internal" href="#skia.TextBlob" title="skia.TextBlob"><code class="xref py py-class docutils literal notranslate"><span class="pre">TextBlob</span></code></a> with a single run.</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#skia.TextBlob.__init__" title="skia.TextBlob.__init__"><code class="xref py py-obj docutils literal notranslate"><span class="pre">__init__</span></code></a></p></td>
 <td><p>Creates <a class="reference internal" href="#skia.TextBlob" title="skia.TextBlob"><code class="xref py py-class docutils literal notranslate"><span class="pre">TextBlob</span></code></a> with a single run.</p></td>
@@ -85,13 +100,16 @@ run.</p>
 <tr class="row-even"><td><p><a class="reference internal" href="#skia.TextBlob.refCntGreaterThan" title="skia.TextBlob.refCntGreaterThan"><code class="xref py py-obj docutils literal notranslate"><span class="pre">refCntGreaterThan</span></code></a></p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#skia.TextBlob.unique" title="skia.TextBlob.unique"><code class="xref py py-obj docutils literal notranslate"><span class="pre">unique</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.TextBlob.serialize" title="skia.TextBlob.serialize"><code class="xref py py-obj docutils literal notranslate"><span class="pre">serialize</span></code></a></p></td>
+<td><p>Returns storage containing <a class="reference internal" href="skia.Data.html#skia.Data" title="skia.Data"><code class="xref py py-class docutils literal notranslate"><span class="pre">Data</span></code></a> describing <a class="reference internal" href="#skia.TextBlob" title="skia.TextBlob"><code class="xref py py-class docutils literal notranslate"><span class="pre">TextBlob</span></code></a>, using optional custom encoders.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.TextBlob.unique" title="skia.TextBlob.unique"><code class="xref py py-obj docutils literal notranslate"><span class="pre">unique</span></code></a></p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#skia.TextBlob.uniqueID" title="skia.TextBlob.uniqueID"><code class="xref py py-obj docutils literal notranslate"><span class="pre">uniqueID</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.TextBlob.uniqueID" title="skia.TextBlob.uniqueID"><code class="xref py py-obj docutils literal notranslate"><span class="pre">uniqueID</span></code></a></p></td>
 <td><p>Returns a non-zero value unique among all text blobs.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#skia.TextBlob.unref" title="skia.TextBlob.unref"><code class="xref py py-obj docutils literal notranslate"><span class="pre">unref</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.TextBlob.unref" title="skia.TextBlob.unref"><code class="xref py py-obj docutils literal notranslate"><span class="pre">unref</span></code></a></p></td>
 <td><p></p></td>
 </tr>
 </tbody>
@@ -102,42 +120,142 @@ run.</p>
 <h2>Methods<a class="headerlink" href="#methods" title="Permalink to this headline">¶</a></h2>
 <dl class="py method">
 <dt id="skia.TextBlob.Deserialize">
-<em class="property">static </em><code class="sig-prename descclassname">TextBlob.</code><code class="sig-name descname">Deserialize</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">arg0</span><span class="p">:</span> <span class="n">capsule</span></em>, <em class="sig-param"><span class="n">arg1</span><span class="p">:</span> <span class="n">int</span></em>, <em class="sig-param"><span class="n">arg2</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.DeserialProcs.html#skia.DeserialProcs" title="skia.DeserialProcs">skia.DeserialProcs</a></span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="#skia.TextBlob" title="skia.TextBlob">skia.TextBlob</a><a class="headerlink" href="#skia.TextBlob.Deserialize" title="Permalink to this definition">¶</a></dt>
-<dd><p>Recreates SkTextBlob that was serialized into data.</p>
+<em class="property">static </em><code class="sig-prename descclassname">TextBlob.</code><code class="sig-name descname">Deserialize</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">data</span><span class="p">:</span> <span class="n">buffer</span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="#skia.TextBlob" title="skia.TextBlob">skia.TextBlob</a><a class="headerlink" href="#skia.TextBlob.Deserialize" title="Permalink to this definition">¶</a></dt>
+<dd><p>Recreates <a class="reference internal" href="#skia.TextBlob" title="skia.TextBlob"><code class="xref py py-class docutils literal notranslate"><span class="pre">TextBlob</span></code></a> that was serialized into data.</p>
+<p>Returns constructed <a class="reference internal" href="#skia.TextBlob" title="skia.TextBlob"><code class="xref py py-class docutils literal notranslate"><span class="pre">TextBlob</span></code></a> if successful; otherwise,
+returns nullptr. Fails if size is smaller than required data length, or
+if data does not permit constructing valid <a class="reference internal" href="#skia.TextBlob" title="skia.TextBlob"><code class="xref py py-class docutils literal notranslate"><span class="pre">TextBlob</span></code></a>.</p>
+<p>procs.fTypefaceProc permits supplying a custom function to decode
+<a class="reference internal" href="skia.Typeface.html#skia.Typeface" title="skia.Typeface"><code class="xref py py-class docutils literal notranslate"><span class="pre">Typeface</span></code></a>. If procs.fTypefaceProc is nullptr, default
+decoding is used. procs.fTypefaceCtx may be used to provide user context
+to procs.fTypefaceProc; procs.fTypefaceProc is called with a pointer to
+<a class="reference internal" href="skia.Typeface.html#skia.Typeface" title="skia.Typeface"><code class="xref py py-class docutils literal notranslate"><span class="pre">Typeface</span></code></a> data, data byte length, and user context.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>data</strong> (<em>Union</em><em>[</em><em>bytes</em><em>,</em><em>bytearray</em><em>,</em><em>memoryview</em><em>]</em>) – serial data</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><a class="reference internal" href="#skia.TextBlob" title="skia.TextBlob"><code class="xref py py-class docutils literal notranslate"><span class="pre">TextBlob</span></code></a> constructed from data in memory</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py method">
 <dt id="skia.TextBlob.MakeFromPosText">
-<em class="property">static </em><code class="sig-prename descclassname">TextBlob.</code><code class="sig-name descname">MakeFromPosText</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">text</span><span class="p">:</span> <span class="n">capsule</span></em>, <em class="sig-param"><span class="n">byteLength</span><span class="p">:</span> <span class="n">int</span></em>, <em class="sig-param"><span class="n">pos</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.Point.html#skia.Point" title="skia.Point">skia.Point</a></span></em>, <em class="sig-param"><span class="n">font</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.Font.html#skia.Font" title="skia.Font">skia.Font</a></span></em>, <em class="sig-param"><span class="n">encoding</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.TextEncoding.html#skia.TextEncoding" title="skia.TextEncoding">skia.TextEncoding</a></span> <span class="o">=</span> <span class="default_value">TextEncoding.kUTF8</span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="#skia.TextBlob" title="skia.TextBlob">skia.TextBlob</a><a class="headerlink" href="#skia.TextBlob.MakeFromPosText" title="Permalink to this definition">¶</a></dt>
-<dd><p>Returns a textblob built from a single run of text with positions.</p>
+<em class="property">static </em><code class="sig-prename descclassname">TextBlob.</code><code class="sig-name descname">MakeFromPosText</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">text</span><span class="p">:</span> <span class="n">str</span></em>, <em class="sig-param"><span class="n">pos</span><span class="p">:</span> <span class="n">List<span class="p">[</span><a class="reference internal" href="skia.Point.html#skia.Point" title="skia.Point">skia.Point</a><span class="p">]</span></span></em>, <em class="sig-param"><span class="n">font</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.Font.html#skia.Font" title="skia.Font">skia.Font</a></span></em>, <em class="sig-param"><span class="n">encoding</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.TextEncoding.html#skia.TextEncoding" title="skia.TextEncoding">skia.TextEncoding</a></span> <span class="o">=</span> <span class="default_value">TextEncoding.kUTF8</span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="#skia.TextBlob" title="skia.TextBlob">skia.TextBlob</a><a class="headerlink" href="#skia.TextBlob.MakeFromPosText" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a textblob built from a single run of text with x-positions and
+a single y value.</p>
+<p>This is equivalent to using <a class="reference internal" href="skia.TextBlobBuilder.html#skia.TextBlobBuilder" title="skia.TextBlobBuilder"><code class="xref py py-class docutils literal notranslate"><span class="pre">TextBlobBuilder</span></code></a> and calling
+<a class="reference internal" href="skia.TextBlobBuilder.html#skia.TextBlobBuilder.allocRunPosH" title="skia.TextBlobBuilder.allocRunPosH"><code class="xref py py-meth docutils literal notranslate"><span class="pre">TextBlobBuilder.allocRunPosH()</span></code></a>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>text</strong> (<em>str</em>) – character code points or glyphs drawn (based on
+encoding)</p></li>
+<li><p><strong>pos</strong> (<em>List</em><em>[</em><a class="reference internal" href="skia.Point.html#skia.Point" title="skia.Point"><em>skia.Point</em></a><em>]</em>) – array of positions, must contain values for
+all of the character points.</p></li>
+<li><p><strong>font</strong> (<a class="reference internal" href="skia.Font.html#skia.Font" title="skia.Font"><em>skia.Font</em></a>) – <a class="reference internal" href="skia.Font.html#skia.Font" title="skia.Font"><code class="xref py py-class docutils literal notranslate"><span class="pre">Font</span></code></a> used for this run</p></li>
+<li><p><strong>encoding</strong> (<a class="reference internal" href="skia.TextEncoding.html#skia.TextEncoding" title="skia.TextEncoding"><em>skia.TextEncoding</em></a>) – specifies the encoding of the text
+array.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>new textblob or nullptr</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py method">
 <dt id="skia.TextBlob.MakeFromPosTextH">
-<em class="property">static </em><code class="sig-prename descclassname">TextBlob.</code><code class="sig-name descname">MakeFromPosTextH</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">text</span><span class="p">:</span> <span class="n">capsule</span></em>, <em class="sig-param"><span class="n">byteLength</span><span class="p">:</span> <span class="n">int</span></em>, <em class="sig-param"><span class="n">xpos</span><span class="p">:</span> <span class="n">float</span></em>, <em class="sig-param"><span class="n">constY</span><span class="p">:</span> <span class="n">float</span></em>, <em class="sig-param"><span class="n">font</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.Font.html#skia.Font" title="skia.Font">skia.Font</a></span></em>, <em class="sig-param"><span class="n">encoding</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.TextEncoding.html#skia.TextEncoding" title="skia.TextEncoding">skia.TextEncoding</a></span> <span class="o">=</span> <span class="default_value">TextEncoding.kUTF8</span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="#skia.TextBlob" title="skia.TextBlob">skia.TextBlob</a><a class="headerlink" href="#skia.TextBlob.MakeFromPosTextH" title="Permalink to this definition">¶</a></dt>
-<dd><p>Returns a textblob built from a single run of text with x-positions and a single y value.</p>
+<em class="property">static </em><code class="sig-prename descclassname">TextBlob.</code><code class="sig-name descname">MakeFromPosTextH</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">text</span><span class="p">:</span> <span class="n">str</span></em>, <em class="sig-param"><span class="n">xpos</span><span class="p">:</span> <span class="n">List<span class="p">[</span>float<span class="p">]</span></span></em>, <em class="sig-param"><span class="n">constY</span><span class="p">:</span> <span class="n">float</span></em>, <em class="sig-param"><span class="n">font</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.Font.html#skia.Font" title="skia.Font">skia.Font</a></span></em>, <em class="sig-param"><span class="n">encoding</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.TextEncoding.html#skia.TextEncoding" title="skia.TextEncoding">skia.TextEncoding</a></span> <span class="o">=</span> <span class="default_value">TextEncoding.kUTF8</span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="#skia.TextBlob" title="skia.TextBlob">skia.TextBlob</a><a class="headerlink" href="#skia.TextBlob.MakeFromPosTextH" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a textblob built from a single run of text with x-positions and
+a single y value.</p>
+<p>This is equivalent to using <a class="reference internal" href="skia.TextBlobBuilder.html#skia.TextBlobBuilder" title="skia.TextBlobBuilder"><code class="xref py py-class docutils literal notranslate"><span class="pre">TextBlobBuilder</span></code></a> and calling
+<a class="reference internal" href="skia.TextBlobBuilder.html#skia.TextBlobBuilder.allocRunPosH" title="skia.TextBlobBuilder.allocRunPosH"><code class="xref py py-meth docutils literal notranslate"><span class="pre">TextBlobBuilder.allocRunPosH()</span></code></a>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>text</strong> (<em>str</em>) – character code points or glyphs drawn (based on
+encoding)</p></li>
+<li><p><strong>xpos</strong> (<em>List</em><em>[</em><em>float</em><em>]</em>) – array of x-positions, must contain values for
+all of the character points.</p></li>
+<li><p><strong>constY</strong> (<em>float</em>) – shared y-position for each character point, to be
+paired with each xpos.</p></li>
+<li><p><strong>font</strong> (<a class="reference internal" href="skia.Font.html#skia.Font" title="skia.Font"><em>skia.Font</em></a>) – <a class="reference internal" href="skia.Font.html#skia.Font" title="skia.Font"><code class="xref py py-class docutils literal notranslate"><span class="pre">Font</span></code></a> used for this run</p></li>
+<li><p><strong>encoding</strong> (<a class="reference internal" href="skia.TextEncoding.html#skia.TextEncoding" title="skia.TextEncoding"><em>skia.TextEncoding</em></a>) – specifies the encoding of the text
+array.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>new textblob or nullptr</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py method">
 <dt id="skia.TextBlob.MakeFromRSXform">
-<em class="property">static </em><code class="sig-prename descclassname">TextBlob.</code><code class="sig-name descname">MakeFromRSXform</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">arg0</span><span class="p">:</span> <span class="n">capsule</span></em>, <em class="sig-param"><span class="n">arg1</span><span class="p">:</span> <span class="n">int</span></em>, <em class="sig-param"><span class="n">arg2</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.RSXform.html#skia.RSXform" title="skia.RSXform">skia.RSXform</a></span></em>, <em class="sig-param"><span class="n">arg3</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.Font.html#skia.Font" title="skia.Font">skia.Font</a></span></em>, <em class="sig-param"><span class="n">arg4</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.TextEncoding.html#skia.TextEncoding" title="skia.TextEncoding">skia.TextEncoding</a></span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="#skia.TextBlob" title="skia.TextBlob">skia.TextBlob</a><a class="headerlink" href="#skia.TextBlob.MakeFromRSXform" title="Permalink to this definition">¶</a></dt>
+<em class="property">static </em><code class="sig-prename descclassname">TextBlob.</code><code class="sig-name descname">MakeFromRSXform</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">text</span><span class="p">:</span> <span class="n">str</span></em>, <em class="sig-param"><span class="n">xform</span><span class="p">:</span> <span class="n">List<span class="p">[</span><a class="reference internal" href="skia.RSXform.html#skia.RSXform" title="skia.RSXform">skia.RSXform</a><span class="p">]</span></span></em>, <em class="sig-param"><span class="n">font</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.Font.html#skia.Font" title="skia.Font">skia.Font</a></span></em>, <em class="sig-param"><span class="n">encoding</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.TextEncoding.html#skia.TextEncoding" title="skia.TextEncoding">skia.TextEncoding</a></span> <span class="o">=</span> <span class="default_value">TextEncoding.kUTF8</span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="#skia.TextBlob" title="skia.TextBlob">skia.TextBlob</a><a class="headerlink" href="#skia.TextBlob.MakeFromRSXform" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
 <dt id="skia.TextBlob.MakeFromString">
 <em class="property">static </em><code class="sig-prename descclassname">TextBlob.</code><code class="sig-name descname">MakeFromString</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">string</span><span class="p">:</span> <span class="n">str</span></em>, <em class="sig-param"><span class="n">font</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.Font.html#skia.Font" title="skia.Font">skia.Font</a></span></em>, <em class="sig-param"><span class="n">encoding</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.TextEncoding.html#skia.TextEncoding" title="skia.TextEncoding">skia.TextEncoding</a></span> <span class="o">=</span> <span class="default_value">TextEncoding.kUTF8</span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="#skia.TextBlob" title="skia.TextBlob">skia.TextBlob</a><a class="headerlink" href="#skia.TextBlob.MakeFromString" title="Permalink to this definition">¶</a></dt>
-<dd><p>Creates SkTextBlob with a single run.</p>
+<dd><p>Creates <a class="reference internal" href="#skia.TextBlob" title="skia.TextBlob"><code class="xref py py-class docutils literal notranslate"><span class="pre">TextBlob</span></code></a> with a single run.</p>
+<p>string meaning depends on <a class="reference internal" href="skia.TextEncoding.html#skia.TextEncoding" title="skia.TextEncoding"><code class="xref py py-class docutils literal notranslate"><span class="pre">TextEncoding</span></code></a>; by default, string
+is encoded as UTF-8.</p>
+<p>font contains attributes used to define the run text.</p>
+<p>When encoding is <a class="reference internal" href="skia.TextEncoding.html#skia.TextEncoding.kUTF8" title="skia.TextEncoding.kUTF8"><code class="xref py py-attr docutils literal notranslate"><span class="pre">TextEncoding.kUTF8</span></code></a>,
+<a class="reference internal" href="skia.TextEncoding.html#skia.TextEncoding.kUTF16" title="skia.TextEncoding.kUTF16"><code class="xref py py-attr docutils literal notranslate"><span class="pre">TextEncoding.kUTF16</span></code></a>, or <a class="reference internal" href="skia.TextEncoding.html#skia.TextEncoding.kUTF32" title="skia.TextEncoding.kUTF32"><code class="xref py py-attr docutils literal notranslate"><span class="pre">TextEncoding.kUTF32</span></code></a>, this
+function uses the default character-to-glyph mapping from the
+<a class="reference internal" href="skia.Typeface.html#skia.Typeface" title="skia.Typeface"><code class="xref py py-class docutils literal notranslate"><span class="pre">Typeface</span></code></a> in font. It does not perform typeface fallback for
+characters not found in the <a class="reference internal" href="skia.Typeface.html#skia.Typeface" title="skia.Typeface"><code class="xref py py-class docutils literal notranslate"><span class="pre">Typeface</span></code></a>. It does not perform
+kerning or other complex shaping; glyphs are positioned based on their
+default advances.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>string</strong> (<em>str</em>) – character code points or glyphs drawn</p></li>
+<li><p><strong>font</strong> (<a class="reference internal" href="skia.Font.html#skia.Font" title="skia.Font"><em>skia.Font</em></a>) – text size, typeface, text scale, and so on, used
+to draw</p></li>
+<li><p><strong>encoding</strong> (<a class="reference internal" href="skia.TextEncoding.html#skia.TextEncoding" title="skia.TextEncoding"><em>skia.TextEncoding</em></a>) – text encoding used in the text array</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><a class="reference internal" href="#skia.TextBlob" title="skia.TextBlob"><code class="xref py py-class docutils literal notranslate"><span class="pre">TextBlob</span></code></a> constructed from one run</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py method">
 <dt id="skia.TextBlob.MakeFromText">
-<em class="property">static </em><code class="sig-prename descclassname">TextBlob.</code><code class="sig-name descname">MakeFromText</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">text</span><span class="p">:</span> <span class="n">capsule</span></em>, <em class="sig-param"><span class="n">byteLength</span><span class="p">:</span> <span class="n">int</span></em>, <em class="sig-param"><span class="n">font</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.Font.html#skia.Font" title="skia.Font">skia.Font</a></span></em>, <em class="sig-param"><span class="n">encoding</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.TextEncoding.html#skia.TextEncoding" title="skia.TextEncoding">skia.TextEncoding</a></span> <span class="o">=</span> <span class="default_value">TextEncoding.kUTF8</span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="#skia.TextBlob" title="skia.TextBlob">skia.TextBlob</a><a class="headerlink" href="#skia.TextBlob.MakeFromText" title="Permalink to this definition">¶</a></dt>
-<dd><p>Creates SkTextBlob with a single run.</p>
+<em class="property">static </em><code class="sig-prename descclassname">TextBlob.</code><code class="sig-name descname">MakeFromText</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">text</span><span class="p">:</span> <span class="n">str</span></em>, <em class="sig-param"><span class="n">font</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.Font.html#skia.Font" title="skia.Font">skia.Font</a></span></em>, <em class="sig-param"><span class="n">encoding</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.TextEncoding.html#skia.TextEncoding" title="skia.TextEncoding">skia.TextEncoding</a></span> <span class="o">=</span> <span class="default_value">TextEncoding.kUTF8</span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="#skia.TextBlob" title="skia.TextBlob">skia.TextBlob</a><a class="headerlink" href="#skia.TextBlob.MakeFromText" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates <a class="reference internal" href="#skia.TextBlob" title="skia.TextBlob"><code class="xref py py-class docutils literal notranslate"><span class="pre">TextBlob</span></code></a> with a single run.</p>
+<p>font contains attributes used to define the run text.</p>
+<p>When encoding is <a class="reference internal" href="skia.TextEncoding.html#skia.TextEncoding.kUTF8" title="skia.TextEncoding.kUTF8"><code class="xref py py-attr docutils literal notranslate"><span class="pre">TextEncoding.kUTF8</span></code></a>,
+<a class="reference internal" href="skia.TextEncoding.html#skia.TextEncoding.kUTF16" title="skia.TextEncoding.kUTF16"><code class="xref py py-attr docutils literal notranslate"><span class="pre">TextEncoding.kUTF16</span></code></a>, or <a class="reference internal" href="skia.TextEncoding.html#skia.TextEncoding.kUTF32" title="skia.TextEncoding.kUTF32"><code class="xref py py-attr docutils literal notranslate"><span class="pre">TextEncoding.kUTF32</span></code></a>, this
+function uses the default character-to-glyph mapping from the
+<a class="reference internal" href="skia.Typeface.html#skia.Typeface" title="skia.Typeface"><code class="xref py py-class docutils literal notranslate"><span class="pre">Typeface</span></code></a> in font. It does not perform typeface fallback for
+characters not found in the <a class="reference internal" href="skia.Typeface.html#skia.Typeface" title="skia.Typeface"><code class="xref py py-class docutils literal notranslate"><span class="pre">Typeface</span></code></a>. It does not perform
+kerning or other complex shaping; glyphs are positioned based on their
+default advances.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>text</strong> (<em>str</em>) – character code points or glyphs drawn</p></li>
+<li><p><strong>font</strong> (<a class="reference internal" href="skia.Font.html#skia.Font" title="skia.Font"><em>skia.Font</em></a>) – text size, typeface, text scale, and so on, used
+to draw</p></li>
+<li><p><strong>encoding</strong> (<a class="reference internal" href="skia.TextEncoding.html#skia.TextEncoding" title="skia.TextEncoding"><em>skia.TextEncoding</em></a>) – text encoding used in the text array</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><a class="reference internal" href="#skia.TextBlob" title="skia.TextBlob"><code class="xref py py-class docutils literal notranslate"><span class="pre">TextBlob</span></code></a> constructed from one run</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py method">
 <dt id="skia.TextBlob.__init__">
-<code class="sig-prename descclassname">TextBlob.</code><code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.TextBlob" title="skia.TextBlob">skia.TextBlob</a></span></em>, <em class="sig-param"><span class="n">text</span><span class="p">:</span> <span class="n">str</span></em>, <em class="sig-param"><span class="n">font</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.Font.html#skia.Font" title="skia.Font">skia.Font</a></span></em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#skia.TextBlob.__init__" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">TextBlob.</code><code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.TextBlob" title="skia.TextBlob">skia.TextBlob</a></span></em>, <em class="sig-param"><span class="n">text</span><span class="p">:</span> <span class="n">str</span></em>, <em class="sig-param"><span class="n">font</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.Font.html#skia.Font" title="skia.Font">skia.Font</a></span></em>, <em class="sig-param"><span class="n">encoding</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.TextEncoding.html#skia.TextEncoding" title="skia.TextEncoding">skia.TextEncoding</a></span> <span class="o">=</span> <span class="default_value">TextEncoding.kUTF8</span></em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#skia.TextBlob.__init__" title="Permalink to this definition">¶</a></dt>
 <dd><p>Creates <a class="reference internal" href="#skia.TextBlob" title="skia.TextBlob"><code class="xref py py-class docutils literal notranslate"><span class="pre">TextBlob</span></code></a> with a single run.</p>
 <p><cite>font</cite> contains attributes used to define the run text.</p>
 <p>This function uses the default character-to-glyph mapping from the
@@ -149,8 +267,9 @@ default advances.</p>
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>text</strong> (<em>str</em>) – character code points or glyphs drawn</p></li>
-<li><p><strong>font</strong> (<a class="reference internal" href="skia.Font.html#skia.Font" title="skia.Font"><em>skia.Font</em></a>) – text size, typeface, text scale, and so on, used to
-draw</p></li>
+<li><p><strong>font</strong> (<a class="reference internal" href="skia.Font.html#skia.Font" title="skia.Font"><em>skia.Font</em></a>) – text size, typeface, text scale, and so on, used
+to draw</p></li>
+<li><p><strong>encoding</strong> (<a class="reference internal" href="skia.TextEncoding.html#skia.TextEncoding" title="skia.TextEncoding"><em>skia.TextEncoding</em></a>) – text encoding used in the text array</p></li>
 </ul>
 </dd>
 </dl>
@@ -160,6 +279,14 @@ draw</p></li>
 <dt id="skia.TextBlob.bounds">
 <code class="sig-prename descclassname">TextBlob.</code><code class="sig-name descname">bounds</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.TextBlob" title="skia.TextBlob">skia.TextBlob</a></span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="skia.Rect.html#skia.Rect" title="skia.Rect">skia.Rect</a><a class="headerlink" href="#skia.TextBlob.bounds" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns conservative bounding box.</p>
+<p>Uses <a class="reference internal" href="skia.Paint.html#skia.Paint" title="skia.Paint"><code class="xref py py-class docutils literal notranslate"><span class="pre">Paint</span></code></a> associated with each glyph to determine glyph
+bounds, and unions all bounds. Returned bounds may be larger than the
+bounds of all glyphs in runs.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>conservative bounding box</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py method">
@@ -169,8 +296,27 @@ draw</p></li>
 
 <dl class="py method">
 <dt id="skia.TextBlob.getIntercepts">
-<code class="sig-prename descclassname">TextBlob.</code><code class="sig-name descname">getIntercepts</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.TextBlob" title="skia.TextBlob">skia.TextBlob</a></span></em>, <em class="sig-param"><span class="n">arg0</span><span class="p">:</span> <span class="n">float</span></em>, <em class="sig-param"><span class="n">arg1</span><span class="p">:</span> <span class="n">float</span></em>, <em class="sig-param"><span class="n">arg2</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.Paint.html#skia.Paint" title="skia.Paint">skia.Paint</a></span></em><span class="sig-paren">)</span> &#x2192; int<a class="headerlink" href="#skia.TextBlob.getIntercepts" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">TextBlob.</code><code class="sig-name descname">getIntercepts</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.TextBlob" title="skia.TextBlob">skia.TextBlob</a></span></em>, <em class="sig-param"><span class="n">bounds</span><span class="p">:</span> <span class="n">List<span class="p">[</span>float<span class="p">]</span></span></em>, <em class="sig-param"><span class="n">paint</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.Paint.html#skia.Paint" title="skia.Paint">skia.Paint</a></span> <span class="o">=</span> <span class="default_value">None</span></em><span class="sig-paren">)</span> &#x2192; List<span class="p">[</span>float<span class="p">]</span><a class="headerlink" href="#skia.TextBlob.getIntercepts" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the number of intervals that intersect bounds.</p>
+<p>bounds describes a pair of lines parallel to the text advance. The
+return count is zero or a multiple of two, and is at most twice the
+number of glyphs in the the blob.</p>
+<p>Pass nullptr for intervals to determine the size of the interval array.</p>
+<p>Runs within the blob that contain <a class="reference internal" href="skia.RSXform.html#skia.RSXform" title="skia.RSXform"><code class="xref py py-class docutils literal notranslate"><span class="pre">RSXform</span></code></a> are ignored when
+computing intercepts.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>bounds</strong> (<em>List</em><em>[</em><em>skia.Scalar</em><em>]</em>) – lower and upper line parallel to the
+advance</p></li>
+<li><p><strong>paint</strong> (<a class="reference internal" href="skia.Paint.html#skia.Paint" title="skia.Paint"><em>skia.Paint</em></a>) – specifies stroking, <a class="reference internal" href="skia.PathEffect.html#skia.PathEffect" title="skia.PathEffect"><code class="xref py py-class docutils literal notranslate"><span class="pre">PathEffect</span></code></a> that
+affects the result; may be nullptr</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>intersections; may be empty</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py method">
@@ -184,6 +330,23 @@ draw</p></li>
 <dd></dd></dl>
 
 <dl class="py method">
+<dt id="skia.TextBlob.serialize">
+<code class="sig-prename descclassname">TextBlob.</code><code class="sig-name descname">serialize</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.TextBlob" title="skia.TextBlob">skia.TextBlob</a></span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="skia.Data.html#skia.Data" title="skia.Data">skia.Data</a><a class="headerlink" href="#skia.TextBlob.serialize" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns storage containing <a class="reference internal" href="skia.Data.html#skia.Data" title="skia.Data"><code class="xref py py-class docutils literal notranslate"><span class="pre">Data</span></code></a> describing
+<a class="reference internal" href="#skia.TextBlob" title="skia.TextBlob"><code class="xref py py-class docutils literal notranslate"><span class="pre">TextBlob</span></code></a>, using optional custom encoders.</p>
+<p>procs.fTypefaceProc permits supplying a custom function to encode
+<a class="reference internal" href="skia.Typeface.html#skia.Typeface" title="skia.Typeface"><code class="xref py py-class docutils literal notranslate"><span class="pre">Typeface</span></code></a>. If procs.fTypefaceProc is nullptr, default
+encoding is used. procs.fTypefaceCtx may be used to provide user context
+to procs.fTypefaceProc; procs.fTypefaceProc is called with a pointer to
+<a class="reference internal" href="skia.Typeface.html#skia.Typeface" title="skia.Typeface"><code class="xref py py-class docutils literal notranslate"><span class="pre">Typeface</span></code></a> and user context.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>storage containing serialized <a class="reference internal" href="#skia.TextBlob" title="skia.TextBlob"><code class="xref py py-class docutils literal notranslate"><span class="pre">TextBlob</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
 <dt id="skia.TextBlob.unique">
 <code class="sig-prename descclassname">TextBlob.</code><code class="sig-name descname">unique</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.TextBlob" title="skia.TextBlob">skia.TextBlob</a></span></em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#skia.TextBlob.unique" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
@@ -192,6 +355,11 @@ draw</p></li>
 <dt id="skia.TextBlob.uniqueID">
 <code class="sig-prename descclassname">TextBlob.</code><code class="sig-name descname">uniqueID</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.TextBlob" title="skia.TextBlob">skia.TextBlob</a></span></em><span class="sig-paren">)</span> &#x2192; int<a class="headerlink" href="#skia.TextBlob.uniqueID" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns a non-zero value unique among all text blobs.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>identifier for <a class="reference internal" href="#skia.TextBlob" title="skia.TextBlob"><code class="xref py py-class docutils literal notranslate"><span class="pre">TextBlob</span></code></a></p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py method">
@@ -253,7 +421,6 @@ draw</p></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.CornerPathEffect.html">CornerPathEffect</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.DashPathEffect.html">DashPathEffect</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.Data.html">Data</a></li>
-<li class="toctree-l2"><a class="reference internal" href="skia.DeserialProcs.html">DeserialProcs</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.DilateImageFilter.html">DilateImageFilter</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.DiscretePathEffect.html">DiscretePathEffect</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.DisplacementMapEffect.html">DisplacementMapEffect</a></li>
@@ -366,6 +533,8 @@ draw</p></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.TableColorFilter.html">TableColorFilter</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.TableMaskFilter.html">TableMaskFilter</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">TextBlob</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.TextBlob.Iter.html">TextBlob.Iter</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.TextBlob.Iter.Run.html">TextBlob.Iter.Run</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.TextBlobBuilder.html">TextBlobBuilder</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.TextEncoding.html">TextEncoding</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.TileImageFilter.html">TileImageFilter</a></li>
@@ -387,7 +556,7 @@ draw</p></li>
   <li><a href="../index.html">Documentation overview</a><ul>
   <li><a href="../reference.html">Reference</a><ul>
       <li>Previous: <a href="skia.TableMaskFilter.html" title="previous chapter">TableMaskFilter</a></li>
-      <li>Next: <a href="skia.TextBlobBuilder.html" title="next chapter">TextBlobBuilder</a></li>
+      <li>Next: <a href="skia.TextBlob.Iter.html" title="next chapter">TextBlob.Iter</a></li>
   </ul></li>
   </ul></li>
 </ul>

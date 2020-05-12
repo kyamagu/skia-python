@@ -4,7 +4,7 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <title>AutoCanvasRestore &#8212; skia-python 0.0.2 documentation</title>
+    <title>TextBlob.Iter.Run &#8212; skia-python 0.0.2 documentation</title>
     <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
@@ -14,8 +14,8 @@
     <script src="../_static/language_data.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="BBoxHierarchy" href="skia.BBoxHierarchy.html" />
-    <link rel="prev" title="ApplyPerspectiveClip" href="skia.ApplyPerspectiveClip.html" />
+    <link rel="next" title="TextBlobBuilder" href="skia.TextBlobBuilder.html" />
+    <link rel="prev" title="TextBlob.Iter" href="skia.TextBlob.Iter.html" />
    
   <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
   
@@ -32,31 +32,38 @@
 
           <div class="body" role="main">
             
-  <div class="section" id="autocanvasrestore">
-<h1>AutoCanvasRestore<a class="headerlink" href="#autocanvasrestore" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="textblob-iter-run">
+<h1>TextBlob.Iter.Run<a class="headerlink" href="#textblob-iter-run" title="Permalink to this headline">¶</a></h1>
 <dl class="py class">
-<dt id="skia.AutoCanvasRestore">
-<em class="property">class </em><code class="sig-name descname">AutoCanvasRestore</code><a class="headerlink" href="#skia.AutoCanvasRestore" title="Permalink to this definition">¶</a></dt>
-<dd><p>Stack helper class calls <a class="reference internal" href="skia.Canvas.html#skia.Canvas.restoreToCount" title="skia.Canvas.restoreToCount"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Canvas.restoreToCount()</span></code></a> when
-<a class="reference internal" href="#skia.AutoCanvasRestore" title="skia.AutoCanvasRestore"><code class="xref py py-class docutils literal notranslate"><span class="pre">AutoCanvasRestore</span></code></a> goes out of scope.</p>
-<p>Use this to guarantee that the canvas is restored to a known state.</p>
-<p>Example:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">skia</span><span class="o">.</span><span class="n">AutoCanvasRestore</span><span class="p">(</span><span class="n">canvas</span><span class="p">):</span>
-    <span class="n">canvas</span><span class="o">.</span><span class="n">drawCircle</span><span class="p">(</span><span class="mf">50.</span><span class="p">,</span> <span class="mf">50.</span><span class="p">,</span> <span class="mf">10.</span><span class="p">,</span> <span class="n">paint</span><span class="p">)</span>
-</pre></div>
-</div>
-<p class="rubric">Methods</p>
+<dt id="skia.TextBlob.Iter.Run">
+<em class="property">class </em><code class="sig-name descname">Run</code><a class="headerlink" href="#skia.TextBlob.Iter.Run" title="Permalink to this definition">¶</a></dt>
+<dd><p class="rubric">Methods</p>
 <table class="longtable docutils align-default">
 <colgroup>
 <col style="width: 10%" />
 <col style="width: 90%" />
 </colgroup>
 <tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="#skia.AutoCanvasRestore.__init__" title="skia.AutoCanvasRestore.__init__"><code class="xref py py-obj docutils literal notranslate"><span class="pre">__init__</span></code></a></p></td>
-<td><p>Preserves <a class="reference internal" href="skia.Canvas.html#skia.Canvas.save" title="skia.Canvas.save"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Canvas.save()</span></code></a> count.</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.TextBlob.Iter.Run.__init__" title="skia.TextBlob.Iter.Run.__init__"><code class="xref py py-obj docutils literal notranslate"><span class="pre">__init__</span></code></a></p></td>
+<td><p></p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#skia.AutoCanvasRestore.restore" title="skia.AutoCanvasRestore.restore"><code class="xref py py-obj docutils literal notranslate"><span class="pre">restore</span></code></a></p></td>
-<td><p>Restores <a class="reference internal" href="skia.Canvas.html#skia.Canvas" title="skia.Canvas"><code class="xref py py-class docutils literal notranslate"><span class="pre">Canvas</span></code></a> to saved state immediately.</p></td>
+</tbody>
+</table>
+<p class="rubric">Attributes</p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.TextBlob.Iter.Run.fGlyphCount" title="skia.TextBlob.Iter.Run.fGlyphCount"><code class="xref py py-obj docutils literal notranslate"><span class="pre">fGlyphCount</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.TextBlob.Iter.Run.fGlyphIndices" title="skia.TextBlob.Iter.Run.fGlyphIndices"><code class="xref py py-obj docutils literal notranslate"><span class="pre">fGlyphIndices</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.TextBlob.Iter.Run.fTypeface" title="skia.TextBlob.Iter.Run.fTypeface"><code class="xref py py-obj docutils literal notranslate"><span class="pre">fTypeface</span></code></a></p></td>
+<td><p></p></td>
 </tr>
 </tbody>
 </table>
@@ -65,29 +72,27 @@
 <div class="section" id="methods">
 <h2>Methods<a class="headerlink" href="#methods" title="Permalink to this headline">¶</a></h2>
 <dl class="py method">
-<dt id="skia.AutoCanvasRestore.__init__">
-<code class="sig-prename descclassname">AutoCanvasRestore.</code><code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.AutoCanvasRestore" title="skia.AutoCanvasRestore">skia.AutoCanvasRestore</a></span></em>, <em class="sig-param"><span class="n">canvas</span><span class="p">:</span> <span class="n">SkCanvas</span></em>, <em class="sig-param"><span class="n">doSave</span><span class="p">:</span> <span class="n">bool</span> <span class="o">=</span> <span class="default_value">True</span></em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#skia.AutoCanvasRestore.__init__" title="Permalink to this definition">¶</a></dt>
-<dd><p>Preserves <a class="reference internal" href="skia.Canvas.html#skia.Canvas.save" title="skia.Canvas.save"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Canvas.save()</span></code></a> count.</p>
-<p>Optionally saves SkCanvas clip and SkCanvas matrix.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>canvas</strong> (<a class="reference internal" href="skia.Canvas.html#skia.Canvas" title="skia.Canvas"><em>skia.Canvas</em></a>) – <a class="reference internal" href="skia.Canvas.html#skia.Canvas" title="skia.Canvas"><code class="xref py py-class docutils literal notranslate"><span class="pre">Canvas</span></code></a> to guard</p></li>
-<li><p><strong>doSave</strong> (<em>bool</em>) – call <a class="reference internal" href="skia.Canvas.html#skia.Canvas.save" title="skia.Canvas.save"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Canvas.save()</span></code></a></p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p>utility to restore <a class="reference internal" href="skia.Canvas.html#skia.Canvas" title="skia.Canvas"><code class="xref py py-class docutils literal notranslate"><span class="pre">Canvas</span></code></a> state on destructor</p>
-</dd>
-</dl>
-</dd></dl>
+<dt id="skia.TextBlob.Iter.Run.__init__">
+<code class="sig-prename descclassname">Run.</code><code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.TextBlob.Iter.Run" title="skia.TextBlob.Iter.Run">skia.TextBlob.Iter.Run</a></span></em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#skia.TextBlob.Iter.Run.__init__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
 
-<dl class="py method">
-<dt id="skia.AutoCanvasRestore.restore">
-<code class="sig-prename descclassname">AutoCanvasRestore.</code><code class="sig-name descname">restore</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.AutoCanvasRestore" title="skia.AutoCanvasRestore">skia.AutoCanvasRestore</a></span></em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#skia.AutoCanvasRestore.restore" title="Permalink to this definition">¶</a></dt>
-<dd><p>Restores <a class="reference internal" href="skia.Canvas.html#skia.Canvas" title="skia.Canvas"><code class="xref py py-class docutils literal notranslate"><span class="pre">Canvas</span></code></a> to saved state immediately.</p>
-<p>Subsequent calls and destructor have no effect.</p>
-</dd></dl>
+</div>
+<div class="section" id="attributes">
+<h2>Attributes<a class="headerlink" href="#attributes" title="Permalink to this headline">¶</a></h2>
+<dl class="py attribute">
+<dt id="skia.TextBlob.Iter.Run.fGlyphCount">
+<code class="sig-prename descclassname">Run.</code><code class="sig-name descname">fGlyphCount</code><a class="headerlink" href="#skia.TextBlob.Iter.Run.fGlyphCount" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="skia.TextBlob.Iter.Run.fGlyphIndices">
+<code class="sig-prename descclassname">Run.</code><code class="sig-name descname">fGlyphIndices</code><a class="headerlink" href="#skia.TextBlob.Iter.Run.fGlyphIndices" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="skia.TextBlob.Iter.Run.fTypeface">
+<code class="sig-prename descclassname">Run.</code><code class="sig-name descname">fTypeface</code><a class="headerlink" href="#skia.TextBlob.Iter.Run.fTypeface" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
 
 </div>
 </div>
@@ -115,7 +120,7 @@
 <li class="toctree-l1 current"><a class="reference internal" href="../reference.html">Reference</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="skia.AlphaType.html">AlphaType</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.ApplyPerspectiveClip.html">ApplyPerspectiveClip</a></li>
-<li class="toctree-l2 current"><a class="current reference internal" href="#">AutoCanvasRestore</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.AutoCanvasRestore.html">AutoCanvasRestore</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.BBoxHierarchy.html">BBoxHierarchy</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.BackingFit.html">BackingFit</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.Bitmap.html">Bitmap</a></li>
@@ -256,7 +261,7 @@
 <li class="toctree-l2"><a class="reference internal" href="skia.TableMaskFilter.html">TableMaskFilter</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.TextBlob.html">TextBlob</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.TextBlob.Iter.html">TextBlob.Iter</a></li>
-<li class="toctree-l2"><a class="reference internal" href="skia.TextBlob.Iter.Run.html">TextBlob.Iter.Run</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">TextBlob.Iter.Run</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.TextBlobBuilder.html">TextBlobBuilder</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.TextEncoding.html">TextEncoding</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.TileImageFilter.html">TileImageFilter</a></li>
@@ -277,8 +282,8 @@
 <ul>
   <li><a href="../index.html">Documentation overview</a><ul>
   <li><a href="../reference.html">Reference</a><ul>
-      <li>Previous: <a href="skia.ApplyPerspectiveClip.html" title="previous chapter">ApplyPerspectiveClip</a></li>
-      <li>Next: <a href="skia.BBoxHierarchy.html" title="next chapter">BBoxHierarchy</a></li>
+      <li>Previous: <a href="skia.TextBlob.Iter.html" title="previous chapter">TextBlob.Iter</a></li>
+      <li>Next: <a href="skia.TextBlobBuilder.html" title="next chapter">TextBlobBuilder</a></li>
   </ul></li>
   </ul></li>
 </ul>
@@ -313,7 +318,7 @@
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
       |
-      <a href="../_sources/_generate/skia.AutoCanvasRestore.rst.txt"
+      <a href="../_sources/_generate/skia.TextBlob.Iter.Run.rst.txt"
           rel="nofollow">Page source</a>
     </div>
 

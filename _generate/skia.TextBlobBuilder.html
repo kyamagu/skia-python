@@ -15,7 +15,7 @@
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="TextEncoding" href="skia.TextEncoding.html" />
-    <link rel="prev" title="TextBlob" href="skia.TextBlob.html" />
+    <link rel="prev" title="TextBlob.Iter.Run" href="skia.TextBlob.Iter.Run.html" />
    
   <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
   
@@ -49,16 +49,19 @@
 <td><p>Constructs empty <a class="reference internal" href="#skia.TextBlobBuilder" title="skia.TextBlobBuilder"><code class="xref py py-class docutils literal notranslate"><span class="pre">TextBlobBuilder</span></code></a>.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#skia.TextBlobBuilder.allocRun" title="skia.TextBlobBuilder.allocRun"><code class="xref py py-obj docutils literal notranslate"><span class="pre">allocRun</span></code></a></p></td>
-<td><p>Returns run with storage for glyphs.</p></td>
+<td><p>Sets a new run with glyphs.</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#skia.TextBlobBuilder.allocRunPos" title="skia.TextBlobBuilder.allocRunPos"><code class="xref py py-obj docutils literal notranslate"><span class="pre">allocRunPos</span></code></a></p></td>
-<td><p>Returns run with storage for glyphs and SkPoint positions.</p></td>
+<td><p>Sets a new run with glyphs and <a class="reference internal" href="skia.Point.html#skia.Point" title="skia.Point"><code class="xref py py-class docutils literal notranslate"><span class="pre">Point</span></code></a> positions.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#skia.TextBlobBuilder.allocRunPosH" title="skia.TextBlobBuilder.allocRunPosH"><code class="xref py py-obj docutils literal notranslate"><span class="pre">allocRunPosH</span></code></a></p></td>
-<td><p>Returns run with storage for glyphs and positions along baseline.</p></td>
+<td><p>Sets a new run with glyphs and positions along baseline.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#skia.TextBlobBuilder.make" title="skia.TextBlobBuilder.make"><code class="xref py py-obj docutils literal notranslate"><span class="pre">make</span></code></a></p></td>
-<td><p>Returns SkTextBlob built from runs of glyphs added by builder.</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.TextBlobBuilder.allocRunRSXform" title="skia.TextBlobBuilder.allocRunRSXform"><code class="xref py py-obj docutils literal notranslate"><span class="pre">allocRunRSXform</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.TextBlobBuilder.make" title="skia.TextBlobBuilder.make"><code class="xref py py-obj docutils literal notranslate"><span class="pre">make</span></code></a></p></td>
+<td><p>Returns <a class="reference internal" href="skia.TextBlob.html#skia.TextBlob" title="skia.TextBlob"><code class="xref py py-class docutils literal notranslate"><span class="pre">TextBlob</span></code></a> built from runs of glyphs added by builder.</p></td>
 </tr>
 </tbody>
 </table>
@@ -74,26 +77,93 @@
 
 <dl class="py method">
 <dt id="skia.TextBlobBuilder.allocRun">
-<code class="sig-prename descclassname">TextBlobBuilder.</code><code class="sig-name descname">allocRun</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.TextBlobBuilder" title="skia.TextBlobBuilder">skia.TextBlobBuilder</a></span></em>, <em class="sig-param"><span class="n">arg0</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.Font.html#skia.Font" title="skia.Font">skia.Font</a></span></em>, <em class="sig-param"><span class="n">arg1</span><span class="p">:</span> <span class="n">int</span></em>, <em class="sig-param"><span class="n">arg2</span><span class="p">:</span> <span class="n">float</span></em>, <em class="sig-param"><span class="n">arg3</span><span class="p">:</span> <span class="n">float</span></em>, <em class="sig-param"><span class="n">arg4</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.Rect.html#skia.Rect" title="skia.Rect">skia.Rect</a></span></em><span class="sig-paren">)</span> &#x2192; skia.TextBlobBuilder.RunBuffer<a class="headerlink" href="#skia.TextBlobBuilder.allocRun" title="Permalink to this definition">¶</a></dt>
-<dd><p>Returns run with storage for glyphs.</p>
+<code class="sig-prename descclassname">TextBlobBuilder.</code><code class="sig-name descname">allocRun</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.TextBlobBuilder" title="skia.TextBlobBuilder">skia.TextBlobBuilder</a></span></em>, <em class="sig-param"><span class="n">font</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.Font.html#skia.Font" title="skia.Font">skia.Font</a></span></em>, <em class="sig-param"><span class="n">glyphs</span><span class="p">:</span> <span class="n">List<span class="p">[</span>int<span class="p">]</span></span></em>, <em class="sig-param"><span class="n">x</span><span class="p">:</span> <span class="n">float</span></em>, <em class="sig-param"><span class="n">y</span><span class="p">:</span> <span class="n">float</span></em>, <em class="sig-param"><span class="n">bounds</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.Rect.html#skia.Rect" title="skia.Rect">skia.Rect</a></span> <span class="o">=</span> <span class="default_value">None</span></em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#skia.TextBlobBuilder.allocRun" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets a new run with glyphs.</p>
+<p>Glyphs share metrics in font.</p>
+<p>Glyphs are positioned on a baseline at (x, y), using font metrics to
+determine their relative placement.</p>
+<p>bounds defines an optional bounding box, used to suppress drawing when
+<a class="reference internal" href="skia.TextBlob.html#skia.TextBlob" title="skia.TextBlob"><code class="xref py py-class docutils literal notranslate"><span class="pre">TextBlob</span></code></a> bounds does not intersect <a class="reference internal" href="skia.Surface.html#skia.Surface" title="skia.Surface"><code class="xref py py-class docutils literal notranslate"><span class="pre">Surface</span></code></a>
+bounds. If bounds is nullptr, <a class="reference internal" href="skia.TextBlob.html#skia.TextBlob" title="skia.TextBlob"><code class="xref py py-class docutils literal notranslate"><span class="pre">TextBlob</span></code></a> bounds is computed
+from (x, y) and RunBuffer::glyphs metrics.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>font</strong> (<a class="reference internal" href="skia.Font.html#skia.Font" title="skia.Font"><em>skia.Font</em></a>) – <a class="reference internal" href="skia.Font.html#skia.Font" title="skia.Font"><code class="xref py py-class docutils literal notranslate"><span class="pre">Font</span></code></a> used for this run</p></li>
+<li><p><strong>glyphs</strong> (<em>List</em><em>[</em><em>int</em><em>]</em>) – array of glyph IDs</p></li>
+<li><p><strong>x</strong> (<em>float</em>) – horizontal offset within the blob</p></li>
+<li><p><strong>y</strong> (<em>float</em>) – vertical offset within the blob</p></li>
+<li><p><strong>bounds</strong> (<a class="reference internal" href="skia.Rect.html#skia.Rect" title="skia.Rect"><em>skia.Rect</em></a>) – optional run bounding box</p></li>
+</ul>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py method">
 <dt id="skia.TextBlobBuilder.allocRunPos">
-<code class="sig-prename descclassname">TextBlobBuilder.</code><code class="sig-name descname">allocRunPos</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.TextBlobBuilder" title="skia.TextBlobBuilder">skia.TextBlobBuilder</a></span></em>, <em class="sig-param"><span class="n">arg0</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.Font.html#skia.Font" title="skia.Font">skia.Font</a></span></em>, <em class="sig-param"><span class="n">arg1</span><span class="p">:</span> <span class="n">int</span></em>, <em class="sig-param"><span class="n">arg2</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.Rect.html#skia.Rect" title="skia.Rect">skia.Rect</a></span></em><span class="sig-paren">)</span> &#x2192; skia.TextBlobBuilder.RunBuffer<a class="headerlink" href="#skia.TextBlobBuilder.allocRunPos" title="Permalink to this definition">¶</a></dt>
-<dd><p>Returns run with storage for glyphs and SkPoint positions.</p>
+<code class="sig-prename descclassname">TextBlobBuilder.</code><code class="sig-name descname">allocRunPos</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.TextBlobBuilder" title="skia.TextBlobBuilder">skia.TextBlobBuilder</a></span></em>, <em class="sig-param"><span class="n">font</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.Font.html#skia.Font" title="skia.Font">skia.Font</a></span></em>, <em class="sig-param"><span class="n">glyphs</span><span class="p">:</span> <span class="n">List<span class="p">[</span>int<span class="p">]</span></span></em>, <em class="sig-param"><span class="n">positions</span><span class="p">:</span> <span class="n">List<span class="p">[</span><a class="reference internal" href="skia.Point.html#skia.Point" title="skia.Point">skia.Point</a><span class="p">]</span></span></em>, <em class="sig-param"><span class="n">bounds</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.Rect.html#skia.Rect" title="skia.Rect">skia.Rect</a></span> <span class="o">=</span> <span class="default_value">None</span></em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#skia.TextBlobBuilder.allocRunPos" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets a new run with glyphs and <a class="reference internal" href="skia.Point.html#skia.Point" title="skia.Point"><code class="xref py py-class docutils literal notranslate"><span class="pre">Point</span></code></a> positions.</p>
+<p>Glyphs share metrics in font.</p>
+<p>Glyphs are positioned using <a class="reference internal" href="skia.Point.html#skia.Point" title="skia.Point"><code class="xref py py-class docutils literal notranslate"><span class="pre">Point</span></code></a>, using two scalar values
+for each <a class="reference internal" href="skia.Point.html#skia.Point" title="skia.Point"><code class="xref py py-class docutils literal notranslate"><span class="pre">Point</span></code></a>.</p>
+<p>bounds defines an optional bounding box, used to suppress drawing when
+<a class="reference internal" href="skia.TextBlob.html#skia.TextBlob" title="skia.TextBlob"><code class="xref py py-class docutils literal notranslate"><span class="pre">TextBlob</span></code></a> bounds does not intersect <a class="reference internal" href="skia.Surface.html#skia.Surface" title="skia.Surface"><code class="xref py py-class docutils literal notranslate"><span class="pre">Surface</span></code></a>
+bounds. If bounds is nullptr, <a class="reference internal" href="skia.TextBlob.html#skia.TextBlob" title="skia.TextBlob"><code class="xref py py-class docutils literal notranslate"><span class="pre">TextBlob</span></code></a> bounds is computed
+from RunBuffer::pos and RunBuffer::glyphs metrics.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>font</strong> (<a class="reference internal" href="skia.Font.html#skia.Font" title="skia.Font"><em>skia.Font</em></a>) – <a class="reference internal" href="skia.Font.html#skia.Font" title="skia.Font"><code class="xref py py-class docutils literal notranslate"><span class="pre">Font</span></code></a> used for this run</p></li>
+<li><p><strong>glyphs</strong> (<em>List</em><em>[</em><em>int</em><em>]</em>) – array of glyph IDs</p></li>
+<li><p><strong>positions</strong> (<em>List</em><em>[</em><a class="reference internal" href="skia.Point.html#skia.Point" title="skia.Point"><em>skia.Point</em></a><em>]</em>) – offsets within the blob</p></li>
+<li><p><strong>bounds</strong> (<a class="reference internal" href="skia.Rect.html#skia.Rect" title="skia.Rect"><em>skia.Rect</em></a>) – optional run bounding box</p></li>
+</ul>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py method">
 <dt id="skia.TextBlobBuilder.allocRunPosH">
-<code class="sig-prename descclassname">TextBlobBuilder.</code><code class="sig-name descname">allocRunPosH</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.TextBlobBuilder" title="skia.TextBlobBuilder">skia.TextBlobBuilder</a></span></em>, <em class="sig-param"><span class="n">arg0</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.Font.html#skia.Font" title="skia.Font">skia.Font</a></span></em>, <em class="sig-param"><span class="n">arg1</span><span class="p">:</span> <span class="n">int</span></em>, <em class="sig-param"><span class="n">arg2</span><span class="p">:</span> <span class="n">float</span></em>, <em class="sig-param"><span class="n">arg3</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.Rect.html#skia.Rect" title="skia.Rect">skia.Rect</a></span></em><span class="sig-paren">)</span> &#x2192; skia.TextBlobBuilder.RunBuffer<a class="headerlink" href="#skia.TextBlobBuilder.allocRunPosH" title="Permalink to this definition">¶</a></dt>
-<dd><p>Returns run with storage for glyphs and positions along baseline.</p>
+<code class="sig-prename descclassname">TextBlobBuilder.</code><code class="sig-name descname">allocRunPosH</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.TextBlobBuilder" title="skia.TextBlobBuilder">skia.TextBlobBuilder</a></span></em>, <em class="sig-param"><span class="n">font</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.Font.html#skia.Font" title="skia.Font">skia.Font</a></span></em>, <em class="sig-param"><span class="n">glyphs</span><span class="p">:</span> <span class="n">List<span class="p">[</span>int<span class="p">]</span></span></em>, <em class="sig-param"><span class="n">xpos</span><span class="p">:</span> <span class="n">List<span class="p">[</span>float<span class="p">]</span></span></em>, <em class="sig-param"><span class="n">y</span><span class="p">:</span> <span class="n">float</span></em>, <em class="sig-param"><span class="n">bounds</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.Rect.html#skia.Rect" title="skia.Rect">skia.Rect</a></span> <span class="o">=</span> <span class="default_value">None</span></em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#skia.TextBlobBuilder.allocRunPosH" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets a new run with glyphs and positions along baseline.</p>
+<p>Glyphs share metrics in font.</p>
+<p>Glyphs are positioned on a baseline at y, using x-axis positions.</p>
+<p>bounds defines an optional bounding box, used to suppress drawing when
+<a class="reference internal" href="skia.TextBlob.html#skia.TextBlob" title="skia.TextBlob"><code class="xref py py-class docutils literal notranslate"><span class="pre">TextBlob</span></code></a> bounds does not intersect <a class="reference internal" href="skia.Surface.html#skia.Surface" title="skia.Surface"><code class="xref py py-class docutils literal notranslate"><span class="pre">Surface</span></code></a>
+bounds. If bounds is nullptr, <a class="reference internal" href="skia.TextBlob.html#skia.TextBlob" title="skia.TextBlob"><code class="xref py py-class docutils literal notranslate"><span class="pre">TextBlob</span></code></a> bounds is computed
+from y, RunBuffer::pos, and RunBuffer::glyphs metrics.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>font</strong> (<a class="reference internal" href="skia.Font.html#skia.Font" title="skia.Font"><em>skia.Font</em></a>) – <a class="reference internal" href="skia.Font.html#skia.Font" title="skia.Font"><code class="xref py py-class docutils literal notranslate"><span class="pre">Font</span></code></a> used for this run</p></li>
+<li><p><strong>glyphs</strong> (<em>List</em><em>[</em><em>int</em><em>]</em>) – array of glyph IDs</p></li>
+<li><p><strong>xpos</strong> (<em>List</em><em>[</em><em>float</em><em>]</em>) – horizontal offsets within the blob</p></li>
+<li><p><strong>y</strong> (<em>float</em>) – vertical offset within the blob</p></li>
+<li><p><strong>bounds</strong> (<a class="reference internal" href="skia.Rect.html#skia.Rect" title="skia.Rect"><em>skia.Rect</em></a>) – optional run bounding box</p></li>
+</ul>
+</dd>
+</dl>
 </dd></dl>
+
+<dl class="py method">
+<dt id="skia.TextBlobBuilder.allocRunRSXform">
+<code class="sig-prename descclassname">TextBlobBuilder.</code><code class="sig-name descname">allocRunRSXform</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.TextBlobBuilder" title="skia.TextBlobBuilder">skia.TextBlobBuilder</a></span></em>, <em class="sig-param"><span class="n">font</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.Font.html#skia.Font" title="skia.Font">skia.Font</a></span></em>, <em class="sig-param"><span class="n">glyphs</span><span class="p">:</span> <span class="n">List<span class="p">[</span>int<span class="p">]</span></span></em>, <em class="sig-param"><span class="n">xforms</span><span class="p">:</span> <span class="n">List<span class="p">[</span><a class="reference internal" href="skia.RSXform.html#skia.RSXform" title="skia.RSXform">skia.RSXform</a><span class="p">]</span></span></em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#skia.TextBlobBuilder.allocRunRSXform" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
 
 <dl class="py method">
 <dt id="skia.TextBlobBuilder.make">
 <code class="sig-prename descclassname">TextBlobBuilder.</code><code class="sig-name descname">make</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.TextBlobBuilder" title="skia.TextBlobBuilder">skia.TextBlobBuilder</a></span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="skia.TextBlob.html#skia.TextBlob" title="skia.TextBlob">skia.TextBlob</a><a class="headerlink" href="#skia.TextBlobBuilder.make" title="Permalink to this definition">¶</a></dt>
-<dd><p>Returns SkTextBlob built from runs of glyphs added by builder.</p>
+<dd><p>Returns <a class="reference internal" href="skia.TextBlob.html#skia.TextBlob" title="skia.TextBlob"><code class="xref py py-class docutils literal notranslate"><span class="pre">TextBlob</span></code></a> built from runs of glyphs added by builder.</p>
+<p>Returned <a class="reference internal" href="skia.TextBlob.html#skia.TextBlob" title="skia.TextBlob"><code class="xref py py-class docutils literal notranslate"><span class="pre">TextBlob</span></code></a> is immutable; it may be copied, but its
+contents may not be altered. Returns nullptr if no runs of glyphs were
+added by builder.</p>
+<p>Resets <a class="reference internal" href="#skia.TextBlobBuilder" title="skia.TextBlobBuilder"><code class="xref py py-class docutils literal notranslate"><span class="pre">TextBlobBuilder</span></code></a> to its initial empty state, allowing
+it to be reused to build a new set of runs.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p><a class="reference internal" href="skia.TextBlob.html#skia.TextBlob" title="skia.TextBlob"><code class="xref py py-class docutils literal notranslate"><span class="pre">TextBlob</span></code></a> or nullptr</p>
+</dd>
+</dl>
 </dd></dl>
 
 </div>
@@ -150,7 +220,6 @@
 <li class="toctree-l2"><a class="reference internal" href="skia.CornerPathEffect.html">CornerPathEffect</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.DashPathEffect.html">DashPathEffect</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.Data.html">Data</a></li>
-<li class="toctree-l2"><a class="reference internal" href="skia.DeserialProcs.html">DeserialProcs</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.DilateImageFilter.html">DilateImageFilter</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.DiscretePathEffect.html">DiscretePathEffect</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.DisplacementMapEffect.html">DisplacementMapEffect</a></li>
@@ -263,6 +332,8 @@
 <li class="toctree-l2"><a class="reference internal" href="skia.TableColorFilter.html">TableColorFilter</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.TableMaskFilter.html">TableMaskFilter</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.TextBlob.html">TextBlob</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.TextBlob.Iter.html">TextBlob.Iter</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.TextBlob.Iter.Run.html">TextBlob.Iter.Run</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">TextBlobBuilder</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.TextEncoding.html">TextEncoding</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.TileImageFilter.html">TileImageFilter</a></li>
@@ -283,7 +354,7 @@
 <ul>
   <li><a href="../index.html">Documentation overview</a><ul>
   <li><a href="../reference.html">Reference</a><ul>
-      <li>Previous: <a href="skia.TextBlob.html" title="previous chapter">TextBlob</a></li>
+      <li>Previous: <a href="skia.TextBlob.Iter.Run.html" title="previous chapter">TextBlob.Iter.Run</a></li>
       <li>Next: <a href="skia.TextEncoding.html" title="next chapter">TextEncoding</a></li>
   </ul></li>
   </ul></li>
