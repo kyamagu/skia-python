@@ -156,6 +156,8 @@ Reference
     TableColorFilter
     TableMaskFilter
     TextBlob
+    TextBlob.Iter
+    TextBlob.Iter.Run
     TextBlobBuilder
     TextEncoding
     TileImageFilter

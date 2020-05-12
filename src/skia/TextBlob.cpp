@@ -10,14 +10,35 @@ sk_sp<SkTextBlob> MakeFromText(
 }
 
 void initTextBlob(py::module &m) {
-py::class_<SkTextBlob, sk_sp<SkTextBlob>>(m, "TextBlob", R"docstring(
+py::class_<SkTextBlob, sk_sp<SkTextBlob>> textblob(m, "TextBlob", R"docstring(
     :py:class:`TextBlob` combines multiple text runs into an immutable
     container.
 
     Each text run consists of glyphs, :py:class:`Paint`, and position. Only
     parts of :py:class:`Paint` related to fonts and text rendering are used by
     run.
-    )docstring")
+    )docstring");
+
+py::class_<SkTextBlob::Iter> iter(textblob, "Iter");
+
+py::class_<SkTextBlob::Iter::Run>(iter, "Run")
+    .def(py::init<>())
+    .def_readonly("fTypeface", &SkTextBlob::Iter::Run::fTypeface,
+        py::return_value_policy::reference)
+    .def_readonly("fGlyphCount", &SkTextBlob::Iter::Run::fGlyphCount)
+    .def_property_readonly("fGlyphIndices",
+        [] (const SkTextBlob::Iter::Run& run) {
+            return std::vector<uint16_t>(
+                run.fGlyphIndices, run.fGlyphIndices + run.fGlyphCount);
+        })
+    ;
+
+iter
+    .def(py::init<const SkTextBlob&>())
+    .def("next", &SkTextBlob::Iter::next)
+    ;
+
+textblob
     .def(py::init(&MakeFromText),
         R"docstring(
         Creates :py:class:`TextBlob` with a single run.
