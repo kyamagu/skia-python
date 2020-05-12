@@ -64,7 +64,6 @@ def test_FontArguments_getVariationDesignPosition(fontarguments):
 
 @pytest.fixture
 def typeface():
-    # return fontmgr.matchFamilyStyle(None, skia.FontStyle())
     return skia.Typeface.MakeDefault()
 
 
@@ -84,12 +83,7 @@ def test_Typeface_isFixedPitch(typeface):
     assert isinstance(typeface.isFixedPitch(), bool)
 
 
-@pytest.mark.skip(reason='Fix me!')
-def test_Typeface_getVariationDesignPosition(typeface):
-    assert isinstance(typeface.getVariationDesignPosition(), list)
-
-
-@pytest.mark.skip(reason='Fix me!')
+@pytest.mark.xfail(reason='Fix me!')
 def test_Typeface_getVariationDesignParameters(typeface):
     assert isinstance(typeface.getVariationDesignParameters(), list)
 

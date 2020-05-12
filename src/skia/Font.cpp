@@ -235,26 +235,8 @@ typeface
         :rtype: List[skia.FontArguments.VariationPosition.Coordinate]
         )docstring",
         py::arg("coordinateCount") = 10)
-    .def("getVariationDesignParameters",
-        [] (const SkTypeface& typeface, int parameterCount) {
-            std::vector<SkFontParameters::Variation::Axis>
-                params(parameterCount);
-            auto count = typeface.getVariationDesignParameters(
-                &params[0], params.size());
-            if (count == -1)
-                throw std::runtime_error("Failed to get");
-            else if (count > int(params.size()))
-                params.erase(params.begin() + count, params.end());
-            return params;
-        },
-        R"docstring(
-        Returns the design variation parameters.
-
-        :param int parameterCount: the maximum number of entries to get.
-        :return: list of parameters
-        :rtype: List[skia.FontArguments.VariationPosition.Axis]
-        )docstring",
-        py::arg("parameterCount") = 10)
+    // .def("getVariationDesignParameters",
+    //     &SkTypeface::getVariationDesignParameters)
     .def("uniqueID", &SkTypeface::uniqueID,
         R"docstring(
         Return a 32bit value for this typeface, unique for the underlying font
@@ -690,9 +672,9 @@ font
         Constructs :py:class:`Font` with default values with
         :py:class:`Typeface` and size in points.
 
-        :param skia.Typeface typeface: font and style used to draw and measure
+        :typeface: font and style used to draw and measure
             text
-        :param float size: typographic height of text
+        :size: typographic height of text
         )docstring",
         py::arg("typeface"), py::arg("size"))
     .def(py::init<sk_sp<SkTypeface>>(),
@@ -700,7 +682,7 @@ font
         Constructs :py:class:`Font` with default values with
         :py:class:`Typeface`.
 
-        :param skia.Typeface typeface: font and style used to draw and measure
+        :typeface: font and style used to draw and measure
             text
         )docstring",
         py::arg("typeface"))
@@ -713,11 +695,11 @@ font
         Horizontal scale emulates condensed and expanded fonts. Horizontal skew
         emulates oblique fonts.
 
-        :param skia.Typeface typeface: font and style used to draw and measure
+        :typeface: font and style used to draw and measure
             text
-        :param float size: typographic height of text
-        :param float scaleX: text horizontal scale
-        :param float skewX: additional shear on x-axis relative to y-axis
+        :size: typographic height of text
+        :scaleX: text horizontal scale
+        :skewX: additional shear on x-axis relative to y-axis
         )docstring",
         py::arg("typeface"), py::arg("size"), py::arg("scaleX"),
         py::arg("skewX"))
