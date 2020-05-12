@@ -17,9 +17,34 @@ py::class_<SkTextBlob, sk_sp<SkTextBlob>> textblob(m, "TextBlob", R"docstring(
     Each text run consists of glyphs, :py:class:`Paint`, and position. Only
     parts of :py:class:`Paint` related to fonts and text rendering are used by
     run.
+
+    .. rubric:: Classes
+
+    .. autosummary::
+        :nosignatures:
+
+        ~skia.TextBlob.Iter
+        ~skia.TextBlob.Iter.Run
     )docstring");
 
-py::class_<SkTextBlob::Iter> iter(textblob, "Iter");
+py::class_<SkTextBlob::Iter> iter(textblob, "Iter",
+    R"docstring(
+    Iterator for :py:class:`~skia.TextBlob.Iter.Run`.
+
+    Example::
+
+        run = skia.TextBlob.Iter.Run()
+        it = skia.TextBlob.Iter(textblob)
+        while it.next(run):
+            print(run)
+
+    .. rubric:: Classes
+
+    .. autosummary::
+        :nosignatures:
+
+        ~skia.TextBlob.Iter.Run
+    )docstring");
 
 py::class_<SkTextBlob::Iter::Run>(iter, "Run")
     .def(py::init<>())
@@ -278,38 +303,124 @@ py::class_<SkTextBlobBuilder> textblobbuilder(m, "TextBlobBuilder", R"docstring(
     Helper class for constructing :py:class:`TextBlob`.
     )docstring");
 
-py::class_<SkTextBlobBuilder::RunBuffer>(textblobbuilder, "RunBuffer",
-    R"docstring(
-    RunBuffer supplies storage for glyphs and positions within a run.
-    )docstring")
-    .def("points", &SkTextBlobBuilder::RunBuffer::points,
-        py::return_value_policy::reference)
-    .def("xforms", &SkTextBlobBuilder::RunBuffer::xforms,
-        py::return_value_policy::reference)
-    .def_readwrite("glyphs", &SkTextBlobBuilder::RunBuffer::glyphs,
-        "storage for glyphs in run ",
-        py::return_value_policy::reference)
-    .def_readwrite("pos", &SkTextBlobBuilder::RunBuffer::pos,
-        "storage for positions in run.",
-        py::return_value_policy::reference)
-    .def_readwrite("utf8text", &SkTextBlobBuilder::RunBuffer::utf8text,
-        "reserved for future use.",
-        py::return_value_policy::reference)
-    .def_readwrite("clusters", &SkTextBlobBuilder::RunBuffer::clusters,
-        "reserved for future use.",
-        py::return_value_policy::reference)
-    ;
-
 textblobbuilder
     .def(py::init(), "Constructs empty :py:class:`TextBlobBuilder`.")
     .def("make", &SkTextBlobBuilder::make,
-        "Returns SkTextBlob built from runs of glyphs added by builder.")
-    .def("allocRun", &SkTextBlobBuilder::allocRun,
-        "Returns run with storage for glyphs.")
-    .def("allocRunPosH", &SkTextBlobBuilder::allocRunPosH,
-        "Returns run with storage for glyphs and positions along baseline.")
-    .def("allocRunPos", &SkTextBlobBuilder::allocRunPos,
-        "Returns run with storage for glyphs and SkPoint positions.")
-    // .def("allocRunRSXform", &SkTextBlobBuilder::allocRunRSXform)
+        R"docstring(
+        Returns :py:class:`TextBlob` built from runs of glyphs added by builder.
+
+        Returned :py:class:`TextBlob` is immutable; it may be copied, but its
+        contents may not be altered. Returns nullptr if no runs of glyphs were
+        added by builder.
+
+        Resets :py:class:`TextBlobBuilder` to its initial empty state, allowing
+        it to be reused to build a new set of runs.
+
+        :return: :py:class:`TextBlob` or nullptr
+        )docstring")
+    .def("allocRun",
+        [] (SkTextBlobBuilder& builder, const SkFont& font,
+            const std::vector<SkGlyphID>& glyphs, SkScalar x, SkScalar y,
+            const SkRect* bounds) {
+            auto run = builder.allocRun(font, glyphs.size(), x, y, bounds);
+            std::copy(glyphs.begin(), glyphs.end(), run.glyphs);
+        },
+        R"docstring(
+        Sets a new run with glyphs.
+
+        Glyphs share metrics in font.
+
+        Glyphs are positioned on a baseline at (x, y), using font metrics to
+        determine their relative placement.
+
+        bounds defines an optional bounding box, used to suppress drawing when
+        :py:class:`TextBlob` bounds does not intersect :py:class:`Surface`
+        bounds. If bounds is nullptr, :py:class:`TextBlob` bounds is computed
+        from (x, y) and RunBuffer::glyphs metrics.
+
+        :param skia.Font font: :py:class:`Font` used for this run
+        :param List[int] glyphs: array of glyph IDs
+        :param float x: horizontal offset within the blob
+        :param float y: vertical offset within the blob
+        :param skia.Rect bounds: optional run bounding box
+        )docstring",
+        py::arg("font"), py::arg("glyphs"), py::arg("x"), py::arg("y"),
+        py::arg("bounds") = nullptr)
+    .def("allocRunPosH",
+        [] (SkTextBlobBuilder& builder, const SkFont& font,
+            const std::vector<SkGlyphID>& glyphs,
+            const std::vector<SkScalar>& xpos,
+            SkScalar y, const SkRect* bounds) {
+            if (glyphs.size() != xpos.size())
+                throw std::runtime_error(
+                    "glyphs and xpos must have the same size.");
+            auto run = builder.allocRunPosH(font, glyphs.size(), y, bounds);
+            std::copy(glyphs.begin(), glyphs.end(), run.glyphs);
+            std::copy(xpos.begin(), xpos.end(), run.pos);
+        },
+        R"docstring(
+        Sets a new run with glyphs and positions along baseline.
+
+        Glyphs share metrics in font.
+
+        Glyphs are positioned on a baseline at y, using x-axis positions.
+
+        bounds defines an optional bounding box, used to suppress drawing when
+        :py:class:`TextBlob` bounds does not intersect :py:class:`Surface`
+        bounds. If bounds is nullptr, :py:class:`TextBlob` bounds is computed
+        from y, RunBuffer::pos, and RunBuffer::glyphs metrics.
+
+        :param skia.Font font: :py:class:`Font` used for this run
+        :param List[int] glyphs: array of glyph IDs
+        :param List[float] xpos: horizontal offsets within the blob
+        :param float y: vertical offset within the blob
+        :param skia.Rect bounds: optional run bounding box
+        )docstring",
+        py::arg("font"), py::arg("glyphs"), py::arg("xpos"), py::arg("y"),
+        py::arg("bounds") = nullptr)
+    .def("allocRunPos",
+        [] (SkTextBlobBuilder& builder, const SkFont& font,
+            const std::vector<SkGlyphID>& glyphs,
+            const std::vector<SkPoint>& positions,
+            const SkRect* bounds) {
+            if (glyphs.size() != positions.size())
+                throw std::runtime_error(
+                    "glyphs and positions must have the same size.");
+            auto run = builder.allocRunPos(font, glyphs.size(), bounds);
+            std::copy(glyphs.begin(), glyphs.end(), run.glyphs);
+            std::copy(positions.begin(), positions.end(), run.points());
+        },
+        R"docstring(
+        Sets a new run with glyphs and :py:class:`Point` positions.
+
+        Glyphs share metrics in font.
+
+        Glyphs are positioned using :py:class:`Point`, using two scalar values
+        for each :py:class:`Point`.
+
+        bounds defines an optional bounding box, used to suppress drawing when
+        :py:class:`TextBlob` bounds does not intersect :py:class:`Surface`
+        bounds. If bounds is nullptr, :py:class:`TextBlob` bounds is computed
+        from RunBuffer::pos and RunBuffer::glyphs metrics.
+
+        :param skia.Font font: :py:class:`Font` used for this run
+        :param List[int] glyphs: array of glyph IDs
+        :param List[skia.Point] positions: offsets within the blob
+        :param skia.Rect bounds: optional run bounding box
+        )docstring",
+        py::arg("font"), py::arg("glyphs"), py::arg("positions"),
+        py::arg("bounds") = nullptr)
+    .def("allocRunRSXform",
+        [] (SkTextBlobBuilder& builder, const SkFont& font,
+            const std::vector<SkGlyphID>& glyphs,
+            const std::vector<SkRSXform>& xforms) {
+            if (glyphs.size() != xforms.size())
+                throw std::runtime_error(
+                    "glyphs and xforms must have the same size.");
+            auto run = builder.allocRunRSXform(font, glyphs.size());
+            std::copy(glyphs.begin(), glyphs.end(), run.glyphs);
+            std::copy(xforms.begin(), xforms.end(), run.xforms());
+        },
+        py::arg("font"), py::arg("glyphs"), py::arg("xforms"))
     ;
 }

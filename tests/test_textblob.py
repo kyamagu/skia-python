@@ -95,3 +95,38 @@ def test_TextBlob_Iter_Run_fGlyphCount(run):
 
 def test_TextBlob_Iter_Run_fGlyphIndices(run):
     assert isinstance(run.fGlyphIndices, list)
+
+
+@pytest.fixture
+def builder():
+    return skia.TextBlobBuilder()
+
+
+def test_TextBlobBuilder_init():
+    assert isinstance(skia.TextBlobBuilder(), skia.TextBlobBuilder)
+
+
+def test_TextBlobBuilder_allocRun(builder):
+    builder.allocRun(skia.Font(), [0x20, 0x21], 0, 0)
+
+
+def test_TextBlobBuilder_allocRunPosH(builder):
+    builder.allocRunPosH(skia.Font(), [0x20, 0x21], [0, 1], 0)
+
+
+def test_TextBlobBuilder_allocRunPos(builder):
+    builder.allocRunPos(
+        skia.Font(), [0x20, 0x21], [skia.Point(0, 0), skia.Point(1, 0)])
+
+
+def test_TextBlobBuilder_allocRunRSXform(builder):
+    xform = [
+        skia.RSXform(1, 0, 0, 0),
+        skia.RSXform(1, 0, 1, 0),
+    ]
+    builder.allocRunRSXform(skia.Font(), [0x20, 0x21], xform)
+
+
+def test_TextBlobBuilder_make(builder):
+    builder.allocRun(skia.Font(), [0x20, 0x21], 0, 0)
+    assert isinstance(builder.make(), skia.TextBlob)
