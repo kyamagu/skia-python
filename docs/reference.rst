@@ -44,7 +44,6 @@ Reference
     CornerPathEffect
     DashPathEffect
     Data
-    DeserialProcs
     DilateImageFilter
     DiscretePathEffect
     DisplacementMapEffect
