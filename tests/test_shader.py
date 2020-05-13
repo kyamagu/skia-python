@@ -39,8 +39,23 @@ def test_Shaders_Empty():
     assert isinstance(skia.Shaders.Empty(), skia.Shader)
 
 
-def test_Shaders_Color():
-    assert isinstance(skia.Shaders.Color(skia.ColorRED), skia.Shader)
+@pytest.mark.parametrize('args', [
+    (skia.ColorRED,),
+    (skia.ColorRED, skia.ColorSpace.MakeSRGBLinear()),
+])
+def test_Shaders_Color(args):
+    assert isinstance(skia.Shaders.Color(*args), skia.Shader)
+
+
+def test_Shaders_Blend(shader):
+    assert isinstance(
+        skia.Shaders.Blend(skia.BlendMode.kSrc, shader, shader),
+        skia.Shader)
+
+
+def test_Shaders_Lerp(shader):
+    assert isinstance(
+        skia.Shaders.Lerp(0.5, shader, shader), skia.Shader)
 
 
 @pytest.mark.parametrize('args', [

@@ -1,6 +1,14 @@
 #include "common.h"
 #include <pybind11/stl.h>
 
+template <>
+sk_sp<SkShader> CloneFlattenable(const SkShader& shader) {
+    auto data = shader.serialize();
+    auto flat = SkShader::Deserialize(
+        shader.getFlattenableType(), data->data(), data->size());
+    return sk_sp<SkShader>(reinterpret_cast<SkShader*>(flat.release()));
+}
+
 void initShader(py::module &m) {
 py::class_<SkShader, sk_sp<SkShader>, SkFlattenable> shader(
     m, "Shader", R"docstring(
@@ -168,14 +176,25 @@ py::class_<SkShaders>(m, "Shaders")
     .def_static("Empty", &SkShaders::Empty)
     .def_static("Color", py::overload_cast<SkColor>(&SkShaders::Color),
         py::arg("color"))
-    // .def_static("Color",
-    //     py::overload_cast<const SkColor4f&, sk_sp<SkColorSpace>>(
-    //         &SkShaders::Color),
-    //     py::arg("color"))
-    // .def_static("Blend", &SkShaders::Blend,
-    //     py::arg("mode"), py::arg("dst"), py::arg("src"))
-    // .def_static("Lerp", &SkShaders::Lerp,
-    //     py::arg("t"), py::arg("dst"), py::arg("src"))
+    .def_static("Color",
+        [] (const SkColor4f& color, const SkColorSpace& cs) {
+            return SkShaders::Color(color, CloneFlattenable(cs));
+        },
+        py::arg("color"), py::arg("cs") = nullptr)
+    .def_static("Blend",
+        [] (SkBlendMode mode, const SkShader& dst,
+            const SkShader& src) {
+            return SkShaders::Blend(
+                mode, CloneFlattenable(dst), CloneFlattenable(src));
+        },
+        py::arg("mode"), py::arg("dst"), py::arg("src"))
+    .def_static("Lerp",
+        [] (SkScalar t, const SkShader& dst,
+            const SkShader& src) {
+            return SkShaders::Lerp(
+                t, CloneFlattenable(dst), CloneFlattenable(src));
+        },
+        py::arg("t"), py::arg("dst"), py::arg("src"))
     ;
 
 py::class_<SkGradientShader> gradientshader(m, "GradientShader");
