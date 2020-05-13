@@ -84,11 +84,29 @@ py::class_<SkColorInfo>(m, "ColorInfo", R"docstring(
     colors.
     )docstring")
     .def(py::init<>(),
-        "Creates an SkColorInfo with kUnknown_SkColorType, "
-        "kUnknown_SkAlphaType, and no SkColorSpace.")
-    .def(py::init<SkColorType, SkAlphaType, sk_sp<SkColorSpace>>(),
-        "Creates SkColorInfo from SkColorType ct, SkAlphaType at, and "
-        "optionally SkColorSpace cs.")
+        R"docstring(
+        Creates an :py:class:`ColorInfo` with
+        :py:attr:`~ColorType.kUnknown_ColorType`,
+        :py:attr:`~AlphaType.kUnknown_AlphaType`, and no :py:class:`ColorSpace`.
+        )docstring")
+    .def(py::init<>(
+        [] (SkColorType ct, SkAlphaType at, const SkColorSpace* cs) {
+            auto cs_ = (cs) ? CloneFlattenable(*cs) :
+                sk_sp<SkColorSpace>(nullptr);
+            return SkColorInfo(ct, at, cs_);
+        }),
+        R"docstring(
+        Creates :py:class:`ColorInfo` from :py:class:`ColorType` ct,
+        :py:class:`AlphaType` at, and optionally :py:class:`ColorSpace` cs.
+
+        If :py:class:`ColorSpace` cs is nullptr and :py:class:`ColorInfo` is
+        part of drawing source: :py:class:`ColorSpace` defaults to sRGB, mapping
+        into :py:class:`Surface` :py:class:`ColorSpace`.
+
+        Parameters are not validated to see if their values are legal, or that
+        the combination is supported.
+        )docstring",
+        py::arg("ct"), py::arg("at"), py::arg("cs") = nullptr)
     .def(py::init<const SkColorInfo&>())
     // .def(py::init<SkColorInfo&&>())
     .def("colorSpace", &SkColorInfo::colorSpace,
@@ -99,26 +117,61 @@ py::class_<SkColorInfo>(m, "ColorInfo", R"docstring(
     .def("isOpaque", &SkColorInfo::isOpaque)
     .def("gammaCloseToSRGB", &SkColorInfo::gammaCloseToSRGB)
     .def("__eq__", &SkColorInfo::operator==,
-        "Does other represent the same color type, alpha type, and color "
-        "space?",
+        R"docstring(
+        Does other represent the same color type, alpha type, and color space?
+        )docstring",
         py::is_operator())
     .def("__ne__", &SkColorInfo::operator!=,
-        "Does other represent a different color type, alpha type, or color "
-        "space?",
+        R"docstring(
+        Does other represent a different color type, alpha type, or color space?
+        )docstring",
         py::is_operator())
     .def("makeAlphaType", &SkColorInfo::makeAlphaType,
-        "Creates SkColorInfo with same SkColorType, SkColorSpace, with "
-        "SkAlphaType set to newAlphaType.")
+        R"docstring(
+        Creates :py:class:`ColorInfo` with same :py:class:`ColorType`,
+        :py:class:`ColorSpace`, with :py:class:`AlphaType` set to newAlphaType.
+
+        Created :py:class:`ColorInfo` contains newAlphaType even if it is
+        incompatible with :py:class:`ColorType`, in which case
+        :py:class:`AlphaType` in :py:class:`ColorInfo` is ignored.
+        )docstring",
+        py::arg("newAlphaType"))
     .def("makeColorType", &SkColorInfo::makeColorType,
-        "Creates new SkColorInfo with same SkAlphaType, SkColorSpace, with "
-        "SkColorType set to newColorType.")
-    .def("makeColorSpace", &SkColorInfo::makeColorSpace,
-        "Creates SkColorInfo with same SkAlphaType, SkColorType, with "
-        "SkColorSpace set to cs.")
+        R"docstring(
+        Creates new :py:class:`ColorInfo` with same :py:class:`AlphaType`,
+        :py:class:`ColorSpace`, with :py:class:`ColorType` set to newColorType.
+        )docstring",
+        py::arg("newColorType"))
+    .def("makeColorSpace",
+        [] (const SkColorInfo& info, const SkColorSpace* cs) {
+            auto cs_ = (cs) ? CloneFlattenable(*cs) :
+                sk_sp<SkColorSpace>(nullptr);
+            return info.makeColorSpace(cs_);
+        },
+        R"docstring(
+        Creates :py:class:`ColorInfo` with same :py:class:`AlphaType`,
+        :py:class:`ColorType`, with :py:class:`ColorSpace` set to cs.
+
+        cs may be nullptr.
+        )docstring",
+        py::arg("cs"))
     .def("bytesPerPixel", &SkColorInfo::bytesPerPixel,
-        "Returns number of bytes per pixel required by SkColorType.")
+        R"docstring(
+        Returns number of bytes per pixel required by :py:class:`ColorType`.
+
+        Returns zero if :py:meth:`colorType` is
+        :py:attr:`~ColorType.kUnknown_ColorType`.
+
+        :return: bytes in pixel
+        )docstring")
     .def("shiftPerPixel", &SkColorInfo::shiftPerPixel,
-        "Returns bit shift converting row bytes to row pixels.")
+        R"docstring(
+        Returns bit shift converting row bytes to row pixels.
+
+        Returns zero for :py:attr:`ColorType.kUnknown_ColorType`.
+
+        :return: one of: 0, 1, 2, 3, 4; left shift to convert pixels to bytes
+        )docstring")
     ;
 
 py::class_<SkImageInfo>(m, "ImageInfo", R"docstring(
