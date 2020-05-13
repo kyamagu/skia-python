@@ -5,6 +5,13 @@ void initSize(py::module &m) {
 py::class_<SkISize>(m, "ISize")
     .def(py::init(&SkISize::MakeEmpty))
     .def(py::init(&SkISize::Make))
+    .def(py::init(
+        [] (py::tuple t) {
+            if (t.size() != 2)
+                throw std::runtime_error(
+                    "ISize must have exactly two elements.");
+            return SkISize::Make(t[0].cast<int32_t>(), t[1].cast<int32_t>());
+        }))
     .def("set", &SkISize::set)
     .def("isZero", &SkISize::isZero,
         "Returns true iff fWidth == 0 && fHeight == 0.")
@@ -21,11 +28,20 @@ py::class_<SkISize>(m, "ISize")
     .def_readwrite("fHeight", &SkISize::fHeight)
     ;
 
+py::implicitly_convertible<py::tuple, SkISize>();
+
 // Size
 py::class_<SkSize>(m, "Size")
     .def(py::init(&SkSize::MakeEmpty))
     .def(py::init(py::overload_cast<SkScalar, SkScalar>(&SkSize::Make)))
     .def(py::init(py::overload_cast<const SkISize&>(&SkSize::Make)))
+    .def(py::init(
+        [] (py::tuple t) {
+            if (t.size() != 2)
+                throw std::runtime_error(
+                    "Size must have exactly two elements.");
+            return SkSize::Make(t[0].cast<SkScalar>(), t[1].cast<SkScalar>());
+        }))
     .def("set", &SkSize::set)
     .def("isZero", &SkSize::isZero,
         "Returns true iff fWidth == 0 && fHeight == 0.")
@@ -44,4 +60,7 @@ py::class_<SkSize>(m, "Size")
     .def_readwrite("fWidth", &SkSize::fWidth)
     .def_readwrite("fHeight", &SkSize::fHeight)
     ;
+
+py::implicitly_convertible<SkISize, SkSize>();
+py::implicitly_convertible<py::tuple, SkSize>();
 }
