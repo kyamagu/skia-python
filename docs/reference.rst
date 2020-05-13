@@ -87,6 +87,9 @@ Reference
     IRect
     ISize
     Image
+    Image.CompressionType
+    Image.BitDepth
+    Image.CachingHint
     ImageFilter
     ImageFilters
     ImageInfo

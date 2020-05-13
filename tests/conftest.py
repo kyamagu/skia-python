@@ -58,18 +58,25 @@ def opengl_is_available():
     return False
 
 
+@pytest.fixture(scope='session')
+def grcontext():
+    if opengl_is_available():
+        with opengl_context():
+            yield skia.GrContext.MakeGL()
+    else:
+        yield None
+
+
 @pytest.fixture(scope='session', params=[
     'raster',
     ('gpu', pytest.mark.skipif(
         not opengl_is_available(), reason='OpenGL is not available')),
 ])
-def surface(request):
-    if request.param == 'gpu':
-        with opengl_context():
-            context = skia.GrContext.MakeGL()
-            info = skia.ImageInfo.MakeN32Premul(320, 240)
-            yield skia.Surface.MakeRenderTarget(
-                context, skia.Budgeted.kNo, info)
+def surface(request, grcontext):
+    if request.param == 'gpu' and grcontext is not None:
+        info = skia.ImageInfo.MakeN32Premul(320, 240)
+        yield skia.Surface.MakeRenderTarget(
+            grcontext, skia.Budgeted.kNo, info)
     else:
         yield skia.Surface(320, 240)
 
