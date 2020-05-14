@@ -3,8 +3,6 @@ import pytest
 import numpy as np
 import sys
 
-from .conftest import opengl_context, opengl_is_available
-
 
 def check_surface(x):
     assert isinstance(x, skia.Surface)
