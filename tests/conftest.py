@@ -14,10 +14,11 @@ def glfw_context():
         raise RuntimeError('glfw.init() failed')
     glfw.window_hint(glfw.VISIBLE, glfw.FALSE)
     glfw.window_hint(glfw.STENCIL_BITS, 8)
-    context = glfw.create_window(640, 480, '', None, None)
-    glfw.make_context_current(context)
     try:
+        context = glfw.create_window(640, 480, '', None, None)
+        glfw.make_context_current(context)
         yield context
+        glfw.destroy_window(context)
     except glfw.GLFWError:
         logger.exception('GLFW error')
     glfw.terminate()
@@ -71,7 +72,7 @@ def context(opengl_context):
     yield skia.GrContext.MakeGL()
 
 
-@pytest.fixture(scope='session', params=[
+@pytest.fixture(scope='module', params=[
     'raster',
     ('gpu', pytest.mark.skipif(
         not opengl_is_available(), reason='OpenGL is not available')),
@@ -80,10 +81,10 @@ def surface(request):
     if request.param == 'gpu':
         context = request.getfixturevalue('context')
         info = skia.ImageInfo.MakeN32Premul(320, 240)
-        yield skia.Surface.MakeRenderTarget(
+        return skia.Surface.MakeRenderTarget(
             context, skia.Budgeted.kNo, info)
     else:
-        yield skia.Surface(320, 240)
+        return skia.Surface(320, 240)
 
 
 @pytest.fixture(scope='session')
