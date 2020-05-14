@@ -29,19 +29,6 @@ def glut_context():
     yield context
 
 
-@contextlib.contextmanager
-def opengl_context():
-    try:
-        with glfw_context() as context:
-            yield context
-        return
-    except ImportError:
-        logger.warning('glfw not found, falling back to pyopengl')
-
-    with glut_context() as context:
-        yield context
-
-
 def opengl_is_available():
     try:
         import glfw
@@ -59,11 +46,23 @@ def opengl_is_available():
 
 
 @pytest.fixture(scope='session')
-def context():
-    if not opengl_is_available():
-        pytest.skip('OpenGL is not available')
-    with opengl_context():
-        yield skia.GrContext.MakeGL()
+def opengl_context():
+    try:
+        with glfw_context() as context:
+            yield context
+        return
+    except ImportError:
+        logger.warning('glfw not found, falling back to pyopengl')
+
+    with glut_context() as context:
+        yield context
+
+    pytest.skip('OpenGL is not available')
+
+
+@pytest.fixture(scope='session')
+def context(opengl_context):
+    yield skia.GrContext.MakeGL()
 
 
 @pytest.fixture(scope='session', params=[
@@ -71,8 +70,9 @@ def context():
     ('gpu', pytest.mark.skipif(
         not opengl_is_available(), reason='OpenGL is not available')),
 ])
-def surface(request, context):
+def surface(request):
     if request.param == 'gpu':
+        context = request.getfixturevalue('context')
         info = skia.ImageInfo.MakeN32Premul(320, 240)
         yield skia.Surface.MakeRenderTarget(
             context, skia.Budgeted.kNo, info)
