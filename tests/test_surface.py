@@ -148,9 +148,8 @@ def test_Surface_MakeRasterN32Premul(args):
         False,
     ),
 ])
-def test_Surface_MakeRenderTarget(args):
-    with opengl_context():
-        context = skia.GrContext.MakeGL()
+def test_Surface_MakeRenderTarget(args, grcontext):
+    if grcontext is not None:
         info = skia.ImageInfo.MakeN32Premul(320, 240)
         check_surface(skia.Surface.MakeRenderTarget(
             context, skia.Budgeted.kNo, info, *args))
