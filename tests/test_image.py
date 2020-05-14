@@ -72,8 +72,7 @@ def test_Image_isValid(image):
 
 
 def test_Image_flush(image, context):
-    if context is not None:
-        image.flush(context)
+    image.flush(context)
 
 
 @pytest.mark.parametrize('use_pixmap', [False, True])

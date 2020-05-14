@@ -16,7 +16,10 @@ def glfw_context():
     glfw.window_hint(glfw.STENCIL_BITS, 8)
     context = glfw.create_window(640, 480, '', None, None)
     glfw.make_context_current(context)
-    yield context
+    try:
+        yield context
+    except glfw.GLFWError:
+        logger.exception('GLFW error')
     glfw.terminate()
 
 
@@ -54,8 +57,11 @@ def opengl_context():
     except ImportError:
         logger.warning('glfw not found, falling back to pyopengl')
 
-    with glut_context() as context:
-        yield context
+    try:
+        with glut_context() as context:
+            yield context
+    except ImportError:
+        pass
 
     pytest.skip('OpenGL is not available')
 
