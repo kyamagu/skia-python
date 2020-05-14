@@ -1025,10 +1025,33 @@ image
         )docstring",
         py::arg("context"), py::arg("pixmap"), py::arg("buildMips"),
         py::arg("limitToMaxTextureSize") = false)
-    /*
     .def_static("MakeFromAdoptedTexture",
-        &SkImage::MakeFromAdoptedTexture,
-        "Creates SkImage from backendTexture associated with context.")
+        [] (GrContext* context, const GrBackendTexture& backendTexture,
+            GrSurfaceOrigin origin, SkColorType colorType,
+            SkAlphaType alphaType, const SkColorSpace* colorSpace) {
+            return SkImage::MakeFromAdoptedTexture(
+                context, backendTexture, origin, colorType, alphaType,
+                CloneColorSpace(colorSpace));
+        },
+        R"docstring(
+        Creates :py:class:`Image` from backendTexture associated with context.
+
+        backendTexture and returned :py:class:`Image` are managed internally,
+        and are released when no longer needed.
+
+        :py:class:`Image` is returned if format of backendTexture is recognized
+        and supported. Recognized formats vary by GPU back-end.
+
+        :param skia.GrContext context: GPU context
+        :param skia.GrBackendTexture backendTexture: texture residing on GPU
+        :param skia.ColorSpace colorSpace: range of colors; may be nullptr
+        :return: created :py:class:`Image`, or nullptr
+        )docstring",
+        py::arg("context"), py::arg("backendTexture"), py::arg("origin"),
+        py::arg("colorType"),
+        py::arg("alphaType") = SkAlphaType::kPremul_SkAlphaType,
+        py::arg("colorSpace") = nullptr)
+    /*
     .def_static("MakeFromYUVATexturesCopy", &SkImage::MakeFromYUVATexturesCopy,
         "Creates an SkImage by flattening the specified YUVA planes into a "
         "single, interleaved RGBA image.")

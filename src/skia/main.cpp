@@ -48,8 +48,8 @@ PYBIND11_MODULE(skia, m) {
     initBitmap(m);
     initFont(m);
     initGrContext(m);
-    initImage(m);
     initImageInfo(m);
+    initImage(m);
     initPaint(m);
     initPath(m);
     initPicture(m);

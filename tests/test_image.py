@@ -287,6 +287,14 @@ def test_Image_MakeCrossContextFromPixmap(context, pixmap):
         skia.Image)
 
 
+def test_Image_MakeFromAdoptedTexture(context, texture):
+    assert isinstance(
+        skia.Image.MakeFromAdoptedTexture(
+            context, texture, skia.GrSurfaceOrigin.kTopLeft_GrSurfaceOrigin,
+            skia.ColorType.kRGBA_8888_ColorType),
+        skia.Image)
+
+
 def test_Image_MakeFromPicture():
     recorder = skia.PictureRecorder()
     canvas = recorder.beginRecording(skia.Rect(100, 100))
