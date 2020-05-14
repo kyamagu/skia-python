@@ -82,10 +82,14 @@ def surface(request, grcontext):
 
 
 @pytest.fixture(scope='session')
-def image():
+def png_data():
     import os
     root_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
     image_path = os.path.join(
         root_dir, 'skia', 'resources', 'images', 'color_wheel.png')
-    data = skia.Data.MakeFromFileName(image_path)
-    return skia.Image.MakeFromEncoded(data)
+    return skia.Data.MakeFromFileName(image_path)
+
+
+@pytest.fixture(scope='session')
+def image(png_data):
+    return skia.Image.MakeFromEncoded(png_data)

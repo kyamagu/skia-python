@@ -143,7 +143,7 @@ def test_Surface_MakeRasterN32Premul(args):
     tuple(),
     (
         0,
-        skia.GrSurfaceOrigin.kBottomLeft,
+        skia.GrSurfaceOrigin.kBottomLeft_GrSurfaceOrigin,
         None,
         False,
     ),
