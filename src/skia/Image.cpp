@@ -5,6 +5,13 @@ template<typename T>
 using NumPy = py::array_t<T, py::array::c_style | py::array::forcecast>;
 
 void initImage(py::module &m) {
+py::enum_<SkBudgeted>(m, "Budgeted", R"docstring(
+    Indicates whether an allocation should count against a cache budget.
+    )docstring")
+    .value("kNo", SkBudgeted::kNo)
+    .value("kYes", SkBudgeted::kYes)
+    .export_values();
+
 py::enum_<SkFilterQuality>(m, "FilterQuality",
     R"docstring(
     Controls how much filtering to be done when scaling/transforming complex
@@ -102,6 +109,13 @@ py::enum_<SkImage::BitDepth>(image, "BitDepth")
 py::enum_<SkImage::CachingHint>(image, "CachingHint")
     .value("kAllow_CachingHint", SkImage::CachingHint::kAllow_CachingHint)
     .value("kDisallow_CachingHint", SkImage::CachingHint::kDisallow_CachingHint)
+    .export_values();
+
+py::enum_<SkImage::LegacyBitmapMode>(image, "LegacyBitmapMode")
+    .value("kRO_LegacyBitmapMode", SkImage::kRO_LegacyBitmapMode,
+        R"docstring(
+        returned bitmap is read-only and immutable
+        )docstring")
     .export_values();
 
 image
@@ -227,7 +241,7 @@ image
         opaque.
 
         :return: true if :py:class:`AlphaType` is
-            :py:attr:`~AlphaType.kOpaque_SkAlphaType`
+            :py:attr:`~AlphaType.kOpaque_AlphaType`
         )docstring")
     .def("makeShader",
         py::overload_cast<SkTileMode, SkTileMode, const SkMatrix*>(
@@ -364,46 +378,295 @@ image
         py::arg("srcX") = 0, py::arg("srcY") = 0,
         py::arg("cachingHint") = SkImage::kAllow_CachingHint)
     .def("readPixels",
-        (bool (SkImage::*)(const SkPixmap&, int, int, SkImage::CachingHint)
-            const) &SkImage::readPixels,
-        "Copies a SkRect of pixels from SkImage to dst.",
+        py::overload_cast<const SkPixmap&, int, int, SkImage::CachingHint>(
+            &SkImage::readPixels, py::const_),
+        R"docstring(
+        Copies :py:class:`Rect` of pixels from :py:class:`Image` to dst.
+
+        Copy starts at offset (srcX, srcY), and does not exceed
+        :py:class:`Image` (:py:meth:`width`, :py:meth:`height`).
+
+        dst specifies width, height, :py:class:`ColorType`,
+        :py:class:`AlphaType`, and :py:class:`ColorSpace`, pixel storage, and
+        row bytes of destination. ``dst.rowBytes()`` specifics the gap from one
+        destination row to the next. Returns true if pixels are copied. Returns
+        false if:
+
+        - dst pixel storage equals nullptr
+        - dstRowBytes is less than ``ImageInfo.minRowBytes``
+        - :py:class:`PixelRef` is nullptr
+
+        Pixels are copied only if pixel conversion is possible. If
+        :py:class:`Image` :py:class:`ColorType` is
+        :py:attr:`~ColorType.kGray_8_ColorType`, or
+        :py:attr:`~ColorType.kAlpha_8_ColorType`; ``dst.colorType``
+        must match. If :py:class:`Image` :py:class:`ColorType` is
+        :py:attr:`~ColorType.kGray_8_ColorType`, ``dst.colorSpace`` must
+        match. If :py:class:`Image` :py:class:`AlphaType` is
+        :py:attr:`~AlphaType.kOpaque_AlphaType`, ``dst.alphaType`` must
+        match. If :py:class:`Image` :py:class:`ColorSpace` is nullptr,
+        ``dst.colorSpace`` must match. Returns false if pixel conversion is
+        not possible.
+
+        srcX and srcY may be negative to copy only top or left of source.
+        Returns false if :py:meth:`width` or :py:meth:`height` is zero or
+        negative. Returns false if abs(srcX) >= Image :py:meth:`width`, or if
+        abs(srcY) >= Image :py:meth:`height`.
+
+        If cachingHint is :py:attr:`~Image.CachingHint.kAllow_CachingHint`,
+        pixels may be retained locally. If cachingHint is
+        :py:attr:`~Image.CachingHint.kDisallow_CachingHint`, pixels are not
+        added to the local cache.
+
+        :dst: destination :py:class:`Pixmap`: :py:class:`ImageInfo`, pixels,
+            row bytes
+        :srcX: column index whose absolute value is less than
+            :py:meth:`width`
+        :srcY: row index whose absolute value is less than
+            :py:meth:`height`
+        :return: true if pixels are copied to dst
+        )docstring",
         py::arg("dst"), py::arg("srcX"), py::arg("srcY"),
         py::arg("cachingHint") = SkImage::CachingHint::kAllow_CachingHint)
     .def("scalePixels", &SkImage::scalePixels,
-        "Copies SkImage to dst, scaling pixels to fit dst.width() and "
-        "dst.height(), and converting pixels to match dst.colorType() and "
-        "dst.alphaType().")
+        R"docstring(
+        Copies :py:class:`Image` to dst, scaling pixels to fit ``dst.width()``
+        and ``dst.height()``, and converting pixels to match ``dst.colorType()``
+        and ``dst.alphaType()``.
+
+        Returns true if pixels are copied. Returns false if ``dst.addr()`` is
+        nullptr, or ``dst.rowBytes()`` is less than dst
+        :py:meth:`ImageInfo.minRowBytes`.
+
+        Pixels are copied only if pixel conversion is possible. If
+        :py:class:`Image` :py:class:`ColorType` is
+        :py:attr:`~ColorType.kGray_8_ColorType`, or
+        :py:attr:`~ColorType.kAlpha_8_ColorType`; ``dst.colorType()`` must
+        match. If :py:class:`Image` :py:class:`ColorType` is
+        :py:attr:`~ColorType.kGray_8_ColorType`, ``dst.colorSpace()`` must
+        match. If :py:class:`Image` :py:class:`AlphaType` is
+        :py:attr:`~AlphaType.kOpaque_AlphaType`, ``dst.alphaType()`` must match.
+        If :py:class:`Image` :py:class:`ColorSpace` is nullptr,
+        ``dst.colorSpace()`` must match. Returns false if pixel conversion is
+        not possible.
+
+        Scales the image, with filterQuality, to match ``dst.width()`` and
+        ``dst.height()``. filterQuality
+        :py:attr:`~FilterQuality.None_FilterQuality` is fastest, typically
+        implemented with nearest neighbor filter.
+        :py:attr:`~FilterQuality.kLow_FilterQuality` is typically implemented
+        with bilerp filter. :py:attr:`~FilterQuality.kMedium_FilterQuality` is
+        typically implemented with bilerp filter, and mip-map filter when size
+        is reduced. :py:attr:`~FilterQuality.kHigh_FilterQuality` is slowest,
+        typically implemented with bicubic filter.
+
+        If cachingHint is :py:attr:`~Image.CachingHint.kAllow_CachingHint`,
+        pixels may be retained locally. If cachingHint is
+        :py:attr:`~Image.CachingHint.kDisallow_CachingHint`, pixels are not
+        added to the local cache.
+
+        :param skia.Pixmap dst: destination :py:class:`Pixmap`:
+            :py:class:`ImageInfo`, pixels, row bytes
+        :param skia.FilterQuality filterQuality: Filter quality
+        :param skia.Image.CachingHint cachingHint: Caching hint
+        :return: true if pixels are scaled to fit dst
+        )docstring",
+        py::arg("dst"),
+        py::arg("filterQuality") = SkFilterQuality::kMedium_SkFilterQuality,
+        py::arg("cachingHint") = SkImage::kAllow_CachingHint)
     .def("encodeToData",
-        (sk_sp<SkData> (SkImage::*)(SkEncodedImageFormat, int) const)
-        &SkImage::encodeToData,
-        "Encodes SkImage pixels, returning result as SkData.")
+        py::overload_cast<SkEncodedImageFormat, int>(
+            &SkImage::encodeToData, py::const_),
+        R"docstring(
+        Encodes :py:class:`Image` pixels, returning result as :py:class:`Data`.
+
+        Returns nullptr if encoding fails, or if encodedImageFormat is not
+        supported.
+
+        :py:class:`Image` encoding in a format requires both building with one
+        or more of: SK_ENCODE_JPEG, SK_ENCODE_PNG, SK_ENCODE_WEBP; and platform
+        support for the encoded format.
+
+        If SK_BUILD_FOR_MAC or SK_BUILD_FOR_IOS is defined, encodedImageFormat
+        can additionally be one of: :py:attr:`~EncodedImageFormat.kICO`,
+        :py:attr:`~EncodedImageFormat.kBMP`,
+        :py:attr:`~EncodedImageFormat.kGIF`.
+
+        quality is a platform and format specific metric trading off size and
+        encoding error. When used, quality equaling 100 encodes with the least
+        error. quality may be ignored by the encoder.
+
+        :param skia.EncodedImageFormat encodedImageFormat:
+            one of: :py:attr:`~EncodedImageFormat.kJPEG`,
+            :py:attr:`~EncodedImageFormat.kPNG`,
+            :py:attr:`~EncodedImageFormat.kWEBP`
+        :param int quality: encoder specific metric with 100 equaling best
+        :return: encoded :py:class:`Image`, or nullptr
+        )docstring",
+        py::arg("encodedImageFormat"), py::arg("quality"))
     .def("encodeToData",
-        (sk_sp<SkData> (SkImage::*)() const) &SkImage::encodeToData,
-        "Encodes SkImage pixels, returning result as SkData.")
+        py::overload_cast<>(&SkImage::encodeToData, py::const_),
+        R"docstring(
+        Encodes :py:class:`Image` pixels, returning result as :py:class:`Data`.
+
+        Returns existing encoded data if present; otherwise, :py:class:`Image`
+        is encoded with :py:attr:`~EncodedImageFormat.kPNG`. Skia must be built
+        with SK_ENCODE_PNG to encode :py:class:`Image`.
+
+        Returns nullptr if existing encoded data is missing or invalid, and
+        encoding fails.
+
+        :return: encoded :py:class:`Image`, or nullptr
+        )docstring")
     .def("refEncodedData", &SkImage::refEncodedData,
-        "Returns encoded SkImage pixels as SkData, if SkImage was created from "
-        "supported encoded stream format.")
-    .def("makeSubset", &SkImage::makeSubset, "Returns subset of SkImage.")
-    // .def("makeTextureImage", &SkImage::makeTextureImage,
-    //     "Returns SkImage backed by GPU texture associated with context.")
+        R"docstring(
+        Returns encoded :py:class:`Image` pixels as :py:class:`Data`, if
+        :py:class:`Image` was created from supported encoded stream format.
+
+        Platform support for formats vary and may require building with one or
+        more of: SK_ENCODE_JPEG, SK_ENCODE_PNG, SK_ENCODE_WEBP.
+
+        Returns nullptr if :py:class:`Image` contents are not encoded.
+
+        :return: encoded :py:class:`Image`, or nullptr
+        )docstring")
+    .def("makeSubset", &SkImage::makeSubset,
+        R"docstring(
+        Returns subset of :py:class:`Image`.
+
+        subset must be fully contained by :py:class:`Image`
+        :py:meth:`dimensions`. The implementation may share pixels, or may copy
+        them.
+
+        Returns nullptr if subset is empty, or subset is not contained by
+        bounds, or pixels in :py:class:`Image` could not be read or copied.
+
+        :param skia.IRect subset: bounds of returned :py:class:`Image`
+        :return: partial or full :py:class:`Image`, or nullptr
+        )docstring",
+        py::arg("subset"))
+    .def("makeTextureImage", &SkImage::makeTextureImage,
+        R"docstring(
+        Returns :py:class:`Image` backed by GPU texture associated with context.
+
+        Returned :py:class:`Image` is compatible with :py:class:`Surface`
+        created with dstColorSpace. The returned :py:class:`Image` respects
+        mipMapped setting; if mipMapped equals :py:attr:`GrMipMapped.kYes`, the
+        backing texture allocates mip map levels.
+
+        The mipMapped parameter is effectively treated as kNo if MIP maps are
+        not supported by the GPU.
+
+        Returns original :py:class:`Image` if the image is already
+        texture-backed, the context matches, and mipMapped is compatible with
+        the backing GPU texture. :py:class:`Budgeted` is ignored in this case.
+
+        Returns nullptr if context is nullptr, or if :py:class:`Image` was
+        created with another GrContext.
+
+        :param GrContext context: GPU context
+        :param GrMipMapped mipMapped: whether created :py:class:`Image` texture
+            must allocate mip map levels
+        :param skia.Budgeted budgeted: whether to count a newly created texture
+            for the returned image counts against the GrContext's budget.
+        :return: created :py:class:`Image`, or nullptr
+        )docstring",
+        py::arg("context").none(false), py::arg("mipMapped") = GrMipMapped::kNo,
+        py::arg("budgeted") = SkBudgeted::kYes)
     .def("makeNonTextureImage", &SkImage::makeNonTextureImage,
-        "Returns raster image or lazy image.")
-    .def("makeRasterImage", &SkImage::makeRasterImage, "Returns raster image.")
-    // .def("makeWithFilter",
-    //     (sk_sp<SkImage> (SkImage::*)(GrContext*, const SkImageFilter*,
-    //         const SkIRect&, const SkIRect&, SkIRect*, SkIPoint*))
-    //     &SkImage::makeWithFilter,
-    //     "Creates filtered SkImage.")
-    // .def("makeWithFilter",
-    //     (sk_sp<SkImage> (SkImage::*)(const SkImageFilter*,
-    //         const SkIRect&, const SkIRect&, SkIRect*, SkIPoint*))
-    //     &SkImage::makeWithFilter,
-    //     "To be deprecated.")
+        R"docstring(
+        Returns raster image or lazy image.
+
+        Copies :py:class:`Image` backed by GPU texture into CPU memory if
+        needed. Returns original :py:class:`Image` if decoded in raster bitmap,
+        or if encoded in a stream.
+
+        Returns nullptr if backed by GPU texture and copy fails.
+
+        :return: raster image, lazy image, or nullptr
+        )docstring")
+    .def("makeRasterImage", &SkImage::makeRasterImage,
+        R"docstring(
+        Returns raster image.
+
+        Copies :py:class:`Image` backed by GPU texture into CPU memory, or
+        decodes :py:class:`Image` from lazy image. Returns original
+        :py:class:`Image` if decoded in raster bitmap.
+
+        Returns nullptr if copy, decode, or pixel read fails.
+
+        If cachingHint is :py:attr:`Image.CachingHint.kAllow_CachingHint`,
+        pixels may be retained locally. If cachingHint is
+        :py:attr:`Image.CachingHint.kDisallow_CachingHint`, pixels are not added
+        to the local cache.
+
+        :param skia.Image.CachingHint cachingHint: Caching hint
+        :return: raster image, or nullptr
+        )docstring",
+        py::arg("cachingHint") = SkImage::kAllow_CachingHint)
+    .def("makeWithFilter",
+        py::overload_cast<GrContext*, const SkImageFilter*,
+            const SkIRect&, const SkIRect&, SkIRect*, SkIPoint*>(
+                &SkImage::makeWithFilter, py::const_),
+        R"docstring(
+        Creates filtered :py:class:`Image`.
+
+        filter processes original :py:class:`Image`, potentially changing color,
+        position, and size. subset is the bounds of original :py:class:`Image`
+        processed by filter. clipBounds is the expected bounds of the filtered
+        :py:class:`Image`. outSubset is required storage for the actual bounds
+        of the filtered :py:class:`Image`. offset is required storage for
+        translation of returned :py:class:`Image`.
+
+        Returns nullptr if :py:class:`Image` could not be created. If nullptr is
+        returned, outSubset and offset are undefined.
+
+        Useful for animation of :py:class:`ImageFilter` that varies size from
+        frame to frame. Returned :py:class:`Image` is created larger than
+        required by filter so that GPU texture can be reused with different
+        sized effects. outSubset describes the valid bounds of GPU texture
+        returned. offset translates the returned :py:class:`Image` to keep
+        subsequent animation frames aligned with respect to each other.
+
+        :param skia.GrContext context: the GrContext in play - if it exists
+        :param skia.ImageFilter filter: how :py:class:`Image` is sampled when
+            transformed
+        :param skia.IRect subset:  bounds of :py:class:`Image` processed by
+            filter
+        :param skia.IRect clipBounds:  expected bounds of filtered
+            :py:class:`Image`
+        :param skia.IRect outSubset:   output for returned :py:class:`Image`
+            bounds
+        :param skia.IPoint offset:  output for returned :py:class:`Image`
+            translation
+        :return: filtered :py:class:`Image`, or nullptr
+        )docstring",
+        py::arg("context"), py::arg("filter"), py::arg("subset"),
+        py::arg("clipBounds"), py::arg("outSubset").none(false),
+        py::arg("offset").none(false))
     .def("asLegacyBitmap", &SkImage::asLegacyBitmap,
-        "Deprecated.")
+        R"docstring(
+        Deprecated.
+
+        Creates raster :py:class:`Bitmap` with same pixels as :py:class:`Image`.
+        If legacyBitmapMode is :py:attr:`~Image.kRO_LegacyBitmapMode`, returned
+        bitmap is read-only and immutable. Returns true if :py:class:`Bitmap` is
+        stored in bitmap. Returns false and resets bitmap if :py:class:`Bitmap`
+        write did not succeed.
+
+        :param bitmap: storage for legacy :py:class:`Bitmap`
+        :param legacyBitmapMode: bitmap is read-only and immutable
+        :return: true if :py:class:`Bitmap` was created
+        )docstring",
+        py::arg("bitmap").none(false),
+        py::arg("legacyBitmapMode") = SkImage::kRO_LegacyBitmapMode)
     .def("isLazyGenerated", &SkImage::isLazyGenerated,
-        "Returns true if SkImage is backed by an image-generator or other "
-        "service that creates and caches its pixels or texture on-demand.")
+        R"docstring(
+        Returns true if :py:class:`Image` is backed by an image-generator or
+        other service that creates and caches its pixels or texture on-demand.
+
+        :return: true if :py:class:`Image` is created as needed
+        )docstring")
     .def("makeColorSpace",
         [] (const SkImage& image, const SkColorSpace* target) {
             return image.makeColorSpace(CloneColorSpace(target));
@@ -422,12 +685,42 @@ image
         :param skia.ColorSpace target: :py:class:`ColorSpace` describing color
             range of returned :py:class:`Image`
         :return: created :py:class:`Image` in target :py:class:`ColorSpace`
-        )docstring")
-    .def("makeColorTypeAndColorSpace", &SkImage::makeColorTypeAndColorSpace,
-        "Experimental.")
-    .def("reinterpretColorSpace", &SkImage::reinterpretColorSpace,
-        "Creates a new SkImage identical to this one, but with a different "
-        "SkColorSpace.")
+        )docstring",
+        py::arg("target"))
+    .def("makeColorTypeAndColorSpace",
+        [] (const SkImage& image, SkColorType ct, const SkColorSpace* cs) {
+            return image.makeColorTypeAndColorSpace(ct, CloneColorSpace(cs));
+        },
+        R"docstring(
+        Experimental.
+
+        Creates :py:class:`Image` in target :py:class:`ColorType` and
+        :py:class:`ColorSpace`. Returns nullptr if :py:class:`Image` could not
+        be created.
+
+        Returns original :py:class:`Image` if it is in target
+        :py:class:`ColorType` and :py:class:`ColorSpace`.
+
+        :param skia.ColorType targetColorType: :py:class:`ColorType` of returned
+            :py:class:`Image`
+        :param skia.ColorSpace targetColorSpace: :py:class:`ColorSpace` of
+            returned :py:class:`Image`
+        :return: created :py:class:`Image` in target :py:class:`ColorType` and
+            :py:class:`ColorSpace`
+        )docstring",
+        py::arg("targetColorType"), py::arg("targetColorSpace") = nullptr)
+    .def("reinterpretColorSpace",
+        [] (const SkImage& image, const SkColorSpace* cs) {
+            return image.reinterpretColorSpace(CloneColorSpace(cs));
+        },
+        R"docstring(
+        Creates a new :py:class:`Image` identical to this one, but with a
+        different :py:class:`ColorSpace`.
+
+        This does not convert the underlying pixel data, so the resulting image
+        will draw differently.
+        )docstring",
+        py::arg("newColorSpace") = nullptr)
     .def_static("MakeRasterCopy", &SkImage::MakeRasterCopy,
         "Creates SkImage from SkPixmap and copy of pixels.")
     .def_static("MakeRasterData", &SkImage::MakeRasterData,

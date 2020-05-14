@@ -76,14 +76,91 @@ def test_Image_flush(image, grcontext):
         image.flush(grcontext)
 
 
-def test_Image_readPixels(image):
+@pytest.mark.parametrize('use_pixmap', [False, True])
+def test_Image_readPixels(image, use_pixmap):
     info = image.imageInfo().makeWH(100, 100)
     dstRowBytes = info.minRowBytes()
     dstPixels = bytearray(info.computeByteSize(dstRowBytes))
+    if use_pixmap:
+        dst = skia.Pixmap(info, dstPixels, dstRowBytes)
+        assert isinstance(image.readPixels(dst, 0, 0), bool)
+    else:
+        assert isinstance(
+            image.readPixels(info, dstPixels, dstRowBytes, 0, 0), bool)
+
+
+def test_Image_scalePixels(image):
+    info = image.imageInfo().makeWH(100, 100)
+    dstRowBytes = info.minRowBytes()
+    dstPixels = bytearray(info.computeByteSize(dstRowBytes))
+    dst = skia.Pixmap(info, dstPixels, dstRowBytes)
+    assert isinstance(image.scalePixels(dst), bool)
+
+
+@pytest.mark.parametrize('args', [
+    (skia.EncodedImageFormat.kJPEG, 100),
+    tuple(),
+])
+def test_Image_encodeToData(image, args):
+    assert isinstance(image.encodeToData(*args), skia.Data)
+
+
+def test_Image_refEncodedData(image):
+    assert isinstance(image.refEncodedData(), skia.Data)
+
+
+def test_Image_makeTextureImage(image, grcontext):
+    if grcontext:
+        assert isinstance(
+            image.makeTextureImage(
+                grcontext, skia.GrMipMapped.kNo, skia.Budgeted.kNo),
+            skia.Image)
+
+
+def test_Image_makeNonTextureImage(image):
+    assert isinstance(image.makeNonTextureImage(), skia.Image)
+
+
+def test_Image_makeRasterImage(image):
+    assert isinstance(image.makeRasterImage(), skia.Image)
+
+
+def test_Image_makeWithFilter(image, grcontext):
+    outSubset = skia.IRect(100, 100)
+    offset = skia.IPoint(0, 0)
     assert isinstance(
-        image.readPixels(info, dstPixels, dstRowBytes, 0, 0), bool)
+        image.makeWithFilter(
+            grcontext,
+            skia.ImageFilters.Blur(1., 1.),
+            skia.IRect(100, 100),
+            skia.IRect(100, 100),
+            outSubset,
+            offset),
+        skia.Image)
+
+
+def test_Image_asLegacyBitmap(image):
+    bitmap = skia.Bitmap()
+    assert isinstance(image.asLegacyBitmap(bitmap), bool)
+
+
+def test_Image_isLazyGenerated(image):
+    assert isinstance(image.isLazyGenerated(), bool)
 
 
 def test_Image_makeColorSpace(image):
     assert isinstance(
         image.makeColorSpace(skia.ColorSpace.MakeSRGB()), skia.Image)
+
+
+def test_Image_makeColorSpace(image):
+    assert isinstance(
+        image.makeColorTypeAndColorSpace(
+            skia.ColorType.kRGBA_8888_ColorType,
+            skia.ColorSpace.MakeSRGB()),
+        skia.Image)
+
+
+def test_Image_reinterpretColorSpace(image):
+    assert isinstance(
+        image.reinterpretColorSpace(skia.ColorSpace.MakeSRGB()), skia.Image)
