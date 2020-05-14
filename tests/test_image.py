@@ -2,13 +2,6 @@ import skia
 import pytest
 
 
-@pytest.fixture
-def context(grcontext):
-    if not grcontext:
-        pytest.skip('GrContext is not available')
-    return grcontext
-
-
 def test_Image_imageInfo(image):
     assert isinstance(image.imageInfo(), skia.ImageInfo)
 
