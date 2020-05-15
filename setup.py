@@ -146,8 +146,8 @@ setup(
     description='Skia python binding',
     long_description=open('README.md', 'r').read(),
     ext_modules=[extension],
-    install_requires=['pybind11>=2.4'],
-    setup_requires=['pybind11>=2.4'],
+    install_requires=['pybind11>=2.5'],
+    setup_requires=['pybind11>=2.5'],
     cmdclass={'build_ext': BuildExt},
     command_options={
         'build_sphinx': {

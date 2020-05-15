@@ -32,6 +32,7 @@ def glfw_context():
     glfw.window_hint(glfw.STENCIL_BITS, 8)
     context = glfw.create_window(640, 480, '', None, None)
     glfw.make_context_current(context)
+    logger.debug('glfw context created')
     yield context
     glfw.destroy_window(context)
     glfw.terminate()
@@ -43,6 +44,7 @@ def glut_context():
     glutInit()
     context = glutCreateWindow('Hidden window for OpenGL context')
     glutHideWindow()
+    logger.debug('glut context created')
     yield context
 
 
