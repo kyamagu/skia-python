@@ -3,8 +3,6 @@ import pytest
 import numpy as np
 import sys
 
-from .conftest import opengl_context, opengl_is_available
-
 
 def check_surface(x):
     assert isinstance(x, skia.Surface)
@@ -137,23 +135,19 @@ def test_Surface_MakeRasterN32Premul(args):
     check_surface(skia.Surface.MakeRasterN32Premul(*args))
 
 
-@pytest.mark.skipif(not opengl_is_available() or sys.platform == 'win32',
-    reason='OpenGL is not available.')
 @pytest.mark.parametrize('args', [
     tuple(),
     (
         0,
-        skia.GrSurfaceOrigin.kBottomLeft,
+        skia.GrSurfaceOrigin.kBottomLeft_GrSurfaceOrigin,
         None,
         False,
     ),
 ])
-def test_Surface_MakeRenderTarget(args):
-    with opengl_context():
-        context = skia.GrContext.MakeGL()
-        info = skia.ImageInfo.MakeN32Premul(320, 240)
-        check_surface(skia.Surface.MakeRenderTarget(
-            context, skia.Budgeted.kNo, info, *args))
+def test_Surface_MakeRenderTarget(args, context):
+    info = skia.ImageInfo.MakeN32Premul(320, 240)
+    check_surface(skia.Surface.MakeRenderTarget(
+        context, skia.Budgeted.kNo, info, *args))
 
 
 def test_Surface_MakeNull():

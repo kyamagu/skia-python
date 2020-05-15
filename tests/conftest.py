@@ -7,41 +7,6 @@ import logging
 logger = logging.getLogger(__name__)
 
 
-@contextlib.contextmanager
-def glfw_context():
-    import glfw
-    if not glfw.init():
-        raise RuntimeError('glfw.init() failed')
-    glfw.window_hint(glfw.VISIBLE, glfw.FALSE)
-    glfw.window_hint(glfw.STENCIL_BITS, 8)
-    context = glfw.create_window(640, 480, '', None, None)
-    glfw.make_context_current(context)
-    yield context
-    glfw.terminate()
-
-
-@contextlib.contextmanager
-def glut_context():
-    from OpenGL.GLUT import glutInit, glutCreateWindow, glutHideWindow
-    glutInit()
-    context = glutCreateWindow('Hidden window for OpenGL context')
-    glutHideWindow()
-    yield context
-
-
-@contextlib.contextmanager
-def opengl_context():
-    try:
-        with glfw_context() as context:
-            yield context
-        return
-    except ImportError:
-        logger.warning('glfw not found, falling back to pyopengl')
-
-    with glut_context() as context:
-        yield context
-
-
 def opengl_is_available():
     try:
         import glfw
@@ -58,27 +23,77 @@ def opengl_is_available():
     return False
 
 
-@pytest.fixture(scope='session', params=[
+@pytest.fixture(scope='session')
+def glfw_context():
+    import glfw
+    if not glfw.init():
+        raise RuntimeError('glfw.init() failed')
+    glfw.window_hint(glfw.VISIBLE, glfw.FALSE)
+    glfw.window_hint(glfw.STENCIL_BITS, 8)
+    context = glfw.create_window(640, 480, '', None, None)
+    glfw.make_context_current(context)
+    yield context
+    glfw.destroy_window(context)
+    glfw.terminate()
+
+
+@pytest.fixture(scope='session')
+def glut_context():
+    from OpenGL.GLUT import glutInit, glutCreateWindow, glutHideWindow
+    glutInit()
+    context = glutCreateWindow('Hidden window for OpenGL context')
+    glutHideWindow()
+    yield context
+
+
+@pytest.fixture(scope='session')
+def opengl_context(request):
+    try:
+        yield request.getfixturevalue('glfw_context')
+        return
+    except ImportError:
+        logger.warning('glfw not found, falling back to pyopengl')
+    except UserWarning as e:
+        logger.exception(e)
+        pytest.skip('GLFW error')
+
+    try:
+        yield request.getfixturevalue('glut_context')
+    except ImportError:
+        pass
+
+    pytest.skip('OpenGL is not available')
+
+
+@pytest.fixture(scope='session')
+def context(opengl_context):
+    yield skia.GrContext.MakeGL()
+
+
+@pytest.fixture(scope='module', params=[
     'raster',
     ('gpu', pytest.mark.skipif(
         not opengl_is_available(), reason='OpenGL is not available')),
 ])
 def surface(request):
     if request.param == 'gpu':
-        with opengl_context():
-            context = skia.GrContext.MakeGL()
-            info = skia.ImageInfo.MakeN32Premul(320, 240)
-            yield skia.Surface.MakeRenderTarget(
-                context, skia.Budgeted.kNo, info)
+        context = request.getfixturevalue('context')
+        info = skia.ImageInfo.MakeN32Premul(320, 240)
+        return skia.Surface.MakeRenderTarget(
+            context, skia.Budgeted.kNo, info)
     else:
-        yield skia.Surface(320, 240)
+        return skia.Surface(320, 240)
 
 
 @pytest.fixture(scope='session')
-def image():
+def png_data():
     import os
     root_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
     image_path = os.path.join(
         root_dir, 'skia', 'resources', 'images', 'color_wheel.png')
-    data = skia.Data.MakeFromFileName(image_path)
-    return skia.Image.MakeFromEncoded(data)
+    return skia.Data.MakeFromFileName(image_path)
+
+
+@pytest.fixture(scope='session')
+def image(png_data):
+    return skia.Image.MakeFromEncoded(png_data)

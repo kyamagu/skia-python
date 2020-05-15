@@ -14,4 +14,7 @@ sk_sp<T> CloneFlattenable(const T& flattenable) {
     return T::Deserialize(data->data(), data->size());
 }
 
+sk_sp<SkColorSpace> CloneColorSpace(const SkColorSpace* cs);
+sk_sp<SkImage> CloneImage(const SkImage& image);
+
 #endif  // _COMMON_H_

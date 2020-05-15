@@ -21,9 +21,36 @@ py::class_<SkPixmap>(m, "Pixmap", R"docstring(
         "Creates an empty SkPixmap without pixels, with "
         "kUnknown_SkColorType, with kUnknown_SkAlphaType, and with a "
         "width and height of zero.")
-    .def(py::init<const SkImageInfo&, const void*, size_t>(),
-        "Creates SkPixmap from info width, height, SkAlphaType, and "
-        "SkColorType.")
+    .def(py::init(
+        [] (const SkImageInfo& info, py::object data, size_t rowBytes) {
+            if (data.is_none())
+                return SkPixmap(info, nullptr, rowBytes);
+            auto buffer = data.cast<py::buffer>().request();
+            size_t size = (buffer.ndim) ?
+                buffer.shape[0] * buffer.strides[0] : 0;
+            if (size < info.computeByteSize(rowBytes))
+                throw std::runtime_error(
+                    "Buffer size is smaller than required.");
+            return SkPixmap(info, buffer.ptr, rowBytes);
+        }),
+        R"docstring(
+        Creates :py:class:`Pixmap` from info width, height,
+        :py:class:`AlphaType`, and :py:class:`ColorType`.
+
+        data points to pixels, or nullptr. rowBytes should be info.width() times
+        info.bytesPerPixel(), or larger.
+
+        No parameter checking is performed; it is up to the caller to ensure that addr and rowBytes agree with info.
+
+        The memory lifetime of pixels is managed by the caller. When :py:class:`Pixmap` goes out of scope, addr is unaffected.
+
+        :py:class:`Pixmap` may be later modified by reset() to change its size, pixel type, or storage.
+
+        info    width, height, :py:class:`AlphaType`, :py:class:`ColorType` of :py:class:`ImageInfo`
+        addr    pointer to pixels allocated by caller; may be nullptr
+        rowBytes    size of one row of addr; width times pixel size, or larger
+        )docstring",
+        py::arg("info"), py::arg("data"), py::arg("rowBytes"))
     .def("reset",
         py::overload_cast<>(&SkPixmap::reset),
         "Sets width, height, row bytes to zero; pixel address to nullptr; "

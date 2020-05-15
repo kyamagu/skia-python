@@ -43,8 +43,10 @@ py::enum_<GrSurfaceOrigin>(m, "GrSurfaceOrigin", R"docstring(
     GPU SkImage and SkSurfaces can be stored such that (0, 0) in texture space
     may correspond to either the top-left or bottom-left content pixel.
     )docstring")
-    .value("kTopLeft", GrSurfaceOrigin::kTopLeft_GrSurfaceOrigin)
-    .value("kBottomLeft", GrSurfaceOrigin::kBottomLeft_GrSurfaceOrigin)
+    .value("kTopLeft_GrSurfaceOrigin",
+        GrSurfaceOrigin::kTopLeft_GrSurfaceOrigin)
+    .value("kBottomLeft_GrSurfaceOrigin",
+        GrSurfaceOrigin::kBottomLeft_GrSurfaceOrigin)
     .export_values();
 
 py::enum_<GrGLBackendState>(m, "GrGLBackendState", R"docstring(
@@ -109,6 +111,10 @@ py::class_<GrBackendSemaphore>(m, "GrBackendSemaphore")
 py::class_<GrBackendTexture>(m, "GrBackendTexture")
     .def(py::init())
     .def("isValid", &GrBackendTexture::isValid)
+    ;
+
+py::class_<GrBackendFormat>(m, "GrBackendFormat")
+    .def("isValid", &GrBackendFormat::isValid)
     ;
 
 py::class_<GrGLInterface, sk_sp<GrGLInterface>, SkRefCnt>(
@@ -207,14 +213,36 @@ py::class_<GrContext, sk_sp<GrContext>, SkRefCnt>(m, "GrContext")
     //     "traceMemoryDump.")
     .def("supportsDistanceFieldText", &GrContext::supportsDistanceFieldText)
     .def("storeVkPipelineCacheData", &GrContext::storeVkPipelineCacheData)
-    // .def("defaultBackendFormat", &GrContext::defaultBackendFormat)
+    .def("defaultBackendFormat", &GrContext::defaultBackendFormat,
+        R"docstring(
+        Retrieve the default GrBackendFormat for a given :py:class:`ColorType`
+        and renderability.
+
+        It is guaranteed that this backend format will be the one used by the
+        following :py:class:`ColorType` and SurfaceCharacterization-based
+        :py:meth:`createBackendTexture` methods.
+
+        The caller should check that the returned format is valid.
+        )docstring",
+        py::arg("colorType"), py::arg("renderable") = GrRenderable::kNo)
     // .def("createBackendTexture",
     //     (GrBackendTexture (GrContext::*)(int, int, const GrBackendFormat&,
     //         GrMipMapped, GrRenderable, GrProtected))
     //     &GrContext::createBackendTexture)
-    // .def("createBackendTexture",
-    //     (GrBackendTexture (GrContext::*)(int, int, SkColorType, GrMipMapped,
-    //         GrRenderable, GrProtected)) &GrContext::createBackendTexture)
+    .def("createBackendTexture",
+        py::overload_cast<int, int, SkColorType, GrMipMapped,
+            GrRenderable, GrProtected>(&GrContext::createBackendTexture),
+        R"docstring(
+        If possible, create an uninitialized backend texture.
+
+        The client should ensure that the returned backend texture is valid. If
+        successful, the created backend texture will be compatible with the
+        provided :py:class:`ColorType`. For the Vulkan backend the layout of the
+        created VkImage will be: VK_IMAGE_LAYOUT_UNDEFINED.
+        )docstring",
+        py::arg("width"), py::arg("height"), py::arg("colorType"),
+        py::arg("mipMapped"), py::arg("renderable"),
+        py::arg("protected") = GrProtected::kNo)
     // .def("createBackendTexture",
     //     (GrBackendTexture (GrContext::*)(const SkSurfaceCharacterization &))
     //     &GrContext::createBackendTexture)
@@ -235,15 +263,36 @@ py::class_<GrContext, sk_sp<GrContext>, SkRefCnt>(m, "GrContext")
     // .def("createBackendTexture",
     //     (GrBackendTexture (GrContext::*)(const SkPixmap&, GrRenderable,
     //         GrProtected isProtected)) &GrContext::createBackendTexture)
-    // .def("compressedBackendFormat", &GrContext::compressedBackendFormat)
-    // .def("createCompressedBackendTexture",
-    //     (GrBackendTexture (GrContext::*)(int, int, const GrBackendFormat&,
-    //         const SkColor4f&, GrMipMapped, GrProtected))
-    //     &GrContext::createCompressedBackendTexture)
-    // .def("createCompressedBackendTexture",
-    //     (GrBackendTexture (GrContext::*)(int, int, SkImage::CompressionType,
-    //         const SkColor4f&, GrMipMapped, GrProtected))
-    //     &GrContext::createCompressedBackendTexture)
+    .def("compressedBackendFormat", &GrContext::compressedBackendFormat,
+        R"docstring(
+        Retrieve the :py:class:`GrBackendFormat` for a given
+        :py:class:`Image.CompressionType`.
+
+        This is guaranteed to match the backend format used by the following
+        :py:meth:`createCompressedsBackendTexture` methods that take a
+        CompressionType. The caller should check that the returned format is
+        valid.
+        )docstring",
+        py::arg("compressionType"))
+
+    .def("createCompressedBackendTexture",
+        [] (GrContext& context, int width, int height,
+            const GrBackendFormat& backendFormat, const SkColor4f& color,
+            GrMipMapped mipMapped) {
+            return context.createCompressedBackendTexture(
+                width, height, backendFormat, color, mipMapped);
+        },
+        py::arg("width"), py::arg("height"), py::arg("backendFormat"),
+        py::arg("color"), py::arg("mipMapped"))
+    .def("createCompressedBackendTexture",
+        [] (GrContext& context, int width, int height,
+            SkImage::CompressionType type, const SkColor4f& color,
+            GrMipMapped mipMapped) {
+            return context.createCompressedBackendTexture(
+                width, height, type, color, mipMapped);
+        },
+        py::arg("width"), py::arg("height"), py::arg("type"), py::arg("color"),
+        py::arg("mipMapped"))
     // .def("createCompressedBackendTexture",
     //     (GrBackendTexture (GrContext::*)(int, int, const GrBackendFormat&,
     //         const void*, size_t, GrMipMapped, GrProtected))

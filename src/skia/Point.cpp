@@ -7,6 +7,11 @@ py::class_<SkIPoint>(m, "IPoint", R"docstring(
     :py:class:`IPoint` holds two 32-bit integer coordinates.
     )docstring")
     .def(py::init(&SkIPoint::Make), "Sets fX to x, fY to y.")
+    .def(py::init([] (py::tuple t) {
+        if (t.size() != 2)
+            throw std::runtime_error("Point must have exactly two elements.");
+        return SkIPoint::Make(t[0].cast<int32_t>(), t[1].cast<int32_t>());
+    }))
     .def("x", &SkIPoint::x, "Returns x-axis value of SkIPoint.")
     .def("y", &SkIPoint::y, "Returns y-axis value of SkIPoint.")
     .def("isZero", &SkIPoint::isZero,
@@ -33,11 +38,30 @@ py::class_<SkIPoint>(m, "IPoint", R"docstring(
         )
     ;
 
+py::implicitly_convertible<py::tuple, SkIPoint>();
+
 // Point
 py::class_<SkPoint>(m, "Point", R"docstring(
     :py:class:`Point` holds two 32-bit floating point coordinates.
     )docstring")
-    .def(py::init(&SkPoint::Make), "Sets fX to x, fY to y.")
+    .def(py::init(&SkPoint::Make),
+        R"docstring(
+        Sets fX to x, fY to y.
+
+        Used both to set :py:class:`Point` and vector.
+
+        :param float x: :py:class:`Scalar` x-axis value of constructed
+            :py:class:`Point` or vector
+        :param float y: :py:class:`Scalar` y-axis value of constructed
+            :py:class:`Point` or vector
+        :return: :py:class:`Point` (x, y)
+        )docstring",
+        py::arg("x"), py::arg("y"))
+    .def(py::init([] (py::tuple t) {
+        if (t.size() != 2)
+            throw std::runtime_error("Point must have exactly two elements.");
+        return SkPoint::Make(t[0].cast<SkScalar>(), t[1].cast<SkScalar>());
+    }))
     .def("x", &SkPoint::x, "Returns x-axis value of SkPoint or vector.")
     .def("y", &SkPoint::y, "Returns y-axis value of SkPoint or vector.")
     .def("isZero", &SkPoint::isZero,
@@ -120,9 +144,22 @@ py::class_<SkPoint>(m, "Point", R"docstring(
         "Returns SkPoint resulting from SkPoint a offset by vector b, "
         "computed as: (a.fX + b.fX, a.fY + b.fY).")
     ;
+
+py::implicitly_convertible<py::tuple, SkPoint>();
+
 // Point3
 py::class_<SkPoint3>(m, "Point3")
     .def(py::init(&SkPoint3::Make))
+    .def(py::init(
+        [] (py::tuple t) {
+            if (t.size() != 3)
+                throw std::runtime_error(
+                    "Point3 must have exactly three elements.");
+            return SkPoint3::Make(
+                t[0].cast<SkScalar>(),
+                t[1].cast<SkScalar>(),
+                t[2].cast<SkScalar>());
+        }))
     .def("x", &SkPoint3::x)
     .def("y", &SkPoint3::y)
     .def("z", &SkPoint3::z)
@@ -166,4 +203,6 @@ py::class_<SkPoint3>(m, "Point3")
         "Returns a new point whose coordinates are the sum of a and b (a + b)")
     .def(SkScalar() * py::self)
     ;
+
+py::implicitly_convertible<py::tuple, SkPoint3>();
 }

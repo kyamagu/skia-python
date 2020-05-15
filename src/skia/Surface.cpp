@@ -17,13 +17,6 @@ py::enum_<SkBackingFit>(m, "BackingFit", R"docstring(
     .value("kExact", SkBackingFit::kExact)
     .export_values();
 
-py::enum_<SkBudgeted>(m, "Budgeted", R"docstring(
-    Indicates whether an allocation should count against a cache budget.
-    )docstring")
-    .value("kNo", SkBudgeted::kNo)
-    .value("kYes", SkBudgeted::kYes)
-    .export_values();
-
 py::enum_<SkPixelGeometry>(m, "PixelGeometry", R"docstring(
     Description of how the LCD strips are arranged for each pixel.
 

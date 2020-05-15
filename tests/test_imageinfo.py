@@ -3,12 +3,82 @@ import pytest
 import sys
 
 
-def check_colorinfo(x):
-    assert isinstance(x, skia.ColorInfo)
+@pytest.fixture
+def colorinfo():
+    return skia.ColorInfo(
+        skia.ColorType.kRGBA_8888_ColorType,
+        skia.AlphaType.kPremul_AlphaType,
+        skia.ColorSpace.MakeSRGB())
 
 
-def test_ColorInfo_init():
-    check_colorinfo(skia.ColorInfo())
+@pytest.mark.parametrize('args', [
+    tuple(),
+    (
+        skia.ColorType.kUnknown_ColorType,
+        skia.AlphaType.kUnknown_AlphaType,
+        skia.ColorSpace.MakeSRGB(),
+    ),
+])
+def test_ColorInfo_init(args):
+    assert isinstance(skia.ColorInfo(*args), skia.ColorInfo)
+
+
+def test_ColorInfo_colorSpace(colorinfo):
+    assert isinstance(colorinfo.colorSpace(), (skia.ColorSpace, type(None)))
+
+
+def test_ColorInfo_refColorSpace(colorinfo):
+    assert isinstance(colorinfo.refColorSpace(), (skia.ColorSpace, type(None)))
+
+
+def test_ColorInfo_colorType(colorinfo):
+    assert isinstance(colorinfo.colorType(), skia.ColorType)
+
+
+def test_ColorInfo_alphaType(colorinfo):
+    assert isinstance(colorinfo.alphaType(), skia.AlphaType)
+
+
+def test_ColorInfo_isOpaque(colorinfo):
+    assert isinstance(colorinfo.isOpaque(), bool)
+
+
+def test_ColorInfo_gammaCloseToSRGB(colorinfo):
+    assert isinstance(colorinfo.gammaCloseToSRGB(), bool)
+
+
+def test_ColorInfo_eq(colorinfo):
+    assert colorinfo == colorinfo
+
+
+def test_ColorInfo_ne(colorinfo):
+    assert colorinfo != skia.ColorInfo()
+
+
+def test_ColorInfo_makeAlphaType(colorinfo):
+    assert isinstance(
+        colorinfo.makeAlphaType(skia.AlphaType.kOpaque_AlphaType),
+        skia.ColorInfo)
+
+
+def test_ColorInfo_makeColorType(colorinfo):
+    assert isinstance(
+        colorinfo.makeColorType(skia.ColorType.kAlpha_8_ColorType),
+        skia.ColorInfo)
+
+
+def test_ColorInfo_makeColorSpace(colorinfo):
+    assert isinstance(
+        colorinfo.makeColorSpace(skia.ColorSpace.MakeSRGBLinear()),
+        skia.ColorInfo)
+
+
+def test_ColorInfo_bytesPerPixel(colorinfo):
+    assert isinstance(colorinfo.bytesPerPixel(), int)
+
+
+def test_ColorInfo_shiftPerPixel(colorinfo):
+    assert isinstance(colorinfo.shiftPerPixel(), int)
 
 
 @pytest.fixture(scope='session')
@@ -18,53 +88,6 @@ def imageinfo():
 
 def check_imageinfo(x):
     assert isinstance(x, skia.ImageInfo)
-
-
-@pytest.mark.parametrize('args', [
-    (100, 100, skia.ColorType.kRGBA_8888_ColorType,
-        skia.AlphaType.kPremul_AlphaType),
-    (skia.ISize(100, 100), skia.ColorType.kRGBA_8888_ColorType,
-        skia.AlphaType.kPremul_AlphaType),
-    (skia.ISize(100, 100), skia.ColorInfo()),
-])
-def test_ImageInfo_Make(args):
-    check_imageinfo(skia.ImageInfo.Make(*args))
-
-
-@pytest.mark.parametrize('args', [
-    (100, 100, skia.AlphaType.kPremul_AlphaType),
-])
-def test_ImageInfo_MakeN32(args):
-    check_imageinfo(skia.ImageInfo.MakeN32(*args))
-
-
-def test_ImageInfo_MakeS32():
-    check_imageinfo(
-        skia.ImageInfo.MakeS32(100, 100, skia.AlphaType.kPremul_AlphaType))
-
-
-@pytest.mark.parametrize('args', [
-    (100, 100),
-    (skia.ISize(100, 100),),
-])
-def test_ImageInfo_MakeN32Premul(args):
-    check_imageinfo(skia.ImageInfo.MakeN32Premul(*args))
-
-
-@pytest.mark.parametrize('args', [
-    (100, 100),
-    (skia.ISize(100, 100),),
-])
-def test_ImageInfo_MakeA8(args):
-    check_imageinfo(skia.ImageInfo.MakeA8(*args))
-
-
-@pytest.mark.parametrize('args', [
-    tuple(),
-    (100, 100),
-])
-def test_ImageInfo_MakeUnknown(args):
-    check_imageinfo(skia.ImageInfo.MakeUnknown(*args))
 
 
 def test_ImageInfo_init():
@@ -136,9 +159,8 @@ def test_ImageInfo_makeColorType(imageinfo):
         imageinfo.makeColorType(skia.ColorType.kRGBA_8888_ColorType))
 
 
-
-# def test_ImageInfo_makeColorSpace(imageinfo):
-#     check_imageinfo(imageinfo.makeColorSpace())
+def test_ImageInfo_makeColorSpace(imageinfo):
+    check_imageinfo(imageinfo.makeColorSpace(skia.ColorSpace.MakeSRGBLinear()))
 
 
 def test_ImageInfo_bytesPerPixel(imageinfo):
@@ -183,5 +205,72 @@ def test_ImageInfo_reset():
     imageinfo.reset()
 
 
+@pytest.mark.parametrize('args', [
+    (100, 100, skia.ColorType.kRGBA_8888_ColorType,
+        skia.AlphaType.kPremul_AlphaType),
+    (100, 100, skia.ColorType.kRGBA_8888_ColorType,
+        skia.AlphaType.kPremul_AlphaType, skia.ColorSpace.MakeSRGBLinear()),
+    (skia.ISize(100, 100), skia.ColorType.kRGBA_8888_ColorType,
+        skia.AlphaType.kPremul_AlphaType),
+    (skia.ISize(100, 100), skia.ColorInfo()),
+])
+def test_ImageInfo_Make(args):
+    check_imageinfo(skia.ImageInfo.Make(*args))
+
+
+@pytest.mark.parametrize('args', [
+    (100, 100, skia.AlphaType.kPremul_AlphaType),
+])
+def test_ImageInfo_MakeN32(args):
+    check_imageinfo(skia.ImageInfo.MakeN32(*args))
+
+
+def test_ImageInfo_MakeS32():
+    check_imageinfo(
+        skia.ImageInfo.MakeS32(100, 100, skia.AlphaType.kPremul_AlphaType))
+
+
+@pytest.mark.parametrize('args', [
+    (100, 100),
+    (skia.ISize(100, 100),),
+])
+def test_ImageInfo_MakeN32Premul(args):
+    check_imageinfo(skia.ImageInfo.MakeN32Premul(*args))
+
+
+@pytest.mark.parametrize('args', [
+    (100, 100),
+    (skia.ISize(100, 100),),
+])
+def test_ImageInfo_MakeA8(args):
+    check_imageinfo(skia.ImageInfo.MakeA8(*args))
+
+
+@pytest.mark.parametrize('args', [
+    tuple(),
+    (100, 100),
+])
+def test_ImageInfo_MakeUnknown(args):
+    check_imageinfo(skia.ImageInfo.MakeUnknown(*args))
+
+
 def test_ImageInfo_ByteSizeOverflowed():
     assert not skia.ImageInfo.ByteSizeOverflowed(100)
+
+
+def test_AlphaTypeIsOpaque():
+    assert skia.AlphaTypeIsOpaque(skia.AlphaType.kOpaque_AlphaType)
+
+
+def test_ColorTypeBytesPerPixel():
+    assert skia.ColorTypeBytesPerPixel(skia.ColorType.kRGBA_8888_ColorType) == 4
+
+
+def test_ColorTypeIsAlwaysOpaque():
+    assert skia.ColorTypeIsAlwaysOpaque(skia.ColorType.kRGB_888x_ColorType)
+
+
+def test_ColorTypeIsAlwaysOpaque():
+    assert skia.ColorTypeValidateAlphaType(
+        skia.ColorType.kRGBA_8888_ColorType,
+        skia.AlphaType.kOpaque_AlphaType)

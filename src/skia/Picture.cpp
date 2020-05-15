@@ -133,7 +133,8 @@ picturerecorder
         py::overload_cast<const SkRect&, SkBBHFactory*, uint32_t>(
             &SkPictureRecorder::beginRecording),
         py::arg("bounds"), py::arg("bbhFactory") = nullptr,
-        py::arg("recordFlags") = 0)
+        py::arg("recordFlags") = 0,
+        py::return_value_policy::reference)
     .def("beginRecording",
         py::overload_cast<SkScalar, SkScalar, SkBBHFactory*, uint32_t>(
             &SkPictureRecorder::beginRecording),
