@@ -12,7 +12,7 @@ except ImportError:
     pass
 
 NAME = 'skia-python'
-__version__ = '0.0.2'
+__version__ = '0.0.3'
 
 SKIA_PATH = os.getenv('SKIA_PATH', 'skia')
 SKIA_OUT_PATH = os.getenv(
@@ -146,8 +146,8 @@ setup(
     description='Skia python binding',
     long_description=open('README.md', 'r').read(),
     ext_modules=[extension],
-    install_requires=['pybind11>=2.4'],
-    setup_requires=['pybind11>=2.4'],
+    install_requires=['pybind11>=2.5'],
+    setup_requires=['pybind11>=2.5'],
     cmdclass={'build_ext': BuildExt},
     command_options={
         'build_sphinx': {

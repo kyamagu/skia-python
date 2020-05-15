@@ -56,7 +56,7 @@ def test_Surface_draw(surface):
 
 
 def test_Surface_peekPixels(surface):
-    assert surface.peekPixels(skia.Pixmap())
+    assert isinstance(surface.peekPixels(skia.Pixmap()), bool)
 
 
 @pytest.mark.parametrize('args', [
