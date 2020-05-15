@@ -14,8 +14,11 @@ Image
    
       ~Image.DecodeToRaster
       ~Image.DecodeToTexture
+      ~Image.MakeBackendTextureFromImage
       ~Image.MakeCrossContextFromPixmap
+      ~Image.MakeFromAdoptedTexture
       ~Image.MakeFromBitmap
+      ~Image.MakeFromCompressedTexture
       ~Image.MakeFromEncoded
       ~Image.MakeFromPicture
       ~Image.MakeFromRaster
@@ -23,6 +26,7 @@ Image
       ~Image.MakeRasterCopy
       ~Image.MakeRasterData
       ~Image.MakeRasterFromCompressed
+      ~Image.MakeTextureFromCompressed
       ~Image.__init__
       ~Image.alphaType
       ~Image.asLegacyBitmap
@@ -45,6 +49,8 @@ Image
       ~Image.makeRasterImage
       ~Image.makeShader
       ~Image.makeSubset
+      ~Image.makeTextureImage
+      ~Image.makeWithFilter
       ~Image.peekPixels
       ~Image.readPixels
       ~Image.ref
@@ -73,6 +79,7 @@ Image
       ~Image.kF16
       ~Image.kLast
       ~Image.kNone
+      ~Image.kRO_LegacyBitmapMode
       ~Image.kU8
    
    
@@ -89,9 +96,15 @@ Methods
 
 .. automethod:: skia.Image.DecodeToTexture
 
+.. automethod:: skia.Image.MakeBackendTextureFromImage
+
 .. automethod:: skia.Image.MakeCrossContextFromPixmap
 
+.. automethod:: skia.Image.MakeFromAdoptedTexture
+
 .. automethod:: skia.Image.MakeFromBitmap
+
+.. automethod:: skia.Image.MakeFromCompressedTexture
 
 .. automethod:: skia.Image.MakeFromEncoded
 
@@ -106,6 +119,8 @@ Methods
 .. automethod:: skia.Image.MakeRasterData
 
 .. automethod:: skia.Image.MakeRasterFromCompressed
+
+.. automethod:: skia.Image.MakeTextureFromCompressed
 
 .. automethod:: skia.Image.__init__
 
@@ -150,6 +165,10 @@ Methods
 .. automethod:: skia.Image.makeShader
 
 .. automethod:: skia.Image.makeSubset
+
+.. automethod:: skia.Image.makeTextureImage
+
+.. automethod:: skia.Image.makeWithFilter
 
 .. automethod:: skia.Image.peekPixels
 
@@ -198,6 +217,8 @@ Attributes
 .. autoattribute:: skia.Image.kLast
 
 .. autoattribute:: skia.Image.kNone
+
+.. autoattribute:: skia.Image.kRO_LegacyBitmapMode
 
 .. autoattribute:: skia.Image.kU8
 

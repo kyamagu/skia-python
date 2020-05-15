@@ -177,10 +177,22 @@ safe across threads.</p>
 <li><p>__init__(self: skia.Pixmap) -&gt; None</p></li>
 </ol>
 <p>Creates an empty SkPixmap without pixels, with kUnknown_SkColorType, with kUnknown_SkAlphaType, and with a width and height of zero.</p>
-<ol class="arabic simple" start="2">
-<li><p>__init__(self: skia.Pixmap, arg0: skia.ImageInfo, arg1: capsule, arg2: int) -&gt; None</p></li>
+<ol class="arabic" start="2">
+<li><p>__init__(self: skia.Pixmap, info: skia.ImageInfo, data: object, rowBytes: int) -&gt; None</p>
+<blockquote>
+<div><p>Creates <a class="reference internal" href="#skia.Pixmap" title="skia.Pixmap"><code class="xref py py-class docutils literal notranslate"><span class="pre">Pixmap</span></code></a> from info width, height,
+<a class="reference internal" href="skia.AlphaType.html#skia.AlphaType" title="skia.AlphaType"><code class="xref py py-class docutils literal notranslate"><span class="pre">AlphaType</span></code></a>, and <a class="reference internal" href="skia.ColorType.html#skia.ColorType" title="skia.ColorType"><code class="xref py py-class docutils literal notranslate"><span class="pre">ColorType</span></code></a>.</p>
+<p>data points to pixels, or nullptr. rowBytes should be info.width() times
+info.bytesPerPixel(), or larger.</p>
+<p>No parameter checking is performed; it is up to the caller to ensure that addr and rowBytes agree with info.</p>
+<p>The memory lifetime of pixels is managed by the caller. When <a class="reference internal" href="#skia.Pixmap" title="skia.Pixmap"><code class="xref py py-class docutils literal notranslate"><span class="pre">Pixmap</span></code></a> goes out of scope, addr is unaffected.</p>
+<p><a class="reference internal" href="#skia.Pixmap" title="skia.Pixmap"><code class="xref py py-class docutils literal notranslate"><span class="pre">Pixmap</span></code></a> may be later modified by reset() to change its size, pixel type, or storage.</p>
+<p>info    width, height, <a class="reference internal" href="skia.AlphaType.html#skia.AlphaType" title="skia.AlphaType"><code class="xref py py-class docutils literal notranslate"><span class="pre">AlphaType</span></code></a>, <a class="reference internal" href="skia.ColorType.html#skia.ColorType" title="skia.ColorType"><code class="xref py py-class docutils literal notranslate"><span class="pre">ColorType</span></code></a> of <a class="reference internal" href="skia.ImageInfo.html#skia.ImageInfo" title="skia.ImageInfo"><code class="xref py py-class docutils literal notranslate"><span class="pre">ImageInfo</span></code></a>
+addr    pointer to pixels allocated by caller; may be nullptr
+rowBytes    size of one row of addr; width times pixel size, or larger</p>
+</div></blockquote>
+</li>
 </ol>
-<p>Creates SkPixmap from info width, height, SkAlphaType, and SkColorType.</p>
 </dd></dl>
 
 <dl class="py method">
@@ -580,6 +592,9 @@ safe across threads.</p>
 <li class="toctree-l2"><a class="reference internal" href="skia.IRect.html">IRect</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.ISize.html">ISize</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.Image.html">Image</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.Image.CompressionType.html">Image.CompressionType</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.Image.BitDepth.html">Image.BitDepth</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.Image.CachingHint.html">Image.CachingHint</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.ImageFilter.html">ImageFilter</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.ImageFilters.html">ImageFilters</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.ImageInfo.html">ImageInfo</a></li>

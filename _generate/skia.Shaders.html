@@ -44,10 +44,16 @@
 <col style="width: 90%" />
 </colgroup>
 <tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Shaders.Color" title="skia.Shaders.Color"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Color</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Shaders.Blend" title="skia.Shaders.Blend"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Blend</span></code></a></p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#skia.Shaders.Empty" title="skia.Shaders.Empty"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Empty</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.Shaders.Color" title="skia.Shaders.Color"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Color</span></code></a></p></td>
+<td><p>Overloaded function.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Shaders.Empty" title="skia.Shaders.Empty"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Empty</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.Shaders.Lerp" title="skia.Shaders.Lerp"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Lerp</span></code></a></p></td>
 <td><p></p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#skia.Shaders.__init__" title="skia.Shaders.__init__"><code class="xref py py-obj docutils literal notranslate"><span class="pre">__init__</span></code></a></p></td>
@@ -60,13 +66,28 @@
 <div class="section" id="methods">
 <h2>Methods<a class="headerlink" href="#methods" title="Permalink to this headline">¶</a></h2>
 <dl class="py method">
-<dt id="skia.Shaders.Color">
-<em class="property">static </em><code class="sig-prename descclassname">Shaders.</code><code class="sig-name descname">Color</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">color</span><span class="p">:</span> <span class="n">int</span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="skia.Shader.html#skia.Shader" title="skia.Shader">skia.Shader</a><a class="headerlink" href="#skia.Shaders.Color" title="Permalink to this definition">¶</a></dt>
+<dt id="skia.Shaders.Blend">
+<em class="property">static </em><code class="sig-prename descclassname">Shaders.</code><code class="sig-name descname">Blend</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">mode</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.BlendMode.html#skia.BlendMode" title="skia.BlendMode">skia.BlendMode</a></span></em>, <em class="sig-param"><span class="n">dst</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.Shader.html#skia.Shader" title="skia.Shader">skia.Shader</a></span></em>, <em class="sig-param"><span class="n">src</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.Shader.html#skia.Shader" title="skia.Shader">skia.Shader</a></span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="skia.Shader.html#skia.Shader" title="skia.Shader">skia.Shader</a><a class="headerlink" href="#skia.Shaders.Blend" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
+
+<dl class="py method">
+<dt id="skia.Shaders.Color">
+<em class="property">static </em><code class="sig-prename descclassname">Shaders.</code><code class="sig-name descname">Color</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span><span class="n">args</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#skia.Shaders.Color" title="Permalink to this definition">¶</a></dt>
+<dd><p>Overloaded function.</p>
+<ol class="arabic simple">
+<li><p>Color(color: int) -&gt; skia.Shader</p></li>
+<li><p>Color(color: skia.Color4f, cs: skia.ColorSpace = None) -&gt; skia.Shader</p></li>
+</ol>
+</dd></dl>
 
 <dl class="py method">
 <dt id="skia.Shaders.Empty">
 <em class="property">static </em><code class="sig-prename descclassname">Shaders.</code><code class="sig-name descname">Empty</code><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="skia.Shader.html#skia.Shader" title="skia.Shader">skia.Shader</a><a class="headerlink" href="#skia.Shaders.Empty" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="skia.Shaders.Lerp">
+<em class="property">static </em><code class="sig-prename descclassname">Shaders.</code><code class="sig-name descname">Lerp</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">t</span><span class="p">:</span> <span class="n">float</span></em>, <em class="sig-param"><span class="n">dst</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.Shader.html#skia.Shader" title="skia.Shader">skia.Shader</a></span></em>, <em class="sig-param"><span class="n">src</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.Shader.html#skia.Shader" title="skia.Shader">skia.Shader</a></span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="skia.Shader.html#skia.Shader" title="skia.Shader">skia.Shader</a><a class="headerlink" href="#skia.Shaders.Lerp" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
@@ -172,6 +193,9 @@
 <li class="toctree-l2"><a class="reference internal" href="skia.IRect.html">IRect</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.ISize.html">ISize</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.Image.html">Image</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.Image.CompressionType.html">Image.CompressionType</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.Image.BitDepth.html">Image.BitDepth</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.Image.CachingHint.html">Image.CachingHint</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.ImageFilter.html">ImageFilter</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.ImageFilters.html">ImageFilters</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.ImageInfo.html">ImageInfo</a></li>

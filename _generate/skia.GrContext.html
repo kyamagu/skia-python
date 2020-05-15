@@ -62,6 +62,18 @@
 <tr class="row-even"><td><p><a class="reference internal" href="#skia.GrContext.colorTypeSupportedAsSurface" title="skia.GrContext.colorTypeSupportedAsSurface"><code class="xref py py-obj docutils literal notranslate"><span class="pre">colorTypeSupportedAsSurface</span></code></a></p></td>
 <td><p>Can a SkSurface be created with the given color type.</p></td>
 </tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.GrContext.compressedBackendFormat" title="skia.GrContext.compressedBackendFormat"><code class="xref py py-obj docutils literal notranslate"><span class="pre">compressedBackendFormat</span></code></a></p></td>
+<td><p>Retrieve the <code class="xref py py-class docutils literal notranslate"><span class="pre">GrBackendFormat</span></code> for a given <a class="reference internal" href="skia.Image.CompressionType.html#skia.Image.CompressionType" title="skia.Image.CompressionType"><code class="xref py py-class docutils literal notranslate"><span class="pre">Image.CompressionType</span></code></a>.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.GrContext.createBackendTexture" title="skia.GrContext.createBackendTexture"><code class="xref py py-obj docutils literal notranslate"><span class="pre">createBackendTexture</span></code></a></p></td>
+<td><p>If possible, create an uninitialized backend texture.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.GrContext.createCompressedBackendTexture" title="skia.GrContext.createCompressedBackendTexture"><code class="xref py py-obj docutils literal notranslate"><span class="pre">createCompressedBackendTexture</span></code></a></p></td>
+<td><p>Overloaded function.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.GrContext.defaultBackendFormat" title="skia.GrContext.defaultBackendFormat"><code class="xref py py-obj docutils literal notranslate"><span class="pre">defaultBackendFormat</span></code></a></p></td>
+<td><p>Retrieve the default GrBackendFormat for a given <a class="reference internal" href="skia.ColorType.html#skia.ColorType" title="skia.ColorType"><code class="xref py py-class docutils literal notranslate"><span class="pre">ColorType</span></code></a> and renderability.</p></td>
+</tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#skia.GrContext.flush" title="skia.GrContext.flush"><code class="xref py py-obj docutils literal notranslate"><span class="pre">flush</span></code></a></p></td>
 <td><p>Call to ensure all drawing to the context has been issued to the underlying 3D API.</p></td>
 </tr>
@@ -177,6 +189,48 @@
 <dt id="skia.GrContext.colorTypeSupportedAsSurface">
 <code class="sig-prename descclassname">GrContext.</code><code class="sig-name descname">colorTypeSupportedAsSurface</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.GrContext" title="skia.GrContext">skia.GrContext</a></span></em>, <em class="sig-param"><span class="n">arg0</span><span class="p">:</span> <span class="n">SkColorType</span></em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#skia.GrContext.colorTypeSupportedAsSurface" title="Permalink to this definition">¶</a></dt>
 <dd><p>Can a SkSurface be created with the given color type.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="skia.GrContext.compressedBackendFormat">
+<code class="sig-prename descclassname">GrContext.</code><code class="sig-name descname">compressedBackendFormat</code><span class="sig-paren">(</span><em class="sig-param">self: skia.GrContext</em>, <em class="sig-param">compressionType: SkImage::CompressionType</em><span class="sig-paren">)</span> &#x2192; skia.GrBackendFormat<a class="headerlink" href="#skia.GrContext.compressedBackendFormat" title="Permalink to this definition">¶</a></dt>
+<dd><p>Retrieve the <code class="xref py py-class docutils literal notranslate"><span class="pre">GrBackendFormat</span></code> for a given
+<a class="reference internal" href="skia.Image.CompressionType.html#skia.Image.CompressionType" title="skia.Image.CompressionType"><code class="xref py py-class docutils literal notranslate"><span class="pre">Image.CompressionType</span></code></a>.</p>
+<p>This is guaranteed to match the backend format used by the following
+<code class="xref py py-meth docutils literal notranslate"><span class="pre">createCompressedsBackendTexture()</span></code> methods that take a
+CompressionType. The caller should check that the returned format is
+valid.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="skia.GrContext.createBackendTexture">
+<code class="sig-prename descclassname">GrContext.</code><code class="sig-name descname">createBackendTexture</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.GrContext" title="skia.GrContext">skia.GrContext</a></span></em>, <em class="sig-param"><span class="n">width</span><span class="p">:</span> <span class="n">int</span></em>, <em class="sig-param"><span class="n">height</span><span class="p">:</span> <span class="n">int</span></em>, <em class="sig-param"><span class="n">colorType</span><span class="p">:</span> <span class="n">SkColorType</span></em>, <em class="sig-param"><span class="n">mipMapped</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.GrMipMapped.html#skia.GrMipMapped" title="skia.GrMipMapped">skia.GrMipMapped</a></span></em>, <em class="sig-param"><span class="n">renderable</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.GrRenderable.html#skia.GrRenderable" title="skia.GrRenderable">skia.GrRenderable</a></span></em>, <em class="sig-param"><span class="n">protected</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.GrProtected.html#skia.GrProtected" title="skia.GrProtected">skia.GrProtected</a></span> <span class="o">=</span> <span class="default_value">GrProtected.kNo</span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="skia.GrBackendTexture.html#skia.GrBackendTexture" title="skia.GrBackendTexture">skia.GrBackendTexture</a><a class="headerlink" href="#skia.GrContext.createBackendTexture" title="Permalink to this definition">¶</a></dt>
+<dd><p>If possible, create an uninitialized backend texture.</p>
+<p>The client should ensure that the returned backend texture is valid. If
+successful, the created backend texture will be compatible with the
+provided <a class="reference internal" href="skia.ColorType.html#skia.ColorType" title="skia.ColorType"><code class="xref py py-class docutils literal notranslate"><span class="pre">ColorType</span></code></a>. For the Vulkan backend the layout of the
+created VkImage will be: VK_IMAGE_LAYOUT_UNDEFINED.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="skia.GrContext.createCompressedBackendTexture">
+<code class="sig-prename descclassname">GrContext.</code><code class="sig-name descname">createCompressedBackendTexture</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span><span class="n">args</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#skia.GrContext.createCompressedBackendTexture" title="Permalink to this definition">¶</a></dt>
+<dd><p>Overloaded function.</p>
+<ol class="arabic simple">
+<li><p>createCompressedBackendTexture(self: skia.GrContext, width: int, height: int, backendFormat: skia.GrBackendFormat, color: skia.Color4f, mipMapped: skia.GrMipMapped) -&gt; skia.GrBackendTexture</p></li>
+<li><p>createCompressedBackendTexture(self: skia.GrContext, width: int, height: int, type: SkImage::CompressionType, color: skia.Color4f, mipMapped: skia.GrMipMapped) -&gt; skia.GrBackendTexture</p></li>
+</ol>
+</dd></dl>
+
+<dl class="py method">
+<dt id="skia.GrContext.defaultBackendFormat">
+<code class="sig-prename descclassname">GrContext.</code><code class="sig-name descname">defaultBackendFormat</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.GrContext" title="skia.GrContext">skia.GrContext</a></span></em>, <em class="sig-param"><span class="n">colorType</span><span class="p">:</span> <span class="n">SkColorType</span></em>, <em class="sig-param"><span class="n">renderable</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.GrRenderable.html#skia.GrRenderable" title="skia.GrRenderable">skia.GrRenderable</a></span> <span class="o">=</span> <span class="default_value">GrRenderable.kNo</span></em><span class="sig-paren">)</span> &#x2192; skia.GrBackendFormat<a class="headerlink" href="#skia.GrContext.defaultBackendFormat" title="Permalink to this definition">¶</a></dt>
+<dd><p>Retrieve the default GrBackendFormat for a given <a class="reference internal" href="skia.ColorType.html#skia.ColorType" title="skia.ColorType"><code class="xref py py-class docutils literal notranslate"><span class="pre">ColorType</span></code></a>
+and renderability.</p>
+<p>It is guaranteed that this backend format will be the one used by the
+following <a class="reference internal" href="skia.ColorType.html#skia.ColorType" title="skia.ColorType"><code class="xref py py-class docutils literal notranslate"><span class="pre">ColorType</span></code></a> and SurfaceCharacterization-based
+<a class="reference internal" href="#skia.GrContext.createBackendTexture" title="skia.GrContext.createBackendTexture"><code class="xref py py-meth docutils literal notranslate"><span class="pre">createBackendTexture()</span></code></a> methods.</p>
+<p>The caller should check that the returned format is valid.</p>
 </dd></dl>
 
 <dl class="py method">
@@ -423,6 +477,9 @@ been allocated via new, and not on the stack.</p>
 <li class="toctree-l2"><a class="reference internal" href="skia.IRect.html">IRect</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.ISize.html">ISize</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.Image.html">Image</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.Image.CompressionType.html">Image.CompressionType</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.Image.BitDepth.html">Image.BitDepth</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.Image.CachingHint.html">Image.CachingHint</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.ImageFilter.html">ImageFilter</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.ImageFilters.html">ImageFilters</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.ImageInfo.html">ImageInfo</a></li>
