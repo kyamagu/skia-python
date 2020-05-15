@@ -7,32 +7,6 @@ import logging
 logger = logging.getLogger(__name__)
 
 
-@contextlib.contextmanager
-def glfw_context():
-    import glfw
-    if not glfw.init():
-        raise RuntimeError('glfw.init() failed')
-    glfw.window_hint(glfw.VISIBLE, glfw.FALSE)
-    glfw.window_hint(glfw.STENCIL_BITS, 8)
-    try:
-        context = glfw.create_window(640, 480, '', None, None)
-        glfw.make_context_current(context)
-        yield context
-        glfw.destroy_window(context)
-    except glfw.GLFWError:
-        logger.exception('GLFW error')
-    glfw.terminate()
-
-
-@contextlib.contextmanager
-def glut_context():
-    from OpenGL.GLUT import glutInit, glutCreateWindow, glutHideWindow
-    glutInit()
-    context = glutCreateWindow('Hidden window for OpenGL context')
-    glutHideWindow()
-    yield context
-
-
 def opengl_is_available():
     try:
         import glfw
@@ -50,17 +24,41 @@ def opengl_is_available():
 
 
 @pytest.fixture(scope='session')
-def opengl_context():
+def glfw_context():
+    import glfw
+    if not glfw.init():
+        raise RuntimeError('glfw.init() failed')
+    glfw.window_hint(glfw.VISIBLE, glfw.FALSE)
+    glfw.window_hint(glfw.STENCIL_BITS, 8)
+    context = glfw.create_window(640, 480, '', None, None)
+    glfw.make_context_current(context)
+    yield context
+    glfw.destroy_window(context)
+    glfw.terminate()
+
+
+@pytest.fixture(scope='session')
+def glut_context():
+    from OpenGL.GLUT import glutInit, glutCreateWindow, glutHideWindow
+    glutInit()
+    context = glutCreateWindow('Hidden window for OpenGL context')
+    glutHideWindow()
+    yield context
+
+
+@pytest.fixture(scope='session')
+def opengl_context(request):
     try:
-        with glfw_context() as context:
-            yield context
+        yield request.getfixturevalue('glfw_context')
         return
     except ImportError:
         logger.warning('glfw not found, falling back to pyopengl')
+    except UserWarning as e:
+        logger.exception(e)
+        pytest.skip('GLFW error')
 
     try:
-        with glut_context() as context:
-            yield context
+        yield request.getfixturevalue('glut_context')
     except ImportError:
         pass
 
