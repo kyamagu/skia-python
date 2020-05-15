@@ -7,22 +7,6 @@ import logging
 logger = logging.getLogger(__name__)
 
 
-def opengl_is_available():
-    try:
-        import glfw
-        return True
-    except ImportError:
-        pass
-
-    try:
-        import OpenGL
-        return True
-    except ImportError:
-        pass
-
-    return False
-
-
 @pytest.fixture(scope='session')
 def glfw_context():
     import glfw
@@ -54,7 +38,7 @@ def opengl_context(request):
         yield request.getfixturevalue('glfw_context')
         return
     except ImportError:
-        logger.warning('glfw not found, falling back to pyopengl')
+        logger.warning('glfw not found')
     except UserWarning as e:
         logger.exception(e)
         pytest.skip('GLFW error')
@@ -62,7 +46,7 @@ def opengl_context(request):
     try:
         yield request.getfixturevalue('glut_context')
     except ImportError:
-        pass
+        logger.warning('pyopengl not found')
 
     pytest.skip('OpenGL is not available')
 
@@ -72,11 +56,7 @@ def context(opengl_context):
     yield skia.GrContext.MakeGL()
 
 
-@pytest.fixture(scope='module', params=[
-    'raster',
-    ('gpu', pytest.mark.skipif(
-        not opengl_is_available(), reason='OpenGL is not available')),
-])
+@pytest.fixture(scope='module', params=['raster', 'gpu'])
 def surface(request):
     if request.param == 'gpu':
         context = request.getfixturevalue('context')
