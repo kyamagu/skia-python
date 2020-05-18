@@ -45,6 +45,7 @@ if sys.platform == 'win32':
         '/wd4180',  # Qualifier applied to function type has no meaning.
     ]
     EXTRA_LINK_ARGS = [
+        '/MT',
         '/OPT:ICF',
         '/OPT:REF',
     ]
