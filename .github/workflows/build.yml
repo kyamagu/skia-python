@@ -131,7 +131,7 @@ jobs:
     strategy:
       matrix:
         arch: [ x64 ]
-        python-version: [3.5]
+        python-version: [3.7]
     steps:
     - uses: actions/checkout@v2
       with:
@@ -142,7 +142,7 @@ jobs:
       id: cache
       with:
         path: skia\out\Release
-        key: ${{ runner.os }}-${{ matrix.arch }}-skia-out-${{ hashFiles('submodule.txt') }}
+        key: ${{ runner.os }}-${{ matrix.arch }}-skia-out-0-${{ hashFiles('submodule.txt') }}
     - name: Set up Python 2.7
       uses: actions/setup-python@v1
       with:
@@ -155,7 +155,7 @@ jobs:
       run: |
         cd skia
         python tools\git-sync-deps
-        bin\gn gen out\Release --args='is_official_build=true skia_enable_tools=true skia_use_system_libjpeg_turbo=false skia_use_system_libwebp=false skia_use_system_libpng=false skia_use_system_icu=false skia_use_system_harfbuzz=false skia_use_system_expat=false skia_use_system_zlib=false extra_cflags_cc=[\"/GR\", \"/EHsc\"] target_cpu=\"${{ matrix.arch }}\"'
+        bin\gn gen out\Release --args='is_official_build=true skia_enable_tools=true skia_use_system_libjpeg_turbo=false skia_use_system_libwebp=false skia_use_system_libpng=false skia_use_system_icu=false skia_use_system_harfbuzz=false skia_use_system_expat=false skia_use_system_zlib=false extra_cflags_cc=[\"/GR\", \"/EHsc\", \"/MD\"] target_cpu=\"${{ matrix.arch }}\"'
         ninja -C out\Release skia skia.h
         rm out\Release\obj -r -fo
         cd ..
