@@ -287,12 +287,7 @@ def test_Image_MakeFromAdoptedTexture(context, texture):
         skia.Image)
 
 
-def test_Image_MakeFromPicture():
-    recorder = skia.PictureRecorder()
-    canvas = recorder.beginRecording(skia.Rect(100, 100))
-    canvas.clear(0xFFFFFFFF)
-    canvas.drawLine(0, 0, 100, 100, skia.Paint())
-    picture = recorder.finishRecordingAsPicture()
+def test_Image_MakeFromPicture(picture):
     assert isinstance(
         skia.Image.MakeFromPicture(picture, (100, 100)),
         (skia.Image, type(None)))

@@ -49,46 +49,206 @@ py::class_<SkPicture, PyPicture, sk_sp<SkPicture>, SkRefCnt>(
     :py:class:`Picture` has a cull :py:class:`Rect`, which is used as a bounding
     box hint. To limit :py:class:`Picture` bounds, use :py:class:`Canvas` clip
     when recording or drawing :py:class:`Picture`.
+
+    Example::
+
+        recorder = skia.PictureRecorder()
+        canvas = recorder.beginRecording(skia.Rect(100, 100))
+        canvas.clear(0xFFFFFFFF)
+        canvas.drawLine(0, 0, 100, 100, skia.Paint())
+        picture = recorder.finishRecordingAsPicture()
     )docstring")
-    .def(py::init(&SkPicture::MakePlaceholder))
-    .def("playback", &SkPicture::playback,
-        "Replays the drawing commands on the specified canvas.")
+    .def(py::init(&SkPicture::MakePlaceholder),
+        R"docstring(
+        Returns a placeholder :py:class:`Picture`.
+
+        Result does not draw, and contains only cull :py:class:`Rect`, a hint of
+        its bounds. Result is immutable; it cannot be changed later. Result
+        identifier is unique.
+
+        Returned placeholder can be intercepted during playback to insert other
+        commands into :py:class:`Canvas` draw stream.
+
+        :param skia.Rect cull: placeholder dimensions
+        :return: placeholder with unique identifier
+        )docstring",
+        py::arg("cull"))
+    .def("playback", [] (SkPicture& picture, SkCanvas* canvas) {
+            picture.playback(canvas);
+        },
+        R"docstring(
+        Replays the drawing commands on the specified canvas.
+
+        In the case that the commands are recorded, each command in the
+        :py:class:`Picture` is sent separately to canvas.
+
+        To add a single command to draw :py:class:`Picture` to recording canvas,
+        call :py:meth:`Canvas.drawPicture` instead.
+
+        :param skia.Canvas canvas: receiver of drawing commands
+        :param callback: allows interruption of playback
+        )docstring",
+        py::arg("canvas"))
     .def("cullRect", &SkPicture::cullRect,
-        "Returns cull SkRect for this picture, passed in when SkPicture was "
-        "created.")
+        R"docstring(
+        Returns cull :py:class:`Rect` for this picture, passed in when
+        :py:class:`Picture` was created.
+
+        Returned :py:class:`Rect` does not specify clipping :py:class:`Rect` for
+        :py:class:`Picture`; cull is hint of :py:class:`Picture` bounds.
+
+        :py:class:`Picture` is free to discard recorded drawing commands that
+        fall outside cull.
+
+        :return: bounds passed when :py:class:`Picture` was created
+        )docstring")
     .def("uniqueID", &SkPicture::uniqueID,
-        "Returns a non-zero value unique among SkPicture in Skia process.")
+        R"docstring(
+        Returns a non-zero value unique among :py:class:`Picture` in Skia
+        process.
+
+        :return: identifier for :py:class:`Picture`
+        )docstring")
     .def("serialize",
-        // py::overload_cast<const SkSerialProcs*>(&SkPicture::serialize),
         [] (SkPicture& picture) { return picture.serialize(); },
-        "Returns storage containing SkData describing SkPicture, using "
-        "optional custom encoders.")
-    // .def("serialize",
-    //     py::overload_cast<SkWStream*, const SkSerialProcs*>(
-    //         &SkPicture::serialize),
-    //     "Writes picture to stream, using optional custom encoders.")
+        R"docstring(
+        Returns storage containing :py:class:`Data` describing
+        :py:class:`Picture`.
+
+        :return: storage containing serialized :py:class:`Picture`
+        )docstring")
     .def("approximateOpCount", &SkPicture::approximateOpCount,
-        "Returns the approximate number of operations in SkPicture.")
+        R"docstring(
+        Returns the approximate number of operations in :py:class:`Picture`.
+
+        Returned value may be greater or less than the number of
+        :py:class:`Canvas` calls recorded: some calls may be recorded as more
+        than one operation, other calls may be optimized away.
+
+        :return: approximate operation count
+        )docstring")
     .def("approximateBytesUsed", &SkPicture::approximateBytesUsed,
-        "Returns the approximate byte size of SkPicture.")
+        R"docstring(
+        Returns the approximate byte size of :py:class:`Picture`.
+
+        Does not include large objects referenced by :py:class:`Picture`.
+
+        :return: approximate size
+        )docstring")
     .def("makeShader",
         py::overload_cast<SkTileMode, SkTileMode, const SkMatrix*,
             const SkRect*>(&SkPicture::makeShader, py::const_),
-        "Return a new shader that will draw with this picture.")
-    .def("makeShader",
-        py::overload_cast<SkTileMode, SkTileMode, const SkMatrix*>(
-            &SkPicture::makeShader, py::const_))
+        R"docstring(
+        Return a new shader that will draw with this picture.
+
+        :param skia.TileMode tmx: The tiling mode to use when sampling in the
+            x-direction.
+        :param skia.TileMode tmy: The tiling mode to use when sampling in the
+            y-direction.
+        :param skia.Matrix localMatrix: Optional matrix used when sampling
+        :param skia.Rect tile: The tile rectangle in picture coordinates:
+            this represents the subset (or superset) of the picture used when
+            building a tile. It is not affected by localMatrix and does not
+            imply scaling (only translation and cropping). If null, the tile
+            rect is considered equal to the picture bounds.
+        :return: Returns a new shader object. Note: this function never returns
+            null.
+        )docstring",
+        py::arg("tmx"), py::arg("tmy"), py::arg("localMatrix") = nullptr,
+        py::arg("tile") = nullptr)
     // .def_static("MakeFromStream", &SkPicture::MakeFromStream,
     //     "Recreates SkPicture that was serialized into a stream.")
-    // .def_static("MakeFromData",
-    //     py::overload_cast<const SkData*, const SkDeserialProcs*>(
-    //         &SkPicture::MakeFromData),
-    //     "Recreates SkPicture that was serialized into data.")
+    .def_static("MakeFromData",
+        [] (const SkData* data) {
+            auto picture = SkPicture::MakeFromData(data);
+            if (!picture)
+                throw py::value_error("Invalid data");
+            return picture;
+        },
+        R"docstring(
+        Recreates :py:class:`Picture` that was serialized into data.
+
+        Returns constructed :py:class:`Picture` if successful. Fails if data
+        does not permit constructing valid :py:class:`Picture`.
+
+        :param skia.Data data: container for serial data
+        :return: :py:class:`Picture` constructed from data
+        :raise: ValueError
+        )docstring",
+        py::arg("data"))
     // .def_static("MakeFromData",
     //     py::overload_cast<const void*, size_t, const SkDeserialProcs*>(
     //         &SkPicture::MakeFromData))
     .def_static("MakePlaceholder", &SkPicture::MakePlaceholder,
-        "Returns a placeholder SkPicture.")
+        R"docstring(
+        Returns a placeholder :py:class:`Picture`.
+
+        Result does not draw, and contains only cull :py:class:`Rect`, a hint of
+        its bounds. Result is immutable; it cannot be changed later. Result
+        identifier is unique.
+
+        Returned placeholder can be intercepted during playback to insert other
+        commands into :py:class:`Canvas` draw stream.
+
+        :param skia.Rect cull: placeholder dimensions
+        :return: placeholder with unique identifier
+        )docstring",
+        py::arg("cull"))
+    ;
+
+py::class_<SkDrawable, sk_sp<SkDrawable>, SkFlattenable>(m, "Drawable",
+    R"docstring(
+    Base-class for objects that draw into :py:class:`Canvas`.
+
+    The object has a generation ID, which is guaranteed to be unique across all
+    drawables. To allow for clients of the drawable that may want to cache the
+    results, the drawable must change its generation ID whenever its internal
+    state changes such that it will draw differently.
+    )docstring")
+    .def("draw",
+        py::overload_cast<SkCanvas*, const SkMatrix*>(&SkDrawable::draw),
+        R"docstring(
+        Draws into the specified content.
+
+        The drawing sequence will be balanced upon return (i.e. the
+        ``saveLevel()`` on the canvas will match what it was when
+        :py:meth:`draw` was called, and the current matrix and clip settings
+        will not be changed.
+        )docstring",
+        py::arg("canvas").none(false), py::arg("matrix") = nullptr)
+    .def("draw",
+        py::overload_cast<SkCanvas*, SkScalar, SkScalar>(&SkDrawable::draw),
+        py::arg("canvas").none(false), py::arg("x"), py::arg("y"))
+    // .def("snapGpuDrawHandler", &SkDrawable::snapGpuDrawHandler)
+    .def("newPictureSnapshot", &SkDrawable::newPictureSnapshot,
+        py::return_value_policy::reference)
+    .def("getGenerationID", &SkDrawable::getGenerationID,
+        R"docstring(
+        Return a unique value for this instance.
+
+        If two calls to this return the same value, it is presumed that calling
+        the draw() method will render the same thing as well.
+
+        Subclasses that change their state should call
+        :py:meth:`notifyDrawingChanged` to ensure that a new value will be
+        returned the next time it is called.
+        )docstring")
+    .def("getBounds", &SkDrawable::getBounds,
+        R"docstring(
+        Return the (conservative) bounds of what the drawable will draw.
+
+        If the drawable can change what it draws (e.g. animation or in response
+        to some external change), then this must return a bounds that is always
+        valid for all possible states.
+        )docstring")
+    .def("notifyDrawingChanged", &SkDrawable::notifyDrawingChanged,
+        R"docstring(
+        Calling this invalidates the previous generation ID, and causes a new
+        one to be computed the next time getGenerationID() is called.
+
+        Typically this is called by the object itself, in response to its
+        internal state changing.
+        )docstring")
     ;
 
 py::class_<SkBBHFactory>(m, "BBHFactory");
@@ -103,20 +263,27 @@ bboxhierarchy
     .def(py::init())
     .def("insert",
         py::overload_cast<const SkRect[], int>(&SkBBoxHierarchy::insert),
-        "Insert N bounding boxes into the hierarchy.")
+        R"docstring(
+        Insert N bounding boxes into the hierarchy.
+        )docstring")
     .def("insert",
         py::overload_cast<const SkRect[], const SkBBoxHierarchy::Metadata[],
             int>(&SkBBoxHierarchy::insert))
     .def("search", &SkBBoxHierarchy::search,
-        "Populate results with the indices of bounding boxes intersecting "
-        "that query.")
+        R"docstring(
+        Populate results with the indices of bounding boxes intersecting that
+        query.
+        )docstring")
     .def("bytesUsed", &SkBBoxHierarchy::bytesUsed,
-        "Return approximate size in memory of this.")
+        R"docstring(
+        Return approximate size in memory of this.
+        )docstring")
     ;
 
 py::class_<SkPictureRecorder> picturerecorder(m, "PictureRecorder");
 
-py::enum_<SkPictureRecorder::RecordFlags>(picturerecorder, "RecordFlags")
+py::enum_<SkPictureRecorder::RecordFlags>(
+    picturerecorder, "RecordFlags", py::arithmetic())
     .value("kPlaybackDrawPicture_RecordFlag",
         SkPictureRecorder::RecordFlags::kPlaybackDrawPicture_RecordFlag)
     .export_values();
@@ -130,33 +297,81 @@ picturerecorder
     //         &SkPictureRecorder::beginRecording),
     //     "Returns the canvas that records the drawing commands.")
     .def("beginRecording",
-        py::overload_cast<const SkRect&, SkBBHFactory*, uint32_t>(
-            &SkPictureRecorder::beginRecording),
-        py::arg("bounds"), py::arg("bbhFactory") = nullptr,
-        py::arg("recordFlags") = 0,
+        [] (SkPictureRecorder& recorder, const SkRect& bounds, uint32_t flags) {
+            return recorder.beginRecording(bounds, nullptr, flags);
+        },
+        R"docstring(
+        Returns the canvas that records the drawing commands.
+
+        :bounds: the cull rect used when recording this picture. Any
+            drawing the falls outside of this rect is undefined, and may be
+            drawn or it may not.
+        :recordFlags: optional flags that control recording.
+        :return: the canvas.
+        )docstring",
+        py::arg("bounds"), py::arg("recordFlags") = 0,
         py::return_value_policy::reference)
     .def("beginRecording",
-        py::overload_cast<SkScalar, SkScalar, SkBBHFactory*, uint32_t>(
-            &SkPictureRecorder::beginRecording),
-        py::arg("width"), py::arg("height"), py::arg("bbhFactory") = nullptr,
-        py::arg("recordFlags") = 0,
+        [] (SkPictureRecorder& recorder, SkScalar width, SkScalar height,
+            uint32_t flags) {
+            return recorder.beginRecording(width, height, nullptr, flags);
+        },
+        py::arg("width"), py::arg("height"), py::arg("recordFlags") = 0,
         py::return_value_policy::reference)
     .def("getRecordingCanvas", &SkPictureRecorder::getRecordingCanvas,
-        "Returns the recording canvas if one is active, or NULL if recording "
-        "is not active.",
+        R"docstring(
+        Returns the recording canvas if one is active, or NULL if recording is
+        not active.
+
+        This does not alter the refcnt on the canvas (if present).
+        )docstring",
         py::return_value_policy::reference)
     .def("finishRecordingAsPicture",
         &SkPictureRecorder::finishRecordingAsPicture,
-        "Signal that the caller is done recording.",
+        R"docstring(
+        Signal that the caller is done recording.
+
+        This invalidates the canvas returned by :py:meth:`beginRecording` or
+        :py:meth:`getRecordingCanvas`. Ownership of the object is passed to the
+        caller, who must call unref() when they are done using it.
+
+        The returned picture is immutable. If during recording drawables were
+        added to the canvas, these will have been "drawn" into a recording
+        canvas, so that this resulting picture will reflect their current state,
+        but will not contain a live reference to the drawables themselves.
+        )docstring",
         py::arg("endFlags") = 0)
     .def("finishRecordingAsPictureWithCull",
         &SkPictureRecorder::finishRecordingAsPictureWithCull,
-        "Signal that the caller is done recording, and update the cull rect "
-        "to use for bounding box hierarchy (BBH) generation.",
+        R"docstring(
+        Signal that the caller is done recording, and update the cull rect to
+        use for bounding box hierarchy (BBH) generation.
+
+        The behavior is the same as calling :py:meth:`finishRecordingAsPicture`,
+        except that this method updates the cull rect initially passed into
+        beginRecording.
+
+        :param skia.Rect cullRect: the new culling rectangle to use as the
+            overall bound for BBH generation and subsequent culling operations.
+        :return: the picture containing the recorded content.
+        )docstring",
         py::arg("cullRect"), py::arg("endFlags") = 0)
     .def("finishRecordingAsDrawable",
         &SkPictureRecorder::finishRecordingAsDrawable,
-        "Signal that the caller is done recording.",
+        R"docstring(
+        Signal that the caller is done recording.
+
+        This invalidates the canvas returned by :py:meth:`beginRecording` or
+        :py:meth:`getRecordingCanvas`. Ownership of the object is passed to the
+        caller, who must call unref() when they are done using it.
+
+        Unlike :py:meth:`finishRecordingAsPicture`, which returns an immutable
+        picture, the returned drawable may contain live references to other
+        drawables (if they were added to the recording canvas) and therefore
+        this drawable will reflect the current state of those nested drawables
+        anytime it is drawn or a new picture is snapped from it (by calling
+        drawable.newPictureSnapshot()).
+        )docstring",
         py::arg("endFlags") = 0)
     ;
 }
