@@ -153,5 +153,5 @@ def test_Pixmap_scalePixels(pixmap):
     assert isinstance(pixmap.scalePixels(dst), bool)
 
 
-def test_Pixmap_scalePixels(pixmap):
+def test_Pixmap_erase(pixmap):
     assert isinstance(pixmap.erase(0xFFFFFFFF), bool)
