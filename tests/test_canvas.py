@@ -3,14 +3,6 @@ import pytest
 import numpy as np
 
 
-@pytest.fixture
-def canvas(surface):
-    canvas = surface.getCanvas()
-    yield canvas
-    canvas.clear(skia.ColorWHITE)
-    canvas.flush()
-
-
 @pytest.fixture(scope='session')
 def image():
     yield skia.Image(np.zeros((320, 240, 4), dtype=np.uint8))

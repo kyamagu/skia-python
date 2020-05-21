@@ -67,6 +67,14 @@ def surface(request):
         return skia.Surface(320, 240)
 
 
+@pytest.fixture
+def canvas(surface):
+    canvas = surface.getCanvas()
+    yield canvas
+    canvas.clear(skia.ColorWHITE)
+    canvas.flush()
+
+
 @pytest.fixture(scope='session')
 def png_data():
     import os
@@ -79,3 +87,12 @@ def png_data():
 @pytest.fixture(scope='session')
 def image(png_data):
     return skia.Image.MakeFromEncoded(png_data)
+
+
+@pytest.fixture(scope='module')
+def picture():
+    recorder = skia.PictureRecorder()
+    canvas = recorder.beginRecording(skia.Rect(100, 100))
+    canvas.clear(0xFFFFFFFF)
+    canvas.drawLine(0, 0, 100, 100, skia.Paint())
+    return recorder.finishRecordingAsPicture()
