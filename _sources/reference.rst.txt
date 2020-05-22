@@ -17,7 +17,6 @@ Reference
     AlphaType
     ApplyPerspectiveClip
     AutoCanvasRestore
-    BBoxHierarchy
     BackingFit
     Bitmap
     BlendMode
@@ -47,6 +46,7 @@ Reference
     DilateImageFilter
     DiscretePathEffect
     DisplacementMapEffect
+    Drawable
     DropShadowImageFilter
     EncodedImageFormat
     ErodeImageFilter

@@ -4,7 +4,7 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <title>Flattanable &#8212; skia-python 0.0.3 documentation</title>
+    <title>Drawable &#8212; skia-python 0.0.3 documentation</title>
     <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
@@ -14,8 +14,8 @@
     <script src="../_static/language_data.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Font" href="skia.Font.html" />
-    <link rel="prev" title="FilterQuality" href="skia.FilterQuality.html" />
+    <link rel="next" title="DropShadowImageFilter" href="skia.DropShadowImageFilter.html" />
+    <link rel="prev" title="DisplacementMapEffect" href="skia.DisplacementMapEffect.html" />
    
   <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
   
@@ -32,14 +32,16 @@
 
           <div class="body" role="main">
             
-  <div class="section" id="flattanable">
-<h1>Flattanable<a class="headerlink" href="#flattanable" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="drawable">
+<h1>Drawable<a class="headerlink" href="#drawable" title="Permalink to this headline">¶</a></h1>
 <dl class="py class">
-<dt id="skia.Flattanable">
-<em class="property">class </em><code class="sig-name descname">Flattanable</code><a class="headerlink" href="#skia.Flattanable" title="Permalink to this definition">¶</a></dt>
-<dd><p><code class="xref py py-class docutils literal notranslate"><span class="pre">Flattenable</span></code> is the base class for objects that need to be
-flattened into a data stream for either transport or as part of the key to
-the font cache.</p>
+<dt id="skia.Drawable">
+<em class="property">class </em><code class="sig-name descname">Drawable</code><a class="headerlink" href="#skia.Drawable" title="Permalink to this definition">¶</a></dt>
+<dd><p>Base-class for objects that draw into <a class="reference internal" href="skia.Canvas.html#skia.Canvas" title="skia.Canvas"><code class="xref py py-class docutils literal notranslate"><span class="pre">Canvas</span></code></a>.</p>
+<p>The object has a generation ID, which is guaranteed to be unique across all
+drawables. To allow for clients of the drawable that may want to cache the
+results, the drawable must change its generation ID whenever its internal
+state changes such that it will draw differently.</p>
 <p class="rubric">Methods</p>
 <table class="longtable docutils align-default">
 <colgroup>
@@ -47,28 +49,43 @@ the font cache.</p>
 <col style="width: 90%" />
 </colgroup>
 <tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Flattanable.Deserialize" title="skia.Flattanable.Deserialize"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Deserialize</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Drawable.Deserialize" title="skia.Drawable.Deserialize"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Deserialize</span></code></a></p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#skia.Flattanable.__init__" title="skia.Flattanable.__init__"><code class="xref py py-obj docutils literal notranslate"><span class="pre">__init__</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.Drawable.__init__" title="skia.Drawable.__init__"><code class="xref py py-obj docutils literal notranslate"><span class="pre">__init__</span></code></a></p></td>
 <td><p>Initialize self.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Flattanable.getFlattenableType" title="skia.Flattanable.getFlattenableType"><code class="xref py py-obj docutils literal notranslate"><span class="pre">getFlattenableType</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Drawable.draw" title="skia.Drawable.draw"><code class="xref py py-obj docutils literal notranslate"><span class="pre">draw</span></code></a></p></td>
+<td><p>Overloaded function.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.Drawable.getBounds" title="skia.Drawable.getBounds"><code class="xref py py-obj docutils literal notranslate"><span class="pre">getBounds</span></code></a></p></td>
+<td><p>Return the (conservative) bounds of what the drawable will draw.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Drawable.getFlattenableType" title="skia.Drawable.getFlattenableType"><code class="xref py py-obj docutils literal notranslate"><span class="pre">getFlattenableType</span></code></a></p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#skia.Flattanable.getTypeName" title="skia.Flattanable.getTypeName"><code class="xref py py-obj docutils literal notranslate"><span class="pre">getTypeName</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.Drawable.getGenerationID" title="skia.Drawable.getGenerationID"><code class="xref py py-obj docutils literal notranslate"><span class="pre">getGenerationID</span></code></a></p></td>
+<td><p>Return a unique value for this instance.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Drawable.getTypeName" title="skia.Drawable.getTypeName"><code class="xref py py-obj docutils literal notranslate"><span class="pre">getTypeName</span></code></a></p></td>
 <td><p>Returns the name of the object’s class.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Flattanable.ref" title="skia.Flattanable.ref"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ref</span></code></a></p></td>
-<td><p>Increment the reference count.</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#skia.Flattanable.serialize" title="skia.Flattanable.serialize"><code class="xref py py-obj docutils literal notranslate"><span class="pre">serialize</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.Drawable.newPictureSnapshot" title="skia.Drawable.newPictureSnapshot"><code class="xref py py-obj docutils literal notranslate"><span class="pre">newPictureSnapshot</span></code></a></p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Flattanable.unique" title="skia.Flattanable.unique"><code class="xref py py-obj docutils literal notranslate"><span class="pre">unique</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Drawable.notifyDrawingChanged" title="skia.Drawable.notifyDrawingChanged"><code class="xref py py-obj docutils literal notranslate"><span class="pre">notifyDrawingChanged</span></code></a></p></td>
+<td><p>Calling this invalidates the previous generation ID, and causes a new one to be computed the next time getGenerationID() is called.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.Drawable.ref" title="skia.Drawable.ref"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ref</span></code></a></p></td>
+<td><p>Increment the reference count.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Drawable.serialize" title="skia.Drawable.serialize"><code class="xref py py-obj docutils literal notranslate"><span class="pre">serialize</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.Drawable.unique" title="skia.Drawable.unique"><code class="xref py py-obj docutils literal notranslate"><span class="pre">unique</span></code></a></p></td>
 <td><p>May return true if the caller is the only owner.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#skia.Flattanable.unref" title="skia.Flattanable.unref"><code class="xref py py-obj docutils literal notranslate"><span class="pre">unref</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Drawable.unref" title="skia.Drawable.unref"><code class="xref py py-obj docutils literal notranslate"><span class="pre">unref</span></code></a></p></td>
 <td><p>Decrement the reference count.</p></td>
 </tr>
 </tbody>
@@ -80,40 +97,40 @@ the font cache.</p>
 <col style="width: 90%" />
 </colgroup>
 <tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Flattanable.kColorFilter_Type" title="skia.Flattanable.kColorFilter_Type"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kColorFilter_Type</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Drawable.kColorFilter_Type" title="skia.Drawable.kColorFilter_Type"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kColorFilter_Type</span></code></a></p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#skia.Flattanable.kDrawLooper_Type" title="skia.Flattanable.kDrawLooper_Type"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kDrawLooper_Type</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.Drawable.kDrawLooper_Type" title="skia.Drawable.kDrawLooper_Type"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kDrawLooper_Type</span></code></a></p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Flattanable.kDrawable_Type" title="skia.Flattanable.kDrawable_Type"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kDrawable_Type</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Drawable.kDrawable_Type" title="skia.Drawable.kDrawable_Type"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kDrawable_Type</span></code></a></p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#skia.Flattanable.kImageFilter_Type" title="skia.Flattanable.kImageFilter_Type"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kImageFilter_Type</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.Drawable.kImageFilter_Type" title="skia.Drawable.kImageFilter_Type"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kImageFilter_Type</span></code></a></p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Flattanable.kMaskFilter_Type" title="skia.Flattanable.kMaskFilter_Type"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kMaskFilter_Type</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Drawable.kMaskFilter_Type" title="skia.Drawable.kMaskFilter_Type"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kMaskFilter_Type</span></code></a></p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#skia.Flattanable.kPathEffect_Type" title="skia.Flattanable.kPathEffect_Type"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kPathEffect_Type</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.Drawable.kPathEffect_Type" title="skia.Drawable.kPathEffect_Type"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kPathEffect_Type</span></code></a></p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Flattanable.kPixelRef_Type" title="skia.Flattanable.kPixelRef_Type"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kPixelRef_Type</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Drawable.kPixelRef_Type" title="skia.Drawable.kPixelRef_Type"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kPixelRef_Type</span></code></a></p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#skia.Flattanable.kShaderBase_Type" title="skia.Flattanable.kShaderBase_Type"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kShaderBase_Type</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.Drawable.kShaderBase_Type" title="skia.Drawable.kShaderBase_Type"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kShaderBase_Type</span></code></a></p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Flattanable.kUnused_Type" title="skia.Flattanable.kUnused_Type"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kUnused_Type</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Drawable.kUnused_Type" title="skia.Drawable.kUnused_Type"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kUnused_Type</span></code></a></p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#skia.Flattanable.kUnused_Type2" title="skia.Flattanable.kUnused_Type2"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kUnused_Type2</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.Drawable.kUnused_Type2" title="skia.Drawable.kUnused_Type2"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kUnused_Type2</span></code></a></p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Flattanable.kUnused_Type3" title="skia.Flattanable.kUnused_Type3"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kUnused_Type3</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Drawable.kUnused_Type3" title="skia.Drawable.kUnused_Type3"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kUnused_Type3</span></code></a></p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#skia.Flattanable.kUnused_Type4" title="skia.Flattanable.kUnused_Type4"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kUnused_Type4</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.Drawable.kUnused_Type4" title="skia.Drawable.kUnused_Type4"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kUnused_Type4</span></code></a></p></td>
 <td><p></p></td>
 </tr>
 </tbody>
@@ -123,50 +140,102 @@ the font cache.</p>
 <div class="section" id="methods">
 <h2>Methods<a class="headerlink" href="#methods" title="Permalink to this headline">¶</a></h2>
 <dl class="py method">
-<dt id="skia.Flattanable.Deserialize">
-<em class="property">static </em><code class="sig-prename descclassname">Flattanable.</code><code class="sig-name descname">Deserialize</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">arg0</span><span class="p">:</span> <span class="n">skia.Flattanable.Type</span></em>, <em class="sig-param"><span class="n">arg1</span><span class="p">:</span> <span class="n">buffer</span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="#skia.Flattanable" title="skia.Flattanable">skia.Flattanable</a><a class="headerlink" href="#skia.Flattanable.Deserialize" title="Permalink to this definition">¶</a></dt>
+<dt id="skia.Drawable.Deserialize">
+<em class="property">static </em><code class="sig-prename descclassname">Drawable.</code><code class="sig-name descname">Deserialize</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">arg0</span><span class="p">:</span> <span class="n">skia.Flattanable.Type</span></em>, <em class="sig-param"><span class="n">arg1</span><span class="p">:</span> <span class="n">buffer</span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="skia.Flattanable.html#skia.Flattanable" title="skia.Flattanable">skia.Flattanable</a><a class="headerlink" href="#skia.Drawable.Deserialize" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
-<dt id="skia.Flattanable.__init__">
-<code class="sig-prename descclassname">Flattanable.</code><code class="sig-name descname">__init__</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#skia.Flattanable.__init__" title="Permalink to this definition">¶</a></dt>
+<dt id="skia.Drawable.__init__">
+<code class="sig-prename descclassname">Drawable.</code><code class="sig-name descname">__init__</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#skia.Drawable.__init__" title="Permalink to this definition">¶</a></dt>
 <dd><p>Initialize self.  See help(type(self)) for accurate signature.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="skia.Flattanable.getFlattenableType">
-<code class="sig-prename descclassname">Flattanable.</code><code class="sig-name descname">getFlattenableType</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Flattanable" title="skia.Flattanable">skia.Flattanable</a></span></em><span class="sig-paren">)</span> &#x2192; skia.Flattanable.Type<a class="headerlink" href="#skia.Flattanable.getFlattenableType" title="Permalink to this definition">¶</a></dt>
+<dt id="skia.Drawable.draw">
+<code class="sig-prename descclassname">Drawable.</code><code class="sig-name descname">draw</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span><span class="n">args</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#skia.Drawable.draw" title="Permalink to this definition">¶</a></dt>
+<dd><p>Overloaded function.</p>
+<ol class="arabic">
+<li><p>draw(self: skia.Drawable, canvas: SkCanvas, matrix: skia.Matrix = None) -&gt; None</p>
+<blockquote>
+<div><p>Draws into the specified content.</p>
+<p>The drawing sequence will be balanced upon return (i.e. the
+<code class="docutils literal notranslate"><span class="pre">saveLevel()</span></code> on the canvas will match what it was when
+<a class="reference internal" href="#skia.Drawable.draw" title="skia.Drawable.draw"><code class="xref py py-meth docutils literal notranslate"><span class="pre">draw()</span></code></a> was called, and the current matrix and clip settings
+will not be changed.</p>
+</div></blockquote>
+</li>
+<li><p>draw(self: skia.Drawable, canvas: SkCanvas, x: float, y: float) -&gt; None</p></li>
+</ol>
+</dd></dl>
+
+<dl class="py method">
+<dt id="skia.Drawable.getBounds">
+<code class="sig-prename descclassname">Drawable.</code><code class="sig-name descname">getBounds</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Drawable" title="skia.Drawable">skia.Drawable</a></span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="skia.Rect.html#skia.Rect" title="skia.Rect">skia.Rect</a><a class="headerlink" href="#skia.Drawable.getBounds" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the (conservative) bounds of what the drawable will draw.</p>
+<p>If the drawable can change what it draws (e.g. animation or in response
+to some external change), then this must return a bounds that is always
+valid for all possible states.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="skia.Drawable.getFlattenableType">
+<code class="sig-prename descclassname">Drawable.</code><code class="sig-name descname">getFlattenableType</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.Flattanable.html#skia.Flattanable" title="skia.Flattanable">skia.Flattanable</a></span></em><span class="sig-paren">)</span> &#x2192; skia.Flattanable.Type<a class="headerlink" href="#skia.Drawable.getFlattenableType" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
-<dt id="skia.Flattanable.getTypeName">
-<code class="sig-prename descclassname">Flattanable.</code><code class="sig-name descname">getTypeName</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Flattanable" title="skia.Flattanable">skia.Flattanable</a></span></em><span class="sig-paren">)</span> &#x2192; str<a class="headerlink" href="#skia.Flattanable.getTypeName" title="Permalink to this definition">¶</a></dt>
+<dt id="skia.Drawable.getGenerationID">
+<code class="sig-prename descclassname">Drawable.</code><code class="sig-name descname">getGenerationID</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Drawable" title="skia.Drawable">skia.Drawable</a></span></em><span class="sig-paren">)</span> &#x2192; int<a class="headerlink" href="#skia.Drawable.getGenerationID" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a unique value for this instance.</p>
+<p>If two calls to this return the same value, it is presumed that calling
+the draw() method will render the same thing as well.</p>
+<p>Subclasses that change their state should call
+<a class="reference internal" href="#skia.Drawable.notifyDrawingChanged" title="skia.Drawable.notifyDrawingChanged"><code class="xref py py-meth docutils literal notranslate"><span class="pre">notifyDrawingChanged()</span></code></a> to ensure that a new value will be
+returned the next time it is called.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="skia.Drawable.getTypeName">
+<code class="sig-prename descclassname">Drawable.</code><code class="sig-name descname">getTypeName</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.Flattanable.html#skia.Flattanable" title="skia.Flattanable">skia.Flattanable</a></span></em><span class="sig-paren">)</span> &#x2192; str<a class="headerlink" href="#skia.Drawable.getTypeName" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the name of the object’s class.</p>
-<p>Implemented in <a class="reference internal" href="skia.Drawable.html#skia.Drawable" title="skia.Drawable"><code class="xref py py-class docutils literal notranslate"><span class="pre">Drawable</span></code></a>.</p>
+<p>Implemented in <a class="reference internal" href="#skia.Drawable" title="skia.Drawable"><code class="xref py py-class docutils literal notranslate"><span class="pre">Drawable</span></code></a>.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="skia.Flattanable.ref">
-<code class="sig-prename descclassname">Flattanable.</code><code class="sig-name descname">ref</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n">skia.RefCntBase</span></em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#skia.Flattanable.ref" title="Permalink to this definition">¶</a></dt>
-<dd><p>Increment the reference count.</p>
-<p>Must be balanced by a call to <a class="reference internal" href="#skia.Flattanable.unref" title="skia.Flattanable.unref"><code class="xref py py-meth docutils literal notranslate"><span class="pre">unref()</span></code></a>.</p>
-</dd></dl>
-
-<dl class="py method">
-<dt id="skia.Flattanable.serialize">
-<code class="sig-prename descclassname">Flattanable.</code><code class="sig-name descname">serialize</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Flattanable" title="skia.Flattanable">skia.Flattanable</a></span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="skia.Data.html#skia.Data" title="skia.Data">skia.Data</a><a class="headerlink" href="#skia.Flattanable.serialize" title="Permalink to this definition">¶</a></dt>
+<dt id="skia.Drawable.newPictureSnapshot">
+<code class="sig-prename descclassname">Drawable.</code><code class="sig-name descname">newPictureSnapshot</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Drawable" title="skia.Drawable">skia.Drawable</a></span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="skia.Picture.html#skia.Picture" title="skia.Picture">skia.Picture</a><a class="headerlink" href="#skia.Drawable.newPictureSnapshot" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
-<dt id="skia.Flattanable.unique">
-<code class="sig-prename descclassname">Flattanable.</code><code class="sig-name descname">unique</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n">skia.RefCntBase</span></em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#skia.Flattanable.unique" title="Permalink to this definition">¶</a></dt>
+<dt id="skia.Drawable.notifyDrawingChanged">
+<code class="sig-prename descclassname">Drawable.</code><code class="sig-name descname">notifyDrawingChanged</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Drawable" title="skia.Drawable">skia.Drawable</a></span></em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#skia.Drawable.notifyDrawingChanged" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calling this invalidates the previous generation ID, and causes a new
+one to be computed the next time getGenerationID() is called.</p>
+<p>Typically this is called by the object itself, in response to its
+internal state changing.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="skia.Drawable.ref">
+<code class="sig-prename descclassname">Drawable.</code><code class="sig-name descname">ref</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n">skia.RefCntBase</span></em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#skia.Drawable.ref" title="Permalink to this definition">¶</a></dt>
+<dd><p>Increment the reference count.</p>
+<p>Must be balanced by a call to <a class="reference internal" href="#skia.Drawable.unref" title="skia.Drawable.unref"><code class="xref py py-meth docutils literal notranslate"><span class="pre">unref()</span></code></a>.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="skia.Drawable.serialize">
+<code class="sig-prename descclassname">Drawable.</code><code class="sig-name descname">serialize</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.Flattanable.html#skia.Flattanable" title="skia.Flattanable">skia.Flattanable</a></span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="skia.Data.html#skia.Data" title="skia.Data">skia.Data</a><a class="headerlink" href="#skia.Drawable.serialize" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="skia.Drawable.unique">
+<code class="sig-prename descclassname">Drawable.</code><code class="sig-name descname">unique</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n">skia.RefCntBase</span></em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#skia.Drawable.unique" title="Permalink to this definition">¶</a></dt>
 <dd><p>May return true if the caller is the only owner.</p>
 <p>Ensures that all previous owner’s actions are complete.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="skia.Flattanable.unref">
-<code class="sig-prename descclassname">Flattanable.</code><code class="sig-name descname">unref</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n">skia.RefCntBase</span></em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#skia.Flattanable.unref" title="Permalink to this definition">¶</a></dt>
+<dt id="skia.Drawable.unref">
+<code class="sig-prename descclassname">Drawable.</code><code class="sig-name descname">unref</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n">skia.RefCntBase</span></em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#skia.Drawable.unref" title="Permalink to this definition">¶</a></dt>
 <dd><p>Decrement the reference count.</p>
 <p>If the reference count is 1 before the decrement, then delete the
 object. Note that if this is the case, then the object needs to have
@@ -177,63 +246,63 @@ been allocated via new, and not on the stack.</p>
 <div class="section" id="attributes">
 <h2>Attributes<a class="headerlink" href="#attributes" title="Permalink to this headline">¶</a></h2>
 <dl class="py attribute">
-<dt id="skia.Flattanable.kColorFilter_Type">
-<code class="sig-prename descclassname">Flattanable.</code><code class="sig-name descname">kColorFilter_Type</code><em class="property"> = Type.kColorFilter_Type</em><a class="headerlink" href="#skia.Flattanable.kColorFilter_Type" title="Permalink to this definition">¶</a></dt>
+<dt id="skia.Drawable.kColorFilter_Type">
+<code class="sig-prename descclassname">Drawable.</code><code class="sig-name descname">kColorFilter_Type</code><em class="property"> = Type.kColorFilter_Type</em><a class="headerlink" href="#skia.Drawable.kColorFilter_Type" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
-<dt id="skia.Flattanable.kDrawLooper_Type">
-<code class="sig-prename descclassname">Flattanable.</code><code class="sig-name descname">kDrawLooper_Type</code><em class="property"> = Type.kDrawLooper_Type</em><a class="headerlink" href="#skia.Flattanable.kDrawLooper_Type" title="Permalink to this definition">¶</a></dt>
+<dt id="skia.Drawable.kDrawLooper_Type">
+<code class="sig-prename descclassname">Drawable.</code><code class="sig-name descname">kDrawLooper_Type</code><em class="property"> = Type.kDrawLooper_Type</em><a class="headerlink" href="#skia.Drawable.kDrawLooper_Type" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
-<dt id="skia.Flattanable.kDrawable_Type">
-<code class="sig-prename descclassname">Flattanable.</code><code class="sig-name descname">kDrawable_Type</code><em class="property"> = Type.kDrawable_Type</em><a class="headerlink" href="#skia.Flattanable.kDrawable_Type" title="Permalink to this definition">¶</a></dt>
+<dt id="skia.Drawable.kDrawable_Type">
+<code class="sig-prename descclassname">Drawable.</code><code class="sig-name descname">kDrawable_Type</code><em class="property"> = Type.kDrawable_Type</em><a class="headerlink" href="#skia.Drawable.kDrawable_Type" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
-<dt id="skia.Flattanable.kImageFilter_Type">
-<code class="sig-prename descclassname">Flattanable.</code><code class="sig-name descname">kImageFilter_Type</code><em class="property"> = Type.kImageFilter_Type</em><a class="headerlink" href="#skia.Flattanable.kImageFilter_Type" title="Permalink to this definition">¶</a></dt>
+<dt id="skia.Drawable.kImageFilter_Type">
+<code class="sig-prename descclassname">Drawable.</code><code class="sig-name descname">kImageFilter_Type</code><em class="property"> = Type.kImageFilter_Type</em><a class="headerlink" href="#skia.Drawable.kImageFilter_Type" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
-<dt id="skia.Flattanable.kMaskFilter_Type">
-<code class="sig-prename descclassname">Flattanable.</code><code class="sig-name descname">kMaskFilter_Type</code><em class="property"> = Type.kMaskFilter_Type</em><a class="headerlink" href="#skia.Flattanable.kMaskFilter_Type" title="Permalink to this definition">¶</a></dt>
+<dt id="skia.Drawable.kMaskFilter_Type">
+<code class="sig-prename descclassname">Drawable.</code><code class="sig-name descname">kMaskFilter_Type</code><em class="property"> = Type.kMaskFilter_Type</em><a class="headerlink" href="#skia.Drawable.kMaskFilter_Type" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
-<dt id="skia.Flattanable.kPathEffect_Type">
-<code class="sig-prename descclassname">Flattanable.</code><code class="sig-name descname">kPathEffect_Type</code><em class="property"> = Type.kPathEffect_Type</em><a class="headerlink" href="#skia.Flattanable.kPathEffect_Type" title="Permalink to this definition">¶</a></dt>
+<dt id="skia.Drawable.kPathEffect_Type">
+<code class="sig-prename descclassname">Drawable.</code><code class="sig-name descname">kPathEffect_Type</code><em class="property"> = Type.kPathEffect_Type</em><a class="headerlink" href="#skia.Drawable.kPathEffect_Type" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
-<dt id="skia.Flattanable.kPixelRef_Type">
-<code class="sig-prename descclassname">Flattanable.</code><code class="sig-name descname">kPixelRef_Type</code><em class="property"> = Type.kPixelRef_Type</em><a class="headerlink" href="#skia.Flattanable.kPixelRef_Type" title="Permalink to this definition">¶</a></dt>
+<dt id="skia.Drawable.kPixelRef_Type">
+<code class="sig-prename descclassname">Drawable.</code><code class="sig-name descname">kPixelRef_Type</code><em class="property"> = Type.kPixelRef_Type</em><a class="headerlink" href="#skia.Drawable.kPixelRef_Type" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
-<dt id="skia.Flattanable.kShaderBase_Type">
-<code class="sig-prename descclassname">Flattanable.</code><code class="sig-name descname">kShaderBase_Type</code><em class="property"> = Type.kShaderBase_Type</em><a class="headerlink" href="#skia.Flattanable.kShaderBase_Type" title="Permalink to this definition">¶</a></dt>
+<dt id="skia.Drawable.kShaderBase_Type">
+<code class="sig-prename descclassname">Drawable.</code><code class="sig-name descname">kShaderBase_Type</code><em class="property"> = Type.kShaderBase_Type</em><a class="headerlink" href="#skia.Drawable.kShaderBase_Type" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
-<dt id="skia.Flattanable.kUnused_Type">
-<code class="sig-prename descclassname">Flattanable.</code><code class="sig-name descname">kUnused_Type</code><em class="property"> = Type.kUnused_Type</em><a class="headerlink" href="#skia.Flattanable.kUnused_Type" title="Permalink to this definition">¶</a></dt>
+<dt id="skia.Drawable.kUnused_Type">
+<code class="sig-prename descclassname">Drawable.</code><code class="sig-name descname">kUnused_Type</code><em class="property"> = Type.kUnused_Type</em><a class="headerlink" href="#skia.Drawable.kUnused_Type" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
-<dt id="skia.Flattanable.kUnused_Type2">
-<code class="sig-prename descclassname">Flattanable.</code><code class="sig-name descname">kUnused_Type2</code><em class="property"> = Type.kUnused_Type2</em><a class="headerlink" href="#skia.Flattanable.kUnused_Type2" title="Permalink to this definition">¶</a></dt>
+<dt id="skia.Drawable.kUnused_Type2">
+<code class="sig-prename descclassname">Drawable.</code><code class="sig-name descname">kUnused_Type2</code><em class="property"> = Type.kUnused_Type2</em><a class="headerlink" href="#skia.Drawable.kUnused_Type2" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
-<dt id="skia.Flattanable.kUnused_Type3">
-<code class="sig-prename descclassname">Flattanable.</code><code class="sig-name descname">kUnused_Type3</code><em class="property"> = Type.kUnused_Type3</em><a class="headerlink" href="#skia.Flattanable.kUnused_Type3" title="Permalink to this definition">¶</a></dt>
+<dt id="skia.Drawable.kUnused_Type3">
+<code class="sig-prename descclassname">Drawable.</code><code class="sig-name descname">kUnused_Type3</code><em class="property"> = Type.kUnused_Type3</em><a class="headerlink" href="#skia.Drawable.kUnused_Type3" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
-<dt id="skia.Flattanable.kUnused_Type4">
-<code class="sig-prename descclassname">Flattanable.</code><code class="sig-name descname">kUnused_Type4</code><em class="property"> = Type.kUnused_Type4</em><a class="headerlink" href="#skia.Flattanable.kUnused_Type4" title="Permalink to this definition">¶</a></dt>
+<dt id="skia.Drawable.kUnused_Type4">
+<code class="sig-prename descclassname">Drawable.</code><code class="sig-name descname">kUnused_Type4</code><em class="property"> = Type.kUnused_Type4</em><a class="headerlink" href="#skia.Drawable.kUnused_Type4" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </div>
@@ -292,12 +361,12 @@ been allocated via new, and not on the stack.</p>
 <li class="toctree-l2"><a class="reference internal" href="skia.DilateImageFilter.html">DilateImageFilter</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.DiscretePathEffect.html">DiscretePathEffect</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.DisplacementMapEffect.html">DisplacementMapEffect</a></li>
-<li class="toctree-l2"><a class="reference internal" href="skia.Drawable.html">Drawable</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Drawable</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.DropShadowImageFilter.html">DropShadowImageFilter</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.EncodedImageFormat.html">EncodedImageFormat</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.ErodeImageFilter.html">ErodeImageFilter</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.FilterQuality.html">FilterQuality</a></li>
-<li class="toctree-l2 current"><a class="current reference internal" href="#">Flattanable</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.Flattanable.html">Flattanable</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.Font.html">Font</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.Font.Edging.html">Font.Edging</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.FontArguments.html">FontArguments</a></li>
@@ -427,8 +496,8 @@ been allocated via new, and not on the stack.</p>
 <ul>
   <li><a href="../index.html">Documentation overview</a><ul>
   <li><a href="../reference.html">Reference</a><ul>
-      <li>Previous: <a href="skia.FilterQuality.html" title="previous chapter">FilterQuality</a></li>
-      <li>Next: <a href="skia.Font.html" title="next chapter">Font</a></li>
+      <li>Previous: <a href="skia.DisplacementMapEffect.html" title="previous chapter">DisplacementMapEffect</a></li>
+      <li>Next: <a href="skia.DropShadowImageFilter.html" title="next chapter">DropShadowImageFilter</a></li>
   </ul></li>
   </ul></li>
 </ul>
@@ -463,7 +532,7 @@ been allocated via new, and not on the stack.</p>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
       |
-      <a href="../_sources/_generate/skia.Flattanable.rst.txt"
+      <a href="../_sources/_generate/skia.Drawable.rst.txt"
           rel="nofollow">Page source</a>
     </div>
 

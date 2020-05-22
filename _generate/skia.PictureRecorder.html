@@ -89,34 +89,82 @@
 <dt id="skia.PictureRecorder.beginRecording">
 <code class="sig-prename descclassname">PictureRecorder.</code><code class="sig-name descname">beginRecording</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span><span class="n">args</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#skia.PictureRecorder.beginRecording" title="Permalink to this definition">¶</a></dt>
 <dd><p>Overloaded function.</p>
-<ol class="arabic simple">
-<li><p>beginRecording(self: skia.PictureRecorder, bounds: skia.Rect, bbhFactory: skia.BBHFactory = None, recordFlags: int = 0) -&gt; SkCanvas</p></li>
-<li><p>beginRecording(self: skia.PictureRecorder, width: float, height: float, bbhFactory: skia.BBHFactory = None, recordFlags: int = 0) -&gt; SkCanvas</p></li>
+<ol class="arabic">
+<li><p>beginRecording(self: skia.PictureRecorder, bounds: skia.Rect, recordFlags: int = 0) -&gt; SkCanvas</p>
+<blockquote>
+<div><p>Returns the canvas that records the drawing commands.</p>
+<dl class="field-list simple">
+<dt class="field-odd">bounds</dt>
+<dd class="field-odd"><p>the cull rect used when recording this picture. Any
+drawing the falls outside of this rect is undefined, and may be
+drawn or it may not.</p>
+</dd>
+<dt class="field-even">recordFlags</dt>
+<dd class="field-even"><p>optional flags that control recording.</p>
+</dd>
+<dt class="field-odd">return</dt>
+<dd class="field-odd"><p>the canvas.</p>
+</dd>
+</dl>
+</div></blockquote>
+</li>
+<li><p>beginRecording(self: skia.PictureRecorder, width: float, height: float, recordFlags: int = 0) -&gt; SkCanvas</p></li>
 </ol>
 </dd></dl>
 
 <dl class="py method">
 <dt id="skia.PictureRecorder.finishRecordingAsDrawable">
-<code class="sig-prename descclassname">PictureRecorder.</code><code class="sig-name descname">finishRecordingAsDrawable</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.PictureRecorder" title="skia.PictureRecorder">skia.PictureRecorder</a></span></em>, <em class="sig-param"><span class="n">endFlags</span><span class="p">:</span> <span class="n">int</span> <span class="o">=</span> <span class="default_value">0</span></em><span class="sig-paren">)</span> &#x2192; SkDrawable<a class="headerlink" href="#skia.PictureRecorder.finishRecordingAsDrawable" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">PictureRecorder.</code><code class="sig-name descname">finishRecordingAsDrawable</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.PictureRecorder" title="skia.PictureRecorder">skia.PictureRecorder</a></span></em>, <em class="sig-param"><span class="n">endFlags</span><span class="p">:</span> <span class="n">int</span> <span class="o">=</span> <span class="default_value">0</span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="skia.Drawable.html#skia.Drawable" title="skia.Drawable">skia.Drawable</a><a class="headerlink" href="#skia.PictureRecorder.finishRecordingAsDrawable" title="Permalink to this definition">¶</a></dt>
 <dd><p>Signal that the caller is done recording.</p>
+<p>This invalidates the canvas returned by <a class="reference internal" href="#skia.PictureRecorder.beginRecording" title="skia.PictureRecorder.beginRecording"><code class="xref py py-meth docutils literal notranslate"><span class="pre">beginRecording()</span></code></a> or
+<a class="reference internal" href="#skia.PictureRecorder.getRecordingCanvas" title="skia.PictureRecorder.getRecordingCanvas"><code class="xref py py-meth docutils literal notranslate"><span class="pre">getRecordingCanvas()</span></code></a>. Ownership of the object is passed to the
+caller, who must call unref() when they are done using it.</p>
+<p>Unlike <a class="reference internal" href="#skia.PictureRecorder.finishRecordingAsPicture" title="skia.PictureRecorder.finishRecordingAsPicture"><code class="xref py py-meth docutils literal notranslate"><span class="pre">finishRecordingAsPicture()</span></code></a>, which returns an immutable
+picture, the returned drawable may contain live references to other
+drawables (if they were added to the recording canvas) and therefore
+this drawable will reflect the current state of those nested drawables
+anytime it is drawn or a new picture is snapped from it (by calling
+drawable.newPictureSnapshot()).</p>
 </dd></dl>
 
 <dl class="py method">
 <dt id="skia.PictureRecorder.finishRecordingAsPicture">
 <code class="sig-prename descclassname">PictureRecorder.</code><code class="sig-name descname">finishRecordingAsPicture</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.PictureRecorder" title="skia.PictureRecorder">skia.PictureRecorder</a></span></em>, <em class="sig-param"><span class="n">endFlags</span><span class="p">:</span> <span class="n">int</span> <span class="o">=</span> <span class="default_value">0</span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="skia.Picture.html#skia.Picture" title="skia.Picture">skia.Picture</a><a class="headerlink" href="#skia.PictureRecorder.finishRecordingAsPicture" title="Permalink to this definition">¶</a></dt>
 <dd><p>Signal that the caller is done recording.</p>
+<p>This invalidates the canvas returned by <a class="reference internal" href="#skia.PictureRecorder.beginRecording" title="skia.PictureRecorder.beginRecording"><code class="xref py py-meth docutils literal notranslate"><span class="pre">beginRecording()</span></code></a> or
+<a class="reference internal" href="#skia.PictureRecorder.getRecordingCanvas" title="skia.PictureRecorder.getRecordingCanvas"><code class="xref py py-meth docutils literal notranslate"><span class="pre">getRecordingCanvas()</span></code></a>. Ownership of the object is passed to the
+caller, who must call unref() when they are done using it.</p>
+<p>The returned picture is immutable. If during recording drawables were
+added to the canvas, these will have been “drawn” into a recording
+canvas, so that this resulting picture will reflect their current state,
+but will not contain a live reference to the drawables themselves.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt id="skia.PictureRecorder.finishRecordingAsPictureWithCull">
 <code class="sig-prename descclassname">PictureRecorder.</code><code class="sig-name descname">finishRecordingAsPictureWithCull</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.PictureRecorder" title="skia.PictureRecorder">skia.PictureRecorder</a></span></em>, <em class="sig-param"><span class="n">cullRect</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.Rect.html#skia.Rect" title="skia.Rect">skia.Rect</a></span></em>, <em class="sig-param"><span class="n">endFlags</span><span class="p">:</span> <span class="n">int</span> <span class="o">=</span> <span class="default_value">0</span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="skia.Picture.html#skia.Picture" title="skia.Picture">skia.Picture</a><a class="headerlink" href="#skia.PictureRecorder.finishRecordingAsPictureWithCull" title="Permalink to this definition">¶</a></dt>
-<dd><p>Signal that the caller is done recording, and update the cull rect to use for bounding box hierarchy (BBH) generation.</p>
+<dd><p>Signal that the caller is done recording, and update the cull rect to
+use for bounding box hierarchy (BBH) generation.</p>
+<p>The behavior is the same as calling <a class="reference internal" href="#skia.PictureRecorder.finishRecordingAsPicture" title="skia.PictureRecorder.finishRecordingAsPicture"><code class="xref py py-meth docutils literal notranslate"><span class="pre">finishRecordingAsPicture()</span></code></a>,
+except that this method updates the cull rect initially passed into
+beginRecording.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>cullRect</strong> (<a class="reference internal" href="skia.Rect.html#skia.Rect" title="skia.Rect"><em>skia.Rect</em></a>) – the new culling rectangle to use as the
+overall bound for BBH generation and subsequent culling operations.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>the picture containing the recorded content.</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py method">
 <dt id="skia.PictureRecorder.getRecordingCanvas">
 <code class="sig-prename descclassname">PictureRecorder.</code><code class="sig-name descname">getRecordingCanvas</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.PictureRecorder" title="skia.PictureRecorder">skia.PictureRecorder</a></span></em><span class="sig-paren">)</span> &#x2192; SkCanvas<a class="headerlink" href="#skia.PictureRecorder.getRecordingCanvas" title="Permalink to this definition">¶</a></dt>
-<dd><p>Returns the recording canvas if one is active, or NULL if recording is not active.</p>
+<dd><p>Returns the recording canvas if one is active, or NULL if recording is
+not active.</p>
+<p>This does not alter the refcnt on the canvas (if present).</p>
 </dd></dl>
 
 </div>
@@ -154,7 +202,6 @@
 <li class="toctree-l2"><a class="reference internal" href="skia.AlphaType.html">AlphaType</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.ApplyPerspectiveClip.html">ApplyPerspectiveClip</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.AutoCanvasRestore.html">AutoCanvasRestore</a></li>
-<li class="toctree-l2"><a class="reference internal" href="skia.BBoxHierarchy.html">BBoxHierarchy</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.BackingFit.html">BackingFit</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.Bitmap.html">Bitmap</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.BlendMode.html">BlendMode</a></li>
@@ -184,6 +231,7 @@
 <li class="toctree-l2"><a class="reference internal" href="skia.DilateImageFilter.html">DilateImageFilter</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.DiscretePathEffect.html">DiscretePathEffect</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.DisplacementMapEffect.html">DisplacementMapEffect</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.Drawable.html">Drawable</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.DropShadowImageFilter.html">DropShadowImageFilter</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.EncodedImageFormat.html">EncodedImageFormat</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.ErodeImageFilter.html">ErodeImageFilter</a></li>
