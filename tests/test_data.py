@@ -4,7 +4,7 @@ import pytest
 
 @pytest.fixture
 def data(png_data):
-    return skia.Data(png_data)
+    return skia.Data(png_data, True)
 
 
 @pytest.mark.parametrize('args', [
@@ -31,7 +31,12 @@ def test_Data_isEmpty(data):
 
 
 def test_Data_data(data):
-    assert isinstance(data.data(), memoryview)
+    view = data.data()
+    assert isinstance(view, memoryview)
+    assert view.readonly
+    with pytest.raises(TypeError):
+        view.cast('B')[0] = 0  # cast needed due to pybind11 issue #2223
+    assert bytes(view) == bytes(data)
 
 
 def test_Data_bytes(data):
@@ -39,7 +44,12 @@ def test_Data_bytes(data):
 
 
 def test_Data_writable_data(data):
-    assert isinstance(data.writable_data(), memoryview)
+    copy = skia.Data(data, True)
+    view = copy.writable_data()
+    assert isinstance(view, memoryview)
+    assert not view.readonly
+    view.cast('B')[0] = 0  # cast needed due to pybind11 issue #2223
+    assert not data.equals(copy)
 
 
 def test_Data_copyRange(data):
@@ -53,3 +63,31 @@ def test_Data_equals(data):
 
 def test_Data_eq(data):
     assert isinstance(data == data, bool)
+
+
+def test_Data_MakeWithCopy(data):
+    assert isinstance(skia.Data.MakeWithCopy(data), skia.Data)
+
+
+def test_Data_MakeUninitialized():
+    assert isinstance(skia.Data.MakeUninitialized(128), skia.Data)
+
+
+def test_Data_MakeWithoutCopy(data):
+    assert isinstance(skia.Data.MakeWithoutCopy(data), skia.Data)
+
+
+def test_Data_MakeFromFileName(png_data):
+    import tempfile
+    with tempfile.NamedTemporaryFile(suffix='.png') as f:
+        f.write(png_data)
+        f.flush()
+        assert isinstance(skia.Data.MakeFromFileName(f.name), skia.Data)
+
+
+def test_Data_MakeSubset(data):
+    assert isinstance(skia.Data.MakeSubset(data, 0, 100), skia.Data)
+
+
+def test_Data_MakeEmpty(data):
+    assert isinstance(skia.Data.MakeEmpty(), skia.Data)

@@ -1,7 +1,6 @@
 #include "common.h"
 
-
-py::buffer_info GetBuffer(SkData &d, bool writable = false) {
+py::buffer_info GetBuffer(SkData &d, bool readonly = true) {
     return py::buffer_info(
         d.writable_data(),
         sizeof(uint8_t),
@@ -9,10 +8,9 @@ py::buffer_info GetBuffer(SkData &d, bool writable = false) {
         1,
         { d.size() },
         { sizeof(uint8_t) },
-        writable
+        readonly
     );
 }
-
 
 template<>
 struct py::detail::has_operator_delete<SkData, void> : std::false_type {};
@@ -70,7 +68,7 @@ py::class_<SkData, sk_sp<SkData>>(m, "Data", py::buffer_protocol(),
         is cast to ``bytes``.
         )docstring")
     .def("writable_data",
-        [] (SkData& data) { return py::memoryview(GetBuffer(data, true)); },
+        [] (SkData& data) { return py::memoryview(GetBuffer(data, false)); },
         R"docstring(
         USE WITH CAUTION.
 
@@ -88,7 +86,7 @@ py::class_<SkData, sk_sp<SkData>>(m, "Data", py::buffer_protocol(),
             size_t given = (info.ndim) ? info.strides[0] * info.shape[0] : 0;
             if (given < length)
                 throw std::runtime_error("Buffer is smaller than required");
-            data.copyRange(offset, length, info.ptr);
+            return data.copyRange(offset, length, info.ptr);
         },
         R"docstring(
         Helper to copy a range of the data into a caller-provided buffer.
@@ -109,28 +107,43 @@ py::class_<SkData, sk_sp<SkData>>(m, "Data", py::buffer_protocol(),
         Returns true if these two objects have the same length and contents,
         effectively returning 0 == memcmp(...)
         )docstring",
-        py::arg("other"),
-        py::is_operator())
+        py::arg("other"), py::is_operator())
     .def("unique", &SkData::unique)
     .def("ref", &SkData::ref)
     .def("unref", &SkData::unref)
     .def("deref", &SkData::deref)
     .def("refCntGreaterThan", &SkData::refCntGreaterThan)
-    .def_static("MakeWithCopy", &SkData::MakeWithCopy,
-        "Create a new dataref by copying the specified data.")
+    .def_static("MakeWithCopy",
+        [] (py::buffer b) {
+            auto info = b.request();
+            size_t size = (info.ndim) ? info.strides[0] * info.shape[0] : 0;
+            return SkData::MakeWithCopy(info.ptr, size);
+        },
+        R"docstring(
+        Create a new dataref by copying the specified data.
+        )docstring",
+        py::arg("data"))
     .def_static("MakeUninitialized", &SkData::MakeUninitialized,
-        "Create a new data with uninitialized contents.")
-    .def_static("MakeWithCString", &SkData::MakeWithCString,
-        "Create a new dataref by copying the specified c-string (a "
-        "null-terminated array of bytes).")
-    // .def_static("MakeWithProc", &SkData::MakeWithProc,
-    //     "Create a new dataref, taking the ptr as is, and using the "
-    //     "releaseproc to free it.")
-    .def_static("MakeWithoutCopy", &SkData::MakeWithoutCopy,
-        "Call this when the data parameter is already const and will outlive "
-        "the lifetime of the SkData.")
-    .def_static("MakeFromMalloc", &SkData::MakeFromMalloc,
-        "Create a new dataref from a pointer allocated by malloc.")
+        R"docstring(
+        Create a new data with uninitialized contents.
+
+        The caller should call :py:meth:`writable_data` to write into the
+        buffer, but this must be done before another :py:meth:`ref` is made.
+        )docstring",
+        py::arg("length"))
+    .def_static("MakeWithoutCopy",
+        [] (py::buffer b) {
+            auto info = b.request();
+            size_t size = (info.ndim) ? info.strides[0] * info.shape[0] : 0;
+            return SkData::MakeWithoutCopy(info.ptr, size);
+        },
+        R"docstring(
+        Call this when the data parameter is already const and will outlive the
+        lifetime of the :py:class:`Data`.
+
+        Suitable for with const globals.
+        )docstring",
+        py::arg("data"))
     .def_static("MakeFromFileName",
         [] (const std::string& path) {
             return SkData::MakeFromFileName(path.c_str());
@@ -141,18 +154,18 @@ py::class_<SkData, sk_sp<SkData>>(m, "Data", py::buffer_protocol(),
         If the file cannot be opened, this returns NULL.
         )docstring",
         py::arg("path"))
-    .def_static("MakeFromFILE", &SkData::MakeFromFILE,
-        "Create a new dataref from a stdio FILE.")
-    .def_static("MakeFromFD", &SkData::MakeFromFD,
-        "Create a new dataref from a file descriptor.")
-    // .def_static("MakeFromStream", &SkData::MakeFromStream, "Attempt to read"
-    //      " size bytes into a SkData.")
     .def_static("MakeSubset", &SkData::MakeSubset,
-        "Create a new dataref using a subset of the data in the specified src "
-        "dataref.")
+        R"docstring(
+        Create a new dataref using a subset of the data in the specified src
+        dataref.
+        )docstring",
+        py::arg("src"), py::arg("offset"), py::arg("length"))
     .def_static("MakeEmpty", &SkData::MakeEmpty,
-        "Returns a new empty dataref (or a reference to a shared empty "
-        "dataref).")
+        R"docstring(
+        Returns a new empty dataref (or a reference to a shared empty dataref).
+
+        New or shared, the caller must see that unref() is eventually called.
+        )docstring")
     ;
 
 py::implicitly_convertible<py::buffer, SkData>();
