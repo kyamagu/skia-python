@@ -1,6 +1,6 @@
 #include "common.h"
 
-template <typename T, bool writable = false>
+template <typename T, bool readonly = true>
 py::memoryview AddrN(const SkPixmap& pixmap) {
     if (pixmap.info().bytesPerPixel() != sizeof(T))
         throw std::runtime_error("Incompatible byte size.");
@@ -12,18 +12,20 @@ py::memoryview AddrN(const SkPixmap& pixmap) {
             2,
             { pixmap.rowBytesAsPixels(), pixmap.height() },
             { pixmap.rowBytes(), sizeof(T) },
-            writable
+            readonly
         )
     );
 }
 
-template <bool writable = false>
+template <bool readonly = true>
 py::memoryview Addr(const SkPixmap& pixmap) {
     ssize_t bytesPerPixel = pixmap.info().bytesPerPixel();
-    std::string format =
-        (bytesPerPixel == 1) ? "B" :
-        (bytesPerPixel == 2) ? "H" :
-        (bytesPerPixel == 4) ? "I" : "Q";
+    const std::string& format =
+        (bytesPerPixel == 1) ? py::format_descriptor<uint8_t>::format() :
+        (bytesPerPixel == 2) ? py::format_descriptor<uint16_t>::format() :
+        (bytesPerPixel == 4) ? py::format_descriptor<uint32_t>::format() :
+        (bytesPerPixel == 8) ? py::format_descriptor<uint64_t>::format() :
+        py::format_descriptor<uint8_t>::format();
     return py::memoryview(
         py::buffer_info(
             pixmap.writable_addr(),
@@ -32,7 +34,7 @@ py::memoryview Addr(const SkPixmap& pixmap) {
             2,
             { pixmap.rowBytesAsPixels(), pixmap.height() },
             { ssize_t(pixmap.rowBytes()), bytesPerPixel },
-            writable
+            readonly
         )
     );
 }
@@ -201,7 +203,7 @@ py::class_<SkPixmap>(m, "Pixmap", R"docstring(
 
         :return: byte length of pixel row
         )docstring")
-    .def("addr", &Addr<false>,
+    .def("addr", &Addr<true>,
         R"docstring(
         Returns pixel address, the base address corresponding to the pixel
         origin.
@@ -419,7 +421,7 @@ py::class_<SkPixmap>(m, "Pixmap", R"docstring(
         :rtype: memoryview
         )docstring")
     .def("writable_addr",
-        &Addr<true>,
+        &Addr<false>,
         R"docstring(
         Returns writable base pixel address.
 
