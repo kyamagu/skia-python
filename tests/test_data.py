@@ -77,12 +77,12 @@ def test_Data_MakeWithoutCopy(data):
     assert isinstance(skia.Data.MakeWithoutCopy(data), skia.Data)
 
 
-def test_Data_MakeFromFileName(png_data, tmpdir):
+def test_Data_MakeFromFileName(png_data):
     import os
-    path = os.path.join(tmpdir, 'image.png')
-    with open(path, 'wb') as f:
-        f.write(png_data)
-    assert isinstance(skia.Data.MakeFromFileName(path), skia.Data)
+    root_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    image_path = os.path.join(
+        root_dir, 'skia', 'resources', 'images', 'color_wheel.png')
+    assert isinstance(skia.Data.MakeFromFileName(image_path), skia.Data)
 
 
 def test_Data_MakeSubset(data):
