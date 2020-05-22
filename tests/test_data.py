@@ -77,12 +77,12 @@ def test_Data_MakeWithoutCopy(data):
     assert isinstance(skia.Data.MakeWithoutCopy(data), skia.Data)
 
 
-def test_Data_MakeFromFileName(png_data):
-    import tempfile
-    with tempfile.NamedTemporaryFile(suffix='.png') as f:
+def test_Data_MakeFromFileName(png_data, tmpdir):
+    import os
+    path = os.path.join(tmpdir, 'image.png')
+    with open(path, 'wb') as f:
         f.write(png_data)
-        f.flush()
-        assert isinstance(skia.Data.MakeFromFileName(f.name), skia.Data)
+    assert isinstance(skia.Data.MakeFromFileName(path), skia.Data)
 
 
 def test_Data_MakeSubset(data):
