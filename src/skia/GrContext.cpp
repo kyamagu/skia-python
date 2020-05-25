@@ -96,6 +96,44 @@ py::enum_<GrSemaphoresSubmitted>(m, "GrSemaphoresSubmitted")
     .value("kYes", GrSemaphoresSubmitted::kYes)
     .export_values();
 
+py::enum_<GrColorType>(m, "GrColorType")
+    .value("kUnknown", GrColorType::kUnknown)
+    .value("kAlpha_8", GrColorType::kAlpha_8)
+    .value("kBGR_565", GrColorType::kBGR_565)
+    .value("kABGR_4444", GrColorType::kABGR_4444)
+    .value("kRGBA_8888", GrColorType::kRGBA_8888)
+    .value("kRGBA_8888_SRGB", GrColorType::kRGBA_8888_SRGB)
+    .value("kRGB_888x", GrColorType::kRGB_888x)
+    .value("kRG_88", GrColorType::kRG_88)
+    .value("kBGRA_8888", GrColorType::kBGRA_8888)
+    .value("kRGBA_1010102", GrColorType::kRGBA_1010102)
+    .value("kGray_8", GrColorType::kGray_8)
+    .value("kAlpha_F16", GrColorType::kAlpha_F16)
+    .value("kRGBA_F16", GrColorType::kRGBA_F16)
+    .value("kRGBA_F16_Clamped", GrColorType::kRGBA_F16_Clamped)
+    .value("kRGBA_F32", GrColorType::kRGBA_F32)
+    .value("kAlpha_16", GrColorType::kAlpha_16)
+    .value("kRG_1616", GrColorType::kRG_1616)
+    .value("kRG_F16", GrColorType::kRG_F16)
+    .value("kRGBA_16161616", GrColorType::kRGBA_16161616)
+    .value("kAlpha_8xxx", GrColorType::kAlpha_8xxx)
+    .value("kAlpha_F32xxx", GrColorType::kAlpha_F32xxx)
+    .value("kGray_8xxx", GrColorType::kGray_8xxx)
+    .value("kRGB_888", GrColorType::kRGB_888)
+    .value("kR_8", GrColorType::kR_8)
+    .value("kR_16", GrColorType::kR_16)
+    .value("kR_F16", GrColorType::kR_F16)
+    .value("kGray_F16", GrColorType::kGray_F16)
+    .value("kLast", GrColorType::kLast)
+    .export_values();
+
+py::enum_<GrTextureType>(m, "GrTextureType")
+    .value("kNone", GrTextureType::kNone)
+    .value("k2D", GrTextureType::k2D)
+    .value("kRectangle", GrTextureType::kRectangle)
+    .value("kExternal", GrTextureType::kExternal)
+    .export_values();
+
 py::class_<GrBackendSemaphore>(m, "GrBackendSemaphore")
     .def(py::init())
     // .def("initGL", &GrBackendSemaphore::initGL)
@@ -108,13 +146,56 @@ py::class_<GrBackendSemaphore>(m, "GrBackendSemaphore")
     // .def("mtlValue", &GrBackendSemaphore::mtlValue)
     ;
 
-py::class_<GrBackendTexture>(m, "GrBackendTexture")
-    .def(py::init())
-    .def("isValid", &GrBackendTexture::isValid)
+py::class_<GrBackendFormat>(m, "GrBackendFormat")
+    .def(py::init<>())
+    .def(py::init<const GrBackendFormat&>())
+    .def_static("MakeGL", &GrBackendFormat::MakeGL)
+    .def_static("MakeMock", &GrBackendFormat::MakeMock)
+    .def("backend", &GrBackendFormat::backend)
+    .def("textureType", &GrBackendFormat::textureType)
+    // .def("channelMask", &GrBackendFormat::channelMask)
+    .def("asGLFormat", &GrBackendFormat::asGLFormat)
+    .def("asMockColorType", &GrBackendFormat::asMockColorType)
+    .def("asMockCompressionType", &GrBackendFormat::asMockCompressionType)
+    .def("makeTexture2D", &GrBackendFormat::makeTexture2D)
+    .def("isValid", &GrBackendFormat::isValid)
     ;
 
-py::class_<GrBackendFormat>(m, "GrBackendFormat")
-    .def("isValid", &GrBackendFormat::isValid)
+py::class_<GrGLTextureInfo>(m, "GrGLTextureInfo")
+    .def(py::init<>())
+    .def_readwrite("fTarget", &GrGLTextureInfo::fTarget)
+    .def_readwrite("fID", &GrGLTextureInfo::fID)
+    .def_readwrite("fFormat", &GrGLTextureInfo::fFormat)
+    .def("__eq__", &GrGLTextureInfo::operator==, py::is_operator())
+    ;
+
+py::class_<GrMockTextureInfo>(m, "GrMockTextureInfo")
+    .def(py::init<>())
+    .def(py::init<GrColorType, SkImage::CompressionType, int>())
+    .def("__eq__", &GrMockTextureInfo::operator==, py::is_operator())
+    ;
+
+py::class_<GrBackendTexture>(m, "GrBackendTexture")
+    .def(py::init<>())
+    .def(py::init<int, int, GrMipMapped, const GrGLTextureInfo&>(),
+        py::arg("width"), py::arg("height"), py::arg("mipMapped"),
+        py::arg("glInfo"))
+    .def(py::init<int, int, GrMipMapped, const GrMockTextureInfo&>(),
+        py::arg("width"), py::arg("height"), py::arg("mipMapped"),
+        py::arg("mockInfo"))
+    .def("dimensions", &GrBackendTexture::dimensions)
+    .def("width", &GrBackendTexture::width)
+    .def("height", &GrBackendTexture::height)
+    .def("hasMipMaps", &GrBackendTexture::hasMipMaps)
+    .def("backend", &GrBackendTexture::backend)
+    .def("getGLTextureInfo", &GrBackendTexture::getGLTextureInfo)
+    .def("glTextureParametersModified",
+        &GrBackendTexture::glTextureParametersModified)
+    .def("getBackendFormat", &GrBackendTexture::getBackendFormat)
+    .def("getMockTextureInfo", &GrBackendTexture::getMockTextureInfo)
+    .def("isProtected", &GrBackendTexture::isProtected)
+    .def("isValid", &GrBackendTexture::isValid)
+    .def("isSameTexture", &GrBackendTexture::isSameTexture)
     ;
 
 py::class_<GrGLInterface, sk_sp<GrGLInterface>, SkRefCnt>(
