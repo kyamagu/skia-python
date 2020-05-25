@@ -2,13 +2,6 @@ import skia
 import pytest
 
 
-@pytest.fixture
-def pixmap():
-    info = skia.ImageInfo.MakeN32Premul(100, 100)
-    data = bytearray(info.computeMinByteSize())
-    yield skia.Pixmap(info, data, info.minRowBytes())
-
-
 @pytest.mark.parametrize('args', [
     tuple(),
     (skia.ImageInfo.MakeN32Premul(100, 100), None, 400),
