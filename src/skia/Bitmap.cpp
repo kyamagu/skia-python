@@ -19,7 +19,33 @@ py::buffer_info GetPixels(const SkBitmap& bitmap) {
 }
 
 
+void* GetBufferPtr(const SkImageInfo& info, py::buffer& b, size_t rowBytes) {
+    auto buffer = b.request();
+    size_t given = (buffer.ndim) ? buffer.shape[0] * buffer.strides[0] : 0;
+    size_t required = (rowBytes) ?
+        info.computeByteSize(rowBytes) : info.computeMinByteSize();
+    if (given < required)
+        throw std::runtime_error("Buffer is smaller than required.");
+    return buffer.ptr;
+}
+
+
 void initBitmap(py::module &m) {
+py::enum_<SkTileMode>(m, "TileMode")
+    .value("kClamp", SkTileMode::kClamp,
+        "Replicate the edge color if the shader draws outside of its original "
+        "bounds.")
+    .value("kRepeat", SkTileMode::kRepeat,
+        "Repeat the shader's image horizontally and vertically.")
+    .value("kMirror", SkTileMode::kMirror,
+        "Repeat the shader's image horizontally and vertically, alternating "
+        "mirror images so that adjacent images always seam.")
+    .value("kDecal", SkTileMode::kDecal,
+        "Only draw within the original domain, return transparent-black "
+        "everywhere else.")
+    .value("kLastTileMode", SkTileMode::kLastTileMode,
+        "")
+    .export_values();
 
 py::class_<SkPixelRef>(m, "PixelRef",
     R"docstring(
@@ -276,7 +302,8 @@ bitmap
         sharing :py:class:`PixelRef` are affected.
 
         :return: true if :py:class:`AlphaType` is set
-        )docstring")
+        )docstring",
+        py::arg("alphaType"))
     .def("getPixels",
         [] (const SkBitmap& bitmap) -> py::object {
             if (!bitmap.getPixels())
@@ -296,7 +323,7 @@ bitmap
         Does not include unused memory on last row when
         :py:meth:`rowBytesAsPixels` exceeds :py:meth:`width`. Returns SIZE_MAX
         if result does not fit in size_t. Returns zero if :py:meth:`height` or
-            :py:meth:`width` is 0. Returns :py:meth:`height` times
+        :py:meth:`width` is 0. Returns :py:meth:`height` times
         :py:meth:`rowBytes` if :py:meth:`colorType` is
         :py:attr:`~ColorType.kUnknown_ColorType`.
 
@@ -598,15 +625,9 @@ bitmap
             size_t rowBytes) {
             if (obj.is_none())
                 return bitmap.installPixels(info, nullptr, rowBytes);
-            auto buffer = obj.cast<py::buffer>().request();
-            size_t given = (buffer.ndim) ?
-                buffer.strides[0] * buffer.shape[0] : 0;
-            size_t required = (rowBytes) ?
-                info.computeByteSize(rowBytes) : info.computeMinByteSize();
-            if (given < required)
-                throw std::runtime_error(
-                    "Buffer size is smaller than required.");
-            return bitmap.installPixels(info, buffer.ptr, rowBytes);
+            auto buffer = obj.cast<py::buffer>();
+            auto ptr = GetBufferPtr(info, buffer, rowBytes);
+            return bitmap.installPixels(info, ptr, rowBytes);
         },
         R"docstring(
         Sets :py:class:`ImageInfo` to info following the rules in
@@ -652,13 +673,8 @@ bitmap
         py::arg("pixmap"))
     .def("setPixels",
         [] (SkBitmap& bitmap, py::buffer b) {
-            auto buffer = b.request();
-            size_t given = (buffer.ndim) ?
-                buffer.strides[0] * buffer.shape[0] : 0;
-            if (given < bitmap.computeByteSize())
-                throw std::runtime_error(
-                    "Buffer size is smaller than required.");
-            return bitmap.setPixels(buffer.ptr);
+            return bitmap.setPixels(
+                GetBufferPtr(bitmap.info(), b, bitmap.rowBytes()));
         },
         R"docstring(
         Replaces :py:class:`PixelRef` with pixels, preserving
@@ -675,7 +691,8 @@ bitmap
 
         :param Union[bytes,bytearray,memoryview] pixels: address of pixel
             storage, managed by caller
-        )docstring")
+        )docstring",
+        py::arg("pixels"))
     // .def("pixelRef", &SkBitmap::pixelRef,
     //     "Returns SkPixelRef, which contains: pixel base address; its "
     //     "dimensions; and rowBytes(), the interval from one row to the next."
@@ -757,60 +774,276 @@ bitmap
         )docstring",
         py::arg("c"), py::arg("area"))
     .def("getColor", &SkBitmap::getColor,
-        "Returns pixel at (x, y) as unpremultiplied color.")
+        R"docstring(
+        Returns pixel at (x, y) as unpremultiplied color.
+
+        Returns black with alpha if :py:class:`ColorType` is
+        :py:attr:`~ColorType.kAlpha_8_ColorType`.
+
+        Input is not validated: out of bounds values of x or y trigger an
+        assert() if built with SK_DEBUG defined; and returns undefined values or
+        may crash if SK_RELEASE is defined. Fails if :py:class:`ColorType` is
+        :py:attr:`~ColorType.kUnknown_ColorType` or pixel address is nullptr.
+
+        :py:class:`ColorSpace` in :py:class:`ImageInfo` is ignored. Some color
+        precision may be lost in the conversion to unpremultiplied color;
+        original pixel data may have additional precision.
+
+        :param int x: column index, zero or greater, and less than width()
+        :param int y: row index, zero or greater, and less than height()
+        :return: pixel converted to unpremultiplied color
+        )docstring",
+        py::arg("x"), py::arg("y"))
     .def("getAlphaf", &SkBitmap::getAlphaf,
-        "Look up the pixel at (x,y) and return its alpha component, normalized "
-        "to [0..1].")
-    .def("getAddr", &SkBitmap::getAddr, "Returns pixel address at (x, y).",
-        py::return_value_policy::reference)
-    .def("getAddr32", &SkBitmap::getAddr32, "Returns address at (x, y).",
-        py::return_value_policy::reference)
-    .def("getAddr16", &SkBitmap::getAddr16, "Returns address at (x, y).",
-        py::return_value_policy::reference)
-    .def("getAddr8", &SkBitmap::getAddr8, "Returns address at (x, y).",
-        py::return_value_policy::reference)
+        R"docstring(
+        Look up the pixel at (x,y) and return its alpha component, normalized to
+        [0..1].
+
+        This is roughly equivalent to :py:func:`GetColorA` of
+        :py:meth:`getColor`, but can be more efficent (and more precise if the
+        pixels store more than 8 bits per component).
+
+        :param int x: column index, zero or greater, and less than
+            :py:meth:`width`
+        :param int y: row index, zero or greater, and less than
+            :py:meth:`height`
+        :return: alpha converted to normalized float
+        )docstring",
+        py::arg("x"), py::arg("y"))
+    // .def("getAddr", &SkBitmap::getAddr, "Returns pixel address at (x, y).",
+    //     py::return_value_policy::reference)
+    // .def("getAddr32", &SkBitmap::getAddr32, "Returns address at (x, y).",
+    //     py::return_value_policy::reference)
+    // .def("getAddr16", &SkBitmap::getAddr16, "Returns address at (x, y).",
+    //     py::return_value_policy::reference)
+    // .def("getAddr8", &SkBitmap::getAddr8, "Returns address at (x, y).",
+    //     py::return_value_policy::reference)
     .def("extractSubset", &SkBitmap::extractSubset,
-        "Shares SkPixelRef with dst.")
+        R"docstring(
+        Shares :py:class:`PixelRef` with dst.
+
+        Pixels are not copied; :py:class:`Bitmap` and dst point to the same
+        pixels; dst :py:meth:`bounds` are set to the intersection of subset and
+        the original :py:meth:`bounds`.
+
+        subset may be larger than :py:meth:`bounds`. Any area outside of
+        :py:meth:`bounds` is ignored.
+
+        Any contents of dst are discarded. :py:meth:`isVolatile` setting is
+        copied to dst. dst is set to :py:meth:`colorType`, :py:meth:`alphaType`,
+        and :py:meth:`colorSpace`.
+
+        Return false if:
+
+        - dst is nullptr
+        - :py:class:`PixelRef` is nullptr
+        - subset does not intersect :py:meth:`bounds`
+
+        :param dst: :py:class:`Bitmap` set to subset
+        :param subset: rectangle of pixels to reference
+        :return: true if dst is replaced by subset
+        )docstring",
+        py::arg("dst").none(false), py::arg("subset"))
     .def("readPixels",
-        (bool (SkBitmap::*)(const SkImageInfo&, void*, size_t, int, int) const)
-        &SkBitmap::readPixels,
-        "Copies a SkRect of pixels from SkBitmap to dstPixels.")
+        [] (const SkBitmap& bitmap, const SkImageInfo& info, py::buffer b,
+            size_t rowBytes, int srcX, int srcY) {
+            return bitmap.readPixels(
+                info, GetBufferPtr(info, b, rowBytes), rowBytes, srcX, srcY);
+        },
+        R"docstring(
+        Copies a :py:class:`Rect` of pixels from :py:class:`Bitmap` to
+        dstPixels.
+
+        Copy starts at (srcX, srcY), and does not exceed :py:class:`Bitmap` (
+        :py:meth:`width`, :py:meth:`height`).
+
+        dstInfo specifies width, height, :py:class:`ColorType`,
+        :py:class:`AlphaType`, and :py:class:`ColorSpace` of destination.
+        dstRowBytes specifics the gap from one destination row to the next.
+        Returns true if pixels are copied. Returns false if:
+
+        - dstInfo has no address
+        - dstRowBytes is less than dstInfo.minRowBytes()
+        - :py:class:`PixelRef` is nullptr
+
+        Pixels are copied only if pixel conversion is possible. If
+        :py:class:`Bitmap` colorType() is
+        :py:attr:`~ColorType.kGray_8_ColorType`, or
+        :py:attr:`~ColorType.kAlpha_8_ColorType`; dstInfo.colorType() must
+        match. If :py:class:`Bitmap` colorType() is
+        :py:attr:`~ColorType.kGray_8_ColorType`, dstInfo.colorSpace() must
+        match. If :py:class:`Bitmap` alphaType() is
+        :py:attr:`~AlphaType.kOpaque_AlphaType`, dstInfo.alphaType() must match.
+        If :py:class:`Bitmap` colorSpace() is nullptr, dstInfo.colorSpace() must
+        match. Returns false if pixel conversion is not possible.
+
+        srcX and srcY may be negative to copy only top or left of source.
+        Returns false if width() or height() is zero or negative. Returns false
+        if abs(srcX) >= Bitmap width(), or if abs(srcY) >= Bitmap height().
+
+        :dstInfo: destination width, height, :py:class:`ColorType`,
+            :py:class:`AlphaType`, :py:class:`ColorSpace`
+        :dstPixels: destination pixel storage
+        :dstRowBytes: destination row length
+        :srcX: column index whose absolute value is less than :py:meth:`width`
+        :srcY: row index whose absolute value is less than :py:meth:`height`
+        :return: true if pixels are copied to dstPixels
+        )docstring",
+        py::arg("dstInfo"), py::arg("dstPixels"), py::arg("dstRowBytes"),
+        py::arg("srcX") = 0, py::arg("srcY") = 0)
     .def("readPixels",
-        (bool (SkBitmap::*)(const SkPixmap&, int, int) const)
-        &SkBitmap::readPixels,
-        "Copies a SkRect of pixels from SkBitmap to dst.")
-    .def("readPixels",
-        (bool (SkBitmap::*)(const SkPixmap&) const) &SkBitmap::readPixels,
-        "Copies a SkRect of pixels from SkBitmap to dst.")
+        py::overload_cast<const SkPixmap&, int, int>(
+            &SkBitmap::readPixels, py::const_),
+        R"docstring(
+        Copies a :py:class:`Rect` of pixels from :py:class:`Bitmap` to
+        dst.
+
+        Copy starts at (srcX, srcY), and does not exceed :py:class:`Bitmap` (
+        :py:meth:`width`, :py:meth:`height`).
+
+        dst specifies width, height, :py:class:`ColorType`,
+        :py:class:`AlphaType`, :py:class:`ColorSpace`, pixel storage, and row
+        bytes of destination. dst.rowBytes() specifics the gap from one
+        destination row to the next. Returns true if pixels are copied. Returns
+        false if:
+
+        - dst pixel storage equals nullptr
+        - dst.rowBytes is less than :py:meth:`ImageInfo.minRowBytes`
+        - :py:class:`PixelRef` is nullptr
+
+        Pixels are copied only if pixel conversion is possible. If
+        :py:class:`Bitmap` colorType() is
+        :py:attr:`~ColorType.kGray_8_ColorType`, or
+        :py:attr:`~ColorType.kAlpha_8_ColorType`; dst :py:class:`ColorType` must
+        match. If :py:class:`Bitmap` colorType() is
+        :py:attr:`~ColorType.kGray_8_ColorType`, dst :py:class:`ColorSpace` must
+        match. If :py:class:`Bitmap` alphaType() is
+        :py:attr:`~AlphaType.kOpaque_AlphaType`, dst :py:class:`AlphaType` must
+        match. If :py:class:`Bitmap` colorSpace() is nullptr, dst
+        :py:class:`ColorSpace` must match. Returns false if pixel conversion is
+        not possible.
+
+        srcX and srcY may be negative to copy only top or left of source.
+        Returns false if width() or height() is zero or negative. Returns false
+        if abs(srcX) >= Bitmap width(), or if abs(srcY) >= Bitmap height().
+
+        :dst: destination :py:class:`Pixmap`: :py:class:`ImageInfo`, pixels, row
+            bytes
+        :srcX: column index whose absolute value is less than width()
+        :srcY: row index whose absolute value is less than height()
+        :return: true if pixels are copied to dst
+        )docstring",
+        py::arg("dst"), py::arg("srcX") = 0, py::arg("srcY") = 0)
     .def("writePixels",
-        (bool (SkBitmap::*)(const SkPixmap&, int, int))
-        &SkBitmap::writePixels,
-        "Copies a SkRect of pixels from src.")
-    .def("writePixels",
-        (bool (SkBitmap::*)(const SkPixmap&)) &SkBitmap::writePixels,
-        "Copies a SkRect of pixels from src.")
+        py::overload_cast<const SkPixmap&, int, int>(&SkBitmap::writePixels),
+        R"docstring(
+        Copies a :py:class:`Rect` of pixels from src.
+
+        Copy starts at (dstX, dstY), and does not exceed (``src.width()``,
+        ``src.height()``).
+
+        src specifies width, height, :py:class:`ColorType`,
+        :py:class:`AlphaType`, :py:class:`ColorSpace`, pixel storage, and row
+        bytes of source. src.rowBytes() specifics the gap from one source row to
+        the next. Returns true if pixels are copied. Returns false if:
+
+        - src pixel storage equals nullptr
+        - src.rowBytes is less than :py:class:`ImageInfo`::minRowBytes()
+        - :py:class:`PixelRef` is nullptr
+
+        Pixels are copied only if pixel conversion is possible. If
+        :py:class:`Bitmap` colorType() is
+        :py:attr:`~ColorType.kGray_8_ColorType`, or
+        :py:attr:`~ColorType.kAlpha_8_ColorType`; src :py:class:`ColorType` must
+        match. If :py:class:`Bitmap` colorType() is
+        :py:attr:`~ColorType.kGray_8_ColorType`, src :py:class:`ColorSpace` must
+        match. If :py:class:`Bitmap` alphaType() is
+        :py:attr:`~AlphaType.kOpaque_AlphaType`, src :py:class:`AlphaType` must
+        match. If :py:class:`Bitmap` colorSpace() is nullptr, src
+        :py:class:`ColorSpace` must match. Returns false if pixel conversion is
+        not possible.
+
+        dstX and dstY may be negative to copy only top or left of source.
+        Returns false if width() or height() is zero or negative. Returns false
+        if abs(dstX) >= Bitmap width(), or if abs(dstY) >= Bitmap height().
+
+        :param skia.Pixmap src: source :py:class:`Pixmap`:
+            :py:class:`ImageInfo`, pixels, row bytes
+        :param int dstX: column index whose absolute value is less than width()
+        :param int dstY: row index whose absolute value is less than height()
+        :return: true if src pixels are copied to :py:class:`Bitmap`
+        )docstring",
+        py::arg("src"), py::arg("dstX") = 0, py::arg("dstY") = 0)
     .def("extractAlpha",
-        (bool (SkBitmap::*)(SkBitmap *dst) const) &SkBitmap::extractAlpha,
-        "Sets dst to alpha described by pixels.")
-    .def("extractAlpha",
-        (bool (SkBitmap::*)(SkBitmap *dst, const SkPaint*, SkIPoint*) const)
-        &SkBitmap::extractAlpha,
-        "Sets dst to alpha described by pixels.")
-    // .def("extractAlpha",
-    //     (bool (SkBitmap::*)(SkBitmap *dst, const SkPaint*, Allocator*,
-    //         SkIPoint*)) &SkBitmap::extractAlpha,
-    //     "Sets dst to alpha described by pixels.")
+        py::overload_cast<SkBitmap*, const SkPaint*, SkIPoint*>(
+            &SkBitmap::extractAlpha, py::const_),
+        R"docstring(
+        Sets dst to alpha described by pixels.
+
+        Returns false if dst cannot be written to or dst pixels cannot be
+        allocated.
+
+        If paint is not nullptr and contains :py:class:`MaskFilter`,
+        :py:class:`MaskFilter` generates mask alpha from :py:class:`Bitmap`.
+        Uses HeapAllocator to reserve memory for dst :py:class:`PixelRef`. Sets
+        offset to top-left position for dst for alignment with
+        :py:class:`Bitmap`; (0, 0) unless :py:class:`MaskFilter` generates mask.
+
+        :param dst: holds :py:class:`PixelRef` to fill with alpha layer
+        :param paint: holds optional :py:class:`MaskFilter`; may be nullptr
+        :param offset: top-left position for dst; may be nullptr
+        :return: true if alpha layer was constructed in dst :py:class:`PixelRef`
+        )docstring",
+        py::arg("dst"), py::arg("paint") = nullptr, py::arg("offset") = nullptr)
     .def("peekPixels", &SkBitmap::peekPixels,
-        "Copies SkBitmap pixel address, row bytes, and SkImageInfo to pixmap, "
-        "if address is available, and returns true.")
-    // .def("makeShader",
-    //     (sk_sp<SkShader> (SkBitmap::*)(SkTileMode, SkTileMode, const
-    //         SkMatrix*) const) &SkBitmap::makeShader)
-    // .def("makeShader",
-    //     (sk_sp<SkShader> (SkBitmap::*)(const SkMatrix*) const)
-    //     &SkBitmap::makeShader)
+        R"docstring(
+        Copies :py:class:`Bitmap` pixel address, row bytes, and
+        :py:class:`ImageInfo` to pixmap, if address is available, and returns
+        true.
+
+        If pixel address is not available, return false and leave pixmap
+        unchanged.
+
+        pixmap contents become invalid on any future change to
+        :py:class:`Bitmap`.
+
+        :param skia.Pixmap pixmap: storage for pixel state if pixels are
+            readable; otherwise, ignored
+        :return: true if :py:class:`Bitmap` has direct access to pixels
+        )docstring",
+        py::arg("pixmap"))
+    .def("makeShader",
+        py::overload_cast<SkTileMode, SkTileMode, const SkMatrix*>(
+            &SkBitmap::makeShader, py::const_),
+        py::arg("tmx") = SkTileMode::kClamp,
+        py::arg("tmy") = SkTileMode::kClamp, py::arg("localMatrix") = nullptr)
     ;
 
+
 m.def("ComputeIsOpaque", &SkBitmap::ComputeIsOpaque,
-    "Returns true if all pixels are opaque.");
+    R"docstring(
+    Returns true if all pixels are opaque.
+
+    :py:class:`ColorType` determines how pixels are encoded, and whether pixel
+    describes alpha. Returns true for :py:class:`ColorType` without alpha in
+    each pixel; for other :py:class:`ColorType`, returns true if all pixels have
+    alpha values equivalent to 1.0 or greater.
+
+    For :py:class:`ColorType` :py:attr:`~ColorType.kRGB_565_ColorType` or
+    :py:attr:`~ColorType.kGray_8_ColorType`: always returns true. For
+    :py:class:`ColorType` :py:attr:`~ColorType.kAlpha_8_ColorType`,
+    :py:attr:`~ColorType.kBGRA_8888_ColorType`,
+    :py:attr:`~ColorType.kRGBA_8888_ColorType`: returns true if all pixel alpha
+    values are 255. For :py:class:`ColorType`
+    :py:attr:`~ColorType.kARGB_4444_ColorType`: returns true if all pixel alpha
+    values are 15. For :py:attr:`~ColorType.kRGBA_F16_ColorType`: returns true
+    if all pixel alpha values are 1.0 or greater.
+
+    Returns false for :py:attr:`~ColorType.kUnknown_ColorType`.
+
+    :param skia.Bitmap bm: :py:class:`Bitmap` to check
+    :return: true if all pixels have opaque values or :py:class:`ColorType` is
+        opaque
+    )docstring",
+    py::arg("bm"));
 }
