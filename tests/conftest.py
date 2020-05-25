@@ -96,3 +96,10 @@ def picture():
     canvas.clear(0xFFFFFFFF)
     canvas.drawLine(0, 0, 100, 100, skia.Paint())
     return recorder.finishRecordingAsPicture()
+
+
+@pytest.fixture
+def pixmap():
+    info = skia.ImageInfo.MakeN32Premul(100, 100)
+    data = bytearray(info.computeMinByteSize())
+    yield skia.Pixmap(info, data, info.minRowBytes())

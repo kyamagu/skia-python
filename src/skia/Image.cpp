@@ -41,22 +41,6 @@ py::enum_<SkFilterQuality>(m, "FilterQuality",
     .value("kLast_FilterQuality", SkFilterQuality::kLast_SkFilterQuality)
     .export_values();
 
-py::enum_<SkTileMode>(m, "TileMode")
-    .value("kClamp", SkTileMode::kClamp,
-        "Replicate the edge color if the shader draws outside of its original "
-        "bounds.")
-    .value("kRepeat", SkTileMode::kRepeat,
-        "Repeat the shader's image horizontally and vertically.")
-    .value("kMirror", SkTileMode::kMirror,
-        "Repeat the shader's image horizontally and vertically, alternating "
-        "mirror images so that adjacent images always seam.")
-    .value("kDecal", SkTileMode::kDecal,
-        "Only draw within the original domain, return transparent-black "
-        "everywhere else.")
-    .value("kLastTileMode", SkTileMode::kLastTileMode,
-        "")
-    .export_values();
-
 py::enum_<SkEncodedImageFormat>(m, "EncodedImageFormat", R"docstring(
     Enum describing format of encoded data.
     )docstring")
