@@ -27,14 +27,9 @@ Bitmap
       ~Bitmap.empty
       ~Bitmap.erase
       ~Bitmap.eraseARGB
-      ~Bitmap.eraseArea
       ~Bitmap.eraseColor
       ~Bitmap.extractAlpha
       ~Bitmap.extractSubset
-      ~Bitmap.getAddr
-      ~Bitmap.getAddr16
-      ~Bitmap.getAddr32
-      ~Bitmap.getAddr8
       ~Bitmap.getAlphaf
       ~Bitmap.getBounds
       ~Bitmap.getColor
@@ -48,9 +43,9 @@ Bitmap
       ~Bitmap.isNull
       ~Bitmap.isOpaque
       ~Bitmap.isVolatile
+      ~Bitmap.makeShader
       ~Bitmap.notifyPixelsChanged
       ~Bitmap.peekPixels
-      ~Bitmap.pixelRefOrigin
       ~Bitmap.pixmap
       ~Bitmap.readPixels
       ~Bitmap.readyToDraw
@@ -74,6 +69,12 @@ Bitmap
    
 
    
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+   
+      ~Bitmap.kZeroPixels_AllocFlag
    
    
 
@@ -115,21 +116,11 @@ Methods
 
 .. automethod:: skia.Bitmap.eraseARGB
 
-.. automethod:: skia.Bitmap.eraseArea
-
 .. automethod:: skia.Bitmap.eraseColor
 
 .. automethod:: skia.Bitmap.extractAlpha
 
 .. automethod:: skia.Bitmap.extractSubset
-
-.. automethod:: skia.Bitmap.getAddr
-
-.. automethod:: skia.Bitmap.getAddr16
-
-.. automethod:: skia.Bitmap.getAddr32
-
-.. automethod:: skia.Bitmap.getAddr8
 
 .. automethod:: skia.Bitmap.getAlphaf
 
@@ -157,11 +148,11 @@ Methods
 
 .. automethod:: skia.Bitmap.isVolatile
 
+.. automethod:: skia.Bitmap.makeShader
+
 .. automethod:: skia.Bitmap.notifyPixelsChanged
 
 .. automethod:: skia.Bitmap.peekPixels
-
-.. automethod:: skia.Bitmap.pixelRefOrigin
 
 .. automethod:: skia.Bitmap.pixmap
 
@@ -204,4 +195,12 @@ Methods
 
 
 
+
+
+Attributes
+----------
+
+
+
+.. autoattribute:: skia.Bitmap.kZeroPixels_AllocFlag
 
