@@ -32,6 +32,14 @@ Reference
     Canvas.Lattice
     Canvas.Lattice.RectType
     ClipOp
+    Codec
+    Codec.Result
+    Codec.Options
+    Codec.FrameInfo
+    Codec.SelectionPolicy
+    Codec.ZeroInitialized
+    Codec.ScanlineOrder
+    Codec.EncodedOrigin
     Color4f
     ColorFilter
     ColorFilter.Flags
