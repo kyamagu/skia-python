@@ -91,7 +91,9 @@ matrix
         R"docstring(
         Creates an identity :py:class:`Matrix`::
 
-            | 1 0 0 | | 0 1 0 | | 0 0 1 |
+            | 1 0 0 |
+            | 0 1 0 |
+            | 0 0 1 |
         )docstring")
     .def(py::init(
         [] (NumPy array) {
@@ -125,7 +127,9 @@ matrix
 
         Identity matrix is::
 
-            | 1 0 0 | | 0 1 0 | | 0 0 1 |
+            | 1 0 0 |
+            | 0 1 0 |
+            | 0 0 1 |
 
         :return: true if :py:class:`Matrix` has no effect
         )docstring")
@@ -503,7 +507,9 @@ matrix
 
         Sets :py:class:`Matrix` to::
 
-            | 1 0 0 | | 0 1 0 | | 0 0 1 |
+            | 1 0 0 |
+            | 0 1 0 |
+            | 0 0 1 |
 
         Also called :py:meth:`setIdentity`; use the one that provides better
         inline documentation.
@@ -515,7 +521,9 @@ matrix
 
         Sets :py:class:`Matrix` to::
 
-            | 1 0 0 | | 0 1 0 | | 0 0 1 |
+            | 1 0 0 |
+            | 0 1 0 |
+            | 0 0 1 |
 
         Also called :py:meth:`reset`; use the one that provides better inline
         documentation.
@@ -960,8 +968,8 @@ matrix
 
         where::
 
-        dx = px - sx * px
-        dy = py - sy * py
+            dx = px - sx * px
+            dy = py - sy * py
 
         sets :py:class:`Matrix` to::
 
@@ -1457,7 +1465,7 @@ matrix
 
         where pt is initialized from each of (rect.fLeft, rect.fTop),
         (rect.fRight, rect.fTop), (rect.fRight, rect.fBottom), (rect.fLeft,
-        rect.fBottom), each dst :py:class:`Point` is computed as:
+        rect.fBottom), each dst :py:class:`Point` is computed as::
 
                           |A B C| |x|                               Ax+By+C   Dx+Ey+F
             Matrix * pt = |D E F| |y| = |Ax+By+C Dx+Ey+F Gx+Hy+I| = ------- , -------
@@ -1730,7 +1738,7 @@ matrix
             a = | D E F |, b = | M N O |
                 | G H I |      | P Q R |
 
-        sets :py:class:`Matrix` to:
+        sets :py:class:`Matrix` to::
 
                     | A B C |   | J K L |   | AJ+BM+CP AK+BN+CQ AL+BO+CR |
             a * b = | D E F | * | M N O | = | DJ+EM+FP DK+EN+FQ DL+EO+FR |
