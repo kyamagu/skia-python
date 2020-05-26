@@ -70,13 +70,17 @@ Reference
     GradientShader
     GradientShader.Flags
     GrBackendApi
+    GrBackendFormat
     GrBackendSemaphore
     GrBackendTexture
     GrContext
     GrFlushFlags
+    GrFlushInfo
     GrGLBackendState
     GrGLInterface
+    GrGLTextureInfo
     GrMipMapped
+    GrMockTextureInfo
     GrProtected
     GrRenderable
     GrSemaphoresSubmitted
