@@ -47,10 +47,10 @@
 </colgroup>
 <tbody>
 <tr class="row-odd"><td><p><a class="reference internal" href="#skia.Vertices.Decode" title="skia.Vertices.Decode"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Decode</span></code></a></p></td>
-<td><p>Recreate a vertices from a buffer previously created by calling encode().</p></td>
+<td><p>Recreate a vertices from a buffer previously created by calling <a class="reference internal" href="#skia.Vertices.encode" title="skia.Vertices.encode"><code class="xref py py-meth docutils literal notranslate"><span class="pre">encode()</span></code></a>.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#skia.Vertices.MakeCopy" title="skia.Vertices.MakeCopy"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MakeCopy</span></code></a></p></td>
-<td><p>Overloaded function.</p></td>
+<td><p>Create a vertices by copying the specified arrays.</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#skia.Vertices.__init__" title="skia.Vertices.__init__"><code class="xref py py-obj docutils literal notranslate"><span class="pre">__init__</span></code></a></p></td>
 <td><p>Create a vertices by copying the specified arrays.</p></td>
@@ -111,33 +111,42 @@
 <h2>Methods<a class="headerlink" href="#methods" title="Permalink to this headline">¶</a></h2>
 <dl class="py method">
 <dt id="skia.Vertices.Decode">
-<em class="property">static </em><code class="sig-prename descclassname">Vertices.</code><code class="sig-name descname">Decode</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">arg0</span><span class="p">:</span> <span class="n">capsule</span></em>, <em class="sig-param"><span class="n">arg1</span><span class="p">:</span> <span class="n">int</span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="#skia.Vertices" title="skia.Vertices">skia.Vertices</a><a class="headerlink" href="#skia.Vertices.Decode" title="Permalink to this definition">¶</a></dt>
-<dd><p>Recreate a vertices from a buffer previously created by calling encode().</p>
+<em class="property">static </em><code class="sig-prename descclassname">Vertices.</code><code class="sig-name descname">Decode</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">data</span><span class="p">:</span> <span class="n">buffer</span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="#skia.Vertices" title="skia.Vertices">skia.Vertices</a><a class="headerlink" href="#skia.Vertices.Decode" title="Permalink to this definition">¶</a></dt>
+<dd><p>Recreate a vertices from a buffer previously created by calling
+<a class="reference internal" href="#skia.Vertices.encode" title="skia.Vertices.encode"><code class="xref py py-meth docutils literal notranslate"><span class="pre">encode()</span></code></a>.</p>
+<p>Returns null if the data is corrupt or the length is incorrect for the
+contents.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt id="skia.Vertices.MakeCopy">
-<em class="property">static </em><code class="sig-prename descclassname">Vertices.</code><code class="sig-name descname">MakeCopy</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span><span class="n">args</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#skia.Vertices.MakeCopy" title="Permalink to this definition">¶</a></dt>
-<dd><p>Overloaded function.</p>
-<ol class="arabic simple">
-<li><p>MakeCopy(arg0: skia.Vertices.VertexMode, arg1: int, arg2: skia.Point, arg3: skia.Point, arg4: int, arg5: int, arg6: int) -&gt; skia.Vertices</p></li>
-</ol>
-<p>Create a vertices by copying the specified arrays.</p>
-<ol class="arabic simple" start="2">
-<li><p>MakeCopy(arg0: skia.Vertices.VertexMode, arg1: int, arg2: skia.Point, arg3: skia.Point, arg4: int) -&gt; skia.Vertices</p></li>
-</ol>
-</dd></dl>
-
-<dl class="py method">
-<dt id="skia.Vertices.__init__">
-<code class="sig-prename descclassname">Vertices.</code><code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Vertices" title="skia.Vertices">skia.Vertices</a></span></em>, <em class="sig-param"><span class="n">arg0</span><span class="p">:</span> <span class="n">skia.Vertices.VertexMode</span></em>, <em class="sig-param"><span class="n">arg1</span><span class="p">:</span> <span class="n">list</span></em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#skia.Vertices.__init__" title="Permalink to this definition">¶</a></dt>
+<em class="property">static </em><code class="sig-prename descclassname">Vertices.</code><code class="sig-name descname">MakeCopy</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">mode</span><span class="p">:</span> <span class="n">skia.Vertices.VertexMode</span></em>, <em class="sig-param"><span class="n">positions</span><span class="p">:</span> <span class="n">List<span class="p">[</span><a class="reference internal" href="skia.Point.html#skia.Point" title="skia.Point">skia.Point</a><span class="p">]</span></span></em>, <em class="sig-param"><span class="n">texs</span><span class="p">:</span> <span class="n">object</span> <span class="o">=</span> <span class="default_value">None</span></em>, <em class="sig-param"><span class="n">colors</span><span class="p">:</span> <span class="n">object</span> <span class="o">=</span> <span class="default_value">None</span></em>, <em class="sig-param"><span class="n">indices</span><span class="p">:</span> <span class="n">object</span> <span class="o">=</span> <span class="default_value">None</span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="#skia.Vertices" title="skia.Vertices">skia.Vertices</a><a class="headerlink" href="#skia.Vertices.MakeCopy" title="Permalink to this definition">¶</a></dt>
 <dd><p>Create a vertices by copying the specified arrays.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>mode</strong> (<em>skia.Vertices.VertexMode</em>) – vertex mode</p></li>
-<li><p><strong>skia.Point</strong><strong>, </strong><strong>int</strong><strong>]</strong><strong>] </strong><strong>vertices</strong> (<em>list</em><em>[</em><em>tuple</em><em>[</em><a class="reference internal" href="skia.Point.html#skia.Point" title="skia.Point"><em>skia.Point</em></a><em>,</em>) – list of (
-position, tex, color)</p></li>
+<li><p><strong>positions</strong> (<em>List</em><em>[</em><a class="reference internal" href="skia.Point.html#skia.Point" title="skia.Point"><em>skia.Point</em></a><em>]</em>) – List of points</p></li>
+<li><p><strong>texs</strong> (<em>List</em><em>[</em><a class="reference internal" href="skia.Point.html#skia.Point" title="skia.Point"><em>skia.Point</em></a><em>]</em>) – List of texs; may be None</p></li>
+<li><p><strong>colors</strong> (<em>List</em><em>[</em><em>int</em><em>]</em>) – List of colors; may be None</p></li>
+<li><p><strong>indices</strong> (<em>List</em><em>[</em><em>int</em><em>]</em>) – Optional list of indices; may be None</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="skia.Vertices.__init__">
+<code class="sig-prename descclassname">Vertices.</code><code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Vertices" title="skia.Vertices">skia.Vertices</a></span></em>, <em class="sig-param"><span class="n">mode</span><span class="p">:</span> <span class="n">skia.Vertices.VertexMode</span></em>, <em class="sig-param"><span class="n">positions</span><span class="p">:</span> <span class="n">List<span class="p">[</span><a class="reference internal" href="skia.Point.html#skia.Point" title="skia.Point">skia.Point</a><span class="p">]</span></span></em>, <em class="sig-param"><span class="n">texs</span><span class="p">:</span> <span class="n">object</span> <span class="o">=</span> <span class="default_value">None</span></em>, <em class="sig-param"><span class="n">colors</span><span class="p">:</span> <span class="n">object</span> <span class="o">=</span> <span class="default_value">None</span></em>, <em class="sig-param"><span class="n">indices</span><span class="p">:</span> <span class="n">object</span> <span class="o">=</span> <span class="default_value">None</span></em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#skia.Vertices.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a vertices by copying the specified arrays.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>mode</strong> (<em>skia.Vertices.VertexMode</em>) – vertex mode</p></li>
+<li><p><strong>positions</strong> (<em>List</em><em>[</em><a class="reference internal" href="skia.Point.html#skia.Point" title="skia.Point"><em>skia.Point</em></a><em>]</em>) – List of points</p></li>
+<li><p><strong>texs</strong> (<em>List</em><em>[</em><a class="reference internal" href="skia.Point.html#skia.Point" title="skia.Point"><em>skia.Point</em></a><em>]</em>) – List of texs; may be None</p></li>
+<li><p><strong>colors</strong> (<em>List</em><em>[</em><em>int</em><em>]</em>) – List of colors; may be None</p></li>
+<li><p><strong>indices</strong> (<em>List</em><em>[</em><em>int</em><em>]</em>) – Optional list of indices; may be None</p></li>
 </ul>
 </dd>
 </dl>
@@ -162,6 +171,8 @@ position, tex, color)</p></li>
 <dt id="skia.Vertices.encode">
 <code class="sig-prename descclassname">Vertices.</code><code class="sig-name descname">encode</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Vertices" title="skia.Vertices">skia.Vertices</a></span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="skia.Data.html#skia.Data" title="skia.Data">skia.Data</a><a class="headerlink" href="#skia.Vertices.encode" title="Permalink to this definition">¶</a></dt>
 <dd><p>Pack the vertices object into a byte buffer.</p>
+<p>This can be used to recreate the vertices by calling <a class="reference internal" href="#skia.Vertices.Decode" title="skia.Vertices.Decode"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Decode()</span></code></a>
+with the buffer.</p>
 </dd></dl>
 
 <dl class="py method">
@@ -439,7 +450,7 @@ position, tex, color)</p></li>
       &copy;2020, Kota Yamaguchi.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.0.3</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.0.4</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
       |
