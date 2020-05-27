@@ -4,22 +4,8 @@ import numpy as np
 
 
 @pytest.fixture(scope='session')
-def image():
-    yield skia.Image(np.zeros((320, 240, 4), dtype=np.uint8))
-
-
-@pytest.fixture(scope='session')
 def bitmap():
     yield skia.Bitmap()
-
-
-@pytest.fixture(scope='session')
-def vertices():
-    return skia.Vertices(skia.Vertices.kTriangles_VertexMode, [
-        (skia.Point(0, 0), skia.Point(1, 1), skia.ColorRED),
-        (skia.Point(1, 1), skia.Point(1, 0), skia.ColorRED),
-        (skia.Point(1, 0), skia.Point(0, 0), skia.ColorRED),
-    ])
 
 
 def check_canvas(x):
