@@ -103,3 +103,13 @@ def pixmap():
     info = skia.ImageInfo.MakeN32Premul(100, 100)
     data = bytearray(info.computeMinByteSize())
     yield skia.Pixmap(info, data, info.minRowBytes())
+
+
+@pytest.fixture
+def vertices():
+    return skia.Vertices(
+        skia.Vertices.kTriangles_VertexMode,
+        [skia.Point(0, 0), skia.Point(1, 1), skia.Point(1, 0)],
+        [skia.Point(1, 1), skia.Point(1, 0), skia.Point(0, 0)],
+        [skia.ColorRED, skia.ColorRED, skia.ColorRED],
+    )
