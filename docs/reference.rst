@@ -143,6 +143,10 @@ Reference
     RSXform
     Rect
     Region
+    Region.Cliperator
+    Region.Iterator
+    Region.Spanerator
+    Region.Op
     Shader
     ShaderMaskFilter
     Shaders
