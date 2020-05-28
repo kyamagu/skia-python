@@ -76,12 +76,16 @@ def canvas(surface):
 
 
 @pytest.fixture(scope='session')
-def png_data():
+def png_path():
     import os
     root_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-    image_path = os.path.join(
+    return os.path.join(
         root_dir, 'skia', 'resources', 'images', 'color_wheel.png')
-    return skia.Data.MakeFromFileName(image_path)
+
+
+@pytest.fixture(scope='session')
+def png_data(png_path):
+    return skia.Data.MakeFromFileName(png_path)
 
 
 @pytest.fixture(scope='session')

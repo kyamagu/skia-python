@@ -34,7 +34,7 @@ if sys.platform == 'win32':
     ]
     EXTRA_OBJECTS = [os.path.join(SKIA_OUT_PATH, 'skia.lib')]
     EXTRA_COMPILE_ARGS = [
-        '/std:c++latest',
+        '/std:c++17',  # c++20 fails.
         '/DVERSION_INFO=%s' % __version__,
         '/Zc:inline',
         # Disable a bunch of warnings.
