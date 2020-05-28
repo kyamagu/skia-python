@@ -32,6 +32,14 @@ Reference
     Canvas.Lattice
     Canvas.Lattice.RectType
     ClipOp
+    Codec
+    Codec.DisposalMethod
+    Codec.FrameInfo
+    Codec.Options
+    Codec.Result
+    Codec.ScanlineOrder
+    Codec.SelectionPolicy
+    Codec.ZeroInitialized
     Color4f
     ColorFilter
     ColorFilter.Flags
@@ -49,6 +57,7 @@ Reference
     Drawable
     DropShadowImageFilter
     EncodedImageFormat
+    EncodedOrigin
     ErodeImageFilter
     FilterQuality
     Flattanable

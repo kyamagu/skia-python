@@ -1,0 +1,907 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Codec &#8212; skia-python 0.0.3 documentation</title>
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/language_data.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Codec.DisposalMethod" href="skia.Codec.DisposalMethod.html" />
+    <link rel="prev" title="ClipOp" href="skia.ClipOp.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="codec">
+<h1>Codec<a class="headerlink" href="#codec" title="Permalink to this headline">¶</a></h1>
+<dl class="py class">
+<dt id="skia.Codec">
+<em class="property">class </em><code class="sig-name descname">Codec</code><a class="headerlink" href="#skia.Codec" title="Permalink to this definition">¶</a></dt>
+<dd><p><a class="reference internal" href="#skia.Codec" title="skia.Codec"><code class="xref py py-class docutils literal notranslate"><span class="pre">Codec</span></code></a> Abstraction layer directly on top of an image codec.</p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="skia.Codec.DisposalMethod.html#skia.Codec.DisposalMethod" title="skia.Codec.DisposalMethod"><code class="xref py py-obj docutils literal notranslate"><span class="pre">DisposalMethod</span></code></a></p></td>
+<td><p>This specifies how the next frame is based on this frame.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="skia.Codec.FrameInfo.html#skia.Codec.FrameInfo" title="skia.Codec.FrameInfo"><code class="xref py py-obj docutils literal notranslate"><span class="pre">FrameInfo</span></code></a></p></td>
+<td><p>Information about individual frames in a multi-framed image.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="skia.Codec.Options.html#skia.Codec.Options" title="skia.Codec.Options"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Options</span></code></a></p></td>
+<td><p>Additional options to pass to getPixels.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="skia.Codec.Result.html#skia.Codec.Result" title="skia.Codec.Result"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Result</span></code></a></p></td>
+<td><p>Error codes for various <a class="reference internal" href="#skia.Codec" title="skia.Codec"><code class="xref py py-class docutils literal notranslate"><span class="pre">Codec</span></code></a> methods.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="skia.Codec.ScanlineOrder.html#skia.Codec.ScanlineOrder" title="skia.Codec.ScanlineOrder"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ScanlineOrder</span></code></a></p></td>
+<td><p>The order in which rows are output from the scanline decoder is not the</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="skia.Codec.SelectionPolicy.html#skia.Codec.SelectionPolicy" title="skia.Codec.SelectionPolicy"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SelectionPolicy</span></code></a></p></td>
+<td><p>For container formats that contain both still images and image sequences,</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="skia.Codec.ZeroInitialized.html#skia.Codec.ZeroInitialized" title="skia.Codec.ZeroInitialized"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ZeroInitialized</span></code></a></p></td>
+<td><p>Whether or not the memory passed to getPixels is zero initialized.</p></td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Methods</p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Codec.MakeFromData" title="skia.Codec.MakeFromData"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MakeFromData</span></code></a></p></td>
+<td><p>If this data represents an encoded image that we know how to decode, return an <a class="reference internal" href="#skia.Codec" title="skia.Codec"><code class="xref py py-class docutils literal notranslate"><span class="pre">Codec</span></code></a> that can decode it.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.Codec.MinBufferedBytesNeeded" title="skia.Codec.MinBufferedBytesNeeded"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MinBufferedBytesNeeded</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Codec.ResultToString" title="skia.Codec.ResultToString"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ResultToString</span></code></a></p></td>
+<td><p>Returns a textual representation of <a class="reference internal" href="skia.Codec.Result.html#skia.Codec.Result" title="skia.Codec.Result"><code class="xref py py-class docutils literal notranslate"><span class="pre">Codec.Result</span></code></a></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.Codec.__init__" title="skia.Codec.__init__"><code class="xref py py-obj docutils literal notranslate"><span class="pre">__init__</span></code></a></p></td>
+<td><p>If this stream represents an encoded image that we know how to decode, return an <a class="reference internal" href="#skia.Codec" title="skia.Codec"><code class="xref py py-class docutils literal notranslate"><span class="pre">Codec</span></code></a> that can decode it.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Codec.bounds" title="skia.Codec.bounds"><code class="xref py py-obj docutils literal notranslate"><span class="pre">bounds</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.Codec.dimensions" title="skia.Codec.dimensions"><code class="xref py py-obj docutils literal notranslate"><span class="pre">dimensions</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Codec.getEncodedFormat" title="skia.Codec.getEncodedFormat"><code class="xref py py-obj docutils literal notranslate"><span class="pre">getEncodedFormat</span></code></a></p></td>
+<td><p>Format of the encoded data.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.Codec.getFrameCount" title="skia.Codec.getFrameCount"><code class="xref py py-obj docutils literal notranslate"><span class="pre">getFrameCount</span></code></a></p></td>
+<td><p>Return the number of frames in the image.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Codec.getFrameInfo" title="skia.Codec.getFrameInfo"><code class="xref py py-obj docutils literal notranslate"><span class="pre">getFrameInfo</span></code></a></p></td>
+<td><p>Overloaded function.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.Codec.getInfo" title="skia.Codec.getInfo"><code class="xref py py-obj docutils literal notranslate"><span class="pre">getInfo</span></code></a></p></td>
+<td><p>Return a reasonable <a class="reference internal" href="skia.ImageInfo.html#skia.ImageInfo" title="skia.ImageInfo"><code class="xref py py-class docutils literal notranslate"><span class="pre">ImageInfo</span></code></a> to decode into.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Codec.getOrigin" title="skia.Codec.getOrigin"><code class="xref py py-obj docutils literal notranslate"><span class="pre">getOrigin</span></code></a></p></td>
+<td><p>Returns the image orientation stored in the EXIF data.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.Codec.getPixels" title="skia.Codec.getPixels"><code class="xref py py-obj docutils literal notranslate"><span class="pre">getPixels</span></code></a></p></td>
+<td><p>Overloaded function.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Codec.getRepetitionCount" title="skia.Codec.getRepetitionCount"><code class="xref py py-obj docutils literal notranslate"><span class="pre">getRepetitionCount</span></code></a></p></td>
+<td><p>Return the number of times to repeat, if this image is animated.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.Codec.getScaledDimensions" title="skia.Codec.getScaledDimensions"><code class="xref py py-obj docutils literal notranslate"><span class="pre">getScaledDimensions</span></code></a></p></td>
+<td><p>Return a size that approximately supports the desired scale factor.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Codec.getScanlineOrder" title="skia.Codec.getScanlineOrder"><code class="xref py py-obj docutils literal notranslate"><span class="pre">getScanlineOrder</span></code></a></p></td>
+<td><p>An enum representing the order in which scanlines will be returned by the scanline decoder.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.Codec.getScanlines" title="skia.Codec.getScanlines"><code class="xref py py-obj docutils literal notranslate"><span class="pre">getScanlines</span></code></a></p></td>
+<td><p>Write the next countLines scanlines into dst.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Codec.getValidSubset" title="skia.Codec.getValidSubset"><code class="xref py py-obj docutils literal notranslate"><span class="pre">getValidSubset</span></code></a></p></td>
+<td><p>Return (via <cite>desiredSubset</cite>) a subset which can decoded from this codec, or false if this codec cannot decode subsets or anything similar to <cite>desiredSubset</cite>.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.Codec.incrementalDecode" title="skia.Codec.incrementalDecode"><code class="xref py py-obj docutils literal notranslate"><span class="pre">incrementalDecode</span></code></a></p></td>
+<td><p>Start/continue the incremental decode.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Codec.nextScanline" title="skia.Codec.nextScanline"><code class="xref py py-obj docutils literal notranslate"><span class="pre">nextScanline</span></code></a></p></td>
+<td><p>Returns the y-coordinate of the next row to be returned by the scanline decoder.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.Codec.outputScanline" title="skia.Codec.outputScanline"><code class="xref py py-obj docutils literal notranslate"><span class="pre">outputScanline</span></code></a></p></td>
+<td><p>Returns the output y-coordinate of the row that corresponds to an input y-coordinate.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Codec.skipScanlines" title="skia.Codec.skipScanlines"><code class="xref py py-obj docutils literal notranslate"><span class="pre">skipScanlines</span></code></a></p></td>
+<td><p>Skip count scanlines.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.Codec.startIncrementalDecode" title="skia.Codec.startIncrementalDecode"><code class="xref py py-obj docutils literal notranslate"><span class="pre">startIncrementalDecode</span></code></a></p></td>
+<td><p>Prepare for an incremental decode with the specified options.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Codec.startScanlineDecode" title="skia.Codec.startScanlineDecode"><code class="xref py py-obj docutils literal notranslate"><span class="pre">startScanlineDecode</span></code></a></p></td>
+<td><p>Prepare for a scanline decode with the specified options.</p></td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Attributes</p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Codec.kCouldNotRewind" title="skia.Codec.kCouldNotRewind"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kCouldNotRewind</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.Codec.kErrorInInput" title="skia.Codec.kErrorInInput"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kErrorInInput</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Codec.kIncompleteInput" title="skia.Codec.kIncompleteInput"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kIncompleteInput</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.Codec.kInternalError" title="skia.Codec.kInternalError"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kInternalError</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Codec.kInvalidConversion" title="skia.Codec.kInvalidConversion"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kInvalidConversion</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.Codec.kInvalidInput" title="skia.Codec.kInvalidInput"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kInvalidInput</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Codec.kInvalidParameters" title="skia.Codec.kInvalidParameters"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kInvalidParameters</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.Codec.kInvalidScale" title="skia.Codec.kInvalidScale"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kInvalidScale</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Codec.kKeep" title="skia.Codec.kKeep"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kKeep</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.Codec.kNoFrame" title="skia.Codec.kNoFrame"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kNoFrame</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Codec.kNo_ZeroInitialized" title="skia.Codec.kNo_ZeroInitialized"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kNo_ZeroInitialized</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.Codec.kPreferAnimation" title="skia.Codec.kPreferAnimation"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kPreferAnimation</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Codec.kPreferStillImage" title="skia.Codec.kPreferStillImage"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kPreferStillImage</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.Codec.kRepetitionCountInfinite" title="skia.Codec.kRepetitionCountInfinite"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kRepetitionCountInfinite</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Codec.kRestoreBGColor" title="skia.Codec.kRestoreBGColor"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kRestoreBGColor</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.Codec.kRestorePrevious" title="skia.Codec.kRestorePrevious"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kRestorePrevious</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Codec.kSuccess" title="skia.Codec.kSuccess"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kSuccess</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.Codec.kUnimplemented" title="skia.Codec.kUnimplemented"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kUnimplemented</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Codec.kYes_ZeroInitialized" title="skia.Codec.kYes_ZeroInitialized"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kYes_ZeroInitialized</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<div class="section" id="methods">
+<h2>Methods<a class="headerlink" href="#methods" title="Permalink to this headline">¶</a></h2>
+<dl class="py method">
+<dt id="skia.Codec.MakeFromData">
+<em class="property">static </em><code class="sig-prename descclassname">Codec.</code><code class="sig-name descname">MakeFromData</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">data</span><span class="p">:</span> <span class="n">buffer</span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="#skia.Codec" title="skia.Codec">skia.Codec</a><a class="headerlink" href="#skia.Codec.MakeFromData" title="Permalink to this definition">¶</a></dt>
+<dd><p>If this data represents an encoded image that we know how to decode,
+return an <a class="reference internal" href="#skia.Codec" title="skia.Codec"><code class="xref py py-class docutils literal notranslate"><span class="pre">Codec</span></code></a> that can decode it. Otherwise return NULL.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="skia.Codec.MinBufferedBytesNeeded">
+<em class="property">static </em><code class="sig-prename descclassname">Codec.</code><code class="sig-name descname">MinBufferedBytesNeeded</code><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; int<a class="headerlink" href="#skia.Codec.MinBufferedBytesNeeded" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="skia.Codec.ResultToString">
+<em class="property">static </em><code class="sig-prename descclassname">Codec.</code><code class="sig-name descname">ResultToString</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">result</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.Codec.Result.html#skia.Codec.Result" title="skia.Codec.Result">skia.Codec.Result</a></span></em><span class="sig-paren">)</span> &#x2192; str<a class="headerlink" href="#skia.Codec.ResultToString" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a textual representation of <a class="reference internal" href="skia.Codec.Result.html#skia.Codec.Result" title="skia.Codec.Result"><code class="xref py py-class docutils literal notranslate"><span class="pre">Codec.Result</span></code></a></p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="skia.Codec.__init__">
+<code class="sig-prename descclassname">Codec.</code><code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Codec" title="skia.Codec">skia.Codec</a></span></em>, <em class="sig-param"><span class="n">data</span><span class="p">:</span> <span class="n">buffer</span></em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#skia.Codec.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>If this stream represents an encoded image that we know how to decode,
+return an <a class="reference internal" href="#skia.Codec" title="skia.Codec"><code class="xref py py-class docutils literal notranslate"><span class="pre">Codec</span></code></a> that can decode it. Otherwise return None.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="skia.Codec.bounds">
+<code class="sig-prename descclassname">Codec.</code><code class="sig-name descname">bounds</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Codec" title="skia.Codec">skia.Codec</a></span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="skia.IRect.html#skia.IRect" title="skia.IRect">skia.IRect</a><a class="headerlink" href="#skia.Codec.bounds" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="skia.Codec.dimensions">
+<code class="sig-prename descclassname">Codec.</code><code class="sig-name descname">dimensions</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Codec" title="skia.Codec">skia.Codec</a></span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="skia.ISize.html#skia.ISize" title="skia.ISize">skia.ISize</a><a class="headerlink" href="#skia.Codec.dimensions" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="skia.Codec.getEncodedFormat">
+<code class="sig-prename descclassname">Codec.</code><code class="sig-name descname">getEncodedFormat</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Codec" title="skia.Codec">skia.Codec</a></span></em><span class="sig-paren">)</span> &#x2192; SkEncodedImageFormat<a class="headerlink" href="#skia.Codec.getEncodedFormat" title="Permalink to this definition">¶</a></dt>
+<dd><p>Format of the encoded data.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="skia.Codec.getFrameCount">
+<code class="sig-prename descclassname">Codec.</code><code class="sig-name descname">getFrameCount</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Codec" title="skia.Codec">skia.Codec</a></span></em><span class="sig-paren">)</span> &#x2192; int<a class="headerlink" href="#skia.Codec.getFrameCount" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the number of frames in the image.</p>
+<p>May require reading through the stream.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="skia.Codec.getFrameInfo">
+<code class="sig-prename descclassname">Codec.</code><code class="sig-name descname">getFrameInfo</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span><span class="n">args</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#skia.Codec.getFrameInfo" title="Permalink to this definition">¶</a></dt>
+<dd><p>Overloaded function.</p>
+<ol class="arabic">
+<li><p>getFrameInfo(self: skia.Codec, index: int, info: skia.Codec.FrameInfo) -&gt; bool</p>
+<blockquote>
+<div><p>Return info about a single frame.</p>
+<p>Only supported by multi-frame images. Does not read through the stream,
+so it should be called after <a class="reference internal" href="#skia.Codec.getFrameCount" title="skia.Codec.getFrameCount"><code class="xref py py-meth docutils literal notranslate"><span class="pre">getFrameCount()</span></code></a> to parse any
+frames that have not already been parsed.</p>
+</div></blockquote>
+</li>
+<li><p>getFrameInfo(self: skia.Codec) -&gt; List[skia.Codec.FrameInfo]</p>
+<blockquote>
+<div><p>Return info about all the frames in the image.</p>
+<p>May require reading through the stream to determine info about the
+frames (including the count).</p>
+<p>As such, future decoding calls may require a rewind.</p>
+<p>For still (non-animated) image codecs, this will return an empty vector.</p>
+</div></blockquote>
+</li>
+</ol>
+</dd></dl>
+
+<dl class="py method">
+<dt id="skia.Codec.getInfo">
+<code class="sig-prename descclassname">Codec.</code><code class="sig-name descname">getInfo</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Codec" title="skia.Codec">skia.Codec</a></span></em><span class="sig-paren">)</span> &#x2192; SkImageInfo<a class="headerlink" href="#skia.Codec.getInfo" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a reasonable <a class="reference internal" href="skia.ImageInfo.html#skia.ImageInfo" title="skia.ImageInfo"><code class="xref py py-class docutils literal notranslate"><span class="pre">ImageInfo</span></code></a> to decode into.</p>
+<p>If the image has an ICC profile that does not map to an
+<a class="reference internal" href="skia.ColorSpace.html#skia.ColorSpace" title="skia.ColorSpace"><code class="xref py py-class docutils literal notranslate"><span class="pre">ColorSpace</span></code></a>, the returned <a class="reference internal" href="skia.ImageInfo.html#skia.ImageInfo" title="skia.ImageInfo"><code class="xref py py-class docutils literal notranslate"><span class="pre">ImageInfo</span></code></a> will use
+SRGB.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="skia.Codec.getOrigin">
+<code class="sig-prename descclassname">Codec.</code><code class="sig-name descname">getOrigin</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Codec" title="skia.Codec">skia.Codec</a></span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="skia.EncodedOrigin.html#skia.EncodedOrigin" title="skia.EncodedOrigin">skia.EncodedOrigin</a><a class="headerlink" href="#skia.Codec.getOrigin" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the image orientation stored in the EXIF data.
+If there is no EXIF data, or if we cannot read the EXIF data, returns
+<code class="xref py py-attr docutils literal notranslate"><span class="pre">kTopLeft</span></code>.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="skia.Codec.getPixels">
+<code class="sig-prename descclassname">Codec.</code><code class="sig-name descname">getPixels</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span><span class="n">args</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#skia.Codec.getPixels" title="Permalink to this definition">¶</a></dt>
+<dd><p>Overloaded function.</p>
+<ol class="arabic">
+<li><p>getPixels(self: skia.Codec, info: SkImageInfo, data: buffer, rowBytes: int, options: skia.Codec.Options = None) -&gt; skia.Codec.Result</p>
+<blockquote>
+<div><p>Decode into the given pixels, a block of memory of size at
+least (info.fHeight - 1) * rowBytes + (info.fWidth *
+bytesPerPixel)</p>
+<p>Repeated calls to this function should give the same results,
+allowing the PixelRef to be immutable.</p>
+<p>If a scanline decode is in progress, scanline mode will end, requiring
+the client to call <a class="reference internal" href="#skia.Codec.startScanlineDecode" title="skia.Codec.startScanlineDecode"><code class="xref py py-meth docutils literal notranslate"><span class="pre">startScanlineDecode()</span></code></a> in order to return to
+decoding scanlines.</p>
+<dl class="field-list">
+<dt class="field-odd">info</dt>
+<dd class="field-odd"><p>A description of the format (config, size)
+expected by the caller.  This can simply be identical
+to the info returned by getInfo().</p>
+<p>This contract also allows the caller to specify
+different output-configs, which the implementation can
+decide to support or not.</p>
+<p>A size that does not match getInfo() implies a request
+to scale. If the generator cannot perform this scale,
+it will return kInvalidScale.</p>
+<p>If the info contains a non-null SkColorSpace, the codec
+will perform the appropriate color space transformation.</p>
+<p>If the caller passes in the SkColorSpace that maps to the
+ICC profile reported by getICCProfile(), the color space
+transformation is a no-op.</p>
+<p>If the caller passes a null SkColorSpace, no color space
+transformation will be done.</p>
+</dd>
+<dt class="field-even">return</dt>
+<dd class="field-even"><p>Result kSuccess, or another value explaining the type of
+failure.</p>
+</dd>
+</dl>
+</div></blockquote>
+</li>
+<li><p>getPixels(self: skia.Codec, pixmap: SkPixmap, options: skia.Codec.Options = None) -&gt; skia.Codec.Result</p></li>
+</ol>
+</dd></dl>
+
+<dl class="py method">
+<dt id="skia.Codec.getRepetitionCount">
+<code class="sig-prename descclassname">Codec.</code><code class="sig-name descname">getRepetitionCount</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Codec" title="skia.Codec">skia.Codec</a></span></em><span class="sig-paren">)</span> &#x2192; int<a class="headerlink" href="#skia.Codec.getRepetitionCount" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the number of times to repeat, if this image is animated. This
+number does not　include the first play through of each frame. For
+example, a repetition count of 4 means　that each frame is played 5
+times and then the animation stops.</p>
+<p>It can return kRepetitionCountInfinite, a negative number, meaning that
+the animation　should loop forever.</p>
+<p>May require reading the stream to find the repetition count.</p>
+<p>As such, future decoding calls may require a rewind.</p>
+<p>For still (non-animated) image codecs, this will return 0.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="skia.Codec.getScaledDimensions">
+<code class="sig-prename descclassname">Codec.</code><code class="sig-name descname">getScaledDimensions</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Codec" title="skia.Codec">skia.Codec</a></span></em>, <em class="sig-param"><span class="n">desiredScale</span><span class="p">:</span> <span class="n">float</span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="skia.ISize.html#skia.ISize" title="skia.ISize">skia.ISize</a><a class="headerlink" href="#skia.Codec.getScaledDimensions" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a size that approximately supports the desired scale factor.
+The codec may not be able to scale efficiently to the exact scale
+factor requested, so return a size that approximates that scale.
+The returned value is the codec’s suggestion for the closest valid
+scale that it can natively support</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="skia.Codec.getScanlineOrder">
+<code class="sig-prename descclassname">Codec.</code><code class="sig-name descname">getScanlineOrder</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Codec" title="skia.Codec">skia.Codec</a></span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="skia.Codec.ScanlineOrder.html#skia.Codec.ScanlineOrder" title="skia.Codec.ScanlineOrder">skia.Codec.ScanlineOrder</a><a class="headerlink" href="#skia.Codec.getScanlineOrder" title="Permalink to this definition">¶</a></dt>
+<dd><p>An enum representing the order in which scanlines will be returned by
+the scanline decoder.</p>
+<p>This is undefined before <a class="reference internal" href="#skia.Codec.startScanlineDecode" title="skia.Codec.startScanlineDecode"><code class="xref py py-meth docutils literal notranslate"><span class="pre">startScanlineDecode()</span></code></a> is called.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="skia.Codec.getScanlines">
+<code class="sig-prename descclassname">Codec.</code><code class="sig-name descname">getScanlines</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Codec" title="skia.Codec">skia.Codec</a></span></em>, <em class="sig-param"><span class="n">dst</span><span class="p">:</span> <span class="n">buffer</span></em>, <em class="sig-param"><span class="n">countLines</span><span class="p">:</span> <span class="n">int</span></em>, <em class="sig-param"><span class="n">rowBytes</span><span class="p">:</span> <span class="n">int</span></em><span class="sig-paren">)</span> &#x2192; int<a class="headerlink" href="#skia.Codec.getScanlines" title="Permalink to this definition">¶</a></dt>
+<dd><p>Write the next countLines scanlines into dst.</p>
+<p>Not valid to call before calling startScanlineDecode().</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>dst</strong> – Must be non-null, and large enough to hold countLines
+scanlines of size rowBytes.</p></li>
+<li><p><strong>countLines</strong> – Number of lines to write.</p></li>
+<li><p><strong>rowBytes</strong> – Number of bytes per row. Must be large enough to hold
+a scanline based on the <a class="reference internal" href="skia.ImageInfo.html#skia.ImageInfo" title="skia.ImageInfo"><code class="xref py py-class docutils literal notranslate"><span class="pre">ImageInfo</span></code></a> used to create this
+object.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>the number of lines successfully decoded.  If this value is
+less than countLines, this will fill the remaining lines with a
+default value.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="skia.Codec.getValidSubset">
+<code class="sig-prename descclassname">Codec.</code><code class="sig-name descname">getValidSubset</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Codec" title="skia.Codec">skia.Codec</a></span></em>, <em class="sig-param"><span class="n">desiredSubset</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.IRect.html#skia.IRect" title="skia.IRect">skia.IRect</a></span></em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#skia.Codec.getValidSubset" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return (via <cite>desiredSubset</cite>) a subset which can decoded from this codec,
+or false if this codec cannot decode subsets or anything similar to
+<cite>desiredSubset</cite>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>desiredSubset</strong> – In/out parameter. As input, a desired subset of
+the original bounds (as specified by getInfo). If true is returned,
+desiredSubset may have been modified to a subset which is
+supported. Although a particular change may have been made to
+desiredSubset to create something supported, it is possible other
+changes could result in a valid subset.
+If false is returned, desiredSubset’s value is undefined.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>true if this codec supports decoding <cite>desiredSubset</cite> (as
+returned, potentially modified)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="skia.Codec.incrementalDecode">
+<code class="sig-prename descclassname">Codec.</code><code class="sig-name descname">incrementalDecode</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Codec" title="skia.Codec">skia.Codec</a></span></em>, <em class="sig-param"><span class="n">rowsDecoded</span><span class="p">:</span> <span class="n">int</span> <span class="o">=</span> <span class="default_value">None</span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="skia.Codec.Result.html#skia.Codec.Result" title="skia.Codec.Result">skia.Codec.Result</a><a class="headerlink" href="#skia.Codec.incrementalDecode" title="Permalink to this definition">¶</a></dt>
+<dd><p>Start/continue the incremental decode.</p>
+<p>Not valid to call before a call to <a class="reference internal" href="#skia.Codec.startIncrementalDecode" title="skia.Codec.startIncrementalDecode"><code class="xref py py-meth docutils literal notranslate"><span class="pre">startIncrementalDecode()</span></code></a>
+returns kSuccess.</p>
+<p>If kIncompleteInput is returned, may be called again after more data has
+been provided to the source SkStream.</p>
+<p>Unlike getPixels and getScanlines, this does not do any filling. This is
+left up to the caller, since they may be skipping lines or continuing
+the decode later. In the latter case, they may choose to initialize all
+lines first, or only initialize the remaining lines after the first
+call.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>rowsDecoded</strong> – Optional output variable returning the total number
+of lines initialized. Only meaningful if this method returns
+kIncompleteInput. Otherwise the implementation may not set it.
+Note that some implementations may have initialized this many rows,
+but not necessarily finished those rows (e.g. interlaced PNG). This
+may be useful for determining what rows the client needs to
+initialize.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>kSuccess if all lines requested in startIncrementalDecode have
+been completely decoded. kIncompleteInput otherwise.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="skia.Codec.nextScanline">
+<code class="sig-prename descclassname">Codec.</code><code class="sig-name descname">nextScanline</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Codec" title="skia.Codec">skia.Codec</a></span></em><span class="sig-paren">)</span> &#x2192; int<a class="headerlink" href="#skia.Codec.nextScanline" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the y-coordinate of the next row to be returned by the scanline
+decoder.</p>
+<p>This will equal fCurrScanline, except in the case of strangely
+encoded image types (bottom-up bmps).</p>
+<p>Results are undefined when not in scanline decoding mode.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="skia.Codec.outputScanline">
+<code class="sig-prename descclassname">Codec.</code><code class="sig-name descname">outputScanline</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Codec" title="skia.Codec">skia.Codec</a></span></em>, <em class="sig-param"><span class="n">inputScanline</span><span class="p">:</span> <span class="n">int</span></em><span class="sig-paren">)</span> &#x2192; int<a class="headerlink" href="#skia.Codec.outputScanline" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the output y-coordinate of the row that corresponds to an input
+y-coordinate.  The input y-coordinate represents where the scanline
+is located in the encoded data.</p>
+<p>This will equal inputScanline, except in the case of strangely
+encoded image types (bottom-up bmps, interlaced gifs).</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="skia.Codec.skipScanlines">
+<code class="sig-prename descclassname">Codec.</code><code class="sig-name descname">skipScanlines</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Codec" title="skia.Codec">skia.Codec</a></span></em>, <em class="sig-param"><span class="n">countLines</span><span class="p">:</span> <span class="n">int</span></em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#skia.Codec.skipScanlines" title="Permalink to this definition">¶</a></dt>
+<dd><p>Skip count scanlines.</p>
+<p>Not valid to call before calling startScanlineDecode().</p>
+<p>The default version just calls onGetScanlines and discards the dst.
+NOTE: If skipped lines are the only lines with alpha, this default
+will make reallyHasAlpha return true, when it could have returned
+false.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p><p>true if the scanlines were successfully skipped
+false on failure, possible reasons for failure include:</p>
+<ul class="simple">
+<li><p>An incomplete input image stream.</p></li>
+<li><p>Calling this function before calling startScanlineDecode().</p></li>
+<li><dl class="simple">
+<dt>If countLines is less than zero or so large that it moves</dt><dd><p>the current scanline past the end of the image.</p>
+</dd>
+</dl>
+</li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="skia.Codec.startIncrementalDecode">
+<code class="sig-prename descclassname">Codec.</code><code class="sig-name descname">startIncrementalDecode</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Codec" title="skia.Codec">skia.Codec</a></span></em>, <em class="sig-param"><span class="n">dstInfo</span><span class="p">:</span> <span class="n">SkImageInfo</span></em>, <em class="sig-param"><span class="n">dst</span><span class="p">:</span> <span class="n">buffer</span></em>, <em class="sig-param"><span class="n">rowBytes</span><span class="p">:</span> <span class="n">int</span></em>, <em class="sig-param"><span class="n">options</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.Codec.Options.html#skia.Codec.Options" title="skia.Codec.Options">skia.Codec.Options</a></span> <span class="o">=</span> <span class="default_value">None</span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="skia.Codec.Result.html#skia.Codec.Result" title="skia.Codec.Result">skia.Codec.Result</a><a class="headerlink" href="#skia.Codec.startIncrementalDecode" title="Permalink to this definition">¶</a></dt>
+<dd><p>Prepare for an incremental decode with the specified options.</p>
+<p>This may require a rewind.</p>
+<p>If kIncompleteInput is returned, may be called again after more data has
+been provided to the source <code class="xref py py-class docutils literal notranslate"><span class="pre">Stream</span></code>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>dstInfo</strong> – Info of the destination. If the dimensions do not match
+those of getInfo, this implies a scale.</p></li>
+<li><p><strong>dst</strong> – Memory to write to. Needs to be large enough to hold the
+subset, if present, or the full image as described in dstInfo.</p></li>
+<li><p><strong>options</strong> – Contains decoding options, including if memory is zero
+initialized and whether to decode a subset.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Enum representing success or reason for failure.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="skia.Codec.startScanlineDecode">
+<code class="sig-prename descclassname">Codec.</code><code class="sig-name descname">startScanlineDecode</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Codec" title="skia.Codec">skia.Codec</a></span></em>, <em class="sig-param"><span class="n">dstInfo</span><span class="p">:</span> <span class="n">SkImageInfo</span></em>, <em class="sig-param"><span class="n">options</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.Codec.Options.html#skia.Codec.Options" title="skia.Codec.Options">skia.Codec.Options</a></span> <span class="o">=</span> <span class="default_value">None</span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="skia.Codec.Result.html#skia.Codec.Result" title="skia.Codec.Result">skia.Codec.Result</a><a class="headerlink" href="#skia.Codec.startScanlineDecode" title="Permalink to this definition">¶</a></dt>
+<dd><p>Prepare for a scanline decode with the specified options.</p>
+<p>After this call, this class will be ready to decode the first scanline.</p>
+<p>This must be called in order to call <a class="reference internal" href="#skia.Codec.getScanlines" title="skia.Codec.getScanlines"><code class="xref py py-meth docutils literal notranslate"><span class="pre">getScanlines()</span></code></a> or
+<a class="reference internal" href="#skia.Codec.skipScanlines" title="skia.Codec.skipScanlines"><code class="xref py py-meth docutils literal notranslate"><span class="pre">skipScanlines()</span></code></a>.</p>
+<p>This may require rewinding the stream.</p>
+<p>Not all Codecs support this.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>dstInfo</strong> – Info of the destination. If the dimensions do not match
+those of getInfo, this implies a scale.</p></li>
+<li><p><strong>options</strong> – Contains decoding options, including if memory is zero
+initialized.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Enum representing success or reason for failure.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="section" id="attributes">
+<h2>Attributes<a class="headerlink" href="#attributes" title="Permalink to this headline">¶</a></h2>
+<dl class="py attribute">
+<dt id="skia.Codec.kCouldNotRewind">
+<code class="sig-prename descclassname">Codec.</code><code class="sig-name descname">kCouldNotRewind</code><em class="property"> = Result.kCouldNotRewind</em><a class="headerlink" href="#skia.Codec.kCouldNotRewind" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="skia.Codec.kErrorInInput">
+<code class="sig-prename descclassname">Codec.</code><code class="sig-name descname">kErrorInInput</code><em class="property"> = Result.kErrorInInput</em><a class="headerlink" href="#skia.Codec.kErrorInInput" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="skia.Codec.kIncompleteInput">
+<code class="sig-prename descclassname">Codec.</code><code class="sig-name descname">kIncompleteInput</code><em class="property"> = Result.kIncompleteInput</em><a class="headerlink" href="#skia.Codec.kIncompleteInput" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="skia.Codec.kInternalError">
+<code class="sig-prename descclassname">Codec.</code><code class="sig-name descname">kInternalError</code><em class="property"> = Result.kInternalError</em><a class="headerlink" href="#skia.Codec.kInternalError" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="skia.Codec.kInvalidConversion">
+<code class="sig-prename descclassname">Codec.</code><code class="sig-name descname">kInvalidConversion</code><em class="property"> = Result.kInvalidConversion</em><a class="headerlink" href="#skia.Codec.kInvalidConversion" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="skia.Codec.kInvalidInput">
+<code class="sig-prename descclassname">Codec.</code><code class="sig-name descname">kInvalidInput</code><em class="property"> = Result.kInvalidInput</em><a class="headerlink" href="#skia.Codec.kInvalidInput" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="skia.Codec.kInvalidParameters">
+<code class="sig-prename descclassname">Codec.</code><code class="sig-name descname">kInvalidParameters</code><em class="property"> = Result.kInvalidParameters</em><a class="headerlink" href="#skia.Codec.kInvalidParameters" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="skia.Codec.kInvalidScale">
+<code class="sig-prename descclassname">Codec.</code><code class="sig-name descname">kInvalidScale</code><em class="property"> = Result.kInvalidScale</em><a class="headerlink" href="#skia.Codec.kInvalidScale" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="skia.Codec.kKeep">
+<code class="sig-prename descclassname">Codec.</code><code class="sig-name descname">kKeep</code><em class="property"> = DisposalMethod.kKeep</em><a class="headerlink" href="#skia.Codec.kKeep" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="skia.Codec.kNoFrame">
+<code class="sig-prename descclassname">Codec.</code><code class="sig-name descname">kNoFrame</code><em class="property"> = -1</em><a class="headerlink" href="#skia.Codec.kNoFrame" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="skia.Codec.kNo_ZeroInitialized">
+<code class="sig-prename descclassname">Codec.</code><code class="sig-name descname">kNo_ZeroInitialized</code><em class="property"> = ZeroInitialized.kNo_ZeroInitialized</em><a class="headerlink" href="#skia.Codec.kNo_ZeroInitialized" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="skia.Codec.kPreferAnimation">
+<code class="sig-prename descclassname">Codec.</code><code class="sig-name descname">kPreferAnimation</code><em class="property"> = SelectionPolicy.kPreferAnimation</em><a class="headerlink" href="#skia.Codec.kPreferAnimation" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="skia.Codec.kPreferStillImage">
+<code class="sig-prename descclassname">Codec.</code><code class="sig-name descname">kPreferStillImage</code><em class="property"> = SelectionPolicy.kPreferStillImage</em><a class="headerlink" href="#skia.Codec.kPreferStillImage" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="skia.Codec.kRepetitionCountInfinite">
+<code class="sig-prename descclassname">Codec.</code><code class="sig-name descname">kRepetitionCountInfinite</code><em class="property"> = -1</em><a class="headerlink" href="#skia.Codec.kRepetitionCountInfinite" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="skia.Codec.kRestoreBGColor">
+<code class="sig-prename descclassname">Codec.</code><code class="sig-name descname">kRestoreBGColor</code><em class="property"> = DisposalMethod.kRestoreBGColor</em><a class="headerlink" href="#skia.Codec.kRestoreBGColor" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="skia.Codec.kRestorePrevious">
+<code class="sig-prename descclassname">Codec.</code><code class="sig-name descname">kRestorePrevious</code><em class="property"> = DisposalMethod.kRestorePrevious</em><a class="headerlink" href="#skia.Codec.kRestorePrevious" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="skia.Codec.kSuccess">
+<code class="sig-prename descclassname">Codec.</code><code class="sig-name descname">kSuccess</code><em class="property"> = Result.kSuccess</em><a class="headerlink" href="#skia.Codec.kSuccess" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="skia.Codec.kUnimplemented">
+<code class="sig-prename descclassname">Codec.</code><code class="sig-name descname">kUnimplemented</code><em class="property"> = Result.kUnimplemented</em><a class="headerlink" href="#skia.Codec.kUnimplemented" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="skia.Codec.kYes_ZeroInitialized">
+<code class="sig-prename descclassname">Codec.</code><code class="sig-name descname">kYes_ZeroInitialized</code><em class="property"> = ZeroInitialized.kYes_ZeroInitialized</em><a class="headerlink" href="#skia.Codec.kYes_ZeroInitialized" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../index.html">skia-python</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../build.html">Build instruction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../usage.html">Usage</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../reference.html">Reference</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="skia.AlphaType.html">AlphaType</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.ApplyPerspectiveClip.html">ApplyPerspectiveClip</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.AutoCanvasRestore.html">AutoCanvasRestore</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.BackingFit.html">BackingFit</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.Bitmap.html">Bitmap</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.BlendMode.html">BlendMode</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.BlendModeCoeff.html">BlendModeCoeff</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.BlurStyle.html">BlurStyle</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.Budgeted.html">Budgeted</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.Canvas.html">Canvas</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.Canvas.SaveLayerFlags.html">Canvas.SaveLayerFlags</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.Canvas.SrcRectConstraint.html">Canvas.SrcRectConstraint</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.Canvas.PointMode.html">Canvas.PointMode</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.Canvas.QuadAAFlags.html">Canvas.QuadAAFlags</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.Canvas.SaveLayerRec.html">Canvas.SaveLayerRec</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.Canvas.Lattice.html">Canvas.Lattice</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.Canvas.Lattice.RectType.html">Canvas.Lattice.RectType</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.ClipOp.html">ClipOp</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Codec</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.Codec.DisposalMethod.html">Codec.DisposalMethod</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.Codec.FrameInfo.html">Codec.FrameInfo</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.Codec.Options.html">Codec.Options</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.Codec.Result.html">Codec.Result</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.Codec.ScanlineOrder.html">Codec.ScanlineOrder</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.Codec.SelectionPolicy.html">Codec.SelectionPolicy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.Codec.ZeroInitialized.html">Codec.ZeroInitialized</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.Color4f.html">Color4f</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.ColorFilter.html">ColorFilter</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.ColorFilter.Flags.html">ColorFilter.Flags</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.ColorFilters.html">ColorFilters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.ColorInfo.html">ColorInfo</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.ColorSpace.html">ColorSpace</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.ColorType.html">ColorType</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.ConvergeMode.html">ConvergeMode</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.CornerPathEffect.html">CornerPathEffect</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.DashPathEffect.html">DashPathEffect</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.Data.html">Data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.DilateImageFilter.html">DilateImageFilter</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.DiscretePathEffect.html">DiscretePathEffect</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.DisplacementMapEffect.html">DisplacementMapEffect</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.Drawable.html">Drawable</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.DropShadowImageFilter.html">DropShadowImageFilter</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.EncodedImageFormat.html">EncodedImageFormat</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.EncodedOrigin.html">EncodedOrigin</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.ErodeImageFilter.html">ErodeImageFilter</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.FilterQuality.html">FilterQuality</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.Flattanable.html">Flattanable</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.Font.html">Font</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.Font.Edging.html">Font.Edging</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.FontArguments.html">FontArguments</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.FontArguments.VariationPosition.html">FontArguments.VariationPosition</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.FontArguments.VariationPosition.Coordinate.html">FontArguments.VariationPosition.Coordinate</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.FontArguments.VariationPosition.Coordinates.html">FontArguments.VariationPosition.Coordinates</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.FontHinting.html">FontHinting</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.FontMetrics.html">FontMetrics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.FontMetrics.FontMetricsFlags.html">FontMetrics.FontMetricsFlags</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.FontMgr.html">FontMgr</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.FontStyle.html">FontStyle</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.FontStyle.Weight.html">FontStyle.Weight</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.FontStyle.Width.html">FontStyle.Width</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.FontStyle.Slant.html">FontStyle.Slant</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.FontStyleSet.html">FontStyleSet</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.GradientShader.html">GradientShader</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.GradientShader.Flags.html">GradientShader.Flags</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.GrBackendApi.html">GrBackendApi</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.GrBackendFormat.html">GrBackendFormat</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.GrBackendSemaphore.html">GrBackendSemaphore</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.GrBackendTexture.html">GrBackendTexture</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.GrContext.html">GrContext</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.GrFlushFlags.html">GrFlushFlags</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.GrFlushInfo.html">GrFlushInfo</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.GrGLBackendState.html">GrGLBackendState</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.GrGLInterface.html">GrGLInterface</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.GrGLTextureInfo.html">GrGLTextureInfo</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.GrMipMapped.html">GrMipMapped</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.GrMockTextureInfo.html">GrMockTextureInfo</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.GrProtected.html">GrProtected</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.GrRenderable.html">GrRenderable</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.GrSemaphoresSubmitted.html">GrSemaphoresSubmitted</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.GrSurfaceOrigin.html">GrSurfaceOrigin</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.HighContrastConfig.html">HighContrastConfig</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.HighContrastFilter.html">HighContrastFilter</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.IPoint.html">IPoint</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.IRect.html">IRect</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.ISize.html">ISize</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.Image.html">Image</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.Image.CompressionType.html">Image.CompressionType</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.Image.BitDepth.html">Image.BitDepth</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.Image.CachingHint.html">Image.CachingHint</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.ImageFilter.html">ImageFilter</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.ImageFilters.html">ImageFilters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.ImageInfo.html">ImageInfo</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.LightingImageFilter.html">LightingImageFilter</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.LumaColorFilter.html">LumaColorFilter</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.M44.html">M44</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.MagnifierImageFilter.html">MagnifierImageFilter</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.MaskFilter.html">MaskFilter</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.Matrix.html">Matrix</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.MatrixPathEffect.html">MatrixPathEffect</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.MergePathEffect.html">MergePathEffect</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.OffsetImageFilter.html">OffsetImageFilter</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.OverdrawColorFilter.html">OverdrawColorFilter</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.Paint.html">Paint</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.Paint.Style.html">Paint.Style</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.Paint.Cap.html">Paint.Cap</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.Paint.Join.html">Paint.Join</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.PaintImageFilter.html">PaintImageFilter</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.Path.html">Path</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.Path.Iter.html">Path.Iter</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.Path.RawIter.html">Path.RawIter</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.Path.ArcSize.html">Path.ArcSize</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.Path.AddPathMode.html">Path.AddPathMode</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.Path.SegmentMask.html">Path.SegmentMask</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.Path.Verb.html">Path.Verb</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.PathConvexityType.html">PathConvexityType</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.PathDirection.html">PathDirection</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.PathEffect.html">PathEffect</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.PathEffect.DashInfo.html">PathEffect.DashInfo</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.PathEffect.DashType.html">PathEffect.DashType</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.PathEffect.PointData.html">PathEffect.PointData</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.PathEffect.PointData.PointFlags.html">PathEffect.PointData.PointFlags</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.Path1DPathEffect.html">Path1DPathEffect</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.Path1DPathEffect.Style.html">Path1DPathEffect.Style</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.Path2DPathEffect.html">Path2DPathEffect</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.PathFillType.html">PathFillType</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.PathSegmentMask.html">PathSegmentMask</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.PathVerb.html">PathVerb</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.PerlinNoiseShader.html">PerlinNoiseShader</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.Picture.html">Picture</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.PictureRecorder.html">PictureRecorder</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.PixelGeometry.html">PixelGeometry</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.Pixmap.html">Pixmap</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.Point.html">Point</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.Point3.html">Point3</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.RRect.html">RRect</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.RSXform.html">RSXform</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.Rect.html">Rect</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.Region.html">Region</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.Region.Cliperator.html">Region.Cliperator</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.Region.Iterator.html">Region.Iterator</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.Region.Spanerator.html">Region.Spanerator</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.Region.Op.html">Region.Op</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.Shader.html">Shader</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.ShaderMaskFilter.html">ShaderMaskFilter</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.Shaders.html">Shaders</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.Size.html">Size</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.StrokePathEffect.html">StrokePathEffect</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.StrokeRec.html">StrokeRec</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.Surface.html">Surface</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.Surface.AsyncReadResult.html">Surface.AsyncReadResult</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.Surface.ContentChangeMode.html">Surface.ContentChangeMode</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.Surface.BackendHandleAccess.html">Surface.BackendHandleAccess</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.Surface.RescaleGamma.html">Surface.RescaleGamma</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.Surface.BackendSurfaceAccess.html">Surface.BackendSurfaceAccess</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.Surface.FlushFlags.html">Surface.FlushFlags</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.SurfaceCharacterization.html">SurfaceCharacterization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.SurfaceProps.html">SurfaceProps</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.SurfaceProps.Flags.html">SurfaceProps.Flags</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.SurfaceProps.InitType.html">SurfaceProps.InitType</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.TableColorFilter.html">TableColorFilter</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.TableMaskFilter.html">TableMaskFilter</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.TextBlob.html">TextBlob</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.TextBlob.Iter.html">TextBlob.Iter</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.TextBlob.Iter.Run.html">TextBlob.Iter.Run</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.TextBlobBuilder.html">TextBlobBuilder</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.TextEncoding.html">TextEncoding</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.TileImageFilter.html">TileImageFilter</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.TileMode.html">TileMode</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.TrimPathEffect.html">TrimPathEffect</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.TrimPathEffect.Mode.html">TrimPathEffect.Mode</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.Typeface.html">Typeface</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.Typeface.SerializeBehavior.html">Typeface.SerializeBehavior</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.Vertices.html">Vertices</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.XfermodeImageFilter.html">XfermodeImageFilter</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.YUVColorSpace.html">YUVColorSpace</a></li>
+</ul>
+</li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  <li><a href="../reference.html">Reference</a><ul>
+      <li>Previous: <a href="skia.ClipOp.html" title="previous chapter">ClipOp</a></li>
+      <li>Next: <a href="skia.Codec.DisposalMethod.html" title="next chapter">Codec.DisposalMethod</a></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2020, Kota Yamaguchi.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.0.4</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="../_sources/_generate/skia.Codec.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>
