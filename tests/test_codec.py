@@ -87,6 +87,7 @@ def test_Codec_incrementalDecode(codec):
         rows = 0
         while codec.incrementalDecode(rows) == skia.Codec.kIncompleteInput:
             assert isinstance(rows, int)
+            break
 
 
 @pytest.fixture
