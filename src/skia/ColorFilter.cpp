@@ -4,6 +4,8 @@
 
 const int SkOverdrawColorFilter::kNumColors;
 
+namespace {
+
 py::object ColorFilterAsAColorMode(SkColorFilter& colorFilter) {
     SkColor color;
     SkBlendMode mode;
@@ -13,6 +15,17 @@ py::object ColorFilterAsAColorMode(SkColorFilter& colorFilter) {
     else
         return py::none();
 }
+
+void CopyTableIfValid(py::object obj, std::vector<uint8_t>* table) {
+    if (!obj.is_none()) {
+        auto v = obj.cast<std::vector<uint8_t>>();
+        if (v.size() != 256)
+            throw py::value_error("Table must have 256 elements");
+        table->assign(v.begin(), v.end());
+    }
+}
+
+}  // namespace
 
 void initColorFilter(py::module &m) {
 py::class_<SkColorFilter, sk_sp<SkColorFilter>, SkFlattenable> colorfilter(
@@ -279,15 +292,18 @@ py::class_<SkTableColorFilter>(
         )docstring",
         py::arg("table"))
     .def_static("MakeARGB",
-        [] (const std::vector<uint8_t>& tableA,
-            const std::vector<uint8_t>& tableR,
-            const std::vector<uint8_t>& tableG,
-            const std::vector<uint8_t>& tableB) {
-            if (tableA.size() != 256 || tableR.size() != 256 ||
-                tableG.size() != 256 || tableB.size() != 256)
-                throw std::runtime_error("each table must have 256 elements");
+        [] (py::object tableA, py::object tableR, py::object tableG,
+            py::object tableB) {
+            std::vector<uint8_t> tableA_, tableR_, tableG_, tableB_;
+            CopyTableIfValid(tableA, &tableA_);
+            CopyTableIfValid(tableR, &tableR_);
+            CopyTableIfValid(tableG, &tableG_);
+            CopyTableIfValid(tableB, &tableB_);
             return SkTableColorFilter::MakeARGB(
-                &tableA[0], &tableR[0], &tableG[0], &tableB[0]);
+                (tableA_.empty()) ? nullptr : &tableA_[0],
+                (tableR_.empty()) ? nullptr : &tableR_[0],
+                (tableG_.empty()) ? nullptr : &tableG_[0],
+                (tableB_.empty()) ? nullptr : &tableB_[0]);
         },
         R"docstring(
         Create a table colorfilter, with a different table for each component
