@@ -59,7 +59,7 @@ def test_Shaders_Lerp(shader):
 
 
 @pytest.mark.parametrize('args', [
-    ([skia.Point(0, 0), skia.Point(1, 1)], [0xFFFF00FF, 0xFFFFFF00], []),
+    ([skia.Point(0, 0), skia.Point(1, 1)], [0xFFFF00FF, 0xFFFFFF00]),
     ([skia.Point(0, 0), skia.Point(1, 1)], [0xFFFF00FF, 0xFFFFFF00], [0, 1],
         skia.TileMode.kClamp, 0, skia.Matrix()),
 ])
@@ -69,18 +69,18 @@ def test_GradientShader_MakeLinear(args):
 
 def test_GradientShader_MakeRadial():
     assert isinstance(skia.GradientShader.MakeRadial(
-        skia.Point(10, 10), 5, [0xFFFF00FF, 0xFFFFFF00], []), skia.Shader)
+        skia.Point(10, 10), 5, [0xFFFF00FF, 0xFFFFFF00]), skia.Shader)
 
 
 def test_GradientShader_MakeTwoPointConical():
     assert isinstance(skia.GradientShader.MakeTwoPointConical(
-        skia.Point(0, 0), 0, skia.Point(1, 1), 90, [0xFFFF00FF, 0xFFFFFF00],
-        []), skia.Shader)
+        skia.Point(0, 0), 0, skia.Point(1, 1), 90, [0xFFFF00FF, 0xFFFFFF00]),
+    skia.Shader)
 
 
 def test_GradientShader_MakeSweep():
     assert isinstance(skia.GradientShader.MakeSweep(
-        10, 10, [0xFFFF00FF, 0xFFFFFF00], []), skia.Shader)
+        10, 10, [0xFFFF00FF, 0xFFFFFF00]), skia.Shader)
 
 
 def test_PerlinNoiseShader_MakeFractalNoise():
