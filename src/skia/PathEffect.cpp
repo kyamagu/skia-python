@@ -142,6 +142,7 @@ py::class_<SkPathEffect, sk_sp<SkPathEffect>, SkFlattenable>
         ~skia.DiscretePathEffect
         ~skia.DashPathEffect
         ~skia.CornerPathEffect
+        ~skia.Line2DPathEffect
         ~skia.Path1DPathEffect
         ~skia.Path2DPathEffect
         ~skia.MergePathEffect
@@ -396,6 +397,12 @@ path1dpatheffect
             point (based on the current position and tangent)
         )docstring",
         py::arg("path"), py::arg("advance"), py::arg("phase"), py::arg("style"))
+    ;
+
+py::class_<SkLine2DPathEffect, SkPathEffect, sk_sp<SkLine2DPathEffect>>(
+    m, "Line2DPathEffect")
+    .def_static("Make", &SkLine2DPathEffect::Make,
+        py::arg("width"), py::arg("matrix"))
     ;
 
 py::class_<SkPath2DPathEffect, SkPathEffect, sk_sp<SkPath2DPathEffect>>(

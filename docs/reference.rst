@@ -107,6 +107,7 @@ Reference
     ImageFilters
     ImageInfo
     LightingImageFilter
+    Line2DPathEffect
     LumaColorFilter
     M44
     MagnifierImageFilter

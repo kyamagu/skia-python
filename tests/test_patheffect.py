@@ -218,6 +218,11 @@ def test_Path1DPathEffect_Make():
         skia.PathEffect)
 
 
+def test_Line2DPathEffect_Make():
+    assert isinstance(
+        skia.Line2DPathEffect.Make(1, skia.Matrix()), skia.PathEffect)
+
+
 def test_Path2DPathEffect_Make():
     path = skia.Path()
     path.addCircle(10, 10, 5)
