@@ -168,5 +168,5 @@ m.attr("ColorGREEN") = SK_ColorGREEN;
 m.attr("ColorBLUE") = SK_ColorBLUE;
 m.attr("ColorYELLOW") = SK_ColorYELLOW;
 m.attr("ColorCYAN") = SK_ColorCYAN;
-m.attr("ColorYELLOW") = SK_ColorYELLOW;
+m.attr("ColorMAGENTA") = SK_ColorMAGENTA;
 }
