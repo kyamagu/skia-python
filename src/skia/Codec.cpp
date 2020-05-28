@@ -679,8 +679,8 @@ codec
         R"docstring(
         Return the number of times to repeat, if this image is animated. This
         number does not　include the first play through of each frame. For
-        example, a repetition count of 4 means　that each frame is played 5 times
-        and then the animation stops.
+        example, a repetition count of 4 means　that each frame is played 5
+        times and then the animation stops.
      　
         It can return kRepetitionCountInfinite, a negative number, meaning that
         the animation　should loop forever.
