@@ -478,9 +478,18 @@ attempt to defer the actual decode, while the DecodeTo… method
 explicitly decode and allocate the backend when the call is made.</p>
 <p>If the encoded format is not supported, or subset is outside of the
 bounds of the decoded image, nullptr is returned.</p>
-<p>encoded the encoded data
-subset  the bounds of the pixels within the decoded image to return. may be null.
-:return: created <a class="reference internal" href="#skia.Image" title="skia.Image"><code class="xref py py-class docutils literal notranslate"><span class="pre">Image</span></code></a>, or nullptr</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>encoded</strong> – the encoded data</p></li>
+<li><p><strong>subset</strong> (<a class="reference internal" href="skia.IRect.html#skia.IRect" title="skia.IRect"><em>skia.IRect</em></a>) – the bounds of the pixels within the decoded
+image to return. may be null.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>created <a class="reference internal" href="#skia.Image" title="skia.Image"><code class="xref py py-class docutils literal notranslate"><span class="pre">Image</span></code></a>, or nullptr</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py method">
@@ -526,7 +535,8 @@ each dimension fits in 29 bits; <a class="reference internal" href="skia.ColorTy
 row of pixels; pixel address is not nullptr.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>pixmap</strong> (<a class="reference internal" href="skia.Pixmap.html#skia.Pixmap" title="skia.Pixmap"><em>skia.Pixmap</em></a>) – <a class="reference internal" href="skia.ImageInfo.html#skia.ImageInfo" title="skia.ImageInfo"><code class="xref py py-class docutils literal notranslate"><span class="pre">ImageInfo</span></code></a>, pixel address, and row bytes</p>
+<dd class="field-odd"><p><strong>pixmap</strong> (<a class="reference internal" href="skia.Pixmap.html#skia.Pixmap" title="skia.Pixmap"><em>skia.Pixmap</em></a>) – <a class="reference internal" href="skia.ImageInfo.html#skia.ImageInfo" title="skia.ImageInfo"><code class="xref py py-class docutils literal notranslate"><span class="pre">ImageInfo</span></code></a>, pixel address, and row
+bytes</p>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p><a class="reference internal" href="#skia.Image" title="skia.Image"><code class="xref py py-class docutils literal notranslate"><span class="pre">Image</span></code></a> sharing pixmap</p>
@@ -1127,31 +1137,15 @@ readable; otherwise, ignored</p>
 <code class="sig-prename descclassname">Image.</code><code class="sig-name descname">readPixels</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span><span class="n">args</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#skia.Image.readPixels" title="Permalink to this definition">¶</a></dt>
 <dd><p>Overloaded function.</p>
 <ol class="arabic">
-<li><p>readPixels(self: skia.Image, dstInfo: skia.ImageInfo, dstPixels: buffer, dstRowBytes: int, srcX: int = 0, srcY: int = 0, cachingHint: skia.Image.CachingHint = CachingHint.kAllow_CachingHint) -&gt; bool</p>
+<li><p>readPixels(self: skia.Image, array: buffer, srcX: int = 0, srcY: int = 0, cachingHint: skia.Image.CachingHint = CachingHint.kAllow_CachingHint) -&gt; bool</p>
 <blockquote>
-<div><p>Copies <a class="reference internal" href="skia.Rect.html#skia.Rect" title="skia.Rect"><code class="xref py py-class docutils literal notranslate"><span class="pre">Rect</span></code></a> of pixels from <a class="reference internal" href="#skia.Image" title="skia.Image"><code class="xref py py-class docutils literal notranslate"><span class="pre">Image</span></code></a> to dstPixels.</p>
+<div><p>Copies <a class="reference internal" href="skia.Rect.html#skia.Rect" title="skia.Rect"><code class="xref py py-class docutils literal notranslate"><span class="pre">Rect</span></code></a> of pixels from <a class="reference internal" href="#skia.Image" title="skia.Image"><code class="xref py py-class docutils literal notranslate"><span class="pre">Image</span></code></a> to array.</p>
 <p>Copy starts at offset (srcX, srcY), and does not exceed
 <a class="reference internal" href="#skia.Image" title="skia.Image"><code class="xref py py-class docutils literal notranslate"><span class="pre">Image</span></code></a> (<a class="reference internal" href="#skia.Image.width" title="skia.Image.width"><code class="xref py py-meth docutils literal notranslate"><span class="pre">width()</span></code></a>, <a class="reference internal" href="#skia.Image.height" title="skia.Image.height"><code class="xref py py-meth docutils literal notranslate"><span class="pre">height()</span></code></a>).</p>
-<p>dstInfo specifies width, height, <a class="reference internal" href="skia.ColorType.html#skia.ColorType" title="skia.ColorType"><code class="xref py py-class docutils literal notranslate"><span class="pre">ColorType</span></code></a>,
-<a class="reference internal" href="skia.AlphaType.html#skia.AlphaType" title="skia.AlphaType"><code class="xref py py-class docutils literal notranslate"><span class="pre">AlphaType</span></code></a>, and <a class="reference internal" href="skia.ColorSpace.html#skia.ColorSpace" title="skia.ColorSpace"><code class="xref py py-class docutils literal notranslate"><span class="pre">ColorSpace</span></code></a> of destination.
-dstRowBytes specifies the gap from one destination row to the next.
-Returns true if pixels are copied. Returns false if:</p>
+<p>Returns true if pixels are copied. Returns false if:</p>
 <ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">dstInfo.addr</span></code> equals nullptr</p></li>
-<li><p>dstRowBytes is less than <code class="docutils literal notranslate"><span class="pre">dstInfo.minRowBytes</span></code></p></li>
-<li><p><code class="xref py py-class docutils literal notranslate"><span class="pre">PixelRef</span></code> is nullptr</p></li>
+<li><p>array row stride is less than <code class="docutils literal notranslate"><span class="pre">dstInfo.minRowBytes</span></code></p></li>
 </ul>
-<p>Pixels are copied only if pixel conversion is possible. If
-<a class="reference internal" href="#skia.Image" title="skia.Image"><code class="xref py py-class docutils literal notranslate"><span class="pre">Image</span></code></a> <a class="reference internal" href="skia.ColorType.html#skia.ColorType" title="skia.ColorType"><code class="xref py py-class docutils literal notranslate"><span class="pre">ColorType</span></code></a> is
-<a class="reference internal" href="skia.ColorType.html#skia.ColorType.kGray_8_ColorType" title="skia.ColorType.kGray_8_ColorType"><code class="xref py py-attr docutils literal notranslate"><span class="pre">kGray_8_ColorType</span></code></a>, or
-<a class="reference internal" href="skia.ColorType.html#skia.ColorType.kAlpha_8_ColorType" title="skia.ColorType.kAlpha_8_ColorType"><code class="xref py py-attr docutils literal notranslate"><span class="pre">kAlpha_8_ColorType</span></code></a>; <code class="docutils literal notranslate"><span class="pre">dstInfo.colorType</span></code>
-must match. If <a class="reference internal" href="#skia.Image" title="skia.Image"><code class="xref py py-class docutils literal notranslate"><span class="pre">Image</span></code></a> <a class="reference internal" href="skia.ColorType.html#skia.ColorType" title="skia.ColorType"><code class="xref py py-class docutils literal notranslate"><span class="pre">ColorType</span></code></a> is
-<a class="reference internal" href="skia.ColorType.html#skia.ColorType.kGray_8_ColorType" title="skia.ColorType.kGray_8_ColorType"><code class="xref py py-attr docutils literal notranslate"><span class="pre">kGray_8_ColorType</span></code></a>, <code class="docutils literal notranslate"><span class="pre">dstInfo.colorSpace</span></code> must
-match. If <a class="reference internal" href="#skia.Image" title="skia.Image"><code class="xref py py-class docutils literal notranslate"><span class="pre">Image</span></code></a> <a class="reference internal" href="skia.AlphaType.html#skia.AlphaType" title="skia.AlphaType"><code class="xref py py-class docutils literal notranslate"><span class="pre">AlphaType</span></code></a> is
-<a class="reference internal" href="skia.AlphaType.html#skia.AlphaType.kOpaque_AlphaType" title="skia.AlphaType.kOpaque_AlphaType"><code class="xref py py-attr docutils literal notranslate"><span class="pre">kOpaque_AlphaType</span></code></a>, <code class="docutils literal notranslate"><span class="pre">dstInfo.alphaType</span></code> must
-match. If <a class="reference internal" href="#skia.Image" title="skia.Image"><code class="xref py py-class docutils literal notranslate"><span class="pre">Image</span></code></a> <a class="reference internal" href="skia.ColorSpace.html#skia.ColorSpace" title="skia.ColorSpace"><code class="xref py py-class docutils literal notranslate"><span class="pre">ColorSpace</span></code></a> is nullptr,
-<code class="docutils literal notranslate"><span class="pre">dstInfo.colorSpace</span></code> must match. Returns false if pixel conversion is
-not possible.</p>
 <p>srcX and srcY may be negative to copy only top or left of source.
 Returns false if <a class="reference internal" href="#skia.Image.width" title="skia.Image.width"><code class="xref py py-meth docutils literal notranslate"><span class="pre">width()</span></code></a> or <a class="reference internal" href="#skia.Image.height" title="skia.Image.height"><code class="xref py py-meth docutils literal notranslate"><span class="pre">height()</span></code></a> is zero or
 negative. Returns false if abs(srcX) &gt;= Image <a class="reference internal" href="#skia.Image.width" title="skia.Image.width"><code class="xref py py-meth docutils literal notranslate"><span class="pre">width()</span></code></a>, or if
@@ -1161,15 +1155,9 @@ pixels may be retained locally. If cachingHint is
 <a class="reference internal" href="skia.Image.CachingHint.html#skia.Image.CachingHint.kDisallow_CachingHint" title="skia.Image.CachingHint.kDisallow_CachingHint"><code class="xref py py-attr docutils literal notranslate"><span class="pre">kDisallow_CachingHint</span></code></a>, pixels are not
 added to the local cache.</p>
 <dl class="field-list simple">
-<dt class="field-odd">dstInfo</dt>
-<dd class="field-odd"><p>destination width, height, <a class="reference internal" href="skia.ColorType.html#skia.ColorType" title="skia.ColorType"><code class="xref py py-class docutils literal notranslate"><span class="pre">ColorType</span></code></a>,
-<a class="reference internal" href="skia.AlphaType.html#skia.AlphaType" title="skia.AlphaType"><code class="xref py py-class docutils literal notranslate"><span class="pre">AlphaType</span></code></a>, <a class="reference internal" href="skia.ColorSpace.html#skia.ColorSpace" title="skia.ColorSpace"><code class="xref py py-class docutils literal notranslate"><span class="pre">ColorSpace</span></code></a></p>
-</dd>
-<dt class="field-even">dstPixels</dt>
-<dd class="field-even"><p>destination pixel storage</p>
-</dd>
-<dt class="field-odd">dstRowBytes</dt>
-<dd class="field-odd"><p>destination row length</p>
+<dt class="field-odd">array</dt>
+<dd class="field-odd"><p>destination pixel storage, such as <code class="docutils literal notranslate"><span class="pre">bytearray</span></code> or
+<code class="docutils literal notranslate"><span class="pre">numpy.ndarray</span></code></p>
 </dd>
 <dt class="field-even">srcX</dt>
 <dd class="field-even"><p>column index whose absolute value is less than
@@ -1180,7 +1168,7 @@ added to the local cache.</p>
 <a class="reference internal" href="#skia.Image.height" title="skia.Image.height"><code class="xref py py-meth docutils literal notranslate"><span class="pre">height()</span></code></a></p>
 </dd>
 <dt class="field-even">return</dt>
-<dd class="field-even"><p>true if pixels are copied to dstPixels</p>
+<dd class="field-even"><p>true if pixels are copied to array</p>
 </dd>
 </dl>
 </div></blockquote>
@@ -1552,6 +1540,7 @@ been allocated via new, and not on the stack.</p>
 <li class="toctree-l2"><a class="reference internal" href="skia.ImageFilters.html">ImageFilters</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.ImageInfo.html">ImageInfo</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.LightingImageFilter.html">LightingImageFilter</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.Line2DPathEffect.html">Line2DPathEffect</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.LumaColorFilter.html">LumaColorFilter</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.M44.html">M44</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.MagnifierImageFilter.html">MagnifierImageFilter</a></li>

@@ -49,8 +49,8 @@
 <li><p><code class="docutils literal notranslate"><span class="pre">/GR</span></code> flag for <code class="docutils literal notranslate"><span class="pre">cl.exe</span></code> (Visual C++)</p></li>
 </ul>
 </li>
-<li><p><code class="docutils literal notranslate"><span class="pre">gn</span></code> args should include <code class="docutils literal notranslate"><span class="pre">skia_enable_tools</span> <span class="pre">=</span> <span class="pre">true</span></code> to build <code class="docutils literal notranslate"><span class="pre">skia.h</span></code> header.
-This is automatically enabled when <code class="docutils literal notranslate"><span class="pre">is_official_build</span> <span class="pre">=</span> <span class="pre">false</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">/MD</span></code> flag must be set for <code class="docutils literal notranslate"><span class="pre">cl.exe</span></code> (Visual C++)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">gn</span></code> args should include <code class="docutils literal notranslate"><span class="pre">skia_enable_tools</span> <span class="pre">=</span> <span class="pre">true</span></code> to build <code class="docutils literal notranslate"><span class="pre">skia.h</span></code> header.</p></li>
 <li><p>Static linking is assumed; therefore, <code class="docutils literal notranslate"><span class="pre">is_component_build</span> <span class="pre">=</span> <span class="pre">false</span></code>.</p></li>
 </ul>
 <p>For detailed Skia build instructions, check <a class="reference external" href="https://skia.org/">the official page</a>.</p>
@@ -129,7 +129,7 @@ python setup.py bdist_wheel
 
 <span class="nb">cd </span><span class="n">skia</span>
 <span class="n">python2</span> <span class="n">tools</span><span class="p">\</span><span class="n">git-sync-deps</span>
-<span class="n">bin</span><span class="p">\</span><span class="n">gn</span> <span class="n">gen</span> <span class="n">out</span><span class="p">\</span><span class="n">Release</span> <span class="p">-</span><span class="n">-args</span><span class="p">=</span><span class="s1">&#39;is_official_build=true skia_enable_tools=true skia_use_system_libjpeg_turbo=false skia_use_system_libwebp=false skia_use_system_libpng=false skia_use_system_icu=false skia_use_system_harfbuzz=false skia_use_system_expat=false skia_use_system_zlib=false extra_cflags_cc=[\&quot;/GR\&quot;, \&quot;/EHsc\&quot;] target_cpu=\&quot;${{ matrix.arch }}\&quot;&#39;</span>
+<span class="n">bin</span><span class="p">\</span><span class="n">gn</span> <span class="n">gen</span> <span class="n">out</span><span class="p">\</span><span class="n">Release</span> <span class="p">-</span><span class="n">-args</span><span class="p">=</span><span class="s1">&#39;is_official_build=true skia_enable_tools=true skia_use_system_libjpeg_turbo=false skia_use_system_libwebp=false skia_use_system_libpng=false skia_use_system_icu=false skia_use_system_harfbuzz=false skia_use_system_expat=false skia_use_system_zlib=false extra_cflags_cc=[\&quot;/GR\&quot;, \&quot;/EHsc\&quot;, \&quot;/MD\&quot;] target_cpu=\&quot;x86_64\&quot;&#39;</span>
 <span class="n">ninja</span> <span class="n">-C</span> <span class="n">out</span><span class="p">\</span><span class="n">Release</span> <span class="n">skia</span> <span class="n">skia</span><span class="p">.</span><span class="nb">h</span>
 <span class="nb">cd </span><span class="p">..</span>
 
