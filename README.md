@@ -44,6 +44,7 @@ For unsupported environment, check the [build instruction](https://kyamagu.githu
 - [Canvas Creation](https://github.com/kyamagu/skia-python/blob/master/notebooks/Canvas-Creation.ipynb)
 - [Path Overview](https://github.com/kyamagu/skia-python/blob/master/notebooks/Path-Overview.ipynb)
 - [Paint Overview](https://github.com/kyamagu/skia-python/blob/master/notebooks/Paint-Overview.ipynb)
+- [Python Image I/O](https://github.com/kyamagu/skia-python/blob/master/notebooks/Python-Image-IO.ipynb)
 
 ## Documentation
 
