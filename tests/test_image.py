@@ -1,5 +1,6 @@
 import skia
 import pytest
+import numpy as np
 
 
 def test_Image_imageInfo(image):
@@ -75,17 +76,22 @@ def test_Image_flush(image, context):
     image.flush(context)
 
 
-@pytest.mark.parametrize('use_pixmap', [False, True])
-def test_Image_readPixels(image, use_pixmap):
+@pytest.mark.parametrize('array_fn', [
+    lambda w, h, c: np.zeros((h, w, c), dtype=np.uint8),
+    lambda w, h, c: bytearray(w * h * c),
+])
+def test_Image_readPixels(image, array_fn):
+    c = image.imageInfo().bytesPerPixel()
+    array = array_fn(image.width(), image.height(), c)
+    assert isinstance(image.readPixels(array), bool)
+
+
+def test_Image_readPixels2(image):
     info = image.imageInfo().makeWH(100, 100)
     dstRowBytes = info.minRowBytes()
     dstPixels = bytearray(info.computeByteSize(dstRowBytes))
-    if use_pixmap:
-        dst = skia.Pixmap(info, dstPixels, dstRowBytes)
-        assert isinstance(image.readPixels(dst, 0, 0), bool)
-    else:
-        assert isinstance(
-            image.readPixels(info, dstPixels, dstRowBytes, 0, 0), bool)
+    dst = skia.Pixmap(info, dstPixels, dstRowBytes)
+    assert isinstance(image.readPixels(dst, 0, 0), bool)
 
 
 def test_Image_scalePixels(image):

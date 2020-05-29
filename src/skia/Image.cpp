@@ -4,6 +4,7 @@
 template<typename T>
 using NumPy = py::array_t<T, py::array::c_style | py::array::forcecast>;
 
+namespace {
 
 void* GetBufferPtr(const SkImageInfo& info, py::buffer& data, size_t rowBytes,
                     size_t* size) {
@@ -16,6 +17,27 @@ void* GetBufferPtr(const SkImageInfo& info, py::buffer& data, size_t rowBytes,
     return buffer.ptr;
 }
 
+bool ReadPixels(const SkImage& image, py::buffer obj, int srcX, int srcY,
+                SkImage::CachingHint hint) {
+    auto buffer = obj.request(true);
+    auto info = image.imageInfo();
+    if (buffer.ndim == 0)
+        throw py::value_error("Empty buffer is given");
+    size_t rowBytes = info.minRowBytes();
+    if (buffer.ndim > 1) {
+        if (buffer.shape[0] != image.height())
+            throw py::value_error("Height does not match");
+        if (size_t(buffer.strides[0]) < rowBytes)
+            throw py::value_error("Row stride is smaller than required");
+        rowBytes = buffer.strides[0];
+    }
+    size_t size = buffer.shape[0] * buffer.strides[0];
+    if (size < info.computeByteSize(rowBytes))
+        throw std::runtime_error("Buffer is smaller than required.");
+    return image.readPixels(info, buffer.ptr, rowBytes, srcX, srcY, hint);
+}
+
+}
 
 void initImage(py::module &m) {
 py::enum_<SkBudgeted>(m, "Budgeted", R"docstring(
@@ -313,40 +335,16 @@ image
         py::arg("context").none(false))
     // .def("getBackendTexture", &SkImage::getBackendTexture,
     //     "Retrieves the back-end texture.")
-    .def("readPixels",
-        [] (const SkImage& image, const SkImageInfo& info, py::buffer dst,
-            size_t dstRowBytes, int srcX, int srcY,
-            SkImage::CachingHint cachingHint) {
-            auto ptr = GetBufferPtr(info, dst, dstRowBytes, nullptr);
-            return image.readPixels(
-                info, ptr, dstRowBytes, srcX, srcY, cachingHint);
-        },
+    .def("readPixels", &ReadPixels,
         R"docstring(
-        Copies :py:class:`Rect` of pixels from :py:class:`Image` to dstPixels.
+        Copies :py:class:`Rect` of pixels from :py:class:`Image` to array.
 
         Copy starts at offset (srcX, srcY), and does not exceed
         :py:class:`Image` (:py:meth:`width`, :py:meth:`height`).
 
-        dstInfo specifies width, height, :py:class:`ColorType`,
-        :py:class:`AlphaType`, and :py:class:`ColorSpace` of destination.
-        dstRowBytes specifies the gap from one destination row to the next.
         Returns true if pixels are copied. Returns false if:
 
-        - ``dstInfo.addr`` equals nullptr
-        - dstRowBytes is less than ``dstInfo.minRowBytes``
-        - :py:class:`PixelRef` is nullptr
-
-        Pixels are copied only if pixel conversion is possible. If
-        :py:class:`Image` :py:class:`ColorType` is
-        :py:attr:`~ColorType.kGray_8_ColorType`, or
-        :py:attr:`~ColorType.kAlpha_8_ColorType`; ``dstInfo.colorType``
-        must match. If :py:class:`Image` :py:class:`ColorType` is
-        :py:attr:`~ColorType.kGray_8_ColorType`, ``dstInfo.colorSpace`` must
-        match. If :py:class:`Image` :py:class:`AlphaType` is
-        :py:attr:`~AlphaType.kOpaque_AlphaType`, ``dstInfo.alphaType`` must
-        match. If :py:class:`Image` :py:class:`ColorSpace` is nullptr,
-        ``dstInfo.colorSpace`` must match. Returns false if pixel conversion is
-        not possible.
+        - array row stride is less than ``dstInfo.minRowBytes``
 
         srcX and srcY may be negative to copy only top or left of source.
         Returns false if :py:meth:`width` or :py:meth:`height` is zero or
@@ -358,18 +356,15 @@ image
         :py:attr:`~Image.CachingHint.kDisallow_CachingHint`, pixels are not
         added to the local cache.
 
-        :dstInfo: destination width, height, :py:class:`ColorType`,
-            :py:class:`AlphaType`, :py:class:`ColorSpace`
-        :dstPixels:   destination pixel storage
-        :dstRowBytes: destination row length
+        :array: destination pixel storage, such as ``bytearray`` or
+            ``numpy.ndarray``
         :srcX: column index whose absolute value is less than
             :py:meth:`width`
         :srcY: row index whose absolute value is less than
             :py:meth:`height`
-        :return: true if pixels are copied to dstPixels
+        :return: true if pixels are copied to array
         )docstring",
-        py::arg("dstInfo"), py::arg("dstPixels"), py::arg("dstRowBytes"),
-        py::arg("srcX") = 0, py::arg("srcY") = 0,
+        py::arg("array"), py::arg("srcX") = 0, py::arg("srcY") = 0,
         py::arg("cachingHint") = SkImage::kAllow_CachingHint)
     .def("readPixels",
         py::overload_cast<const SkPixmap&, int, int, SkImage::CachingHint>(
@@ -774,7 +769,8 @@ image
         :py:attr:`kUnknown_ColorType`; row bytes are large enough to hold one
         row of pixels; pixel address is not nullptr.
 
-        :param skia.Pixmap pixmap: :py:class:`ImageInfo`, pixel address, and row bytes
+        :param skia.Pixmap pixmap: :py:class:`ImageInfo`, pixel address, and row
+            bytes
         :return: :py:class:`Image` sharing pixmap
         )docstring",
         py::arg("pixmap").none(false))
@@ -818,8 +814,9 @@ image
         If the encoded format is not supported, or subset is outside of the
         bounds of the decoded image, nullptr is returned.
 
-        encoded the encoded data
-        subset  the bounds of the pixels within the decoded image to return. may be null.
+        :param encoded: the encoded data
+        :param skia.IRect subset:  the bounds of the pixels within the decoded
+            image to return. may be null.
         :return: created :py:class:`Image`, or nullptr
         )docstring",
         py::arg("encoded"), py::arg("subset") = nullptr)
