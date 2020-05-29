@@ -111,6 +111,9 @@ def test_TableColorFilter_Make():
     assert isinstance(skia.TableColorFilter.Make(range(256)), skia.ColorFilter)
 
 
-def test_TableColorFilter_MakeARGB():
-    assert isinstance(skia.TableColorFilter.MakeARGB(
-        range(256), range(256), range(256), range(256)), skia.ColorFilter)
+@pytest.mark.parametrize('args', [
+    (range(256), range(256), range(256), range(256)),
+    (range(256), None, None, None),
+])
+def test_TableColorFilter_MakeARGB(args):
+    assert isinstance(skia.TableColorFilter.MakeARGB(*args), skia.ColorFilter)

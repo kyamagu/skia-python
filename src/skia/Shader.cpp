@@ -9,6 +9,9 @@ sk_sp<SkShader> CloneFlattenable(const SkShader& shader) {
     return sk_sp<SkShader>(reinterpret_cast<SkShader*>(flat.release()));
 }
 
+#define GET_SKSCALAR_PTR(pos) \
+((pos.is_none()) ? nullptr : &(pos.cast<std::vector<SkScalar>>())[0])
+
 void initShader(py::module &m) {
 py::class_<SkShader, sk_sp<SkShader>, SkFlattenable> shader(
     m, "Shader", R"docstring(
@@ -207,16 +210,15 @@ py::enum_<SkGradientShader::Flags>(gradientshader, "Flags", py::arithmetic())
 gradientshader
     .def_static("MakeLinear",
         [] (const std::vector<SkPoint>& pts, const std::vector<SkColor>& colors,
-            std::vector<SkScalar>& pos, SkTileMode mode, uint32_t flags,
+            py::object pos, SkTileMode mode, uint32_t flags,
             const SkMatrix* localMatrix) {
             if (pts.size() != 2)
                 throw std::runtime_error("pts must have two elements.");
             if (colors.size() < 2)
                 throw std::runtime_error("length of colors must be 2 or more.");
             return SkGradientShader::MakeLinear(
-                &pts[0], &colors[0],
-                (pos.size() == colors.size()) ? &pos[0] : nullptr,
-                colors.size(), mode, flags, localMatrix);
+                &pts[0], &colors[0], GET_SKSCALAR_PTR(pos), colors.size(), mode,
+                flags, localMatrix);
         },
         R"docstring(
         Returns a shader that generates a linear gradient between the two
@@ -234,19 +236,18 @@ gradientshader
         :param skia.TileMode mode: The tiling mode
         :param localMatrix: Local matrix
         )docstring",
-        py::arg("pts"), py::arg("colors"), py::arg("pos"),
+        py::arg("pts"), py::arg("colors"), py::arg("pos") = nullptr,
         py::arg("mode") = SkTileMode::kClamp, py::arg("flags") = 0,
         py::arg("localMatrix") = nullptr)
     .def_static("MakeRadial",
         [] (const SkPoint& center, SkScalar radius,
             const std::vector<SkColor>& colors,
-            const std::vector<SkScalar>& pos, SkTileMode mode, uint32_t flags,
+            py::object pos, SkTileMode mode, uint32_t flags,
             const SkMatrix* localMatrix) {
             if (colors.size() < 2)
                 throw std::runtime_error("length of colors must be 2 or more.");
             return SkGradientShader::MakeRadial(
-                center, radius, &colors[0],
-                (pos.size() == colors.size()) ? &pos[0] : nullptr,
+                center, radius, &colors[0], GET_SKSCALAR_PTR(pos),
                 colors.size(), mode, flags, localMatrix);
         },
         R"docstring(
@@ -268,19 +269,18 @@ gradientshader
         :param localMatrix: Local matrix
         )docstring",
         py::arg("center"), py::arg("radius"), py::arg("colors"),
-        py::arg("pos"), py::arg("mode") = SkTileMode::kClamp,
+        py::arg("pos") = nullptr, py::arg("mode") = SkTileMode::kClamp,
         py::arg("flags") = 0, py::arg("localMatrix") = nullptr)
     .def_static("MakeTwoPointConical",
         [] (const SkPoint& start, SkScalar startRadius, const SkPoint& end,
             SkScalar endRadius, const std::vector<SkColor>& colors,
-            const std::vector<SkScalar>& pos, SkTileMode mode, uint32_t flags,
+            py::object pos, SkTileMode mode, uint32_t flags,
             const SkMatrix *localMatrix) {
             if (colors.size() < 2)
                 throw std::runtime_error("length of colors must be 2 or more.");
             return SkGradientShader::MakeTwoPointConical(
                 start, startRadius, end, endRadius, &colors[0],
-                (pos.size() == colors.size()) ? &pos[0] : nullptr,
-                colors.size(), mode, flags,
+                GET_SKSCALAR_PTR(pos), colors.size(), mode, flags,
                 localMatrix);
         },
         R"docstring(
@@ -292,19 +292,18 @@ gradientshader
         http://dev.w3.org/html5/2dcontext/#dom-context-2d-createradialgradient
         )docstring",
         py::arg("start"), py::arg("startRadius"), py::arg("end"),
-        py::arg("endRadius"), py::arg("colors"), py::arg("pos"),
+        py::arg("endRadius"), py::arg("colors"), py::arg("pos") = nullptr,
         py::arg("mode") = SkTileMode::kClamp, py::arg("flags") = 0,
         py::arg("localMatrix") = nullptr)
     .def_static("MakeSweep",
         [] (SkScalar cx, SkScalar cy, const std::vector<SkColor>& colors,
-            const std::vector<SkScalar>& pos, SkTileMode mode,
-            SkScalar startAngle, SkScalar endAngle, uint32_t flags,
+            py::object pos, SkTileMode mode, SkScalar startAngle,
+            SkScalar endAngle, uint32_t flags,
             const SkMatrix *localMatrix) {
             if (colors.size() < 2)
                 throw std::runtime_error("length of colors must be 2 or more.");
             return SkGradientShader::MakeSweep(
-                cx, cy, &colors[0],
-                (pos.size() == colors.size()) ? &pos[0] : nullptr,
+                cx, cy, &colors[0], GET_SKSCALAR_PTR(pos),
                 colors.size(), mode, startAngle, endAngle, flags, localMatrix);
         },
         R"docstring(
@@ -316,7 +315,7 @@ gradientshader
         http://dev.w3.org/html5/2dcontext/#dom-context-2d-createradialgradient
         )docstring",
         py::arg("cx"), py::arg("cy"), py::arg("colors"),
-        py::arg("pos"), py::arg("mode") = SkTileMode::kClamp,
+        py::arg("pos") = nullptr, py::arg("mode") = SkTileMode::kClamp,
         py::arg("startAngle") = 0, py::arg("endAngle") = 360,
         py::arg("flags") = 0, py::arg("localMatrix") = nullptr)
     ;
