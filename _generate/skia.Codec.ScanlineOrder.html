@@ -45,6 +45,10 @@ output row orderings.</p>
 <p>Members:</p>
 <blockquote>
 <div><dl>
+<dt>kKeep :</dt><dd><p>By far the most common, this indicates that the image can be decoded
+reliably using the scanline decoder, and that rows will be output in
+the logical order.</p>
+</dd>
 <dt>kRestoreBGColor :</dt><dd><p>This indicates that the scanline decoder reliably outputs rows, but
 they will be returned in reverse order.  If the scanline format is
 kBottomUp, the nextScanline() API can be used to determine the actual
@@ -61,10 +65,6 @@ with caution.  As with full image decodes, the decoder will handle
 inverting the requested rows, but rows will still be delivered
 starting from the bottom of the image.</p>
 <p>Upside down bmps are an example.</p>
-</dd>
-<dt>kKeep :</dt><dd><p>By far the most common, this indicates that the image can be decoded
-reliably using the scanline decoder, and that rows will be output in
-the logical order.</p>
 </dd>
 </dl>
 </div></blockquote>
