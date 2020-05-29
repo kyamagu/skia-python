@@ -18,8 +18,8 @@ For building skia, there are a few compile-time requirements:
   - ``-frtti`` flag for ``clang`` or ``gcc``
   - ``/GR`` flag for ``cl.exe`` (Visual C++)
 
+- ``/MD`` flag must be set for ``cl.exe`` (Visual C++)
 - ``gn`` args should include ``skia_enable_tools = true`` to build ``skia.h`` header.
-  This is automatically enabled when ``is_official_build = false``.
 - Static linking is assumed; therefore, ``is_component_build = false``.
 
 For detailed Skia build instructions, check `the official page`_.
@@ -119,7 +119,7 @@ Windows binary can be built using the generic steps above.
 
     cd skia
     python2 tools\git-sync-deps
-    bin\gn gen out\Release --args='is_official_build=true skia_enable_tools=true skia_use_system_libjpeg_turbo=false skia_use_system_libwebp=false skia_use_system_libpng=false skia_use_system_icu=false skia_use_system_harfbuzz=false skia_use_system_expat=false skia_use_system_zlib=false extra_cflags_cc=[\"/GR\", \"/EHsc\"] target_cpu=\"${{ matrix.arch }}\"'
+    bin\gn gen out\Release --args='is_official_build=true skia_enable_tools=true skia_use_system_libjpeg_turbo=false skia_use_system_libwebp=false skia_use_system_libpng=false skia_use_system_icu=false skia_use_system_harfbuzz=false skia_use_system_expat=false skia_use_system_zlib=false extra_cflags_cc=[\"/GR\", \"/EHsc\", \"/MD\"] target_cpu=\"x86_64\"'
     ninja -C out\Release skia skia.h
     cd ..
 
