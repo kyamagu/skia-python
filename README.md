@@ -25,15 +25,15 @@ Supported platforms:
 
 For Linux platforms, there must be OpenGL and fontconfig installed:
 
-.. code-block:: bash
-
-    apt-get install libfontconfig1 libgl1-mesa-glx libgl1-mesa-dri
+```bash
+apt-get install libfontconfig1 libgl1-mesa-glx libgl1-mesa-dri
+```
 
 Or:
 
-.. code-block:: bash
-
-    yum install fontconfig mesa-libGL mesa-dri-drivers
+```bash
+yum install fontconfig mesa-libGL mesa-dri-drivers
+```
 
 For unsupported environment, check the [build instruction](https://kyamagu.github.io/skia-python/build.html).
 
