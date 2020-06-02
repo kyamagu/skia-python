@@ -7,9 +7,34 @@ import pytest
     (0xFF00FF00,),
     (skia.Color4f.FromColor(0xFF00FF00), skia.ColorSpace.MakeSRGB()),
     (skia.Paint(),),
+    (
+        {
+            'Alpha': 255,
+            'Alphaf': 1.0,
+            'AntiAlias': True,
+            'Color': 0xFFFFFFFF,
+            'Color4f': skia.Color4f.FromColor(0xFF00FF00),
+            'ColorFilter': skia.LumaColorFilter.Make(),
+            'Dither': False,
+            'FilterQuality': skia.kMedium_FilterQuality,
+            'ImageFilter': skia.ImageFilters.Blur(1.0, 1.0),
+            'MaskFilter': skia.MaskFilter.MakeBlur(skia.kNormal_BlurStyle, 1.),
+            'PathEffect': skia.DashPathEffect.Make([2., 1.], 0),
+            'Shader': skia.Shaders.Empty(),
+            'StrokeCap': skia.Paint.kButt_Cap,
+            'StrokeJoin': skia.Paint.kMiter_Join,
+            'StrokeMiter': 0,
+            'StrokeWidth': 2,
+            'Style': skia.Paint.kStroke_Style,
+        },
+    ),
 ])
 def test_Paint_init(args):
     assert isinstance(skia.Paint(*args), skia.Paint)
+
+
+def test_Paint_kwargs():
+    assert isinstance(skia.Paint(Color=0xFFFFFFFF), skia.Paint)
 
 
 @pytest.fixture
@@ -185,8 +210,8 @@ def test_Paint_refMaskFilter(paint):
     assert isinstance(paint.refMaskFilter(), (skia.MaskFilter, type(None)))
 
 
-# def test_Paint_setMaskFilter(paint):
-#     paint.setMaskFilter(skia.CornerMaskFilter.Make(4.0))
+def test_Paint_setMaskFilter(paint):
+    paint.setMaskFilter(skia.MaskFilter.MakeBlur(skia.kNormal_BlurStyle, 1.))
 
 
 def test_Paint_getImageFilter(paint):
@@ -197,8 +222,8 @@ def test_Paint_refImageFilter(paint):
     assert isinstance(paint.refImageFilter(), (skia.ImageFilter, type(None)))
 
 
-# def test_Paint_setImageFilter(paint):
-#     paint.setImageFilter(skia.CornerImageFilter.Make(4.0))
+def test_Paint_setImageFilter(paint):
+    paint.setImageFilter(skia.ImageFilters.Blur(1.0, 1.0))
 
 
 def test_Paint_nothingToDraw(paint):
@@ -243,3 +268,8 @@ def test_Paint_ne(paint):
     paint2 = skia.Paint()
     paint2.setColor(0xFFFFFFFF)
     assert paint != paint2
+
+
+def test_Paint_convertible(canvas):
+    canvas.drawPaint({'Color': 0xFFFFFFFF})
+    canvas.drawLine((0, 0), (1, 1), {'Color': 0xFF0000FF})
