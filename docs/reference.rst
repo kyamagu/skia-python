@@ -5,14 +5,16 @@ Reference
 
 .. currentmodule:: skia
 
+.. toctree::
+
+    color
+
 .. rubric:: Classes
 
 .. autosummary::
     :toctree: _generate
     :nosignatures:
     :template: class.rst
-
-    .. rubric:: Classes
 
     AlphaType
     ApplyPerspectiveClip
@@ -41,6 +43,8 @@ Reference
     Codec.SelectionPolicy
     Codec.ZeroInitialized
     Color4f
+    ColorChannel
+    ColorChannelFlag
     ColorFilter
     ColorFilter.Flags
     ColorFilters
