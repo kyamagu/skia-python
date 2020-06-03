@@ -13,7 +13,6 @@ const int SkPaint::kStyleCount;
 const int SkPaint::kCapCount;
 const int SkPaint::kJoinCount;
 
-
 class PyFlattanable : public SkFlattenable {
 public:
     using SkFlattenable::SkFlattenable;
@@ -27,6 +26,70 @@ public:
         PYBIND11_OVERLOAD_PURE(Type, SkFlattenable, getFlattenableType);
     }
 };
+
+namespace {
+
+SkPaint MakeFromDict(py::dict dict) {
+    SkPaint paint;
+    for (auto item : dict) {
+        std::string key(py::str(item.first));
+        auto value = item.second;
+        if (key == "Alpha")
+            paint.setAlpha(value.cast<uint8_t>());
+        else if (key == "Alphaf")
+            paint.setAlphaf(value.cast<float>());
+        else if (key == "AntiAlias")
+            paint.setAntiAlias(value.cast<bool>());
+        else if (key == "ARGB") {
+            auto t = value.cast<py::tuple>();
+            if (t.size() != 3)
+                throw py::value_error("ARGB must be 4-element tuple.");
+            paint.setARGB(
+                t[0].cast<uint8_t>(),
+                t[1].cast<uint8_t>(),
+                t[2].cast<uint8_t>(),
+                t[3].cast<uint8_t>()
+                );
+        }
+        else if (key == "BlendMode")
+            paint.setBlendMode(value.cast<SkBlendMode>());
+        else if (key == "Color")
+            paint.setColor(value.cast<SkColor>());
+        else if (key == "Color4f")
+            paint.setColor4f(value.cast<SkColor4f>());  // TODO: ColorSpace
+        else if (key == "ColorFilter")
+            paint.setColorFilter(value.cast<sk_sp<SkColorFilter>>());
+        else if (key == "Dither")
+            paint.setDither(value.cast<bool>());
+        else if (key == "FilterQuality")
+            paint.setFilterQuality(value.cast<SkFilterQuality>());
+        else if (key == "ImageFilter")
+            paint.setImageFilter(value.cast<sk_sp<SkImageFilter>>());
+        else if (key == "MaskFilter")
+            paint.setMaskFilter(value.cast<sk_sp<SkMaskFilter>>());
+        else if (key == "PathEffect")
+            paint.setPathEffect(value.cast<sk_sp<SkPathEffect>>());
+        else if (key == "Shader")
+            paint.setShader(value.cast<sk_sp<SkShader>>());
+        // else if (key == "Stroke")
+        //     paint.setStroke(value.cast<bool>());
+        else if (key == "StrokeCap")
+            paint.setStrokeCap(value.cast<SkPaint::Cap>());
+        else if (key == "StrokeJoin")
+            paint.setStrokeJoin(value.cast<SkPaint::Join>());
+        else if (key == "StrokeMiter")
+            paint.setStrokeMiter(value.cast<SkScalar>());
+        else if (key == "StrokeWidth")
+            paint.setStrokeWidth(value.cast<SkScalar>());
+        else if (key == "Style")
+            paint.setStyle(value.cast<SkPaint::Style>());
+        else
+            throw py::key_error(key);
+    }
+    return paint;
+}
+
+}  // namespace
 
 
 void initPaint(py::module &m) {
@@ -43,6 +106,22 @@ py::class_<SkPaint> paint(m, "Paint", R"docstring(
     multiple-pass algorithms that alter the drawing geometry, color, and
     transparency. For instance, :py:class:`Paint` does not directly implement
     dashing or blur, but contains the objects that do so.
+
+    Example::
+
+        paint = skia.Paint(
+            Alphaf=1.0,
+            AntiAlias=True,
+            Color=skia.ColorBLUE,
+            StrokeWidth=2,
+            Style=skia.Paint.kStroke_Style,
+            )
+
+    :py:class:`Paint` is implicitly convertible from python dict. It is
+    possible to replace :py:class:`Paint` with ``dict`` where required::
+
+        canvas.drawPaint({'Color': 0xFFFFFFFF})
+        canvas.drawLine((0, 0), (1, 1), {'Color': 0xFF0000FF})
 
     .. rubric:: Classes
 
@@ -119,7 +198,60 @@ paint
         :paint: original to copy
         )docstring",
         py::arg("paint"))
-    // .def(py::init<SkPaint&&>())
+    .def(py::init([] (py::kwargs kwargs) { return MakeFromDict(kwargs); }),
+        R"docstring(
+        Constructs :py:class:`Paint` with keyword arguments. See ``setXXX``
+        methods for required signatures.
+
+        Example::
+
+            paint = skia.Paint(
+                Alpha=255,
+                Alphaf=1.0,
+                AntiAlias=True,
+                Color=0xFFFFFFFF,
+                Color4f=skia.Color4f.FromColor(0xFF00FF00),
+                ColorFilter=skia.LumaColorFilter.Make(),
+                Dither=False,
+                FilterQuality=skia.kMedium_FilterQuality,
+                ImageFilter=skia.ImageFilters.Blur(1.0, 1.0),
+                MaskFilter=skia.MaskFilter.MakeBlur(skia.kNormal_BlurStyle, 1.),
+                PathEffect=skia.DashPathEffect.Make([2., 1.], 0),
+                Shader=skia.Shaders.Empty(),
+                StrokeCap=skia.Paint.kButt_Cap,
+                StrokeJoin=skia.Paint.kMiter_Join,
+                StrokeMiter=0,
+                StrokeWidth=2,
+                Style=skia.Paint.kStroke_Style,
+                )
+        )docstring")
+    .def(py::init(&MakeFromDict),
+        R"docstring(
+        Constructs :py:class:`Paint` from python dict::
+
+            d = {
+                'Alpha': 255,
+                'Alphaf': 1.0,
+                'AntiAlias': True,
+                'Color': 0xFFFFFFFF,
+                'Color4f': skia.Color4f.FromColor(0xFF00FF00),
+                'ColorFilter': skia.LumaColorFilter.Make(),
+                'Dither': False,
+                'FilterQuality': skia.kMedium_FilterQuality,
+                'ImageFilter': skia.ImageFilters.Blur(1.0, 1.0),
+                'MaskFilter': skia.MaskFilter.MakeBlur(skia.kNormal_BlurStyle, 1.),
+                'PathEffect': skia.DashPathEffect.Make([2., 1.], 0),
+                'Shader': skia.Shaders.Empty(),
+                'StrokeCap': skia.Paint.kButt_Cap,
+                'StrokeJoin': skia.Paint.kMiter_Join,
+                'StrokeMiter': 0,
+                'StrokeWidth': 2,
+                'Style': skia.Paint.kStroke_Style,
+            }
+            paint = skia.Paint(d)
+
+        )docstring",
+        py::arg("d").none(false))
     .def("getHash", &SkPaint::getHash,
         R"docstring(
         Returns a hash generated from :py:class:`Paint` values and pointers.
@@ -638,14 +770,16 @@ paint
         py::arg("other"))
     ;
 
+py::implicitly_convertible<py::dict, SkPaint>();
+
 py::class_<SkFlattenable, PyFlattanable, sk_sp<SkFlattenable>, SkRefCnt>
-    flattanable(m, "Flattanable", R"docstring(
+    flattenable(m, "Flattanable", R"docstring(
     :py:class:`Flattenable` is the base class for objects that need to be
     flattened into a data stream for either transport or as part of the key to
     the font cache.
     )docstring");
 
-py::enum_<SkFlattenable::Type>(flattanable, "Type")
+py::enum_<SkFlattenable::Type>(flattenable, "Type")
     .value("kColorFilter_Type", SkFlattenable::Type::kSkColorFilter_Type)
     .value("kDrawable_Type", SkFlattenable::Type::kSkDrawable_Type)
     .value("kDrawLooper_Type", SkFlattenable::Type::kSkDrawLooper_Type)
@@ -660,7 +794,7 @@ py::enum_<SkFlattenable::Type>(flattanable, "Type")
     .value("kUnused_Type3", SkFlattenable::Type::kSkUnused_Type3)
     .export_values();
 
-flattanable
+flattenable
     // .def("getFactory", &SkFlattenable::getFactory)
     .def("getTypeName", &SkFlattenable::getTypeName,
         R"docstring(
@@ -671,8 +805,8 @@ flattanable
     // .def("flatten", &SkFlattenable::flatten)
     .def("getFlattenableType", &SkFlattenable::getFlattenableType)
     .def("serialize",
-        [] (const SkFlattenable& flattanable) {
-            return flattanable.serialize();
+        [] (const SkFlattenable& flattenable) {
+            return flattenable.serialize();
         })
     // .def_static("NameToFactory", &SkFlattenable::NameToFactory)
     // .def_static("FactoryToName", &SkFlattenable::FactoryToName)

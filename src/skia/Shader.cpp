@@ -224,19 +224,20 @@ gradientshader
         Returns a shader that generates a linear gradient between the two
         specified points.
 
-        :param List[skia.Point] pts: The start and end points for the gradient.
+        :param List[skia.Point] points: The start and end points for the
+            gradient.
         :param List[int] colors: The array of colors, to be distributed
             between the two points
-        :param List[float] pos: May be empty list. array of Scalars, or NULL,
-            of the relative position of each corresponding color in the colors
-            array. If this is NULL, the the colors are distributed evenly
+        :param List[float] positions: May be empty list. array of Scalars, or
+            NULL, of the relative position of each corresponding color in the
+            colors array. If this is NULL, the the colors are distributed evenly
             between the start and end point. If this is not null, the values
             must begin with 0, end with 1.0, and intermediate values must be
             strictly increasing.
         :param skia.TileMode mode: The tiling mode
         :param localMatrix: Local matrix
         )docstring",
-        py::arg("pts"), py::arg("colors"), py::arg("pos") = nullptr,
+        py::arg("points"), py::arg("colors"), py::arg("positions") = nullptr,
         py::arg("mode") = SkTileMode::kClamp, py::arg("flags") = 0,
         py::arg("localMatrix") = nullptr)
     .def_static("MakeRadial",
@@ -259,8 +260,8 @@ gradientshader
             this gradient
         :param List[int] colors:  The array of colors, to be distributed between
             the center and edge of the circle
-        :param List[float] pos: May be empty list. The array of Scalars, or
-            NULL, of the relative position of each corresponding color in the
+        :param List[float] positions: May be empty list. The array of Scalars,
+            or NULL, of the relative position of each corresponding color in the
             colors array. If this is NULL, the the colors are distributed evenly
             between the center and edge of the circle. If this is not null, the
             values must begin with 0, end with 1.0, and intermediate values must
@@ -269,7 +270,7 @@ gradientshader
         :param localMatrix: Local matrix
         )docstring",
         py::arg("center"), py::arg("radius"), py::arg("colors"),
-        py::arg("pos") = nullptr, py::arg("mode") = SkTileMode::kClamp,
+        py::arg("positions") = nullptr, py::arg("mode") = SkTileMode::kClamp,
         py::arg("flags") = 0, py::arg("localMatrix") = nullptr)
     .def_static("MakeTwoPointConical",
         [] (const SkPoint& start, SkScalar startRadius, const SkPoint& end,
@@ -292,7 +293,7 @@ gradientshader
         http://dev.w3.org/html5/2dcontext/#dom-context-2d-createradialgradient
         )docstring",
         py::arg("start"), py::arg("startRadius"), py::arg("end"),
-        py::arg("endRadius"), py::arg("colors"), py::arg("pos") = nullptr,
+        py::arg("endRadius"), py::arg("colors"), py::arg("positions") = nullptr,
         py::arg("mode") = SkTileMode::kClamp, py::arg("flags") = 0,
         py::arg("localMatrix") = nullptr)
     .def_static("MakeSweep",
@@ -315,7 +316,7 @@ gradientshader
         http://dev.w3.org/html5/2dcontext/#dom-context-2d-createradialgradient
         )docstring",
         py::arg("cx"), py::arg("cy"), py::arg("colors"),
-        py::arg("pos") = nullptr, py::arg("mode") = SkTileMode::kClamp,
+        py::arg("positions") = nullptr, py::arg("mode") = SkTileMode::kClamp,
         py::arg("startAngle") = 0, py::arg("endAngle") = 360,
         py::arg("flags") = 0, py::arg("localMatrix") = nullptr)
     ;
