@@ -67,6 +67,14 @@ def test_ISize_setEmpty(isize):
     assert isize.isEmpty()
 
 
+def test_ISize_eq(isize):
+    assert isize == isize
+
+
+def test_ISize_ne(isize):
+    assert isize != (0, 0)
+
+
 def test_ISize_iter(isize):
     width, height = tuple(isize)
 
@@ -147,6 +155,14 @@ def test_Size_fWidth_fHeight(size):
 def test_Size_setEmpty(size):
     size.setEmpty()
     assert size.isEmpty()
+
+
+def test_ISize_eq(size):
+    assert size == size
+
+
+def test_ISize_ne(size):
+    assert size != (0, 0)
 
 
 def test_Size_iter(size):

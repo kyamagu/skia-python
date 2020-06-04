@@ -1,6 +1,7 @@
 #include "common.h"
+#include <pybind11/stl.h>
 #include <pybind11/operators.h>
-#include <sstream>
+#include <pybind11/iostream.h>
 
 namespace py = pybind11;
 
@@ -16,115 +17,600 @@ py::class_<SkIRect>(m, "IRect", R"docstring(
     and height. :py:class:`IRect` describes an area; if its right is less than
     or equal to its left, or if its bottom is less than or equal to its top, it
     is considered empty.
+
+    Example::
+
+        irect = skia.IRect(0, 0, 180, 120)
+        irect = skia.IRect((0, 0, 180, 120))  # Convert from tuple
+        print(irect.width(), irect.height())
+        left, top, right, bottom = tuple(irect)  # Convert to tuple
+
     )docstring")
-    // Python additions.
-    .def(py::init(&SkIRect::MakeEmpty))
-    .def(py::init(&SkIRect::MakeWH))
-    .def(py::init(&SkIRect::MakeLTRB))
-    .def("__repr__", [](const SkIRect& r) {
-        std::stringstream s;
-        s << "IRect(" << r.fLeft << ", " << r.fTop << ", " <<
-            r.fRight << ", " << r.fBottom << ")";
-        return s.str();
-    })
-    // Wrappers.
-    .def("left", &SkIRect::left, "Returns left edge of SkIRect, if sorted.")
-    .def("top", &SkIRect::top, "Returns top edge of SkIRect, if sorted.")
-    .def("right", &SkIRect::right, "Returns right edge of SkIRect, if sorted.")
+    .def(py::init(&SkIRect::MakeEmpty),
+        R"docstring(
+        Creates :py:class:`IRect` set to (0, 0, 0, 0).
+
+        Many other rectangles are empty; if left is equal to or greater than
+        right, or if top is equal to or greater than bottom. Setting all members
+        to zero is a convenience, but does not designate a special empty
+        rectangle.
+
+        :return: bounds (0, 0, 0, 0)
+        )docstring")
+    .def(py::init(&SkIRect::MakeWH),
+        R"docstring(
+        Returns constructed :py:class:`IRect` set to (0, 0, w, h).
+
+        Does not validate input; w or h may be negative.
+
+        :w: width of constructed :py:class:`IRect`
+        :h: height of constructed :py:class:`IRect`
+        :return: bounds (0, 0, w, h)
+        )docstring",
+        py::arg("w"), py::arg("h"))
+    .def(py::init(&SkIRect::MakeLTRB),
+        R"docstring(
+        Creates :py:class:`IRect` set to: (x, y, x + w, y + h).
+
+        Does not validate input; w or h may be negative.
+
+        :l: integer stored in fLeft
+        :t: integer stored in fTop
+        :r: integer stored in fRight
+        :b: integer stored in fBottom
+        :return: bounds (l, t, r, b)
+        )docstring",
+        py::arg("l"), py::arg("t"), py::arg("r"), py::arg("b"))
+    .def(py::init(
+        [] (py::tuple t) {
+            if (t.size() == 0)
+                return SkIRect::MakeEmpty();
+            else if (t.size() == 2)
+                return SkIRect::MakeWH(
+                    t[0].cast<int32_t>(), t[1].cast<int32_t>());
+            else if (t.size() == 4)
+                return SkIRect::MakeLTRB(
+                    t[0].cast<int32_t>(), t[1].cast<int32_t>(),
+                    t[2].cast<int32_t>(), t[3].cast<int32_t>());
+            else
+                throw py::value_error("Invalid tuple.");
+        }),
+        py::arg("t"))
+    .def("__iter__",
+        [](const SkIRect& r) {
+            return py::make_iterator(&r.fLeft, &r.fLeft + 4);
+        })
+    .def("__len__", [] (const SkIRect& r) { return 4; })
+    .def("__repr__",
+        [](const SkIRect& r) {
+            std::stringstream s;
+            s << "IRect(" << r.fLeft << ", " << r.fTop << ", " <<
+                r.fRight << ", " << r.fBottom << ")";
+            return s.str();
+        })
+    .def("left", &SkIRect::left,
+        R"docstring(
+        Returns left edge of :py:class:`IRect`, if sorted.
+
+        Call :py:meth:`sort` to reverse fLeft and fRight if needed.
+
+        :return: fLeft
+        )docstring")
+    .def("top", &SkIRect::top,
+        R"docstring(
+        Returns top edge of :py:class:`IRect`, if sorted.
+
+        Call :py:meth:`isEmpty` to see if :py:class:`IRect` may be invalid, and
+        :py:meth:`sort` to reverse fTop and fBottom if needed.
+
+        :return: fTop
+        )docstring")
+    .def("right", &SkIRect::right,
+        R"docstring(
+        Returns right edge of :py:class:`IRect`, if sorted.
+
+        Call :py:meth:`sort` to reverse fLeft and fRight if needed.
+
+        :return: fRight
+        )docstring")
     .def("bottom", &SkIRect::bottom,
-        "Returns bottom edge of SkIRect, if sorted.")
-    .def("x", &SkIRect::x, "Returns left edge of SkIRect, if sorted.")
-    .def("y", &SkIRect::y, "Returns top edge of SkIRect, if sorted.")
+        R"docstring(
+        Returns bottom edge of :py:class:`IRect`, if sorted.
+
+        Call :py:meth:`isEmpty` to see if :py:class:`IRect` may be invalid, and
+        :py:meth:`sort` to reverse fTop and fBottom if needed.
+
+        Returns
+        fBottom
+        )docstring")
+    .def("x", &SkIRect::x,
+        R"docstring(
+        Returns left edge of :py:class:`IRect`, if sorted.
+
+        Call :py:meth:`isEmpty` to see if :py:class:`IRect` is valid, and
+        :py:meth:`sort` to reverse fLeft and fRight if needed.
+
+        :return: fLeft
+        )docstring")
+    .def("y", &SkIRect::y,
+        R"docstring(
+        Returns top edge of :py:class:`IRect`, if sorted.
+
+        Call :py:meth:`isEmpty` to see if :py:class:`IRect` is invalid, and
+        :py:meth:`sort` to reverse fTop and fBottom if needed.
+
+        :return: fTop
+        )docstring")
     .def("topLeft", &SkIRect::topLeft)
-    .def("width", &SkIRect::width, "Returns span on the x-axis.")
-    .def("height", &SkIRect::height, "Returns span on the y-axis.")
+    .def("width", &SkIRect::width,
+        R"docstring(
+        Returns span on the x-axis.
+
+        This does not check if :py:class:`IRect` is sorted, or if result fits in
+        32-bit signed integer; result may be negative.
+
+        :return: fRight minus fLeft
+        )docstring")
+    .def("height", &SkIRect::height,
+        R"docstring(
+        Returns span on the y-axis.
+
+        This does not check if :py:class:`IRect` is sorted, or if result fits in
+        32-bit signed integer; result may be negative.
+
+        :return: fBottom minus fTop
+        )docstring")
     .def("size", &SkIRect::size, "Returns spans on the x-axis and y-axis.")
-    .def("width64", &SkIRect::width64, "Returns span on the x-axis.")
-    .def("height64", &SkIRect::height64, "Returns span on the y-axis.")
+    .def("width64", &SkIRect::width64,
+        R"docstring(
+        Returns span on the x-axis.
+
+        This does not check if :py:class:`IRect` is sorted, so the result may be
+        negative. This is safer than calling :py:meth:`width` since
+        :py:meth:`width` might overflow in its calculation.
+
+        :return: fRight minus fLeft cast to int64_t
+        )docstring")
+    .def("height64", &SkIRect::height64,
+        R"docstring(
+        Returns span on the y-axis.
+
+        This does not check if :py:class:`IRect` is sorted, so the result may be
+        negative. This is safer than calling :py:meth:`height` since
+        :py:meth:`height` might overflow in its calculation.
+
+        :return: fBottom minus fTop cast to int64_t
+        )docstring")
     .def("isEmpty64", &SkIRect::isEmpty64,
-        "Returns true if fLeft is equal to or greater than fRight, or if fTop "
-        "is equal to or greater than fBottom.")
+        R"docstring(
+        Returns true if fLeft is equal to or greater than fRight, or if fTop is
+        equal to or greater than fBottom.
+
+        Call :py:meth:`sort` to reverse rectangles with negative
+        :py:meth:`width64` or :py:meth:`height64`.
+
+        :return: true if :py:meth:`width64` or :py:meth:`height64` are zero or
+            negative
+        )docstring")
     .def("isEmpty", &SkIRect::isEmpty,
-        "Returns true if width() or height() are zero or negative.")
-    .def("setEmpty", &SkIRect::setEmpty, "Sets SkIRect to (0, 0, 0, 0).")
+        R"docstring(
+        Returns true if :py:meth:`width` or :py:meth:`height` are zero or
+        negative.
+
+        :return: true if :py:meth:`width` or :py:meth:`height` are zero or
+            negative
+        )docstring")
+    .def("setEmpty", &SkIRect::setEmpty,
+        R"docstring(
+        Sets :py:class:`IRect` to (0, 0, 0, 0).
+
+        Many other rectangles are empty; if left is equal to or greater than
+        right, or if top is equal to or greater than bottom. Setting all members
+        to zero is a convenience, but does not designate a special empty
+        rectangle.
+        )docstring")
     .def("setLTRB", &SkIRect::setLTRB,
-        "Sets SkIRect to (left, top, right, bottom).")
+        R"docstring(
+        Sets :py:class:`IRect` to (left, top, right, bottom).
+
+        left and right are not sorted; left is not necessarily less than right.
+        top and bottom are not sorted; top is not necessarily less than bottom.
+
+        :param left:   stored in fLeft
+        :param top:    stored in fTop
+        :param right:  stored in fRight
+        :param bottom: stored in fBottom
+        )docstring",
+        py::arg("left"), py::arg("top"), py::arg("right"), py::arg("bottom"))
     .def("setXYWH", &SkIRect::setXYWH,
-        "Sets SkIRect to: (x, y, x + width, y + height).")
-    .def("setWH", &SkIRect::setWH)
+        R"docstring(
+        Sets :py:class:`IRect` to: (x, y, x + width, y + height).
+
+        Does not validate input; width or height may be negative.
+
+        :param x:  stored in fLeft
+        :param y:  stored in fTop
+        :param width:   added to x and stored in fRight
+        :param height:  added to y and stored in fBottom
+        )docstring",
+        py::arg("x"), py::arg("y"), py::arg("width"), py::arg("height"))
+    .def("setWH", &SkIRect::setWH, py::arg("width"), py::arg("height"))
     .def("makeOffset",
-        (SkIRect (SkIRect::*)(int32_t, int32_t) const) &SkIRect::makeOffset,
-        "Returns SkIRect offset by (dx, dy).")
+        py::overload_cast<int32_t, int32_t>(&SkIRect::makeOffset, py::const_),
+        R"docstring(
+        Returns :py:class:`IRect` offset by (dx, dy).
+
+        If dx is negative, :py:class:`IRect` returned is moved to the left. If
+        dx is positive, :py:class:`IRect` returned is moved to the right. If dy
+        is negative, :py:class:`IRect` returned is moved upward. If dy is
+        positive, :py:class:`IRect` returned is moved downward.
+
+        :dx:  offset added to fLeft and fRight
+        :dy:  offset added to fTop and fBottom
+        :return: :py:class:`IRect` offset by dx and dy, with original width and
+            height
+        )docstring",
+        py::arg("dx"), py::arg("dy"))
     .def("makeOffset",
-        (SkIRect (SkIRect::*)(SkIVector) const) &SkIRect::makeOffset,
-        "Returns SkIRect offset by (offset.x(), offset.y()).")
+        py::overload_cast<SkIVector>(&SkIRect::makeOffset, py::const_),
+        R"docstring(
+        Returns :py:class:`IRect` offset by (offset.x(), offset.y()).
+
+        If offset.x() is negative, :py:class:`IRect` returned is moved to the
+        left. If offset.x() is positive, :py:class:`IRect` returned is moved to
+        the right. If offset.y() is negative, :py:class:`IRect` returned is
+        moved upward. If offset.y() is positive, :py:class:`IRect` returned is
+        moved downward.
+
+        :offset:  translation vector
+        :return: :py:class:`IRect` translated by offset, with original width and
+            height
+        )docstring",
+        py::arg("offset"))
     .def("makeInset", &SkIRect::makeInset,
-        "Returns SkIRect, inset by (dx, dy).")
+        R"docstring(
+        Returns :py:class:`IRect`, inset by (dx, dy).
+
+        If dx is negative, :py:class:`IRect` returned is wider. If dx is
+        positive, :py:class:`IRect` returned is narrower. If dy is negative,
+        :py:class:`IRect` returned is taller. If dy is positive,
+        :py:class:`IRect` returned is shorter.
+
+        :param dx:  offset added to fLeft and subtracted from fRight
+        :param dy:  offset added to fTop and subtracted from fBottom
+        :return: :py:class:`IRect` inset symmetrically left and right, top and
+            bottom
+        )docstring",
+        py::arg("dx"), py::arg("dy"))
     .def("makeOutset", &SkIRect::makeOutset,
-        "Returns SkIRect, outset by (dx, dy).")
+        R"docstring(
+        Returns :py:class:`IRect`, outset by (dx, dy).
+
+        If dx is negative, :py:class:`IRect` returned is narrower. If dx is
+        positive, :py:class:`IRect` returned is wider. If dy is negative,
+        :py:class:`IRect` returned is shorter. If dy is positive,
+        :py:class:`IRect` returned is taller.
+
+        :param dx: offset subtracted to fLeft and added from fRight
+        :param dy: offset subtracted to fTop and added from fBottom
+        :return: :py:class:`IRect` outset symmetrically left and right, top and
+            bottom
+        )docstring",
+        py::arg("dx"), py::arg("dy"))
     .def("offset", py::overload_cast<int32_t, int32_t>(&SkIRect::offset),
-        "Offsets SkIRect by adding dx to fLeft, fRight; and by adding dy to "
-        "fTop, fBottom.")
+        R"docstring(
+        Offsets :py:class:`IRect` by adding dx to fLeft, fRight; and by adding
+        dy to fTop, fBottom.
+
+        If dx is negative, moves :py:class:`IRect` returned to the left. If dx
+        is positive, moves :py:class:`IRect` returned to the right. If dy is
+        negative, moves :py:class:`IRect` returned upward. If dy is positive,
+        moves :py:class:`IRect` returned downward.
+
+        :dx:  offset added to fLeft and fRight
+        :dy:  offset added to fTop and fBottom
+        )docstring",
+        py::arg("dx"), py::arg("dy"))
     .def("offset", py::overload_cast<const SkIPoint&>(&SkIRect::offset),
-        "Offsets SkIRect by adding delta.fX to fLeft, fRight; and by adding "
-        "delta.fY to fTop, fBottom.")
+        R"docstring(
+        Offsets :py:class:`IRect` by adding delta.fX to fLeft, fRight; and by
+        adding delta.fY to fTop, fBottom.
+
+        If delta.fX is negative, moves :py:class:`IRect` returned to the left.
+        If delta.fX is positive, moves :py:class:`IRect` returned to the right.
+        If delta.fY is negative, moves :py:class:`IRect` returned upward. If
+        delta.fY is positive, moves :py:class:`IRect` returned downward.
+
+        :delta:  offset added to :py:class:`IRect`
+        )docstring",
+        py::arg("delta"))
     .def("offsetTo", &SkIRect::offsetTo,
-        "Offsets SkIRect so that fLeft equals newX, and fTop equals newY.")
-    .def("inset", &SkIRect::inset, "Insets SkIRect by (dx,dy).")
-    .def("outset", &SkIRect::outset, "Outsets SkIRect by (dx, dy).")
+        R"docstring(
+        Offsets :py:class:`IRect` so that fLeft equals newX, and fTop equals
+        newY.
+
+        width and height are unchanged.
+
+        :param newX:  stored in fLeft, preserving :py:meth:`width`
+        :param newY:  stored in fTop, preserving :py:meth:`height`
+        )docstring",
+        py::arg("newX"), py::arg("newY"))
+    .def("inset", &SkIRect::inset,
+        R"docstring(
+        Insets :py:class:`IRect` by (dx,dy).
+
+        If dx is positive, makes :py:class:`IRect` narrower. If dx is negative,
+        makes :py:class:`IRect` wider. If dy is positive, makes
+        :py:class:`IRect` shorter. If dy is negative, makes :py:class:`IRect`
+        taller.
+
+        :param dx:  offset added to fLeft and subtracted from fRight
+        :param dy:  offset added to fTop and subtracted from fBottom
+        )docstring",
+        py::arg("dx"), py::arg("dy"))
+    .def("outset", &SkIRect::outset,
+        R"docstring(
+        Outsets :py:class:`IRect` by (dx, dy).
+
+        If dx is positive, makes :py:class:`IRect` wider. If dx is negative,
+        makes :py:class:`IRect` narrower. If dy is positive, makes
+        :py:class:`IRect` taller. If dy is negative, makes :py:class:`IRect`
+        shorter.
+
+        :param dx:  subtracted to fLeft and added from fRight
+        :param dy:  subtracted to fTop and added from fBottom
+        )docstring",
+        py::arg("dx"), py::arg("dy"))
     .def("adjust", &SkIRect::adjust,
-        "Adjusts SkIRect by adding dL to fLeft, dT to fTop, dR to fRight, and "
-        "dB to fBottom.")
+        R"docstring(
+        Adjusts :py:class:`IRect` by adding dL to fLeft, dT to fTop, dR to
+        fRight, and dB to fBottom.
+
+        If dL is positive, narrows :py:class:`IRect` on the left. If negative,
+        widens it on the left. If dT is positive, shrinks :py:class:`IRect` on
+        the top. If negative, lengthens it on the top. If dR is positive,
+        narrows :py:class:`IRect` on the right. If negative, widens it on the
+        right. If dB is positive, shrinks :py:class:`IRect` on the bottom. If
+        negative, lengthens it on the bottom.
+
+        The resulting :py:class:`IRect` is not checked for validity. Thus, if
+        the resulting :py:class:`IRect` left is greater than right, the
+        :py:class:`IRect` will be considered empty. Call :py:meth:`sort` after
+        this call if that is not the desired behavior.
+
+        :param dL:  offset added to fLeft
+        :param dT:  offset added to fTop
+        :param dR:  offset added to fRight
+        :param dB:  offset added to fBottom
+        )docstring",
+        py::arg("dL"), py::arg("dT"), py::arg("dR"), py::arg("dB"))
+    .def("__contains__",
+        [] (const SkIRect& r, const SkIPoint& p) {
+            return r.contains(p.fX, p.fY);
+        },
+        py::is_operator())
+    .def("__contains__",
+        py::overload_cast<const SkIRect&>(&SkIRect::contains, py::const_),
+        py::is_operator())
+    .def("__contains__",
+        py::overload_cast<const SkRect&>(&SkIRect::contains, py::const_),
+        py::is_operator())
     .def("contains",
-        (bool (SkIRect::*)(int32_t, int32_t) const) &SkIRect::contains,
-        "Returns true if: fLeft <= x < fRight && fTop <= y < fBottom.")
+        py::overload_cast<int32_t, int32_t>(&SkIRect::contains, py::const_),
+        R"docstring(
+        Returns true if: fLeft <= x < fRight && fTop <= y < fBottom.
+
+        Returns false if :py:class:`IRect` is empty.
+
+        Considers input to describe constructed :py:class:`IRect`: (x, y, x + 1,
+        y + 1) and returns true if constructed area is completely enclosed by
+        :py:class:`IRect` area.
+
+        :x:  test :py:class:`IPoint` x-coordinate
+        :y:  test :py:class:`IPoint` y-coordinate
+        :return: true if (x, y) is inside :py:class:`IRect`
+        )docstring",
+        py::arg("x"), py::arg("y"))
     .def("contains",
-        (bool (SkIRect::*)(const SkIRect&) const) &SkIRect::contains,
-        "Returns true if SkIRect contains r.")
+        py::overload_cast<const SkIRect&>(&SkIRect::contains, py::const_),
+        R"docstring(
+        Returns true if :py:class:`IRect` contains r.
+
+        Returns false if :py:class:`IRect` is empty or r is empty.
+
+        :py:class:`IRect` contains r when :py:class:`IRect` area completely
+        includes r area.
+
+        :r: :py:class:`IRect` contained
+        :return: true if all sides of :py:class:`IRect` are outside r
+        )docstring",
+        py::arg("r"))
     .def("contains",
-        (bool (SkIRect::*)(const SkRect&) const) &SkIRect::contains,
-        "Returns true if SkRect contains r. ")
+        py::overload_cast<const SkRect&>(&SkIRect::contains, py::const_),
+        R"docstring(
+        Returns true if :py:class:`IRect` contains r.
+
+        Returns false if :py:class:`IRect` is empty or r is empty.
+
+        :py:class:`IRect` contains r when :py:class:`IRect` area completely
+        includes r area.
+
+        :r: :py:class:`Rect` contained
+        :return: true if all sides of :py:class:`IRect` are outside r
+        )docstring",
+        py::arg("r"))
     .def("containsNoEmptyCheck", &SkIRect::containsNoEmptyCheck,
-        "Returns true if SkIRect contains construction.")
+        R"docstring(
+        Returns true if :py:class:`IRect` contains construction.
+
+        Asserts if :py:class:`IRect` is empty or construction is empty, and if
+        SK_DEBUG is defined.
+
+        Return is undefined if :py:class:`IRect` is empty or construction is
+        empty.
+
+        :param r: :py:class:`IRect` contained
+        :return: true if all sides of :py:class:`IRect` are outside r
+        )docstring",
+        py::arg("r"))
     .def("intersect",
-        (bool (SkIRect::*)(const SkIRect&)) &SkIRect::intersect,
-        "Returns true if SkIRect intersects r, and sets SkIRect to "
-        "intersection.")
+        py::overload_cast<const SkIRect&>(&SkIRect::intersect),
+        R"docstring(
+        Returns true if :py:class:`IRect` intersects r, and sets
+        :py:class:`IRect` to intersection.
+
+        Returns false if :py:class:`IRect` does not intersect r, and leaves
+        :py:class:`IRect` unchanged.
+
+        Returns false if either r or :py:class:`IRect` is empty, leaving
+        :py:class:`IRect` unchanged.
+
+        :r: limit of result
+        :return: true if r and :py:class:`IRect` have area in common
+        )docstring",
+        py::arg("r"))
     .def("intersect",
-        (bool (SkIRect::*)(const SkIRect&, const SkIRect&)) &SkIRect::intersect,
-        "Returns true if a intersects b, and sets SkIRect to intersection.")
-    .def("join", &SkIRect::join, "Sets SkIRect to the union of itself and r.")
+        py::overload_cast<const SkIRect&, const SkIRect&>(&SkIRect::intersect),
+        R"docstring(
+        Returns true if a intersects b, and sets :py:class:`IRect` to
+        intersection.
+
+        Returns false if a does not intersect b, and leaves :py:class:`IRect`
+        unchanged.
+
+        Returns false if either a or b is empty, leaving :py:class:`IRect`
+        unchanged.
+
+        :a: :py:class:`IRect` to intersect
+        :b: :py:class:`IRect` to intersect
+        :return: true if a and b have area in common
+        )docstring",
+        py::arg("a"), py::arg("b"))
+    .def("join", &SkIRect::join,
+        R"docstring(
+        Sets :py:class:`IRect` to the union of itself and r.
+
+        Has no effect if r is empty. Otherwise, if :py:class:`IRect` is empty,
+        sets :py:class:`IRect` to r.
+
+        :param r: expansion :py:class:`IRect`
+        )docstring",
+        py::arg("r"))
     .def("sort", &SkIRect::sort,
-        "Swaps fLeft and fRight if fLeft is greater than fRight; and swaps "
-        "fTop and fBottom if fTop is greater than fBottom.")
+        R"docstring(
+        Swaps fLeft and fRight if fLeft is greater than fRight; and swaps fTop
+        and fBottom if fTop is greater than fBottom.
+
+        Result may be empty, and :py:meth:`width` and :py:meth:`height` will be
+        zero or positive.
+        )docstring")
     .def("makeSorted", &SkIRect::makeSorted,
-        "Returns SkIRect with fLeft and fRight swapped if fLeft is greater "
-        "than fRight; and with fTop and fBottom swapped if fTop is greater "
-        "than fBottom.")
+        R"docstring(
+        Returns :py:class:`IRect` with fLeft and fRight swapped if fLeft is
+        greater than fRight; and with fTop and fBottom swapped if fTop is
+        greater than fBottom.
+
+        Result may be empty; and :py:meth:`width` and :py:meth:`height` will be
+        zero or positive.
+
+        :return: sorted :py:class:`IRect`
+        )docstring")
     .def_static("MakeEmpty", &SkIRect::MakeEmpty,
-        "Returns constructed SkIRect set to (0, 0, 0, 0).")
+        R"docstring(
+        Returns constructed :py:class:`IRect` set to (0, 0, 0, 0).
+
+        Many other rectangles are empty; if left is equal to or greater than
+        right, or if top is equal to or greater than bottom. Setting all members
+        to zero is a convenience, but does not designate a special empty
+        rectangle.
+
+        :return: bounds (0, 0, 0, 0)
+        )docstring")
     .def_static("MakeWH", &SkIRect::MakeWH,
-        "Returns constructed SkIRect set to (0, 0, w, h).")
+        R"docstring(
+        Returns constructed :py:class:`IRect` set to (0, 0, w, h).
+
+        Does not validate input; w or h may be negative.
+
+        :param w: width of constructed :py:class:`IRect`
+        :param h: height of constructed :py:class:`IRect`
+        :return: bounds (0, 0, w, h)
+        )docstring",
+        py::arg("w"), py::arg("h"))
     .def_static("MakeSize", &SkIRect::MakeSize,
-        "Returns constructed SkIRect set to (0, 0, size.width(), "
-        "size.height()).")
+        R"docstring(
+        Returns constructed :py:class:`IRect` set to (0, 0, size.width(),
+        size.height()).
+
+        Does not validate input; size.width() or size.height() may be negative.
+
+        :param size: values for :py:class:`IRect` width and height
+        :return: bounds (0, 0, size.width(), size.height())
+        )docstring",
+        py::arg("size"))
     .def_static("MakeLTRB", &SkIRect::MakeLTRB,
-        "Returns constructed SkIRect set to (l, t, r, b).")
+        R"docstring(
+        Returns constructed :py:class:`IRect` set to (l, t, r, b).
+
+        Does not sort input; :py:class:`IRect` may result in fLeft greater than
+        fRight, or fTop greater than fBottom.
+
+        :param l: integer stored in fLeft
+        :param t: integer stored in fTop
+        :param r: integer stored in fRight
+        :param b: integer stored in fBottom
+        :return: bounds (l, t, r, b)
+        )docstring",
+        py::arg("l"), py::arg("t"), py::arg("r"), py::arg("b"))
     .def_static("MakeXYWH", &SkIRect::MakeXYWH,
-        "Returns constructed SkIRect set to: (x, y, x + w, y + h).")
+        R"docstring(
+        Returns constructed :py:class:`IRect` set to: (x, y, x + w, y + h).
+
+        Does not validate input; w or h may be negative.
+
+        :param x: stored in fLeft
+        :param y: stored in fTop
+        :param w: added to x and stored in fRight
+        :param h: added to y and stored in fBottom
+        :return: bounds at (x, y) with width w and height h
+        )docstring",
+        py::arg("x"), py::arg("y"), py::arg("w"), py::arg("h"))
     .def_static("Intersects", &SkIRect::Intersects,
-        "Returns true if a intersects b.")
+        R"docstring(
+        Returns true if a intersects b.
+
+        Returns false if either a or b is empty, or do not intersect.
+
+        :param a: :py:class:`IRect` to intersect
+        :param b: :py:class:`IRect` to intersect
+        :return: true if a and b have area in common
+        )docstring",
+        py::arg("a"), py::arg("b"))
     .def_readwrite("fLeft", &SkIRect::fLeft, "smaller x-axis bounds")
     .def_readwrite("fTop", &SkIRect::fTop, "smaller y-axis bounds")
     .def_readwrite("fRight", &SkIRect::fRight, "larger x-axis bounds")
     .def_readwrite("fBottom", &SkIRect::fBottom, "larger y-axis bounds")
     .def(py::self == py::self,
-        "Returns true if all members in a: fLeft, fTop, fRight, and fBottom; "
-        "are identical to corresponding members in b.")
+        R"docstring(
+        Returns true if all members in self: fLeft, fTop, fRight, and fBottom;
+        are identical to corresponding members in other.
+
+        :param other: :py:class:`IRect` to compare
+        :return: true if members are equal
+        )docstring",
+        py::arg("other"))
     .def(py::self != py::self,
-        "Returns true if any member in a: fLeft, fTop, fRight, and fBottom; is "
-        "not identical to the corresponding member in b.")
+        R"docstring(
+        Returns true if any member in self: fLeft, fTop, fRight, and fBottom; is
+        not identical to the corresponding member in other.
+
+        :param other: :py:class:`IRect` to compare
+        :return: true if members are not equal
+        )docstring",
+        py::arg("other"))
     ;
+
+py::implicitly_convertible<py::tuple, SkIRect>();
 
 // Rect
 py::class_<SkRect>(m, "Rect", R"docstring(
@@ -136,176 +622,815 @@ py::class_<SkRect>(m, "Rect", R"docstring(
     equal to its left, or if its bottom is less than or equal to its top, it is
     considered empty.
     )docstring")
-    // Python additions.
-    .def(py::init(&SkRect::MakeEmpty))
-    .def(py::init(&SkRect::MakeWH))
-    .def(py::init(&SkRect::MakeLTRB))
+    .def(py::init(&SkRect::MakeEmpty),
+        R"docstring(
+        Returns constructed :py:class:`Rect` set to (0, 0, 0, 0).
+
+        Many other rectangles are empty; if left is equal to or greater than
+        right, or if top is equal to or greater than bottom. Setting all members
+        to zero is a convenience, but does not designate a special empty
+        rectangle.
+
+        :return: bounds (0, 0, 0, 0)
+        )docstring")
+    .def(py::init(&SkRect::MakeWH),
+        R"docstring(
+        Returns constructed :py:class:`Rect` set to :py:class:`Scalar` values
+        (0, 0, w, h).
+
+        Does not validate input; w or h may be negative.
+
+        Passing integer values may generate a compiler warning since
+        :py:class:`Rect` cannot represent 32-bit integers exactly. Use
+        :py:class:`IRect` for an exact integer rectangle.
+
+        :w: Scalar width of constructed :py:class:`Rect`
+        :h: Scalar height of constructed :py:class:`Rect`
+        :return: bounds (0, 0, w, h)
+        )docstring",
+        py::arg("w"), py::arg("h"))
+    .def(py::init(&SkRect::MakeLTRB),
+        R"docstring(
+        Returns constructed :py:class:`Rect` set to (l, t, r, b).
+
+        Does not sort input; :py:class:`Rect` may result in fLeft greater than
+        fRight, or fTop greater than fBottom.
+
+        :l:  Scalar stored in fLeft
+        :t:  Scalar stored in fTop
+        :r:  Scalar stored in fRight
+        :b:  Scalar stored in fBottom
+        :return: bounds (l, t, r, b)
+        )docstring",
+        py::arg("l"), py::arg("t"), py::arg("r"), py::arg("b"))
+    .def(py::init(py::overload_cast<const SkISize&>(&SkRect::Make)),
+        R"docstring(
+        Returns constructed :py:class:`Rect` set to (0, 0, size.width(),
+        size.height()).
+
+        Does not validate input; size.width() or size.height() may be negative.
+
+        :size: integer values for :py:class:`Rect` width and height
+        :return: bounds (0, 0, size.width(), size.height())
+        )docstring",
+        py::arg("size"))
+    .def(py::init(py::overload_cast<const SkIRect&>(&SkRect::Make)),
+        R"docstring(
+        Returns constructed :py:class:`Rect` set to irect, promoting integers
+        to scalar.
+
+        Does not validate input; fLeft may be greater than fRight, fTop may be
+        greater than fBottom.
+
+        :irect: integer unsorted bounds
+        :return: irect members converted to Scalar
+        )docstring",
+        py::arg("irect"))
+    .def(py::init(
+        [] (py::tuple t) {
+            if (t.size() == 0)
+                return SkRect::MakeEmpty();
+            else if (t.size() == 2)
+                return SkRect::MakeWH(
+                    t[0].cast<SkScalar>(), t[1].cast<SkScalar>());
+            else if (t.size() == 4)
+                return SkRect::MakeXYWH(
+                    t[0].cast<SkScalar>(), t[1].cast<SkScalar>(),
+                    t[2].cast<SkScalar>(), t[3].cast<SkScalar>());
+            else
+                throw py::value_error("Invalid tuple.");
+        }),
+        py::arg("t"))
+    .def("__iter__",
+        [](const SkRect& r) {
+            return py::make_iterator(&r.fLeft, &r.fLeft + 4);
+        })
+    .def("__len__", [] (const SkRect& r) { return 4; })
     .def("__repr__", [](const SkRect& r) {
         std::stringstream s;
         s << "Rect(" << r.fLeft << ", " << r.fTop << ", " <<
             r.fRight << ", " << r.fBottom << ")";
         return s.str();
     })
-    // Wrappers.
     .def("isEmpty", &SkRect::isEmpty,
-        "Returns true if fLeft is equal to or greater than fRight, or if "
-        "fTop is equal to or greater than fBottom.")
+        R"docstring(
+        Returns true if fLeft is equal to or greater than fRight, or if fTop is
+        equal to or greater than fBottom.
+
+        Call :py:meth:`sort` to reverse rectangles with negative
+        :py:meth:`width` or :py:meth:`height`.
+
+        :return: true if :py:meth:`width` or :py:meth:`height` are zero or
+            negative
+        )docstring")
     .def("isSorted", &SkRect::isSorted,
-        "Returns true if fLeft is equal to or less than fRight, or if fTop is "
-        "equal to or less than fBottom.")
+        R"docstring(
+        Returns true if fLeft is equal to or less than fRight, or if fTop is
+        equal to or less than fBottom.
+
+        Call :py:meth:`sort` to reverse rectangles with negative
+        :py:meth:`width` or :py:meth:`height`.
+
+        :return: true if :py:meth:`width` or :py:meth:`height` are zero or
+            positive
+        )docstring")
     .def("isFinite", &SkRect::isFinite,
-        "Returns true if all values in the rectangle are finite: SK_ScalarMin "
-        "or larger, and SK_ScalarMax or smaller.")
-    .def("x", &SkRect::x, "Returns left edge of SkRect, if sorted.")
-    .def("y", &SkRect::y, "Returns top edge of SkRect, if sorted.")
-    .def("left", &SkRect::left, "Returns left edge of SkRect, if sorted.")
-    .def("top", &SkRect::top, "Returns top edge of SkRect, if sorted.")
-    .def("right", &SkRect::right, "Returns right edge of SkRect, if sorted.")
+        R"docstring(
+        Returns true if all values in the rectangle are finite: SK_ScalarMin or
+        larger, and SK_ScalarMax or smaller.
+
+        :return: true if no member is infinite or NaN
+        )docstring")
+    .def("x", &SkRect::x,
+        R"docstring(
+        Returns left edge of :py:class:`Rect`, if sorted.
+
+        Call :py:meth:`isSorted` to see if :py:class:`Rect` is valid. Call
+        :py:meth:`sort` to reverse fLeft and fRight if needed.
+
+        :return: fLeft
+        )docstring")
+    .def("y", &SkRect::y,
+        R"docstring(
+        Returns top edge of SkRect, if sorted.
+
+        Call :py:meth:`isEmpty` to see if SkRect may be invalid, and
+        :py:meth:`sort` to reverse fTop and fBottom if needed.
+
+        :return: fTop
+        )docstring")
+    .def("left", &SkRect::left,
+        R"docstring(
+        Returns left edge of SkRect, if sorted.
+
+        Call :py:meth:`isSorted` to see if SkRect is valid. Call :py:meth:`sort`
+        to reverse fLeft and fRight if needed.
+
+        :return: fLeft
+        )docstring")
+    .def("top", &SkRect::top,
+        R"docstring(
+        Returns top edge of SkRect, if sorted.
+
+        Call :py:meth:`isEmpty` to see if SkRect may be invalid, and
+        :py:meth:`sort` to reverse fTop and fBottom if needed.
+
+        :return: fTop
+        )docstring")
+    .def("right", &SkRect::right,
+        R"docstring(
+        Returns right edge of SkRect, if sorted.
+
+        Call :py:meth:`isSorted` to see if SkRect is valid. Call :py:meth:`sort`
+        to reverse fLeft and fRight if needed.
+
+        :return: fRight
+        )docstring")
     .def("bottom", &SkRect::bottom,
-        "Returns bottom edge of SkRect, if sorted.")
-    .def("width", &SkRect::width, "Returns span on the x-axis.")
+        R"docstring(
+        Returns bottom edge of SkRect, if sorted.
+
+        Call :py:meth:`isEmpty` to see if SkRect may be invalid, and
+        :py:meth:`sort` to reverse fTop and fBottom if needed.
+
+        :return: fBottom
+        )docstring")
+    .def("width", &SkRect::width,
+        R"docstring(
+        Returns span on the x-axis.
+
+        This does not check if :py:class:`Rect` is sorted, or if result fits in
+        32-bit float; result may be negative or infinity.
+
+        :return: fRight minus fLeft
+        )docstring")
     .def("height", &SkRect::height, "Returns span on the y-axis.")
     .def("centerX", &SkRect::centerX,
-        "Returns average of left edge and right edge.")
+        R"docstring(
+        Returns average of left edge and right edge.
+
+        Result does not change if SkRect is sorted. Result may overflow to
+        infinity if :py:class:`Rect` is far from the origin.
+
+        :return: midpoint on x-axis
+        )docstring")
     .def("centerY", &SkRect::centerY,
-        "Returns average of top edge and bottom edge.")
-    .def("setEmpty", &SkRect::setEmpty, "Sets SkRect to (0, 0, 0, 0).")
-    .def("set", py::overload_cast<const SkIRect&>(&SkRect::set),
-        "Sets SkRect to src, promoting src members from integer to scalar.")
+        R"docstring(
+        Returns average of top edge and bottom edge.
+
+        Result does not change if :py:class:`Rect` is sorted.
+
+        :return: midpoint on y-axis
+        )docstring")
+    .def("toQuad",
+        [] (const SkRect& rect) {
+            std::vector<SkPoint> quad(4);
+            rect.toQuad(&quad[0]);
+            return quad;
+        },
+        R"docstring(
+        Returns four points in quad that enclose :py:class:`Rect` ordered as:
+        top-left, top-right, bottom-right, bottom-left.
+
+        :return: corners of :py:class:`Rect`
+        )docstring")
+    .def("setEmpty", &SkRect::setEmpty,
+        R"docstring(
+        Sets :py:class:`Rect` to (0, 0, 0, 0).
+
+        Many other rectangles are empty; if left is equal to or greater than
+        right, or if top is equal to or greater than bottom. Setting all members
+        to zero is a convenience, but does not designate a special empty
+        rectangle.
+        )docstring")
     .def("setLTRB", &SkRect::setLTRB,
-        "Sets SkRect to (left, top, right, bottom).")
-    .def("setBounds", &SkRect::setBounds,
-        "Sets to bounds of SkPoint array with count entries.")
-    .def("setBoundsNoCheck", &SkRect::setBoundsNoCheck,
-        "Sets to bounds of SkPoint pts array with count entries.")
+        R"docstring(
+        Sets :py:class:`Rect` to (left, top, right, bottom).
+
+        left and right are not sorted; left is not necessarily less than right.
+        top and bottom are not sorted; top is not necessarily less than bottom.
+
+        :param left:   stored in fLeft
+        :param top:    stored in fTop
+        :param right:  stored in fRight
+        :param bottom: stored in fBottom
+        )docstring",
+        py::arg("left"), py::arg("top"), py::arg("right"), py::arg("bottom"))
+    .def("setBounds",
+        [] (SkRect& rect, const std::vector<SkPoint>& points) {
+            rect.setBounds(&points[0], points.size());
+        },
+        R"docstring(
+        Sets to bounds of :py:class:`Point` array with count entries.
+
+        If count is zero or smaller, or if :py:class:`Point` array contains an
+        infinity or NaN, sets to (0, 0, 0, 0).
+
+        Result is either empty or sorted: fLeft is less than or equal to fRight,
+        and fTop is less than or equal to fBottom.
+
+        :param points: :py:class:`Point` array
+        )docstring",
+        py::arg("points"))
+    .def("setBoundsCheck",
+        [] (SkRect& rect, const std::vector<SkPoint>& points) {
+            return rect.setBoundsCheck(&points[0], points.size());
+        },
+        R"docstring(
+        Sets to bounds of :py:class:`Point` array with count entries.
+
+        Returns false if count is zero or smaller, or if :py:class:`Point` array
+        contains an infinity or NaN; in these cases sets :py:class:`Rect` to
+        (0, 0, 0, 0).
+
+        Result is either empty or sorted: fLeft is less than or equal to fRight,
+        and fTop is less than or equal to fBottom.
+
+        :param points: :py:class:`Point` array
+        :return: true if all :py:class:`Point` values are finite
+        )docstring",
+        py::arg("points"))
+    .def("setBoundsNoCheck",
+        [] (SkRect& rect, const std::vector<SkPoint>& points) {
+            rect.setBoundsNoCheck(&points[0], points.size());
+        },
+        R"docstring(
+        Sets to bounds of :py:class:`Point` pts array with count entries.
+
+        If any :py:class:`Point` in pts contains infinity or NaN, all
+        :py:class:`Rect` dimensions are set to NaN.
+
+        :param points: :py:class:`Point` array
+        )docstring",
+        py::arg("points"))
+    .def("set", py::overload_cast<const SkIRect&>(&SkRect::set),
+        R"docstring(
+        Sets :py:class:`Rect` to src, promoting src members from integer to
+        scalar.
+
+        Very large values in src may lose precision.
+
+        :src: integer :py:class:`Rect`
+        )docstring",
+        py::arg("src"))
     .def("set", py::overload_cast<const SkPoint&, const SkPoint&>(&SkRect::set),
-        "Sets bounds to the smallest SkRect enclosing SkPoint p0 and p1.")
+        R"docstring(
+        Sets bounds to the smallest :py:class:`Rect` enclosing :py:class:`Point`
+        p0 and p1.
+
+        The result is sorted and may be empty. Does not check to see if values
+        are finite.
+
+        :p0:  corner to include
+        :p1:  corner to include
+        )docstring",
+        py::arg("p0"), py::arg("p1"))
     .def("setXYWH", &SkRect::setXYWH,
-        "Sets SkRect to: (x, y, x + width, y + height).")
-    .def("setWH", &SkRect::setWH, "Sets SkRect to (0, 0, width, height).")
-    .def("setIWH", &SkRect::setIWH)
+        R"docstring(
+        Sets :py:class:`Rect` to (x, y, x + width, y + height).
+
+        Does not validate input; width or height may be negative.
+
+        :param x:   stored in fLeft
+        :param y:   stored in fTop
+        :param width:   added to x and stored in fRight
+        :param height:  added to y and stored in fBottom
+        )docstring",
+        py::arg("x"), py::arg("y"), py::arg("width"), py::arg("height"))
+    .def("setWH", &SkRect::setWH,
+        R"docstring(
+        Sets :py:class:`Rect` to (0, 0, width, height).
+
+        Does not validate input; width or height may be negative.
+
+        :param width:   stored in fRight
+        :param height:  stored in fBottom
+        )docstring",
+        py::arg("width"), py::arg("height"))
+    .def("setIWH", &SkRect::setIWH, py::arg("width"), py::arg("height"))
     .def("makeOffset",
-        (SkRect (SkRect::*)(SkScalar, SkScalar) const) &SkRect::makeOffset,
-        "Returns SkRect offset by (dx, dy).")
+        py::overload_cast<SkScalar, SkScalar>(&SkRect::makeOffset, py::const_),
+        R"docstring(
+        Returns :py:class:`Rect` offset by (dx, dy).
+
+        If dx is negative, :py:class:`Rect` returned is moved to the left. If dx
+        is positive, :py:class:`Rect` returned is moved to the right. If dy is
+        negative, :py:class:`Rect` returned is moved upward. If dy is positive,
+        :py:class:`Rect` returned is moved downward.
+
+        :dx: added to fLeft and fRight
+        :dy: added to fTop and fBottom
+        :return: :py:class:`Rect` offset on axes, with original width and height
+        )docstring",
+        py::arg("dx"), py::arg("dy"))
     .def("makeOffset",
-        (SkRect (SkRect::*)(SkVector) const) &SkRect::makeOffset,
-        "Returns SkRect offset by v.")
-    .def("makeInset", &SkRect::makeInset, "Returns SkRect, inset by (dx, dy).")
+        py::overload_cast<SkVector>(&SkRect::makeOffset, py::const_),
+        R"docstring(
+        Returns :py:class:`Rect` offset by v.
+
+        :v: added to rect
+        :return: :py:class:`Rect` offset on axes, with original width and height
+        )docstring",
+        py::arg("v"))
+    .def("makeInset", &SkRect::makeInset,
+        R"docstring(
+        Returns :py:class:`Rect`, inset by (dx, dy).
+
+        If dx is negative, :py:class:`Rect` returned is wider. If dx is
+        positive, :py:class:`Rect` returned is narrower. If dy is negative,
+        :py:class:`Rect` returned is taller. If dy is positive, :py:class:`Rect`
+        returned is shorter.
+
+        :param dx: added to fLeft and subtracted from fRight
+        :param dy: added to fTop and subtracted from fBottom
+        :return: :py:class:`Rect` inset symmetrically left and right, top and
+            bottom
+        )docstring",
+        py::arg("dx"), py::arg("dy"))
     .def("makeOutset", &SkRect::makeOutset,
-        "Returns SkRect, outset by (dx, dy).")
-    .def("offset", py::overload_cast<SkScalar, SkScalar>(&SkRect::offset),
-        "Offsets SkRect by adding dx to fLeft, fRight; and by adding dy to "
-        "fTop, fBottom.")
+        R"docstring(
+        Returns :py:class:`Rect`, outset by (dx, dy).
+
+        If dx is negative, :py:class:`Rect` returned is narrower. If dx is
+        positive, :py:class:`Rect` returned is wider. If dy is negative,
+        :py:class:`Rect` returned is shorter. If dy is positive,
+        :py:class:`Rect` returned is taller.
+
+        :param dx: subtracted to fLeft and added from fRight
+        :param dy: subtracted to fTop and added from fBottom
+        :return: :py:class:`Rect` outset symmetrically left and right, top and
+            bottom
+        )docstring",
+        py::arg("dx"), py::arg("dy"))
+    .def("offset",
+        py::overload_cast<SkScalar, SkScalar>(&SkRect::offset),
+        R"docstring(
+        Offsets :py:class:`Rect` by adding dx to fLeft, fRight; and by adding dy
+        to fTop, fBottom.
+
+        If dx is negative, moves :py:class:`Rect` to the left. If dx is
+        positive, moves :py:class:`Rect` to the right. If dy is negative, moves
+        :py:class:`Rect` upward. If dy is positive, moves :py:class:`Rect`
+        downward.
+
+        :dx:  offset added to fLeft and fRight
+        :dy:  offset added to fTop and fBottom
+        )docstring",
+        py::arg("dx"), py::arg("dy"))
     .def("offset", py::overload_cast<const SkPoint&>(&SkRect::offset),
-        "Offsets SkRect by adding delta.fX to fLeft, fRight; and by adding "
-        "delta.fY to fTop, fBottom.")
+        R"docstring(
+        Offsets :py:class:`Rect` by adding delta.fX to fLeft, fRight; and by
+        adding delta.fY to fTop, fBottom.
+
+        If delta.fX is negative, moves :py:class:`Rect` to the left. If delta.fX
+        is positive, moves :py:class:`Rect` to the right. If delta.fY is
+        negative, moves :py:class:`Rect` upward. If delta.fY is positive, moves
+        :py:class:`Rect` downward.
+
+        :param delta: added to :py:class:`Rect`
+        )docstring",
+        py::arg("delta"))
     .def("offsetTo", &SkRect::offsetTo,
-        "Offsets SkRect so that fLeft equals newX, and fTop equals newY.")
-    .def("inset", &SkRect::inset, "Insets SkRect by (dx,dy).")
-    .def("outset", &SkRect::outset, "Outsets SkRect by (dx, dy).")
+        R"docstring(
+        Offsets :py:class:`Rect` so that fLeft equals newX, and fTop equals
+        newY.
+
+        width and height are unchanged.
+
+        :param newX: stored in fLeft, preserving :py:meth:`width`
+        :param newY: stored in fTop, preserving :py:meth:`height`
+        )docstring")
+    .def("inset", &SkRect::inset,
+        R"docstring(
+        Insets :py:class:`Rect` by (dx, dy).
+
+        If dx is positive, makes :py:class:`Rect` narrower. If dx is negative,
+        makes :py:class:`Rect` wider. If dy is positive, makes :py:class:`Rect`
+        shorter. If dy is negative, makes :py:class:`Rect` taller.
+
+        :param dx:  added to fLeft and subtracted from fRight
+        :param dy:  added to fTop and subtracted from fBottom
+        )docstring",
+        py::arg("dx"), py::arg("dy"))
+    .def("outset", &SkRect::outset,
+        R"docstring(
+        Outsets :py:class:`Rect` by (dx, dy).
+
+        If dx is positive, makes :py:class:`Rect` wider. If dx is negative,
+        makes :py:class:`Rect` narrower. If dy is positive, makes
+        :py:class:`Rect` taller. If dy is negative, makes :py:class:`Rect`
+        shorter.
+
+        :param dx:  subtracted to fLeft and added from fRight
+        :param dy:  subtracted to fTop and added from fBottom
+        )docstring",
+        py::arg("dx"), py::arg("dy"))
     .def("intersect",
-        (bool (SkRect::*)(const SkRect&)) &SkRect::intersect,
-        "Returns true if SkRect intersects r, and sets SkRect to "
-        "intersection.")
+        py::overload_cast<const SkRect&>(&SkRect::intersect),
+        R"docstring(
+        Returns true if :py:class:`Rect` intersects r, and sets :py:class:`Rect`
+        to intersection.
+
+        Returns false if :py:class:`Rect` does not intersect r, and leaves
+        :py:class:`Rect` unchanged.
+
+        Returns false if either r or :py:class:`Rect` is empty, leaving
+        :py:class:`Rect` unchanged.
+
+        :r: limit of result
+        :return: true if r and :py:class:`Rect` have area in common
+        )docstring",
+        py::arg("r"))
     .def("intersect",
-        (bool (SkRect::*)(const SkRect&, const SkRect&)) &SkRect::intersect,
-        "Returns true if a intersects b, and sets SkRect to intersection.")
+        py::overload_cast<const SkRect&, const SkRect&>(&SkRect::intersect),
+        R"docstring(
+        Returns true if a intersects b, and sets :py:class:`Rect` to
+        intersection.
+
+        Returns false if a does not intersect b, and leaves :py:class:`Rect`
+        unchanged.
+
+        Returns false if either a or b is empty, leaving :py:class:`Rect`
+        unchanged.
+
+        :a: :py:class:`Rect` to intersect
+        :b: :py:class:`Rect` to intersect
+        :return: true if a and b have area in common
+        )docstring",
+        py::arg("a"), py::arg("b"))
     .def("intersects", &SkRect::intersects,
-        "Returns true if SkRect intersects r.")
-    .def("join", &SkRect::join, "Sets SkRect to the union of itself and r.")
+        R"docstring(
+        Returns true if :py:class:`Rect` intersects r.
+
+        Returns false if either r or :py:class:`Rect` is empty, or do not
+        intersect.
+
+        :param r:  :py:class:`Rect` to intersect
+        :return: true if r and :py:class:`Rect` have area in common
+        )docstring",
+        py::arg("r"))
+    .def("join", &SkRect::join,
+        R"docstring(
+        Sets :py:class:`Rect` to the union of itself and r.
+
+        Has no effect if r is empty. Otherwise, if :py:class:`Rect` is empty,
+        sets :py:class:`Rect` to r.
+
+        :param r: expansion :py:class:`Rect`
+        )docstring",
+        py::arg("r"))
     .def("joinNonEmptyArg", &SkRect::joinNonEmptyArg,
-        "Sets SkRect to the union of itself and r.")
+        R"docstring(
+        Sets :py:class:`Rect` to the union of itself and r.
+
+        Asserts if r is empty and SK_DEBUG is defined. If :py:class:`Rect` is
+        empty, sets :py:class:`Rect` to r.
+
+        May produce incorrect results if r is empty.
+
+        :param r: expansion :py:class:`Rect`
+        )docstring",
+        py::arg("r"))
     .def("joinPossiblyEmptyRect", &SkRect::joinPossiblyEmptyRect,
-        "Sets SkRect to the union of itself and the construction.")
+        R"docstring(
+        Sets :py:class:`Rect` to the union of itself and the construction.
+
+        May produce incorrect results if :py:class:`Rect` or r is empty.
+
+        :param r:  expansion :py:class:`Rect`
+        )docstring",
+        py::arg("r"))
+    .def("__contains__",
+        [] (const SkRect& r, const SkPoint& p) {
+            return r.contains(p.fX, p.fY);
+        },
+        py::is_operator())
+    .def("__contains__",
+        py::overload_cast<const SkRect&>(&SkRect::contains, py::const_),
+        py::is_operator())
+    .def("__contains__",
+        py::overload_cast<const SkIRect&>(&SkRect::contains, py::const_),
+        py::is_operator())
     .def("contains",
-        (bool (SkRect::*)(SkScalar, SkScalar) const) &SkRect::contains,
-        "Returns true if: fLeft <= x < fRight && fTop <= y < fBottom.")
+        py::overload_cast<SkScalar, SkScalar>(&SkRect::contains, py::const_),
+        R"docstring(
+        Returns true if: fLeft <= x < fRight && fTop <= y < fBottom.
+
+        Returns false if :py:class:`Rect` is empty.
+
+        :x:  test :py:class:`Point` x-coordinate
+        :y:  test :py:class:`Point` y-coordinate
+        :return: true if (x, y) is inside :py:class:`Rect`
+        )docstring",
+        py::arg("x"), py::arg("y"))
     .def("contains",
-        (bool (SkRect::*)(const SkRect&) const) &SkRect::contains,
-        "Returns true if SkRect contains r.")
+        py::overload_cast<const SkRect&>(&SkRect::contains, py::const_),
+        R"docstring(
+        Returns true if :py:class:`Rect` contains r.
+
+        Returns false if :py:class:`Rect` is empty or r is empty.
+
+        :py:class:`Rect` contains r when :py:class:`Rect` area completely
+        includes r area.
+
+        :r: :py:class:`Rect` contained
+        :return: true if all sides of :py:class:`Rect` are outside r
+        )docstring",
+        py::arg("r"))
     .def("contains",
-        (bool (SkRect::*)(const SkIRect&) const) &SkRect::contains,
-        "Returns true if SkRect contains r. ")
-    .def("round", py::overload_cast<SkIRect*>(&SkRect::round, py::const_),
-        "Sets SkIRect by adding 0.5 and discarding the fractional portion of "
-        "SkRect members, using (SkScalarRoundToInt(fLeft), "
-        "SkScalarRoundToInt(fTop), SkScalarRoundToInt(fRight), "
-        "SkScalarRoundToInt(fBottom)).")
-    .def("roundOut", py::overload_cast<SkIRect*>(&SkRect::roundOut, py::const_),
-        "Sets SkIRect by discarding the fractional portion of fLeft and fTop; "
-        "and rounding up fRight and fBottom, using (SkScalarFloorToInt(fLeft), "
-        "SkScalarFloorToInt(fTop), SkScalarCeilToInt(fRight), "
-        "SkScalarCeilToInt(fBottom)).")
-    .def("roundOut", py::overload_cast<SkRect*>(&SkRect::roundOut, py::const_),
-        "Sets SkRect by discarding the fractional portion of fLeft and fTop; "
-        "and rounding up fRight and fBottom, using (SkScalarFloorToInt(fLeft), "
-        "SkScalarFloorToInt(fTop), SkScalarCeilToInt(fRight), "
-        "SkScalarCeilToInt(fBottom)).")
-    .def("roundIn", &SkRect::roundIn,
-        "Sets SkRect by rounding up fLeft and fTop; and discarding the "
-        "fractional portion of fRight and fBottom, using "
-        "(SkScalarCeilToInt(fLeft), SkScalarCeilToInt(fTop), "
-        "SkScalarFloorToInt(fRight), SkScalarFloorToInt(fBottom)).")
+        py::overload_cast<const SkIRect&>(&SkRect::contains, py::const_),
+        R"docstring(
+        Returns true if :py:class:`Rect` contains r.
+
+        Returns false if :py:class:`Rect` is empty or r is empty.
+
+        :py:class:`Rect` contains r when :py:class:`Rect` area completely
+        includes r area.
+
+        :r: :py:class:`IRect` contained
+        :return: true if all sides of :py:class:`Rect` are outside r
+        )docstring",
+        py::arg("r"))
     .def("round", py::overload_cast<>(&SkRect::round, py::const_),
-        "Returns SkIRect by adding 0.5 and discarding the fractional portion "
-        "of SkRect members, using (SkScalarRoundToInt(fLeft), "
-        "SkScalarRoundToInt(fTop), SkScalarRoundToInt(fRight), "
-        "SkScalarRoundToInt(fBottom)).")
+        R"docstring(
+        Returns :py:class:`IRect` by adding 0.5 and discarding the fractional
+        portion of :py:class:`Rect` members, using (
+        ``SkScalarRoundToInt(fLeft)``, ``SkScalarRoundToInt(fTop)``,
+        ``SkScalarRoundToInt(fRight)``, ``SkScalarRoundToInt(fBottom)``).
+
+        :return: rounded :py:class:`IRect`
+        )docstring")
+    .def("roundIn",
+        [] (const SkRect& rect) {
+            SkIRect dst;
+            rect.roundIn(&dst);
+            return dst;
+        },
+        R"docstring(
+        Sets :py:class:`Rect` by rounding up fLeft and fTop; and discarding the
+        fractional portion of fRight and fBottom, using (
+        ``SkScalarCeilToInt(fLeft)``, ``SkScalarCeilToInt(fTop)``,
+        ``SkScalarFloorToInt(fRight)``, ``SkScalarFloorToInt(fBottom)``).
+        )docstring")
     .def("roundOut", py::overload_cast<>(&SkRect::roundOut, py::const_),
-        "Sets SkIRect by discarding the fractional portion of fLeft and fTop; "
-        "and rounding up fRight and fBottom, using (SkScalarFloorToInt(fLeft), "
-        "SkScalarFloorToInt(fTop), SkScalarCeilToInt(fRight), "
-        "SkScalarCeilToInt(fBottom)).")
+        R"docstring(
+        Sets :py:class:`IRect` by discarding the fractional portion of fLeft and
+        fTop; and rounding up fRight and fBottom, using (
+        ``SkScalarFloorToInt(fLeft)``, ``SkScalarFloorToInt(fTop)``,
+        ``SkScalarCeilToInt(fRight)``, ``SkScalarCeilToInt(fBottom)``).
+
+        :return: rounded :py:class:`IRect`
+        )docstring")
     .def("sort", &SkRect::sort,
-        "Swaps fLeft and fRight if fLeft is greater than fRight; and swaps "
-        "fTop and fBottom if fTop is greater than fBottom.")
+        R"docstring(
+        Swaps fLeft and fRight if fLeft is greater than fRight; and swaps fTop
+        and fBottom if fTop is greater than fBottom.
+
+        Result may be empty; and :py:meth:`width` and :py:meth:`height` will be
+        zero or positive.
+        )docstring")
     .def("makeSorted", &SkRect::makeSorted,
-        "Returns SkRect with fLeft and fRight swapped if fLeft is greater "
-        "than fRight; and with fTop and fBottom swapped if fTop is greater "
-        "than fBottom.")
-    .def("asScalars", &SkRect::asScalars,
-        "Returns pointer to first scalar in SkRect, to treat it as an array "
-        "with four entries.",
-        py::return_value_policy::reference)
-    .def("dump", py::overload_cast<bool>(&SkRect::dump, py::const_),
-        "Writes text representation of SkRect to standard output.")
-    .def("dump", py::overload_cast<>(&SkRect::dump, py::const_),
-        "Writes text representation of SkRect to standard output.")
-    .def("dumpHex", &SkRect::dumpHex,
-        "Writes text representation of SkRect to standard output.")
+        R"docstring(
+        Returns :py:class:`Rect` with fLeft and fRight swapped if fLeft is
+        greater than fRight; and with fTop and fBottom swapped if fTop is
+        greater than fBottom.
+
+        Result may be empty; and :py:meth:`width` and :py:meth:`height` will be
+        zero or positive.
+
+        :return: sorted :py:class:`Rect`
+        )docstring")
+    .def("asScalars",
+        [] (const SkRect& r) {
+            return py::memoryview(py::buffer_info(
+                const_cast<SkScalar*>(r.asScalars()),
+                sizeof(SkScalar),
+                py::format_descriptor<SkScalar>::format(),
+                1,
+                { 4 },
+                { sizeof(SkScalar) },
+                true
+            ));
+        },
+        R"docstring(
+        Returns pointer to first scalar in :py:class:`Rect`, to treat it as an
+        array with four entries.
+
+        :return: pointer to fLeft
+        )docstring")
+    .def("dump",
+        [] (const SkRect& rect, bool asHex) {
+            py::scoped_ostream_redirect stream;
+            rect.dump(asHex);
+        },
+        R"docstring(
+        Writes text representation of :py:class:`Rect` to standard output.
+
+        Set asHex to true to generate exact binary representations of floating
+        point numbers.
+
+        :param asHex: true if Scalar values are written as hexadecimal
+        )docstring",
+        py::arg("asHex") = false)
+    .def("dumpHex",
+        [] (const SkRect& rect) {
+            py::scoped_ostream_redirect stream;
+            rect.dumpHex();
+        },
+        R"docstring(
+        Writes text representation of :py:class:`Rect` to standard output.
+
+        The representation may be directly compiled as C++ code. Floating point
+        values are written in hexadecimal to preserve their exact bit pattern.
+        The output reconstructs the original :py:class:`Rect`.
+
+        Use instead of dump() when submitting
+        )docstring")
     .def_static("MakeEmpty", &SkRect::MakeEmpty,
-        "Returns constructed SkRect set to (0, 0, 0, 0).")
+        R"docstring(
+        Returns constructed :py:class:`Rect` set to (0, 0, 0, 0).
+
+        Many other rectangles are empty; if left is equal to or greater than
+        right, or if top is equal to or greater than bottom. Setting all members
+        to zero is a convenience, but does not designate a special empty
+        rectangle.
+
+        :return: bounds (0, 0, 0, 0)
+        )docstring")
     .def_static("MakeWH", &SkRect::MakeWH,
-        "Returns constructed SkRect set to SkScalar values (0, 0, w, h).")
+        R"docstring(
+        Returns constructed :py:class:`Rect` set to :py:class:`Scalar` values
+        (0, 0, w, h).
+
+        Does not validate input; w or h may be negative.
+
+        Passing integer values may generate a compiler warning since
+        :py:class:`Rect` cannot represent 32-bit integers exactly. Use
+        :py:class:`IRect` for an exact integer rectangle.
+
+        :param w: Scalar width of constructed :py:class:`Rect`
+        :param h: Scalar height of constructed :py:class:`Rect`
+        :return: bounds (0, 0, w, h)
+        )docstring",
+        py::arg("w"), py::arg("h"))
     .def_static("MakeIWH", &SkRect::MakeIWH,
-        "Returns constructed SkRect set to integer values (0, 0, w, h).")
+        R"docstring(
+        Returns constructed :py:class:`Rect` set to integer values (0, 0, w, h).
+
+        Does not validate input; w or h may be negative.
+
+        Use to avoid a compiler warning that input may lose precision when
+        stored. Use :py:class:`IRect` for an exact integer rectangle.
+
+        :param w: integer width of constructed :py:class:`Rect`
+        :param h: integer height of constructed :py:class:`Rect`
+        :return: bounds (0, 0, w, h)
+        )docstring",
+        py::arg("w"), py::arg("h"))
     .def_static("MakeSize", &SkRect::MakeSize,
-        "Returns constructed SkRect set to (0, 0, size.width(), "
-        "size.height()).")
+        R"docstring(
+        Returns constructed :py:class:`Rect` set to (0, 0, size.width(),
+        size.height()).
+
+        Does not validate input; size.width() or size.height() may be negative.
+
+        :param size:  Scalar values for :py:class:`Rect` width and height
+        :return: bounds (0, 0, size.width(), size.height())
+        )docstring",
+        py::arg("size"))
     .def_static("MakeLTRB", &SkRect::MakeLTRB,
-        "Returns constructed SkRect set to (l, t, r, b).")
+        R"docstring(
+        Returns constructed :py:class:`Rect` set to (l, t, r, b).
+
+        Does not sort input; :py:class:`Rect` may result in fLeft greater than
+        fRight, or fTop greater than fBottom.
+
+        :param l:  Scalar stored in fLeft
+        :param t:  Scalar stored in fTop
+        :param r:  Scalar stored in fRight
+        :param b:  Scalar stored in fBottom
+        :return: bounds (l, t, r, b)
+        )docstring",
+        py::arg("l"), py::arg("t"), py::arg("r"), py::arg("b"))
     .def_static("MakeXYWH", &SkRect::MakeXYWH,
-        "Returns constructed SkRect set to: (x, y, x + w, y + h).")
+        R"docstring(
+        Returns constructed :py:class:`Rect` set to (x, y, x + w, y + h).
+
+        Does not validate input; w or h may be negative.
+
+        :param x:  stored in fLeft
+        :param y:  stored in fTop
+        :param w:  added to x and stored in fRight
+        :param h:  added to y and stored in fBottom
+        :return: bounds at (x, y) with width w and height h
+        )docstring",
+        py::arg("x"), py::arg("y"), py::arg("w"), py::arg("h"))
     .def_static("Make", py::overload_cast<const SkISize&>(&SkRect::Make),
-        "Returns constructed SkIRect set to (0, 0, size.width(), "
-        "size.height()).")
+        R"docstring(
+        Returns constructed :py:class:`Rect` set to (0, 0, size.width(),
+        size.height()).
+
+        Does not validate input; size.width() or size.height() may be negative.
+
+        :size: integer values for :py:class:`Rect` width and height
+        :return: bounds (0, 0, size.width(), size.height())
+        )docstring",
+        py::arg("size"))
     .def_static("Make", py::overload_cast<const SkIRect&>(&SkRect::Make),
-        "Returns constructed SkIRect set to irect, promoting integers to "
-        "scalar.")
+        R"docstring(
+        Returns constructed :py:class:`Rect` set to irect, promoting integers
+        to scalar.
+
+        Does not validate input; fLeft may be greater than fRight, fTop may be
+        greater than fBottom.
+
+        :irect: integer unsorted bounds
+        :return: irect members converted to Scalar
+        )docstring",
+        py::arg("irect"))
     .def_static("Intersects",
         py::overload_cast<const SkRect&, const SkRect&>(&SkRect::Intersects),
-        "Returns true if a intersects b.")
+        R"docstring(
+        Returns true if a intersects b.
+
+        Returns false if either a or b is empty, or do not intersect.
+
+        :param a:  :py:class:`Rect` to intersect
+        :param b:  :py:class:`Rect` to intersect
+        :return: true if a and b have area in common
+        )docstring",
+        py::arg("a"), py::arg("b"))
     .def_readwrite("fLeft", &SkRect::fLeft, "smaller x-axis bounds")
     .def_readwrite("fTop", &SkRect::fTop, "smaller y-axis bounds")
     .def_readwrite("fRight", &SkRect::fRight, "larger x-axis bounds")
     .def_readwrite("fBottom", &SkRect::fBottom, "larger y-axis bounds")
     .def(py::self == py::self,
-        "Returns true if all members in a: fLeft, fTop, fRight, and fBottom; "
-        "are identical to corresponding members in b.")
+        R"docstring(
+        Returns true if all members in self: fLeft, fTop, fRight, and fBottom;
+        are equal to the corresponding members in other.
+
+        self and other are not equal if either contain NaN. self and other are
+        equal if members contain zeroes with different signs.
+
+        :param other: :py:class:`Rect` to compare
+        :return: true if members are equal
+        )docstring",
+        py::arg("other"))
     .def(py::self != py::self,
-        "Returns true if any member in a: fLeft, fTop, fRight, and fBottom; is "
-        "not identical to the corresponding member in b.")
+        R"docstring(
+        Returns true if any in self: fLeft, fTop, fRight, and fBottom; does not
+        equal to the corresponding members in other.
+
+        self and other are not equal if either contain NaN. self and other are
+        equal if members contain zeroes with different signs.
+
+        :param other: :py:class:`Rect` to compare
+        :return: true if members are not equal
+        )docstring",
+        py::arg("other"))
     ;
+
+py::implicitly_convertible<py::tuple, SkRect>();
 
 py::class_<SkRRect> rrect(m, "RRect", R"docstring(
     :py:class:`RRect` describes a rounded rectangle with a bounds and a pair of
