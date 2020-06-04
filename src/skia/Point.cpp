@@ -36,7 +36,7 @@ py::class_<SkIPoint>(m, "IPoint", R"docstring(
         )docstring")
     .def("y", &SkIPoint::y,
         R"docstring(
-        Returns y-axis value of SkIPoint.
+        Returns y-axis value of :py:class:`IPoint`.
         )docstring")
     .def("isZero", &SkIPoint::isZero,
         R"docstring(
