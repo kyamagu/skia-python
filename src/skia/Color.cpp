@@ -1,7 +1,6 @@
 #include "common.h"
 #include <pybind11/operators.h>
 #include <pybind11/stl.h>
-#include <sstream>
 
 void initColor(py::module &m) {
 py::class_<SkColor4f>(m, "Color4f", R"docstring(
@@ -146,11 +145,7 @@ py::class_<SkColor4f>(m, "Color4f", R"docstring(
         :return: color as Color int
         )docstring")
     .def("__int__", &SkColor4f::toSkColor)
-    .def("__tuple__",
-        [] (const SkColor4f& color4f) {
-            return py::make_tuple(
-                color4f.fR, color4f.fG, color4f.fB, color4f.fA);
-        })
+    .def("__len__", [] (const SkColor4f& color4f) { return 4; })
     .def("__repr__",
         [] (const SkColor4f& color4f) {
             std::stringstream s;

@@ -3,6 +3,7 @@
 
 #include <pybind11/pybind11.h>
 #include <skia.h>
+#include <sstream>
 
 namespace py = pybind11;
 
