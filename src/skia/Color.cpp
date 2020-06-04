@@ -13,13 +13,17 @@ py::class_<SkColor4f>(m, "Color4f", R"docstring(
 
     Example::
 
-        color4f = skia.Color4f(1.0, 0.0, 0.0, 1.0)
-        color = color4f.toColor()  # Convert to int format
-        color = int(color4f)  # Convert to int format
+        color4f = skia.Color4f(0xFFFFFFFF)            # From int format
+        color4f = skia.Color4f(1.0, 0.0, 0.0, 1.0)    # From elements
+        color4f = skia.Color4f((1.0, 0.0, 0.0, 1.0))  # From tuple
+        color = color4f.toColor()                     # Convert to int format
+        color = int(color4f)                          # Convert to int format
+        r, g, b, a = tuple(color4f)                   # Convert to tuple
     )docstring")
     .def(py::init(&SkColor4f::FromColor),
         R"docstring(
         Returns closest :py:class:`Color4f` to ARGB Color.
+        See :py:meth:`FromColor`.
         )docstring",
         py::arg("color"))
     .def(py::init(
@@ -46,7 +50,11 @@ py::class_<SkColor4f>(m, "Color4f", R"docstring(
             else
                 throw py::value_error("Tuple must have 3 or 4 elements");
             return color4f;
-        }))
+        }),
+        R"docstring(
+        Returns a new Color4f instance given (R, G, B) or (R, G, B, A) tuple.
+        )docstring",
+        py::arg("t"))
     .def(py::self == py::self,
         R"docstring(
         Compares :py:class:`Color4f` with other, and returns true if all
@@ -138,6 +146,18 @@ py::class_<SkColor4f>(m, "Color4f", R"docstring(
         :return: color as Color int
         )docstring")
     .def("__int__", &SkColor4f::toSkColor)
+    .def("__tuple__",
+        [] (const SkColor4f& color4f) {
+            return py::make_tuple(
+                color4f.fR, color4f.fG, color4f.fB, color4f.fA);
+        })
+    .def("__repr__",
+        [] (const SkColor4f& color4f) {
+            std::stringstream s;
+            s << "Color4f(" << color4f.fR << ", " << color4f.fG << ", "
+                << color4f.fB << ", " << color4f.fA << ")";
+            return s.str();
+        })
     // .def("premul", &SkColor4f::premul,
     //     "Returns SkRGBA4f premultiplied by alpha.")
     // .def("unpremul", &SkColor4f::unpremul,
@@ -162,7 +182,8 @@ py::class_<SkColor4f>(m, "Color4f", R"docstring(
     //     :return: :py:class:`PMColor` as :py:class:`RGBA4f`
     //     )docstring",
     //     py::arg("pmcolor"))
-    .def_static("FromBytes_RGBA", &SkColor4f::FromBytes_RGBA)
+    .def_static("FromBytes_RGBA", &SkColor4f::FromBytes_RGBA,
+        py::arg("rgba"))
     .def_readwrite("fR", &SkColor4f::fR, "red component")
     .def_readwrite("fG", &SkColor4f::fG, "green component")
     .def_readwrite("fB", &SkColor4f::fB, "blue component")
@@ -179,13 +200,6 @@ py::class_<SkColor4f>(m, "Color4f", R"docstring(
     .def_readonly_static("kYellow", &SkColors::kYellow)
     .def_readonly_static("kCyan", &SkColors::kCyan)
     .def_readonly_static("kMagenta", &SkColors::kMagenta)
-    .def("__repr__",
-        [] (const SkColor4f& color4f) {
-            std::stringstream s;
-            s << "Color4f(" << color4f.fR << ", " << color4f.fG << ", "
-                << color4f.fB << ", " << color4f.fA << ")";
-            return s.str();
-        });
     ;
 
 py::implicitly_convertible<SkColor, SkColor4f>();

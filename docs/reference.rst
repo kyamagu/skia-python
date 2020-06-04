@@ -6,6 +6,7 @@ Reference
 .. currentmodule:: skia
 
 .. toctree::
+    :maxdepth: 1
 
     color
 

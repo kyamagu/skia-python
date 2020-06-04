@@ -51,7 +51,15 @@ def test_Color4f_fitsInBytes(color4f):
 
 def test_Color4f_toColor(color4f):
     assert isinstance(color4f.toColor(), int)
+
+
+def test_Color4f_int(color4f):
     assert isinstance(int(color4f), int)
+
+
+def test_Color4f_tuple(color4f):
+    assert isinstance(tuple(color4f), tuple)
+    r, g, b, a = tuple(color4f)
 
 
 def test_Color4f_repr(color4f):
