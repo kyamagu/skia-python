@@ -621,6 +621,13 @@ py::class_<SkRect>(m, "Rect", R"docstring(
     and height. :py:class:`Rect` describes an area; if its right is less than or
     equal to its left, or if its bottom is less than or equal to its top, it is
     considered empty.
+
+    Example::
+
+        rect = skia.Rect(0, 0, 180, 120)
+        rect = skia.Rect((0, 0, 180, 120))  # Convert from tuple
+        print(rect.width(), rect.height())
+        left, top, right, bottom = tuple(rect)  # Convert to tuple
     )docstring")
     .def(py::init(&SkRect::MakeEmpty),
         R"docstring(
@@ -1478,9 +1485,46 @@ py::enum_<SkRRect::Corner>(rrect, "Corner")
 
 rrect
     .def(py::init(),
-        "Initializes bounds at (0, 0), the origin, with zero width and height.")
+        R"docstring(
+        Initializes bounds at (0, 0), the origin, with zero width and height.
+
+        Initializes corner radii to (0, 0), and sets type of kEmpty_Type.
+
+        :return: empty :py:class:`RRect`
+        )docstring")
     .def(py::init<const SkRRect&>(),
-        "Initializes to copy of rrect bounds and corner radii.")
+        R"docstring(
+        Initializes to copy of rrect bounds and corner radii.
+
+        :rrect: bounds and corner to copy
+        :return: copy of rrect
+        )docstring",
+        py::arg("rrect"))
+    .def(py::init(&SkRRect::MakeRectXY),
+        R"docstring(
+        Initializes to rounded rectangle with the same radii for all four
+        corners.
+
+        If rect is empty, sets to kEmpty_Type. Otherwise, if xRad and yRad are
+        zero, sets to kRect_Type. Otherwise, if xRad is at least half
+        rect.width() and yRad is at least half rect.height(), sets to
+        kOval_Type. Otherwise, sets to kSimple_Type.
+
+        :rect:    bounds of rounded rectangle
+        :xRad:    x-axis radius of corners
+        :yRad:    y-axis radius of corners
+        :return: rounded rectangle
+        )docstring",
+        py::arg("rect"), py::arg("xRad"), py::arg("yRad"))
+    .def("__repr__",
+        [] (const SkRRect& r) {
+            std::stringstream s;
+            auto rect = r.rect();
+            s << "RRect(" << rect.fLeft << ", " << rect.fTop << ", "
+                << rect.fRight << ", " << rect.fBottom << ", "
+                << r.type() << ")";
+            return s.str();
+        })
     .def("getType", &SkRRect::getType)
     .def("type", &SkRRect::type)
     .def("isEmpty", &SkRRect::isEmpty)
@@ -1489,78 +1533,410 @@ rrect
     .def("isSimple", &SkRRect::isSimple)
     .def("isNinePatch", &SkRRect::isNinePatch)
     .def("isComplex", &SkRRect::isComplex)
-    .def("width", &SkRRect::width, "Returns span on the x-axis.")
-    .def("height", &SkRRect::height, "Returns span on the y-axis.")
+    .def("width", &SkRRect::width,
+        R"docstring(
+        Returns span on the x-axis.
+
+        This does not check if result fits in 32-bit float; result may be
+        infinity.
+
+        :return: rect().fRight minus rect().fLeft
+        )docstring")
+    .def("height", &SkRRect::height,
+        R"docstring(
+        Returns span on the y-axis.
+
+        This does not check if result fits in 32-bit float; result may be
+        infinity.
+
+        :return: rect().fBottom minus rect().fTop
+        )docstring")
     .def("getSimpleRadii", &SkRRect::getSimpleRadii,
-        "Returns top-left corner radii.")
+        R"docstring(
+        Returns top-left corner radii.
+
+        If :py:meth:`type` returns kEmpty_Type, kRect_Type, kOval_Type, or
+        kSimple_Type, returns a value representative of all corner radii. If
+        :py:meth:`type` returns kNinePatch_Type or kComplex_Type, at least one
+        of the remaining three corners has a different value.
+
+        :return: corner radii for simple types
+        )docstring")
     .def("setEmpty", &SkRRect::setEmpty,
-        "Sets bounds to zero width and height at (0, 0), the origin.")
+        R"docstring(
+        Sets bounds to zero width and height at (0, 0), the origin.
+
+        Sets corner radii to zero and sets type to kEmpty_Type.
+        )docstring")
     .def("setRect", &SkRRect::setRect,
-        "Sets bounds to sorted rect, and sets corner radii to zero.")
+        R"docstring(
+        Sets bounds to sorted rect, and sets corner radii to zero.
+
+        If set bounds has width and height, and sets type to kRect_Type;
+        otherwise, sets type to kEmpty_Type.
+
+        :param rect:    bounds to set
+        )docstring",
+        py::arg("rect"))
     .def("setOval", &SkRRect::setOval,
-        "Sets bounds to oval, x-axis radii to half oval.width(), and all "
-        "y-axis radii to half oval.height().")
+        R"docstring(
+        Sets bounds to oval, x-axis radii to half oval.width(), and all y-axis
+        radii to half oval.height().
+
+        If oval bounds is empty, sets to kEmpty_Type. Otherwise, sets to
+        kOval_Type.
+
+        :param oval:    bounds of oval
+        )docstring",
+        py::arg("oval"))
     .def("setRectXY", &SkRRect::setRectXY,
-        "Sets to rounded rectangle with the same radii for all four corners.")
+        R"docstring(
+        Sets to rounded rectangle with the same radii for all four corners.
+
+        If rect is empty, sets to kEmpty_Type. Otherwise, if xRad or yRad is
+        zero, sets to kRect_Type. Otherwise, if xRad is at least half
+        rect.width() and yRad is at least half rect.height(), sets to
+        kOval_Type. Otherwise, sets to kSimple_Type.
+
+        :param rect:  bounds of rounded rectangle
+        :param xRad:  x-axis radius of corners
+        :param yRad:  y-axis radius of corners
+        )docstring",
+        py::arg("rect"), py::arg("xRad"), py::arg("yRad"))
     .def("setNinePatch", &SkRRect::setNinePatch,
-        "Sets bounds to rect.")
-    .def("setRectRadii", &SkRRect::setRectRadii,
-        "Sets bounds to rect.")
-    .def("rect", &SkRRect::rect, "Returns bounds.")
+        R"docstring(
+        Sets bounds to rect.
+
+        Sets radii to (leftRad, topRad), (rightRad, topRad), (rightRad,
+        bottomRad), (leftRad, bottomRad).
+
+        If rect is empty, sets to kEmpty_Type. Otherwise, if leftRad and
+        rightRad are zero, sets to kRect_Type. Otherwise, if topRad and
+        bottomRad are zero, sets to kRect_Type. Otherwise, if leftRad and
+        rightRad are equal and at least half rect.width(), and topRad and
+        bottomRad are equal at least half rect.height(), sets to kOval_Type.
+        Otherwise, if leftRad and rightRad are equal, and topRad and bottomRad
+        are equal, sets to kSimple_Type. Otherwise, sets to kNinePatch_Type.
+
+        Nine patch refers to the nine parts defined by the radii: one center
+        rectangle, four edge patches, and four corner patches.
+
+        :param rect:    bounds of rounded rectangle
+        :param leftRad: left-top and left-bottom x-axis radius
+        :param topRad:  left-top and right-top y-axis radius
+        :param rightRad:    right-top and right-bottom x-axis radius
+        :param bottomRad:   left-bottom and right-bottom y-axis radius
+        )docstring",
+        py::arg("rect"), py::arg("leftRad"), py::arg("topRad"),
+        py::arg("rightRad"), py::arg("bottomRad"))
+    .def("setRectRadii",
+        [] (SkRRect& rrect, const SkRect& rect,
+            const std::vector<SkVector>& radii) {
+            if (radii.size() != 4)
+                throw py::value_error("radii must have 4 elements");
+            rrect.setRectRadii(rect, &radii[0]);
+        },
+        R"docstring(
+        Sets bounds to rect.
+
+        Sets radii array for individual control of all for corners.
+
+        If rect is empty, sets to kEmpty_Type. Otherwise, if one of each corner
+        radii are zero, sets to kRect_Type. Otherwise, if all x-axis radii are
+        equal and at least half rect.width(), and all y-axis radii are equal at
+        least half rect.height(), sets to kOval_Type. Otherwise, if all x-axis
+        radii are equal, and all y-axis radii are equal, sets to kSimple_Type.
+        Otherwise, sets to kNinePatch_Type.
+
+        :param rect:    bounds of rounded rectangle
+        :param radii:   corner x-axis and y-axis radii
+        )docstring",
+        py::arg("rect"), py::arg("radii"))
+    .def("rect", &SkRRect::rect,
+        R"docstring(
+        Returns bounds.
+
+        Bounds may have zero width or zero height. Bounds right is greater than
+        or equal to left; bounds bottom is greater than or equal to top. Result
+        is identical to :py:meth:`getBounds`.
+
+        :return: bounding box
+        )docstring")
     .def("radii", &SkRRect::radii,
-        "Returns scalar pair for radius of curve on x-axis and y-axis for one "
-        "corner.")
-    .def("getBounds", &SkRRect::getBounds, "Returns bounds.")
+        R"docstring(
+        Returns scalar pair for radius of curve on x-axis and y-axis for one
+        corner.
+
+        Both radii may be zero. If not zero, both are positive and finite.
+
+        :return: x-axis and y-axis radii for one corner
+        )docstring",
+        py::arg("corner"))
+    .def("getBounds", &SkRRect::getBounds,
+        R"docstring(
+        Returns bounds.
+
+        Bounds may have zero width or zero height. Bounds right is greater than
+        or equal to left; bounds bottom is greater than or equal to top. Result
+        is identical to :py:meth:`rect`.
+
+        :return: bounding box
+        )docstring")
     .def("inset",
         py::overload_cast<SkScalar, SkScalar, SkRRect*>(
             &SkRRect::inset, py::const_),
-        "Copies SkRRect to dst, then insets dst bounds by dx and dy, and "
-        "adjusts dst radii by dx and dy.")
+        R"docstring(
+        Copies :py:class:`RRect` to dst, then insets dst bounds by dx and dy,
+        and adjusts dst radii by dx and dy.
+
+        dx and dy may be positive, negative, or zero. dst may be
+        :py:class:`RRect`.
+
+        If either corner radius is zero, the corner has no curvature and is
+        unchanged. Otherwise, if adjusted radius becomes negative, pins radius
+        to zero. If dx exceeds half dst bounds width, dst bounds left and right
+        are set to bounds x-axis center. If dy exceeds half dst bounds height,
+        dst bounds top and bottom are set to bounds y-axis center.
+
+        If dx or dy cause the bounds to become infinite, dst bounds is zeroed.
+
+        :dx:  added to rect().fLeft, and subtracted from rect().fRight
+        :dy:  added to rect().fTop, and subtracted from rect().fBottom
+        :dst: insets bounds and radii
+        )docstring",
+        py::arg("dx"), py::arg("dy"), py::arg("dst"))
     .def("inset",
         py::overload_cast<SkScalar, SkScalar>(&SkRRect::inset),
-        "Insets bounds by dx and dy, and adjusts radii by dx and dy.")
+        R"docstring(
+        Insets bounds by dx and dy, and adjusts radii by dx and dy.
+
+        dx and dy may be positive, negative, or zero.
+
+        If either corner radius is zero, the corner has no curvature and is
+        unchanged. Otherwise, if adjusted radius becomes negative, pins radius
+        to zero. If dx exceeds half bounds width, bounds left and right are set
+        to bounds x-axis center. If dy exceeds half bounds height, bounds top
+        and bottom are set to bounds y-axis center.
+
+        If dx or dy cause the bounds to become infinite, bounds is zeroed.
+
+        :dx:  added to rect().fLeft, and subtracted from rect().fRight
+        :dy:  added to rect().fTop, and subtracted from rect().fBottom
+        )docstring",
+        py::arg("dx"), py::arg("dy"))
     .def("outset",
         py::overload_cast<SkScalar, SkScalar, SkRRect*>(
             &SkRRect::outset, py::const_),
-        "Outsets dst bounds by dx and dy, and adjusts radii by dx and dy.")
+        R"docstring(
+        Outsets dst bounds by dx and dy, and adjusts radii by dx and dy.
+
+        dx and dy may be positive, negative, or zero.
+
+        If either corner radius is zero, the corner has no curvature and is
+        unchanged. Otherwise, if adjusted radius becomes negative, pins radius
+        to zero. If dx exceeds half dst bounds width, dst bounds left and right
+        are set to bounds x-axis center. If dy exceeds half dst bounds height,
+        dst bounds top and bottom are set to bounds y-axis center.
+
+        If dx or dy cause the bounds to become infinite, dst bounds is zeroed.
+
+        :dx:  subtracted from rect().fLeft, and added to rect().fRight
+        :dy:  subtracted from rect().fTop, and added to rect().fBottom
+        :dst: outset bounds and radii
+        )docstring",
+        py::arg("dx"), py::arg("dy"), py::arg("dst"))
     .def("outset",
         py::overload_cast<SkScalar, SkScalar>(&SkRRect::outset),
-        "Outsets bounds by dx and dy, and adjusts radii by dx and dy.")
-    .def("offset", &SkRRect::offset, "Translates SkRRect by (dx, dy).")
+        R"docstring(
+        Outsets bounds by dx and dy, and adjusts radii by dx and dy.
+
+        dx and dy may be positive, negative, or zero.
+
+        If either corner radius is zero, the corner has no curvature and is
+        unchanged. Otherwise, if adjusted radius becomes negative, pins radius
+        to zero. If dx exceeds half bounds width, bounds left and right are set
+        to bounds x-axis center. If dy exceeds half bounds height, bounds top
+        and bottom are set to bounds y-axis center.
+
+        If dx or dy cause the bounds to become infinite, bounds is zeroed.
+
+        :dx:  subtracted from rect().fLeft, and added to rect().fRight
+        :dy:  subtracted from rect().fTop, and added to rect().fBottom
+        )docstring",
+        py::arg("dx"), py::arg("dy"))
+    .def("offset", &SkRRect::offset,
+        R"docstring(
+        Translates SkRRect by (dx, dy).
+
+        :param dx:  offset added to rect().fLeft and rect().fRight
+        :parma dy:  offset added to rect().fTop and rect().fBottom
+        )docstring")
     .def("makeOffset", &SkRRect::makeOffset,
-        "Returns SkRRect translated by (dx, dy).")
+        R"docstring(
+        Returns :py:class:`RRect` translated by (dx, dy).
+
+        :param dx:  offset added to rect().fLeft and rect().fRight
+        :param dy:  offset added to rect().fTop and rect().fBottom
+        :return: :py:class:`RRect` bounds offset by (dx, dy), with unchanged
+            corner radii
+        )docstring",
+        py::arg("dx"), py::arg("dy"))
     .def("contains", &SkRRect::contains,
-        "Returns true if rect is inside the bounds and corner radii, and if "
-        "SkRRect and rect are not empty.")
+        R"docstring(
+        Returns true if rect is inside the bounds and corner radii, and if
+        :py:class:`RRect` and rect are not empty.
+
+        :param rect:  area tested for containment
+        :return: true if SkRRect contains rect
+        )docstring",
+        py::arg("rect"))
     .def("isValid", &SkRRect::isValid,
-        "Returns true if bounds and radii values are finite and describe a "
-        "SkRRect SkRRect::Type that matches getType().")
-    .def("writeToMemory", &SkRRect::writeToMemory, "Writes SkRRect to buffer.")
-    .def("readFromMemory", &SkRRect::readFromMemory,
-        "Reads SkRRect from buffer, reading kSizeInMemory bytes.")
+        R"docstring(
+        Returns true if bounds and radii values are finite and describe a
+        :py:class:`RRect` :py:class:`RRect.Type` that matches
+        :py:meth:`getType`.
+
+        All :py:class:`RRect` methods construct valid types, even if the input
+        values are not valid. Invalid :py:class:`RRect` data can only be
+        generated by corrupting memory.
+
+        :return: true if bounds and radii match :py:meth:`type`
+        )docstring")
+    .def("writeToMemory", [] (const SkRRect& rrect) {
+            std::vector<char> buffer(SkRRect::kSizeInMemory);
+            rrect.writeToMemory(&buffer[0]);
+            return py::bytes(&buffer[0], buffer.size());
+        },
+        R"docstring(
+        Writes :py:class:`RRect` to buffer.
+
+        Writes kSizeInMemory bytes, and returns kSizeInMemory, the number of
+        bytes written.
+
+        :return: bytes written, kSizeInMemory
+        )docstring")
+    .def("readFromMemory",
+        [] (SkRRect& rrect, const std::string& buffer) {
+            return rrect.readFromMemory(&buffer[0], buffer.size());
+        },
+        R"docstring(
+        Reads :py:class:`RRect` from buffer, reading kSizeInMemory bytes.
+
+        Returns kSizeInMemory, bytes read if length is at least kSizeInMemory.
+        Otherwise, returns zero.
+
+        :param buffer:  memory to read from
+        :return: bytes read, or 0 if length is less than kSizeInMemory
+        )docstring",
+        py::arg("buffer"))
     .def("transform", &SkRRect::transform,
-        "Transforms by SkRRect by matrix, storing result in dst.")
-    .def("dump", py::overload_cast<bool>(&SkRRect::dump, py::const_),
-        "Writes text representation of SkRRect to standard output.")
-    .def("dump", py::overload_cast<>(&SkRRect::dump, py::const_),
-        "Writes text representation of SkRRect to standard output.")
-    .def("dumpHex", &SkRRect::dumpHex,
-        "Writes text representation of SkRRect to standard output.")
+        R"docstring(
+        Transforms by :py:class:`RRect` by matrix, storing result in dst.
+
+        Returns true if :py:class:`RRect` transformed can be represented by
+        another :py:class:`RRect`. Returns false if matrix contains
+        transformations that are not axis aligned.
+
+        Asserts in debug builds if :py:class:`RRect` equals dst.
+
+        :param matrix:  :py:class:`Matrix` specifying the transform
+        :param dst: :py:class:`RRect` to store the result
+        :return: true if transformation succeeded.
+        )docstring",
+        py::arg("matrix"), py::arg("dst"))
+    .def("dump",
+        [] (const SkRRect& rrect, bool asHex) {
+            py::scoped_ostream_redirect stream;
+            rrect.dump(asHex);
+        },
+        R"docstring(
+        Writes text representation of :py:class:`RRect` to standard output.
+
+        Set asHex true to generate exact binary representations of floating
+        point numbers.
+
+        :param asHex:  true if Scalar values are written as hexadecimal
+        )docstring",
+        py::arg("asHex") = false)
+    .def("dumpHex",
+        [] (const SkRRect& rrect) {
+            py::scoped_ostream_redirect stream;
+            rrect.dumpHex();
+        },
+        R"docstring(
+        Writes text representation of :py:class:`RRect` to standard output.
+
+        The representation may be directly compiled as C++ code. Floating point
+        values are written in hexadecimal to preserve their exact bit pattern.
+        The output reconstructs the original :py:class:`RRect`.
+        )docstring")
     .def_static("MakeEmpty", &SkRRect::MakeEmpty,
-        "Initializes bounds at (0, 0), the origin, with zero width and height.")
+        R"docstring(
+        Initializes bounds at (0, 0), the origin, with zero width and height.
+
+        Initializes corner radii to (0, 0), and sets type of kEmpty_Type.
+
+        :return: empty :py:class:`RRect`
+        )docstring")
     .def_static("MakeRect", &SkRRect::MakeRect,
-        "Initializes to copy of r bounds and zeroes corner radii.")
+        R"docstring(
+        Initializes to copy of r bounds and zeroes corner radii.
+
+        :param r: bounds to copy
+        :return: copy of r
+        )docstring",
+        py::arg("r"))
     .def_static("MakeOval", &SkRRect::MakeOval,
-        "Sets bounds to oval, x-axis radii to half oval.width(), and all "
-        "y-axis radii to half oval.height().")
+        R"docstring(
+        Sets bounds to oval, x-axis radii to half oval.width(), and all y-axis
+        radii to half oval.height().
+
+        If oval bounds is empty, sets to kEmpty_Type. Otherwise, sets to
+        kOval_Type.
+
+        :param oval:    bounds of oval
+        :return: oval
+        )docstring",
+        py::arg("oval"))
     .def_static("MakeRectXY", &SkRRect::MakeRectXY,
-        "Sets to rounded rectangle with the same radii for all four corners.")
+        R"docstring(
+        Sets to rounded rectangle with the same radii for all four corners.
+
+        If rect is empty, sets to kEmpty_Type. Otherwise, if xRad and yRad are
+        zero, sets to kRect_Type. Otherwise, if xRad is at least half
+        rect.width() and yRad is at least half rect.height(), sets to
+        kOval_Type. Otherwise, sets to kSimple_Type.
+
+        :param rect:    bounds of rounded rectangle
+        :param xRad:    x-axis radius of corners
+        :param yRad:    y-axis radius of corners
+        :return: rounded rectangle
+        )docstring",
+        py::arg("rect"), py::arg("xRad"), py::arg("yRad"))
     .def_readonly_static("kSizeInMemory", &SkRRect::kSizeInMemory)
     .def(py::self == py::self,
-        "Returns true if bounds and radii in a are equal to bounds and radii "
-        "in b.")
+        R"docstring(
+        Returns true if bounds and radii in self are equal to bounds and radii
+        in other.
+
+        self and other are not equal if either contain NaN. self and other are
+        equal if members contain zeroes with different signs.
+
+        :param other: :py:class:`Rect` bounds and radii to compare
+        :return: true if members are equal
+        )docstring",
+        py::arg("other"))
     .def(py::self != py::self,
-        "Returns true if bounds and radii in a are not equal to bounds and "
-        "radii in b.")
+        R"docstring(
+        Returns true if bounds and radii in self are not equal to bounds and
+        radii in other.
+
+        self and other are not equal if either contain NaN. self and other are
+        equal if members contain zeroes with different signs.
+
+        :param other: :py:class:`Rect` bounds and radii to compare
+        :return: true if members are not equal
+        )docstring",
+        py::arg("other"))
     ;
 }
