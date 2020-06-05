@@ -14,7 +14,7 @@
     <script src="../_static/language_data.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="ColorFilter" href="skia.ColorFilter.html" />
+    <link rel="next" title="ColorChannel" href="skia.ColorChannel.html" />
     <link rel="prev" title="Codec.ZeroInitialized" href="skia.Codec.ZeroInitialized.html" />
    
   <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
@@ -39,6 +39,16 @@
 <em class="property">class </em><code class="sig-name descname">Color4f</code><a class="headerlink" href="#skia.Color4f" title="Permalink to this definition">¶</a></dt>
 <dd><p>RGBA color value, holding four floating point components.</p>
 <p>Color components are always in a known order, and are unpremultiplied.</p>
+<p>Skia’s public API always uses unpremultiplied colors.</p>
+<p>Example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">color4f</span> <span class="o">=</span> <span class="n">skia</span><span class="o">.</span><span class="n">Color4f</span><span class="p">(</span><span class="mh">0xFFFFFFFF</span><span class="p">)</span>            <span class="c1"># From int format</span>
+<span class="n">color4f</span> <span class="o">=</span> <span class="n">skia</span><span class="o">.</span><span class="n">Color4f</span><span class="p">(</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">)</span>    <span class="c1"># From elements</span>
+<span class="n">color4f</span> <span class="o">=</span> <span class="n">skia</span><span class="o">.</span><span class="n">Color4f</span><span class="p">((</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">))</span>  <span class="c1"># From tuple</span>
+<span class="n">color</span> <span class="o">=</span> <span class="n">color4f</span><span class="o">.</span><span class="n">toColor</span><span class="p">()</span>                     <span class="c1"># Convert to int format</span>
+<span class="n">color</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">color4f</span><span class="p">)</span>                          <span class="c1"># Convert to int format</span>
+<span class="n">r</span><span class="p">,</span> <span class="n">g</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">a</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">color4f</span><span class="p">)</span>                   <span class="c1"># Convert to tuple</span>
+</pre></div>
+</div>
 <p class="rubric">Methods</p>
 <table class="longtable docutils align-default">
 <colgroup>
@@ -50,16 +60,16 @@
 <td><p></p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#skia.Color4f.FromColor" title="skia.Color4f.FromColor"><code class="xref py py-obj docutils literal notranslate"><span class="pre">FromColor</span></code></a></p></td>
-<td><p>Returns closest <code class="xref py py-class docutils literal notranslate"><span class="pre">RGBA4f</span></code> to <code class="xref py py-class docutils literal notranslate"><span class="pre">Color</span></code>.</p></td>
+<td><p>Returns closest <a class="reference internal" href="#skia.Color4f" title="skia.Color4f"><code class="xref py py-class docutils literal notranslate"><span class="pre">Color4f</span></code></a> to Color int.</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#skia.Color4f.__init__" title="skia.Color4f.__init__"><code class="xref py py-obj docutils literal notranslate"><span class="pre">__init__</span></code></a></p></td>
-<td><p></p></td>
+<td><p>Overloaded function.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#skia.Color4f.fitsInBytes" title="skia.Color4f.fitsInBytes"><code class="xref py py-obj docutils literal notranslate"><span class="pre">fitsInBytes</span></code></a></p></td>
 <td><p>Returns true if all channels are in [0, 1].</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#skia.Color4f.isOpaque" title="skia.Color4f.isOpaque"><code class="xref py py-obj docutils literal notranslate"><span class="pre">isOpaque</span></code></a></p></td>
-<td><p>Returns true if SkRGBA4f is an opaque color.</p></td>
+<td><p>Returns true if <a class="reference internal" href="#skia.Color4f" title="skia.Color4f"><code class="xref py py-class docutils literal notranslate"><span class="pre">Color4f</span></code></a> is an opaque color.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#skia.Color4f.makeOpaque" title="skia.Color4f.makeOpaque"><code class="xref py py-obj docutils literal notranslate"><span class="pre">makeOpaque</span></code></a></p></td>
 <td><p></p></td>
@@ -68,10 +78,10 @@
 <td><p></p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#skia.Color4f.toColor" title="skia.Color4f.toColor"><code class="xref py py-obj docutils literal notranslate"><span class="pre">toColor</span></code></a></p></td>
-<td><p>Returns closest SkColor to SkRGBA4f.</p></td>
+<td><p>Returns closest Color to <a class="reference internal" href="#skia.Color4f" title="skia.Color4f"><code class="xref py py-class docutils literal notranslate"><span class="pre">Color4f</span></code></a>.</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#skia.Color4f.vec" title="skia.Color4f.vec"><code class="xref py py-obj docutils literal notranslate"><span class="pre">vec</span></code></a></p></td>
-<td><p>Overloaded function.</p></td>
+<td><p>Returns a memoryview to components of <a class="reference internal" href="#skia.Color4f" title="skia.Color4f"><code class="xref py py-class docutils literal notranslate"><span class="pre">Color4f</span></code></a>, for array access.</p></td>
 </tr>
 </tbody>
 </table>
@@ -82,6 +92,18 @@
 <col style="width: 90%" />
 </colgroup>
 <tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Color4f.fA" title="skia.Color4f.fA"><code class="xref py py-obj docutils literal notranslate"><span class="pre">fA</span></code></a></p></td>
+<td><p>alpha component</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.Color4f.fB" title="skia.Color4f.fB"><code class="xref py py-obj docutils literal notranslate"><span class="pre">fB</span></code></a></p></td>
+<td><p>blue component</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Color4f.fG" title="skia.Color4f.fG"><code class="xref py py-obj docutils literal notranslate"><span class="pre">fG</span></code></a></p></td>
+<td><p>green component</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.Color4f.fR" title="skia.Color4f.fR"><code class="xref py py-obj docutils literal notranslate"><span class="pre">fR</span></code></a></p></td>
+<td><p>red component</p></td>
+</tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#skia.Color4f.kBlack" title="skia.Color4f.kBlack"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kBlack</span></code></a></p></td>
 <td><p></p></td>
 </tr>
@@ -126,28 +148,61 @@
 <h2>Methods<a class="headerlink" href="#methods" title="Permalink to this headline">¶</a></h2>
 <dl class="py method">
 <dt id="skia.Color4f.FromBytes_RGBA">
-<em class="property">static </em><code class="sig-prename descclassname">Color4f.</code><code class="sig-name descname">FromBytes_RGBA</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">arg0</span><span class="p">:</span> <span class="n">int</span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="#skia.Color4f" title="skia.Color4f">skia.Color4f</a><a class="headerlink" href="#skia.Color4f.FromBytes_RGBA" title="Permalink to this definition">¶</a></dt>
+<em class="property">static </em><code class="sig-prename descclassname">Color4f.</code><code class="sig-name descname">FromBytes_RGBA</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">rgba</span><span class="p">:</span> <span class="n">int</span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="#skia.Color4f" title="skia.Color4f">skia.Color4f</a><a class="headerlink" href="#skia.Color4f.FromBytes_RGBA" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
 <dt id="skia.Color4f.FromColor">
 <em class="property">static </em><code class="sig-prename descclassname">Color4f.</code><code class="sig-name descname">FromColor</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">color</span><span class="p">:</span> <span class="n">int</span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="#skia.Color4f" title="skia.Color4f">skia.Color4f</a><a class="headerlink" href="#skia.Color4f.FromColor" title="Permalink to this definition">¶</a></dt>
-<dd><p>Returns closest <code class="xref py py-class docutils literal notranslate"><span class="pre">RGBA4f</span></code> to <code class="xref py py-class docutils literal notranslate"><span class="pre">Color</span></code>.</p>
-<p>Only allowed if <code class="xref py py-class docutils literal notranslate"><span class="pre">RGBA4f</span></code> is unpremultiplied.</p>
+<dd><p>Returns closest <a class="reference internal" href="#skia.Color4f" title="skia.Color4f"><code class="xref py py-class docutils literal notranslate"><span class="pre">Color4f</span></code></a> to Color int.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Color</dt>
-<dd class="field-odd"><p>Color with Alpha, red, blue, and green components</p>
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>color</strong> (<em>int</em>) – Color with Alpha, red, blue, and green components
+(e.g., 0xFFFFFFFF)</p>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">Color</span></code> as <code class="xref py py-class docutils literal notranslate"><span class="pre">RGBA4f</span></code></p>
+<dd class="field-even"><p>Color int as <a class="reference internal" href="#skia.Color4f" title="skia.Color4f"><code class="xref py py-class docutils literal notranslate"><span class="pre">Color4f</span></code></a></p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py method">
 <dt id="skia.Color4f.__init__">
-<code class="sig-prename descclassname">Color4f.</code><code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Color4f" title="skia.Color4f">skia.Color4f</a></span></em>, <em class="sig-param"><span class="n">color</span><span class="p">:</span> <span class="n">int</span></em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#skia.Color4f.__init__" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<code class="sig-prename descclassname">Color4f.</code><code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span><span class="n">args</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#skia.Color4f.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Overloaded function.</p>
+<ol class="arabic">
+<li><p>__init__(self: skia.Color4f, color: int) -&gt; None</p>
+<blockquote>
+<div><p>Returns closest <a class="reference internal" href="#skia.Color4f" title="skia.Color4f"><code class="xref py py-class docutils literal notranslate"><span class="pre">Color4f</span></code></a> to ARGB Color.
+See <a class="reference internal" href="#skia.Color4f.FromColor" title="skia.Color4f.FromColor"><code class="xref py py-meth docutils literal notranslate"><span class="pre">FromColor()</span></code></a>.</p>
+</div></blockquote>
+</li>
+<li><p>__init__(self: skia.Color4f, red: float, green: float, blue: float, alpha: float = 1.0) -&gt; None</p>
+<blockquote>
+<div><p>Returns a new Color4f instance initialized with the given values.</p>
+<dl class="field-list simple">
+<dt class="field-odd">red</dt>
+<dd class="field-odd"><p>red components</p>
+</dd>
+<dt class="field-even">green</dt>
+<dd class="field-even"><p>green components</p>
+</dd>
+<dt class="field-odd">blue</dt>
+<dd class="field-odd"><p>blue components</p>
+</dd>
+<dt class="field-even">alpha</dt>
+<dd class="field-even"><p>alpha components</p>
+</dd>
+</dl>
+</div></blockquote>
+</li>
+<li><p>__init__(self: skia.Color4f, t: tuple) -&gt; None</p>
+<blockquote>
+<div><p>Returns a new Color4f instance given (R, G, B) or (R, G, B, A) tuple.</p>
+</div></blockquote>
+</li>
+</ol>
+</dd></dl>
 
 <dl class="py method">
 <dt id="skia.Color4f.fitsInBytes">
@@ -158,7 +213,13 @@
 <dl class="py method">
 <dt id="skia.Color4f.isOpaque">
 <code class="sig-prename descclassname">Color4f.</code><code class="sig-name descname">isOpaque</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Color4f" title="skia.Color4f">skia.Color4f</a></span></em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#skia.Color4f.isOpaque" title="Permalink to this definition">¶</a></dt>
-<dd><p>Returns true if SkRGBA4f is an opaque color.</p>
+<dd><p>Returns true if <a class="reference internal" href="#skia.Color4f" title="skia.Color4f"><code class="xref py py-class docutils literal notranslate"><span class="pre">Color4f</span></code></a> is an opaque color.</p>
+<p>Asserts if fA is out of range and SK_DEBUG is defined.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>true if <a class="reference internal" href="#skia.Color4f" title="skia.Color4f"><code class="xref py py-class docutils literal notranslate"><span class="pre">Color4f</span></code></a> is opaque</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py method">
@@ -174,80 +235,106 @@
 <dl class="py method">
 <dt id="skia.Color4f.toColor">
 <code class="sig-prename descclassname">Color4f.</code><code class="sig-name descname">toColor</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Color4f" title="skia.Color4f">skia.Color4f</a></span></em><span class="sig-paren">)</span> &#x2192; int<a class="headerlink" href="#skia.Color4f.toColor" title="Permalink to this definition">¶</a></dt>
-<dd><p>Returns closest SkColor to SkRGBA4f.</p>
+<dd><p>Returns closest Color to <a class="reference internal" href="#skia.Color4f" title="skia.Color4f"><code class="xref py py-class docutils literal notranslate"><span class="pre">Color4f</span></code></a>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>color as Color int</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py method">
 <dt id="skia.Color4f.vec">
-<code class="sig-prename descclassname">Color4f.</code><code class="sig-name descname">vec</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span><span class="n">args</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#skia.Color4f.vec" title="Permalink to this definition">¶</a></dt>
-<dd><p>Overloaded function.</p>
-<ol class="arabic simple">
-<li><p>vec(self: skia.Color4f) -&gt; float</p></li>
-<li><p>vec(self: skia.Color4f) -&gt; float</p></li>
-</ol>
+<code class="sig-prename descclassname">Color4f.</code><code class="sig-name descname">vec</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Color4f" title="skia.Color4f">skia.Color4f</a></span></em><span class="sig-paren">)</span> &#x2192; memoryview<a class="headerlink" href="#skia.Color4f.vec" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a memoryview to components of <a class="reference internal" href="#skia.Color4f" title="skia.Color4f"><code class="xref py py-class docutils literal notranslate"><span class="pre">Color4f</span></code></a>, for array
+access.</p>
 </dd></dl>
 
 </div>
 <div class="section" id="attributes">
 <h2>Attributes<a class="headerlink" href="#attributes" title="Permalink to this headline">¶</a></h2>
 <dl class="py attribute">
+<dt id="skia.Color4f.fA">
+<code class="sig-prename descclassname">Color4f.</code><code class="sig-name descname">fA</code><a class="headerlink" href="#skia.Color4f.fA" title="Permalink to this definition">¶</a></dt>
+<dd><p>alpha component</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="skia.Color4f.fB">
+<code class="sig-prename descclassname">Color4f.</code><code class="sig-name descname">fB</code><a class="headerlink" href="#skia.Color4f.fB" title="Permalink to this definition">¶</a></dt>
+<dd><p>blue component</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="skia.Color4f.fG">
+<code class="sig-prename descclassname">Color4f.</code><code class="sig-name descname">fG</code><a class="headerlink" href="#skia.Color4f.fG" title="Permalink to this definition">¶</a></dt>
+<dd><p>green component</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="skia.Color4f.fR">
+<code class="sig-prename descclassname">Color4f.</code><code class="sig-name descname">fR</code><a class="headerlink" href="#skia.Color4f.fR" title="Permalink to this definition">¶</a></dt>
+<dd><p>red component</p>
+</dd></dl>
+
+<dl class="py attribute">
 <dt id="skia.Color4f.kBlack">
-<code class="sig-prename descclassname">Color4f.</code><code class="sig-name descname">kBlack</code><em class="property"> = &lt;skia.Color4f object&gt;</em><a class="headerlink" href="#skia.Color4f.kBlack" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">Color4f.</code><code class="sig-name descname">kBlack</code><em class="property"> = Color4f(0, 0, 0, 1)</em><a class="headerlink" href="#skia.Color4f.kBlack" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt id="skia.Color4f.kBlue">
-<code class="sig-prename descclassname">Color4f.</code><code class="sig-name descname">kBlue</code><em class="property"> = &lt;skia.Color4f object&gt;</em><a class="headerlink" href="#skia.Color4f.kBlue" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">Color4f.</code><code class="sig-name descname">kBlue</code><em class="property"> = Color4f(0, 0, 1, 1)</em><a class="headerlink" href="#skia.Color4f.kBlue" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt id="skia.Color4f.kCyan">
-<code class="sig-prename descclassname">Color4f.</code><code class="sig-name descname">kCyan</code><em class="property"> = &lt;skia.Color4f object&gt;</em><a class="headerlink" href="#skia.Color4f.kCyan" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">Color4f.</code><code class="sig-name descname">kCyan</code><em class="property"> = Color4f(0, 1, 1, 1)</em><a class="headerlink" href="#skia.Color4f.kCyan" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt id="skia.Color4f.kDkGray">
-<code class="sig-prename descclassname">Color4f.</code><code class="sig-name descname">kDkGray</code><em class="property"> = &lt;skia.Color4f object&gt;</em><a class="headerlink" href="#skia.Color4f.kDkGray" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">Color4f.</code><code class="sig-name descname">kDkGray</code><em class="property"> = Color4f(0.25, 0.25, 0.25, 1)</em><a class="headerlink" href="#skia.Color4f.kDkGray" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt id="skia.Color4f.kGray">
-<code class="sig-prename descclassname">Color4f.</code><code class="sig-name descname">kGray</code><em class="property"> = &lt;skia.Color4f object&gt;</em><a class="headerlink" href="#skia.Color4f.kGray" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">Color4f.</code><code class="sig-name descname">kGray</code><em class="property"> = Color4f(0.5, 0.5, 0.5, 1)</em><a class="headerlink" href="#skia.Color4f.kGray" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt id="skia.Color4f.kGreen">
-<code class="sig-prename descclassname">Color4f.</code><code class="sig-name descname">kGreen</code><em class="property"> = &lt;skia.Color4f object&gt;</em><a class="headerlink" href="#skia.Color4f.kGreen" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">Color4f.</code><code class="sig-name descname">kGreen</code><em class="property"> = Color4f(0, 1, 0, 1)</em><a class="headerlink" href="#skia.Color4f.kGreen" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt id="skia.Color4f.kLtGray">
-<code class="sig-prename descclassname">Color4f.</code><code class="sig-name descname">kLtGray</code><em class="property"> = &lt;skia.Color4f object&gt;</em><a class="headerlink" href="#skia.Color4f.kLtGray" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">Color4f.</code><code class="sig-name descname">kLtGray</code><em class="property"> = Color4f(0.75, 0.75, 0.75, 1)</em><a class="headerlink" href="#skia.Color4f.kLtGray" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt id="skia.Color4f.kMagenta">
-<code class="sig-prename descclassname">Color4f.</code><code class="sig-name descname">kMagenta</code><em class="property"> = &lt;skia.Color4f object&gt;</em><a class="headerlink" href="#skia.Color4f.kMagenta" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">Color4f.</code><code class="sig-name descname">kMagenta</code><em class="property"> = Color4f(1, 0, 1, 1)</em><a class="headerlink" href="#skia.Color4f.kMagenta" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt id="skia.Color4f.kRed">
-<code class="sig-prename descclassname">Color4f.</code><code class="sig-name descname">kRed</code><em class="property"> = &lt;skia.Color4f object&gt;</em><a class="headerlink" href="#skia.Color4f.kRed" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">Color4f.</code><code class="sig-name descname">kRed</code><em class="property"> = Color4f(1, 0, 0, 1)</em><a class="headerlink" href="#skia.Color4f.kRed" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt id="skia.Color4f.kTransparent">
-<code class="sig-prename descclassname">Color4f.</code><code class="sig-name descname">kTransparent</code><em class="property"> = &lt;skia.Color4f object&gt;</em><a class="headerlink" href="#skia.Color4f.kTransparent" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">Color4f.</code><code class="sig-name descname">kTransparent</code><em class="property"> = Color4f(0, 0, 0, 0)</em><a class="headerlink" href="#skia.Color4f.kTransparent" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt id="skia.Color4f.kWhite">
-<code class="sig-prename descclassname">Color4f.</code><code class="sig-name descname">kWhite</code><em class="property"> = &lt;skia.Color4f object&gt;</em><a class="headerlink" href="#skia.Color4f.kWhite" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">Color4f.</code><code class="sig-name descname">kWhite</code><em class="property"> = Color4f(1, 1, 1, 1)</em><a class="headerlink" href="#skia.Color4f.kWhite" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt id="skia.Color4f.kYellow">
-<code class="sig-prename descclassname">Color4f.</code><code class="sig-name descname">kYellow</code><em class="property"> = &lt;skia.Color4f object&gt;</em><a class="headerlink" href="#skia.Color4f.kYellow" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">Color4f.</code><code class="sig-name descname">kYellow</code><em class="property"> = Color4f(1, 1, 0, 1)</em><a class="headerlink" href="#skia.Color4f.kYellow" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </div>
@@ -274,6 +361,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../build.html">Build instruction</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../usage.html">Usage</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="../reference.html">Reference</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../color.html">Color</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.AlphaType.html">AlphaType</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.ApplyPerspectiveClip.html">ApplyPerspectiveClip</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.AutoCanvasRestore.html">AutoCanvasRestore</a></li>
@@ -301,6 +389,8 @@
 <li class="toctree-l2"><a class="reference internal" href="skia.Codec.SelectionPolicy.html">Codec.SelectionPolicy</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.Codec.ZeroInitialized.html">Codec.ZeroInitialized</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">Color4f</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.ColorChannel.html">ColorChannel</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.ColorChannelFlag.html">ColorChannelFlag</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.ColorFilter.html">ColorFilter</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.ColorFilter.Flags.html">ColorFilter.Flags</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.ColorFilters.html">ColorFilters</a></li>
@@ -460,7 +550,7 @@
   <li><a href="../index.html">Documentation overview</a><ul>
   <li><a href="../reference.html">Reference</a><ul>
       <li>Previous: <a href="skia.Codec.ZeroInitialized.html" title="previous chapter">Codec.ZeroInitialized</a></li>
-      <li>Next: <a href="skia.ColorFilter.html" title="next chapter">ColorFilter</a></li>
+      <li>Next: <a href="skia.ColorChannel.html" title="next chapter">ColorChannel</a></li>
   </ul></li>
   </ul></li>
 </ul>

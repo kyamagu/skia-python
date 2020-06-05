@@ -43,29 +43,29 @@
 <p>Members:</p>
 <blockquote>
 <div><dl>
+<dt>kSuccess :</dt><dd><p>General return value for success.</p>
+</dd>
+<dt>kInvalidInput :</dt><dd><p>The input did not contain a valid image.</p>
+</dd>
 <dt>kInvalidScale :</dt><dd><p>The generator cannot scale to requested size.</p>
 </dd>
-<dt>kIncompleteInput :</dt><dd><p>The input is incomplete. A partial image was generated.</p>
+<dt>kInvalidConversion :</dt><dd><p>The generator cannot convert to match the request, ignoring dimensions.</p>
 </dd>
 <dt>kInvalidParameters :</dt><dd><p>Parameters (besides info) are invalid. e.g. NULL pixels, rowBytes too
 small, etc.</p>
+</dd>
+<dt>kInternalError :</dt><dd><p>An internal error, such as OOM.</p>
+</dd>
+<dt>kCouldNotRewind :</dt><dd><p>Fulfilling this request requires rewinding the input, which is not
+supported for this input.</p>
+</dd>
+<dt>kIncompleteInput :</dt><dd><p>The input is incomplete. A partial image was generated.</p>
 </dd>
 <dt>kUnimplemented :</dt><dd><p>This method is not implemented by this codec.</p>
 </dd>
 <dt>kErrorInInput :</dt><dd><p>Like kIncompleteInput, except the input had an error.</p>
 <p>If returned from an incremental decode, decoding cannot continue, even
 with more data.</p>
-</dd>
-<dt>kInvalidInput :</dt><dd><p>The input did not contain a valid image.</p>
-</dd>
-<dt>kInvalidConversion :</dt><dd><p>The generator cannot convert to match the request, ignoring dimensions.</p>
-</dd>
-<dt>kCouldNotRewind :</dt><dd><p>Fulfilling this request requires rewinding the input, which is not
-supported for this input.</p>
-</dd>
-<dt>kInternalError :</dt><dd><p>An internal error, such as OOM.</p>
-</dd>
-<dt>kSuccess :</dt><dd><p>General return value for success.</p>
 </dd>
 </dl>
 </div></blockquote>
@@ -220,6 +220,7 @@ supported for this input.</p>
 <li class="toctree-l1"><a class="reference internal" href="../build.html">Build instruction</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../usage.html">Usage</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="../reference.html">Reference</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../color.html">Color</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.AlphaType.html">AlphaType</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.ApplyPerspectiveClip.html">ApplyPerspectiveClip</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.AutoCanvasRestore.html">AutoCanvasRestore</a></li>
@@ -247,6 +248,8 @@ supported for this input.</p>
 <li class="toctree-l2"><a class="reference internal" href="skia.Codec.SelectionPolicy.html">Codec.SelectionPolicy</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.Codec.ZeroInitialized.html">Codec.ZeroInitialized</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.Color4f.html">Color4f</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.ColorChannel.html">ColorChannel</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.ColorChannelFlag.html">ColorChannelFlag</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.ColorFilter.html">ColorFilter</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.ColorFilter.Flags.html">ColorFilter.Flags</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.ColorFilters.html">ColorFilters</a></li>

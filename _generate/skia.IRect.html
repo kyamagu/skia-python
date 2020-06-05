@@ -43,6 +43,13 @@ and lower bounds of a rectangle.</p>
 and height. <a class="reference internal" href="#skia.IRect" title="skia.IRect"><code class="xref py py-class docutils literal notranslate"><span class="pre">IRect</span></code></a> describes an area; if its right is less than
 or equal to its left, or if its bottom is less than or equal to its top, it
 is considered empty.</p>
+<p>Example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">irect</span> <span class="o">=</span> <span class="n">skia</span><span class="o">.</span><span class="n">IRect</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">180</span><span class="p">,</span> <span class="mi">120</span><span class="p">)</span>
+<span class="n">irect</span> <span class="o">=</span> <span class="n">skia</span><span class="o">.</span><span class="n">IRect</span><span class="p">((</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">180</span><span class="p">,</span> <span class="mi">120</span><span class="p">))</span>  <span class="c1"># Convert from tuple</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">irect</span><span class="o">.</span><span class="n">width</span><span class="p">(),</span> <span class="n">irect</span><span class="o">.</span><span class="n">height</span><span class="p">())</span>
+<span class="n">left</span><span class="p">,</span> <span class="n">top</span><span class="p">,</span> <span class="n">right</span><span class="p">,</span> <span class="n">bottom</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">irect</span><span class="p">)</span>  <span class="c1"># Convert to tuple</span>
+</pre></div>
+</div>
 <p class="rubric">Methods</p>
 <table class="longtable docutils align-default">
 <colgroup>
@@ -54,34 +61,34 @@ is considered empty.</p>
 <td><p>Returns true if a intersects b.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#skia.IRect.MakeEmpty" title="skia.IRect.MakeEmpty"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MakeEmpty</span></code></a></p></td>
-<td><p>Returns constructed SkIRect set to (0, 0, 0, 0).</p></td>
+<td><p>Returns constructed <a class="reference internal" href="#skia.IRect" title="skia.IRect"><code class="xref py py-class docutils literal notranslate"><span class="pre">IRect</span></code></a> set to (0, 0, 0, 0).</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#skia.IRect.MakeLTRB" title="skia.IRect.MakeLTRB"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MakeLTRB</span></code></a></p></td>
-<td><p>Returns constructed SkIRect set to (l, t, r, b).</p></td>
+<td><p>Returns constructed <a class="reference internal" href="#skia.IRect" title="skia.IRect"><code class="xref py py-class docutils literal notranslate"><span class="pre">IRect</span></code></a> set to (l, t, r, b).</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#skia.IRect.MakeSize" title="skia.IRect.MakeSize"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MakeSize</span></code></a></p></td>
-<td><p>Returns constructed SkIRect set to (0, 0, size.width(), size.height()).</p></td>
+<td><p>Returns constructed <a class="reference internal" href="#skia.IRect" title="skia.IRect"><code class="xref py py-class docutils literal notranslate"><span class="pre">IRect</span></code></a> set to (0, 0, size.width(), size.height()).</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#skia.IRect.MakeWH" title="skia.IRect.MakeWH"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MakeWH</span></code></a></p></td>
-<td><p>Returns constructed SkIRect set to (0, 0, w, h).</p></td>
+<td><p>Returns constructed <a class="reference internal" href="#skia.IRect" title="skia.IRect"><code class="xref py py-class docutils literal notranslate"><span class="pre">IRect</span></code></a> set to (0, 0, w, h).</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#skia.IRect.MakeXYWH" title="skia.IRect.MakeXYWH"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MakeXYWH</span></code></a></p></td>
-<td><p>Returns constructed SkIRect set to: (x, y, x + w, y + h).</p></td>
+<td><p>Returns constructed <a class="reference internal" href="#skia.IRect" title="skia.IRect"><code class="xref py py-class docutils literal notranslate"><span class="pre">IRect</span></code></a> set to: (x, y, x + w, y + h).</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#skia.IRect.__init__" title="skia.IRect.__init__"><code class="xref py py-obj docutils literal notranslate"><span class="pre">__init__</span></code></a></p></td>
 <td><p>Overloaded function.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#skia.IRect.adjust" title="skia.IRect.adjust"><code class="xref py py-obj docutils literal notranslate"><span class="pre">adjust</span></code></a></p></td>
-<td><p>Adjusts SkIRect by adding dL to fLeft, dT to fTop, dR to fRight, and dB to fBottom.</p></td>
+<td><p>Adjusts <a class="reference internal" href="#skia.IRect" title="skia.IRect"><code class="xref py py-class docutils literal notranslate"><span class="pre">IRect</span></code></a> by adding dL to fLeft, dT to fTop, dR to fRight, and dB to fBottom.</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#skia.IRect.bottom" title="skia.IRect.bottom"><code class="xref py py-obj docutils literal notranslate"><span class="pre">bottom</span></code></a></p></td>
-<td><p>Returns bottom edge of SkIRect, if sorted.</p></td>
+<td><p>Returns bottom edge of <a class="reference internal" href="#skia.IRect" title="skia.IRect"><code class="xref py py-class docutils literal notranslate"><span class="pre">IRect</span></code></a>, if sorted.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#skia.IRect.contains" title="skia.IRect.contains"><code class="xref py py-obj docutils literal notranslate"><span class="pre">contains</span></code></a></p></td>
 <td><p>Overloaded function.</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#skia.IRect.containsNoEmptyCheck" title="skia.IRect.containsNoEmptyCheck"><code class="xref py py-obj docutils literal notranslate"><span class="pre">containsNoEmptyCheck</span></code></a></p></td>
-<td><p>Returns true if SkIRect contains construction.</p></td>
+<td><p>Returns true if <a class="reference internal" href="#skia.IRect" title="skia.IRect"><code class="xref py py-class docutils literal notranslate"><span class="pre">IRect</span></code></a> contains construction.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#skia.IRect.height" title="skia.IRect.height"><code class="xref py py-obj docutils literal notranslate"><span class="pre">height</span></code></a></p></td>
 <td><p>Returns span on the y-axis.</p></td>
@@ -90,58 +97,58 @@ is considered empty.</p>
 <td><p>Returns span on the y-axis.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#skia.IRect.inset" title="skia.IRect.inset"><code class="xref py py-obj docutils literal notranslate"><span class="pre">inset</span></code></a></p></td>
-<td><p>Insets SkIRect by (dx,dy).</p></td>
+<td><p>Insets <a class="reference internal" href="#skia.IRect" title="skia.IRect"><code class="xref py py-class docutils literal notranslate"><span class="pre">IRect</span></code></a> by (dx,dy).</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#skia.IRect.intersect" title="skia.IRect.intersect"><code class="xref py py-obj docutils literal notranslate"><span class="pre">intersect</span></code></a></p></td>
 <td><p>Overloaded function.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#skia.IRect.isEmpty" title="skia.IRect.isEmpty"><code class="xref py py-obj docutils literal notranslate"><span class="pre">isEmpty</span></code></a></p></td>
-<td><p>Returns true if width() or height() are zero or negative.</p></td>
+<td><p>Returns true if <a class="reference internal" href="#skia.IRect.width" title="skia.IRect.width"><code class="xref py py-meth docutils literal notranslate"><span class="pre">width()</span></code></a> or <a class="reference internal" href="#skia.IRect.height" title="skia.IRect.height"><code class="xref py py-meth docutils literal notranslate"><span class="pre">height()</span></code></a> are zero or negative.</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#skia.IRect.isEmpty64" title="skia.IRect.isEmpty64"><code class="xref py py-obj docutils literal notranslate"><span class="pre">isEmpty64</span></code></a></p></td>
 <td><p>Returns true if fLeft is equal to or greater than fRight, or if fTop is equal to or greater than fBottom.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#skia.IRect.join" title="skia.IRect.join"><code class="xref py py-obj docutils literal notranslate"><span class="pre">join</span></code></a></p></td>
-<td><p>Sets SkIRect to the union of itself and r.</p></td>
+<td><p>Sets <a class="reference internal" href="#skia.IRect" title="skia.IRect"><code class="xref py py-class docutils literal notranslate"><span class="pre">IRect</span></code></a> to the union of itself and r.</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#skia.IRect.left" title="skia.IRect.left"><code class="xref py py-obj docutils literal notranslate"><span class="pre">left</span></code></a></p></td>
-<td><p>Returns left edge of SkIRect, if sorted.</p></td>
+<td><p>Returns left edge of <a class="reference internal" href="#skia.IRect" title="skia.IRect"><code class="xref py py-class docutils literal notranslate"><span class="pre">IRect</span></code></a>, if sorted.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#skia.IRect.makeInset" title="skia.IRect.makeInset"><code class="xref py py-obj docutils literal notranslate"><span class="pre">makeInset</span></code></a></p></td>
-<td><p>Returns SkIRect, inset by (dx, dy).</p></td>
+<td><p>Returns <a class="reference internal" href="#skia.IRect" title="skia.IRect"><code class="xref py py-class docutils literal notranslate"><span class="pre">IRect</span></code></a>, inset by (dx, dy).</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#skia.IRect.makeOffset" title="skia.IRect.makeOffset"><code class="xref py py-obj docutils literal notranslate"><span class="pre">makeOffset</span></code></a></p></td>
 <td><p>Overloaded function.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#skia.IRect.makeOutset" title="skia.IRect.makeOutset"><code class="xref py py-obj docutils literal notranslate"><span class="pre">makeOutset</span></code></a></p></td>
-<td><p>Returns SkIRect, outset by (dx, dy).</p></td>
+<td><p>Returns <a class="reference internal" href="#skia.IRect" title="skia.IRect"><code class="xref py py-class docutils literal notranslate"><span class="pre">IRect</span></code></a>, outset by (dx, dy).</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#skia.IRect.makeSorted" title="skia.IRect.makeSorted"><code class="xref py py-obj docutils literal notranslate"><span class="pre">makeSorted</span></code></a></p></td>
-<td><p>Returns SkIRect with fLeft and fRight swapped if fLeft is greater than fRight; and with fTop and fBottom swapped if fTop is greater than fBottom.</p></td>
+<td><p>Returns <a class="reference internal" href="#skia.IRect" title="skia.IRect"><code class="xref py py-class docutils literal notranslate"><span class="pre">IRect</span></code></a> with fLeft and fRight swapped if fLeft is greater than fRight; and with fTop and fBottom swapped if fTop is greater than fBottom.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#skia.IRect.offset" title="skia.IRect.offset"><code class="xref py py-obj docutils literal notranslate"><span class="pre">offset</span></code></a></p></td>
 <td><p>Overloaded function.</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#skia.IRect.offsetTo" title="skia.IRect.offsetTo"><code class="xref py py-obj docutils literal notranslate"><span class="pre">offsetTo</span></code></a></p></td>
-<td><p>Offsets SkIRect so that fLeft equals newX, and fTop equals newY.</p></td>
+<td><p>Offsets <a class="reference internal" href="#skia.IRect" title="skia.IRect"><code class="xref py py-class docutils literal notranslate"><span class="pre">IRect</span></code></a> so that fLeft equals newX, and fTop equals newY.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#skia.IRect.outset" title="skia.IRect.outset"><code class="xref py py-obj docutils literal notranslate"><span class="pre">outset</span></code></a></p></td>
-<td><p>Outsets SkIRect by (dx, dy).</p></td>
+<td><p>Outsets <a class="reference internal" href="#skia.IRect" title="skia.IRect"><code class="xref py py-class docutils literal notranslate"><span class="pre">IRect</span></code></a> by (dx, dy).</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#skia.IRect.right" title="skia.IRect.right"><code class="xref py py-obj docutils literal notranslate"><span class="pre">right</span></code></a></p></td>
-<td><p>Returns right edge of SkIRect, if sorted.</p></td>
+<td><p>Returns right edge of <a class="reference internal" href="#skia.IRect" title="skia.IRect"><code class="xref py py-class docutils literal notranslate"><span class="pre">IRect</span></code></a>, if sorted.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#skia.IRect.setEmpty" title="skia.IRect.setEmpty"><code class="xref py py-obj docutils literal notranslate"><span class="pre">setEmpty</span></code></a></p></td>
-<td><p>Sets SkIRect to (0, 0, 0, 0).</p></td>
+<td><p>Sets <a class="reference internal" href="#skia.IRect" title="skia.IRect"><code class="xref py py-class docutils literal notranslate"><span class="pre">IRect</span></code></a> to (0, 0, 0, 0).</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#skia.IRect.setLTRB" title="skia.IRect.setLTRB"><code class="xref py py-obj docutils literal notranslate"><span class="pre">setLTRB</span></code></a></p></td>
-<td><p>Sets SkIRect to (left, top, right, bottom).</p></td>
+<td><p>Sets <a class="reference internal" href="#skia.IRect" title="skia.IRect"><code class="xref py py-class docutils literal notranslate"><span class="pre">IRect</span></code></a> to (left, top, right, bottom).</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#skia.IRect.setWH" title="skia.IRect.setWH"><code class="xref py py-obj docutils literal notranslate"><span class="pre">setWH</span></code></a></p></td>
 <td><p></p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#skia.IRect.setXYWH" title="skia.IRect.setXYWH"><code class="xref py py-obj docutils literal notranslate"><span class="pre">setXYWH</span></code></a></p></td>
-<td><p>Sets SkIRect to: (x, y, x + width, y + height).</p></td>
+<td><p>Sets <a class="reference internal" href="#skia.IRect" title="skia.IRect"><code class="xref py py-class docutils literal notranslate"><span class="pre">IRect</span></code></a> to: (x, y, x + width, y + height).</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#skia.IRect.size" title="skia.IRect.size"><code class="xref py py-obj docutils literal notranslate"><span class="pre">size</span></code></a></p></td>
 <td><p>Returns spans on the x-axis and y-axis.</p></td>
@@ -150,7 +157,7 @@ is considered empty.</p>
 <td><p>Swaps fLeft and fRight if fLeft is greater than fRight; and swaps fTop and fBottom if fTop is greater than fBottom.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#skia.IRect.top" title="skia.IRect.top"><code class="xref py py-obj docutils literal notranslate"><span class="pre">top</span></code></a></p></td>
-<td><p>Returns top edge of SkIRect, if sorted.</p></td>
+<td><p>Returns top edge of <a class="reference internal" href="#skia.IRect" title="skia.IRect"><code class="xref py py-class docutils literal notranslate"><span class="pre">IRect</span></code></a>, if sorted.</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#skia.IRect.topLeft" title="skia.IRect.topLeft"><code class="xref py py-obj docutils literal notranslate"><span class="pre">topLeft</span></code></a></p></td>
 <td><p></p></td>
@@ -162,10 +169,10 @@ is considered empty.</p>
 <td><p>Returns span on the x-axis.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#skia.IRect.x" title="skia.IRect.x"><code class="xref py py-obj docutils literal notranslate"><span class="pre">x</span></code></a></p></td>
-<td><p>Returns left edge of SkIRect, if sorted.</p></td>
+<td><p>Returns left edge of <a class="reference internal" href="#skia.IRect" title="skia.IRect"><code class="xref py py-class docutils literal notranslate"><span class="pre">IRect</span></code></a>, if sorted.</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#skia.IRect.y" title="skia.IRect.y"><code class="xref py py-obj docutils literal notranslate"><span class="pre">y</span></code></a></p></td>
-<td><p>Returns top edge of SkIRect, if sorted.</p></td>
+<td><p>Returns top edge of <a class="reference internal" href="#skia.IRect" title="skia.IRect"><code class="xref py py-class docutils literal notranslate"><span class="pre">IRect</span></code></a>, if sorted.</p></td>
 </tr>
 </tbody>
 </table>
@@ -196,228 +203,677 @@ is considered empty.</p>
 <h2>Methods<a class="headerlink" href="#methods" title="Permalink to this headline">¶</a></h2>
 <dl class="py method">
 <dt id="skia.IRect.Intersects">
-<em class="property">static </em><code class="sig-prename descclassname">IRect.</code><code class="sig-name descname">Intersects</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">arg0</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.IRect" title="skia.IRect">skia.IRect</a></span></em>, <em class="sig-param"><span class="n">arg1</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.IRect" title="skia.IRect">skia.IRect</a></span></em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#skia.IRect.Intersects" title="Permalink to this definition">¶</a></dt>
+<em class="property">static </em><code class="sig-prename descclassname">IRect.</code><code class="sig-name descname">Intersects</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">a</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.IRect" title="skia.IRect">skia.IRect</a></span></em>, <em class="sig-param"><span class="n">b</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.IRect" title="skia.IRect">skia.IRect</a></span></em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#skia.IRect.Intersects" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns true if a intersects b.</p>
+<p>Returns false if either a or b is empty, or do not intersect.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>a</strong> – <a class="reference internal" href="#skia.IRect" title="skia.IRect"><code class="xref py py-class docutils literal notranslate"><span class="pre">IRect</span></code></a> to intersect</p></li>
+<li><p><strong>b</strong> – <a class="reference internal" href="#skia.IRect" title="skia.IRect"><code class="xref py py-class docutils literal notranslate"><span class="pre">IRect</span></code></a> to intersect</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>true if a and b have area in common</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py method">
 <dt id="skia.IRect.MakeEmpty">
 <em class="property">static </em><code class="sig-prename descclassname">IRect.</code><code class="sig-name descname">MakeEmpty</code><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="#skia.IRect" title="skia.IRect">skia.IRect</a><a class="headerlink" href="#skia.IRect.MakeEmpty" title="Permalink to this definition">¶</a></dt>
-<dd><p>Returns constructed SkIRect set to (0, 0, 0, 0).</p>
+<dd><p>Returns constructed <a class="reference internal" href="#skia.IRect" title="skia.IRect"><code class="xref py py-class docutils literal notranslate"><span class="pre">IRect</span></code></a> set to (0, 0, 0, 0).</p>
+<p>Many other rectangles are empty; if left is equal to or greater than
+right, or if top is equal to or greater than bottom. Setting all members
+to zero is a convenience, but does not designate a special empty
+rectangle.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>bounds (0, 0, 0, 0)</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py method">
 <dt id="skia.IRect.MakeLTRB">
-<em class="property">static </em><code class="sig-prename descclassname">IRect.</code><code class="sig-name descname">MakeLTRB</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">arg0</span><span class="p">:</span> <span class="n">int</span></em>, <em class="sig-param"><span class="n">arg1</span><span class="p">:</span> <span class="n">int</span></em>, <em class="sig-param"><span class="n">arg2</span><span class="p">:</span> <span class="n">int</span></em>, <em class="sig-param"><span class="n">arg3</span><span class="p">:</span> <span class="n">int</span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="#skia.IRect" title="skia.IRect">skia.IRect</a><a class="headerlink" href="#skia.IRect.MakeLTRB" title="Permalink to this definition">¶</a></dt>
-<dd><p>Returns constructed SkIRect set to (l, t, r, b).</p>
+<em class="property">static </em><code class="sig-prename descclassname">IRect.</code><code class="sig-name descname">MakeLTRB</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">l</span><span class="p">:</span> <span class="n">int</span></em>, <em class="sig-param"><span class="n">t</span><span class="p">:</span> <span class="n">int</span></em>, <em class="sig-param"><span class="n">r</span><span class="p">:</span> <span class="n">int</span></em>, <em class="sig-param"><span class="n">b</span><span class="p">:</span> <span class="n">int</span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="#skia.IRect" title="skia.IRect">skia.IRect</a><a class="headerlink" href="#skia.IRect.MakeLTRB" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns constructed <a class="reference internal" href="#skia.IRect" title="skia.IRect"><code class="xref py py-class docutils literal notranslate"><span class="pre">IRect</span></code></a> set to (l, t, r, b).</p>
+<p>Does not sort input; <a class="reference internal" href="#skia.IRect" title="skia.IRect"><code class="xref py py-class docutils literal notranslate"><span class="pre">IRect</span></code></a> may result in fLeft greater than
+fRight, or fTop greater than fBottom.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>l</strong> – integer stored in fLeft</p></li>
+<li><p><strong>t</strong> – integer stored in fTop</p></li>
+<li><p><strong>r</strong> – integer stored in fRight</p></li>
+<li><p><strong>b</strong> – integer stored in fBottom</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>bounds (l, t, r, b)</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py method">
 <dt id="skia.IRect.MakeSize">
-<em class="property">static </em><code class="sig-prename descclassname">IRect.</code><code class="sig-name descname">MakeSize</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">arg0</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.ISize.html#skia.ISize" title="skia.ISize">skia.ISize</a></span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="#skia.IRect" title="skia.IRect">skia.IRect</a><a class="headerlink" href="#skia.IRect.MakeSize" title="Permalink to this definition">¶</a></dt>
-<dd><p>Returns constructed SkIRect set to (0, 0, size.width(), size.height()).</p>
+<em class="property">static </em><code class="sig-prename descclassname">IRect.</code><code class="sig-name descname">MakeSize</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">size</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.ISize.html#skia.ISize" title="skia.ISize">skia.ISize</a></span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="#skia.IRect" title="skia.IRect">skia.IRect</a><a class="headerlink" href="#skia.IRect.MakeSize" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns constructed <a class="reference internal" href="#skia.IRect" title="skia.IRect"><code class="xref py py-class docutils literal notranslate"><span class="pre">IRect</span></code></a> set to (0, 0, size.width(),
+size.height()).</p>
+<p>Does not validate input; size.width() or size.height() may be negative.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>size</strong> – values for <a class="reference internal" href="#skia.IRect" title="skia.IRect"><code class="xref py py-class docutils literal notranslate"><span class="pre">IRect</span></code></a> width and height</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>bounds (0, 0, size.width(), size.height())</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py method">
 <dt id="skia.IRect.MakeWH">
-<em class="property">static </em><code class="sig-prename descclassname">IRect.</code><code class="sig-name descname">MakeWH</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">arg0</span><span class="p">:</span> <span class="n">int</span></em>, <em class="sig-param"><span class="n">arg1</span><span class="p">:</span> <span class="n">int</span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="#skia.IRect" title="skia.IRect">skia.IRect</a><a class="headerlink" href="#skia.IRect.MakeWH" title="Permalink to this definition">¶</a></dt>
-<dd><p>Returns constructed SkIRect set to (0, 0, w, h).</p>
+<em class="property">static </em><code class="sig-prename descclassname">IRect.</code><code class="sig-name descname">MakeWH</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">w</span><span class="p">:</span> <span class="n">int</span></em>, <em class="sig-param"><span class="n">h</span><span class="p">:</span> <span class="n">int</span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="#skia.IRect" title="skia.IRect">skia.IRect</a><a class="headerlink" href="#skia.IRect.MakeWH" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns constructed <a class="reference internal" href="#skia.IRect" title="skia.IRect"><code class="xref py py-class docutils literal notranslate"><span class="pre">IRect</span></code></a> set to (0, 0, w, h).</p>
+<p>Does not validate input; w or h may be negative.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>w</strong> – width of constructed <a class="reference internal" href="#skia.IRect" title="skia.IRect"><code class="xref py py-class docutils literal notranslate"><span class="pre">IRect</span></code></a></p></li>
+<li><p><strong>h</strong> – height of constructed <a class="reference internal" href="#skia.IRect" title="skia.IRect"><code class="xref py py-class docutils literal notranslate"><span class="pre">IRect</span></code></a></p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>bounds (0, 0, w, h)</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py method">
 <dt id="skia.IRect.MakeXYWH">
-<em class="property">static </em><code class="sig-prename descclassname">IRect.</code><code class="sig-name descname">MakeXYWH</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">arg0</span><span class="p">:</span> <span class="n">int</span></em>, <em class="sig-param"><span class="n">arg1</span><span class="p">:</span> <span class="n">int</span></em>, <em class="sig-param"><span class="n">arg2</span><span class="p">:</span> <span class="n">int</span></em>, <em class="sig-param"><span class="n">arg3</span><span class="p">:</span> <span class="n">int</span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="#skia.IRect" title="skia.IRect">skia.IRect</a><a class="headerlink" href="#skia.IRect.MakeXYWH" title="Permalink to this definition">¶</a></dt>
-<dd><p>Returns constructed SkIRect set to: (x, y, x + w, y + h).</p>
+<em class="property">static </em><code class="sig-prename descclassname">IRect.</code><code class="sig-name descname">MakeXYWH</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">x</span><span class="p">:</span> <span class="n">int</span></em>, <em class="sig-param"><span class="n">y</span><span class="p">:</span> <span class="n">int</span></em>, <em class="sig-param"><span class="n">w</span><span class="p">:</span> <span class="n">int</span></em>, <em class="sig-param"><span class="n">h</span><span class="p">:</span> <span class="n">int</span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="#skia.IRect" title="skia.IRect">skia.IRect</a><a class="headerlink" href="#skia.IRect.MakeXYWH" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns constructed <a class="reference internal" href="#skia.IRect" title="skia.IRect"><code class="xref py py-class docutils literal notranslate"><span class="pre">IRect</span></code></a> set to: (x, y, x + w, y + h).</p>
+<p>Does not validate input; w or h may be negative.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>x</strong> – stored in fLeft</p></li>
+<li><p><strong>y</strong> – stored in fTop</p></li>
+<li><p><strong>w</strong> – added to x and stored in fRight</p></li>
+<li><p><strong>h</strong> – added to y and stored in fBottom</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>bounds at (x, y) with width w and height h</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py method">
 <dt id="skia.IRect.__init__">
 <code class="sig-prename descclassname">IRect.</code><code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span><span class="n">args</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#skia.IRect.__init__" title="Permalink to this definition">¶</a></dt>
 <dd><p>Overloaded function.</p>
-<ol class="arabic simple">
-<li><p>__init__(self: skia.IRect) -&gt; None</p></li>
-<li><p>__init__(self: skia.IRect, arg0: int, arg1: int) -&gt; None</p></li>
-<li><p>__init__(self: skia.IRect, arg0: int, arg1: int, arg2: int, arg3: int) -&gt; None</p></li>
+<ol class="arabic">
+<li><p>__init__(self: skia.IRect) -&gt; None</p>
+<blockquote>
+<div><p>Creates <a class="reference internal" href="#skia.IRect" title="skia.IRect"><code class="xref py py-class docutils literal notranslate"><span class="pre">IRect</span></code></a> set to (0, 0, 0, 0).</p>
+<p>Many other rectangles are empty; if left is equal to or greater than
+right, or if top is equal to or greater than bottom. Setting all members
+to zero is a convenience, but does not designate a special empty
+rectangle.</p>
+<dl class="field-list simple">
+<dt class="field-odd">return</dt>
+<dd class="field-odd"><p>bounds (0, 0, 0, 0)</p>
+</dd>
+</dl>
+</div></blockquote>
+</li>
+<li><p>__init__(self: skia.IRect, w: int, h: int) -&gt; None</p>
+<blockquote>
+<div><p>Returns constructed <a class="reference internal" href="#skia.IRect" title="skia.IRect"><code class="xref py py-class docutils literal notranslate"><span class="pre">IRect</span></code></a> set to (0, 0, w, h).</p>
+<p>Does not validate input; w or h may be negative.</p>
+<dl class="field-list simple">
+<dt class="field-odd">w</dt>
+<dd class="field-odd"><p>width of constructed <a class="reference internal" href="#skia.IRect" title="skia.IRect"><code class="xref py py-class docutils literal notranslate"><span class="pre">IRect</span></code></a></p>
+</dd>
+<dt class="field-even">h</dt>
+<dd class="field-even"><p>height of constructed <a class="reference internal" href="#skia.IRect" title="skia.IRect"><code class="xref py py-class docutils literal notranslate"><span class="pre">IRect</span></code></a></p>
+</dd>
+<dt class="field-odd">return</dt>
+<dd class="field-odd"><p>bounds (0, 0, w, h)</p>
+</dd>
+</dl>
+</div></blockquote>
+</li>
+<li><p>__init__(self: skia.IRect, l: int, t: int, r: int, b: int) -&gt; None</p>
+<blockquote>
+<div><p>Creates <a class="reference internal" href="#skia.IRect" title="skia.IRect"><code class="xref py py-class docutils literal notranslate"><span class="pre">IRect</span></code></a> set to: (x, y, x + w, y + h).</p>
+<p>Does not validate input; w or h may be negative.</p>
+<dl class="field-list simple">
+<dt class="field-odd">l</dt>
+<dd class="field-odd"><p>integer stored in fLeft</p>
+</dd>
+<dt class="field-even">t</dt>
+<dd class="field-even"><p>integer stored in fTop</p>
+</dd>
+<dt class="field-odd">r</dt>
+<dd class="field-odd"><p>integer stored in fRight</p>
+</dd>
+<dt class="field-even">b</dt>
+<dd class="field-even"><p>integer stored in fBottom</p>
+</dd>
+<dt class="field-odd">return</dt>
+<dd class="field-odd"><p>bounds (l, t, r, b)</p>
+</dd>
+</dl>
+</div></blockquote>
+</li>
+<li><p>__init__(self: skia.IRect, t: tuple) -&gt; None</p></li>
 </ol>
 </dd></dl>
 
 <dl class="py method">
 <dt id="skia.IRect.adjust">
-<code class="sig-prename descclassname">IRect.</code><code class="sig-name descname">adjust</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.IRect" title="skia.IRect">skia.IRect</a></span></em>, <em class="sig-param"><span class="n">arg0</span><span class="p">:</span> <span class="n">int</span></em>, <em class="sig-param"><span class="n">arg1</span><span class="p">:</span> <span class="n">int</span></em>, <em class="sig-param"><span class="n">arg2</span><span class="p">:</span> <span class="n">int</span></em>, <em class="sig-param"><span class="n">arg3</span><span class="p">:</span> <span class="n">int</span></em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#skia.IRect.adjust" title="Permalink to this definition">¶</a></dt>
-<dd><p>Adjusts SkIRect by adding dL to fLeft, dT to fTop, dR to fRight, and dB to fBottom.</p>
+<code class="sig-prename descclassname">IRect.</code><code class="sig-name descname">adjust</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.IRect" title="skia.IRect">skia.IRect</a></span></em>, <em class="sig-param"><span class="n">dL</span><span class="p">:</span> <span class="n">int</span></em>, <em class="sig-param"><span class="n">dT</span><span class="p">:</span> <span class="n">int</span></em>, <em class="sig-param"><span class="n">dR</span><span class="p">:</span> <span class="n">int</span></em>, <em class="sig-param"><span class="n">dB</span><span class="p">:</span> <span class="n">int</span></em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#skia.IRect.adjust" title="Permalink to this definition">¶</a></dt>
+<dd><p>Adjusts <a class="reference internal" href="#skia.IRect" title="skia.IRect"><code class="xref py py-class docutils literal notranslate"><span class="pre">IRect</span></code></a> by adding dL to fLeft, dT to fTop, dR to
+fRight, and dB to fBottom.</p>
+<p>If dL is positive, narrows <a class="reference internal" href="#skia.IRect" title="skia.IRect"><code class="xref py py-class docutils literal notranslate"><span class="pre">IRect</span></code></a> on the left. If negative,
+widens it on the left. If dT is positive, shrinks <a class="reference internal" href="#skia.IRect" title="skia.IRect"><code class="xref py py-class docutils literal notranslate"><span class="pre">IRect</span></code></a> on
+the top. If negative, lengthens it on the top. If dR is positive,
+narrows <a class="reference internal" href="#skia.IRect" title="skia.IRect"><code class="xref py py-class docutils literal notranslate"><span class="pre">IRect</span></code></a> on the right. If negative, widens it on the
+right. If dB is positive, shrinks <a class="reference internal" href="#skia.IRect" title="skia.IRect"><code class="xref py py-class docutils literal notranslate"><span class="pre">IRect</span></code></a> on the bottom. If
+negative, lengthens it on the bottom.</p>
+<p>The resulting <a class="reference internal" href="#skia.IRect" title="skia.IRect"><code class="xref py py-class docutils literal notranslate"><span class="pre">IRect</span></code></a> is not checked for validity. Thus, if
+the resulting <a class="reference internal" href="#skia.IRect" title="skia.IRect"><code class="xref py py-class docutils literal notranslate"><span class="pre">IRect</span></code></a> left is greater than right, the
+<a class="reference internal" href="#skia.IRect" title="skia.IRect"><code class="xref py py-class docutils literal notranslate"><span class="pre">IRect</span></code></a> will be considered empty. Call <a class="reference internal" href="#skia.IRect.sort" title="skia.IRect.sort"><code class="xref py py-meth docutils literal notranslate"><span class="pre">sort()</span></code></a> after
+this call if that is not the desired behavior.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>dL</strong> – offset added to fLeft</p></li>
+<li><p><strong>dT</strong> – offset added to fTop</p></li>
+<li><p><strong>dR</strong> – offset added to fRight</p></li>
+<li><p><strong>dB</strong> – offset added to fBottom</p></li>
+</ul>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py method">
 <dt id="skia.IRect.bottom">
 <code class="sig-prename descclassname">IRect.</code><code class="sig-name descname">bottom</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.IRect" title="skia.IRect">skia.IRect</a></span></em><span class="sig-paren">)</span> &#x2192; int<a class="headerlink" href="#skia.IRect.bottom" title="Permalink to this definition">¶</a></dt>
-<dd><p>Returns bottom edge of SkIRect, if sorted.</p>
+<dd><p>Returns bottom edge of <a class="reference internal" href="#skia.IRect" title="skia.IRect"><code class="xref py py-class docutils literal notranslate"><span class="pre">IRect</span></code></a>, if sorted.</p>
+<p>Call <a class="reference internal" href="#skia.IRect.isEmpty" title="skia.IRect.isEmpty"><code class="xref py py-meth docutils literal notranslate"><span class="pre">isEmpty()</span></code></a> to see if <a class="reference internal" href="#skia.IRect" title="skia.IRect"><code class="xref py py-class docutils literal notranslate"><span class="pre">IRect</span></code></a> may be invalid, and
+<a class="reference internal" href="#skia.IRect.sort" title="skia.IRect.sort"><code class="xref py py-meth docutils literal notranslate"><span class="pre">sort()</span></code></a> to reverse fTop and fBottom if needed.</p>
+<p>Returns
+fBottom</p>
 </dd></dl>
 
 <dl class="py method">
 <dt id="skia.IRect.contains">
 <code class="sig-prename descclassname">IRect.</code><code class="sig-name descname">contains</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span><span class="n">args</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#skia.IRect.contains" title="Permalink to this definition">¶</a></dt>
 <dd><p>Overloaded function.</p>
-<ol class="arabic simple">
-<li><p>contains(self: skia.IRect, arg0: int, arg1: int) -&gt; bool</p></li>
+<ol class="arabic">
+<li><p>contains(self: skia.IRect, x: int, y: int) -&gt; bool</p>
+<blockquote>
+<div><p>Returns true if: fLeft &lt;= x &lt; fRight &amp;&amp; fTop &lt;= y &lt; fBottom.</p>
+<p>Returns false if <a class="reference internal" href="#skia.IRect" title="skia.IRect"><code class="xref py py-class docutils literal notranslate"><span class="pre">IRect</span></code></a> is empty.</p>
+<p>Considers input to describe constructed <a class="reference internal" href="#skia.IRect" title="skia.IRect"><code class="xref py py-class docutils literal notranslate"><span class="pre">IRect</span></code></a>: (x, y, x + 1,
+y + 1) and returns true if constructed area is completely enclosed by
+<a class="reference internal" href="#skia.IRect" title="skia.IRect"><code class="xref py py-class docutils literal notranslate"><span class="pre">IRect</span></code></a> area.</p>
+<dl class="field-list simple">
+<dt class="field-odd">x</dt>
+<dd class="field-odd"><p>test <a class="reference internal" href="skia.IPoint.html#skia.IPoint" title="skia.IPoint"><code class="xref py py-class docutils literal notranslate"><span class="pre">IPoint</span></code></a> x-coordinate</p>
+</dd>
+<dt class="field-even">y</dt>
+<dd class="field-even"><p>test <a class="reference internal" href="skia.IPoint.html#skia.IPoint" title="skia.IPoint"><code class="xref py py-class docutils literal notranslate"><span class="pre">IPoint</span></code></a> y-coordinate</p>
+</dd>
+<dt class="field-odd">return</dt>
+<dd class="field-odd"><p>true if (x, y) is inside <a class="reference internal" href="#skia.IRect" title="skia.IRect"><code class="xref py py-class docutils literal notranslate"><span class="pre">IRect</span></code></a></p>
+</dd>
+</dl>
+</div></blockquote>
+</li>
+<li><p>contains(self: skia.IRect, r: skia.IRect) -&gt; bool</p>
+<blockquote>
+<div><p>Returns true if <a class="reference internal" href="#skia.IRect" title="skia.IRect"><code class="xref py py-class docutils literal notranslate"><span class="pre">IRect</span></code></a> contains r.</p>
+<p>Returns false if <a class="reference internal" href="#skia.IRect" title="skia.IRect"><code class="xref py py-class docutils literal notranslate"><span class="pre">IRect</span></code></a> is empty or r is empty.</p>
+<p><a class="reference internal" href="#skia.IRect" title="skia.IRect"><code class="xref py py-class docutils literal notranslate"><span class="pre">IRect</span></code></a> contains r when <a class="reference internal" href="#skia.IRect" title="skia.IRect"><code class="xref py py-class docutils literal notranslate"><span class="pre">IRect</span></code></a> area completely
+includes r area.</p>
+<dl class="field-list simple">
+<dt class="field-odd">r</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#skia.IRect" title="skia.IRect"><code class="xref py py-class docutils literal notranslate"><span class="pre">IRect</span></code></a> contained</p>
+</dd>
+<dt class="field-even">return</dt>
+<dd class="field-even"><p>true if all sides of <a class="reference internal" href="#skia.IRect" title="skia.IRect"><code class="xref py py-class docutils literal notranslate"><span class="pre">IRect</span></code></a> are outside r</p>
+</dd>
+</dl>
+</div></blockquote>
+</li>
+<li><p>contains(self: skia.IRect, r: SkRect) -&gt; bool</p>
+<blockquote>
+<div><p>Returns true if <a class="reference internal" href="#skia.IRect" title="skia.IRect"><code class="xref py py-class docutils literal notranslate"><span class="pre">IRect</span></code></a> contains r.</p>
+<p>Returns false if <a class="reference internal" href="#skia.IRect" title="skia.IRect"><code class="xref py py-class docutils literal notranslate"><span class="pre">IRect</span></code></a> is empty or r is empty.</p>
+<p><a class="reference internal" href="#skia.IRect" title="skia.IRect"><code class="xref py py-class docutils literal notranslate"><span class="pre">IRect</span></code></a> contains r when <a class="reference internal" href="#skia.IRect" title="skia.IRect"><code class="xref py py-class docutils literal notranslate"><span class="pre">IRect</span></code></a> area completely
+includes r area.</p>
+<dl class="field-list simple">
+<dt class="field-odd">r</dt>
+<dd class="field-odd"><p><a class="reference internal" href="skia.Rect.html#skia.Rect" title="skia.Rect"><code class="xref py py-class docutils literal notranslate"><span class="pre">Rect</span></code></a> contained</p>
+</dd>
+<dt class="field-even">return</dt>
+<dd class="field-even"><p>true if all sides of <a class="reference internal" href="#skia.IRect" title="skia.IRect"><code class="xref py py-class docutils literal notranslate"><span class="pre">IRect</span></code></a> are outside r</p>
+</dd>
+</dl>
+</div></blockquote>
+</li>
 </ol>
-<p>Returns true if: fLeft &lt;= x &lt; fRight &amp;&amp; fTop &lt;= y &lt; fBottom.</p>
-<ol class="arabic simple" start="2">
-<li><p>contains(self: skia.IRect, arg0: skia.IRect) -&gt; bool</p></li>
-</ol>
-<p>Returns true if SkIRect contains r.</p>
-<ol class="arabic simple" start="3">
-<li><p>contains(self: skia.IRect, arg0: SkRect) -&gt; bool</p></li>
-</ol>
-<p>Returns true if SkRect contains r.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt id="skia.IRect.containsNoEmptyCheck">
-<code class="sig-prename descclassname">IRect.</code><code class="sig-name descname">containsNoEmptyCheck</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.IRect" title="skia.IRect">skia.IRect</a></span></em>, <em class="sig-param"><span class="n">arg0</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.IRect" title="skia.IRect">skia.IRect</a></span></em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#skia.IRect.containsNoEmptyCheck" title="Permalink to this definition">¶</a></dt>
-<dd><p>Returns true if SkIRect contains construction.</p>
+<code class="sig-prename descclassname">IRect.</code><code class="sig-name descname">containsNoEmptyCheck</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.IRect" title="skia.IRect">skia.IRect</a></span></em>, <em class="sig-param"><span class="n">r</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.IRect" title="skia.IRect">skia.IRect</a></span></em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#skia.IRect.containsNoEmptyCheck" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns true if <a class="reference internal" href="#skia.IRect" title="skia.IRect"><code class="xref py py-class docutils literal notranslate"><span class="pre">IRect</span></code></a> contains construction.</p>
+<p>Asserts if <a class="reference internal" href="#skia.IRect" title="skia.IRect"><code class="xref py py-class docutils literal notranslate"><span class="pre">IRect</span></code></a> is empty or construction is empty, and if
+SK_DEBUG is defined.</p>
+<p>Return is undefined if <a class="reference internal" href="#skia.IRect" title="skia.IRect"><code class="xref py py-class docutils literal notranslate"><span class="pre">IRect</span></code></a> is empty or construction is
+empty.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>r</strong> – <a class="reference internal" href="#skia.IRect" title="skia.IRect"><code class="xref py py-class docutils literal notranslate"><span class="pre">IRect</span></code></a> contained</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>true if all sides of <a class="reference internal" href="#skia.IRect" title="skia.IRect"><code class="xref py py-class docutils literal notranslate"><span class="pre">IRect</span></code></a> are outside r</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py method">
 <dt id="skia.IRect.height">
 <code class="sig-prename descclassname">IRect.</code><code class="sig-name descname">height</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.IRect" title="skia.IRect">skia.IRect</a></span></em><span class="sig-paren">)</span> &#x2192; int<a class="headerlink" href="#skia.IRect.height" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns span on the y-axis.</p>
+<p>This does not check if <a class="reference internal" href="#skia.IRect" title="skia.IRect"><code class="xref py py-class docutils literal notranslate"><span class="pre">IRect</span></code></a> is sorted, or if result fits in
+32-bit signed integer; result may be negative.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>fBottom minus fTop</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py method">
 <dt id="skia.IRect.height64">
 <code class="sig-prename descclassname">IRect.</code><code class="sig-name descname">height64</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.IRect" title="skia.IRect">skia.IRect</a></span></em><span class="sig-paren">)</span> &#x2192; int<a class="headerlink" href="#skia.IRect.height64" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns span on the y-axis.</p>
+<p>This does not check if <a class="reference internal" href="#skia.IRect" title="skia.IRect"><code class="xref py py-class docutils literal notranslate"><span class="pre">IRect</span></code></a> is sorted, so the result may be
+negative. This is safer than calling <a class="reference internal" href="#skia.IRect.height" title="skia.IRect.height"><code class="xref py py-meth docutils literal notranslate"><span class="pre">height()</span></code></a> since
+<a class="reference internal" href="#skia.IRect.height" title="skia.IRect.height"><code class="xref py py-meth docutils literal notranslate"><span class="pre">height()</span></code></a> might overflow in its calculation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>fBottom minus fTop cast to int64_t</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py method">
 <dt id="skia.IRect.inset">
-<code class="sig-prename descclassname">IRect.</code><code class="sig-name descname">inset</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.IRect" title="skia.IRect">skia.IRect</a></span></em>, <em class="sig-param"><span class="n">arg0</span><span class="p">:</span> <span class="n">int</span></em>, <em class="sig-param"><span class="n">arg1</span><span class="p">:</span> <span class="n">int</span></em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#skia.IRect.inset" title="Permalink to this definition">¶</a></dt>
-<dd><p>Insets SkIRect by (dx,dy).</p>
+<code class="sig-prename descclassname">IRect.</code><code class="sig-name descname">inset</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.IRect" title="skia.IRect">skia.IRect</a></span></em>, <em class="sig-param"><span class="n">dx</span><span class="p">:</span> <span class="n">int</span></em>, <em class="sig-param"><span class="n">dy</span><span class="p">:</span> <span class="n">int</span></em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#skia.IRect.inset" title="Permalink to this definition">¶</a></dt>
+<dd><p>Insets <a class="reference internal" href="#skia.IRect" title="skia.IRect"><code class="xref py py-class docutils literal notranslate"><span class="pre">IRect</span></code></a> by (dx,dy).</p>
+<p>If dx is positive, makes <a class="reference internal" href="#skia.IRect" title="skia.IRect"><code class="xref py py-class docutils literal notranslate"><span class="pre">IRect</span></code></a> narrower. If dx is negative,
+makes <a class="reference internal" href="#skia.IRect" title="skia.IRect"><code class="xref py py-class docutils literal notranslate"><span class="pre">IRect</span></code></a> wider. If dy is positive, makes
+<a class="reference internal" href="#skia.IRect" title="skia.IRect"><code class="xref py py-class docutils literal notranslate"><span class="pre">IRect</span></code></a> shorter. If dy is negative, makes <a class="reference internal" href="#skia.IRect" title="skia.IRect"><code class="xref py py-class docutils literal notranslate"><span class="pre">IRect</span></code></a>
+taller.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>dx</strong> – offset added to fLeft and subtracted from fRight</p></li>
+<li><p><strong>dy</strong> – offset added to fTop and subtracted from fBottom</p></li>
+</ul>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py method">
 <dt id="skia.IRect.intersect">
 <code class="sig-prename descclassname">IRect.</code><code class="sig-name descname">intersect</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span><span class="n">args</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#skia.IRect.intersect" title="Permalink to this definition">¶</a></dt>
 <dd><p>Overloaded function.</p>
-<ol class="arabic simple">
-<li><p>intersect(self: skia.IRect, arg0: skia.IRect) -&gt; bool</p></li>
+<ol class="arabic">
+<li><p>intersect(self: skia.IRect, r: skia.IRect) -&gt; bool</p>
+<blockquote>
+<div><p>Returns true if <a class="reference internal" href="#skia.IRect" title="skia.IRect"><code class="xref py py-class docutils literal notranslate"><span class="pre">IRect</span></code></a> intersects r, and sets
+<a class="reference internal" href="#skia.IRect" title="skia.IRect"><code class="xref py py-class docutils literal notranslate"><span class="pre">IRect</span></code></a> to intersection.</p>
+<p>Returns false if <a class="reference internal" href="#skia.IRect" title="skia.IRect"><code class="xref py py-class docutils literal notranslate"><span class="pre">IRect</span></code></a> does not intersect r, and leaves
+<a class="reference internal" href="#skia.IRect" title="skia.IRect"><code class="xref py py-class docutils literal notranslate"><span class="pre">IRect</span></code></a> unchanged.</p>
+<p>Returns false if either r or <a class="reference internal" href="#skia.IRect" title="skia.IRect"><code class="xref py py-class docutils literal notranslate"><span class="pre">IRect</span></code></a> is empty, leaving
+<a class="reference internal" href="#skia.IRect" title="skia.IRect"><code class="xref py py-class docutils literal notranslate"><span class="pre">IRect</span></code></a> unchanged.</p>
+<dl class="field-list simple">
+<dt class="field-odd">r</dt>
+<dd class="field-odd"><p>limit of result</p>
+</dd>
+<dt class="field-even">return</dt>
+<dd class="field-even"><p>true if r and <a class="reference internal" href="#skia.IRect" title="skia.IRect"><code class="xref py py-class docutils literal notranslate"><span class="pre">IRect</span></code></a> have area in common</p>
+</dd>
+</dl>
+</div></blockquote>
+</li>
+<li><p>intersect(self: skia.IRect, a: skia.IRect, b: skia.IRect) -&gt; bool</p>
+<blockquote>
+<div><p>Returns true if a intersects b, and sets <a class="reference internal" href="#skia.IRect" title="skia.IRect"><code class="xref py py-class docutils literal notranslate"><span class="pre">IRect</span></code></a> to
+intersection.</p>
+<p>Returns false if a does not intersect b, and leaves <a class="reference internal" href="#skia.IRect" title="skia.IRect"><code class="xref py py-class docutils literal notranslate"><span class="pre">IRect</span></code></a>
+unchanged.</p>
+<p>Returns false if either a or b is empty, leaving <a class="reference internal" href="#skia.IRect" title="skia.IRect"><code class="xref py py-class docutils literal notranslate"><span class="pre">IRect</span></code></a>
+unchanged.</p>
+<dl class="field-list simple">
+<dt class="field-odd">a</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#skia.IRect" title="skia.IRect"><code class="xref py py-class docutils literal notranslate"><span class="pre">IRect</span></code></a> to intersect</p>
+</dd>
+<dt class="field-even">b</dt>
+<dd class="field-even"><p><a class="reference internal" href="#skia.IRect" title="skia.IRect"><code class="xref py py-class docutils literal notranslate"><span class="pre">IRect</span></code></a> to intersect</p>
+</dd>
+<dt class="field-odd">return</dt>
+<dd class="field-odd"><p>true if a and b have area in common</p>
+</dd>
+</dl>
+</div></blockquote>
+</li>
 </ol>
-<p>Returns true if SkIRect intersects r, and sets SkIRect to intersection.</p>
-<ol class="arabic simple" start="2">
-<li><p>intersect(self: skia.IRect, arg0: skia.IRect, arg1: skia.IRect) -&gt; bool</p></li>
-</ol>
-<p>Returns true if a intersects b, and sets SkIRect to intersection.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt id="skia.IRect.isEmpty">
 <code class="sig-prename descclassname">IRect.</code><code class="sig-name descname">isEmpty</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.IRect" title="skia.IRect">skia.IRect</a></span></em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#skia.IRect.isEmpty" title="Permalink to this definition">¶</a></dt>
-<dd><p>Returns true if width() or height() are zero or negative.</p>
+<dd><p>Returns true if <a class="reference internal" href="#skia.IRect.width" title="skia.IRect.width"><code class="xref py py-meth docutils literal notranslate"><span class="pre">width()</span></code></a> or <a class="reference internal" href="#skia.IRect.height" title="skia.IRect.height"><code class="xref py py-meth docutils literal notranslate"><span class="pre">height()</span></code></a> are zero or
+negative.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>true if <a class="reference internal" href="#skia.IRect.width" title="skia.IRect.width"><code class="xref py py-meth docutils literal notranslate"><span class="pre">width()</span></code></a> or <a class="reference internal" href="#skia.IRect.height" title="skia.IRect.height"><code class="xref py py-meth docutils literal notranslate"><span class="pre">height()</span></code></a> are zero or
+negative</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py method">
 <dt id="skia.IRect.isEmpty64">
 <code class="sig-prename descclassname">IRect.</code><code class="sig-name descname">isEmpty64</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.IRect" title="skia.IRect">skia.IRect</a></span></em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#skia.IRect.isEmpty64" title="Permalink to this definition">¶</a></dt>
-<dd><p>Returns true if fLeft is equal to or greater than fRight, or if fTop is equal to or greater than fBottom.</p>
+<dd><p>Returns true if fLeft is equal to or greater than fRight, or if fTop is
+equal to or greater than fBottom.</p>
+<p>Call <a class="reference internal" href="#skia.IRect.sort" title="skia.IRect.sort"><code class="xref py py-meth docutils literal notranslate"><span class="pre">sort()</span></code></a> to reverse rectangles with negative
+<a class="reference internal" href="#skia.IRect.width64" title="skia.IRect.width64"><code class="xref py py-meth docutils literal notranslate"><span class="pre">width64()</span></code></a> or <a class="reference internal" href="#skia.IRect.height64" title="skia.IRect.height64"><code class="xref py py-meth docutils literal notranslate"><span class="pre">height64()</span></code></a>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>true if <a class="reference internal" href="#skia.IRect.width64" title="skia.IRect.width64"><code class="xref py py-meth docutils literal notranslate"><span class="pre">width64()</span></code></a> or <a class="reference internal" href="#skia.IRect.height64" title="skia.IRect.height64"><code class="xref py py-meth docutils literal notranslate"><span class="pre">height64()</span></code></a> are zero or
+negative</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py method">
 <dt id="skia.IRect.join">
-<code class="sig-prename descclassname">IRect.</code><code class="sig-name descname">join</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.IRect" title="skia.IRect">skia.IRect</a></span></em>, <em class="sig-param"><span class="n">arg0</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.IRect" title="skia.IRect">skia.IRect</a></span></em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#skia.IRect.join" title="Permalink to this definition">¶</a></dt>
-<dd><p>Sets SkIRect to the union of itself and r.</p>
+<code class="sig-prename descclassname">IRect.</code><code class="sig-name descname">join</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.IRect" title="skia.IRect">skia.IRect</a></span></em>, <em class="sig-param"><span class="n">r</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.IRect" title="skia.IRect">skia.IRect</a></span></em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#skia.IRect.join" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets <a class="reference internal" href="#skia.IRect" title="skia.IRect"><code class="xref py py-class docutils literal notranslate"><span class="pre">IRect</span></code></a> to the union of itself and r.</p>
+<p>Has no effect if r is empty. Otherwise, if <a class="reference internal" href="#skia.IRect" title="skia.IRect"><code class="xref py py-class docutils literal notranslate"><span class="pre">IRect</span></code></a> is empty,
+sets <a class="reference internal" href="#skia.IRect" title="skia.IRect"><code class="xref py py-class docutils literal notranslate"><span class="pre">IRect</span></code></a> to r.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>r</strong> – expansion <a class="reference internal" href="#skia.IRect" title="skia.IRect"><code class="xref py py-class docutils literal notranslate"><span class="pre">IRect</span></code></a></p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py method">
 <dt id="skia.IRect.left">
 <code class="sig-prename descclassname">IRect.</code><code class="sig-name descname">left</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.IRect" title="skia.IRect">skia.IRect</a></span></em><span class="sig-paren">)</span> &#x2192; int<a class="headerlink" href="#skia.IRect.left" title="Permalink to this definition">¶</a></dt>
-<dd><p>Returns left edge of SkIRect, if sorted.</p>
+<dd><p>Returns left edge of <a class="reference internal" href="#skia.IRect" title="skia.IRect"><code class="xref py py-class docutils literal notranslate"><span class="pre">IRect</span></code></a>, if sorted.</p>
+<p>Call <a class="reference internal" href="#skia.IRect.sort" title="skia.IRect.sort"><code class="xref py py-meth docutils literal notranslate"><span class="pre">sort()</span></code></a> to reverse fLeft and fRight if needed.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>fLeft</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py method">
 <dt id="skia.IRect.makeInset">
-<code class="sig-prename descclassname">IRect.</code><code class="sig-name descname">makeInset</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.IRect" title="skia.IRect">skia.IRect</a></span></em>, <em class="sig-param"><span class="n">arg0</span><span class="p">:</span> <span class="n">int</span></em>, <em class="sig-param"><span class="n">arg1</span><span class="p">:</span> <span class="n">int</span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="#skia.IRect" title="skia.IRect">skia.IRect</a><a class="headerlink" href="#skia.IRect.makeInset" title="Permalink to this definition">¶</a></dt>
-<dd><p>Returns SkIRect, inset by (dx, dy).</p>
+<code class="sig-prename descclassname">IRect.</code><code class="sig-name descname">makeInset</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.IRect" title="skia.IRect">skia.IRect</a></span></em>, <em class="sig-param"><span class="n">dx</span><span class="p">:</span> <span class="n">int</span></em>, <em class="sig-param"><span class="n">dy</span><span class="p">:</span> <span class="n">int</span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="#skia.IRect" title="skia.IRect">skia.IRect</a><a class="headerlink" href="#skia.IRect.makeInset" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns <a class="reference internal" href="#skia.IRect" title="skia.IRect"><code class="xref py py-class docutils literal notranslate"><span class="pre">IRect</span></code></a>, inset by (dx, dy).</p>
+<p>If dx is negative, <a class="reference internal" href="#skia.IRect" title="skia.IRect"><code class="xref py py-class docutils literal notranslate"><span class="pre">IRect</span></code></a> returned is wider. If dx is
+positive, <a class="reference internal" href="#skia.IRect" title="skia.IRect"><code class="xref py py-class docutils literal notranslate"><span class="pre">IRect</span></code></a> returned is narrower. If dy is negative,
+<a class="reference internal" href="#skia.IRect" title="skia.IRect"><code class="xref py py-class docutils literal notranslate"><span class="pre">IRect</span></code></a> returned is taller. If dy is positive,
+<a class="reference internal" href="#skia.IRect" title="skia.IRect"><code class="xref py py-class docutils literal notranslate"><span class="pre">IRect</span></code></a> returned is shorter.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>dx</strong> – offset added to fLeft and subtracted from fRight</p></li>
+<li><p><strong>dy</strong> – offset added to fTop and subtracted from fBottom</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><a class="reference internal" href="#skia.IRect" title="skia.IRect"><code class="xref py py-class docutils literal notranslate"><span class="pre">IRect</span></code></a> inset symmetrically left and right, top and
+bottom</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py method">
 <dt id="skia.IRect.makeOffset">
 <code class="sig-prename descclassname">IRect.</code><code class="sig-name descname">makeOffset</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span><span class="n">args</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#skia.IRect.makeOffset" title="Permalink to this definition">¶</a></dt>
 <dd><p>Overloaded function.</p>
-<ol class="arabic simple">
-<li><p>makeOffset(self: skia.IRect, arg0: int, arg1: int) -&gt; skia.IRect</p></li>
+<ol class="arabic">
+<li><p>makeOffset(self: skia.IRect, dx: int, dy: int) -&gt; skia.IRect</p>
+<blockquote>
+<div><p>Returns <a class="reference internal" href="#skia.IRect" title="skia.IRect"><code class="xref py py-class docutils literal notranslate"><span class="pre">IRect</span></code></a> offset by (dx, dy).</p>
+<p>If dx is negative, <a class="reference internal" href="#skia.IRect" title="skia.IRect"><code class="xref py py-class docutils literal notranslate"><span class="pre">IRect</span></code></a> returned is moved to the left. If
+dx is positive, <a class="reference internal" href="#skia.IRect" title="skia.IRect"><code class="xref py py-class docutils literal notranslate"><span class="pre">IRect</span></code></a> returned is moved to the right. If dy
+is negative, <a class="reference internal" href="#skia.IRect" title="skia.IRect"><code class="xref py py-class docutils literal notranslate"><span class="pre">IRect</span></code></a> returned is moved upward. If dy is
+positive, <a class="reference internal" href="#skia.IRect" title="skia.IRect"><code class="xref py py-class docutils literal notranslate"><span class="pre">IRect</span></code></a> returned is moved downward.</p>
+<dl class="field-list simple">
+<dt class="field-odd">dx</dt>
+<dd class="field-odd"><p>offset added to fLeft and fRight</p>
+</dd>
+<dt class="field-even">dy</dt>
+<dd class="field-even"><p>offset added to fTop and fBottom</p>
+</dd>
+<dt class="field-odd">return</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#skia.IRect" title="skia.IRect"><code class="xref py py-class docutils literal notranslate"><span class="pre">IRect</span></code></a> offset by dx and dy, with original width and
+height</p>
+</dd>
+</dl>
+</div></blockquote>
+</li>
+<li><p>makeOffset(self: skia.IRect, offset: skia.IPoint) -&gt; skia.IRect</p>
+<blockquote>
+<div><p>Returns <a class="reference internal" href="#skia.IRect" title="skia.IRect"><code class="xref py py-class docutils literal notranslate"><span class="pre">IRect</span></code></a> offset by (offset.x(), offset.y()).</p>
+<p>If offset.x() is negative, <a class="reference internal" href="#skia.IRect" title="skia.IRect"><code class="xref py py-class docutils literal notranslate"><span class="pre">IRect</span></code></a> returned is moved to the
+left. If offset.x() is positive, <a class="reference internal" href="#skia.IRect" title="skia.IRect"><code class="xref py py-class docutils literal notranslate"><span class="pre">IRect</span></code></a> returned is moved to
+the right. If offset.y() is negative, <a class="reference internal" href="#skia.IRect" title="skia.IRect"><code class="xref py py-class docutils literal notranslate"><span class="pre">IRect</span></code></a> returned is
+moved upward. If offset.y() is positive, <a class="reference internal" href="#skia.IRect" title="skia.IRect"><code class="xref py py-class docutils literal notranslate"><span class="pre">IRect</span></code></a> returned is
+moved downward.</p>
+<dl class="field-list simple">
+<dt class="field-odd">offset</dt>
+<dd class="field-odd"><p>translation vector</p>
+</dd>
+<dt class="field-even">return</dt>
+<dd class="field-even"><p><a class="reference internal" href="#skia.IRect" title="skia.IRect"><code class="xref py py-class docutils literal notranslate"><span class="pre">IRect</span></code></a> translated by offset, with original width and
+height</p>
+</dd>
+</dl>
+</div></blockquote>
+</li>
 </ol>
-<p>Returns SkIRect offset by (dx, dy).</p>
-<ol class="arabic simple" start="2">
-<li><p>makeOffset(self: skia.IRect, arg0: skia.IPoint) -&gt; skia.IRect</p></li>
-</ol>
-<p>Returns SkIRect offset by (offset.x(), offset.y()).</p>
 </dd></dl>
 
 <dl class="py method">
 <dt id="skia.IRect.makeOutset">
-<code class="sig-prename descclassname">IRect.</code><code class="sig-name descname">makeOutset</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.IRect" title="skia.IRect">skia.IRect</a></span></em>, <em class="sig-param"><span class="n">arg0</span><span class="p">:</span> <span class="n">int</span></em>, <em class="sig-param"><span class="n">arg1</span><span class="p">:</span> <span class="n">int</span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="#skia.IRect" title="skia.IRect">skia.IRect</a><a class="headerlink" href="#skia.IRect.makeOutset" title="Permalink to this definition">¶</a></dt>
-<dd><p>Returns SkIRect, outset by (dx, dy).</p>
+<code class="sig-prename descclassname">IRect.</code><code class="sig-name descname">makeOutset</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.IRect" title="skia.IRect">skia.IRect</a></span></em>, <em class="sig-param"><span class="n">dx</span><span class="p">:</span> <span class="n">int</span></em>, <em class="sig-param"><span class="n">dy</span><span class="p">:</span> <span class="n">int</span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="#skia.IRect" title="skia.IRect">skia.IRect</a><a class="headerlink" href="#skia.IRect.makeOutset" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns <a class="reference internal" href="#skia.IRect" title="skia.IRect"><code class="xref py py-class docutils literal notranslate"><span class="pre">IRect</span></code></a>, outset by (dx, dy).</p>
+<p>If dx is negative, <a class="reference internal" href="#skia.IRect" title="skia.IRect"><code class="xref py py-class docutils literal notranslate"><span class="pre">IRect</span></code></a> returned is narrower. If dx is
+positive, <a class="reference internal" href="#skia.IRect" title="skia.IRect"><code class="xref py py-class docutils literal notranslate"><span class="pre">IRect</span></code></a> returned is wider. If dy is negative,
+<a class="reference internal" href="#skia.IRect" title="skia.IRect"><code class="xref py py-class docutils literal notranslate"><span class="pre">IRect</span></code></a> returned is shorter. If dy is positive,
+<a class="reference internal" href="#skia.IRect" title="skia.IRect"><code class="xref py py-class docutils literal notranslate"><span class="pre">IRect</span></code></a> returned is taller.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>dx</strong> – offset subtracted to fLeft and added from fRight</p></li>
+<li><p><strong>dy</strong> – offset subtracted to fTop and added from fBottom</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><a class="reference internal" href="#skia.IRect" title="skia.IRect"><code class="xref py py-class docutils literal notranslate"><span class="pre">IRect</span></code></a> outset symmetrically left and right, top and
+bottom</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py method">
 <dt id="skia.IRect.makeSorted">
 <code class="sig-prename descclassname">IRect.</code><code class="sig-name descname">makeSorted</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.IRect" title="skia.IRect">skia.IRect</a></span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="#skia.IRect" title="skia.IRect">skia.IRect</a><a class="headerlink" href="#skia.IRect.makeSorted" title="Permalink to this definition">¶</a></dt>
-<dd><p>Returns SkIRect with fLeft and fRight swapped if fLeft is greater than fRight; and with fTop and fBottom swapped if fTop is greater than fBottom.</p>
+<dd><p>Returns <a class="reference internal" href="#skia.IRect" title="skia.IRect"><code class="xref py py-class docutils literal notranslate"><span class="pre">IRect</span></code></a> with fLeft and fRight swapped if fLeft is
+greater than fRight; and with fTop and fBottom swapped if fTop is
+greater than fBottom.</p>
+<p>Result may be empty; and <a class="reference internal" href="#skia.IRect.width" title="skia.IRect.width"><code class="xref py py-meth docutils literal notranslate"><span class="pre">width()</span></code></a> and <a class="reference internal" href="#skia.IRect.height" title="skia.IRect.height"><code class="xref py py-meth docutils literal notranslate"><span class="pre">height()</span></code></a> will be
+zero or positive.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>sorted <a class="reference internal" href="#skia.IRect" title="skia.IRect"><code class="xref py py-class docutils literal notranslate"><span class="pre">IRect</span></code></a></p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py method">
 <dt id="skia.IRect.offset">
 <code class="sig-prename descclassname">IRect.</code><code class="sig-name descname">offset</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span><span class="n">args</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#skia.IRect.offset" title="Permalink to this definition">¶</a></dt>
 <dd><p>Overloaded function.</p>
-<ol class="arabic simple">
-<li><p>offset(self: skia.IRect, arg0: int, arg1: int) -&gt; None</p></li>
+<ol class="arabic">
+<li><p>offset(self: skia.IRect, dx: int, dy: int) -&gt; None</p>
+<blockquote>
+<div><p>Offsets <a class="reference internal" href="#skia.IRect" title="skia.IRect"><code class="xref py py-class docutils literal notranslate"><span class="pre">IRect</span></code></a> by adding dx to fLeft, fRight; and by adding
+dy to fTop, fBottom.</p>
+<p>If dx is negative, moves <a class="reference internal" href="#skia.IRect" title="skia.IRect"><code class="xref py py-class docutils literal notranslate"><span class="pre">IRect</span></code></a> returned to the left. If dx
+is positive, moves <a class="reference internal" href="#skia.IRect" title="skia.IRect"><code class="xref py py-class docutils literal notranslate"><span class="pre">IRect</span></code></a> returned to the right. If dy is
+negative, moves <a class="reference internal" href="#skia.IRect" title="skia.IRect"><code class="xref py py-class docutils literal notranslate"><span class="pre">IRect</span></code></a> returned upward. If dy is positive,
+moves <a class="reference internal" href="#skia.IRect" title="skia.IRect"><code class="xref py py-class docutils literal notranslate"><span class="pre">IRect</span></code></a> returned downward.</p>
+<dl class="field-list simple">
+<dt class="field-odd">dx</dt>
+<dd class="field-odd"><p>offset added to fLeft and fRight</p>
+</dd>
+<dt class="field-even">dy</dt>
+<dd class="field-even"><p>offset added to fTop and fBottom</p>
+</dd>
+</dl>
+</div></blockquote>
+</li>
+<li><p>offset(self: skia.IRect, delta: skia.IPoint) -&gt; None</p>
+<blockquote>
+<div><p>Offsets <a class="reference internal" href="#skia.IRect" title="skia.IRect"><code class="xref py py-class docutils literal notranslate"><span class="pre">IRect</span></code></a> by adding delta.fX to fLeft, fRight; and by
+adding delta.fY to fTop, fBottom.</p>
+<p>If delta.fX is negative, moves <a class="reference internal" href="#skia.IRect" title="skia.IRect"><code class="xref py py-class docutils literal notranslate"><span class="pre">IRect</span></code></a> returned to the left.
+If delta.fX is positive, moves <a class="reference internal" href="#skia.IRect" title="skia.IRect"><code class="xref py py-class docutils literal notranslate"><span class="pre">IRect</span></code></a> returned to the right.
+If delta.fY is negative, moves <a class="reference internal" href="#skia.IRect" title="skia.IRect"><code class="xref py py-class docutils literal notranslate"><span class="pre">IRect</span></code></a> returned upward. If
+delta.fY is positive, moves <a class="reference internal" href="#skia.IRect" title="skia.IRect"><code class="xref py py-class docutils literal notranslate"><span class="pre">IRect</span></code></a> returned downward.</p>
+<dl class="field-list simple">
+<dt class="field-odd">delta</dt>
+<dd class="field-odd"><p>offset added to <a class="reference internal" href="#skia.IRect" title="skia.IRect"><code class="xref py py-class docutils literal notranslate"><span class="pre">IRect</span></code></a></p>
+</dd>
+</dl>
+</div></blockquote>
+</li>
 </ol>
-<p>Offsets SkIRect by adding dx to fLeft, fRight; and by adding dy to fTop, fBottom.</p>
-<ol class="arabic simple" start="2">
-<li><p>offset(self: skia.IRect, arg0: skia.IPoint) -&gt; None</p></li>
-</ol>
-<p>Offsets SkIRect by adding delta.fX to fLeft, fRight; and by adding delta.fY to fTop, fBottom.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt id="skia.IRect.offsetTo">
-<code class="sig-prename descclassname">IRect.</code><code class="sig-name descname">offsetTo</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.IRect" title="skia.IRect">skia.IRect</a></span></em>, <em class="sig-param"><span class="n">arg0</span><span class="p">:</span> <span class="n">int</span></em>, <em class="sig-param"><span class="n">arg1</span><span class="p">:</span> <span class="n">int</span></em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#skia.IRect.offsetTo" title="Permalink to this definition">¶</a></dt>
-<dd><p>Offsets SkIRect so that fLeft equals newX, and fTop equals newY.</p>
+<code class="sig-prename descclassname">IRect.</code><code class="sig-name descname">offsetTo</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.IRect" title="skia.IRect">skia.IRect</a></span></em>, <em class="sig-param"><span class="n">newX</span><span class="p">:</span> <span class="n">int</span></em>, <em class="sig-param"><span class="n">newY</span><span class="p">:</span> <span class="n">int</span></em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#skia.IRect.offsetTo" title="Permalink to this definition">¶</a></dt>
+<dd><p>Offsets <a class="reference internal" href="#skia.IRect" title="skia.IRect"><code class="xref py py-class docutils literal notranslate"><span class="pre">IRect</span></code></a> so that fLeft equals newX, and fTop equals
+newY.</p>
+<p>width and height are unchanged.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>newX</strong> – stored in fLeft, preserving <a class="reference internal" href="#skia.IRect.width" title="skia.IRect.width"><code class="xref py py-meth docutils literal notranslate"><span class="pre">width()</span></code></a></p></li>
+<li><p><strong>newY</strong> – stored in fTop, preserving <a class="reference internal" href="#skia.IRect.height" title="skia.IRect.height"><code class="xref py py-meth docutils literal notranslate"><span class="pre">height()</span></code></a></p></li>
+</ul>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py method">
 <dt id="skia.IRect.outset">
-<code class="sig-prename descclassname">IRect.</code><code class="sig-name descname">outset</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.IRect" title="skia.IRect">skia.IRect</a></span></em>, <em class="sig-param"><span class="n">arg0</span><span class="p">:</span> <span class="n">int</span></em>, <em class="sig-param"><span class="n">arg1</span><span class="p">:</span> <span class="n">int</span></em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#skia.IRect.outset" title="Permalink to this definition">¶</a></dt>
-<dd><p>Outsets SkIRect by (dx, dy).</p>
+<code class="sig-prename descclassname">IRect.</code><code class="sig-name descname">outset</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.IRect" title="skia.IRect">skia.IRect</a></span></em>, <em class="sig-param"><span class="n">dx</span><span class="p">:</span> <span class="n">int</span></em>, <em class="sig-param"><span class="n">dy</span><span class="p">:</span> <span class="n">int</span></em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#skia.IRect.outset" title="Permalink to this definition">¶</a></dt>
+<dd><p>Outsets <a class="reference internal" href="#skia.IRect" title="skia.IRect"><code class="xref py py-class docutils literal notranslate"><span class="pre">IRect</span></code></a> by (dx, dy).</p>
+<p>If dx is positive, makes <a class="reference internal" href="#skia.IRect" title="skia.IRect"><code class="xref py py-class docutils literal notranslate"><span class="pre">IRect</span></code></a> wider. If dx is negative,
+makes <a class="reference internal" href="#skia.IRect" title="skia.IRect"><code class="xref py py-class docutils literal notranslate"><span class="pre">IRect</span></code></a> narrower. If dy is positive, makes
+<a class="reference internal" href="#skia.IRect" title="skia.IRect"><code class="xref py py-class docutils literal notranslate"><span class="pre">IRect</span></code></a> taller. If dy is negative, makes <a class="reference internal" href="#skia.IRect" title="skia.IRect"><code class="xref py py-class docutils literal notranslate"><span class="pre">IRect</span></code></a>
+shorter.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>dx</strong> – subtracted to fLeft and added from fRight</p></li>
+<li><p><strong>dy</strong> – subtracted to fTop and added from fBottom</p></li>
+</ul>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py method">
 <dt id="skia.IRect.right">
 <code class="sig-prename descclassname">IRect.</code><code class="sig-name descname">right</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.IRect" title="skia.IRect">skia.IRect</a></span></em><span class="sig-paren">)</span> &#x2192; int<a class="headerlink" href="#skia.IRect.right" title="Permalink to this definition">¶</a></dt>
-<dd><p>Returns right edge of SkIRect, if sorted.</p>
+<dd><p>Returns right edge of <a class="reference internal" href="#skia.IRect" title="skia.IRect"><code class="xref py py-class docutils literal notranslate"><span class="pre">IRect</span></code></a>, if sorted.</p>
+<p>Call <a class="reference internal" href="#skia.IRect.sort" title="skia.IRect.sort"><code class="xref py py-meth docutils literal notranslate"><span class="pre">sort()</span></code></a> to reverse fLeft and fRight if needed.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>fRight</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py method">
 <dt id="skia.IRect.setEmpty">
 <code class="sig-prename descclassname">IRect.</code><code class="sig-name descname">setEmpty</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.IRect" title="skia.IRect">skia.IRect</a></span></em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#skia.IRect.setEmpty" title="Permalink to this definition">¶</a></dt>
-<dd><p>Sets SkIRect to (0, 0, 0, 0).</p>
+<dd><p>Sets <a class="reference internal" href="#skia.IRect" title="skia.IRect"><code class="xref py py-class docutils literal notranslate"><span class="pre">IRect</span></code></a> to (0, 0, 0, 0).</p>
+<p>Many other rectangles are empty; if left is equal to or greater than
+right, or if top is equal to or greater than bottom. Setting all members
+to zero is a convenience, but does not designate a special empty
+rectangle.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt id="skia.IRect.setLTRB">
-<code class="sig-prename descclassname">IRect.</code><code class="sig-name descname">setLTRB</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.IRect" title="skia.IRect">skia.IRect</a></span></em>, <em class="sig-param"><span class="n">arg0</span><span class="p">:</span> <span class="n">int</span></em>, <em class="sig-param"><span class="n">arg1</span><span class="p">:</span> <span class="n">int</span></em>, <em class="sig-param"><span class="n">arg2</span><span class="p">:</span> <span class="n">int</span></em>, <em class="sig-param"><span class="n">arg3</span><span class="p">:</span> <span class="n">int</span></em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#skia.IRect.setLTRB" title="Permalink to this definition">¶</a></dt>
-<dd><p>Sets SkIRect to (left, top, right, bottom).</p>
+<code class="sig-prename descclassname">IRect.</code><code class="sig-name descname">setLTRB</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.IRect" title="skia.IRect">skia.IRect</a></span></em>, <em class="sig-param"><span class="n">left</span><span class="p">:</span> <span class="n">int</span></em>, <em class="sig-param"><span class="n">top</span><span class="p">:</span> <span class="n">int</span></em>, <em class="sig-param"><span class="n">right</span><span class="p">:</span> <span class="n">int</span></em>, <em class="sig-param"><span class="n">bottom</span><span class="p">:</span> <span class="n">int</span></em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#skia.IRect.setLTRB" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets <a class="reference internal" href="#skia.IRect" title="skia.IRect"><code class="xref py py-class docutils literal notranslate"><span class="pre">IRect</span></code></a> to (left, top, right, bottom).</p>
+<p>left and right are not sorted; left is not necessarily less than right.
+top and bottom are not sorted; top is not necessarily less than bottom.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>left</strong> – stored in fLeft</p></li>
+<li><p><strong>top</strong> – stored in fTop</p></li>
+<li><p><strong>right</strong> – stored in fRight</p></li>
+<li><p><strong>bottom</strong> – stored in fBottom</p></li>
+</ul>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py method">
 <dt id="skia.IRect.setWH">
-<code class="sig-prename descclassname">IRect.</code><code class="sig-name descname">setWH</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.IRect" title="skia.IRect">skia.IRect</a></span></em>, <em class="sig-param"><span class="n">arg0</span><span class="p">:</span> <span class="n">int</span></em>, <em class="sig-param"><span class="n">arg1</span><span class="p">:</span> <span class="n">int</span></em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#skia.IRect.setWH" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">IRect.</code><code class="sig-name descname">setWH</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.IRect" title="skia.IRect">skia.IRect</a></span></em>, <em class="sig-param"><span class="n">width</span><span class="p">:</span> <span class="n">int</span></em>, <em class="sig-param"><span class="n">height</span><span class="p">:</span> <span class="n">int</span></em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#skia.IRect.setWH" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
 <dt id="skia.IRect.setXYWH">
-<code class="sig-prename descclassname">IRect.</code><code class="sig-name descname">setXYWH</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.IRect" title="skia.IRect">skia.IRect</a></span></em>, <em class="sig-param"><span class="n">arg0</span><span class="p">:</span> <span class="n">int</span></em>, <em class="sig-param"><span class="n">arg1</span><span class="p">:</span> <span class="n">int</span></em>, <em class="sig-param"><span class="n">arg2</span><span class="p">:</span> <span class="n">int</span></em>, <em class="sig-param"><span class="n">arg3</span><span class="p">:</span> <span class="n">int</span></em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#skia.IRect.setXYWH" title="Permalink to this definition">¶</a></dt>
-<dd><p>Sets SkIRect to: (x, y, x + width, y + height).</p>
+<code class="sig-prename descclassname">IRect.</code><code class="sig-name descname">setXYWH</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.IRect" title="skia.IRect">skia.IRect</a></span></em>, <em class="sig-param"><span class="n">x</span><span class="p">:</span> <span class="n">int</span></em>, <em class="sig-param"><span class="n">y</span><span class="p">:</span> <span class="n">int</span></em>, <em class="sig-param"><span class="n">width</span><span class="p">:</span> <span class="n">int</span></em>, <em class="sig-param"><span class="n">height</span><span class="p">:</span> <span class="n">int</span></em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#skia.IRect.setXYWH" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets <a class="reference internal" href="#skia.IRect" title="skia.IRect"><code class="xref py py-class docutils literal notranslate"><span class="pre">IRect</span></code></a> to: (x, y, x + width, y + height).</p>
+<p>Does not validate input; width or height may be negative.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>x</strong> – stored in fLeft</p></li>
+<li><p><strong>y</strong> – stored in fTop</p></li>
+<li><p><strong>width</strong> – added to x and stored in fRight</p></li>
+<li><p><strong>height</strong> – added to y and stored in fBottom</p></li>
+</ul>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py method">
@@ -429,13 +885,23 @@ is considered empty.</p>
 <dl class="py method">
 <dt id="skia.IRect.sort">
 <code class="sig-prename descclassname">IRect.</code><code class="sig-name descname">sort</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.IRect" title="skia.IRect">skia.IRect</a></span></em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#skia.IRect.sort" title="Permalink to this definition">¶</a></dt>
-<dd><p>Swaps fLeft and fRight if fLeft is greater than fRight; and swaps fTop and fBottom if fTop is greater than fBottom.</p>
+<dd><p>Swaps fLeft and fRight if fLeft is greater than fRight; and swaps fTop
+and fBottom if fTop is greater than fBottom.</p>
+<p>Result may be empty, and <a class="reference internal" href="#skia.IRect.width" title="skia.IRect.width"><code class="xref py py-meth docutils literal notranslate"><span class="pre">width()</span></code></a> and <a class="reference internal" href="#skia.IRect.height" title="skia.IRect.height"><code class="xref py py-meth docutils literal notranslate"><span class="pre">height()</span></code></a> will be
+zero or positive.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt id="skia.IRect.top">
 <code class="sig-prename descclassname">IRect.</code><code class="sig-name descname">top</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.IRect" title="skia.IRect">skia.IRect</a></span></em><span class="sig-paren">)</span> &#x2192; int<a class="headerlink" href="#skia.IRect.top" title="Permalink to this definition">¶</a></dt>
-<dd><p>Returns top edge of SkIRect, if sorted.</p>
+<dd><p>Returns top edge of <a class="reference internal" href="#skia.IRect" title="skia.IRect"><code class="xref py py-class docutils literal notranslate"><span class="pre">IRect</span></code></a>, if sorted.</p>
+<p>Call <a class="reference internal" href="#skia.IRect.isEmpty" title="skia.IRect.isEmpty"><code class="xref py py-meth docutils literal notranslate"><span class="pre">isEmpty()</span></code></a> to see if <a class="reference internal" href="#skia.IRect" title="skia.IRect"><code class="xref py py-class docutils literal notranslate"><span class="pre">IRect</span></code></a> may be invalid, and
+<a class="reference internal" href="#skia.IRect.sort" title="skia.IRect.sort"><code class="xref py py-meth docutils literal notranslate"><span class="pre">sort()</span></code></a> to reverse fTop and fBottom if needed.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>fTop</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py method">
@@ -447,24 +913,53 @@ is considered empty.</p>
 <dt id="skia.IRect.width">
 <code class="sig-prename descclassname">IRect.</code><code class="sig-name descname">width</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.IRect" title="skia.IRect">skia.IRect</a></span></em><span class="sig-paren">)</span> &#x2192; int<a class="headerlink" href="#skia.IRect.width" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns span on the x-axis.</p>
+<p>This does not check if <a class="reference internal" href="#skia.IRect" title="skia.IRect"><code class="xref py py-class docutils literal notranslate"><span class="pre">IRect</span></code></a> is sorted, or if result fits in
+32-bit signed integer; result may be negative.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>fRight minus fLeft</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py method">
 <dt id="skia.IRect.width64">
 <code class="sig-prename descclassname">IRect.</code><code class="sig-name descname">width64</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.IRect" title="skia.IRect">skia.IRect</a></span></em><span class="sig-paren">)</span> &#x2192; int<a class="headerlink" href="#skia.IRect.width64" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns span on the x-axis.</p>
+<p>This does not check if <a class="reference internal" href="#skia.IRect" title="skia.IRect"><code class="xref py py-class docutils literal notranslate"><span class="pre">IRect</span></code></a> is sorted, so the result may be
+negative. This is safer than calling <a class="reference internal" href="#skia.IRect.width" title="skia.IRect.width"><code class="xref py py-meth docutils literal notranslate"><span class="pre">width()</span></code></a> since
+<a class="reference internal" href="#skia.IRect.width" title="skia.IRect.width"><code class="xref py py-meth docutils literal notranslate"><span class="pre">width()</span></code></a> might overflow in its calculation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>fRight minus fLeft cast to int64_t</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py method">
 <dt id="skia.IRect.x">
 <code class="sig-prename descclassname">IRect.</code><code class="sig-name descname">x</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.IRect" title="skia.IRect">skia.IRect</a></span></em><span class="sig-paren">)</span> &#x2192; int<a class="headerlink" href="#skia.IRect.x" title="Permalink to this definition">¶</a></dt>
-<dd><p>Returns left edge of SkIRect, if sorted.</p>
+<dd><p>Returns left edge of <a class="reference internal" href="#skia.IRect" title="skia.IRect"><code class="xref py py-class docutils literal notranslate"><span class="pre">IRect</span></code></a>, if sorted.</p>
+<p>Call <a class="reference internal" href="#skia.IRect.isEmpty" title="skia.IRect.isEmpty"><code class="xref py py-meth docutils literal notranslate"><span class="pre">isEmpty()</span></code></a> to see if <a class="reference internal" href="#skia.IRect" title="skia.IRect"><code class="xref py py-class docutils literal notranslate"><span class="pre">IRect</span></code></a> is valid, and
+<a class="reference internal" href="#skia.IRect.sort" title="skia.IRect.sort"><code class="xref py py-meth docutils literal notranslate"><span class="pre">sort()</span></code></a> to reverse fLeft and fRight if needed.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>fLeft</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py method">
 <dt id="skia.IRect.y">
 <code class="sig-prename descclassname">IRect.</code><code class="sig-name descname">y</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.IRect" title="skia.IRect">skia.IRect</a></span></em><span class="sig-paren">)</span> &#x2192; int<a class="headerlink" href="#skia.IRect.y" title="Permalink to this definition">¶</a></dt>
-<dd><p>Returns top edge of SkIRect, if sorted.</p>
+<dd><p>Returns top edge of <a class="reference internal" href="#skia.IRect" title="skia.IRect"><code class="xref py py-class docutils literal notranslate"><span class="pre">IRect</span></code></a>, if sorted.</p>
+<p>Call <a class="reference internal" href="#skia.IRect.isEmpty" title="skia.IRect.isEmpty"><code class="xref py py-meth docutils literal notranslate"><span class="pre">isEmpty()</span></code></a> to see if <a class="reference internal" href="#skia.IRect" title="skia.IRect"><code class="xref py py-class docutils literal notranslate"><span class="pre">IRect</span></code></a> is invalid, and
+<a class="reference internal" href="#skia.IRect.sort" title="skia.IRect.sort"><code class="xref py py-meth docutils literal notranslate"><span class="pre">sort()</span></code></a> to reverse fTop and fBottom if needed.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>fTop</p>
+</dd>
+</dl>
 </dd></dl>
 
 </div>
@@ -518,6 +1013,7 @@ is considered empty.</p>
 <li class="toctree-l1"><a class="reference internal" href="../build.html">Build instruction</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../usage.html">Usage</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="../reference.html">Reference</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../color.html">Color</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.AlphaType.html">AlphaType</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.ApplyPerspectiveClip.html">ApplyPerspectiveClip</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.AutoCanvasRestore.html">AutoCanvasRestore</a></li>
@@ -545,6 +1041,8 @@ is considered empty.</p>
 <li class="toctree-l2"><a class="reference internal" href="skia.Codec.SelectionPolicy.html">Codec.SelectionPolicy</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.Codec.ZeroInitialized.html">Codec.ZeroInitialized</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.Color4f.html">Color4f</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.ColorChannel.html">ColorChannel</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.ColorChannelFlag.html">ColorChannelFlag</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.ColorFilter.html">ColorFilter</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.ColorFilter.Flags.html">ColorFilter.Flags</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.ColorFilters.html">ColorFilters</a></li>

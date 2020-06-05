@@ -511,8 +511,8 @@ opaque</p>
 <dt id="skia.Paint.getColor">
 <code class="sig-prename descclassname">Paint.</code><code class="sig-name descname">getColor</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Paint" title="skia.Paint">skia.Paint</a></span></em><span class="sig-paren">)</span> &#x2192; int<a class="headerlink" href="#skia.Paint.getColor" title="Permalink to this definition">¶</a></dt>
 <dd><p>Retrieves alpha and RGB, unpremultiplied, packed into 32 bits.</p>
-<p>Use helpers <code class="xref py py-func docutils literal notranslate"><span class="pre">ColorGetA()</span></code>, <code class="xref py py-func docutils literal notranslate"><span class="pre">ColorGetR()</span></code>,
-<code class="xref py py-func docutils literal notranslate"><span class="pre">ColorGetG()</span></code>, and <code class="xref py py-func docutils literal notranslate"><span class="pre">ColorGetB()</span></code> to extract a color
+<p>Use helpers <a class="reference internal" href="../color.html#skia.ColorGetA" title="skia.ColorGetA"><code class="xref py py-func docutils literal notranslate"><span class="pre">ColorGetA()</span></code></a>, <a class="reference internal" href="../color.html#skia.ColorGetR" title="skia.ColorGetR"><code class="xref py py-func docutils literal notranslate"><span class="pre">ColorGetR()</span></code></a>,
+<a class="reference internal" href="../color.html#skia.ColorGetG" title="skia.ColorGetG"><code class="xref py py-func docutils literal notranslate"><span class="pre">ColorGetG()</span></code></a>, and <a class="reference internal" href="../color.html#skia.ColorGetB" title="skia.ColorGetB"><code class="xref py py-func docutils literal notranslate"><span class="pre">ColorGetB()</span></code></a> to extract a color
 component.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
@@ -1042,7 +1042,7 @@ pen thickness</p>
 <h2>Attributes<a class="headerlink" href="#attributes" title="Permalink to this headline">¶</a></h2>
 <dl class="py attribute">
 <dt id="skia.Paint.kBevel_Join">
-<code class="sig-prename descclassname">Paint.</code><code class="sig-name descname">kBevel_Join</code><em class="property"> = Join.kBevel_Join</em><a class="headerlink" href="#skia.Paint.kBevel_Join" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">Paint.</code><code class="sig-name descname">kBevel_Join</code><em class="property"> = Join.kLast_Join</em><a class="headerlink" href="#skia.Paint.kBevel_Join" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
@@ -1077,12 +1077,12 @@ pen thickness</p>
 
 <dl class="py attribute">
 <dt id="skia.Paint.kLast_Cap">
-<code class="sig-prename descclassname">Paint.</code><code class="sig-name descname">kLast_Cap</code><em class="property"> = Cap.kSquare_Cap</em><a class="headerlink" href="#skia.Paint.kLast_Cap" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">Paint.</code><code class="sig-name descname">kLast_Cap</code><em class="property"> = Cap.kLast_Cap</em><a class="headerlink" href="#skia.Paint.kLast_Cap" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt id="skia.Paint.kLast_Join">
-<code class="sig-prename descclassname">Paint.</code><code class="sig-name descname">kLast_Join</code><em class="property"> = Join.kBevel_Join</em><a class="headerlink" href="#skia.Paint.kLast_Join" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">Paint.</code><code class="sig-name descname">kLast_Join</code><em class="property"> = Join.kLast_Join</em><a class="headerlink" href="#skia.Paint.kLast_Join" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
@@ -1102,7 +1102,7 @@ pen thickness</p>
 
 <dl class="py attribute">
 <dt id="skia.Paint.kSquare_Cap">
-<code class="sig-prename descclassname">Paint.</code><code class="sig-name descname">kSquare_Cap</code><em class="property"> = Cap.kSquare_Cap</em><a class="headerlink" href="#skia.Paint.kSquare_Cap" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">Paint.</code><code class="sig-name descname">kSquare_Cap</code><em class="property"> = Cap.kLast_Cap</em><a class="headerlink" href="#skia.Paint.kSquare_Cap" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
@@ -1144,6 +1144,7 @@ pen thickness</p>
 <li class="toctree-l1"><a class="reference internal" href="../build.html">Build instruction</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../usage.html">Usage</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="../reference.html">Reference</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../color.html">Color</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.AlphaType.html">AlphaType</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.ApplyPerspectiveClip.html">ApplyPerspectiveClip</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.AutoCanvasRestore.html">AutoCanvasRestore</a></li>
@@ -1171,6 +1172,8 @@ pen thickness</p>
 <li class="toctree-l2"><a class="reference internal" href="skia.Codec.SelectionPolicy.html">Codec.SelectionPolicy</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.Codec.ZeroInitialized.html">Codec.ZeroInitialized</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.Color4f.html">Color4f</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.ColorChannel.html">ColorChannel</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.ColorChannelFlag.html">ColorChannelFlag</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.ColorFilter.html">ColorFilter</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.ColorFilter.Flags.html">ColorFilter.Flags</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.ColorFilters.html">ColorFilters</a></li>

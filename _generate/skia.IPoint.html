@@ -38,6 +38,15 @@
 <dt id="skia.IPoint">
 <em class="property">class </em><code class="sig-name descname">IPoint</code><a class="headerlink" href="#skia.IPoint" title="Permalink to this definition">¶</a></dt>
 <dd><p><a class="reference internal" href="#skia.IPoint" title="skia.IPoint"><code class="xref py py-class docutils literal notranslate"><span class="pre">IPoint</span></code></a> holds two 32-bit integer coordinates.</p>
+<p>Example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">point</span> <span class="o">=</span> <span class="n">skia</span><span class="o">.</span><span class="n">IPoint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+<span class="n">point</span> <span class="o">=</span> <span class="n">skia</span><span class="o">.</span><span class="n">IPoint</span><span class="p">((</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>  <span class="c1"># Convert from tuple</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">point</span><span class="o">.</span><span class="n">fX</span><span class="p">,</span> <span class="n">point</span><span class="o">.</span><span class="n">fY</span><span class="p">)</span>
+<span class="n">point</span> <span class="o">+</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>   <span class="c1"># Add offset</span>
+<span class="n">point</span> <span class="o">-</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>   <span class="c1"># Subtract offset</span>
+<span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">point</span><span class="p">)</span>  <span class="c1"># Convert to tuple</span>
+</pre></div>
+</div>
 <p class="rubric">Methods</p>
 <table class="longtable docutils align-default">
 <colgroup>
@@ -52,7 +61,7 @@
 <td><p>Overloaded function.</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#skia.IPoint.equals" title="skia.IPoint.equals"><code class="xref py py-obj docutils literal notranslate"><span class="pre">equals</span></code></a></p></td>
-<td><p>Returns true if SkIPoint is equivalent to SkIPoint constructed from (x, y).</p></td>
+<td><p>Returns true if <a class="reference internal" href="#skia.IPoint" title="skia.IPoint"><code class="xref py py-class docutils literal notranslate"><span class="pre">IPoint</span></code></a> is equivalent to <a class="reference internal" href="#skia.IPoint" title="skia.IPoint"><code class="xref py py-class docutils literal notranslate"><span class="pre">IPoint</span></code></a> constructed from (x, y).</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#skia.IPoint.isZero" title="skia.IPoint.isZero"><code class="xref py py-obj docutils literal notranslate"><span class="pre">isZero</span></code></a></p></td>
 <td><p>Returns true if fX and fY are both zero.</p></td>
@@ -61,10 +70,10 @@
 <td><p>Sets fX to x and fY to y.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#skia.IPoint.x" title="skia.IPoint.x"><code class="xref py py-obj docutils literal notranslate"><span class="pre">x</span></code></a></p></td>
-<td><p>Returns x-axis value of SkIPoint.</p></td>
+<td><p>Returns x-axis value of <a class="reference internal" href="#skia.IPoint" title="skia.IPoint"><code class="xref py py-class docutils literal notranslate"><span class="pre">IPoint</span></code></a>.</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#skia.IPoint.y" title="skia.IPoint.y"><code class="xref py py-obj docutils literal notranslate"><span class="pre">y</span></code></a></p></td>
-<td><p>Returns y-axis value of SkIPoint.</p></td>
+<td><p>Returns y-axis value of <a class="reference internal" href="#skia.IPoint" title="skia.IPoint"><code class="xref py py-class docutils literal notranslate"><span class="pre">IPoint</span></code></a>.</p></td>
 </tr>
 </tbody>
 </table>
@@ -89,27 +98,56 @@
 <h2>Methods<a class="headerlink" href="#methods" title="Permalink to this headline">¶</a></h2>
 <dl class="py method">
 <dt id="skia.IPoint.Make">
-<em class="property">static </em><code class="sig-prename descclassname">IPoint.</code><code class="sig-name descname">Make</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">arg0</span><span class="p">:</span> <span class="n">int</span></em>, <em class="sig-param"><span class="n">arg1</span><span class="p">:</span> <span class="n">int</span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="#skia.IPoint" title="skia.IPoint">skia.IPoint</a><a class="headerlink" href="#skia.IPoint.Make" title="Permalink to this definition">¶</a></dt>
+<em class="property">static </em><code class="sig-prename descclassname">IPoint.</code><code class="sig-name descname">Make</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">x</span><span class="p">:</span> <span class="n">int</span></em>, <em class="sig-param"><span class="n">y</span><span class="p">:</span> <span class="n">int</span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="#skia.IPoint" title="skia.IPoint">skia.IPoint</a><a class="headerlink" href="#skia.IPoint.Make" title="Permalink to this definition">¶</a></dt>
 <dd><p>Sets fX to x, fY to y.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>x</strong> – integer x-axis value of constructed <a class="reference internal" href="#skia.IPoint" title="skia.IPoint"><code class="xref py py-class docutils literal notranslate"><span class="pre">IPoint</span></code></a></p></li>
+<li><p><strong>y</strong> – integer y-axis value of constructed <a class="reference internal" href="#skia.IPoint" title="skia.IPoint"><code class="xref py py-class docutils literal notranslate"><span class="pre">IPoint</span></code></a></p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><a class="reference internal" href="#skia.IPoint" title="skia.IPoint"><code class="xref py py-class docutils literal notranslate"><span class="pre">IPoint</span></code></a> (x, y)</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py method">
 <dt id="skia.IPoint.__init__">
 <code class="sig-prename descclassname">IPoint.</code><code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span><span class="n">args</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#skia.IPoint.__init__" title="Permalink to this definition">¶</a></dt>
 <dd><p>Overloaded function.</p>
-<ol class="arabic simple">
-<li><p>__init__(self: skia.IPoint, arg0: int, arg1: int) -&gt; None</p></li>
-</ol>
-<p>Sets fX to x, fY to y.</p>
-<ol class="arabic simple" start="2">
-<li><p>__init__(self: skia.IPoint, arg0: tuple) -&gt; None</p></li>
+<ol class="arabic">
+<li><p>__init__(self: skia.IPoint, x: int, y: int) -&gt; None</p>
+<blockquote>
+<div><p>Sets fX to x, fY to y.</p>
+<dl class="field-list simple">
+<dt class="field-odd">x</dt>
+<dd class="field-odd"><p>integer x-axis value of constructed <a class="reference internal" href="#skia.IPoint" title="skia.IPoint"><code class="xref py py-class docutils literal notranslate"><span class="pre">IPoint</span></code></a></p>
+</dd>
+<dt class="field-even">y</dt>
+<dd class="field-even"><p>integer y-axis value of constructed <a class="reference internal" href="#skia.IPoint" title="skia.IPoint"><code class="xref py py-class docutils literal notranslate"><span class="pre">IPoint</span></code></a></p>
+</dd>
+</dl>
+</div></blockquote>
+</li>
+<li><p>__init__(self: skia.IPoint, t: tuple) -&gt; None</p></li>
 </ol>
 </dd></dl>
 
 <dl class="py method">
 <dt id="skia.IPoint.equals">
-<code class="sig-prename descclassname">IPoint.</code><code class="sig-name descname">equals</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.IPoint" title="skia.IPoint">skia.IPoint</a></span></em>, <em class="sig-param"><span class="n">arg0</span><span class="p">:</span> <span class="n">int</span></em>, <em class="sig-param"><span class="n">arg1</span><span class="p">:</span> <span class="n">int</span></em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#skia.IPoint.equals" title="Permalink to this definition">¶</a></dt>
-<dd><p>Returns true if SkIPoint is equivalent to SkIPoint constructed from (x, y).</p>
+<code class="sig-prename descclassname">IPoint.</code><code class="sig-name descname">equals</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.IPoint" title="skia.IPoint">skia.IPoint</a></span></em>, <em class="sig-param"><span class="n">x</span><span class="p">:</span> <span class="n">int</span></em>, <em class="sig-param"><span class="n">y</span><span class="p">:</span> <span class="n">int</span></em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#skia.IPoint.equals" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns true if <a class="reference internal" href="#skia.IPoint" title="skia.IPoint"><code class="xref py py-class docutils literal notranslate"><span class="pre">IPoint</span></code></a> is equivalent to <a class="reference internal" href="#skia.IPoint" title="skia.IPoint"><code class="xref py py-class docutils literal notranslate"><span class="pre">IPoint</span></code></a>
+constructed from (x, y).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>x</strong> – value compared with fX</p></li>
+<li><p><strong>y</strong> – value compared with fY</p></li>
+</ul>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py method">
@@ -120,20 +158,20 @@
 
 <dl class="py method">
 <dt id="skia.IPoint.set">
-<code class="sig-prename descclassname">IPoint.</code><code class="sig-name descname">set</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.IPoint" title="skia.IPoint">skia.IPoint</a></span></em>, <em class="sig-param"><span class="n">arg0</span><span class="p">:</span> <span class="n">int</span></em>, <em class="sig-param"><span class="n">arg1</span><span class="p">:</span> <span class="n">int</span></em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#skia.IPoint.set" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">IPoint.</code><code class="sig-name descname">set</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.IPoint" title="skia.IPoint">skia.IPoint</a></span></em>, <em class="sig-param"><span class="n">x</span><span class="p">:</span> <span class="n">int</span></em>, <em class="sig-param"><span class="n">y</span><span class="p">:</span> <span class="n">int</span></em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#skia.IPoint.set" title="Permalink to this definition">¶</a></dt>
 <dd><p>Sets fX to x and fY to y.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt id="skia.IPoint.x">
 <code class="sig-prename descclassname">IPoint.</code><code class="sig-name descname">x</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.IPoint" title="skia.IPoint">skia.IPoint</a></span></em><span class="sig-paren">)</span> &#x2192; int<a class="headerlink" href="#skia.IPoint.x" title="Permalink to this definition">¶</a></dt>
-<dd><p>Returns x-axis value of SkIPoint.</p>
+<dd><p>Returns x-axis value of <a class="reference internal" href="#skia.IPoint" title="skia.IPoint"><code class="xref py py-class docutils literal notranslate"><span class="pre">IPoint</span></code></a>.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt id="skia.IPoint.y">
 <code class="sig-prename descclassname">IPoint.</code><code class="sig-name descname">y</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.IPoint" title="skia.IPoint">skia.IPoint</a></span></em><span class="sig-paren">)</span> &#x2192; int<a class="headerlink" href="#skia.IPoint.y" title="Permalink to this definition">¶</a></dt>
-<dd><p>Returns y-axis value of SkIPoint.</p>
+<dd><p>Returns y-axis value of <a class="reference internal" href="#skia.IPoint" title="skia.IPoint"><code class="xref py py-class docutils literal notranslate"><span class="pre">IPoint</span></code></a>.</p>
 </dd></dl>
 
 </div>
@@ -175,6 +213,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../build.html">Build instruction</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../usage.html">Usage</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="../reference.html">Reference</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../color.html">Color</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.AlphaType.html">AlphaType</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.ApplyPerspectiveClip.html">ApplyPerspectiveClip</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.AutoCanvasRestore.html">AutoCanvasRestore</a></li>
@@ -202,6 +241,8 @@
 <li class="toctree-l2"><a class="reference internal" href="skia.Codec.SelectionPolicy.html">Codec.SelectionPolicy</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.Codec.ZeroInitialized.html">Codec.ZeroInitialized</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.Color4f.html">Color4f</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.ColorChannel.html">ColorChannel</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.ColorChannelFlag.html">ColorChannelFlag</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.ColorFilter.html">ColorFilter</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.ColorFilter.Flags.html">ColorFilter.Flags</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.ColorFilters.html">ColorFilters</a></li>
