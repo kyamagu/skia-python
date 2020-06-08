@@ -10,6 +10,7 @@ void initColor(py::module &);
 void initCodec(py::module &);
 void initColorSpace(py::module &);
 void initData(py::module &);
+void initDocument(py::module &);
 void initGrContext(py::module &);
 void initFont(py::module &);
 void initImage(py::module &);
@@ -24,6 +25,7 @@ void initRect(py::module &);
 void initRefCnt(py::module &);
 void initRegion(py::module &);
 void initSize(py::module &);
+void initStream(py::module &);
 void initSurface(py::module &);
 void initTextBlob(py::module &);
 void initVertices(py::module &);
@@ -45,9 +47,11 @@ PYBIND11_MODULE(skia, m) {
     initRegion(m);
     initMatrix(m);
     initData(m);
+    initStream(m);
 
     initCodec(m);
     initBitmap(m);
+    initDocument(m);
     initFont(m);
     initGrContext(m);
     initImageInfo(m);
