@@ -36,7 +36,10 @@ def null_wstream():
 @pytest.fixture
 def file_wstream(tmp_path):
     yield skia.FILEWStream(tmp_path.name)
-    os.remove(tmp_path.name)
+    try:
+        os.remove(tmp_path.name)
+    except PermissionError:
+        pass
 
 
 @pytest.fixture(params=[
