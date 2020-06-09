@@ -78,7 +78,6 @@ py::enum_<SkPathVerb>(m, "PathVerb")
     .value("kCubic", SkPathVerb::kCubic, "iter.next returns 4 points")
     .value("kClose", SkPathVerb::kClose,
         "iter.next returns 1 point (contour's moveTo pt)")
-    .value("kDone", SkPathVerb::kDone, "iter.next returns 0 points")
     .export_values();
 
 m.def("PathFillType_IsEvenOdd", &SkPathFillType_IsEvenOdd);

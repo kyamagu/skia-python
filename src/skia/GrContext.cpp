@@ -665,8 +665,11 @@ py::class_<GrContext, sk_sp<GrContext>, SkRefCnt>(m, "GrContext")
         py::arg("srcData"),  py::arg("renderable"),
         py::arg("isProtected") = GrProtected::kNo)
     .def("createBackendTexture",
-        py::overload_cast<const SkPixmap&, GrRenderable, GrProtected>(
-            &GrContext::createBackendTexture),
+        [] (GrContext& context, const SkPixmap& pixmap, GrRenderable renderable,
+            GrProtected isProtected) {
+            return context.createBackendTexture(
+                pixmap, renderable, isProtected);
+        },
         py::arg("pixmap"), py::arg("renderable"),
         py::arg("isProtected") = GrProtected::kNo)
     .def("compressedBackendFormat", &GrContext::compressedBackendFormat,
