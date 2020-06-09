@@ -301,8 +301,23 @@ py::class_<SkStream, PyStream<>>(m, "Stream",
     (the read() call returns the number of bytes read) then that means there is
     no more data (at EOF or hit an error). The caller should not call again in
     hopes of fulfilling more of the request.
+
+    .. rubric:: Subclasses
+
+    .. autosummary::
+        :nosignatures:
+
+        ~FILEStream
+        ~MemoryStream
     )docstring")
-    .def("read", &SkStream::read,
+    .def("read",
+        [] (SkStream& stream, py::buffer b, size_t size) {
+            auto info = b.request(true);
+            size_t given = (info.ndim) ? info.strides[0] * info.shape[0] : 0;
+            if (size == 0 || size >= given)
+                size = given;
+            return stream.read(info.ptr, size);
+        },
         R"docstring(
         Reads or skips size number of bytes.
 
@@ -312,11 +327,12 @@ py::class_<SkStream, PyStream<>>(m, "Stream",
 
         :param buffer:  when NULL skip size bytes, otherwise copy size bytes
             into buffer
-        :param size:    the number of bytes to skip or copy
+        :param size:    the number of bytes to skip or copy; may be nullptr
         :return: the number of bytes actually read.
 
         Implemented in :py:class:`MemoryStream`, and :py:class:`FILEStream`.
-        )docstring")
+        )docstring",
+        py::arg("buffer"), py::arg("size") = 0)
     .def("skip", &SkStream::skip,
         R"docstring(
         Skip size number of bytes.
@@ -324,7 +340,12 @@ py::class_<SkStream, PyStream<>>(m, "Stream",
         :return: the actual number bytes that could be skipped.
         )docstring",
         py::arg("size"))
-    .def("peek", &SkStream::peek,
+    .def("peek",
+        [] (SkStream& stream, py::buffer b) {
+            auto info = b.request(true);
+            size_t size = (info.ndim) ? info.strides[0] * info.shape[0] : 0;
+            return stream.peek(info.ptr, size);
+        },
         R"docstring(
         Attempt to peek at size bytes.
 
@@ -340,7 +361,8 @@ py::class_<SkStream, PyStream<>>(m, "Stream",
         :return: The number of bytes peeked/copied.
 
         Reimplemented in :py:class:`MemoryStream`.
-        )docstring")
+        )docstring",
+        py::arg("buffer"))
     .def("isAtEnd", &SkStream::isAtEnd,
         R"docstring(
         Returns true when all the bytes in the stream have been read.
@@ -350,15 +372,69 @@ py::class_<SkStream, PyStream<>>(m, "Stream",
 
         Implemented in :py:class:`MemoryStream`, and :py:class:`FILEStream`.
         )docstring")
-    .def("readS8", &SkStream::readS8)
-    .def("readS16", &SkStream::readS16)
-    .def("readS32", &SkStream::readS32)
-    .def("readU8", &SkStream::readU8)
-    .def("readU16", &SkStream::readU16)
-    .def("readU32", &SkStream::readS8)
-    .def("readBool", &SkStream::readBool)
-    .def("readScalar", &SkStream::readScalar)
-    .def("readPackedUInt", &SkStream::readPackedUInt)
+    .def("readS8",
+        [] (SkStream& stream) {
+            int8_t value;
+            if (stream.readS8(&value))
+                return value;
+            throw std::runtime_error("Failed to read");
+        })
+    .def("readS16",
+        [] (SkStream& stream) {
+            int16_t value;
+            if (stream.readS16(&value))
+                return value;
+            throw std::runtime_error("Failed to read");
+        })
+    .def("readS32",
+        [] (SkStream& stream) {
+            int32_t value;
+            if (stream.readS32(&value))
+                return value;
+            throw std::runtime_error("Failed to read");
+        })
+    .def("readU8",
+        [] (SkStream& stream) {
+            uint8_t value;
+            if (stream.readU8(&value))
+                return value;
+            throw std::runtime_error("Failed to read");
+        })
+    .def("readU16",
+        [] (SkStream& stream) {
+            uint16_t value;
+            if (stream.readU16(&value))
+                return value;
+            throw std::runtime_error("Failed to read");
+        })
+    .def("readU32",
+        [] (SkStream& stream) {
+            uint32_t value;
+            if (stream.readU32(&value))
+                return value;
+            throw std::runtime_error("Failed to read");
+        })
+    .def("readBool",
+        [] (SkStream& stream) {
+            bool value;
+            if (stream.readBool(&value))
+                return value;
+            throw std::runtime_error("Failed to read");
+        })
+    .def("readScalar",
+        [] (SkStream& stream) {
+            SkScalar value;
+            if (stream.readScalar(&value))
+                return value;
+            throw std::runtime_error("Failed to read");
+        })
+    .def("readPackedUInt",
+        [] (SkStream& stream) {
+            size_t value;
+            if (stream.readPackedUInt(&value))
+                return value;
+            throw std::runtime_error("Failed to read");
+        })
     .def("rewind", &SkStream::rewind,
         R"docstring(
         Rewinds to the beginning of the stream.
@@ -446,7 +522,7 @@ py::class_<SkStream, PyStream<>>(m, "Stream",
         )docstring")
     .def_static("MakeFromFile",
         [] (const std::string& path) {
-            SkStream::MakeFromFile(path.c_str());
+            return SkStream::MakeFromFile(path.c_str());
         },
         R"docstring(
         Attempts to open the specified file as a stream, returns nullptr on
@@ -476,7 +552,16 @@ py::class_<SkStreamMemory, PyStreamMemory<>, SkStreamAsset>(
     .def("fork", &SkStreamSeekable::fork)
     ;
 
-py::class_<SkWStream, PyWStream<>>(m, "WStream")
+py::class_<SkWStream, PyWStream<>>(m, "WStream",
+    R"docstring(
+    .. rubric:: Subclasses
+
+    .. autosummary::
+        :nosignatures:
+
+        ~FILEWStream
+        ~DynamicMemoryWStream
+    )docstring")
     .def("write",
         [] (SkWStream& stream, py::buffer b) {
             auto info = b.request();
@@ -484,7 +569,7 @@ py::class_<SkWStream, PyWStream<>>(m, "WStream")
             return stream.write(info.ptr, size);
         },
         R"docstring(
-        Called to write bytes to a SkWStream.
+        Called to write bytes to a :py:class:`WStream`.
 
         Returns true on success
 
@@ -497,7 +582,10 @@ py::class_<SkWStream, PyWStream<>>(m, "WStream")
             :py:class:`FILEWStream`, and :py:class:`NullWStream`.
         )docstring",
         py::arg("buffer"))
-    .def("flush", &SkWStream::flush)
+    .def("flush", &SkWStream::flush,
+        R"docstring(
+        Reimplemented in :py:class:`FILEWStream`, and :py:class:`NullWStream`.
+        )docstring")
     .def("bytesWritten", &SkWStream::bytesWritten)
     .def("write8", &SkWStream::write8, py::arg("value"))
     .def("write16", &SkWStream::write16, py::arg("value"))
@@ -525,7 +613,9 @@ py::class_<SkWStream, PyWStream<>>(m, "WStream")
     ;
 
 py::class_<SkNullWStream, PyWStreamImpl<SkNullWStream>, SkWStream>(
-    m, "NullWStream");
+    m, "NullWStream")
+    .def(py::init<>())
+    ;
 
 py::class_<SkFILEStream, PyStreamImpl<SkFILEStream>, SkStreamAsset>(
     m, "FILEStream")
@@ -533,12 +623,14 @@ py::class_<SkFILEStream, PyStreamImpl<SkFILEStream>, SkStreamAsset>(
         [] (const std::string& path) {
             const char* path_ = path.c_str();
             return SkFILEStream::Make(path_);
-        }))
+        }),
+        py::arg("path"))
     .def_static("Make",
         [] (const std::string& path) {
             const char* path_ = path.c_str();
             return SkFILEStream::Make(path_);
-        })
+        },
+        py::arg("path"))
     .def("isValid", &SkFILEStream::isValid)
     .def("close", &SkFILEStream::close)
     ;
@@ -546,26 +638,51 @@ py::class_<SkFILEStream, PyStreamImpl<SkFILEStream>, SkStreamAsset>(
 py::class_<SkMemoryStream, PyMemoryStream<>, SkStreamMemory>(m, "MemoryStream")
     .def(py::init<>())
     .def(py::init<size_t>(), py::arg("length"))
-    .def(py::init<const void*, size_t, bool>(),
-        py::arg("data"), py::arg("length"), py::arg("copyData") = false)
+    .def(py::init(
+        [] (py::buffer b, bool copyData) {
+            auto info = b.request();
+            size_t size = (info.ndim) ? info.strides[0] * info.shape[0] : 0;
+            return std::unique_ptr<SkMemoryStream>(
+                new SkMemoryStream(info.ptr, size, copyData));
+        }),
+        py::arg("data"), py::arg("copyData") = false)
     .def(py::init<sk_sp<SkData>>(), py::arg("data"))
-    .def_static("MakeCopy", &SkMemoryStream::MakeCopy,
-        py::arg("data"), py::arg("length"))
-    .def_static("MakeDirect", &SkMemoryStream::MakeDirect,
-        py::arg("data"), py::arg("length"))
+    .def_static("MakeCopy",
+        [] (py::buffer b) {
+            auto info = b.request();
+            size_t size = (info.ndim) ? info.strides[0] * info.shape[0] : 0;
+            return SkMemoryStream::MakeCopy(info.ptr, size);
+        },
+        py::arg("data"))
+    .def_static("MakeDirect",
+        [] (py::buffer b) {
+            auto info = b.request();
+            size_t size = (info.ndim) ? info.strides[0] * info.shape[0] : 0;
+            return SkMemoryStream::MakeDirect(info.ptr, size);
+        },
+        py::arg("data"))
     .def_static("Make", &SkMemoryStream::Make, py::arg("data"))
-    .def("setMemory", &SkMemoryStream::setMemory,
-        py::arg("data"), py::arg("length"), py::arg("copyData") = false)
-    .def("setMemoryOwned", &SkMemoryStream::setMemoryOwned,
-        py::arg("data"), py::arg("length"))
+    .def("setMemory",
+        [] (SkMemoryStream& stream, py::buffer b, bool copyData) {
+            auto info = b.request();
+            size_t size = (info.ndim) ? info.strides[0] * info.shape[0] : 0;
+            stream.setMemory(info.ptr, size, copyData);
+        },
+        py::arg("data"), py::arg("copyData") = false)
     .def("asData", &SkMemoryStream::asData)
-    .def("setData", &SkMemoryStream::setData)
+    .def("setData", &SkMemoryStream::setData, py::arg("data"))
     .def("skipToAlign4", &SkMemoryStream::skipToAlign4)
     .def("getAtPos", &SkMemoryStream::getAtPos)
     ;
 
 py::class_<SkFILEWStream, PyWStreamImpl<SkFILEWStream>, SkWStream>(
     m, "FILEWStream")
+    .def(py::init(
+        [] (const std::string& path) {
+            return std::unique_ptr<SkFILEWStream>(
+                new SkFILEWStream(path.c_str()));
+        }),
+        py::arg("path"))
     .def("isValid", &SkFILEWStream::isValid)
     .def("fsync", &SkFILEWStream::fsync)
     ;
@@ -573,18 +690,71 @@ py::class_<SkFILEWStream, PyWStreamImpl<SkFILEWStream>, SkWStream>(
 py::class_<SkDynamicMemoryWStream, PyWStreamImpl<SkDynamicMemoryWStream>,
     SkWStream>(m, "DynamicMemoryWStream")
     .def(py::init<>())
-    .def("read", &SkDynamicMemoryWStream::read)
-    .def("copyTo", &SkDynamicMemoryWStream::copyTo)
-    .def("writeToStream", &SkDynamicMemoryWStream::writeToStream)
-    .def("copyToAndReset", &SkDynamicMemoryWStream::copyToAndReset)
+    .def("read",
+        [] (SkDynamicMemoryWStream& stream, py::buffer b, size_t offset) {
+            auto info = b.request(true);
+            size_t size = (info.ndim) ? info.strides[0] * info.shape[0] : 0;
+            return stream.read(info.ptr, offset, size);
+        },
+        py::arg("data"), py::arg("offset") = 0)
+    .def("copyTo",
+        [] (SkDynamicMemoryWStream& stream, py::buffer b) {
+            auto info = b.request(true);
+            size_t size = (info.ndim) ? info.strides[0] * info.shape[0] : 0;
+            if (size < stream.bytesWritten())
+                throw py::value_error("Buffer is smaller than required");
+            stream.copyTo(info.ptr);
+        },
+        R"docstring(
+        More efficient version of read(dst, 0, :py:meth:`bytesWritten`).
+        )docstring",
+        py::arg("dst"))
+    .def("writeToStream", &SkDynamicMemoryWStream::writeToStream,
+        py::arg("dst"))
+    .def("copyToAndReset",
+        [] (SkDynamicMemoryWStream& stream, py::buffer b) {
+            auto info = b.request(true);
+            size_t size = (info.ndim) ? info.strides[0] * info.shape[0] : 0;
+            if (size < stream.bytesWritten())
+                throw py::value_error("Buffer is smaller than required");
+            stream.copyToAndReset(info.ptr);
+        },
+        R"docstring(
+        Equivalent to :py:meth:`copyTo` followed by :py:meth:`reset`, but may
+        save memory use.
+        )docstring",
+        py::arg("dst"))
     .def("writeToAndReset",
-        py::overload_cast<SkWStream*>(&SkDynamicMemoryWStream::writeToAndReset))
+        py::overload_cast<SkWStream*>(&SkDynamicMemoryWStream::writeToAndReset),
+        R"docstring(
+        Equivalent to :py:meth:`writeToStream` followed by :py:meth:`reset`, but
+        may save memory use.
+        )docstring",
+        py::arg("dst"))
     .def("writeToAndReset",
         py::overload_cast<SkDynamicMemoryWStream*>(
-            &SkDynamicMemoryWStream::writeToAndReset))
-    .def("prependToAndReset", &SkDynamicMemoryWStream::prependToAndReset)
-    .def("detachAsData", &SkDynamicMemoryWStream::detachAsData)
-    .def("detachAsStream", &SkDynamicMemoryWStream::detachAsStream)
+            &SkDynamicMemoryWStream::writeToAndReset),
+        R"docstring(
+        Equivalent to :py:meth:`writeToStream` followed by :py:meth:`reset`, but
+        may save memory use.
+
+        When the dst is also a :py:class:`DynamicMemoryWStream`, the
+        implementation is constant time.
+        )docstring",
+        py::arg("dst"))
+    .def("prependToAndReset", &SkDynamicMemoryWStream::prependToAndReset,
+        R"docstring(
+        Prepend this stream to dst, resetting this.
+        )docstring",
+        py::arg("dst"))
+    .def("detachAsData", &SkDynamicMemoryWStream::detachAsData,
+        R"docstring(
+        Return the contents as :py:class:`Data`, and then reset the stream.
+        )docstring")
+    .def("detachAsStream", &SkDynamicMemoryWStream::detachAsStream,
+        R"docstring(
+        Reset, returning a reader stream with the current content.
+        )docstring")
     .def("reset", &SkDynamicMemoryWStream::reset)
     .def("padToAlign4", &SkDynamicMemoryWStream::padToAlign4)
     ;

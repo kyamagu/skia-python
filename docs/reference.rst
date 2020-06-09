@@ -61,9 +61,12 @@ Reference
     DisplacementMapEffect
     Drawable
     DropShadowImageFilter
+    DynamicMemoryWStream
     EncodedImageFormat
     EncodedOrigin
     ErodeImageFilter
+    FILEStream
+    FILEWStream
     FilterQuality
     Flattanable
     Font
@@ -119,6 +122,7 @@ Reference
     MaskFilter
     Matrix
     MatrixPathEffect
+    MemoryStream
     MergePathEffect
     OffsetImageFilter
     OverdrawColorFilter
@@ -166,6 +170,7 @@ Reference
     ShaderMaskFilter
     Shaders
     Size
+    Stream
     StrokePathEffect
     StrokeRec
     Surface
@@ -193,5 +198,6 @@ Reference
     Typeface
     Typeface.SerializeBehavior
     Vertices
+    WStream
     XfermodeImageFilter
     YUVColorSpace
