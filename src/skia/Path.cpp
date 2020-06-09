@@ -1513,8 +1513,12 @@ path
         //     &SkPath::addRoundRect),
         [] (SkPath& path, const SkRect& rect,
             const std::vector<SkScalar>& radii, SkPathDirection dir) {
-            if (radii.size() != 8)
-                throw std::runtime_error("radii must have 8 elements.");
+            if (radii.size() != 8) {
+                std::stringstream stream;
+                stream << "radii must have 8 elements (given " << radii.size()
+                    << " elements).";
+                throw py::value_error(stream.str());
+            }
             return path.addRoundRect(rect, &radii[0], dir);
         },
         R"docstring(

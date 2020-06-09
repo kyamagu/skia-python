@@ -102,8 +102,12 @@ textblob
     .def("getIntercepts",
         [] (const SkTextBlob& textblob, const std::vector<SkScalar>& bounds,
             const SkPaint* paint) {
-            if (bounds.size() != 2)
-                throw std::runtime_error("Bounds must have two elements.");
+            if (bounds.size() != 2) {
+                std::stringstream stream;
+                stream << "Bounds must have two elements (given "
+                    << bounds.size() << " elements).";
+                throw py::value_error(stream.str());
+            }
             int glyphs = 0;
             SkTextBlob::Iter::Run run;
             SkTextBlob::Iter iter(textblob);
@@ -210,9 +214,13 @@ textblob
     .def_static("MakeFromPosTextH",
         [] (const std::string& text, const std::vector<SkScalar>& xpos,
             SkScalar constY, const SkFont& font, SkTextEncoding encoding) {
-            if (text.size() != xpos.size())
-                throw std::runtime_error(
-                    "text and xpos must have the same number of elements.");
+            if (text.size() != xpos.size()) {
+                std::stringstream stream;
+                stream << "text and xpos must have the same number of elements "
+                    << "(len(text) = " << text.size() << ", "
+                    << "len(xpos) = " << xpos.size() << ").";
+                throw py::value_error(stream.str());
+            }
             return SkTextBlob::MakeFromPosTextH(
                 text.c_str(), text.size(), &xpos[0], constY, font, encoding);
         },
@@ -351,9 +359,13 @@ textblobbuilder
             const std::vector<SkGlyphID>& glyphs,
             const std::vector<SkScalar>& xpos,
             SkScalar y, const SkRect* bounds) {
-            if (glyphs.size() != xpos.size())
-                throw std::runtime_error(
-                    "glyphs and xpos must have the same size.");
+            if (glyphs.size() != xpos.size()) {
+                std::stringstream stream;
+                stream << "glyphs and xpos must have the same number of "
+                    << "elements (len(glyphs) = " << glyphs.size() << ", "
+                    << "len(xpos) = " << xpos.size() << ").";
+                throw py::value_error(stream.str());
+            }
             auto run = builder.allocRunPosH(font, glyphs.size(), y, bounds);
             std::copy(glyphs.begin(), glyphs.end(), run.glyphs);
             std::copy(xpos.begin(), xpos.end(), run.pos);
