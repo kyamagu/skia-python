@@ -61,37 +61,6 @@ py::class_<SkMaskFilter, sk_sp<SkMaskFilter>, SkFlattenable>(
         :return: The new blur maskfilter
         )docstring",
         py::arg("style"), py::arg("sigma"), py::arg("respectCTM") = true)
-    .def_static("MakeCombine",
-        [] (const SkMaskFilter& filterA, const SkMaskFilter& filterB,
-            SkCoverageMode mode) {
-            auto filterA_ = filterA.serialize();
-            auto filterB_ = filterB.serialize();
-            return SkMaskFilter::MakeCombine(
-                SkMaskFilter::Deserialize(filterA_->data(), filterA_->size()),
-                SkMaskFilter::Deserialize(filterB_->data(), filterB_->size()),
-                mode);
-        },
-        R"docstring(
-        Compose two maskfilters together using a coverage mode.
-
-        Returns nullptr on failure.
-        )docstring",
-        py::arg("filterA"), py::arg("filterB"), py::arg("mode"))
-    .def_static("MakeCompose",
-        [] (const SkMaskFilter& outer, const SkMaskFilter& inner) {
-            auto outer_ = outer.serialize();
-            auto inner_ = inner.serialize();
-            return SkMaskFilter::MakeCompose(
-                SkMaskFilter::Deserialize(outer_->data(), outer_->size()),
-                SkMaskFilter::Deserialize(inner_->data(), inner_->size()));
-        },
-        R"docstring(
-        Construct a maskfilter whose effect is to first apply the inner filter
-        and then apply the outer filter to the result of the inner's.
-
-        Returns nullptr on failure.
-        )docstring",
-        py::arg("inner"), py::arg("outer"))
     .def_static("Deserialize",
         [] (py::buffer b) {
             auto info = b.request();

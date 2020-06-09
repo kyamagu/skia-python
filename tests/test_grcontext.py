@@ -237,12 +237,14 @@ def test_GrContext_defaultBackendFormat(context):
         skia.GrRenderable.kNo),
     (64, 64, skia.ColorType.kRGBA_8888_ColorType, skia.GrMipMapped.kNo,
         skia.GrRenderable.kNo),
-    (skia.SurfaceCharacterization(),),
+    pytest.param((skia.SurfaceCharacterization(),), marks=pytest.mark.skip),
     (64, 64, skia.GrBackendFormat(), 0xFFFFFFFF, skia.GrMipMapped.kNo,
         skia.GrRenderable.kNo),
     (64, 64, skia.ColorType.kRGBA_8888_ColorType, 0xFFFFFFFF,
         skia.GrMipMapped.kNo, skia.GrRenderable.kNo),
-    (skia.SurfaceCharacterization(), 0xFFFFFFFF),
+    pytest.param(
+        (skia.SurfaceCharacterization(), 0xFFFFFFFF),
+        marks=pytest.mark.skip),
     ('pixmap[]',),
     ('pixmap',),
 ])

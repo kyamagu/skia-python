@@ -257,7 +257,7 @@ py::class_<SkLumaColorFilter, sk_sp<SkLumaColorFilter>, SkColorFilter>(
     )docstring")
     .def_static("Make", &SkLumaColorFilter::Make);
 
-py::class_<SkOverdrawColorFilter, sk_sp<SkOverdrawColorFilter>, SkColorFilter>(
+py::class_<SkOverdrawColorFilter>(
     m, "OverdrawColorFilter", R"docstring(
     Uses the value in the src alpha channel to set the dst pixel.
 

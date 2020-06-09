@@ -140,13 +140,9 @@ def test_Canvas_skew(canvas):
     canvas.skew(0, 0)
 
 
-def test_Canvas_concat(canvas):
-    canvas.concat(skia.Matrix())
-
-
-@pytest.mark.parametrize('args', [(skia.M44(),),])
-def test_Canvas_concat44(canvas, args):
-    canvas.concat44(*args)
+@pytest.mark.parametrize('arg', [skia.Matrix(), skia.M44()])
+def test_Canvas_concat(canvas, arg):
+    canvas.concat(arg)
 
 
 def test_Canvas_setMatrix(canvas):

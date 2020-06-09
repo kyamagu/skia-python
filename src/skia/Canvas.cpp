@@ -885,12 +885,6 @@ canvas
         :return: depth of save state stack before this call was made.
         )docstring",
         py::arg("layerRec"))
-    .def("experimental_saveCamera",
-        py::overload_cast<const SkM44&, const SkM44&>(
-            &SkCanvas::experimental_saveCamera))
-    .def("experimental_saveCamera",
-        py::overload_cast<const SkScalar[16], const SkScalar[16]>(
-            &SkCanvas::experimental_saveCamera))
     .def("restore", &SkCanvas::restore,
         R"docstring(
         Removes changes to :py:class:`Matrix` and clip since :py:class:`Canvas`
@@ -1005,7 +999,7 @@ canvas
         :param float sy: amount to skew on y-axis
         )docstring",
         py::arg("sx"), py::arg("sy"))
-    .def("concat", &SkCanvas::concat,
+    .def("concat", py::overload_cast<const SkMatrix&>(&SkCanvas::concat),
         R"docstring(
         Replaces :py:class:`Matrix` with matrix premultiplied with existing
         :py:class:`Matrix`.
@@ -1013,12 +1007,10 @@ canvas
         This has the effect of transforming the drawn geometry by matrix, before
         transforming the result with existing :py:class:`Matrix`.
 
-        :param skia.Matrix matrix: matrix to premultiply with existing
-            :py:class:`Matrix`
+        :matrix: matrix to premultiply with existing :py:class:`Matrix`
         )docstring",
         py::arg("matrix"))
-    .def("concat44", py::overload_cast<const SkM44&>(&SkCanvas::concat44))
-    .def("concat44", py::overload_cast<const SkScalar[]>(&SkCanvas::concat44))
+    .def("concat", py::overload_cast<const SkM44&>(&SkCanvas::concat))
     .def("setMatrix", &SkCanvas::setMatrix,
         R"docstring(
         Replaces :py:class:`Matrix` with matrix.

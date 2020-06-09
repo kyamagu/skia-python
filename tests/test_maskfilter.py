@@ -12,23 +12,6 @@ def test_MaskFilter_MakeBlur():
         skia.MaskFilter.MakeBlur(skia.kNormal_BlurStyle, 1.), skia.MaskFilter)
 
 
-def test_MaskFilter_MakeCombine(maskfilter):
-    assert isinstance(
-        skia.MaskFilter.MakeCombine(
-            maskfilter,
-            skia.MaskFilter.MakeBlur(skia.kSolid_BlurStyle, 2.),
-            skia.ConvergeMode.kUnion),
-        skia.MaskFilter)
-
-
-def test_MaskFilter_MakeCompose(maskfilter):
-    assert isinstance(
-        skia.MaskFilter.MakeCompose(
-            maskfilter,
-            skia.MaskFilter.MakeBlur(skia.kSolid_BlurStyle, 2.)),
-        skia.MaskFilter)
-
-
 def test_MaskFilter_Deserialize(maskfilter):
     assert isinstance(
         skia.MaskFilter.Deserialize(maskfilter.serialize()),

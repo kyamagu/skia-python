@@ -59,6 +59,7 @@ Reference
     DilateImageFilter
     DiscretePathEffect
     DisplacementMapEffect
+    Document
     Drawable
     DropShadowImageFilter
     DynamicMemoryWStream
