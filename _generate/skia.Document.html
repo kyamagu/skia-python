@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GrProtected &#8212; skia-python 0.0.4 documentation</title>
+    <title>Document &#8212; skia-python 0.0.4 documentation</title>
     <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
@@ -15,8 +15,8 @@
     <script src="../_static/language_data.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="GrRenderable" href="skia.GrRenderable.html" />
-    <link rel="prev" title="GrMockTextureInfo" href="skia.GrMockTextureInfo.html" />
+    <link rel="next" title="Drawable" href="skia.Drawable.html" />
+    <link rel="prev" title="DisplacementMapEffect" href="skia.DisplacementMapEffect.html" />
    
   <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
   
@@ -33,14 +33,35 @@
 
           <div class="body" role="main">
             
-  <div class="section" id="grprotected">
-<h1>GrProtected<a class="headerlink" href="#grprotected" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="document">
+<h1>Document<a class="headerlink" href="#document" title="Permalink to this headline">¶</a></h1>
 <dl class="py class">
-<dt id="skia.GrProtected">
-<em class="property">class </em><code class="sig-name descname">GrProtected</code><a class="headerlink" href="#skia.GrProtected" title="Permalink to this definition">¶</a></dt>
-<dd><p>Members:</p>
-<p>kNo</p>
-<p>kYes</p>
+<dt id="skia.Document">
+<em class="property">class </em><code class="sig-name descname">Document</code><a class="headerlink" href="#skia.Document" title="Permalink to this definition">¶</a></dt>
+<dd><p>High-level API for creating a document-based canvas.</p>
+<p>To use:</p>
+<ol class="arabic">
+<li><p>Create a document, specifying a stream to store the output.</p></li>
+<li><p>For each “page” of content:</p>
+<blockquote>
+<div><ol class="loweralpha simple">
+<li><p>canvas = doc.beginPage(…)</p></li>
+<li><p>draw_my_content(canvas)</p></li>
+<li><p>doc.endPage()</p></li>
+</ol>
+</div></blockquote>
+</li>
+<li><p>Close the document with doc.close().</p></li>
+</ol>
+<p>Example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">stream</span> <span class="o">=</span> <span class="n">skia</span><span class="o">.</span><span class="n">FILEWStream</span><span class="p">(</span><span class="s1">&#39;output.pdf&#39;</span><span class="p">)</span>
+<span class="n">document</span> <span class="o">=</span> <span class="n">skia</span><span class="o">.</span><span class="n">PDF</span><span class="o">.</span><span class="n">MakeDocument</span><span class="p">(</span><span class="n">stream</span><span class="p">)</span>
+<span class="n">canvas</span> <span class="o">=</span> <span class="n">document</span><span class="o">.</span><span class="n">beginPage</span><span class="p">(</span><span class="mi">480</span><span class="p">,</span> <span class="mi">640</span><span class="p">)</span>
+<span class="n">draw</span><span class="p">(</span><span class="n">canvas</span><span class="p">)</span>
+<span class="n">document</span><span class="o">.</span><span class="n">endPage</span><span class="p">()</span>
+<span class="n">document</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</pre></div>
+</div>
 <p class="rubric">Methods</p>
 <table class="longtable docutils align-default">
 <colgroup>
@@ -48,26 +69,29 @@
 <col style="width: 90%" />
 </colgroup>
 <tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="#skia.GrProtected.__init__" title="skia.GrProtected.__init__"><code class="xref py py-obj docutils literal notranslate"><span class="pre">__init__</span></code></a></p></td>
-<td><p></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Document.__init__" title="skia.Document.__init__"><code class="xref py py-obj docutils literal notranslate"><span class="pre">__init__</span></code></a></p></td>
+<td><p>Initialize self.</p></td>
 </tr>
-</tbody>
-</table>
-<p class="rubric">Attributes</p>
-<table class="longtable docutils align-default">
-<colgroup>
-<col style="width: 10%" />
-<col style="width: 90%" />
-</colgroup>
-<tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="#skia.GrProtected.kNo" title="skia.GrProtected.kNo"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kNo</span></code></a></p></td>
-<td><p></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.Document.abort" title="skia.Document.abort"><code class="xref py py-obj docutils literal notranslate"><span class="pre">abort</span></code></a></p></td>
+<td><p>Call <a class="reference internal" href="#skia.Document.abort" title="skia.Document.abort"><code class="xref py py-meth docutils literal notranslate"><span class="pre">abort()</span></code></a> to stop producing the document immediately.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#skia.GrProtected.kYes" title="skia.GrProtected.kYes"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kYes</span></code></a></p></td>
-<td><p></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Document.beginPage" title="skia.Document.beginPage"><code class="xref py py-obj docutils literal notranslate"><span class="pre">beginPage</span></code></a></p></td>
+<td><p>Begin a new page for the document, returning the canvas that will draw into the page.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#skia.GrProtected.name" title="skia.GrProtected.name"><code class="xref py py-obj docutils literal notranslate"><span class="pre">name</span></code></a></p></td>
-<td><p>handle) -&gt; str</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.Document.close" title="skia.Document.close"><code class="xref py py-obj docutils literal notranslate"><span class="pre">close</span></code></a></p></td>
+<td><p>Call <a class="reference internal" href="#skia.Document.close" title="skia.Document.close"><code class="xref py py-meth docutils literal notranslate"><span class="pre">close()</span></code></a> when all pages have been drawn.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Document.endPage" title="skia.Document.endPage"><code class="xref py py-obj docutils literal notranslate"><span class="pre">endPage</span></code></a></p></td>
+<td><p>Call <a class="reference internal" href="#skia.Document.endPage" title="skia.Document.endPage"><code class="xref py py-meth docutils literal notranslate"><span class="pre">endPage()</span></code></a> when the content for the current page has been drawn (into the canvas returned by <a class="reference internal" href="#skia.Document.beginPage" title="skia.Document.beginPage"><code class="xref py py-meth docutils literal notranslate"><span class="pre">beginPage()</span></code></a>).</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.Document.ref" title="skia.Document.ref"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ref</span></code></a></p></td>
+<td><p>Increment the reference count.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Document.unique" title="skia.Document.unique"><code class="xref py py-obj docutils literal notranslate"><span class="pre">unique</span></code></a></p></td>
+<td><p>May return true if the caller is the only owner.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.Document.unref" title="skia.Document.unref"><code class="xref py py-obj docutils literal notranslate"><span class="pre">unref</span></code></a></p></td>
+<td><p>Decrement the reference count.</p></td>
 </tr>
 </tbody>
 </table>
@@ -76,32 +100,68 @@
 <div class="section" id="methods">
 <h2>Methods<a class="headerlink" href="#methods" title="Permalink to this headline">¶</a></h2>
 <dl class="py method">
-<dt id="skia.GrProtected.__init__">
-<code class="sig-prename descclassname">GrProtected.</code><code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.GrProtected" title="skia.GrProtected">skia.GrProtected</a></span></em>, <em class="sig-param"><span class="n">arg0</span><span class="p">:</span> <span class="n">bool</span></em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#skia.GrProtected.__init__" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dt id="skia.Document.__init__">
+<code class="sig-prename descclassname">Document.</code><code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span><span class="n">args</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#skia.Document.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Initialize self.  See help(type(self)) for accurate signature.</p>
+</dd></dl>
 
-</div>
-<div class="section" id="attributes">
-<h2>Attributes<a class="headerlink" href="#attributes" title="Permalink to this headline">¶</a></h2>
-<dl class="py attribute">
-<dt id="skia.GrProtected.kNo">
-<code class="sig-prename descclassname">GrProtected.</code><code class="sig-name descname">kNo</code><em class="property"> = GrProtected.kNo</em><a class="headerlink" href="#skia.GrProtected.kNo" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dl class="py method">
+<dt id="skia.Document.abort">
+<code class="sig-prename descclassname">Document.</code><code class="sig-name descname">abort</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Document" title="skia.Document">skia.Document</a></span></em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#skia.Document.abort" title="Permalink to this definition">¶</a></dt>
+<dd><p>Call <a class="reference internal" href="#skia.Document.abort" title="skia.Document.abort"><code class="xref py py-meth docutils literal notranslate"><span class="pre">abort()</span></code></a> to stop producing the document immediately.</p>
+<p>The stream output must be ignored, and should not be trusted.</p>
+</dd></dl>
 
-<dl class="py attribute">
-<dt id="skia.GrProtected.kYes">
-<code class="sig-prename descclassname">GrProtected.</code><code class="sig-name descname">kYes</code><em class="property"> = GrProtected.kYes</em><a class="headerlink" href="#skia.GrProtected.kYes" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dl class="py method">
+<dt id="skia.Document.beginPage">
+<code class="sig-prename descclassname">Document.</code><code class="sig-name descname">beginPage</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Document" title="skia.Document">skia.Document</a></span></em>, <em class="sig-param"><span class="n">width</span><span class="p">:</span> <span class="n">float</span></em>, <em class="sig-param"><span class="n">height</span><span class="p">:</span> <span class="n">float</span></em>, <em class="sig-param"><span class="n">content</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.Rect.html#skia.Rect" title="skia.Rect">skia.Rect</a></span> <span class="o">=</span> <span class="default_value">None</span></em><span class="sig-paren">)</span> &#x2192; SkCanvas<a class="headerlink" href="#skia.Document.beginPage" title="Permalink to this definition">¶</a></dt>
+<dd><p>Begin a new page for the document, returning the canvas that will draw
+into the page.</p>
+<p>The document owns this canvas, and it will go out of scope when
+<a class="reference internal" href="#skia.Document.endPage" title="skia.Document.endPage"><code class="xref py py-meth docutils literal notranslate"><span class="pre">endPage()</span></code></a> or <a class="reference internal" href="#skia.Document.close" title="skia.Document.close"><code class="xref py py-meth docutils literal notranslate"><span class="pre">close()</span></code></a> is called, or the document is
+deleted.</p>
+</dd></dl>
 
-<dl class="py attribute">
-<dt id="skia.GrProtected.name">
-<code class="sig-prename descclassname">GrProtected.</code><code class="sig-name descname">name</code><a class="headerlink" href="#skia.GrProtected.name" title="Permalink to this definition">¶</a></dt>
-<dd><p>handle) -&gt; str</p>
-<dl class="field-list simple">
-<dt class="field-odd">Type</dt>
-<dd class="field-odd"><p>(self</p>
-</dd>
-</dl>
+<dl class="py method">
+<dt id="skia.Document.close">
+<code class="sig-prename descclassname">Document.</code><code class="sig-name descname">close</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Document" title="skia.Document">skia.Document</a></span></em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#skia.Document.close" title="Permalink to this definition">¶</a></dt>
+<dd><p>Call <a class="reference internal" href="#skia.Document.close" title="skia.Document.close"><code class="xref py py-meth docutils literal notranslate"><span class="pre">close()</span></code></a> when all pages have been drawn.</p>
+<p>This will close the file or stream holding the document’s contents.
+After <a class="reference internal" href="#skia.Document.close" title="skia.Document.close"><code class="xref py py-meth docutils literal notranslate"><span class="pre">close()</span></code></a> the document can no longer add new pages.
+Deleting the document will automatically call <a class="reference internal" href="#skia.Document.close" title="skia.Document.close"><code class="xref py py-meth docutils literal notranslate"><span class="pre">close()</span></code></a> if need
+be.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="skia.Document.endPage">
+<code class="sig-prename descclassname">Document.</code><code class="sig-name descname">endPage</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Document" title="skia.Document">skia.Document</a></span></em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#skia.Document.endPage" title="Permalink to this definition">¶</a></dt>
+<dd><p>Call <a class="reference internal" href="#skia.Document.endPage" title="skia.Document.endPage"><code class="xref py py-meth docutils literal notranslate"><span class="pre">endPage()</span></code></a> when the content for the current page has been
+drawn (into the canvas returned by <a class="reference internal" href="#skia.Document.beginPage" title="skia.Document.beginPage"><code class="xref py py-meth docutils literal notranslate"><span class="pre">beginPage()</span></code></a>).</p>
+<p>After this call the canvas returned by <a class="reference internal" href="#skia.Document.beginPage" title="skia.Document.beginPage"><code class="xref py py-meth docutils literal notranslate"><span class="pre">beginPage()</span></code></a> will be
+out-of-scope.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="skia.Document.ref">
+<code class="sig-prename descclassname">Document.</code><code class="sig-name descname">ref</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n">skia.RefCntBase</span></em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#skia.Document.ref" title="Permalink to this definition">¶</a></dt>
+<dd><p>Increment the reference count.</p>
+<p>Must be balanced by a call to <a class="reference internal" href="#skia.Document.unref" title="skia.Document.unref"><code class="xref py py-meth docutils literal notranslate"><span class="pre">unref()</span></code></a>.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="skia.Document.unique">
+<code class="sig-prename descclassname">Document.</code><code class="sig-name descname">unique</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n">skia.RefCntBase</span></em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#skia.Document.unique" title="Permalink to this definition">¶</a></dt>
+<dd><p>May return true if the caller is the only owner.</p>
+<p>Ensures that all previous owner’s actions are complete.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="skia.Document.unref">
+<code class="sig-prename descclassname">Document.</code><code class="sig-name descname">unref</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n">skia.RefCntBase</span></em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#skia.Document.unref" title="Permalink to this definition">¶</a></dt>
+<dd><p>Decrement the reference count.</p>
+<p>If the reference count is 1 before the decrement, then delete the
+object. Note that if this is the case, then the object needs to have
+been allocated via new, and not on the stack.</p>
 </dd></dl>
 
 </div>
@@ -171,7 +231,7 @@
 <li class="toctree-l2"><a class="reference internal" href="skia.DilateImageFilter.html">DilateImageFilter</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.DiscretePathEffect.html">DiscretePathEffect</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.DisplacementMapEffect.html">DisplacementMapEffect</a></li>
-<li class="toctree-l2"><a class="reference internal" href="skia.Document.html">Document</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Document</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.Drawable.html">Drawable</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.DropShadowImageFilter.html">DropShadowImageFilter</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.DynamicMemoryWStream.html">DynamicMemoryWStream</a></li>
@@ -211,7 +271,7 @@
 <li class="toctree-l2"><a class="reference internal" href="skia.GrGLTextureInfo.html">GrGLTextureInfo</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.GrMipMapped.html">GrMipMapped</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.GrMockTextureInfo.html">GrMockTextureInfo</a></li>
-<li class="toctree-l2 current"><a class="current reference internal" href="#">GrProtected</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.GrProtected.html">GrProtected</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.GrRenderable.html">GrRenderable</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.GrSemaphoresSubmitted.html">GrSemaphoresSubmitted</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.GrSurfaceOrigin.html">GrSurfaceOrigin</a></li>
@@ -323,8 +383,8 @@
 <ul>
   <li><a href="../index.html">Documentation overview</a><ul>
   <li><a href="../reference.html">Reference</a><ul>
-      <li>Previous: <a href="skia.GrMockTextureInfo.html" title="previous chapter">GrMockTextureInfo</a></li>
-      <li>Next: <a href="skia.GrRenderable.html" title="next chapter">GrRenderable</a></li>
+      <li>Previous: <a href="skia.DisplacementMapEffect.html" title="previous chapter">DisplacementMapEffect</a></li>
+      <li>Next: <a href="skia.Drawable.html" title="next chapter">Drawable</a></li>
   </ul></li>
   </ul></li>
 </ul>
@@ -359,7 +419,7 @@
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
       |
-      <a href="../_sources/_generate/skia.GrProtected.rst.txt"
+      <a href="../_sources/_generate/skia.Document.rst.txt"
           rel="nofollow">Page source</a>
     </div>
 
