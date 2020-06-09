@@ -10,9 +10,23 @@ py::class_<SkDocument, sk_sp<SkDocument>, SkRefCnt>(m, "Document",
     To use:
 
     1. Create a document, specifying a stream to store the output.
-    2. For each "page" of content: a. canvas = doc->beginPage(...) b.
-        draw_my_content(canvas); c. doc->endPage();
-    3. Close the document with doc->close().
+    2. For each "page" of content:
+
+        a. canvas = doc.beginPage(...)
+        b. draw_my_content(canvas)
+        c. doc.endPage()
+
+    3. Close the document with doc.close().
+
+    Example::
+
+        stream = skia.FILEWStream('output.pdf')
+        document = skia.PDF.MakeDocument(stream)
+        canvas = document.beginPage(480, 640)
+        draw(canvas)
+        document.endPage()
+        document.close()
+
     )docstring")
     .def("beginPage", &SkDocument::beginPage,
         R"docstring(
