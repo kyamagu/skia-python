@@ -1512,10 +1512,15 @@ path
         // py::overload_cast<const SkRect&, const SkScalar[], SkPathDirection>(
         //     &SkPath::addRoundRect),
         [] (SkPath& path, const SkRect& rect,
-            const std::vector<SkScalar>& radii, SkPathDirection dir) {
-            if (radii.size() != 8)
-                throw std::runtime_error("radii must have 8 elements.");
-            return path.addRoundRect(rect, &radii[0], dir);
+            py::iterable radii, SkPathDirection dir) {
+            auto radii_ = radii.cast<std::vector<SkScalar>>();
+            if (radii_.size() != 8) {
+                std::stringstream stream;
+                stream << "radii must have 8 elements (given " << radii_.size()
+                    << " elements).";
+                throw py::value_error(stream.str());
+            }
+            return path.addRoundRect(rect, &radii_[0], dir);
         },
         R"docstring(
         Appends :py:class:`RRect` to :py:class:`Path`, creating a new closed

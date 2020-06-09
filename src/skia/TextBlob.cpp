@@ -100,10 +100,15 @@ textblob
         :return: identifier for :py:class:`TextBlob`
         )docstring")
     .def("getIntercepts",
-        [] (const SkTextBlob& textblob, const std::vector<SkScalar>& bounds,
+        [] (const SkTextBlob& textblob, py::iterable bounds,
             const SkPaint* paint) {
-            if (bounds.size() != 2)
-                throw std::runtime_error("Bounds must have two elements.");
+            auto bounds_ = bounds.cast<std::vector<SkScalar>>();
+            if (bounds_.size() != 2) {
+                std::stringstream stream;
+                stream << "Bounds must have two elements (given "
+                    << bounds_.size() << " elements).";
+                throw py::value_error(stream.str());
+            }
             int glyphs = 0;
             SkTextBlob::Iter::Run run;
             SkTextBlob::Iter iter(textblob);
@@ -111,7 +116,7 @@ textblob
                 glyphs += run.fGlyphCount;
             std::vector<SkScalar> intervals(2 * glyphs);
             size_t result = textblob.getIntercepts(
-                &bounds[0], &intervals[0], paint);
+                &bounds_[0], &intervals[0], paint);
             if (result != intervals.size())
                 intervals.erase(intervals.begin() + result, intervals.end());
             return intervals;
@@ -208,13 +213,18 @@ textblob
         py::arg("string"), py::arg("font"),
         py::arg("encoding") = SkTextEncoding::kUTF8)
     .def_static("MakeFromPosTextH",
-        [] (const std::string& text, const std::vector<SkScalar>& xpos,
+        [] (const std::string& text, py::iterable xpos,
             SkScalar constY, const SkFont& font, SkTextEncoding encoding) {
-            if (text.size() != xpos.size())
-                throw std::runtime_error(
-                    "text and xpos must have the same number of elements.");
+            auto xpos_ = xpos.cast<std::vector<SkScalar>>();
+            if (text.size() != xpos_.size()) {
+                std::stringstream stream;
+                stream << "text and xpos must have the same number of elements "
+                    << "(len(text) = " << text.size() << ", "
+                    << "len(xpos) = " << xpos_.size() << ").";
+                throw py::value_error(stream.str());
+            }
             return SkTextBlob::MakeFromPosTextH(
-                text.c_str(), text.size(), &xpos[0], constY, font, encoding);
+                text.c_str(), text.size(), &xpos_[0], constY, font, encoding);
         },
         R"docstring(
         Returns a textblob built from a single run of text with x-positions and
@@ -348,15 +358,19 @@ textblobbuilder
         py::arg("bounds") = nullptr)
     .def("allocRunPosH",
         [] (SkTextBlobBuilder& builder, const SkFont& font,
-            const std::vector<SkGlyphID>& glyphs,
-            const std::vector<SkScalar>& xpos,
+            const std::vector<SkGlyphID>& glyphs, py::iterable xpos,
             SkScalar y, const SkRect* bounds) {
-            if (glyphs.size() != xpos.size())
-                throw std::runtime_error(
-                    "glyphs and xpos must have the same size.");
+            auto xpos_ = xpos.cast<std::vector<SkScalar>>();
+            if (glyphs.size() != xpos_.size()) {
+                std::stringstream stream;
+                stream << "glyphs and xpos must have the same number of "
+                    << "elements (len(glyphs) = " << glyphs.size() << ", "
+                    << "len(xpos) = " << xpos_.size() << ").";
+                throw py::value_error(stream.str());
+            }
             auto run = builder.allocRunPosH(font, glyphs.size(), y, bounds);
             std::copy(glyphs.begin(), glyphs.end(), run.glyphs);
-            std::copy(xpos.begin(), xpos.end(), run.pos);
+            std::copy(xpos_.begin(), xpos_.end(), run.pos);
         },
         R"docstring(
         Sets a new run with glyphs and positions along baseline.
@@ -380,15 +394,15 @@ textblobbuilder
         py::arg("bounds") = nullptr)
     .def("allocRunPos",
         [] (SkTextBlobBuilder& builder, const SkFont& font,
-            const std::vector<SkGlyphID>& glyphs,
-            const std::vector<SkPoint>& positions,
+            const std::vector<SkGlyphID>& glyphs, py::iterable positions,
             const SkRect* bounds) {
-            if (glyphs.size() != positions.size())
+            auto positions_ = positions.cast<std::vector<SkPoint>>();
+            if (glyphs.size() != positions_.size())
                 throw std::runtime_error(
                     "glyphs and positions must have the same size.");
             auto run = builder.allocRunPos(font, glyphs.size(), bounds);
             std::copy(glyphs.begin(), glyphs.end(), run.glyphs);
-            std::copy(positions.begin(), positions.end(), run.points());
+            std::copy(positions_.begin(), positions_.end(), run.points());
         },
         R"docstring(
         Sets a new run with glyphs and :py:class:`Point` positions.
