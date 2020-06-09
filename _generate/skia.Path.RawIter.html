@@ -4,6 +4,7 @@
 <html>
   <head>
     <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Path.RawIter &#8212; skia-python 0.0.4 documentation</title>
     <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -34,69 +35,36 @@
             
   <div class="section" id="path-rawiter">
 <h1>Path.RawIter<a class="headerlink" href="#path-rawiter" title="Permalink to this headline">¶</a></h1>
-<dl class="py class">
-<dt id="skia.Path.RawIter">
-<em class="property">class </em><code class="sig-name descname">RawIter</code><a class="headerlink" href="#skia.Path.RawIter" title="Permalink to this definition">¶</a></dt>
-<dd><p>Iterates through verb array, and associated <code class="xref py py-class docutils literal notranslate"><span class="pre">Point</span></code> array and
-conic weight.</p>
-<p>verb array, <code class="xref py py-class docutils literal notranslate"><span class="pre">Point</span></code> array, and conic weight are returned
-unaltered.</p>
-<p class="rubric">Methods</p>
-<table class="longtable docutils align-default">
-<colgroup>
-<col style="width: 10%" />
-<col style="width: 90%" />
-</colgroup>
-<tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Path.RawIter.__init__" title="skia.Path.RawIter.__init__"><code class="xref py py-obj docutils literal notranslate"><span class="pre">__init__</span></code></a></p></td>
-<td><p>Overloaded function.</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#skia.Path.RawIter.conicWeight" title="skia.Path.RawIter.conicWeight"><code class="xref py py-obj docutils literal notranslate"><span class="pre">conicWeight</span></code></a></p></td>
-<td><p>Returns conic weight if <a class="reference internal" href="#skia.Path.RawIter.next" title="skia.Path.RawIter.next"><code class="xref py py-meth docutils literal notranslate"><span class="pre">next()</span></code></a> returned <a class="reference internal" href="skia.Path.html#skia.Path.kConic_Verb" title="skia.Path.kConic_Verb"><code class="xref py py-attr docutils literal notranslate"><span class="pre">kConic_Verb</span></code></a>.</p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Path.RawIter.next" title="skia.Path.RawIter.next"><code class="xref py py-obj docutils literal notranslate"><span class="pre">next</span></code></a></p></td>
-<td><p>Returns next <a class="reference internal" href="skia.Path.Verb.html#skia.Path.Verb" title="skia.Path.Verb"><code class="xref py py-class docutils literal notranslate"><span class="pre">Verb</span></code></a> in verb array, and advances <a class="reference internal" href="#skia.Path.RawIter" title="skia.Path.RawIter"><code class="xref py py-class docutils literal notranslate"><span class="pre">RawIter</span></code></a>.</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#skia.Path.RawIter.peek" title="skia.Path.RawIter.peek"><code class="xref py py-obj docutils literal notranslate"><span class="pre">peek</span></code></a></p></td>
-<td><p>Returns next <a class="reference internal" href="skia.Path.Verb.html#skia.Path.Verb" title="skia.Path.Verb"><code class="xref py py-class docutils literal notranslate"><span class="pre">Verb</span></code></a>, but does not advance <a class="reference internal" href="#skia.Path.RawIter" title="skia.Path.RawIter"><code class="xref py py-class docutils literal notranslate"><span class="pre">RawIter</span></code></a>.</p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Path.RawIter.setPath" title="skia.Path.RawIter.setPath"><code class="xref py py-obj docutils literal notranslate"><span class="pre">setPath</span></code></a></p></td>
-<td><p>Sets <a class="reference internal" href="#skia.Path.RawIter" title="skia.Path.RawIter"><code class="xref py py-class docutils literal notranslate"><span class="pre">RawIter</span></code></a> to return elements of verb array, <code class="xref py py-class docutils literal notranslate"><span class="pre">Point</span></code> array, and conic weight in path.</p></td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
 <div class="section" id="methods">
 <h2>Methods<a class="headerlink" href="#methods" title="Permalink to this headline">¶</a></h2>
 <dl class="py method">
 <dt id="skia.Path.RawIter.__init__">
-<code class="sig-prename descclassname">RawIter.</code><code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span><span class="n">args</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#skia.Path.RawIter.__init__" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">Path.RawIter.</code><code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span><span class="n">args</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#skia.Path.RawIter.__init__" title="Permalink to this definition">¶</a></dt>
 <dd><p>Overloaded function.</p>
 <ol class="arabic">
 <li><p>__init__(self: skia.Path.RawIter) -&gt; None</p>
 <blockquote>
-<div><p>Initializes <a class="reference internal" href="#skia.Path.RawIter" title="skia.Path.RawIter"><code class="xref py py-class docutils literal notranslate"><span class="pre">RawIter</span></code></a> with an empty <code class="xref py py-class docutils literal notranslate"><span class="pre">Path</span></code>.</p>
-<p><a class="reference internal" href="#skia.Path.RawIter.next" title="skia.Path.RawIter.next"><code class="xref py py-meth docutils literal notranslate"><span class="pre">next()</span></code></a> on <a class="reference internal" href="#skia.Path.RawIter" title="skia.Path.RawIter"><code class="xref py py-class docutils literal notranslate"><span class="pre">RawIter</span></code></a> returns
+<div><p>Initializes <code class="xref py py-class docutils literal notranslate"><span class="pre">RawIter</span></code> with an empty <a class="reference internal" href="skia.Path.html#skia.Path" title="skia.Path"><code class="xref py py-class docutils literal notranslate"><span class="pre">Path</span></code></a>.</p>
+<p><a class="reference internal" href="#skia.Path.RawIter.next" title="skia.Path.RawIter.next"><code class="xref py py-meth docutils literal notranslate"><span class="pre">next()</span></code></a> on <code class="xref py py-class docutils literal notranslate"><span class="pre">RawIter</span></code> returns
 <a class="reference internal" href="skia.Path.html#skia.Path.kDone_Verb" title="skia.Path.kDone_Verb"><code class="xref py py-attr docutils literal notranslate"><span class="pre">kDone_Verb</span></code></a>. Call <a class="reference internal" href="#skia.Path.RawIter.setPath" title="skia.Path.RawIter.setPath"><code class="xref py py-meth docutils literal notranslate"><span class="pre">setPath()</span></code></a> to initialize
-<a class="reference internal" href="#skia.Path.RawIter" title="skia.Path.RawIter"><code class="xref py py-class docutils literal notranslate"><span class="pre">RawIter</span></code></a> at a later time.</p>
+<code class="xref py py-class docutils literal notranslate"><span class="pre">RawIter</span></code> at a later time.</p>
 <dl class="field-list simple">
 <dt class="field-odd">return</dt>
-<dd class="field-odd"><p><a class="reference internal" href="#skia.Path.RawIter" title="skia.Path.RawIter"><code class="xref py py-class docutils literal notranslate"><span class="pre">RawIter</span></code></a> of empty <code class="xref py py-class docutils literal notranslate"><span class="pre">Path</span></code></p>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">RawIter</span></code> of empty <a class="reference internal" href="skia.Path.html#skia.Path" title="skia.Path"><code class="xref py py-class docutils literal notranslate"><span class="pre">Path</span></code></a></p>
 </dd>
 </dl>
 </div></blockquote>
 </li>
 <li><p>__init__(self: skia.Path.RawIter, path: skia.Path) -&gt; None</p>
 <blockquote>
-<div><p>Sets <a class="reference internal" href="#skia.Path.RawIter" title="skia.Path.RawIter"><code class="xref py py-class docutils literal notranslate"><span class="pre">RawIter</span></code></a> to return elements of verb array,
-<code class="xref py py-class docutils literal notranslate"><span class="pre">Point</span></code> array, and conic weight in path.</p>
+<div><p>Sets <code class="xref py py-class docutils literal notranslate"><span class="pre">RawIter</span></code> to return elements of verb array,
+<a class="reference internal" href="skia.Point.html#skia.Point" title="skia.Point"><code class="xref py py-class docutils literal notranslate"><span class="pre">Point</span></code></a> array, and conic weight in path.</p>
 <dl class="field-list simple">
 <dt class="field-odd">path</dt>
-<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">Path</span></code> to iterate</p>
+<dd class="field-odd"><p><a class="reference internal" href="skia.Path.html#skia.Path" title="skia.Path"><code class="xref py py-class docutils literal notranslate"><span class="pre">Path</span></code></a> to iterate</p>
 </dd>
 <dt class="field-even">return</dt>
-<dd class="field-even"><p><a class="reference internal" href="#skia.Path.RawIter" title="skia.Path.RawIter"><code class="xref py py-class docutils literal notranslate"><span class="pre">RawIter</span></code></a> of path</p>
+<dd class="field-even"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">RawIter</span></code> of path</p>
 </dd>
 </dl>
 </div></blockquote>
@@ -106,14 +74,14 @@ unaltered.</p>
 
 <dl class="py method">
 <dt id="skia.Path.RawIter.conicWeight">
-<code class="sig-prename descclassname">RawIter.</code><code class="sig-name descname">conicWeight</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Path.RawIter" title="skia.Path.RawIter">skia.Path.RawIter</a></span></em><span class="sig-paren">)</span> &#x2192; float<a class="headerlink" href="#skia.Path.RawIter.conicWeight" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">Path.RawIter.</code><code class="sig-name descname">conicWeight</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n">skia.Path.RawIter</span></em><span class="sig-paren">)</span> &#x2192; float<a class="headerlink" href="#skia.Path.RawIter.conicWeight" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns conic weight if <a class="reference internal" href="#skia.Path.RawIter.next" title="skia.Path.RawIter.next"><code class="xref py py-meth docutils literal notranslate"><span class="pre">next()</span></code></a> returned
 <a class="reference internal" href="skia.Path.html#skia.Path.kConic_Verb" title="skia.Path.kConic_Verb"><code class="xref py py-attr docutils literal notranslate"><span class="pre">kConic_Verb</span></code></a>.</p>
 <p>If <a class="reference internal" href="#skia.Path.RawIter.next" title="skia.Path.RawIter.next"><code class="xref py py-meth docutils literal notranslate"><span class="pre">next()</span></code></a> has not been called, or <a class="reference internal" href="#skia.Path.RawIter.next" title="skia.Path.RawIter.next"><code class="xref py py-meth docutils literal notranslate"><span class="pre">next()</span></code></a> did not
 return <a class="reference internal" href="skia.Path.html#skia.Path.kConic_Verb" title="skia.Path.kConic_Verb"><code class="xref py py-attr docutils literal notranslate"><span class="pre">kConic_Verb</span></code></a>, result is undefined.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p>conic weight for conic <code class="xref py py-class docutils literal notranslate"><span class="pre">Point</span></code> returned by
+<dd class="field-odd"><p>conic weight for conic <a class="reference internal" href="skia.Point.html#skia.Point" title="skia.Point"><code class="xref py py-class docutils literal notranslate"><span class="pre">Point</span></code></a> returned by
 <a class="reference internal" href="#skia.Path.RawIter.next" title="skia.Path.RawIter.next"><code class="xref py py-meth docutils literal notranslate"><span class="pre">next()</span></code></a></p>
 </dd>
 </dl>
@@ -121,44 +89,44 @@ return <a class="reference internal" href="skia.Path.html#skia.Path.kConic_Verb"
 
 <dl class="py method">
 <dt id="skia.Path.RawIter.next">
-<code class="sig-prename descclassname">RawIter.</code><code class="sig-name descname">next</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Path.RawIter" title="skia.Path.RawIter">skia.Path.RawIter</a></span></em><span class="sig-paren">)</span> &#x2192; tuple<a class="headerlink" href="#skia.Path.RawIter.next" title="Permalink to this definition">¶</a></dt>
-<dd><p>Returns next <a class="reference internal" href="skia.Path.Verb.html#skia.Path.Verb" title="skia.Path.Verb"><code class="xref py py-class docutils literal notranslate"><span class="pre">Verb</span></code></a> in verb array, and advances
-<a class="reference internal" href="#skia.Path.RawIter" title="skia.Path.RawIter"><code class="xref py py-class docutils literal notranslate"><span class="pre">RawIter</span></code></a>.</p>
+<code class="sig-prename descclassname">Path.RawIter.</code><code class="sig-name descname">next</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n">skia.Path.RawIter</span></em><span class="sig-paren">)</span> &#x2192; tuple<a class="headerlink" href="#skia.Path.RawIter.next" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns next <code class="xref py py-class docutils literal notranslate"><span class="pre">Verb</span></code> in verb array, and advances
+<code class="xref py py-class docutils literal notranslate"><span class="pre">RawIter</span></code>.</p>
 <p>When verb array is exhausted, returns <a class="reference internal" href="skia.Path.html#skia.Path.kDone_Verb" title="skia.Path.kDone_Verb"><code class="xref py py-attr docutils literal notranslate"><span class="pre">kDone_Verb</span></code></a>.</p>
-<p>Zero to four <code class="xref py py-class docutils literal notranslate"><span class="pre">Point</span></code> are stored in pts, depending on the
-returned <a class="reference internal" href="skia.Path.Verb.html#skia.Path.Verb" title="skia.Path.Verb"><code class="xref py py-class docutils literal notranslate"><span class="pre">Verb</span></code></a>.</p>
+<p>Zero to four <a class="reference internal" href="skia.Point.html#skia.Point" title="skia.Point"><code class="xref py py-class docutils literal notranslate"><span class="pre">Point</span></code></a> are stored in pts, depending on the
+returned <code class="xref py py-class docutils literal notranslate"><span class="pre">Verb</span></code>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p>tuple of the following: next <a class="reference internal" href="skia.Path.Verb.html#skia.Path.Verb" title="skia.Path.Verb"><code class="xref py py-class docutils literal notranslate"><span class="pre">Verb</span></code></a> from
-verb array; and storage for <code class="xref py py-class docutils literal notranslate"><span class="pre">Point</span></code> data describing
-returned <a class="reference internal" href="skia.Path.Verb.html#skia.Path.Verb" title="skia.Path.Verb"><code class="xref py py-class docutils literal notranslate"><span class="pre">Verb</span></code></a></p>
+<dd class="field-odd"><p>tuple of the following: next <code class="xref py py-class docutils literal notranslate"><span class="pre">Verb</span></code> from
+verb array; and storage for <a class="reference internal" href="skia.Point.html#skia.Point" title="skia.Point"><code class="xref py py-class docutils literal notranslate"><span class="pre">Point</span></code></a> data describing
+returned <code class="xref py py-class docutils literal notranslate"><span class="pre">Verb</span></code></p>
 </dd>
 <dt class="field-even">Return type</dt>
-<dd class="field-even"><p>Tuple[<a class="reference internal" href="skia.Path.Verb.html#skia.Path.Verb" title="skia.Path.Verb">skia.Path.Verb</a>,List[<a class="reference internal" href="skia.Point.html#skia.Point" title="skia.Point">skia.Point</a>]]</p>
+<dd class="field-even"><p>Tuple[skia.Path.Verb,List[<a class="reference internal" href="skia.Point.html#skia.Point" title="skia.Point">skia.Point</a>]]</p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py method">
 <dt id="skia.Path.RawIter.peek">
-<code class="sig-prename descclassname">RawIter.</code><code class="sig-name descname">peek</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Path.RawIter" title="skia.Path.RawIter">skia.Path.RawIter</a></span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="skia.Path.Verb.html#skia.Path.Verb" title="skia.Path.Verb">skia.Path.Verb</a><a class="headerlink" href="#skia.Path.RawIter.peek" title="Permalink to this definition">¶</a></dt>
-<dd><p>Returns next <a class="reference internal" href="skia.Path.Verb.html#skia.Path.Verb" title="skia.Path.Verb"><code class="xref py py-class docutils literal notranslate"><span class="pre">Verb</span></code></a>, but does not advance
-<a class="reference internal" href="#skia.Path.RawIter" title="skia.Path.RawIter"><code class="xref py py-class docutils literal notranslate"><span class="pre">RawIter</span></code></a>.</p>
+<code class="sig-prename descclassname">Path.RawIter.</code><code class="sig-name descname">peek</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n">skia.Path.RawIter</span></em><span class="sig-paren">)</span> &#x2192; skia.Path.Verb<a class="headerlink" href="#skia.Path.RawIter.peek" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns next <code class="xref py py-class docutils literal notranslate"><span class="pre">Verb</span></code>, but does not advance
+<code class="xref py py-class docutils literal notranslate"><span class="pre">RawIter</span></code>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p>next <a class="reference internal" href="skia.Path.Verb.html#skia.Path.Verb" title="skia.Path.Verb"><code class="xref py py-class docutils literal notranslate"><span class="pre">Verb</span></code></a> from verb array</p>
+<dd class="field-odd"><p>next <code class="xref py py-class docutils literal notranslate"><span class="pre">Verb</span></code> from verb array</p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py method">
 <dt id="skia.Path.RawIter.setPath">
-<code class="sig-prename descclassname">RawIter.</code><code class="sig-name descname">setPath</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Path.RawIter" title="skia.Path.RawIter">skia.Path.RawIter</a></span></em>, <em class="sig-param"><span class="n">path</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.Path.html#skia.Path" title="skia.Path">skia.Path</a></span></em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#skia.Path.RawIter.setPath" title="Permalink to this definition">¶</a></dt>
-<dd><p>Sets <a class="reference internal" href="#skia.Path.RawIter" title="skia.Path.RawIter"><code class="xref py py-class docutils literal notranslate"><span class="pre">RawIter</span></code></a> to return elements of verb array,
-<code class="xref py py-class docutils literal notranslate"><span class="pre">Point</span></code> array, and conic weight in path.</p>
+<code class="sig-prename descclassname">Path.RawIter.</code><code class="sig-name descname">setPath</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n">skia.Path.RawIter</span></em>, <em class="sig-param"><span class="n">path</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.Path.html#skia.Path" title="skia.Path">skia.Path</a></span></em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#skia.Path.RawIter.setPath" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets <code class="xref py py-class docutils literal notranslate"><span class="pre">RawIter</span></code> to return elements of verb array,
+<a class="reference internal" href="skia.Point.html#skia.Point" title="skia.Point"><code class="xref py py-class docutils literal notranslate"><span class="pre">Point</span></code></a> array, and conic weight in path.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>path</strong> (<a class="reference internal" href="skia.Path.html#skia.Path" title="skia.Path"><em>skia.Path</em></a>) – <code class="xref py py-class docutils literal notranslate"><span class="pre">Path</span></code> to iterate</p>
+<dd class="field-odd"><p><strong>path</strong> (<a class="reference internal" href="skia.Path.html#skia.Path" title="skia.Path"><em>skia.Path</em></a>) – <a class="reference internal" href="skia.Path.html#skia.Path" title="skia.Path"><code class="xref py py-class docutils literal notranslate"><span class="pre">Path</span></code></a> to iterate</p>
 </dd>
 </dl>
 </dd></dl>
@@ -232,9 +200,12 @@ returned <a class="reference internal" href="skia.Path.Verb.html#skia.Path.Verb"
 <li class="toctree-l2"><a class="reference internal" href="skia.DisplacementMapEffect.html">DisplacementMapEffect</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.Drawable.html">Drawable</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.DropShadowImageFilter.html">DropShadowImageFilter</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.DynamicMemoryWStream.html">DynamicMemoryWStream</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.EncodedImageFormat.html">EncodedImageFormat</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.EncodedOrigin.html">EncodedOrigin</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.ErodeImageFilter.html">ErodeImageFilter</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.FILEStream.html">FILEStream</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.FILEWStream.html">FILEWStream</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.FilterQuality.html">FilterQuality</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.Flattanable.html">Flattanable</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.Font.html">Font</a></li>
@@ -290,6 +261,7 @@ returned <a class="reference internal" href="skia.Path.Verb.html#skia.Path.Verb"
 <li class="toctree-l2"><a class="reference internal" href="skia.MaskFilter.html">MaskFilter</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.Matrix.html">Matrix</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.MatrixPathEffect.html">MatrixPathEffect</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.MemoryStream.html">MemoryStream</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.MergePathEffect.html">MergePathEffect</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.OffsetImageFilter.html">OffsetImageFilter</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.OverdrawColorFilter.html">OverdrawColorFilter</a></li>
@@ -337,6 +309,7 @@ returned <a class="reference internal" href="skia.Path.Verb.html#skia.Path.Verb"
 <li class="toctree-l2"><a class="reference internal" href="skia.ShaderMaskFilter.html">ShaderMaskFilter</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.Shaders.html">Shaders</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.Size.html">Size</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.Stream.html">Stream</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.StrokePathEffect.html">StrokePathEffect</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.StrokeRec.html">StrokeRec</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.Surface.html">Surface</a></li>
@@ -364,6 +337,7 @@ returned <a class="reference internal" href="skia.Path.Verb.html#skia.Path.Verb"
 <li class="toctree-l2"><a class="reference internal" href="skia.Typeface.html">Typeface</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.Typeface.SerializeBehavior.html">Typeface.SerializeBehavior</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.Vertices.html">Vertices</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.WStream.html">WStream</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.XfermodeImageFilter.html">XfermodeImageFilter</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.YUVColorSpace.html">YUVColorSpace</a></li>
 </ul>
@@ -407,7 +381,7 @@ returned <a class="reference internal" href="skia.Path.Verb.html#skia.Path.Verb"
       &copy;2020, Kota Yamaguchi.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.0.4</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.1.0</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
       |

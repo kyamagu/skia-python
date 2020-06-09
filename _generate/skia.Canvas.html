@@ -4,6 +4,7 @@
 <html>
   <head>
     <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Canvas &#8212; skia-python 0.0.4 documentation</title>
     <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -67,23 +68,23 @@ future.</p>
 <col style="width: 90%" />
 </colgroup>
 <tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="skia.Canvas.SaveLayerFlags.html#skia.Canvas.SaveLayerFlags" title="skia.Canvas.SaveLayerFlags"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SaveLayerFlags</span></code></a></p></td>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">SaveLayerFlags</span></code></p></td>
 <td><p>Members:</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="skia.Canvas.SrcRectConstraint.html#skia.Canvas.SrcRectConstraint" title="skia.Canvas.SrcRectConstraint"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SrcRectConstraint</span></code></a></p></td>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">SrcRectConstraint</span></code></p></td>
 <td><p>Members:</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="skia.Canvas.PointMode.html#skia.Canvas.PointMode" title="skia.Canvas.PointMode"><code class="xref py py-obj docutils literal notranslate"><span class="pre">PointMode</span></code></a></p></td>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">PointMode</span></code></p></td>
 <td><p>Members:</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="skia.Canvas.QuadAAFlags.html#skia.Canvas.QuadAAFlags" title="skia.Canvas.QuadAAFlags"><code class="xref py py-obj docutils literal notranslate"><span class="pre">QuadAAFlags</span></code></a></p></td>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">QuadAAFlags</span></code></p></td>
 <td><p>Members:</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="skia.Canvas.SaveLayerRec.html#skia.Canvas.SaveLayerRec" title="skia.Canvas.SaveLayerRec"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SaveLayerRec</span></code></a></p></td>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">SaveLayerRec</span></code></p></td>
 <td><p>SaveLayerRec contains the state used to create the layer.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="skia.Canvas.Lattice.html#skia.Canvas.Lattice" title="skia.Canvas.Lattice"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Lattice</span></code></a></p></td>
-<td><p><a class="reference internal" href="skia.Canvas.Lattice.html#skia.Canvas.Lattice" title="skia.Canvas.Lattice"><code class="xref py py-class docutils literal notranslate"><span class="pre">Canvas.Lattice</span></code></a> divides <a class="reference internal" href="skia.Bitmap.html#skia.Bitmap" title="skia.Bitmap"><code class="xref py py-class docutils literal notranslate"><span class="pre">Bitmap</span></code></a> or <a class="reference internal" href="skia.Image.html#skia.Image" title="skia.Image"><code class="xref py py-class docutils literal notranslate"><span class="pre">Image</span></code></a> into a rectangular grid.</p></td>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">Lattice</span></code></p></td>
+<td><p><code class="xref py py-class docutils literal notranslate"><span class="pre">Canvas.Lattice</span></code> divides <a class="reference internal" href="skia.Bitmap.html#skia.Bitmap" title="skia.Bitmap"><code class="xref py py-class docutils literal notranslate"><span class="pre">Bitmap</span></code></a> or <a class="reference internal" href="skia.Image.html#skia.Image" title="skia.Image"><code class="xref py py-class docutils literal notranslate"><span class="pre">Image</span></code></a> into a rectangular grid.</p></td>
 </tr>
 </tbody>
 </table>
@@ -459,7 +460,7 @@ To access pixels after drawing, call flush() or peekPixels().</p>
 <p>Used by subclasses with custom implementations for draw member
 functions.</p>
 <p>If props equals <cite>None</cite>, <a class="reference internal" href="skia.SurfaceProps.html#skia.SurfaceProps" title="skia.SurfaceProps"><code class="xref py py-class docutils literal notranslate"><span class="pre">SurfaceProps</span></code></a> are created with
-<a class="reference internal" href="skia.SurfaceProps.InitType.html#skia.SurfaceProps.InitType" title="skia.SurfaceProps.InitType"><code class="xref py py-class docutils literal notranslate"><span class="pre">SurfaceProps.InitType</span></code></a> settings, which choose the pixel
+<code class="xref py py-class docutils literal notranslate"><span class="pre">SurfaceProps.InitType</span></code> settings, which choose the pixel
 striping direction and order. Since a platform may dynamically change
 its direction when the device is rotated, and since a platform may have
 multiple monitors with different characteristics, it is best not to rely
@@ -1036,7 +1037,7 @@ nullptr</p>
 <div><p>Draws circle at (cx, cy) with radius using clip, <a class="reference internal" href="skia.Matrix.html#skia.Matrix" title="skia.Matrix"><code class="xref py py-class docutils literal notranslate"><span class="pre">Matrix</span></code></a>, and
 <a class="reference internal" href="skia.Paint.html#skia.Paint" title="skia.Paint"><code class="xref py py-class docutils literal notranslate"><span class="pre">Paint</span></code></a> paint.</p>
 <p>If radius is zero or less, nothing is drawn. In paint:
-<a class="reference internal" href="skia.Paint.Style.html#skia.Paint.Style" title="skia.Paint.Style"><code class="xref py py-class docutils literal notranslate"><span class="pre">Paint.Style</span></code></a> determines if circle is stroked or filled; if
+<code class="xref py py-class docutils literal notranslate"><span class="pre">Paint.Style</span></code> determines if circle is stroked or filled; if
 stroked, <a class="reference internal" href="skia.Paint.html#skia.Paint" title="skia.Paint"><code class="xref py py-class docutils literal notranslate"><span class="pre">Paint</span></code></a> stroke width describes the line thickness.</p>
 <dl class="field-list simple">
 <dt class="field-odd">cx</dt>
@@ -1060,7 +1061,7 @@ to draw</p>
 <div><p>Draws circle at center with radius using clip, <a class="reference internal" href="skia.Matrix.html#skia.Matrix" title="skia.Matrix"><code class="xref py py-class docutils literal notranslate"><span class="pre">Matrix</span></code></a>, and
 <a class="reference internal" href="skia.Paint.html#skia.Paint" title="skia.Paint"><code class="xref py py-class docutils literal notranslate"><span class="pre">Paint</span></code></a> paint.</p>
 <p>If radius is zero or less, nothing is drawn. In paint:
-<a class="reference internal" href="skia.Paint.Style.html#skia.Paint.Style" title="skia.Paint.Style"><code class="xref py py-class docutils literal notranslate"><span class="pre">Paint.Style</span></code></a> determines if circle is stroked or filled; if
+<code class="xref py py-class docutils literal notranslate"><span class="pre">Paint.Style</span></code> determines if circle is stroked or filled; if
 stroked, <a class="reference internal" href="skia.Paint.html#skia.Paint" title="skia.Paint"><code class="xref py py-class docutils literal notranslate"><span class="pre">Paint</span></code></a> stroke width describes the line thickness.</p>
 <dl class="field-list simple">
 <dt class="field-odd">center</dt>
@@ -1101,9 +1102,9 @@ color and destination</p></li>
 <dd><p>Draws <a class="reference internal" href="skia.RRect.html#skia.RRect" title="skia.RRect"><code class="xref py py-class docutils literal notranslate"><span class="pre">RRect</span></code></a> outer and inner using clip, <a class="reference internal" href="skia.Matrix.html#skia.Matrix" title="skia.Matrix"><code class="xref py py-class docutils literal notranslate"><span class="pre">Matrix</span></code></a>,
 and <a class="reference internal" href="skia.Paint.html#skia.Paint" title="skia.Paint"><code class="xref py py-class docutils literal notranslate"><span class="pre">Paint</span></code></a> paint.</p>
 <p>outer must contain inner or the drawing is undefined. In paint:
-<a class="reference internal" href="skia.Paint.Style.html#skia.Paint.Style" title="skia.Paint.Style"><code class="xref py py-class docutils literal notranslate"><span class="pre">Paint.Style</span></code></a> determines if <a class="reference internal" href="skia.RRect.html#skia.RRect" title="skia.RRect"><code class="xref py py-class docutils literal notranslate"><span class="pre">RRect</span></code></a> is stroked or
+<code class="xref py py-class docutils literal notranslate"><span class="pre">Paint.Style</span></code> determines if <a class="reference internal" href="skia.RRect.html#skia.RRect" title="skia.RRect"><code class="xref py py-class docutils literal notranslate"><span class="pre">RRect</span></code></a> is stroked or
 filled; if stroked, <a class="reference internal" href="skia.Paint.html#skia.Paint" title="skia.Paint"><code class="xref py py-class docutils literal notranslate"><span class="pre">Paint</span></code></a> stroke width describes the line
-thickness, and <a class="reference internal" href="skia.Paint.Join.html#skia.Paint.Join" title="skia.Paint.Join"><code class="xref py py-class docutils literal notranslate"><span class="pre">Paint.Join</span></code></a> draws the corners rounded or
+thickness, and <code class="xref py py-class docutils literal notranslate"><span class="pre">Paint.Join</span></code> draws the corners rounded or
 square.</p>
 <p>GPU-backed platforms optimize drawing when both outer and inner are
 concave and outer contains inner. These platforms may not be able to
@@ -1125,9 +1126,9 @@ to draw</p></li>
 <code class="sig-prename descclassname">Canvas.</code><code class="sig-name descname">drawIRect</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Canvas" title="skia.Canvas">skia.Canvas</a></span></em>, <em class="sig-param"><span class="n">rect</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.IRect.html#skia.IRect" title="skia.IRect">skia.IRect</a></span></em>, <em class="sig-param"><span class="n">paint</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.Paint.html#skia.Paint" title="skia.Paint">skia.Paint</a></span></em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#skia.Canvas.drawIRect" title="Permalink to this definition">¶</a></dt>
 <dd><p>Draws <a class="reference internal" href="skia.IRect.html#skia.IRect" title="skia.IRect"><code class="xref py py-class docutils literal notranslate"><span class="pre">IRect</span></code></a> rect using clip, <a class="reference internal" href="skia.Matrix.html#skia.Matrix" title="skia.Matrix"><code class="xref py py-class docutils literal notranslate"><span class="pre">Matrix</span></code></a>, and
 <a class="reference internal" href="skia.Paint.html#skia.Paint" title="skia.Paint"><code class="xref py py-class docutils literal notranslate"><span class="pre">Paint</span></code></a> paint.</p>
-<p>In paint: <a class="reference internal" href="skia.Paint.Style.html#skia.Paint.Style" title="skia.Paint.Style"><code class="xref py py-class docutils literal notranslate"><span class="pre">Paint.Style</span></code></a> determines if rectangle is stroked or
+<p>In paint: <code class="xref py py-class docutils literal notranslate"><span class="pre">Paint.Style</span></code> determines if rectangle is stroked or
 filled; if stroked, <a class="reference internal" href="skia.Paint.html#skia.Paint" title="skia.Paint"><code class="xref py py-class docutils literal notranslate"><span class="pre">Paint</span></code></a> stroke width describes the line
-thickness, and <a class="reference internal" href="skia.Paint.Join.html#skia.Paint.Join" title="skia.Paint.Join"><code class="xref py py-class docutils literal notranslate"><span class="pre">Paint.Join</span></code></a> draws the corners rounded or
+thickness, and <code class="xref py py-class docutils literal notranslate"><span class="pre">Paint.Join</span></code> draws the corners rounded or
 square.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -1351,8 +1352,8 @@ nullptr</p>
 <div><p>Draws line segment from (x0, y0) to (x1, y1) using clip,
 <a class="reference internal" href="skia.Matrix.html#skia.Matrix" title="skia.Matrix"><code class="xref py py-class docutils literal notranslate"><span class="pre">Matrix</span></code></a>, and <a class="reference internal" href="skia.Paint.html#skia.Paint" title="skia.Paint"><code class="xref py py-class docutils literal notranslate"><span class="pre">Paint</span></code></a> paint.</p>
 <p>In paint: <a class="reference internal" href="skia.Paint.html#skia.Paint" title="skia.Paint"><code class="xref py py-class docutils literal notranslate"><span class="pre">Paint</span></code></a> stroke width describes the line thickness;
-<a class="reference internal" href="skia.Paint.Cap.html#skia.Paint.Cap" title="skia.Paint.Cap"><code class="xref py py-class docutils literal notranslate"><span class="pre">Paint.Cap</span></code></a> draws the end rounded or square;
-<a class="reference internal" href="skia.Paint.Style.html#skia.Paint.Style" title="skia.Paint.Style"><code class="xref py py-class docutils literal notranslate"><span class="pre">Paint.Style</span></code></a> is ignored, as if were set to
+<code class="xref py py-class docutils literal notranslate"><span class="pre">Paint.Cap</span></code> draws the end rounded or square;
+<code class="xref py py-class docutils literal notranslate"><span class="pre">Paint.Style</span></code> is ignored, as if were set to
 <code class="xref py py-attr docutils literal notranslate"><span class="pre">Paint.Style.kStroke</span></code>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">x0</dt>
@@ -1378,8 +1379,8 @@ nullptr</p>
 <div><p>Draws line segment from p0 to p1 using clip, <a class="reference internal" href="skia.Matrix.html#skia.Matrix" title="skia.Matrix"><code class="xref py py-class docutils literal notranslate"><span class="pre">Matrix</span></code></a>, and
 <a class="reference internal" href="skia.Paint.html#skia.Paint" title="skia.Paint"><code class="xref py py-class docutils literal notranslate"><span class="pre">Paint</span></code></a> paint.</p>
 <p>In paint: <a class="reference internal" href="skia.Paint.html#skia.Paint" title="skia.Paint"><code class="xref py py-class docutils literal notranslate"><span class="pre">Paint</span></code></a> stroke width describes the line thickness;
-<a class="reference internal" href="skia.Paint.Cap.html#skia.Paint.Cap" title="skia.Paint.Cap"><code class="xref py py-class docutils literal notranslate"><span class="pre">Paint.Cap</span></code></a> draws the end rounded or square;
-<a class="reference internal" href="skia.Paint.Style.html#skia.Paint.Style" title="skia.Paint.Style"><code class="xref py py-class docutils literal notranslate"><span class="pre">Paint.Style</span></code></a> is ignored, as if were set to
+<code class="xref py py-class docutils literal notranslate"><span class="pre">Paint.Cap</span></code> draws the end rounded or square;
+<code class="xref py py-class docutils literal notranslate"><span class="pre">Paint.Style</span></code> is ignored, as if were set to
 <code class="xref py py-attr docutils literal notranslate"><span class="pre">Paint.Style.kStroke</span></code>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">p0</dt>
@@ -1401,9 +1402,9 @@ nullptr</p>
 <dt id="skia.Canvas.drawOval">
 <code class="sig-prename descclassname">Canvas.</code><code class="sig-name descname">drawOval</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Canvas" title="skia.Canvas">skia.Canvas</a></span></em>, <em class="sig-param"><span class="n">oval</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.Rect.html#skia.Rect" title="skia.Rect">skia.Rect</a></span></em>, <em class="sig-param"><span class="n">paint</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.Paint.html#skia.Paint" title="skia.Paint">skia.Paint</a></span></em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#skia.Canvas.drawOval" title="Permalink to this definition">¶</a></dt>
 <dd><p>Draws oval using clip, <a class="reference internal" href="skia.Matrix.html#skia.Matrix" title="skia.Matrix"><code class="xref py py-class docutils literal notranslate"><span class="pre">Matrix</span></code></a>, and <a class="reference internal" href="skia.Paint.html#skia.Paint" title="skia.Paint"><code class="xref py py-class docutils literal notranslate"><span class="pre">Paint</span></code></a> paint.</p>
-<p>In paint: <a class="reference internal" href="skia.Paint.Style.html#skia.Paint.Style" title="skia.Paint.Style"><code class="xref py py-class docutils literal notranslate"><span class="pre">Paint.Style</span></code></a> determines if oval is stroked or
+<p>In paint: <code class="xref py py-class docutils literal notranslate"><span class="pre">Paint.Style</span></code> determines if oval is stroked or
 filled; if stroked, <a class="reference internal" href="skia.Paint.html#skia.Paint" title="skia.Paint"><code class="xref py py-class docutils literal notranslate"><span class="pre">Paint</span></code></a> stroke width describes the line
-thickness, and <a class="reference internal" href="skia.Paint.Join.html#skia.Paint.Join" title="skia.Paint.Join"><code class="xref py py-class docutils literal notranslate"><span class="pre">Paint.Join</span></code></a> draws the corners rounded or
+thickness, and <code class="xref py py-class docutils literal notranslate"><span class="pre">Paint.Join</span></code> draws the corners rounded or
 square.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -1475,11 +1476,11 @@ be an empty list</p></li>
 <a class="reference internal" href="skia.Paint.html#skia.Paint" title="skia.Paint"><code class="xref py py-class docutils literal notranslate"><span class="pre">Paint</span></code></a> paint.</p>
 <p><a class="reference internal" href="skia.Path.html#skia.Path" title="skia.Path"><code class="xref py py-class docutils literal notranslate"><span class="pre">Path</span></code></a> contains an array of path contour, each of which may be
 open or closed.</p>
-<p>In paint: <a class="reference internal" href="skia.Paint.Style.html#skia.Paint.Style" title="skia.Paint.Style"><code class="xref py py-class docutils literal notranslate"><span class="pre">Paint.Style</span></code></a> determines if <a class="reference internal" href="skia.RRect.html#skia.RRect" title="skia.RRect"><code class="xref py py-class docutils literal notranslate"><span class="pre">RRect</span></code></a> is
+<p>In paint: <code class="xref py py-class docutils literal notranslate"><span class="pre">Paint.Style</span></code> determines if <a class="reference internal" href="skia.RRect.html#skia.RRect" title="skia.RRect"><code class="xref py py-class docutils literal notranslate"><span class="pre">RRect</span></code></a> is
 stroked or filled: if filled, <code class="xref py py-class docutils literal notranslate"><span class="pre">Path.FillType</span></code> determines
 whether path contour describes inside or outside of fill; if stroked,
 <a class="reference internal" href="skia.Paint.html#skia.Paint" title="skia.Paint"><code class="xref py py-class docutils literal notranslate"><span class="pre">Paint</span></code></a> stroke width describes the line thickness,
-<a class="reference internal" href="skia.Paint.html#skia.Paint" title="skia.Paint"><code class="xref py py-class docutils literal notranslate"><span class="pre">Paint</span></code></a>::Cap describes line ends, and <a class="reference internal" href="skia.Paint.Join.html#skia.Paint.Join" title="skia.Paint.Join"><code class="xref py py-class docutils literal notranslate"><span class="pre">Paint.Join</span></code></a>
+<a class="reference internal" href="skia.Paint.html#skia.Paint" title="skia.Paint"><code class="xref py py-class docutils literal notranslate"><span class="pre">Paint</span></code></a>::Cap describes line ends, and <code class="xref py py-class docutils literal notranslate"><span class="pre">Paint.Join</span></code>
 describes how corners are drawn.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -1525,12 +1526,12 @@ filtering, and so on; may be <cite>None</cite></p></li>
 <blockquote>
 <div><p>Draws point at (x, y) using clip, <a class="reference internal" href="skia.Matrix.html#skia.Matrix" title="skia.Matrix"><code class="xref py py-class docutils literal notranslate"><span class="pre">Matrix</span></code></a> and
 <a class="reference internal" href="skia.Paint.html#skia.Paint" title="skia.Paint"><code class="xref py py-class docutils literal notranslate"><span class="pre">Paint</span></code></a> paint.</p>
-<p>The shape of point drawn depends on paint <a class="reference internal" href="skia.Paint.Cap.html#skia.Paint.Cap" title="skia.Paint.Cap"><code class="xref py py-class docutils literal notranslate"><span class="pre">Paint.Cap</span></code></a>. If
+<p>The shape of point drawn depends on paint <code class="xref py py-class docutils literal notranslate"><span class="pre">Paint.Cap</span></code>. If
 paint is set to <code class="xref py py-attr docutils literal notranslate"><span class="pre">Paint.Cap.kRound</span></code>, draw a circle of diameter
 <a class="reference internal" href="skia.Paint.html#skia.Paint" title="skia.Paint"><code class="xref py py-class docutils literal notranslate"><span class="pre">Paint</span></code></a> stroke width. If paint is set to
 <code class="xref py py-attr docutils literal notranslate"><span class="pre">Paint.Cap.kSquare</span></code> or <code class="xref py py-class docutils literal notranslate"><span class="pre">Paint.Cap.Butt</span></code>, draw a
 square of width and height <a class="reference internal" href="skia.Paint.html#skia.Paint" title="skia.Paint"><code class="xref py py-class docutils literal notranslate"><span class="pre">Paint</span></code></a> stroke width.
-<a class="reference internal" href="skia.Paint.Style.html#skia.Paint.Style" title="skia.Paint.Style"><code class="xref py py-class docutils literal notranslate"><span class="pre">Paint.Style</span></code></a> is ignored, as if were set to
+<code class="xref py py-class docutils literal notranslate"><span class="pre">Paint.Style</span></code> is ignored, as if were set to
 <code class="xref py py-class docutils literal notranslate"><span class="pre">Paint.Style.kStroke</span></code>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">x</dt>
@@ -1549,12 +1550,12 @@ square of width and height <a class="reference internal" href="skia.Paint.html#s
 <blockquote>
 <div><p>Draws point p using clip, <a class="reference internal" href="skia.Matrix.html#skia.Matrix" title="skia.Matrix"><code class="xref py py-class docutils literal notranslate"><span class="pre">Matrix</span></code></a> and <a class="reference internal" href="skia.Paint.html#skia.Paint" title="skia.Paint"><code class="xref py py-class docutils literal notranslate"><span class="pre">Paint</span></code></a>
 paint.</p>
-<p>The shape of point drawn depends on paint <a class="reference internal" href="skia.Paint.Cap.html#skia.Paint.Cap" title="skia.Paint.Cap"><code class="xref py py-class docutils literal notranslate"><span class="pre">Paint.Cap</span></code></a>. If
+<p>The shape of point drawn depends on paint <code class="xref py py-class docutils literal notranslate"><span class="pre">Paint.Cap</span></code>. If
 paint is set to <code class="xref py py-attr docutils literal notranslate"><span class="pre">Paint.Cap.kRound</span></code>, draw a circle of diameter
 <a class="reference internal" href="skia.Paint.html#skia.Paint" title="skia.Paint"><code class="xref py py-class docutils literal notranslate"><span class="pre">Paint</span></code></a> stroke width. If paint is set to
 <code class="xref py py-attr docutils literal notranslate"><span class="pre">Paint.Cap.kSquare</span></code> or <code class="xref py py-class docutils literal notranslate"><span class="pre">Paint.Cap.Butt</span></code>, draw a
 square of width and height <a class="reference internal" href="skia.Paint.html#skia.Paint" title="skia.Paint"><code class="xref py py-class docutils literal notranslate"><span class="pre">Paint</span></code></a> stroke width.
-<a class="reference internal" href="skia.Paint.Style.html#skia.Paint.Style" title="skia.Paint.Style"><code class="xref py py-class docutils literal notranslate"><span class="pre">Paint.Style</span></code></a> is ignored, as if were set to
+<code class="xref py py-class docutils literal notranslate"><span class="pre">Paint.Style</span></code> is ignored, as if were set to
 <code class="xref py py-class docutils literal notranslate"><span class="pre">Paint.Style.kStroke</span></code>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">p</dt>
@@ -1571,14 +1572,14 @@ square of width and height <a class="reference internal" href="skia.Paint.html#s
 
 <dl class="py method">
 <dt id="skia.Canvas.drawPoints">
-<code class="sig-prename descclassname">Canvas.</code><code class="sig-name descname">drawPoints</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Canvas" title="skia.Canvas">skia.Canvas</a></span></em>, <em class="sig-param"><span class="n">mode</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.Canvas.PointMode.html#skia.Canvas.PointMode" title="skia.Canvas.PointMode">skia.Canvas.PointMode</a></span></em>, <em class="sig-param"><span class="n">pts</span><span class="p">:</span> <span class="n">List<span class="p">[</span><a class="reference internal" href="skia.Point.html#skia.Point" title="skia.Point">skia.Point</a><span class="p">]</span></span></em>, <em class="sig-param"><span class="n">paint</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.Paint.html#skia.Paint" title="skia.Paint">skia.Paint</a></span></em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#skia.Canvas.drawPoints" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">Canvas.</code><code class="sig-name descname">drawPoints</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Canvas" title="skia.Canvas">skia.Canvas</a></span></em>, <em class="sig-param"><span class="n">mode</span><span class="p">:</span> <span class="n">skia.Canvas.PointMode</span></em>, <em class="sig-param"><span class="n">pts</span><span class="p">:</span> <span class="n">List<span class="p">[</span><a class="reference internal" href="skia.Point.html#skia.Point" title="skia.Point">skia.Point</a><span class="p">]</span></span></em>, <em class="sig-param"><span class="n">paint</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.Paint.html#skia.Paint" title="skia.Paint">skia.Paint</a></span></em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#skia.Canvas.drawPoints" title="Permalink to this definition">¶</a></dt>
 <dd><p>Draws pts using clip, <a class="reference internal" href="skia.Matrix.html#skia.Matrix" title="skia.Matrix"><code class="xref py py-class docutils literal notranslate"><span class="pre">Matrix</span></code></a> and <a class="reference internal" href="skia.Paint.html#skia.Paint" title="skia.Paint"><code class="xref py py-class docutils literal notranslate"><span class="pre">Paint</span></code></a>
 paint.</p>
 <p>mode may be one of: <code class="xref py py-attr docutils literal notranslate"><span class="pre">kPoints</span></code>,
 <code class="xref py py-attr docutils literal notranslate"><span class="pre">kLines</span></code>, or
 <code class="xref py py-attr docutils literal notranslate"><span class="pre">kPolygon</span></code>.</p>
 <p>If mode is <code class="xref py py-attr docutils literal notranslate"><span class="pre">kPoints</span></code>, the shape of point drawn depends on
-paint <a class="reference internal" href="skia.Paint.Cap.html#skia.Paint.Cap" title="skia.Paint.Cap"><code class="xref py py-class docutils literal notranslate"><span class="pre">Paint.Cap</span></code></a>. If paint is set to <code class="xref py py-attr docutils literal notranslate"><span class="pre">Paint.kRound</span></code>,
+paint <code class="xref py py-class docutils literal notranslate"><span class="pre">Paint.Cap</span></code>. If paint is set to <code class="xref py py-attr docutils literal notranslate"><span class="pre">Paint.kRound</span></code>,
 each point draws a circle of diameter <a class="reference internal" href="skia.Paint.html#skia.Paint" title="skia.Paint"><code class="xref py py-class docutils literal notranslate"><span class="pre">Paint</span></code></a> stroke width. If
 paint is set to <code class="xref py py-attr docutils literal notranslate"><span class="pre">Paint.kSquare</span></code> or <code class="xref py py-attr docutils literal notranslate"><span class="pre">Paint.kButt</span></code>, each
 point draws a square of width and height <a class="reference internal" href="skia.Paint.html#skia.Paint" title="skia.Paint"><code class="xref py py-attr docutils literal notranslate"><span class="pre">Paint</span></code></a> stroke width.</p>
@@ -1588,16 +1589,16 @@ count is odd, the final point is ignored.</p>
 <p>If mode is <code class="xref py py-attr docutils literal notranslate"><span class="pre">kPolygon</span></code>, each adjacent pair of points draws a
 line segment. count minus one lines are drawn; the first and last point
 are used once.</p>
-<p>Each line segment respects paint <a class="reference internal" href="skia.Paint.Cap.html#skia.Paint.Cap" title="skia.Paint.Cap"><code class="xref py py-class docutils literal notranslate"><span class="pre">Paint.Cap</span></code></a> and
-<a class="reference internal" href="skia.Paint.html#skia.Paint" title="skia.Paint"><code class="xref py py-class docutils literal notranslate"><span class="pre">Paint</span></code></a> stroke width. <a class="reference internal" href="skia.Paint.Style.html#skia.Paint.Style" title="skia.Paint.Style"><code class="xref py py-class docutils literal notranslate"><span class="pre">Paint.Style</span></code></a> is ignored, as
+<p>Each line segment respects paint <code class="xref py py-class docutils literal notranslate"><span class="pre">Paint.Cap</span></code> and
+<a class="reference internal" href="skia.Paint.html#skia.Paint" title="skia.Paint"><code class="xref py py-class docutils literal notranslate"><span class="pre">Paint</span></code></a> stroke width. <code class="xref py py-class docutils literal notranslate"><span class="pre">Paint.Style</span></code> is ignored, as
 if were set to <code class="xref py py-attr docutils literal notranslate"><span class="pre">Paint.kStroke</span></code>.</p>
 <p>Always draws each element one at a time; is not affected by
-<a class="reference internal" href="skia.Paint.Join.html#skia.Paint.Join" title="skia.Paint.Join"><code class="xref py py-class docutils literal notranslate"><span class="pre">Paint.Join</span></code></a>, and unlike <a class="reference internal" href="#skia.Canvas.drawPath" title="skia.Canvas.drawPath"><code class="xref py py-meth docutils literal notranslate"><span class="pre">drawPath()</span></code></a>, does not create
+<code class="xref py py-class docutils literal notranslate"><span class="pre">Paint.Join</span></code>, and unlike <a class="reference internal" href="#skia.Canvas.drawPath" title="skia.Canvas.drawPath"><code class="xref py py-meth docutils literal notranslate"><span class="pre">drawPath()</span></code></a>, does not create
 a mask from all points and lines before drawing.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>mode</strong> (<a class="reference internal" href="skia.Canvas.PointMode.html#skia.Canvas.PointMode" title="skia.Canvas.PointMode"><em>skia.Canvas.PointMode</em></a>) – whether pts draws points or lines</p></li>
+<li><p><strong>mode</strong> (<em>skia.Canvas.PointMode</em>) – whether pts draws points or lines</p></li>
 <li><p><strong>pts</strong> (<em>Iterable</em><em>[</em><a class="reference internal" href="skia.Point.html#skia.Point" title="skia.Point"><em>skia.Point</em></a><em>]</em>) – array of points to draw</p></li>
 <li><p><strong>paint</strong> (<a class="reference internal" href="skia.Paint.html#skia.Paint" title="skia.Paint"><em>skia.Paint</em></a>) – stroke, blend, color, and so on, used to draw</p></li>
 </ul>
@@ -1610,9 +1611,9 @@ a mask from all points and lines before drawing.</p>
 <code class="sig-prename descclassname">Canvas.</code><code class="sig-name descname">drawRRect</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Canvas" title="skia.Canvas">skia.Canvas</a></span></em>, <em class="sig-param"><span class="n">rrect</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.RRect.html#skia.RRect" title="skia.RRect">skia.RRect</a></span></em>, <em class="sig-param"><span class="n">paint</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.Paint.html#skia.Paint" title="skia.Paint">skia.Paint</a></span></em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#skia.Canvas.drawRRect" title="Permalink to this definition">¶</a></dt>
 <dd><p>Draws <a class="reference internal" href="skia.RRect.html#skia.RRect" title="skia.RRect"><code class="xref py py-class docutils literal notranslate"><span class="pre">RRect</span></code></a> rrect using clip, <a class="reference internal" href="skia.Matrix.html#skia.Matrix" title="skia.Matrix"><code class="xref py py-class docutils literal notranslate"><span class="pre">Matrix</span></code></a>, and
 <a class="reference internal" href="skia.Paint.html#skia.Paint" title="skia.Paint"><code class="xref py py-class docutils literal notranslate"><span class="pre">Paint</span></code></a> paint.</p>
-<p>In paint: <a class="reference internal" href="skia.Paint.Style.html#skia.Paint.Style" title="skia.Paint.Style"><code class="xref py py-class docutils literal notranslate"><span class="pre">Paint.Style</span></code></a> determines if rrect is stroked or
+<p>In paint: <code class="xref py py-class docutils literal notranslate"><span class="pre">Paint.Style</span></code> determines if rrect is stroked or
 filled; if stroked, <a class="reference internal" href="skia.Paint.html#skia.Paint" title="skia.Paint"><code class="xref py py-class docutils literal notranslate"><span class="pre">Paint</span></code></a> stroke width describes the line
-thickness, and <a class="reference internal" href="skia.Paint.Join.html#skia.Paint.Join" title="skia.Paint.Join"><code class="xref py py-class docutils literal notranslate"><span class="pre">Paint.Join</span></code></a> draws the corners rounded or
+thickness, and <code class="xref py py-class docutils literal notranslate"><span class="pre">Paint.Join</span></code> draws the corners rounded or
 square.</p>
 <p>rrect may represent a rectangle, circle, oval, uniformly rounded
 rectangle, or may have any combination of positive non-square radii for
@@ -1633,9 +1634,9 @@ to draw</p></li>
 <code class="sig-prename descclassname">Canvas.</code><code class="sig-name descname">drawRect</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Canvas" title="skia.Canvas">skia.Canvas</a></span></em>, <em class="sig-param"><span class="n">rect</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.Rect.html#skia.Rect" title="skia.Rect">skia.Rect</a></span></em>, <em class="sig-param"><span class="n">paint</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.Paint.html#skia.Paint" title="skia.Paint">skia.Paint</a></span></em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#skia.Canvas.drawRect" title="Permalink to this definition">¶</a></dt>
 <dd><p>Draws <a class="reference internal" href="skia.Rect.html#skia.Rect" title="skia.Rect"><code class="xref py py-class docutils literal notranslate"><span class="pre">Rect</span></code></a> rect using clip, <a class="reference internal" href="skia.Matrix.html#skia.Matrix" title="skia.Matrix"><code class="xref py py-class docutils literal notranslate"><span class="pre">Matrix</span></code></a>, and
 <a class="reference internal" href="skia.Paint.html#skia.Paint" title="skia.Paint"><code class="xref py py-class docutils literal notranslate"><span class="pre">Paint</span></code></a> paint.</p>
-<p>In paint: <a class="reference internal" href="skia.Paint.Style.html#skia.Paint.Style" title="skia.Paint.Style"><code class="xref py py-class docutils literal notranslate"><span class="pre">Paint.Style</span></code></a> determines if rectangle is stroked or
+<p>In paint: <code class="xref py py-class docutils literal notranslate"><span class="pre">Paint.Style</span></code> determines if rectangle is stroked or
 filled; if stroked, <a class="reference internal" href="skia.Paint.html#skia.Paint" title="skia.Paint"><code class="xref py py-class docutils literal notranslate"><span class="pre">Paint</span></code></a> stroke width describes the line
-thickness, and <a class="reference internal" href="skia.Paint.Join.html#skia.Paint.Join" title="skia.Paint.Join"><code class="xref py py-class docutils literal notranslate"><span class="pre">Paint.Join</span></code></a> draws the corners rounded or
+thickness, and <code class="xref py py-class docutils literal notranslate"><span class="pre">Paint.Join</span></code> draws the corners rounded or
 square.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -1653,9 +1654,9 @@ to draw</p></li>
 <code class="sig-prename descclassname">Canvas.</code><code class="sig-name descname">drawRegion</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Canvas" title="skia.Canvas">skia.Canvas</a></span></em>, <em class="sig-param"><span class="n">region</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.Region.html#skia.Region" title="skia.Region">skia.Region</a></span></em>, <em class="sig-param"><span class="n">paint</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.Paint.html#skia.Paint" title="skia.Paint">skia.Paint</a></span></em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#skia.Canvas.drawRegion" title="Permalink to this definition">¶</a></dt>
 <dd><p>Draws <a class="reference internal" href="skia.Region.html#skia.Region" title="skia.Region"><code class="xref py py-class docutils literal notranslate"><span class="pre">Region</span></code></a> region using clip, <a class="reference internal" href="skia.Matrix.html#skia.Matrix" title="skia.Matrix"><code class="xref py py-class docutils literal notranslate"><span class="pre">Matrix</span></code></a>, and
 <a class="reference internal" href="skia.Paint.html#skia.Paint" title="skia.Paint"><code class="xref py py-class docutils literal notranslate"><span class="pre">Paint</span></code></a> paint.</p>
-<p>In paint: <a class="reference internal" href="skia.Paint.Style.html#skia.Paint.Style" title="skia.Paint.Style"><code class="xref py py-class docutils literal notranslate"><span class="pre">Paint.Style</span></code></a> determines if rectangle is stroked or
+<p>In paint: <code class="xref py py-class docutils literal notranslate"><span class="pre">Paint.Style</span></code> determines if rectangle is stroked or
 filled; if stroked, <a class="reference internal" href="skia.Paint.html#skia.Paint" title="skia.Paint"><code class="xref py py-class docutils literal notranslate"><span class="pre">Paint</span></code></a> stroke width describes the line
-thickness, and <a class="reference internal" href="skia.Paint.Join.html#skia.Paint.Join" title="skia.Paint.Join"><code class="xref py py-class docutils literal notranslate"><span class="pre">Paint.Join</span></code></a> draws the corners rounded or
+thickness, and <code class="xref py py-class docutils literal notranslate"><span class="pre">Paint.Join</span></code> draws the corners rounded or
 square.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -1674,13 +1675,13 @@ to draw</p></li>
 <dd><p>Draws <a class="reference internal" href="skia.RRect.html#skia.RRect" title="skia.RRect"><code class="xref py py-class docutils literal notranslate"><span class="pre">RRect</span></code></a> bounded by <a class="reference internal" href="skia.Rect.html#skia.Rect" title="skia.Rect"><code class="xref py py-class docutils literal notranslate"><span class="pre">Rect</span></code></a> rect, with corner
 radii (rx, ry) using clip, <a class="reference internal" href="skia.Matrix.html#skia.Matrix" title="skia.Matrix"><code class="xref py py-class docutils literal notranslate"><span class="pre">Matrix</span></code></a>, and <a class="reference internal" href="skia.Paint.html#skia.Paint" title="skia.Paint"><code class="xref py py-class docutils literal notranslate"><span class="pre">Paint</span></code></a>
 paint.</p>
-<p>In paint: <a class="reference internal" href="skia.Paint.Style.html#skia.Paint.Style" title="skia.Paint.Style"><code class="xref py py-class docutils literal notranslate"><span class="pre">Paint.Style</span></code></a> determines if <a class="reference internal" href="skia.RRect.html#skia.RRect" title="skia.RRect"><code class="xref py py-class docutils literal notranslate"><span class="pre">RRect</span></code></a> is
+<p>In paint: <code class="xref py py-class docutils literal notranslate"><span class="pre">Paint.Style</span></code> determines if <a class="reference internal" href="skia.RRect.html#skia.RRect" title="skia.RRect"><code class="xref py py-class docutils literal notranslate"><span class="pre">RRect</span></code></a> is
 stroked or filled; if stroked, <a class="reference internal" href="skia.Paint.html#skia.Paint" title="skia.Paint"><code class="xref py py-class docutils literal notranslate"><span class="pre">Paint</span></code></a> stroke width describes
 the line thickness. If rx or ry are less than zero, they are treated as
 if they are zero. If rx plus ry exceeds rect width or rect height, radii
 are scaled down to fit. If rx and ry are zero, <a class="reference internal" href="skia.RRect.html#skia.RRect" title="skia.RRect"><code class="xref py py-class docutils literal notranslate"><span class="pre">RRect</span></code></a> is
 drawn as <a class="reference internal" href="skia.Rect.html#skia.Rect" title="skia.Rect"><code class="xref py py-class docutils literal notranslate"><span class="pre">Rect</span></code></a> and if stroked is affected by
-<a class="reference internal" href="skia.Paint.Join.html#skia.Paint.Join" title="skia.Paint.Join"><code class="xref py py-class docutils literal notranslate"><span class="pre">Paint.Join</span></code></a>.</p>
+<code class="xref py py-class docutils literal notranslate"><span class="pre">Paint.Join</span></code>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -1773,9 +1774,9 @@ linear text, and <a class="reference internal" href="skia.Paint.html#skia.Paint"
 <p>Elements of paint: anti-alias, <a class="reference internal" href="skia.BlendMode.html#skia.BlendMode" title="skia.BlendMode"><code class="xref py py-class docutils literal notranslate"><span class="pre">BlendMode</span></code></a>, color including
 alpha, <a class="reference internal" href="skia.ColorFilter.html#skia.ColorFilter" title="skia.ColorFilter"><code class="xref py py-class docutils literal notranslate"><span class="pre">ColorFilter</span></code></a>, <a class="reference internal" href="skia.Paint.html#skia.Paint" title="skia.Paint"><code class="xref py py-class docutils literal notranslate"><span class="pre">Paint</span></code></a> dither,
 <code class="xref py py-class docutils literal notranslate"><span class="pre">DrawLooper</span></code>, <a class="reference internal" href="skia.MaskFilter.html#skia.MaskFilter" title="skia.MaskFilter"><code class="xref py py-class docutils literal notranslate"><span class="pre">MaskFilter</span></code></a>, <a class="reference internal" href="skia.PathEffect.html#skia.PathEffect" title="skia.PathEffect"><code class="xref py py-class docutils literal notranslate"><span class="pre">PathEffect</span></code></a>,
-<a class="reference internal" href="skia.Shader.html#skia.Shader" title="skia.Shader"><code class="xref py py-class docutils literal notranslate"><span class="pre">Shader</span></code></a>, and <a class="reference internal" href="skia.Paint.Style.html#skia.Paint.Style" title="skia.Paint.Style"><code class="xref py py-class docutils literal notranslate"><span class="pre">Paint.Style</span></code></a>; apply to blob. If
+<a class="reference internal" href="skia.Shader.html#skia.Shader" title="skia.Shader"><code class="xref py py-class docutils literal notranslate"><span class="pre">Shader</span></code></a>, and <code class="xref py py-class docutils literal notranslate"><span class="pre">Paint.Style</span></code>; apply to blob. If
 <a class="reference internal" href="skia.Paint.html#skia.Paint" title="skia.Paint"><code class="xref py py-class docutils literal notranslate"><span class="pre">Paint</span></code></a> contains <code class="xref py py-attr docutils literal notranslate"><span class="pre">Paint.kStroke</span></code>: <a class="reference internal" href="skia.Paint.html#skia.Paint" title="skia.Paint"><code class="xref py py-class docutils literal notranslate"><span class="pre">Paint</span></code></a>
-iter limit, <a class="reference internal" href="skia.Paint.Cap.html#skia.Paint.Cap" title="skia.Paint.Cap"><code class="xref py py-class docutils literal notranslate"><span class="pre">Paint.Cap</span></code></a>, <a class="reference internal" href="skia.Paint.Join.html#skia.Paint.Join" title="skia.Paint.Join"><code class="xref py py-class docutils literal notranslate"><span class="pre">Paint.Join</span></code></a>, and
+iter limit, <code class="xref py py-class docutils literal notranslate"><span class="pre">Paint.Cap</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">Paint.Join</span></code>, and
 <a class="reference internal" href="skia.Paint.html#skia.Paint" title="skia.Paint"><code class="xref py py-class docutils literal notranslate"><span class="pre">Paint</span></code></a> stroke width; apply to <a class="reference internal" href="skia.Path.html#skia.Path" title="skia.Path"><code class="xref py py-class docutils literal notranslate"><span class="pre">Path</span></code></a> created from
 blob.</p>
 <dl class="field-list simple">
@@ -2461,7 +2462,7 @@ layer.</p>
 <a class="reference internal" href="#skia.Canvas.setMatrix" title="skia.Canvas.setMatrix"><code class="xref py py-meth docutils literal notranslate"><span class="pre">setMatrix()</span></code></a>, and <a class="reference internal" href="#skia.Canvas.resetMatrix" title="skia.Canvas.resetMatrix"><code class="xref py py-meth docutils literal notranslate"><span class="pre">resetMatrix()</span></code></a>. Clip may be changed by
 <a class="reference internal" href="#skia.Canvas.clipRect" title="skia.Canvas.clipRect"><code class="xref py py-meth docutils literal notranslate"><span class="pre">clipRect()</span></code></a>, <a class="reference internal" href="#skia.Canvas.clipRRect" title="skia.Canvas.clipRRect"><code class="xref py py-meth docutils literal notranslate"><span class="pre">clipRRect()</span></code></a>, <a class="reference internal" href="#skia.Canvas.clipPath" title="skia.Canvas.clipPath"><code class="xref py py-meth docutils literal notranslate"><span class="pre">clipPath()</span></code></a>,
 <a class="reference internal" href="#skia.Canvas.clipRegion" title="skia.Canvas.clipRegion"><code class="xref py py-meth docutils literal notranslate"><span class="pre">clipRegion()</span></code></a>.</p>
-<p><a class="reference internal" href="skia.Canvas.SaveLayerRec.html#skia.Canvas.SaveLayerRec" title="skia.Canvas.SaveLayerRec"><code class="xref py py-class docutils literal notranslate"><span class="pre">SaveLayerRec</span></code></a> contains the state used to create the layer.</p>
+<p><code class="xref py py-class docutils literal notranslate"><span class="pre">SaveLayerRec</span></code> contains the state used to create the layer.</p>
 <p>Call <a class="reference internal" href="#skia.Canvas.restoreToCount" title="skia.Canvas.restoreToCount"><code class="xref py py-meth docutils literal notranslate"><span class="pre">restoreToCount()</span></code></a> with returned value to restore this and
 subsequent saves.</p>
 <dl class="field-list simple">
@@ -2839,9 +2840,12 @@ negative</p>
 <li class="toctree-l2"><a class="reference internal" href="skia.DisplacementMapEffect.html">DisplacementMapEffect</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.Drawable.html">Drawable</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.DropShadowImageFilter.html">DropShadowImageFilter</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.DynamicMemoryWStream.html">DynamicMemoryWStream</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.EncodedImageFormat.html">EncodedImageFormat</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.EncodedOrigin.html">EncodedOrigin</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.ErodeImageFilter.html">ErodeImageFilter</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.FILEStream.html">FILEStream</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.FILEWStream.html">FILEWStream</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.FilterQuality.html">FilterQuality</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.Flattanable.html">Flattanable</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.Font.html">Font</a></li>
@@ -2897,6 +2901,7 @@ negative</p>
 <li class="toctree-l2"><a class="reference internal" href="skia.MaskFilter.html">MaskFilter</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.Matrix.html">Matrix</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.MatrixPathEffect.html">MatrixPathEffect</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.MemoryStream.html">MemoryStream</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.MergePathEffect.html">MergePathEffect</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.OffsetImageFilter.html">OffsetImageFilter</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.OverdrawColorFilter.html">OverdrawColorFilter</a></li>
@@ -2944,6 +2949,7 @@ negative</p>
 <li class="toctree-l2"><a class="reference internal" href="skia.ShaderMaskFilter.html">ShaderMaskFilter</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.Shaders.html">Shaders</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.Size.html">Size</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.Stream.html">Stream</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.StrokePathEffect.html">StrokePathEffect</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.StrokeRec.html">StrokeRec</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.Surface.html">Surface</a></li>
@@ -2971,6 +2977,7 @@ negative</p>
 <li class="toctree-l2"><a class="reference internal" href="skia.Typeface.html">Typeface</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.Typeface.SerializeBehavior.html">Typeface.SerializeBehavior</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.Vertices.html">Vertices</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.WStream.html">WStream</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.XfermodeImageFilter.html">XfermodeImageFilter</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.YUVColorSpace.html">YUVColorSpace</a></li>
 </ul>
@@ -3014,7 +3021,7 @@ negative</p>
       &copy;2020, Kota Yamaguchi.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.0.4</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.1.0</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
       |

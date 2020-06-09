@@ -4,6 +4,7 @@
 <html>
   <head>
     <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>FilterQuality &#8212; skia-python 0.0.4 documentation</title>
     <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -15,7 +16,7 @@
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="Flattanable" href="skia.Flattanable.html" />
-    <link rel="prev" title="ErodeImageFilter" href="skia.ErodeImageFilter.html" />
+    <link rel="prev" title="FILEWStream" href="skia.FILEWStream.html" />
    
   <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
   
@@ -43,11 +44,11 @@ colors e.g. image.</p>
 </div></blockquote>
 <p>Members:</p>
 <blockquote>
-<div><p>kNone_FilterQuality : fastest but lowest quality, typically nearest-neighbor</p>
-<p>kHigh_FilterQuality : slowest but highest quality, typically bicubic or better</p>
-<p>kLast_FilterQuality</p>
+<div><p>kLow_FilterQuality : typically bilerp</p>
 <p>kMedium_FilterQuality : typically bilerp + mipmaps for down-scaling</p>
-<p>kLow_FilterQuality : typically bilerp</p>
+<p>kLast_FilterQuality</p>
+<p>kNone_FilterQuality : fastest but lowest quality, typically nearest-neighbor</p>
+<p>kHigh_FilterQuality : slowest but highest quality, typically bicubic or better</p>
 </div></blockquote>
 <p class="rubric">Methods</p>
 <table class="longtable docutils align-default">
@@ -102,12 +103,12 @@ colors e.g. image.</p>
 <h2>Attributes<a class="headerlink" href="#attributes" title="Permalink to this headline">¶</a></h2>
 <dl class="py attribute">
 <dt id="skia.FilterQuality.kHigh_FilterQuality">
-<code class="sig-prename descclassname">FilterQuality.</code><code class="sig-name descname">kHigh_FilterQuality</code><em class="property"> = FilterQuality.kHigh_FilterQuality</em><a class="headerlink" href="#skia.FilterQuality.kHigh_FilterQuality" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">FilterQuality.</code><code class="sig-name descname">kHigh_FilterQuality</code><em class="property"> = FilterQuality.kLast_FilterQuality</em><a class="headerlink" href="#skia.FilterQuality.kHigh_FilterQuality" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt id="skia.FilterQuality.kLast_FilterQuality">
-<code class="sig-prename descclassname">FilterQuality.</code><code class="sig-name descname">kLast_FilterQuality</code><em class="property"> = FilterQuality.kHigh_FilterQuality</em><a class="headerlink" href="#skia.FilterQuality.kLast_FilterQuality" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">FilterQuality.</code><code class="sig-name descname">kLast_FilterQuality</code><em class="property"> = FilterQuality.kLast_FilterQuality</em><a class="headerlink" href="#skia.FilterQuality.kLast_FilterQuality" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
@@ -205,9 +206,12 @@ colors e.g. image.</p>
 <li class="toctree-l2"><a class="reference internal" href="skia.DisplacementMapEffect.html">DisplacementMapEffect</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.Drawable.html">Drawable</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.DropShadowImageFilter.html">DropShadowImageFilter</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.DynamicMemoryWStream.html">DynamicMemoryWStream</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.EncodedImageFormat.html">EncodedImageFormat</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.EncodedOrigin.html">EncodedOrigin</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.ErodeImageFilter.html">ErodeImageFilter</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.FILEStream.html">FILEStream</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.FILEWStream.html">FILEWStream</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">FilterQuality</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.Flattanable.html">Flattanable</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.Font.html">Font</a></li>
@@ -263,6 +267,7 @@ colors e.g. image.</p>
 <li class="toctree-l2"><a class="reference internal" href="skia.MaskFilter.html">MaskFilter</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.Matrix.html">Matrix</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.MatrixPathEffect.html">MatrixPathEffect</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.MemoryStream.html">MemoryStream</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.MergePathEffect.html">MergePathEffect</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.OffsetImageFilter.html">OffsetImageFilter</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.OverdrawColorFilter.html">OverdrawColorFilter</a></li>
@@ -310,6 +315,7 @@ colors e.g. image.</p>
 <li class="toctree-l2"><a class="reference internal" href="skia.ShaderMaskFilter.html">ShaderMaskFilter</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.Shaders.html">Shaders</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.Size.html">Size</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.Stream.html">Stream</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.StrokePathEffect.html">StrokePathEffect</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.StrokeRec.html">StrokeRec</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.Surface.html">Surface</a></li>
@@ -337,6 +343,7 @@ colors e.g. image.</p>
 <li class="toctree-l2"><a class="reference internal" href="skia.Typeface.html">Typeface</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.Typeface.SerializeBehavior.html">Typeface.SerializeBehavior</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.Vertices.html">Vertices</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.WStream.html">WStream</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.XfermodeImageFilter.html">XfermodeImageFilter</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.YUVColorSpace.html">YUVColorSpace</a></li>
 </ul>
@@ -348,7 +355,7 @@ colors e.g. image.</p>
 <ul>
   <li><a href="../index.html">Documentation overview</a><ul>
   <li><a href="../reference.html">Reference</a><ul>
-      <li>Previous: <a href="skia.ErodeImageFilter.html" title="previous chapter">ErodeImageFilter</a></li>
+      <li>Previous: <a href="skia.FILEWStream.html" title="previous chapter">FILEWStream</a></li>
       <li>Next: <a href="skia.Flattanable.html" title="next chapter">Flattanable</a></li>
   </ul></li>
   </ul></li>
@@ -380,7 +387,7 @@ colors e.g. image.</p>
       &copy;2020, Kota Yamaguchi.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.0.4</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.1.0</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
       |

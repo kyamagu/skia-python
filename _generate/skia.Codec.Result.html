@@ -4,6 +4,7 @@
 <html>
   <head>
     <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Codec.Result &#8212; skia-python 0.0.4 documentation</title>
     <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -34,102 +35,11 @@
             
   <div class="section" id="codec-result">
 <h1>Codec.Result<a class="headerlink" href="#codec-result" title="Permalink to this headline">¶</a></h1>
-<dl class="py class">
-<dt id="skia.Codec.Result">
-<em class="property">class </em><code class="sig-name descname">Result</code><a class="headerlink" href="#skia.Codec.Result" title="Permalink to this definition">¶</a></dt>
-<dd><blockquote>
-<div><p>Error codes for various <code class="xref py py-class docutils literal notranslate"><span class="pre">Codec</span></code> methods.</p>
-</div></blockquote>
-<p>Members:</p>
-<blockquote>
-<div><dl>
-<dt>kSuccess :</dt><dd><p>General return value for success.</p>
-</dd>
-<dt>kInvalidInput :</dt><dd><p>The input did not contain a valid image.</p>
-</dd>
-<dt>kInvalidScale :</dt><dd><p>The generator cannot scale to requested size.</p>
-</dd>
-<dt>kInvalidConversion :</dt><dd><p>The generator cannot convert to match the request, ignoring dimensions.</p>
-</dd>
-<dt>kInvalidParameters :</dt><dd><p>Parameters (besides info) are invalid. e.g. NULL pixels, rowBytes too
-small, etc.</p>
-</dd>
-<dt>kInternalError :</dt><dd><p>An internal error, such as OOM.</p>
-</dd>
-<dt>kCouldNotRewind :</dt><dd><p>Fulfilling this request requires rewinding the input, which is not
-supported for this input.</p>
-</dd>
-<dt>kIncompleteInput :</dt><dd><p>The input is incomplete. A partial image was generated.</p>
-</dd>
-<dt>kUnimplemented :</dt><dd><p>This method is not implemented by this codec.</p>
-</dd>
-<dt>kErrorInInput :</dt><dd><p>Like kIncompleteInput, except the input had an error.</p>
-<p>If returned from an incremental decode, decoding cannot continue, even
-with more data.</p>
-</dd>
-</dl>
-</div></blockquote>
-<p class="rubric">Methods</p>
-<table class="longtable docutils align-default">
-<colgroup>
-<col style="width: 10%" />
-<col style="width: 90%" />
-</colgroup>
-<tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Codec.Result.__init__" title="skia.Codec.Result.__init__"><code class="xref py py-obj docutils literal notranslate"><span class="pre">__init__</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-</tbody>
-</table>
-<p class="rubric">Attributes</p>
-<table class="longtable docutils align-default">
-<colgroup>
-<col style="width: 10%" />
-<col style="width: 90%" />
-</colgroup>
-<tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Codec.Result.kCouldNotRewind" title="skia.Codec.Result.kCouldNotRewind"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kCouldNotRewind</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#skia.Codec.Result.kErrorInInput" title="skia.Codec.Result.kErrorInInput"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kErrorInInput</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Codec.Result.kIncompleteInput" title="skia.Codec.Result.kIncompleteInput"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kIncompleteInput</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#skia.Codec.Result.kInternalError" title="skia.Codec.Result.kInternalError"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kInternalError</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Codec.Result.kInvalidConversion" title="skia.Codec.Result.kInvalidConversion"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kInvalidConversion</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#skia.Codec.Result.kInvalidInput" title="skia.Codec.Result.kInvalidInput"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kInvalidInput</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Codec.Result.kInvalidParameters" title="skia.Codec.Result.kInvalidParameters"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kInvalidParameters</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#skia.Codec.Result.kInvalidScale" title="skia.Codec.Result.kInvalidScale"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kInvalidScale</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Codec.Result.kSuccess" title="skia.Codec.Result.kSuccess"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kSuccess</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#skia.Codec.Result.kUnimplemented" title="skia.Codec.Result.kUnimplemented"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kUnimplemented</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Codec.Result.name" title="skia.Codec.Result.name"><code class="xref py py-obj docutils literal notranslate"><span class="pre">name</span></code></a></p></td>
-<td><p>handle) -&gt; str</p></td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
 <div class="section" id="methods">
 <h2>Methods<a class="headerlink" href="#methods" title="Permalink to this headline">¶</a></h2>
 <dl class="py method">
 <dt id="skia.Codec.Result.__init__">
-<code class="sig-prename descclassname">Result.</code><code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Codec.Result" title="skia.Codec.Result">skia.Codec.Result</a></span></em>, <em class="sig-param"><span class="n">arg0</span><span class="p">:</span> <span class="n">int</span></em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#skia.Codec.Result.__init__" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">Codec.Result.</code><code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n">skia.Codec.Result</span></em>, <em class="sig-param"><span class="n">arg0</span><span class="p">:</span> <span class="n">int</span></em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#skia.Codec.Result.__init__" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </div>
@@ -137,57 +47,57 @@ with more data.</p>
 <h2>Attributes<a class="headerlink" href="#attributes" title="Permalink to this headline">¶</a></h2>
 <dl class="py attribute">
 <dt id="skia.Codec.Result.kCouldNotRewind">
-<code class="sig-prename descclassname">Result.</code><code class="sig-name descname">kCouldNotRewind</code><em class="property"> = Result.kCouldNotRewind</em><a class="headerlink" href="#skia.Codec.Result.kCouldNotRewind" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">Codec.Result.</code><code class="sig-name descname">kCouldNotRewind</code><em class="property"> = Result.kCouldNotRewind</em><a class="headerlink" href="#skia.Codec.Result.kCouldNotRewind" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt id="skia.Codec.Result.kErrorInInput">
-<code class="sig-prename descclassname">Result.</code><code class="sig-name descname">kErrorInInput</code><em class="property"> = Result.kErrorInInput</em><a class="headerlink" href="#skia.Codec.Result.kErrorInInput" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">Codec.Result.</code><code class="sig-name descname">kErrorInInput</code><em class="property"> = Result.kErrorInInput</em><a class="headerlink" href="#skia.Codec.Result.kErrorInInput" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt id="skia.Codec.Result.kIncompleteInput">
-<code class="sig-prename descclassname">Result.</code><code class="sig-name descname">kIncompleteInput</code><em class="property"> = Result.kIncompleteInput</em><a class="headerlink" href="#skia.Codec.Result.kIncompleteInput" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">Codec.Result.</code><code class="sig-name descname">kIncompleteInput</code><em class="property"> = Result.kIncompleteInput</em><a class="headerlink" href="#skia.Codec.Result.kIncompleteInput" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt id="skia.Codec.Result.kInternalError">
-<code class="sig-prename descclassname">Result.</code><code class="sig-name descname">kInternalError</code><em class="property"> = Result.kInternalError</em><a class="headerlink" href="#skia.Codec.Result.kInternalError" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">Codec.Result.</code><code class="sig-name descname">kInternalError</code><em class="property"> = Result.kInternalError</em><a class="headerlink" href="#skia.Codec.Result.kInternalError" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt id="skia.Codec.Result.kInvalidConversion">
-<code class="sig-prename descclassname">Result.</code><code class="sig-name descname">kInvalidConversion</code><em class="property"> = Result.kInvalidConversion</em><a class="headerlink" href="#skia.Codec.Result.kInvalidConversion" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">Codec.Result.</code><code class="sig-name descname">kInvalidConversion</code><em class="property"> = Result.kInvalidConversion</em><a class="headerlink" href="#skia.Codec.Result.kInvalidConversion" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt id="skia.Codec.Result.kInvalidInput">
-<code class="sig-prename descclassname">Result.</code><code class="sig-name descname">kInvalidInput</code><em class="property"> = Result.kInvalidInput</em><a class="headerlink" href="#skia.Codec.Result.kInvalidInput" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">Codec.Result.</code><code class="sig-name descname">kInvalidInput</code><em class="property"> = Result.kInvalidInput</em><a class="headerlink" href="#skia.Codec.Result.kInvalidInput" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt id="skia.Codec.Result.kInvalidParameters">
-<code class="sig-prename descclassname">Result.</code><code class="sig-name descname">kInvalidParameters</code><em class="property"> = Result.kInvalidParameters</em><a class="headerlink" href="#skia.Codec.Result.kInvalidParameters" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">Codec.Result.</code><code class="sig-name descname">kInvalidParameters</code><em class="property"> = Result.kInvalidParameters</em><a class="headerlink" href="#skia.Codec.Result.kInvalidParameters" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt id="skia.Codec.Result.kInvalidScale">
-<code class="sig-prename descclassname">Result.</code><code class="sig-name descname">kInvalidScale</code><em class="property"> = Result.kInvalidScale</em><a class="headerlink" href="#skia.Codec.Result.kInvalidScale" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">Codec.Result.</code><code class="sig-name descname">kInvalidScale</code><em class="property"> = Result.kInvalidScale</em><a class="headerlink" href="#skia.Codec.Result.kInvalidScale" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt id="skia.Codec.Result.kSuccess">
-<code class="sig-prename descclassname">Result.</code><code class="sig-name descname">kSuccess</code><em class="property"> = Result.kSuccess</em><a class="headerlink" href="#skia.Codec.Result.kSuccess" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">Codec.Result.</code><code class="sig-name descname">kSuccess</code><em class="property"> = Result.kSuccess</em><a class="headerlink" href="#skia.Codec.Result.kSuccess" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt id="skia.Codec.Result.kUnimplemented">
-<code class="sig-prename descclassname">Result.</code><code class="sig-name descname">kUnimplemented</code><em class="property"> = Result.kUnimplemented</em><a class="headerlink" href="#skia.Codec.Result.kUnimplemented" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">Codec.Result.</code><code class="sig-name descname">kUnimplemented</code><em class="property"> = Result.kUnimplemented</em><a class="headerlink" href="#skia.Codec.Result.kUnimplemented" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt id="skia.Codec.Result.name">
-<code class="sig-prename descclassname">Result.</code><code class="sig-name descname">name</code><a class="headerlink" href="#skia.Codec.Result.name" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">Codec.Result.</code><code class="sig-name descname">name</code><a class="headerlink" href="#skia.Codec.Result.name" title="Permalink to this definition">¶</a></dt>
 <dd><p>handle) -&gt; str</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
@@ -265,9 +175,12 @@ with more data.</p>
 <li class="toctree-l2"><a class="reference internal" href="skia.DisplacementMapEffect.html">DisplacementMapEffect</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.Drawable.html">Drawable</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.DropShadowImageFilter.html">DropShadowImageFilter</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.DynamicMemoryWStream.html">DynamicMemoryWStream</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.EncodedImageFormat.html">EncodedImageFormat</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.EncodedOrigin.html">EncodedOrigin</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.ErodeImageFilter.html">ErodeImageFilter</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.FILEStream.html">FILEStream</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.FILEWStream.html">FILEWStream</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.FilterQuality.html">FilterQuality</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.Flattanable.html">Flattanable</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.Font.html">Font</a></li>
@@ -323,6 +236,7 @@ with more data.</p>
 <li class="toctree-l2"><a class="reference internal" href="skia.MaskFilter.html">MaskFilter</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.Matrix.html">Matrix</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.MatrixPathEffect.html">MatrixPathEffect</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.MemoryStream.html">MemoryStream</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.MergePathEffect.html">MergePathEffect</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.OffsetImageFilter.html">OffsetImageFilter</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.OverdrawColorFilter.html">OverdrawColorFilter</a></li>
@@ -370,6 +284,7 @@ with more data.</p>
 <li class="toctree-l2"><a class="reference internal" href="skia.ShaderMaskFilter.html">ShaderMaskFilter</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.Shaders.html">Shaders</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.Size.html">Size</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.Stream.html">Stream</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.StrokePathEffect.html">StrokePathEffect</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.StrokeRec.html">StrokeRec</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.Surface.html">Surface</a></li>
@@ -397,6 +312,7 @@ with more data.</p>
 <li class="toctree-l2"><a class="reference internal" href="skia.Typeface.html">Typeface</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.Typeface.SerializeBehavior.html">Typeface.SerializeBehavior</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.Vertices.html">Vertices</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.WStream.html">WStream</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.XfermodeImageFilter.html">XfermodeImageFilter</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.YUVColorSpace.html">YUVColorSpace</a></li>
 </ul>
@@ -440,7 +356,7 @@ with more data.</p>
       &copy;2020, Kota Yamaguchi.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.0.4</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.1.0</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
       |

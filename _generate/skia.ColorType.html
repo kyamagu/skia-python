@@ -4,6 +4,7 @@
 <html>
   <head>
     <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ColorType &#8212; skia-python 0.0.4 documentation</title>
     <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -39,24 +40,24 @@
 <em class="property">class </em><code class="sig-name descname">ColorType</code><a class="headerlink" href="#skia.ColorType" title="Permalink to this definition">¶</a></dt>
 <dd><p>Members:</p>
 <p>kBGR_101010x_ColorType : pixel with 10 bits each for blue, green, red; in 32-bit word</p>
-<p>kRGBA_1010102_ColorType : 10 bits for red, green, blue; 2 bits for alpha; in 32-bit word</p>
-<p>kRGB_888x_ColorType : pixel with 8 bits each for red, green, blue; in 32-bit word</p>
-<p>kRGBA_8888_ColorType : pixel with 8 bits for red, green, blue, alpha; in 32-bit word</p>
-<p>kRGBA_F32_ColorType : pixel using C float for red, green, blue, alpha; in 128-bit word</p>
+<p>kARGB_4444_ColorType : pixel with 4 bits for alpha, red, green, blue; in 16-bit word</p>
+<p>kRGB_101010x_ColorType : pixel with 10 bits each for red, green, blue; in 32-bit word</p>
 <p>kA16_unorm_ColorType</p>
-<p>kA16_float_ColorType</p>
-<p>kGray_8_ColorType : pixel with grayscale level in 8-bit byte</p>
+<p>kAlpha_8_ColorType : pixel with alpha in 8-bit byte</p>
+<p>kRGB_888x_ColorType : pixel with 8 bits each for red, green, blue; in 32-bit word</p>
+<p>kRGBA_F16Norm_ColorType : pixel with half floats in [0,1] for red, green, blue, alpha; in 64-bit word</p>
+<p>kR8G8_unorm_ColorType</p>
 <p>kBGRA_1010102_ColorType : 10 bits for blue, green, red; 2 bits for alpha; in 32-bit word</p>
 <p>kR16G16_float_ColorType</p>
-<p>kRGB_101010x_ColorType : pixel with 10 bits each for red, green, blue; in 32-bit word</p>
-<p>kAlpha_8_ColorType : pixel with alpha in 8-bit byte</p>
-<p>kRGBA_F16Norm_ColorType : pixel with half floats in [0,1] for red, green, blue, alpha; in 64-bit word</p>
-<p>kRGBA_F16_ColorType : pixel with half floats for red, green, blue, alpha; in 64-bit word</p>
+<p>kA16_float_ColorType</p>
 <p>kBGRA_8888_ColorType : pixel with 8 bits for blue, green, red, alpha; in 32-bit word</p>
-<p>kARGB_4444_ColorType : pixel with 4 bits for alpha, red, green, blue; in 16-bit word</p>
-<p>kUnknown_ColorType : uninitialized</p>
+<p>kRGBA_8888_ColorType : pixel with 8 bits for red, green, blue, alpha; in 32-bit word</p>
+<p>kRGBA_F32_ColorType : pixel using C float for red, green, blue, alpha; in 128-bit word</p>
+<p>kGray_8_ColorType : pixel with grayscale level in 8-bit byte</p>
+<p>kRGBA_F16_ColorType : pixel with half floats for red, green, blue, alpha; in 64-bit word</p>
 <p>kRGB_565_ColorType : pixel with 5 bits red, 6 bits green, 5 bits blue, in 16-bit word</p>
-<p>kR8G8_unorm_ColorType</p>
+<p>kUnknown_ColorType : uninitialized</p>
+<p>kRGBA_1010102_ColorType : 10 bits for red, green, blue; 2 bits for alpha; in 32-bit word</p>
 <p class="rubric">Methods</p>
 <table class="longtable docutils align-default">
 <colgroup>
@@ -325,9 +326,12 @@
 <li class="toctree-l2"><a class="reference internal" href="skia.DisplacementMapEffect.html">DisplacementMapEffect</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.Drawable.html">Drawable</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.DropShadowImageFilter.html">DropShadowImageFilter</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.DynamicMemoryWStream.html">DynamicMemoryWStream</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.EncodedImageFormat.html">EncodedImageFormat</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.EncodedOrigin.html">EncodedOrigin</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.ErodeImageFilter.html">ErodeImageFilter</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.FILEStream.html">FILEStream</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.FILEWStream.html">FILEWStream</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.FilterQuality.html">FilterQuality</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.Flattanable.html">Flattanable</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.Font.html">Font</a></li>
@@ -383,6 +387,7 @@
 <li class="toctree-l2"><a class="reference internal" href="skia.MaskFilter.html">MaskFilter</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.Matrix.html">Matrix</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.MatrixPathEffect.html">MatrixPathEffect</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.MemoryStream.html">MemoryStream</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.MergePathEffect.html">MergePathEffect</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.OffsetImageFilter.html">OffsetImageFilter</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.OverdrawColorFilter.html">OverdrawColorFilter</a></li>
@@ -430,6 +435,7 @@
 <li class="toctree-l2"><a class="reference internal" href="skia.ShaderMaskFilter.html">ShaderMaskFilter</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.Shaders.html">Shaders</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.Size.html">Size</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.Stream.html">Stream</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.StrokePathEffect.html">StrokePathEffect</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.StrokeRec.html">StrokeRec</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.Surface.html">Surface</a></li>
@@ -457,6 +463,7 @@
 <li class="toctree-l2"><a class="reference internal" href="skia.Typeface.html">Typeface</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.Typeface.SerializeBehavior.html">Typeface.SerializeBehavior</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.Vertices.html">Vertices</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skia.WStream.html">WStream</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.XfermodeImageFilter.html">XfermodeImageFilter</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skia.YUVColorSpace.html">YUVColorSpace</a></li>
 </ul>
@@ -500,7 +507,7 @@
       &copy;2020, Kota Yamaguchi.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.0.4</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.1.0</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
       |
