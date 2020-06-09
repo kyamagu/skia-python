@@ -42,6 +42,7 @@ jobs:
       run: |
         git clone https://gn.googlesource.com/gn
         cd gn
+        git checkout 981f46c64d1456d2083b1a2fa1367e753e0cdc1b
         python build/gen.py
         ninja -C out gn
         cd ..
