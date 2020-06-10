@@ -35,7 +35,7 @@ Or:
 yum install fontconfig mesa-libGL mesa-dri-drivers
 ```
 
-For unsupported environment, check the [build instruction](https://kyamagu.github.io/skia-python/build.html).
+For unsupported environment, check the [build instruction](https://kyamagu.github.io/skia-python/install.html).
 
 ## Examples
 
@@ -50,9 +50,8 @@ For unsupported environment, check the [build instruction](https://kyamagu.githu
 
 https://kyamagu.github.io/skia-python
 
-- [Build instruction](https://kyamagu.github.io/skia-python/build.html)
-- [Usage](https://kyamagu.github.io/skia-python/usage.html)
-- [Reference](https://kyamagu.github.io/skia-python/reference.html)
+- [Tutorial](https://kyamagu.github.io/skia-python/tutorial/)
+- [Reference](https://kyamagu.github.io/skia-python/reference/)
 
 ## Contributing
 

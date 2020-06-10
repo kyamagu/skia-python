@@ -13,7 +13,7 @@ Reference
 .. rubric:: Classes
 
 .. autosummary::
-    :toctree: _generate
+    :toctree: classes
     :nosignatures:
     :template: class.rst
 
