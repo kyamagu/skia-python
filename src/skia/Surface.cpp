@@ -36,14 +36,6 @@ py::class_<SkSurfaceProps> surfaceprops(m, "SurfaceProps", R"docstring(
 
     The rendering engine can parse these during drawing, and can sometimes
     optimize its performance (e.g. disabling an expensive feature).
-
-    .. rubric:: Classes
-
-    .. autosummary::
-        :nosignatures:
-
-        Flags
-        InitType
     )docstring");
 
 py::enum_<SkSurfaceProps::Flags>(surfaceprops, "Flags", py::arithmetic())

@@ -122,15 +122,6 @@ py::class_<SkPaint> paint(m, "Paint", R"docstring(
 
         canvas.drawPaint({'Color': 0xFFFFFFFF})
         canvas.drawLine((0, 0), (1, 1), {'Color': 0xFF0000FF})
-
-    .. rubric:: Classes
-
-    .. autosummary::
-        :nosignatures:
-
-        ~Paint.Style
-        ~Paint.Cap
-        ~Paint.Join
     )docstring");
 
 py::enum_<SkPaint::Style>(paint, "Style")

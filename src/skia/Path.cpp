@@ -126,20 +126,8 @@ py::class_<SkPath> path(m, "Path", R"docstring(
     winding rule used to fill overlapping contours.
 
     Internally, :py:class:`Path` lazily computes metrics likes bounds and
-    convexity. Call :py:meth:`Path.updateBoundsCache` to make SkPath thread
-    safe.
-
-    .. rubric:: Classes
-
-    .. autosummary::
-        :nosignatures:
-
-        Iter
-        RawIter
-        ArcSize
-        AddPathMode
-        SegmentMask
-        Verb
+    convexity. Call :py:meth:`Path.updateBoundsCache` to make :py:class:`Path`
+    thread safe.
     )docstring");
 
 py::enum_<SkPath::ArcSize>(path, "ArcSize")

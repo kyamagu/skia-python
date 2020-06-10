@@ -1,8 +1,24 @@
 {{ fullname | replace("skia.", "") | escape | underline }}
 
+{% set classes = members | reject("in", methods) | reject("in", attributes) | reject("ge", "_") | list %}
+
 .. currentmodule:: {{ module }}
 
-.. autoclass:: {{ objname }}
+.. autoclass:: {{ fullname }}
+
+   {% block classes %}
+   {% if classes %}
+   .. rubric:: Classes
+
+   .. autosummary::
+      :toctree: .
+      :nosignatures:
+      :template: class.rst
+   {% for item in classes %}
+      ~{{ fullname }}.{{ item }}
+   {%- endfor %}
+   {%- endif %}
+   {% endblock %}
 
    {% block methods %}
    {% if methods %}
@@ -11,7 +27,7 @@
    .. autosummary::
       :nosignatures:
    {% for item in methods %}
-      ~{{ name }}.{{ item }}
+      ~{{ fullname }}.{{ item }}
    {%- endfor %}
    {% endif %}
    {% endblock %}
@@ -22,7 +38,7 @@
 
    .. autosummary::
    {% for item in attributes %}
-      ~{{ name }}.{{ item }}
+      ~{{ fullname }}.{{ item }}
    {%- endfor %}
    {% endif %}
    {% endblock %}

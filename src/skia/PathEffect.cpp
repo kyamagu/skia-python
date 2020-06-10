@@ -9,17 +9,7 @@ const int SkStrokeRec::kStyleCount;
 
 void initPathEffect(py::module &m) {
 // StrokeRec
-py::class_<SkStrokeRec> strokerec(m, "StrokeRec",
-    R"docstring(
-
-    .. rubric:: Classes
-
-    .. autosummary::
-        :nosignatures:
-
-        ~skia.StrokeRec.InitStyle
-        ~skia.StrokeRec.Style
-    )docstring");
+py::class_<SkStrokeRec> strokerec(m, "StrokeRec");
 
 py::enum_<SkStrokeRec::InitStyle>(strokerec, "InitStyle")
     .value("kHairline_InitStyle", SkStrokeRec::InitStyle::kHairline_InitStyle)
@@ -126,14 +116,6 @@ py::class_<SkPathEffect, sk_sp<SkPathEffect>, SkFlattenable>
 
     Dashing is implemented as a subclass of :py:class:`PathEffect`.
 
-    .. rubric:: Classes
-
-    .. autosummary::
-        :nosignatures:
-
-        ~PathEffect.DashInfo
-        ~PathEffect.PointData
-
     .. rubric:: Subclasses
 
     .. autosummary::
@@ -175,13 +157,6 @@ py::class_<SkPathEffect::PointData> pointdata(patheffect, "PointData",
     R"docstring(
     :py:class:`PointData` aggregates all the information needed to draw the
     point primitives returned by an asPoints call.
-
-    .. rubric:: Classes
-
-    .. autosummary::
-        :nosignatures:
-
-        ~skia.PathEffect.PointData.PointFlags
     )docstring");
 
 py::enum_<SkPathEffect::PointData::PointFlags>(
@@ -366,15 +341,7 @@ py::class_<SkCornerPathEffect, SkPathEffect, sk_sp<SkCornerPathEffect>>(
     ;
 
 py::class_<SkPath1DPathEffect, SkPathEffect, sk_sp<SkPath1DPathEffect>>
-    path1dpatheffect(m, "Path1DPathEffect",
-        R"docstring(
-        .. rubric:: Classes
-
-        .. autosummary::
-            :nosignatures:
-
-            ~Path1DPathEffect.Style
-        )docstring");
+    path1dpatheffect(m, "Path1DPathEffect");
 
 py::enum_<SkPath1DPathEffect::Style>(path1dpatheffect, "Style")
     .value("kTranslate_Style", SkPath1DPathEffect::Style::kTranslate_Style)
@@ -439,15 +406,7 @@ py::class_<SkStrokePathEffect>(m, "StrokePathEffect")
         py::arg("width"), py::arg("join"), py::arg("cap"), py::arg("miter") = 4)
     ;
 
-py::class_<SkTrimPathEffect> trimpatheffect(m, "TrimPathEffect",
-    R"docstring(
-    .. rubric:: Classes
-
-    .. autosummary::
-        :nosignatures:
-
-        ~TrimPathEffect.Mode
-    )docstring");
+py::class_<SkTrimPathEffect> trimpatheffect(m, "TrimPathEffect");
 
 py::enum_<SkTrimPathEffect::Mode>(trimpatheffect, "Mode")
     .value("kNormal", SkTrimPathEffect::Mode::kNormal)

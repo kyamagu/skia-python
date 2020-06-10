@@ -27,27 +27,12 @@ Reference
     BlurStyle
     Budgeted
     Canvas
-    Canvas.SaveLayerFlags
-    Canvas.SrcRectConstraint
-    Canvas.PointMode
-    Canvas.QuadAAFlags
-    Canvas.SaveLayerRec
-    Canvas.Lattice
-    Canvas.Lattice.RectType
     ClipOp
     Codec
-    Codec.DisposalMethod
-    Codec.FrameInfo
-    Codec.Options
-    Codec.Result
-    Codec.ScanlineOrder
-    Codec.SelectionPolicy
-    Codec.ZeroInitialized
     Color4f
     ColorChannel
     ColorChannelFlag
     ColorFilter
-    ColorFilter.Flags
     ColorFilters
     ColorInfo
     ColorSpace
@@ -71,22 +56,13 @@ Reference
     FilterQuality
     Flattanable
     Font
-    Font.Edging
     FontArguments
-    FontArguments.VariationPosition
-    FontArguments.VariationPosition.Coordinate
-    FontArguments.VariationPosition.Coordinates
     FontHinting
     FontMetrics
-    FontMetrics.FontMetricsFlags
     FontMgr
     FontStyle
-    FontStyle.Weight
-    FontStyle.Width
-    FontStyle.Slant
     FontStyleSet
     GradientShader
-    GradientShader.Flags
     GrBackendApi
     GrBackendFormat
     GrBackendSemaphore
@@ -109,9 +85,6 @@ Reference
     IRect
     ISize
     Image
-    Image.CompressionType
-    Image.BitDepth
-    Image.CachingHint
     ImageFilter
     ImageFilters
     ImageInfo
@@ -128,26 +101,12 @@ Reference
     OffsetImageFilter
     OverdrawColorFilter
     Paint
-    Paint.Style
-    Paint.Cap
-    Paint.Join
     PaintImageFilter
     Path
-    Path.Iter
-    Path.RawIter
-    Path.ArcSize
-    Path.AddPathMode
-    Path.SegmentMask
-    Path.Verb
     PathConvexityType
     PathDirection
     PathEffect
-    PathEffect.DashInfo
-    PathEffect.DashType
-    PathEffect.PointData
-    PathEffect.PointData.PointFlags
     Path1DPathEffect
-    Path1DPathEffect.Style
     Path2DPathEffect
     PathFillType
     PathSegmentMask
@@ -163,10 +122,6 @@ Reference
     RSXform
     Rect
     Region
-    Region.Cliperator
-    Region.Iterator
-    Region.Spanerator
-    Region.Op
     Shader
     ShaderMaskFilter
     Shaders
@@ -175,29 +130,17 @@ Reference
     StrokePathEffect
     StrokeRec
     Surface
-    Surface.AsyncReadResult
-    Surface.ContentChangeMode
-    Surface.BackendHandleAccess
-    Surface.RescaleGamma
-    Surface.BackendSurfaceAccess
-    Surface.FlushFlags
     SurfaceCharacterization
     SurfaceProps
-    SurfaceProps.Flags
-    SurfaceProps.InitType
     TableColorFilter
     TableMaskFilter
     TextBlob
-    TextBlob.Iter
-    TextBlob.Iter.Run
     TextBlobBuilder
     TextEncoding
     TileImageFilter
     TileMode
     TrimPathEffect
-    TrimPathEffect.Mode
     Typeface
-    Typeface.SerializeBehavior
     Vertices
     WStream
     XfermodeImageFilter

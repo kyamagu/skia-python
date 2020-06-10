@@ -46,16 +46,6 @@ py::class_<SkRegion> region(m, "Region", R"docstring(
         regionA &= regionB  # In-place Intersect
         regionA |= regionB  # In-place Union
         regionA ^= regionB  # In-place XOR
-
-    .. rubric:: Classes
-
-    .. autosummary::
-        :nosignatures:
-
-        ~Region.Cliperator
-        ~Region.Iterator
-        ~Region.Spanerator
-        ~Region.Op
     )docstring");
 
 py::class_<SkRegion::Cliperator>(region, "Cliperator", R"docstring(

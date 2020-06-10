@@ -40,13 +40,6 @@ py::class_<SkColorFilter, sk_sp<SkColorFilter>, SkFlattenable> colorfilter(
     All subclasses are required to be reentrant-safe : it must be legal to share
     the same instance between several threads.
 
-    .. rubric:: Classes
-
-    .. autosummary::
-        :nosignatures:
-
-        ~ColorFilter.Flags
-
     .. rubric:: Subclasses
 
     .. autosummary::
@@ -58,7 +51,6 @@ py::class_<SkColorFilter, sk_sp<SkColorFilter>, SkFlattenable> colorfilter(
         ~skia.LumaColorFilter
         ~skia.OverdrawColorFilter
         ~skia.TableColorFilter
-
     )docstring");
 
 py::enum_<SkColorFilter::Flags>(colorfilter, "Flags", py::arithmetic())
@@ -227,13 +219,6 @@ py::class_<SkHighContrastFilter>(m, "HighContrastFilter",
     Calling :py:meth:`HighContrastFilter.Make` will return nullptr if the config
     is not valid, e.g. if you try to call it with a contrast outside the range
     of -1.0 to 1.0.
-
-    .. rubric:: Classes
-
-    .. autosummary::
-        :nosignatures:
-
-        ~skia.HighContrastConfig
     )docstring")
     .def_static("Make", &SkHighContrastFilter::Make)
     ;
