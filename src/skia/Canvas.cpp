@@ -124,7 +124,10 @@ py::enum_<SkCanvas::QuadAAFlags>(canvas, "QuadAAFlags")
     .value("kAll_QuadAAFlags", SkCanvas::QuadAAFlags::kAll_QuadAAFlags)
     .export_values();
 
-py::enum_<SkCanvas::SaveLayerFlagsSet>(canvas, "SaveLayerFlags")
+py::enum_<SkCanvas::SaveLayerFlagsSet>(
+    canvas, "SaveLayerFlags", py::arithmetic())
+    .value("kPreserveLCDText_SaveLayerFlag",
+        SkCanvas::SaveLayerFlagsSet::kPreserveLCDText_SaveLayerFlag)
     .value("kInitWithPrevious_SaveLayerFlag",
         SkCanvas::SaveLayerFlagsSet::kInitWithPrevious_SaveLayerFlag,
         "initializes with previous contents")

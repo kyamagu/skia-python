@@ -123,6 +123,23 @@ def test_GrFlushInfo_semaphores(grflushinfo, backend_semaphore):
     assert isinstance(grflushinfo.semaphores, list)
 
 
+@pytest.fixture
+def backend_render_target():
+    return skia.GrBackendRenderTarget()
+
+
+def test_GrBackendRenderTarget_init(backend_render_target):
+    assert isinstance(backend_render_target, skia.GrBackendRenderTarget)
+
+
+def test_GrBackendRenderTarget_isValid(backend_render_target):
+    assert isinstance(backend_render_target.isValid(), bool)
+
+
+def test_GrBackendRenderTarget_isFramebufferOnly(backend_render_target):
+    assert isinstance(backend_render_target.isFramebufferOnly(), bool)
+
+
 def test_GrContext_resetContext(context):
     context.resetContext()
 
@@ -213,6 +230,14 @@ def test_GrContext_flush2(context):
     context.flush()
 
 
+def test_GrContext_flushAndSubmit(context):
+    context.flushAndSubmit()
+
+
+def test_GrContext_submit(context):
+    context.submit()
+
+
 def test_GrContext_checkAsyncWorkCompletion(context):
     context.checkAsyncWorkCompletion()
 
@@ -260,6 +285,16 @@ def test_GrContext_createBackendTexture(context, args, request):
     else:
         assert isinstance(
             context.createBackendTexture(*args), skia.GrBackendTexture)
+
+
+def test_GrContext_updateBackendTexture_1(context, backend_texture):
+    assert isinstance(
+        context.updateBackendTexture(backend_texture, skia.ColorBLACK), bool)
+
+
+def test_GrContext_updateBackendTexture_2(context, backend_texture, pixmap):
+    assert isinstance(
+        context.updateBackendTexture(backend_texture, [pixmap]), bool)
 
 
 def test_GrContext_compressedBackendFormat(context):
