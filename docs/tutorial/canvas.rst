@@ -10,6 +10,7 @@ commands, including:
 - `GPU`_ - Skia's GPU-accelerated backend.
 - `PDF`_ - PDF document creation.
 - `Picture`_ - Skia's display list format.
+- `SVG`_ - Experimental SVG backend.
 
 Each backend has a unique way of creating a :py:class:`Canvas`. This page
 gives an example for each.
@@ -116,7 +117,7 @@ The following example uses glfw package to create an OpenGL context. Install
 PDF
 ---
 
-The :py:mod:`PDF` backend uses :py:class:`Document` instead of
+The :py:class:`PDF` backend uses :py:class:`Document` instead of
 :py:class:`Surface`, since a document must include multiple pages. The
 following demonstrates how to write a single-page PDF document to a file::
 
@@ -152,3 +153,20 @@ instead of :py:class:`Surface`.
 Recorded picture can later be drawn onto another canvas::
 
     picture.playback(canvas)
+
+
+SVG
+---
+
+The (still experimental) :py:class:`SVGCanvas` writes into an SVG document.
+
+.. code-block:: python
+
+    import skia
+
+    width, height = 200, 200
+    stream = skia.FILEWStream('output.svg')
+    canvas = skia.SVGCanvas.Make((width, height), stream)
+    draw(canvas)
+    del canvas
+    stream.flush()
