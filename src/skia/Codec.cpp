@@ -65,17 +65,6 @@ m.def("EncodedOriginToMatrix", &SkEncodedOriginToMatrix,
 py::class_<SkCodec> codec(m, "Codec",
     R"docstring(
     :py:class:`Codec` Abstraction layer directly on top of an image codec.
-
-    .. autosummary::
-        :nosignatures:
-
-        ~Codec.DisposalMethod
-        ~Codec.FrameInfo
-        ~Codec.Options
-        ~Codec.Result
-        ~Codec.ScanlineOrder
-        ~Codec.SelectionPolicy
-        ~Codec.ZeroInitialized
     )docstring");
 
 py::enum_<SkCodec::Result>(codec, "Result",

@@ -17,14 +17,6 @@ py::class_<SkTextBlob, sk_sp<SkTextBlob>> textblob(m, "TextBlob", R"docstring(
     Each text run consists of glyphs, :py:class:`Paint`, and position. Only
     parts of :py:class:`Paint` related to fonts and text rendering are used by
     run.
-
-    .. rubric:: Classes
-
-    .. autosummary::
-        :nosignatures:
-
-        ~skia.TextBlob.Iter
-        ~skia.TextBlob.Iter.Run
     )docstring");
 
 py::class_<SkTextBlob::Iter> iter(textblob, "Iter",
@@ -37,13 +29,6 @@ py::class_<SkTextBlob::Iter> iter(textblob, "Iter",
         it = skia.TextBlob.Iter(textblob)
         while it.next(run):
             print(run)
-
-    .. rubric:: Classes
-
-    .. autosummary::
-        :nosignatures:
-
-        ~skia.TextBlob.Iter.Run
     )docstring");
 
 py::class_<SkTextBlob::Iter::Run>(iter, "Run")

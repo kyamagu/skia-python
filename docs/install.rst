@@ -1,5 +1,38 @@
+Install
+=======
+
+PyPI distribution
+-----------------
+
+Binary package is available on PyPI:
+
+.. code-block:: bash
+
+    pip install skia-python
+
+Supported platforms:
+
+- Linux x86_64
+- macOS
+- Windows x86_64
+
+For Linux platforms, there must be OpenGL and fontconfig installed:
+
+.. code-block:: bash
+
+    apt-get install libfontconfig1 libgl1-mesa-glx libgl1-mesa-dri
+
+Or:
+
+.. code-block:: bash
+
+    yum install fontconfig mesa-libGL mesa-dri-drivers
+
+For unsupported platforms, check the `Build instruction`_.
+
+
 Build instruction
-=================
+-----------------
 
 First, clone the repo.
 
@@ -26,8 +59,12 @@ For detailed Skia build instructions, check `the official page`_.
 
 .. _the official page: https://skia.org/
 
+- `Linux`_
+- `macOS`_
+- `Windows`_
+
 Linux
------
+^^^^^
 
 Prerequisites:
 
@@ -74,7 +111,7 @@ the desired version.
     python setup.py bdist_wheel
 
 macOS
------
+^^^^^
 
 Prerequisites:
 
@@ -104,7 +141,7 @@ the desired version.
     python setup.py bdist_wheel
 
 Windows
--------
+^^^^^^^
 
 Prerequisites:
 
@@ -143,12 +180,12 @@ Alternatively, use ``tox`` to run tests under various python versions.
     tox
 
 
-Building documentation
-----------------------
+Documentation
+-------------
 
 Once skia-python is installed, sphinx documentation can be built:
 
 .. code-block:: bash
 
-    python -m pip install sphinx
+    python -m pip install sphinx sphinx-rtd-theme
     python setup.py build_sphinx

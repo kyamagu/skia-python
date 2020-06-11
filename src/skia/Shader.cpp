@@ -23,14 +23,6 @@ py::class_<SkShader, sk_sp<SkShader>, SkFlattenable> shader(
     bitmap tiling or gradient) and then change its transparency w/o having to
     modify the original shader... only the paint's alpha needs to be modified.
 
-    .. rubric:: Classes
-
-    .. autosummary::
-        :nosignatures:
-
-        ~skia.Shader.GradientInfo
-        ~skia.Shader.GradientType
-
     .. rubric:: Subclasses
 
     .. autosummary::

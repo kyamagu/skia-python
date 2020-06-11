@@ -77,26 +77,13 @@ py::class_<SkCanvas> canvas(m, "Canvas", R"docstring(
     or OpenGL to draw to the GPU.
 
     To draw to a document, obtain :py:class:`Canvas` from SVG canvas, document
-    PDF, or :py:class:`PictureRecorder`. SkDocument based :py:class:`Canvas`
-    and other :py:class:`Canvas` subclasses reference :py:class:`BaseDevice`
-    describing the destination.
+    PDF, or :py:class:`PictureRecorder`. :py:class:`Document` based
+    :py:class:`Canvas` and other :py:class:`Canvas` subclasses reference
+    :py:class:`BaseDevice` describing the destination.
 
     :py:class:`Canvas` can be constructed to draw to :py:class:`Bitmap` without
     first creating raster surface. This approach may be deprecated in the
     future.
-
-    .. rubric:: Classes
-
-    .. autosummary::
-        :nosignatures:
-
-        SaveLayerFlags
-        SrcRectConstraint
-        PointMode
-        QuadAAFlags
-        SaveLayerRec
-        Lattice
-
     )docstring");
 
 py::enum_<SkCanvas::SrcRectConstraint>(canvas, "SrcRectConstraint")
@@ -261,19 +248,12 @@ py::class_<SkCanvas::Lattice> lattice(canvas, "Lattice", R"docstring(
     the destination side is too small to hold the fixed entries, all fixed
     entries are proportionately scaled down to fit. The grid entries not on even
     columns and rows are scaled to fit the remaining space, if any.
-
-    .. rubric:: Classes
-
-    .. autosummary::
-        :nosignatures:
-
-        RectType
     )docstring");
 
 py::enum_<SkCanvas::Lattice::RectType>(lattice, "RectType")
     .value("kDefault", SkCanvas::Lattice::RectType::kDefault,
         R"docstring(
-        draws SkBitmap into lattice rectangle
+        draws :py:class:`Bitmap` into lattice rectangle
         )docstring")
     .value("kTransparent", SkCanvas::Lattice::RectType::kTransparent,
         R"docstring(

@@ -17,17 +17,7 @@ void SetVariationPositionCoordinates(
 
 void initFont(py::module &m) {
 // FontStyle
-py::class_<SkFontStyle> fontstyle(m, "FontStyle",
-    R"docstring(
-    .. rubric:: Classes
-
-    .. autosummary::
-        :nosignatures:
-
-        ~FontStyle.Weight
-        ~FontStyle.Width
-        ~FontStyle.Slant
-    )docstring");
+py::class_<SkFontStyle> fontstyle(m, "FontStyle");
 
 py::enum_<SkFontStyle::Weight>(fontstyle, "Weight")
     .value("kInvisible_Weight", SkFontStyle::Weight::kInvisible_Weight)
@@ -76,15 +66,6 @@ fontstyle
 // Typeface
 py::class_<SkFontArguments> fontarguments(m, "FontArguments", R"docstring(
     Represents a set of actual arguments for a font.
-
-    .. rubric:: Classes
-
-    .. autosummary::
-        :nosignatures:
-
-        ~skia.FontArguments.VariationPosition
-        ~skia.FontArguments.VariationPosition.Coordinate
-        ~skia.FontArguments.VariationPosition.Coordinates
     )docstring");
 
 // py::class_<SkFontArguments::Axis>(fontarguments, "Axis")
@@ -96,14 +77,6 @@ py::class_<SkFontArguments::VariationPosition> variationposition(
     fontarguments, "VariationPosition",
     R"docstring(
     Container of coordinates.
-
-    .. rubric:: Classes
-
-    .. autosummary::
-        :nosignatures:
-
-        ~skia.FontArguments.VariationPosition.Coordinate
-        ~skia.FontArguments.VariationPosition.Coordinates
     )docstring");
 
 py::class_<Coordinate>(
@@ -176,13 +149,6 @@ py::class_<SkTypeface, sk_sp<SkTypeface>, SkRefCnt> typeface(
     appears when drawn (and measured).
 
     Typeface objects are immutable, and so they can be shared between threads.
-
-    .. rubric:: Classes
-
-    .. autosummary::
-        :nosignatures:
-
-        ~Typeface.SerializeBehavior
     )docstring");
 
 py::enum_<SkTypeface::SerializeBehavior>(typeface, "SerializeBehavior",
@@ -645,13 +611,6 @@ py::enum_<SkTextEncoding>(m, "TextEncoding")
 
 py::class_<SkFont> font(m, "Font", R"docstring(
     :py:class:`Font` controls options applied when drawing and measuring text.
-
-    .. rubric:: Classes
-
-    .. autosummary::
-        :nosignatures:
-
-        ~Font.Edging
     )docstring");
 
 py::enum_<SkFont::Edging>(font, "Edging", R"docstring(
@@ -1172,13 +1131,6 @@ py::class_<SkFontMetrics> fontmetrics(m, "FontMetrics", R"docstring(
     The metrics of an :py:class:`Font`.
 
     The metric values are consistent with the Skia y-down coordinate system.
-
-    .. rubric:: Classes
-
-    .. autosummary::
-        :nosignatures:
-
-        ~FontMetrics.FontMetricsFlags
     )docstring");
 
 py::enum_<SkFontMetrics::FontMetricsFlags>(fontmetrics, "FontMetricsFlags",

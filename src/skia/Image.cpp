@@ -101,15 +101,6 @@ py::class_<SkImage, sk_sp<SkImage>, SkRefCnt> image(m, "Image",
     streams, GPU texture, YUV_ColorSpace data, or hardware buffer. Encoded
     streams supported include BMP, GIF, HEIF, ICO, JPEG, PNG, WBMP, WebP.
     Supported encoding details vary with platform.
-
-    .. rubric:: Classes
-
-    .. autosummary::
-        :nosignatures:
-
-        ~Image.CompressionType
-        ~Image.BitDepth
-        ~Image.CachingHint
     )docstring");
 
 py::enum_<SkImage::CompressionType>(image, "CompressionType")
