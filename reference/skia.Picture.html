@@ -1,0 +1,637 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Picture &mdash; skia-python 0.0.4 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="PictureRecorder" href="skia.PictureRecorder.html" />
+    <link rel="prev" title="PerlinNoiseShader" href="skia.PerlinNoiseShader.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> skia-python
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.0.4
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../install.html">Install</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tutorial/index.html">Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../development.html">Development</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../reference.html">Reference</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="skia.html">skia</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="skia.AlphaThresholdFilter.html">AlphaThresholdFilter</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.AlphaType.html">AlphaType</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.ApplyPerspectiveClip.html">ApplyPerspectiveClip</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.ArithmeticImageFilter.html">ArithmeticImageFilter</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.AutoCanvasRestore.html">AutoCanvasRestore</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.BBHFactory.html">BBHFactory</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.BBoxHierarchy.html">BBoxHierarchy</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.BackingFit.html">BackingFit</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.Bitmap.html">Bitmap</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.BlendMode.html">BlendMode</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.BlendModeCoeff.html">BlendModeCoeff</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.BlurImageFilter.html">BlurImageFilter</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.BlurMaskFilter.html">BlurMaskFilter</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.BlurStyle.html">BlurStyle</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.Budgeted.html">Budgeted</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.Canvas.html">Canvas</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.ClipOp.html">ClipOp</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.Codec.html">Codec</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.Color4f.html">Color4f</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.ColorChannel.html">ColorChannel</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.ColorChannelFlag.html">ColorChannelFlag</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.ColorFilter.html">ColorFilter</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.ColorFilterImageFilter.html">ColorFilterImageFilter</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.ColorFilters.html">ColorFilters</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.ColorInfo.html">ColorInfo</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.ColorMatrix.html">ColorMatrix</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.ColorMatrixFilter.html">ColorMatrixFilter</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.ColorSpace.html">ColorSpace</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.ColorType.html">ColorType</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.ConvergeMode.html">ConvergeMode</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.CornerPathEffect.html">CornerPathEffect</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.DashPathEffect.html">DashPathEffect</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.Data.html">Data</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.DilateImageFilter.html">DilateImageFilter</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.DiscretePathEffect.html">DiscretePathEffect</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.DisplacementMapEffect.html">DisplacementMapEffect</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.Document.html">Document</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.Drawable.html">Drawable</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.DropShadowImageFilter.html">DropShadowImageFilter</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.DynamicMemoryWStream.html">DynamicMemoryWStream</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.EncodedImageFormat.html">EncodedImageFormat</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.EncodedOrigin.html">EncodedOrigin</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.ErodeImageFilter.html">ErodeImageFilter</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.FILEStream.html">FILEStream</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.FILEWStream.html">FILEWStream</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.FilterQuality.html">FilterQuality</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.Flattanable.html">Flattanable</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.Font.html">Font</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.FontArguments.html">FontArguments</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.FontHinting.html">FontHinting</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.FontMetrics.html">FontMetrics</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.FontMgr.html">FontMgr</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.FontStyle.html">FontStyle</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.FontStyleSet.html">FontStyleSet</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.GrBackendApi.html">GrBackendApi</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.GrBackendFormat.html">GrBackendFormat</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.GrBackendSemaphore.html">GrBackendSemaphore</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.GrBackendTexture.html">GrBackendTexture</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.GrColorType.html">GrColorType</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.GrContext.html">GrContext</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.GrContextOptions.html">GrContextOptions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.GrFlushFlags.html">GrFlushFlags</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.GrFlushInfo.html">GrFlushInfo</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.GrGLBackendState.html">GrGLBackendState</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.GrGLInterface.html">GrGLInterface</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.GrGLTextureInfo.html">GrGLTextureInfo</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.GrMipMapped.html">GrMipMapped</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.GrMockOptions.html">GrMockOptions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.GrMockTextureInfo.html">GrMockTextureInfo</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.GrProtected.html">GrProtected</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.GrRenderable.html">GrRenderable</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.GrSemaphoresSubmitted.html">GrSemaphoresSubmitted</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.GrSurfaceOrigin.html">GrSurfaceOrigin</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.GrTextureType.html">GrTextureType</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.GradientShader.html">GradientShader</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.HighContrastConfig.html">HighContrastConfig</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.HighContrastFilter.html">HighContrastFilter</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.IPoint.html">IPoint</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.IRect.html">IRect</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.ISize.html">ISize</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.Image.html">Image</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.ImageFilter.html">ImageFilter</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.ImageFilters.html">ImageFilters</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.ImageInfo.html">ImageInfo</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.LightingImageFilter.html">LightingImageFilter</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.Line2DPathEffect.html">Line2DPathEffect</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.LumaColorFilter.html">LumaColorFilter</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.M44.html">M44</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.MagnifierImageFilter.html">MagnifierImageFilter</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.MaskFilter.html">MaskFilter</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.Matrix.html">Matrix</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.MatrixPathEffect.html">MatrixPathEffect</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.MemoryStream.html">MemoryStream</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.MergePathEffect.html">MergePathEffect</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.NullWStream.html">NullWStream</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.OffsetImageFilter.html">OffsetImageFilter</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.OverdrawColorFilter.html">OverdrawColorFilter</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.Paint.html">Paint</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.PaintImageFilter.html">PaintImageFilter</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.Path.html">Path</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.Path1DPathEffect.html">Path1DPathEffect</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.Path2DPathEffect.html">Path2DPathEffect</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.PathConvexityType.html">PathConvexityType</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.PathDirection.html">PathDirection</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.PathEffect.html">PathEffect</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.PathFillType.html">PathFillType</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.PathOp.html">PathOp</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.PathSegmentMask.html">PathSegmentMask</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.PathVerb.html">PathVerb</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.PerlinNoiseShader.html">PerlinNoiseShader</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Picture</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#methods">Methods</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="skia.PictureRecorder.html">PictureRecorder</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.PixelGeometry.html">PixelGeometry</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.PixelRef.html">PixelRef</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.Pixmap.html">Pixmap</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.Point.html">Point</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.Point3.html">Point3</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.RRect.html">RRect</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.RSXform.html">RSXform</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.Rect.html">Rect</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.RefCnt.html">RefCnt</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.RefCntBase.html">RefCntBase</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.Region.html">Region</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.Shader.html">Shader</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.ShaderMaskFilter.html">ShaderMaskFilter</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.Shaders.html">Shaders</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.Size.html">Size</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.Stream.html">Stream</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.StreamAsset.html">StreamAsset</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.StreamMemory.html">StreamMemory</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.StreamRewindable.html">StreamRewindable</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.StreamSeekable.html">StreamSeekable</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.StrokePathEffect.html">StrokePathEffect</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.StrokeRec.html">StrokeRec</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.Surface.html">Surface</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.SurfaceCharacterization.html">SurfaceCharacterization</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.SurfaceProps.html">SurfaceProps</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.TableColorFilter.html">TableColorFilter</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.TableMaskFilter.html">TableMaskFilter</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.TextBlob.html">TextBlob</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.TextBlobBuilder.html">TextBlobBuilder</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.TextEncoding.html">TextEncoding</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.TileImageFilter.html">TileImageFilter</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.TileMode.html">TileMode</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.TrimPathEffect.html">TrimPathEffect</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.Typeface.html">Typeface</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.Vertices.html">Vertices</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.WStream.html">WStream</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.XfermodeImageFilter.html">XfermodeImageFilter</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.YUVColorSpace.html">YUVColorSpace</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.html#functions">Functions</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">skia-python</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../reference.html">Reference</a> &raquo;</li>
+        
+          <li><a href="skia.html">skia</a> &raquo;</li>
+        
+      <li>Picture</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/reference/skia.Picture.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="picture">
+<h1>Picture<a class="headerlink" href="#picture" title="Permalink to this headline">¶</a></h1>
+<dl class="py class">
+<dt id="skia.Picture">
+<em class="property">class </em><code class="sig-name descname">Picture</code><a class="headerlink" href="#skia.Picture" title="Permalink to this definition">¶</a></dt>
+<dd><p><a class="reference internal" href="#skia.Picture" title="skia.Picture"><code class="xref py py-class docutils literal notranslate"><span class="pre">Picture</span></code></a> records drawing commands made to <a class="reference internal" href="skia.Canvas.html#skia.Canvas" title="skia.Canvas"><code class="xref py py-class docutils literal notranslate"><span class="pre">Canvas</span></code></a>.</p>
+<p>The command stream may be played in whole or in part at a later time.</p>
+<p><a class="reference internal" href="#skia.Picture" title="skia.Picture"><code class="xref py py-class docutils literal notranslate"><span class="pre">Picture</span></code></a> is an abstract class. <a class="reference internal" href="#skia.Picture" title="skia.Picture"><code class="xref py py-class docutils literal notranslate"><span class="pre">Picture</span></code></a> may be
+generated by <a class="reference internal" href="skia.PictureRecorder.html#skia.PictureRecorder" title="skia.PictureRecorder"><code class="xref py py-class docutils literal notranslate"><span class="pre">PictureRecorder</span></code></a> or <a class="reference internal" href="skia.Drawable.html#skia.Drawable" title="skia.Drawable"><code class="xref py py-class docutils literal notranslate"><span class="pre">Drawable</span></code></a>, or from
+<a class="reference internal" href="#skia.Picture" title="skia.Picture"><code class="xref py py-class docutils literal notranslate"><span class="pre">Picture</span></code></a> previously saved to <a class="reference internal" href="skia.Data.html#skia.Data" title="skia.Data"><code class="xref py py-class docutils literal notranslate"><span class="pre">Data</span></code></a> or
+<a class="reference internal" href="skia.Stream.html#skia.Stream" title="skia.Stream"><code class="xref py py-class docutils literal notranslate"><span class="pre">Stream</span></code></a>.</p>
+<p><a class="reference internal" href="#skia.Picture" title="skia.Picture"><code class="xref py py-class docutils literal notranslate"><span class="pre">Picture</span></code></a> may contain any <a class="reference internal" href="skia.Canvas.html#skia.Canvas" title="skia.Canvas"><code class="xref py py-class docutils literal notranslate"><span class="pre">Canvas</span></code></a> drawing command, as
+well as one or more <a class="reference internal" href="skia.Canvas.html#skia.Canvas" title="skia.Canvas"><code class="xref py py-class docutils literal notranslate"><span class="pre">Canvas</span></code></a> matrix or <a class="reference internal" href="skia.Canvas.html#skia.Canvas" title="skia.Canvas"><code class="xref py py-class docutils literal notranslate"><span class="pre">Canvas</span></code></a> clip.
+<a class="reference internal" href="#skia.Picture" title="skia.Picture"><code class="xref py py-class docutils literal notranslate"><span class="pre">Picture</span></code></a> has a cull <a class="reference internal" href="skia.Rect.html#skia.Rect" title="skia.Rect"><code class="xref py py-class docutils literal notranslate"><span class="pre">Rect</span></code></a>, which is used as a bounding
+box hint. To limit <a class="reference internal" href="#skia.Picture" title="skia.Picture"><code class="xref py py-class docutils literal notranslate"><span class="pre">Picture</span></code></a> bounds, use <a class="reference internal" href="skia.Canvas.html#skia.Canvas" title="skia.Canvas"><code class="xref py py-class docutils literal notranslate"><span class="pre">Canvas</span></code></a> clip
+when recording or drawing <a class="reference internal" href="#skia.Picture" title="skia.Picture"><code class="xref py py-class docutils literal notranslate"><span class="pre">Picture</span></code></a>.</p>
+<p>Example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">recorder</span> <span class="o">=</span> <span class="n">skia</span><span class="o">.</span><span class="n">PictureRecorder</span><span class="p">()</span>
+<span class="n">canvas</span> <span class="o">=</span> <span class="n">recorder</span><span class="o">.</span><span class="n">beginRecording</span><span class="p">(</span><span class="n">skia</span><span class="o">.</span><span class="n">Rect</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="mi">100</span><span class="p">))</span>
+<span class="n">canvas</span><span class="o">.</span><span class="n">clear</span><span class="p">(</span><span class="mh">0xFFFFFFFF</span><span class="p">)</span>
+<span class="n">canvas</span><span class="o">.</span><span class="n">drawLine</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="n">skia</span><span class="o">.</span><span class="n">Paint</span><span class="p">())</span>
+<span class="n">picture</span> <span class="o">=</span> <span class="n">recorder</span><span class="o">.</span><span class="n">finishRecordingAsPicture</span><span class="p">()</span>
+</pre></div>
+</div>
+<p class="rubric">Methods</p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Picture.MakeFromData" title="skia.Picture.MakeFromData"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MakeFromData</span></code></a></p></td>
+<td><p>Recreates <a class="reference internal" href="#skia.Picture" title="skia.Picture"><code class="xref py py-class docutils literal notranslate"><span class="pre">Picture</span></code></a> that was serialized into data.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.Picture.MakePlaceholder" title="skia.Picture.MakePlaceholder"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MakePlaceholder</span></code></a></p></td>
+<td><p>Returns a placeholder <a class="reference internal" href="#skia.Picture" title="skia.Picture"><code class="xref py py-class docutils literal notranslate"><span class="pre">Picture</span></code></a>.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Picture.__init__" title="skia.Picture.__init__"><code class="xref py py-obj docutils literal notranslate"><span class="pre">__init__</span></code></a></p></td>
+<td><p>Returns a placeholder <a class="reference internal" href="#skia.Picture" title="skia.Picture"><code class="xref py py-class docutils literal notranslate"><span class="pre">Picture</span></code></a>.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.Picture.approximateBytesUsed" title="skia.Picture.approximateBytesUsed"><code class="xref py py-obj docutils literal notranslate"><span class="pre">approximateBytesUsed</span></code></a></p></td>
+<td><p>Returns the approximate byte size of <a class="reference internal" href="#skia.Picture" title="skia.Picture"><code class="xref py py-class docutils literal notranslate"><span class="pre">Picture</span></code></a>.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Picture.approximateOpCount" title="skia.Picture.approximateOpCount"><code class="xref py py-obj docutils literal notranslate"><span class="pre">approximateOpCount</span></code></a></p></td>
+<td><p>Returns the approximate number of operations in <a class="reference internal" href="#skia.Picture" title="skia.Picture"><code class="xref py py-class docutils literal notranslate"><span class="pre">Picture</span></code></a>.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.Picture.cullRect" title="skia.Picture.cullRect"><code class="xref py py-obj docutils literal notranslate"><span class="pre">cullRect</span></code></a></p></td>
+<td><p>Returns cull <a class="reference internal" href="skia.Rect.html#skia.Rect" title="skia.Rect"><code class="xref py py-class docutils literal notranslate"><span class="pre">Rect</span></code></a> for this picture, passed in when <a class="reference internal" href="#skia.Picture" title="skia.Picture"><code class="xref py py-class docutils literal notranslate"><span class="pre">Picture</span></code></a> was created.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Picture.makeShader" title="skia.Picture.makeShader"><code class="xref py py-obj docutils literal notranslate"><span class="pre">makeShader</span></code></a></p></td>
+<td><p>Return a new shader that will draw with this picture.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.Picture.playback" title="skia.Picture.playback"><code class="xref py py-obj docutils literal notranslate"><span class="pre">playback</span></code></a></p></td>
+<td><p>Replays the drawing commands on the specified canvas.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Picture.ref" title="skia.Picture.ref"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ref</span></code></a></p></td>
+<td><p>Increment the reference count.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.Picture.serialize" title="skia.Picture.serialize"><code class="xref py py-obj docutils literal notranslate"><span class="pre">serialize</span></code></a></p></td>
+<td><p>Returns storage containing <a class="reference internal" href="skia.Data.html#skia.Data" title="skia.Data"><code class="xref py py-class docutils literal notranslate"><span class="pre">Data</span></code></a> describing <a class="reference internal" href="#skia.Picture" title="skia.Picture"><code class="xref py py-class docutils literal notranslate"><span class="pre">Picture</span></code></a>.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Picture.unique" title="skia.Picture.unique"><code class="xref py py-obj docutils literal notranslate"><span class="pre">unique</span></code></a></p></td>
+<td><p>May return true if the caller is the only owner.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.Picture.uniqueID" title="skia.Picture.uniqueID"><code class="xref py py-obj docutils literal notranslate"><span class="pre">uniqueID</span></code></a></p></td>
+<td><p>Returns a non-zero value unique among <a class="reference internal" href="#skia.Picture" title="skia.Picture"><code class="xref py py-class docutils literal notranslate"><span class="pre">Picture</span></code></a> in Skia process.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Picture.unref" title="skia.Picture.unref"><code class="xref py py-obj docutils literal notranslate"><span class="pre">unref</span></code></a></p></td>
+<td><p>Decrement the reference count.</p></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<div class="section" id="methods">
+<h2>Methods<a class="headerlink" href="#methods" title="Permalink to this headline">¶</a></h2>
+<dl class="py method">
+<dt id="skia.Picture.MakeFromData">
+<em class="property">static </em><code class="sig-prename descclassname">Picture.</code><code class="sig-name descname">MakeFromData</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">data</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.Data.html#skia.Data" title="skia.Data">skia.Data</a></span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="#skia.Picture" title="skia.Picture">skia.Picture</a><a class="headerlink" href="#skia.Picture.MakeFromData" title="Permalink to this definition">¶</a></dt>
+<dd><p>Recreates <a class="reference internal" href="#skia.Picture" title="skia.Picture"><code class="xref py py-class docutils literal notranslate"><span class="pre">Picture</span></code></a> that was serialized into data.</p>
+<p>Returns constructed <a class="reference internal" href="#skia.Picture" title="skia.Picture"><code class="xref py py-class docutils literal notranslate"><span class="pre">Picture</span></code></a> if successful. Fails if data
+does not permit constructing valid <a class="reference internal" href="#skia.Picture" title="skia.Picture"><code class="xref py py-class docutils literal notranslate"><span class="pre">Picture</span></code></a>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>data</strong> (<a class="reference internal" href="skia.Data.html#skia.Data" title="skia.Data"><em>skia.Data</em></a>) – container for serial data</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><a class="reference internal" href="#skia.Picture" title="skia.Picture"><code class="xref py py-class docutils literal notranslate"><span class="pre">Picture</span></code></a> constructed from data</p>
+</dd>
+<dt class="field-odd">Raise</dt>
+<dd class="field-odd"><p>ValueError</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="skia.Picture.MakePlaceholder">
+<em class="property">static </em><code class="sig-prename descclassname">Picture.</code><code class="sig-name descname">MakePlaceholder</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">cull</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.Rect.html#skia.Rect" title="skia.Rect">skia.Rect</a></span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="#skia.Picture" title="skia.Picture">skia.Picture</a><a class="headerlink" href="#skia.Picture.MakePlaceholder" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a placeholder <a class="reference internal" href="#skia.Picture" title="skia.Picture"><code class="xref py py-class docutils literal notranslate"><span class="pre">Picture</span></code></a>.</p>
+<p>Result does not draw, and contains only cull <a class="reference internal" href="skia.Rect.html#skia.Rect" title="skia.Rect"><code class="xref py py-class docutils literal notranslate"><span class="pre">Rect</span></code></a>, a hint of
+its bounds. Result is immutable; it cannot be changed later. Result
+identifier is unique.</p>
+<p>Returned placeholder can be intercepted during playback to insert other
+commands into <a class="reference internal" href="skia.Canvas.html#skia.Canvas" title="skia.Canvas"><code class="xref py py-class docutils literal notranslate"><span class="pre">Canvas</span></code></a> draw stream.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>cull</strong> (<a class="reference internal" href="skia.Rect.html#skia.Rect" title="skia.Rect"><em>skia.Rect</em></a>) – placeholder dimensions</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>placeholder with unique identifier</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="skia.Picture.__init__">
+<code class="sig-prename descclassname">Picture.</code><code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Picture" title="skia.Picture">skia.Picture</a></span></em>, <em class="sig-param"><span class="n">cull</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.Rect.html#skia.Rect" title="skia.Rect">skia.Rect</a></span></em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#skia.Picture.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a placeholder <a class="reference internal" href="#skia.Picture" title="skia.Picture"><code class="xref py py-class docutils literal notranslate"><span class="pre">Picture</span></code></a>.</p>
+<p>Result does not draw, and contains only cull <a class="reference internal" href="skia.Rect.html#skia.Rect" title="skia.Rect"><code class="xref py py-class docutils literal notranslate"><span class="pre">Rect</span></code></a>, a hint of
+its bounds. Result is immutable; it cannot be changed later. Result
+identifier is unique.</p>
+<p>Returned placeholder can be intercepted during playback to insert other
+commands into <a class="reference internal" href="skia.Canvas.html#skia.Canvas" title="skia.Canvas"><code class="xref py py-class docutils literal notranslate"><span class="pre">Canvas</span></code></a> draw stream.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>cull</strong> (<a class="reference internal" href="skia.Rect.html#skia.Rect" title="skia.Rect"><em>skia.Rect</em></a>) – placeholder dimensions</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>placeholder with unique identifier</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="skia.Picture.approximateBytesUsed">
+<code class="sig-prename descclassname">Picture.</code><code class="sig-name descname">approximateBytesUsed</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Picture" title="skia.Picture">skia.Picture</a></span></em><span class="sig-paren">)</span> &#x2192; int<a class="headerlink" href="#skia.Picture.approximateBytesUsed" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the approximate byte size of <a class="reference internal" href="#skia.Picture" title="skia.Picture"><code class="xref py py-class docutils literal notranslate"><span class="pre">Picture</span></code></a>.</p>
+<p>Does not include large objects referenced by <a class="reference internal" href="#skia.Picture" title="skia.Picture"><code class="xref py py-class docutils literal notranslate"><span class="pre">Picture</span></code></a>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>approximate size</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="skia.Picture.approximateOpCount">
+<code class="sig-prename descclassname">Picture.</code><code class="sig-name descname">approximateOpCount</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Picture" title="skia.Picture">skia.Picture</a></span></em><span class="sig-paren">)</span> &#x2192; int<a class="headerlink" href="#skia.Picture.approximateOpCount" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the approximate number of operations in <a class="reference internal" href="#skia.Picture" title="skia.Picture"><code class="xref py py-class docutils literal notranslate"><span class="pre">Picture</span></code></a>.</p>
+<p>Returned value may be greater or less than the number of
+<a class="reference internal" href="skia.Canvas.html#skia.Canvas" title="skia.Canvas"><code class="xref py py-class docutils literal notranslate"><span class="pre">Canvas</span></code></a> calls recorded: some calls may be recorded as more
+than one operation, other calls may be optimized away.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>approximate operation count</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="skia.Picture.cullRect">
+<code class="sig-prename descclassname">Picture.</code><code class="sig-name descname">cullRect</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Picture" title="skia.Picture">skia.Picture</a></span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="skia.Rect.html#skia.Rect" title="skia.Rect">skia.Rect</a><a class="headerlink" href="#skia.Picture.cullRect" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns cull <a class="reference internal" href="skia.Rect.html#skia.Rect" title="skia.Rect"><code class="xref py py-class docutils literal notranslate"><span class="pre">Rect</span></code></a> for this picture, passed in when
+<a class="reference internal" href="#skia.Picture" title="skia.Picture"><code class="xref py py-class docutils literal notranslate"><span class="pre">Picture</span></code></a> was created.</p>
+<p>Returned <a class="reference internal" href="skia.Rect.html#skia.Rect" title="skia.Rect"><code class="xref py py-class docutils literal notranslate"><span class="pre">Rect</span></code></a> does not specify clipping <a class="reference internal" href="skia.Rect.html#skia.Rect" title="skia.Rect"><code class="xref py py-class docutils literal notranslate"><span class="pre">Rect</span></code></a> for
+<a class="reference internal" href="#skia.Picture" title="skia.Picture"><code class="xref py py-class docutils literal notranslate"><span class="pre">Picture</span></code></a>; cull is hint of <a class="reference internal" href="#skia.Picture" title="skia.Picture"><code class="xref py py-class docutils literal notranslate"><span class="pre">Picture</span></code></a> bounds.</p>
+<p><a class="reference internal" href="#skia.Picture" title="skia.Picture"><code class="xref py py-class docutils literal notranslate"><span class="pre">Picture</span></code></a> is free to discard recorded drawing commands that
+fall outside cull.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>bounds passed when <a class="reference internal" href="#skia.Picture" title="skia.Picture"><code class="xref py py-class docutils literal notranslate"><span class="pre">Picture</span></code></a> was created</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="skia.Picture.makeShader">
+<code class="sig-prename descclassname">Picture.</code><code class="sig-name descname">makeShader</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Picture" title="skia.Picture">skia.Picture</a></span></em>, <em class="sig-param"><span class="n">tmx</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.TileMode.html#skia.TileMode" title="skia.TileMode">skia.TileMode</a></span></em>, <em class="sig-param"><span class="n">tmy</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.TileMode.html#skia.TileMode" title="skia.TileMode">skia.TileMode</a></span></em>, <em class="sig-param"><span class="n">localMatrix</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.Matrix.html#skia.Matrix" title="skia.Matrix">skia.Matrix</a></span> <span class="o">=</span> <span class="default_value">None</span></em>, <em class="sig-param"><span class="n">tile</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.Rect.html#skia.Rect" title="skia.Rect">skia.Rect</a></span> <span class="o">=</span> <span class="default_value">None</span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="skia.Shader.html#skia.Shader" title="skia.Shader">skia.Shader</a><a class="headerlink" href="#skia.Picture.makeShader" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a new shader that will draw with this picture.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>tmx</strong> (<a class="reference internal" href="skia.TileMode.html#skia.TileMode" title="skia.TileMode"><em>skia.TileMode</em></a>) – The tiling mode to use when sampling in the
+x-direction.</p></li>
+<li><p><strong>tmy</strong> (<a class="reference internal" href="skia.TileMode.html#skia.TileMode" title="skia.TileMode"><em>skia.TileMode</em></a>) – The tiling mode to use when sampling in the
+y-direction.</p></li>
+<li><p><strong>localMatrix</strong> (<a class="reference internal" href="skia.Matrix.html#skia.Matrix" title="skia.Matrix"><em>skia.Matrix</em></a>) – Optional matrix used when sampling</p></li>
+<li><p><strong>tile</strong> (<a class="reference internal" href="skia.Rect.html#skia.Rect" title="skia.Rect"><em>skia.Rect</em></a>) – The tile rectangle in picture coordinates:
+this represents the subset (or superset) of the picture used when
+building a tile. It is not affected by localMatrix and does not
+imply scaling (only translation and cropping). If null, the tile
+rect is considered equal to the picture bounds.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Returns a new shader object. Note: this function never returns
+null.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="skia.Picture.playback">
+<code class="sig-prename descclassname">Picture.</code><code class="sig-name descname">playback</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Picture" title="skia.Picture">skia.Picture</a></span></em>, <em class="sig-param"><span class="n">canvas</span><span class="p">:</span> <span class="n">SkCanvas</span></em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#skia.Picture.playback" title="Permalink to this definition">¶</a></dt>
+<dd><p>Replays the drawing commands on the specified canvas.</p>
+<p>In the case that the commands are recorded, each command in the
+<a class="reference internal" href="#skia.Picture" title="skia.Picture"><code class="xref py py-class docutils literal notranslate"><span class="pre">Picture</span></code></a> is sent separately to canvas.</p>
+<p>To add a single command to draw <a class="reference internal" href="#skia.Picture" title="skia.Picture"><code class="xref py py-class docutils literal notranslate"><span class="pre">Picture</span></code></a> to recording canvas,
+call <a class="reference internal" href="skia.Canvas.html#skia.Canvas.drawPicture" title="skia.Canvas.drawPicture"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Canvas.drawPicture()</span></code></a> instead.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>canvas</strong> (<a class="reference internal" href="skia.Canvas.html#skia.Canvas" title="skia.Canvas"><em>skia.Canvas</em></a>) – receiver of drawing commands</p></li>
+<li><p><strong>callback</strong> – allows interruption of playback</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="skia.Picture.ref">
+<code class="sig-prename descclassname">Picture.</code><code class="sig-name descname">ref</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.RefCntBase.html#skia.RefCntBase" title="skia.RefCntBase">skia.RefCntBase</a></span></em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#skia.Picture.ref" title="Permalink to this definition">¶</a></dt>
+<dd><p>Increment the reference count.</p>
+<p>Must be balanced by a call to <a class="reference internal" href="#skia.Picture.unref" title="skia.Picture.unref"><code class="xref py py-meth docutils literal notranslate"><span class="pre">unref()</span></code></a>.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="skia.Picture.serialize">
+<code class="sig-prename descclassname">Picture.</code><code class="sig-name descname">serialize</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Picture" title="skia.Picture">skia.Picture</a></span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="skia.Data.html#skia.Data" title="skia.Data">skia.Data</a><a class="headerlink" href="#skia.Picture.serialize" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns storage containing <a class="reference internal" href="skia.Data.html#skia.Data" title="skia.Data"><code class="xref py py-class docutils literal notranslate"><span class="pre">Data</span></code></a> describing
+<a class="reference internal" href="#skia.Picture" title="skia.Picture"><code class="xref py py-class docutils literal notranslate"><span class="pre">Picture</span></code></a>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>storage containing serialized <a class="reference internal" href="#skia.Picture" title="skia.Picture"><code class="xref py py-class docutils literal notranslate"><span class="pre">Picture</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="skia.Picture.unique">
+<code class="sig-prename descclassname">Picture.</code><code class="sig-name descname">unique</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.RefCntBase.html#skia.RefCntBase" title="skia.RefCntBase">skia.RefCntBase</a></span></em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#skia.Picture.unique" title="Permalink to this definition">¶</a></dt>
+<dd><p>May return true if the caller is the only owner.</p>
+<p>Ensures that all previous owner’s actions are complete.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="skia.Picture.uniqueID">
+<code class="sig-prename descclassname">Picture.</code><code class="sig-name descname">uniqueID</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Picture" title="skia.Picture">skia.Picture</a></span></em><span class="sig-paren">)</span> &#x2192; int<a class="headerlink" href="#skia.Picture.uniqueID" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a non-zero value unique among <a class="reference internal" href="#skia.Picture" title="skia.Picture"><code class="xref py py-class docutils literal notranslate"><span class="pre">Picture</span></code></a> in Skia
+process.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>identifier for <a class="reference internal" href="#skia.Picture" title="skia.Picture"><code class="xref py py-class docutils literal notranslate"><span class="pre">Picture</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="skia.Picture.unref">
+<code class="sig-prename descclassname">Picture.</code><code class="sig-name descname">unref</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.RefCntBase.html#skia.RefCntBase" title="skia.RefCntBase">skia.RefCntBase</a></span></em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#skia.Picture.unref" title="Permalink to this definition">¶</a></dt>
+<dd><p>Decrement the reference count.</p>
+<p>If the reference count is 1 before the decrement, then delete the
+object. Note that if this is the case, then the object needs to have
+been allocated via new, and not on the stack.</p>
+</dd></dl>
+
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="skia.PictureRecorder.html" class="btn btn-neutral float-right" title="PictureRecorder" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="skia.PerlinNoiseShader.html" class="btn btn-neutral float-left" title="PerlinNoiseShader" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2020, Kota Yamaguchi
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

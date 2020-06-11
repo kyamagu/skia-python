@@ -1,0 +1,740 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>MemoryStream &mdash; skia-python 0.0.4 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="MergePathEffect" href="skia.MergePathEffect.html" />
+    <link rel="prev" title="MatrixPathEffect" href="skia.MatrixPathEffect.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> skia-python
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.0.4
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../install.html">Install</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tutorial/index.html">Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../development.html">Development</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../reference.html">Reference</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="skia.html">skia</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="skia.AlphaThresholdFilter.html">AlphaThresholdFilter</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.AlphaType.html">AlphaType</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.ApplyPerspectiveClip.html">ApplyPerspectiveClip</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.ArithmeticImageFilter.html">ArithmeticImageFilter</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.AutoCanvasRestore.html">AutoCanvasRestore</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.BBHFactory.html">BBHFactory</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.BBoxHierarchy.html">BBoxHierarchy</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.BackingFit.html">BackingFit</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.Bitmap.html">Bitmap</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.BlendMode.html">BlendMode</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.BlendModeCoeff.html">BlendModeCoeff</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.BlurImageFilter.html">BlurImageFilter</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.BlurMaskFilter.html">BlurMaskFilter</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.BlurStyle.html">BlurStyle</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.Budgeted.html">Budgeted</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.Canvas.html">Canvas</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.ClipOp.html">ClipOp</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.Codec.html">Codec</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.Color4f.html">Color4f</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.ColorChannel.html">ColorChannel</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.ColorChannelFlag.html">ColorChannelFlag</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.ColorFilter.html">ColorFilter</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.ColorFilterImageFilter.html">ColorFilterImageFilter</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.ColorFilters.html">ColorFilters</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.ColorInfo.html">ColorInfo</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.ColorMatrix.html">ColorMatrix</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.ColorMatrixFilter.html">ColorMatrixFilter</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.ColorSpace.html">ColorSpace</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.ColorType.html">ColorType</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.ConvergeMode.html">ConvergeMode</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.CornerPathEffect.html">CornerPathEffect</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.DashPathEffect.html">DashPathEffect</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.Data.html">Data</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.DilateImageFilter.html">DilateImageFilter</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.DiscretePathEffect.html">DiscretePathEffect</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.DisplacementMapEffect.html">DisplacementMapEffect</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.Document.html">Document</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.Drawable.html">Drawable</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.DropShadowImageFilter.html">DropShadowImageFilter</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.DynamicMemoryWStream.html">DynamicMemoryWStream</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.EncodedImageFormat.html">EncodedImageFormat</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.EncodedOrigin.html">EncodedOrigin</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.ErodeImageFilter.html">ErodeImageFilter</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.FILEStream.html">FILEStream</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.FILEWStream.html">FILEWStream</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.FilterQuality.html">FilterQuality</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.Flattanable.html">Flattanable</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.Font.html">Font</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.FontArguments.html">FontArguments</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.FontHinting.html">FontHinting</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.FontMetrics.html">FontMetrics</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.FontMgr.html">FontMgr</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.FontStyle.html">FontStyle</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.FontStyleSet.html">FontStyleSet</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.GrBackendApi.html">GrBackendApi</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.GrBackendFormat.html">GrBackendFormat</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.GrBackendSemaphore.html">GrBackendSemaphore</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.GrBackendTexture.html">GrBackendTexture</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.GrColorType.html">GrColorType</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.GrContext.html">GrContext</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.GrContextOptions.html">GrContextOptions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.GrFlushFlags.html">GrFlushFlags</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.GrFlushInfo.html">GrFlushInfo</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.GrGLBackendState.html">GrGLBackendState</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.GrGLInterface.html">GrGLInterface</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.GrGLTextureInfo.html">GrGLTextureInfo</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.GrMipMapped.html">GrMipMapped</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.GrMockOptions.html">GrMockOptions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.GrMockTextureInfo.html">GrMockTextureInfo</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.GrProtected.html">GrProtected</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.GrRenderable.html">GrRenderable</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.GrSemaphoresSubmitted.html">GrSemaphoresSubmitted</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.GrSurfaceOrigin.html">GrSurfaceOrigin</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.GrTextureType.html">GrTextureType</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.GradientShader.html">GradientShader</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.HighContrastConfig.html">HighContrastConfig</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.HighContrastFilter.html">HighContrastFilter</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.IPoint.html">IPoint</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.IRect.html">IRect</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.ISize.html">ISize</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.Image.html">Image</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.ImageFilter.html">ImageFilter</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.ImageFilters.html">ImageFilters</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.ImageInfo.html">ImageInfo</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.LightingImageFilter.html">LightingImageFilter</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.Line2DPathEffect.html">Line2DPathEffect</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.LumaColorFilter.html">LumaColorFilter</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.M44.html">M44</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.MagnifierImageFilter.html">MagnifierImageFilter</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.MaskFilter.html">MaskFilter</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.Matrix.html">Matrix</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.MatrixPathEffect.html">MatrixPathEffect</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">MemoryStream</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#methods">Methods</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="skia.MergePathEffect.html">MergePathEffect</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.NullWStream.html">NullWStream</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.OffsetImageFilter.html">OffsetImageFilter</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.OverdrawColorFilter.html">OverdrawColorFilter</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.Paint.html">Paint</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.PaintImageFilter.html">PaintImageFilter</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.Path.html">Path</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.Path1DPathEffect.html">Path1DPathEffect</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.Path2DPathEffect.html">Path2DPathEffect</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.PathConvexityType.html">PathConvexityType</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.PathDirection.html">PathDirection</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.PathEffect.html">PathEffect</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.PathFillType.html">PathFillType</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.PathOp.html">PathOp</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.PathSegmentMask.html">PathSegmentMask</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.PathVerb.html">PathVerb</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.PerlinNoiseShader.html">PerlinNoiseShader</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.Picture.html">Picture</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.PictureRecorder.html">PictureRecorder</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.PixelGeometry.html">PixelGeometry</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.PixelRef.html">PixelRef</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.Pixmap.html">Pixmap</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.Point.html">Point</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.Point3.html">Point3</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.RRect.html">RRect</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.RSXform.html">RSXform</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.Rect.html">Rect</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.RefCnt.html">RefCnt</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.RefCntBase.html">RefCntBase</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.Region.html">Region</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.Shader.html">Shader</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.ShaderMaskFilter.html">ShaderMaskFilter</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.Shaders.html">Shaders</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.Size.html">Size</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.Stream.html">Stream</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.StreamAsset.html">StreamAsset</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.StreamMemory.html">StreamMemory</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.StreamRewindable.html">StreamRewindable</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.StreamSeekable.html">StreamSeekable</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.StrokePathEffect.html">StrokePathEffect</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.StrokeRec.html">StrokeRec</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.Surface.html">Surface</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.SurfaceCharacterization.html">SurfaceCharacterization</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.SurfaceProps.html">SurfaceProps</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.TableColorFilter.html">TableColorFilter</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.TableMaskFilter.html">TableMaskFilter</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.TextBlob.html">TextBlob</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.TextBlobBuilder.html">TextBlobBuilder</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.TextEncoding.html">TextEncoding</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.TileImageFilter.html">TileImageFilter</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.TileMode.html">TileMode</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.TrimPathEffect.html">TrimPathEffect</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.Typeface.html">Typeface</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.Vertices.html">Vertices</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.WStream.html">WStream</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.XfermodeImageFilter.html">XfermodeImageFilter</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.YUVColorSpace.html">YUVColorSpace</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.html#functions">Functions</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">skia-python</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../reference.html">Reference</a> &raquo;</li>
+        
+          <li><a href="skia.html">skia</a> &raquo;</li>
+        
+      <li>MemoryStream</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/reference/skia.MemoryStream.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="memorystream">
+<h1>MemoryStream<a class="headerlink" href="#memorystream" title="Permalink to this headline">¶</a></h1>
+<dl class="py class">
+<dt id="skia.MemoryStream">
+<em class="property">class </em><code class="sig-name descname">MemoryStream</code><a class="headerlink" href="#skia.MemoryStream" title="Permalink to this definition">¶</a></dt>
+<dd><p class="rubric">Methods</p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.MemoryStream.Make" title="skia.MemoryStream.Make"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Make</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.MemoryStream.MakeCopy" title="skia.MemoryStream.MakeCopy"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MakeCopy</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.MemoryStream.MakeDirect" title="skia.MemoryStream.MakeDirect"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MakeDirect</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.MemoryStream.MakeFromFile" title="skia.MemoryStream.MakeFromFile"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MakeFromFile</span></code></a></p></td>
+<td><p>Attempts to open the specified file as a stream, returns nullptr on failure.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.MemoryStream.__init__" title="skia.MemoryStream.__init__"><code class="xref py py-obj docutils literal notranslate"><span class="pre">__init__</span></code></a></p></td>
+<td><p>Overloaded function.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.MemoryStream.asData" title="skia.MemoryStream.asData"><code class="xref py py-obj docutils literal notranslate"><span class="pre">asData</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.MemoryStream.duplicate" title="skia.MemoryStream.duplicate"><code class="xref py py-obj docutils literal notranslate"><span class="pre">duplicate</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.MemoryStream.fork" title="skia.MemoryStream.fork"><code class="xref py py-obj docutils literal notranslate"><span class="pre">fork</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.MemoryStream.getAtPos" title="skia.MemoryStream.getAtPos"><code class="xref py py-obj docutils literal notranslate"><span class="pre">getAtPos</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.MemoryStream.getLength" title="skia.MemoryStream.getLength"><code class="xref py py-obj docutils literal notranslate"><span class="pre">getLength</span></code></a></p></td>
+<td><p>Returns the total length of the stream.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.MemoryStream.getMemoryBase" title="skia.MemoryStream.getMemoryBase"><code class="xref py py-obj docutils literal notranslate"><span class="pre">getMemoryBase</span></code></a></p></td>
+<td><p>Returns the starting address for the data.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.MemoryStream.getPosition" title="skia.MemoryStream.getPosition"><code class="xref py py-obj docutils literal notranslate"><span class="pre">getPosition</span></code></a></p></td>
+<td><p>Returns the current position in the stream.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.MemoryStream.hasLength" title="skia.MemoryStream.hasLength"><code class="xref py py-obj docutils literal notranslate"><span class="pre">hasLength</span></code></a></p></td>
+<td><p>Returns true if this stream can report it’s total length.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.MemoryStream.hasPosition" title="skia.MemoryStream.hasPosition"><code class="xref py py-obj docutils literal notranslate"><span class="pre">hasPosition</span></code></a></p></td>
+<td><p>Returns true if this stream can report it’s current position.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.MemoryStream.isAtEnd" title="skia.MemoryStream.isAtEnd"><code class="xref py py-obj docutils literal notranslate"><span class="pre">isAtEnd</span></code></a></p></td>
+<td><p>Returns true when all the bytes in the stream have been read.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.MemoryStream.move" title="skia.MemoryStream.move"><code class="xref py py-obj docutils literal notranslate"><span class="pre">move</span></code></a></p></td>
+<td><p>Seeks to an relative offset in the stream.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.MemoryStream.peek" title="skia.MemoryStream.peek"><code class="xref py py-obj docutils literal notranslate"><span class="pre">peek</span></code></a></p></td>
+<td><p>Attempt to peek at size bytes.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.MemoryStream.read" title="skia.MemoryStream.read"><code class="xref py py-obj docutils literal notranslate"><span class="pre">read</span></code></a></p></td>
+<td><p>Reads or skips size number of bytes.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.MemoryStream.readBool" title="skia.MemoryStream.readBool"><code class="xref py py-obj docutils literal notranslate"><span class="pre">readBool</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.MemoryStream.readPackedUInt" title="skia.MemoryStream.readPackedUInt"><code class="xref py py-obj docutils literal notranslate"><span class="pre">readPackedUInt</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.MemoryStream.readS16" title="skia.MemoryStream.readS16"><code class="xref py py-obj docutils literal notranslate"><span class="pre">readS16</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.MemoryStream.readS32" title="skia.MemoryStream.readS32"><code class="xref py py-obj docutils literal notranslate"><span class="pre">readS32</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.MemoryStream.readS8" title="skia.MemoryStream.readS8"><code class="xref py py-obj docutils literal notranslate"><span class="pre">readS8</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.MemoryStream.readScalar" title="skia.MemoryStream.readScalar"><code class="xref py py-obj docutils literal notranslate"><span class="pre">readScalar</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.MemoryStream.readU16" title="skia.MemoryStream.readU16"><code class="xref py py-obj docutils literal notranslate"><span class="pre">readU16</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.MemoryStream.readU32" title="skia.MemoryStream.readU32"><code class="xref py py-obj docutils literal notranslate"><span class="pre">readU32</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.MemoryStream.readU8" title="skia.MemoryStream.readU8"><code class="xref py py-obj docutils literal notranslate"><span class="pre">readU8</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.MemoryStream.rewind" title="skia.MemoryStream.rewind"><code class="xref py py-obj docutils literal notranslate"><span class="pre">rewind</span></code></a></p></td>
+<td><p>Rewinds to the beginning of the stream.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.MemoryStream.seek" title="skia.MemoryStream.seek"><code class="xref py py-obj docutils literal notranslate"><span class="pre">seek</span></code></a></p></td>
+<td><p>Seeks to an absolute position in the stream.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.MemoryStream.setData" title="skia.MemoryStream.setData"><code class="xref py py-obj docutils literal notranslate"><span class="pre">setData</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.MemoryStream.setMemory" title="skia.MemoryStream.setMemory"><code class="xref py py-obj docutils literal notranslate"><span class="pre">setMemory</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.MemoryStream.skip" title="skia.MemoryStream.skip"><code class="xref py py-obj docutils literal notranslate"><span class="pre">skip</span></code></a></p></td>
+<td><p>Skip size number of bytes.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.MemoryStream.skipToAlign4" title="skia.MemoryStream.skipToAlign4"><code class="xref py py-obj docutils literal notranslate"><span class="pre">skipToAlign4</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<div class="section" id="methods">
+<h2>Methods<a class="headerlink" href="#methods" title="Permalink to this headline">¶</a></h2>
+<dl class="py method">
+<dt id="skia.MemoryStream.Make">
+<em class="property">static </em><code class="sig-prename descclassname">MemoryStream.</code><code class="sig-name descname">Make</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">data</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.Data.html#skia.Data" title="skia.Data">skia.Data</a></span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="#skia.MemoryStream" title="skia.MemoryStream">skia.MemoryStream</a><a class="headerlink" href="#skia.MemoryStream.Make" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="skia.MemoryStream.MakeCopy">
+<em class="property">static </em><code class="sig-prename descclassname">MemoryStream.</code><code class="sig-name descname">MakeCopy</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">data</span><span class="p">:</span> <span class="n">buffer</span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="#skia.MemoryStream" title="skia.MemoryStream">skia.MemoryStream</a><a class="headerlink" href="#skia.MemoryStream.MakeCopy" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="skia.MemoryStream.MakeDirect">
+<em class="property">static </em><code class="sig-prename descclassname">MemoryStream.</code><code class="sig-name descname">MakeDirect</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">data</span><span class="p">:</span> <span class="n">buffer</span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="#skia.MemoryStream" title="skia.MemoryStream">skia.MemoryStream</a><a class="headerlink" href="#skia.MemoryStream.MakeDirect" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="skia.MemoryStream.MakeFromFile">
+<em class="property">static </em><code class="sig-prename descclassname">MemoryStream.</code><code class="sig-name descname">MakeFromFile</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">arg0</span><span class="p">:</span> <span class="n">str</span></em><span class="sig-paren">)</span> &#x2192; SkStreamAsset<a class="headerlink" href="#skia.MemoryStream.MakeFromFile" title="Permalink to this definition">¶</a></dt>
+<dd><p>Attempts to open the specified file as a stream, returns nullptr on
+failure.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="skia.MemoryStream.__init__">
+<code class="sig-prename descclassname">MemoryStream.</code><code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span><span class="n">args</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#skia.MemoryStream.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Overloaded function.</p>
+<ol class="arabic simple">
+<li><p>__init__(self: skia.MemoryStream) -&gt; None</p></li>
+<li><p>__init__(self: skia.MemoryStream, length: int) -&gt; None</p></li>
+<li><p>__init__(self: skia.MemoryStream, data: buffer, copyData: bool = False) -&gt; None</p></li>
+<li><p>__init__(self: skia.MemoryStream, data: skia.Data) -&gt; None</p></li>
+</ol>
+</dd></dl>
+
+<dl class="py method">
+<dt id="skia.MemoryStream.asData">
+<code class="sig-prename descclassname">MemoryStream.</code><code class="sig-name descname">asData</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.MemoryStream" title="skia.MemoryStream">skia.MemoryStream</a></span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="skia.Data.html#skia.Data" title="skia.Data">skia.Data</a><a class="headerlink" href="#skia.MemoryStream.asData" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="skia.MemoryStream.duplicate">
+<code class="sig-prename descclassname">MemoryStream.</code><code class="sig-name descname">duplicate</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.StreamMemory.html#skia.StreamMemory" title="skia.StreamMemory">skia.StreamMemory</a></span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="skia.StreamSeekable.html#skia.StreamSeekable" title="skia.StreamSeekable">skia.StreamSeekable</a><a class="headerlink" href="#skia.MemoryStream.duplicate" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="skia.MemoryStream.fork">
+<code class="sig-prename descclassname">MemoryStream.</code><code class="sig-name descname">fork</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.StreamMemory.html#skia.StreamMemory" title="skia.StreamMemory">skia.StreamMemory</a></span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="skia.StreamSeekable.html#skia.StreamSeekable" title="skia.StreamSeekable">skia.StreamSeekable</a><a class="headerlink" href="#skia.MemoryStream.fork" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="skia.MemoryStream.getAtPos">
+<code class="sig-prename descclassname">MemoryStream.</code><code class="sig-name descname">getAtPos</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.MemoryStream" title="skia.MemoryStream">skia.MemoryStream</a></span></em><span class="sig-paren">)</span> &#x2192; capsule<a class="headerlink" href="#skia.MemoryStream.getAtPos" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="skia.MemoryStream.getLength">
+<code class="sig-prename descclassname">MemoryStream.</code><code class="sig-name descname">getLength</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.Stream.html#skia.Stream" title="skia.Stream">skia.Stream</a></span></em><span class="sig-paren">)</span> &#x2192; int<a class="headerlink" href="#skia.MemoryStream.getLength" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the total length of the stream.</p>
+<p>If this cannot be done, returns 0.</p>
+<p>Reimplemented in <a class="reference internal" href="#skia.MemoryStream" title="skia.MemoryStream"><code class="xref py py-class docutils literal notranslate"><span class="pre">MemoryStream</span></code></a>, <a class="reference internal" href="skia.FILEStream.html#skia.FILEStream" title="skia.FILEStream"><code class="xref py py-class docutils literal notranslate"><span class="pre">FILEStream</span></code></a>, and
+<a class="reference internal" href="skia.StreamAsset.html#skia.StreamAsset" title="skia.StreamAsset"><code class="xref py py-class docutils literal notranslate"><span class="pre">StreamAsset</span></code></a>.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="skia.MemoryStream.getMemoryBase">
+<code class="sig-prename descclassname">MemoryStream.</code><code class="sig-name descname">getMemoryBase</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.Stream.html#skia.Stream" title="skia.Stream">skia.Stream</a></span></em><span class="sig-paren">)</span> &#x2192; capsule<a class="headerlink" href="#skia.MemoryStream.getMemoryBase" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the starting address for the data.</p>
+<p>If this cannot be done, returns NULL.</p>
+<p>Reimplemented in <a class="reference internal" href="#skia.MemoryStream" title="skia.MemoryStream"><code class="xref py py-class docutils literal notranslate"><span class="pre">MemoryStream</span></code></a>, and <a class="reference internal" href="skia.StreamMemory.html#skia.StreamMemory" title="skia.StreamMemory"><code class="xref py py-class docutils literal notranslate"><span class="pre">StreamMemory</span></code></a>.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="skia.MemoryStream.getPosition">
+<code class="sig-prename descclassname">MemoryStream.</code><code class="sig-name descname">getPosition</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.Stream.html#skia.Stream" title="skia.Stream">skia.Stream</a></span></em><span class="sig-paren">)</span> &#x2192; int<a class="headerlink" href="#skia.MemoryStream.getPosition" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the current position in the stream.</p>
+<p>If this cannot be done, returns 0.</p>
+<p>Reimplemented in <a class="reference internal" href="#skia.MemoryStream" title="skia.MemoryStream"><code class="xref py py-class docutils literal notranslate"><span class="pre">MemoryStream</span></code></a>, <a class="reference internal" href="skia.FILEStream.html#skia.FILEStream" title="skia.FILEStream"><code class="xref py py-class docutils literal notranslate"><span class="pre">FILEStream</span></code></a>, and
+<a class="reference internal" href="skia.StreamSeekable.html#skia.StreamSeekable" title="skia.StreamSeekable"><code class="xref py py-class docutils literal notranslate"><span class="pre">StreamSeekable</span></code></a>.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="skia.MemoryStream.hasLength">
+<code class="sig-prename descclassname">MemoryStream.</code><code class="sig-name descname">hasLength</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.Stream.html#skia.Stream" title="skia.Stream">skia.Stream</a></span></em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#skia.MemoryStream.hasLength" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns true if this stream can report it’s total length.</p>
+<p>Reimplemented in <a class="reference internal" href="skia.StreamAsset.html#skia.StreamAsset" title="skia.StreamAsset"><code class="xref py py-class docutils literal notranslate"><span class="pre">StreamAsset</span></code></a>.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="skia.MemoryStream.hasPosition">
+<code class="sig-prename descclassname">MemoryStream.</code><code class="sig-name descname">hasPosition</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.Stream.html#skia.Stream" title="skia.Stream">skia.Stream</a></span></em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#skia.MemoryStream.hasPosition" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns true if this stream can report it’s current position.</p>
+<p>Reimplemented in <a class="reference internal" href="skia.StreamSeekable.html#skia.StreamSeekable" title="skia.StreamSeekable"><code class="xref py py-class docutils literal notranslate"><span class="pre">StreamSeekable</span></code></a>.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="skia.MemoryStream.isAtEnd">
+<code class="sig-prename descclassname">MemoryStream.</code><code class="sig-name descname">isAtEnd</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.Stream.html#skia.Stream" title="skia.Stream">skia.Stream</a></span></em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#skia.MemoryStream.isAtEnd" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns true when all the bytes in the stream have been read.</p>
+<p>This may return true early (when there are no more bytes to be read) or
+late (after the first unsuccessful read).</p>
+<p>Implemented in <a class="reference internal" href="#skia.MemoryStream" title="skia.MemoryStream"><code class="xref py py-class docutils literal notranslate"><span class="pre">MemoryStream</span></code></a>, and <a class="reference internal" href="skia.FILEStream.html#skia.FILEStream" title="skia.FILEStream"><code class="xref py py-class docutils literal notranslate"><span class="pre">FILEStream</span></code></a>.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="skia.MemoryStream.move">
+<code class="sig-prename descclassname">MemoryStream.</code><code class="sig-name descname">move</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.Stream.html#skia.Stream" title="skia.Stream">skia.Stream</a></span></em>, <em class="sig-param"><span class="n">arg0</span><span class="p">:</span> <span class="n">int</span></em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#skia.MemoryStream.move" title="Permalink to this definition">¶</a></dt>
+<dd><p>Seeks to an relative offset in the stream.</p>
+<p>If this cannot be done, returns false. If an attempt is made to move to
+a position outside the stream, the position will be set to the closest
+point within the stream (beginning or end).</p>
+<p>Reimplemented in <a class="reference internal" href="#skia.MemoryStream" title="skia.MemoryStream"><code class="xref py py-class docutils literal notranslate"><span class="pre">MemoryStream</span></code></a>, <a class="reference internal" href="skia.FILEStream.html#skia.FILEStream" title="skia.FILEStream"><code class="xref py py-class docutils literal notranslate"><span class="pre">FILEStream</span></code></a>, and
+<a class="reference internal" href="skia.StreamSeekable.html#skia.StreamSeekable" title="skia.StreamSeekable"><code class="xref py py-class docutils literal notranslate"><span class="pre">StreamSeekable</span></code></a>.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="skia.MemoryStream.peek">
+<code class="sig-prename descclassname">MemoryStream.</code><code class="sig-name descname">peek</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.Stream.html#skia.Stream" title="skia.Stream">skia.Stream</a></span></em>, <em class="sig-param"><span class="n">buffer</span><span class="p">:</span> <span class="n">buffer</span></em><span class="sig-paren">)</span> &#x2192; int<a class="headerlink" href="#skia.MemoryStream.peek" title="Permalink to this definition">¶</a></dt>
+<dd><p>Attempt to peek at size bytes.</p>
+<p>If this stream supports peeking, copy min(size, peekable bytes) into
+buffer, and return the number of bytes copied. If the stream does not
+support peeking, or cannot peek any bytes, return 0 and leave buffer
+unchanged. The stream is guaranteed to be in the same visible state
+after this call, regardless of success or failure.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>buffer</strong> – Must not be NULL, and must be at least size bytes.
+Destination to copy bytes.</p></li>
+<li><p><strong>size</strong> – Number of bytes to copy.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The number of bytes peeked/copied.</p>
+</dd>
+</dl>
+<p>Reimplemented in <a class="reference internal" href="#skia.MemoryStream" title="skia.MemoryStream"><code class="xref py py-class docutils literal notranslate"><span class="pre">MemoryStream</span></code></a>.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="skia.MemoryStream.read">
+<code class="sig-prename descclassname">MemoryStream.</code><code class="sig-name descname">read</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.Stream.html#skia.Stream" title="skia.Stream">skia.Stream</a></span></em>, <em class="sig-param"><span class="n">buffer</span><span class="p">:</span> <span class="n">buffer</span></em>, <em class="sig-param"><span class="n">size</span><span class="p">:</span> <span class="n">int</span> <span class="o">=</span> <span class="default_value">0</span></em><span class="sig-paren">)</span> &#x2192; int<a class="headerlink" href="#skia.MemoryStream.read" title="Permalink to this definition">¶</a></dt>
+<dd><p>Reads or skips size number of bytes.</p>
+<p>If buffer == NULL, skip size bytes, return how many were skipped. If
+buffer != NULL, copy size bytes into buffer, return how many were
+copied.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>buffer</strong> – when NULL skip size bytes, otherwise copy size bytes
+into buffer</p></li>
+<li><p><strong>size</strong> – the number of bytes to skip or copy; may be nullptr</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>the number of bytes actually read.</p>
+</dd>
+</dl>
+<p>Implemented in <a class="reference internal" href="#skia.MemoryStream" title="skia.MemoryStream"><code class="xref py py-class docutils literal notranslate"><span class="pre">MemoryStream</span></code></a>, and <a class="reference internal" href="skia.FILEStream.html#skia.FILEStream" title="skia.FILEStream"><code class="xref py py-class docutils literal notranslate"><span class="pre">FILEStream</span></code></a>.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="skia.MemoryStream.readBool">
+<code class="sig-prename descclassname">MemoryStream.</code><code class="sig-name descname">readBool</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.Stream.html#skia.Stream" title="skia.Stream">skia.Stream</a></span></em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#skia.MemoryStream.readBool" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="skia.MemoryStream.readPackedUInt">
+<code class="sig-prename descclassname">MemoryStream.</code><code class="sig-name descname">readPackedUInt</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.Stream.html#skia.Stream" title="skia.Stream">skia.Stream</a></span></em><span class="sig-paren">)</span> &#x2192; int<a class="headerlink" href="#skia.MemoryStream.readPackedUInt" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="skia.MemoryStream.readS16">
+<code class="sig-prename descclassname">MemoryStream.</code><code class="sig-name descname">readS16</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.Stream.html#skia.Stream" title="skia.Stream">skia.Stream</a></span></em><span class="sig-paren">)</span> &#x2192; int<a class="headerlink" href="#skia.MemoryStream.readS16" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="skia.MemoryStream.readS32">
+<code class="sig-prename descclassname">MemoryStream.</code><code class="sig-name descname">readS32</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.Stream.html#skia.Stream" title="skia.Stream">skia.Stream</a></span></em><span class="sig-paren">)</span> &#x2192; int<a class="headerlink" href="#skia.MemoryStream.readS32" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="skia.MemoryStream.readS8">
+<code class="sig-prename descclassname">MemoryStream.</code><code class="sig-name descname">readS8</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.Stream.html#skia.Stream" title="skia.Stream">skia.Stream</a></span></em><span class="sig-paren">)</span> &#x2192; int<a class="headerlink" href="#skia.MemoryStream.readS8" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="skia.MemoryStream.readScalar">
+<code class="sig-prename descclassname">MemoryStream.</code><code class="sig-name descname">readScalar</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.Stream.html#skia.Stream" title="skia.Stream">skia.Stream</a></span></em><span class="sig-paren">)</span> &#x2192; float<a class="headerlink" href="#skia.MemoryStream.readScalar" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="skia.MemoryStream.readU16">
+<code class="sig-prename descclassname">MemoryStream.</code><code class="sig-name descname">readU16</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.Stream.html#skia.Stream" title="skia.Stream">skia.Stream</a></span></em><span class="sig-paren">)</span> &#x2192; int<a class="headerlink" href="#skia.MemoryStream.readU16" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="skia.MemoryStream.readU32">
+<code class="sig-prename descclassname">MemoryStream.</code><code class="sig-name descname">readU32</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.Stream.html#skia.Stream" title="skia.Stream">skia.Stream</a></span></em><span class="sig-paren">)</span> &#x2192; int<a class="headerlink" href="#skia.MemoryStream.readU32" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="skia.MemoryStream.readU8">
+<code class="sig-prename descclassname">MemoryStream.</code><code class="sig-name descname">readU8</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.Stream.html#skia.Stream" title="skia.Stream">skia.Stream</a></span></em><span class="sig-paren">)</span> &#x2192; int<a class="headerlink" href="#skia.MemoryStream.readU8" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="skia.MemoryStream.rewind">
+<code class="sig-prename descclassname">MemoryStream.</code><code class="sig-name descname">rewind</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.Stream.html#skia.Stream" title="skia.Stream">skia.Stream</a></span></em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#skia.MemoryStream.rewind" title="Permalink to this definition">¶</a></dt>
+<dd><p>Rewinds to the beginning of the stream.</p>
+<p>Returns true if the stream is known to be at the beginning after this
+call returns.</p>
+<p>Reimplemented in <a class="reference internal" href="#skia.MemoryStream" title="skia.MemoryStream"><code class="xref py py-class docutils literal notranslate"><span class="pre">MemoryStream</span></code></a>, <a class="reference internal" href="skia.FILEStream.html#skia.FILEStream" title="skia.FILEStream"><code class="xref py py-class docutils literal notranslate"><span class="pre">FILEStream</span></code></a>, and
+<a class="reference internal" href="skia.StreamRewindable.html#skia.StreamRewindable" title="skia.StreamRewindable"><code class="xref py py-class docutils literal notranslate"><span class="pre">StreamRewindable</span></code></a>.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="skia.MemoryStream.seek">
+<code class="sig-prename descclassname">MemoryStream.</code><code class="sig-name descname">seek</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.Stream.html#skia.Stream" title="skia.Stream">skia.Stream</a></span></em>, <em class="sig-param"><span class="n">position</span><span class="p">:</span> <span class="n">int</span></em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#skia.MemoryStream.seek" title="Permalink to this definition">¶</a></dt>
+<dd><p>Seeks to an absolute position in the stream.</p>
+<p>If this cannot be done, returns false. If an attempt is made to seek
+past the end of the stream, the position will be set to the end of the
+stream.</p>
+<p>Reimplemented in <a class="reference internal" href="#skia.MemoryStream" title="skia.MemoryStream"><code class="xref py py-class docutils literal notranslate"><span class="pre">MemoryStream</span></code></a>, <a class="reference internal" href="skia.FILEStream.html#skia.FILEStream" title="skia.FILEStream"><code class="xref py py-class docutils literal notranslate"><span class="pre">FILEStream</span></code></a>, and
+<a class="reference internal" href="skia.StreamSeekable.html#skia.StreamSeekable" title="skia.StreamSeekable"><code class="xref py py-class docutils literal notranslate"><span class="pre">StreamSeekable</span></code></a>.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="skia.MemoryStream.setData">
+<code class="sig-prename descclassname">MemoryStream.</code><code class="sig-name descname">setData</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.MemoryStream" title="skia.MemoryStream">skia.MemoryStream</a></span></em>, <em class="sig-param"><span class="n">data</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.Data.html#skia.Data" title="skia.Data">skia.Data</a></span></em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#skia.MemoryStream.setData" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="skia.MemoryStream.setMemory">
+<code class="sig-prename descclassname">MemoryStream.</code><code class="sig-name descname">setMemory</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.MemoryStream" title="skia.MemoryStream">skia.MemoryStream</a></span></em>, <em class="sig-param"><span class="n">data</span><span class="p">:</span> <span class="n">buffer</span></em>, <em class="sig-param"><span class="n">copyData</span><span class="p">:</span> <span class="n">bool</span> <span class="o">=</span> <span class="default_value">False</span></em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#skia.MemoryStream.setMemory" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="skia.MemoryStream.skip">
+<code class="sig-prename descclassname">MemoryStream.</code><code class="sig-name descname">skip</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.Stream.html#skia.Stream" title="skia.Stream">skia.Stream</a></span></em>, <em class="sig-param"><span class="n">size</span><span class="p">:</span> <span class="n">int</span></em><span class="sig-paren">)</span> &#x2192; int<a class="headerlink" href="#skia.MemoryStream.skip" title="Permalink to this definition">¶</a></dt>
+<dd><p>Skip size number of bytes.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>the actual number bytes that could be skipped.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="skia.MemoryStream.skipToAlign4">
+<code class="sig-prename descclassname">MemoryStream.</code><code class="sig-name descname">skipToAlign4</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.MemoryStream" title="skia.MemoryStream">skia.MemoryStream</a></span></em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#skia.MemoryStream.skipToAlign4" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="skia.MergePathEffect.html" class="btn btn-neutral float-right" title="MergePathEffect" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="skia.MatrixPathEffect.html" class="btn btn-neutral float-left" title="MatrixPathEffect" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2020, Kota Yamaguchi
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

@@ -1,0 +1,792 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Paint Overview &mdash; skia-python 0.0.4 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Development" href="../development.html" />
+    <link rel="prev" title="Path Overview" href="path.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> skia-python
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.0.4
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../install.html">Install</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Tutorial</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="overview.html">Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="canvas.html">Canvas Creation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="path.html">Path Overview</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Paint Overview</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#xfermode">Xfermode</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#shader">Shader</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#bitmap-shader">Bitmap Shader</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#radial-gradient-shader">Radial Gradient Shader</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#two-point-conical-gradient-shader">Two-Point Conical Gradient Shader</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#sweep-gradient-shader">Sweep Gradient Shader</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#fractal-perlin-noise-shader">Fractal Perlin Noise Shader</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#turbulence-perlin-noise-shader">Turbulence Perlin Noise Shader</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#compose-shader">Compose Shader</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#imagefilter">ImageFilter</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#drop-shadow">Drop Shadow</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#dilate">Dilate</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#erode">Erode</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#maskfilter">MaskFilter</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#blur-mask-filter">Blur Mask Filter</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#colorfilter">ColorFilter</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#color-matrix-color-filter">Color Matrix Color Filter</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#color-table-color-filter">Color Table Color Filter</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#patheffect">PathEffect</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#path-2d-path-effect">Path 2D Path Effect</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#line-2d-path-effect">Line 2D Path Effect</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#path-1d-path-effect">Path 1D Path Effect</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#corner-path-effect">Corner Path Effect</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#dash-path-effect">Dash Path Effect</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#discrete-path-effect">Discrete Path Effect</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#compose-path-effect">Compose Path Effect</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#sum-path-effect">Sum Path Effect</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="index.html#notebook-examples">Notebook examples</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../development.html">Development</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../reference.html">Reference</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">skia-python</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="index.html">Tutorial</a> &raquo;</li>
+        
+      <li>Paint Overview</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/tutorial/paint.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="paint-overview">
+<h1>Paint Overview<a class="headerlink" href="#paint-overview" title="Permalink to this headline">¶</a></h1>
+<p>Anytime you draw something in Skia, and want to specify what color it is, or how
+it blends with the background, or what style or font to draw it in, you specify
+those attributes in a paint.</p>
+<p>Unlike <a class="reference internal" href="../reference/skia.Canvas.html#skia.Canvas" title="skia.Canvas"><code class="xref py py-class docutils literal notranslate"><span class="pre">Canvas</span></code></a>, paints do not maintain an internal stack of state
+(i.e. there is no save/restore on a paint). However, paints are relatively
+light-weight, so the client may create and maintain any number of paint objects,
+each set up for a particular use. Factoring all of these color and stylistic
+attributes out of the canvas state, and into (multiple) paint objects, allows
+canvas’ save/restore to be that much more efficient, as all they have to do is
+maintain the stack of matrix and clip settings.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">paint1</span> <span class="o">=</span> <span class="n">skia</span><span class="o">.</span><span class="n">Paint</span><span class="p">(</span>
+    <span class="n">AntiAlias</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">Color</span><span class="o">=</span><span class="n">skia</span><span class="o">.</span><span class="n">Color</span><span class="p">(</span><span class="mi">255</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>
+    <span class="n">Style</span><span class="o">=</span><span class="n">skia</span><span class="o">.</span><span class="n">Paint</span><span class="o">.</span><span class="n">kFill_Style</span><span class="p">)</span>
+
+<span class="n">paint2</span> <span class="o">=</span> <span class="n">skia</span><span class="o">.</span><span class="n">Paint</span><span class="p">(</span>
+    <span class="n">AntiAlias</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">Color</span><span class="o">=</span><span class="n">skia</span><span class="o">.</span><span class="n">Color</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">136</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>
+    <span class="n">Style</span><span class="o">=</span><span class="n">skia</span><span class="o">.</span><span class="n">Paint</span><span class="o">.</span><span class="n">kStroke_Style</span><span class="p">,</span>
+    <span class="n">StrokeWidth</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+
+<span class="n">paint3</span> <span class="o">=</span> <span class="n">skia</span><span class="o">.</span><span class="n">Paint</span><span class="p">(</span>
+    <span class="n">AntiAlias</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">Color</span><span class="o">=</span><span class="n">skia</span><span class="o">.</span><span class="n">Color</span><span class="p">(</span><span class="mi">136</span><span class="p">,</span> <span class="mi">136</span><span class="p">,</span> <span class="mi">136</span><span class="p">))</span>
+
+<span class="n">blob1</span> <span class="o">=</span> <span class="n">skia</span><span class="o">.</span><span class="n">TextBlob</span><span class="p">(</span><span class="s2">&quot;Skia!&quot;</span><span class="p">,</span> <span class="n">skia</span><span class="o">.</span><span class="n">Font</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="mf">64.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">))</span>
+<span class="n">blob2</span> <span class="o">=</span> <span class="n">skia</span><span class="o">.</span><span class="n">TextBlob</span><span class="p">(</span><span class="s2">&quot;Skia!&quot;</span><span class="p">,</span> <span class="n">skia</span><span class="o">.</span><span class="n">Font</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="mf">64.0</span><span class="p">,</span> <span class="mf">1.5</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">))</span>
+
+<span class="n">canvas</span><span class="o">.</span><span class="n">clear</span><span class="p">(</span><span class="n">skia</span><span class="o">.</span><span class="n">ColorWHITE</span><span class="p">)</span>
+<span class="n">canvas</span><span class="o">.</span><span class="n">drawTextBlob</span><span class="p">(</span><span class="n">blob1</span><span class="p">,</span> <span class="mf">20.0</span><span class="p">,</span> <span class="mf">64.0</span><span class="p">,</span> <span class="n">paint1</span><span class="p">)</span>
+<span class="n">canvas</span><span class="o">.</span><span class="n">drawTextBlob</span><span class="p">(</span><span class="n">blob1</span><span class="p">,</span> <span class="mf">20.0</span><span class="p">,</span> <span class="mf">144.0</span><span class="p">,</span> <span class="n">paint2</span><span class="p">)</span>
+<span class="n">canvas</span><span class="o">.</span><span class="n">drawTextBlob</span><span class="p">(</span><span class="n">blob2</span><span class="p">,</span> <span class="mf">20.0</span><span class="p">,</span> <span class="mf">224.0</span><span class="p">,</span> <span class="n">paint3</span><span class="p">)</span>
+</pre></div>
+</div>
+<img alt="Paint 1" src="../_images/paint-1.png" />
+<p>This shows three different paints, each set up to draw in a different style. Now
+the caller can intermix these paints freely, either using them as is, or
+modifying them as the drawing proceeds.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">fillPaint</span> <span class="o">=</span> <span class="n">skia</span><span class="o">.</span><span class="n">Paint</span><span class="p">()</span>
+<span class="n">strokePaint</span> <span class="o">=</span> <span class="n">skia</span><span class="o">.</span><span class="n">Paint</span><span class="p">(</span>
+    <span class="n">Style</span><span class="o">=</span><span class="n">skia</span><span class="o">.</span><span class="n">Paint</span><span class="o">.</span><span class="n">kStroke_Style</span><span class="p">,</span>
+    <span class="n">StrokeWidth</span><span class="o">=</span><span class="mf">3.0</span>
+<span class="p">)</span>
+
+<span class="n">canvas</span><span class="o">.</span><span class="n">drawRect</span><span class="p">(</span><span class="n">skia</span><span class="o">.</span><span class="n">Rect</span><span class="o">.</span><span class="n">MakeXYWH</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">60</span><span class="p">,</span> <span class="mi">20</span><span class="p">),</span> <span class="n">fillPaint</span><span class="p">)</span>
+<span class="n">canvas</span><span class="o">.</span><span class="n">drawRect</span><span class="p">(</span><span class="n">skia</span><span class="o">.</span><span class="n">Rect</span><span class="o">.</span><span class="n">MakeXYWH</span><span class="p">(</span><span class="mi">80</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">60</span><span class="p">,</span> <span class="mi">20</span><span class="p">),</span> <span class="n">strokePaint</span><span class="p">)</span>
+
+<span class="n">strokePaint</span><span class="o">.</span><span class="n">setStrokeWidth</span><span class="p">(</span><span class="mf">5.0</span><span class="p">)</span>
+<span class="n">canvas</span><span class="o">.</span><span class="n">drawOval</span><span class="p">(</span><span class="n">skia</span><span class="o">.</span><span class="n">Rect</span><span class="o">.</span><span class="n">MakeXYWH</span><span class="p">(</span><span class="mi">150</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">60</span><span class="p">,</span> <span class="mi">20</span><span class="p">),</span> <span class="n">strokePaint</span><span class="p">)</span>
+
+<span class="n">blob</span> <span class="o">=</span> <span class="n">skia</span><span class="o">.</span><span class="n">TextBlob</span><span class="p">(</span><span class="s2">&quot;SKIA&quot;</span><span class="p">,</span> <span class="n">skia</span><span class="o">.</span><span class="n">Font</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="mi">80</span><span class="p">))</span>
+
+<span class="n">fillPaint</span><span class="o">.</span><span class="n">setColor</span><span class="p">(</span><span class="n">skia</span><span class="o">.</span><span class="n">ColorSetARGB</span><span class="p">(</span><span class="mh">0xFF</span><span class="p">,</span> <span class="mh">0xFF</span><span class="p">,</span> <span class="mh">0x00</span><span class="p">,</span> <span class="mh">0x00</span><span class="p">))</span>
+<span class="n">canvas</span><span class="o">.</span><span class="n">drawTextBlob</span><span class="p">(</span><span class="n">blob</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">120</span><span class="p">,</span> <span class="n">fillPaint</span><span class="p">)</span>
+
+<span class="n">fillPaint</span><span class="o">.</span><span class="n">setColor</span><span class="p">(</span><span class="n">skia</span><span class="o">.</span><span class="n">ColorSetARGB</span><span class="p">(</span><span class="mh">0xFF</span><span class="p">,</span> <span class="mh">0x00</span><span class="p">,</span> <span class="mh">0x00</span><span class="p">,</span> <span class="mh">0xFF</span><span class="p">))</span>
+<span class="n">canvas</span><span class="o">.</span><span class="n">drawTextBlob</span><span class="p">(</span><span class="n">blob</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">220</span><span class="p">,</span> <span class="n">fillPaint</span><span class="p">)</span>
+</pre></div>
+</div>
+<img alt="Paint 2" src="../_images/paint-2.png" />
+<p>Beyond simple attributes such as color, strokes, and text values, paints support
+effects. These are subclasses of different aspects of the drawing pipeline, that
+when referenced by a paint (each of them is reference-counted), are called to
+override some part of the drawing pipeline.</p>
+<p>For example, to draw using a gradient instead of a single color, assign a
+<a class="reference internal" href="../reference/skia.Shader.html#skia.Shader" title="skia.Shader"><code class="xref py py-class docutils literal notranslate"><span class="pre">Shader</span></code></a> to the paint.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">paint</span> <span class="o">=</span> <span class="n">skia</span><span class="o">.</span><span class="n">Paint</span><span class="p">(</span>
+    <span class="n">Shader</span><span class="o">=</span><span class="n">skia</span><span class="o">.</span><span class="n">GradientShader</span><span class="o">.</span><span class="n">MakeLinear</span><span class="p">(</span>
+        <span class="n">points</span><span class="o">=</span><span class="p">[(</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">),</span> <span class="p">(</span><span class="mf">256.0</span><span class="p">,</span> <span class="mf">256.0</span><span class="p">)],</span>
+        <span class="n">colors</span><span class="o">=</span><span class="p">[</span><span class="mh">0xFF0000FF</span><span class="p">,</span> <span class="mh">0xFFFFFF00</span><span class="p">]))</span>
+<span class="n">canvas</span><span class="o">.</span><span class="n">drawPaint</span><span class="p">(</span><span class="n">paint</span><span class="p">)</span>
+</pre></div>
+</div>
+<img alt="Paint 3" src="../_images/paint-3.png" />
+<p>Now, anything drawn with that paint will be drawn with the gradient specified in
+the call to <a class="reference internal" href="../reference/skia.GradientShader.html#skia.GradientShader.MakeLinear" title="skia.GradientShader.MakeLinear"><code class="xref py py-meth docutils literal notranslate"><span class="pre">MakeLinear()</span></code></a>.</p>
+<p>There are 6 types of effects that can be assigned to a paint:</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#patheffect"><span class="std std-ref">PathEffect</span></a> - modifications to the geometry (path) before it generates an alpha mask (e.g. dashing)</p></li>
+<li><p><a class="reference internal" href="#imagefilter"><span class="std std-ref">ImageFilter</span></a> - composing custom mask layers (e.g. shadows)</p></li>
+<li><p><a class="reference internal" href="#maskfilter"><span class="std std-ref">MaskFilter</span></a> - modifications to the alpha mask before it is colorized and drawn (e.g. blur)</p></li>
+<li><p><a class="reference internal" href="#shader"><span class="std std-ref">Shader</span></a> - e.g. gradients (linear, radial, sweep), bitmap patterns (clamp, repeat, mirror)</p></li>
+<li><p><a class="reference internal" href="#colorfilter"><span class="std std-ref">ColorFilter</span></a> - modify the source color(s) before applying the xfermode (e.g. color matrix)</p></li>
+<li><p><a class="reference internal" href="#xfermode"><span class="std std-ref">Xfermode</span></a> - e.g. porter-duff transfermodes, blend modes</p></li>
+</ul>
+<p>Paints also hold a reference to a Typeface. The typeface represents a specific
+font style, to be used for measuring and drawing text. Speaking of which, paints
+are used not only for drawing text, but also for measuring it:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">paint</span><span class="o">.</span><span class="n">measureText</span><span class="p">(</span><span class="o">...</span><span class="p">)</span>
+<span class="n">paint</span><span class="o">.</span><span class="n">getTextBounds</span><span class="p">(</span><span class="o">...</span><span class="p">)</span>
+<span class="n">paint</span><span class="o">.</span><span class="n">textToGlyphs</span><span class="p">(</span><span class="o">...</span><span class="p">)</span>
+<span class="n">paint</span><span class="o">.</span><span class="n">getFontMetrics</span><span class="p">(</span><span class="o">...</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="section" id="xfermode">
+<span id="id1"></span><h2>Xfermode<a class="headerlink" href="#xfermode" title="Permalink to this headline">¶</a></h2>
+<p>The following example demonstrates all of the Skia’s standard transfer modes. In
+this example the source is a solid magenta color with a horizontal alpha
+gradient and the destination is a solid cyan color with a vertical alpha
+gradient.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">draw_utf8_string</span><span class="p">(</span><span class="n">canvas</span><span class="p">,</span> <span class="n">text</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">font</span><span class="p">,</span> <span class="n">paint</span><span class="p">):</span>
+    <span class="n">canvas</span><span class="o">.</span><span class="n">drawTextBlob</span><span class="p">(</span><span class="n">skia</span><span class="o">.</span><span class="n">TextBlob</span><span class="p">(</span><span class="n">text</span><span class="p">,</span> <span class="n">font</span><span class="p">),</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">paint</span><span class="p">)</span>
+
+
+<span class="n">modes</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="n">skia</span><span class="o">.</span><span class="n">BlendMode</span><span class="o">.</span><span class="n">kClear</span><span class="p">,</span>
+    <span class="n">skia</span><span class="o">.</span><span class="n">BlendMode</span><span class="o">.</span><span class="n">kSrc</span><span class="p">,</span>
+    <span class="n">skia</span><span class="o">.</span><span class="n">BlendMode</span><span class="o">.</span><span class="n">kDst</span><span class="p">,</span>
+    <span class="n">skia</span><span class="o">.</span><span class="n">BlendMode</span><span class="o">.</span><span class="n">kSrcOver</span><span class="p">,</span>
+    <span class="n">skia</span><span class="o">.</span><span class="n">BlendMode</span><span class="o">.</span><span class="n">kDstOver</span><span class="p">,</span>
+    <span class="n">skia</span><span class="o">.</span><span class="n">BlendMode</span><span class="o">.</span><span class="n">kSrcIn</span><span class="p">,</span>
+    <span class="n">skia</span><span class="o">.</span><span class="n">BlendMode</span><span class="o">.</span><span class="n">kDstIn</span><span class="p">,</span>
+    <span class="n">skia</span><span class="o">.</span><span class="n">BlendMode</span><span class="o">.</span><span class="n">kSrcOut</span><span class="p">,</span>
+    <span class="n">skia</span><span class="o">.</span><span class="n">BlendMode</span><span class="o">.</span><span class="n">kDstOut</span><span class="p">,</span>
+    <span class="n">skia</span><span class="o">.</span><span class="n">BlendMode</span><span class="o">.</span><span class="n">kSrcATop</span><span class="p">,</span>
+    <span class="n">skia</span><span class="o">.</span><span class="n">BlendMode</span><span class="o">.</span><span class="n">kDstATop</span><span class="p">,</span>
+    <span class="n">skia</span><span class="o">.</span><span class="n">BlendMode</span><span class="o">.</span><span class="n">kXor</span><span class="p">,</span>
+    <span class="n">skia</span><span class="o">.</span><span class="n">BlendMode</span><span class="o">.</span><span class="n">kPlus</span><span class="p">,</span>
+    <span class="n">skia</span><span class="o">.</span><span class="n">BlendMode</span><span class="o">.</span><span class="n">kModulate</span><span class="p">,</span>
+    <span class="n">skia</span><span class="o">.</span><span class="n">BlendMode</span><span class="o">.</span><span class="n">kScreen</span><span class="p">,</span>
+    <span class="n">skia</span><span class="o">.</span><span class="n">BlendMode</span><span class="o">.</span><span class="n">kOverlay</span><span class="p">,</span>
+    <span class="n">skia</span><span class="o">.</span><span class="n">BlendMode</span><span class="o">.</span><span class="n">kDarken</span><span class="p">,</span>
+    <span class="n">skia</span><span class="o">.</span><span class="n">BlendMode</span><span class="o">.</span><span class="n">kLighten</span><span class="p">,</span>
+    <span class="n">skia</span><span class="o">.</span><span class="n">BlendMode</span><span class="o">.</span><span class="n">kColorDodge</span><span class="p">,</span>
+    <span class="n">skia</span><span class="o">.</span><span class="n">BlendMode</span><span class="o">.</span><span class="n">kColorBurn</span><span class="p">,</span>
+    <span class="n">skia</span><span class="o">.</span><span class="n">BlendMode</span><span class="o">.</span><span class="n">kHardLight</span><span class="p">,</span>
+    <span class="n">skia</span><span class="o">.</span><span class="n">BlendMode</span><span class="o">.</span><span class="n">kSoftLight</span><span class="p">,</span>
+    <span class="n">skia</span><span class="o">.</span><span class="n">BlendMode</span><span class="o">.</span><span class="n">kDifference</span><span class="p">,</span>
+    <span class="n">skia</span><span class="o">.</span><span class="n">BlendMode</span><span class="o">.</span><span class="n">kExclusion</span><span class="p">,</span>
+    <span class="n">skia</span><span class="o">.</span><span class="n">BlendMode</span><span class="o">.</span><span class="n">kMultiply</span><span class="p">,</span>
+    <span class="n">skia</span><span class="o">.</span><span class="n">BlendMode</span><span class="o">.</span><span class="n">kHue</span><span class="p">,</span>
+    <span class="n">skia</span><span class="o">.</span><span class="n">BlendMode</span><span class="o">.</span><span class="n">kSaturation</span><span class="p">,</span>
+    <span class="n">skia</span><span class="o">.</span><span class="n">BlendMode</span><span class="o">.</span><span class="n">kColor</span><span class="p">,</span>
+    <span class="n">skia</span><span class="o">.</span><span class="n">BlendMode</span><span class="o">.</span><span class="n">kLuminosity</span><span class="p">,</span>
+<span class="p">]</span>
+<span class="n">rect</span> <span class="o">=</span> <span class="n">skia</span><span class="o">.</span><span class="n">Rect</span><span class="p">(</span><span class="mf">64.0</span><span class="p">,</span> <span class="mf">64.0</span><span class="p">)</span>
+<span class="n">font</span> <span class="o">=</span> <span class="n">skia</span><span class="o">.</span><span class="n">Font</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="mi">24</span><span class="p">)</span>
+<span class="n">stroke</span> <span class="o">=</span> <span class="n">skia</span><span class="o">.</span><span class="n">Paint</span><span class="p">(</span><span class="n">Style</span><span class="o">=</span><span class="n">skia</span><span class="o">.</span><span class="n">Paint</span><span class="o">.</span><span class="n">kStroke_Style</span><span class="p">)</span>
+<span class="n">src</span> <span class="o">=</span> <span class="n">skia</span><span class="o">.</span><span class="n">Paint</span><span class="p">(</span>
+    <span class="n">Shader</span><span class="o">=</span><span class="n">skia</span><span class="o">.</span><span class="n">GradientShader</span><span class="o">.</span><span class="n">MakeLinear</span><span class="p">(</span>
+        <span class="p">[(</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">),</span> <span class="p">(</span><span class="mf">64.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">)],</span>
+        <span class="p">[</span><span class="n">skia</span><span class="o">.</span><span class="n">ColorMAGENTA</span> <span class="o">&amp;</span> <span class="mh">0x00FFFFFF</span><span class="p">,</span> <span class="n">skia</span><span class="o">.</span><span class="n">ColorMAGENTA</span><span class="p">]))</span>
+<span class="n">dst</span> <span class="o">=</span> <span class="n">skia</span><span class="o">.</span><span class="n">Paint</span><span class="p">(</span>
+    <span class="n">Shader</span><span class="o">=</span><span class="n">skia</span><span class="o">.</span><span class="n">GradientShader</span><span class="o">.</span><span class="n">MakeLinear</span><span class="p">(</span>
+        <span class="p">[(</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">),</span> <span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">64.0</span><span class="p">)],</span>
+        <span class="p">[</span><span class="n">skia</span><span class="o">.</span><span class="n">ColorCYAN</span> <span class="o">&amp;</span> <span class="mh">0x00FFFFFF</span><span class="p">,</span> <span class="n">skia</span><span class="o">.</span><span class="n">ColorCYAN</span><span class="p">]))</span>
+<span class="n">canvas</span><span class="o">.</span><span class="n">clear</span><span class="p">(</span><span class="n">skia</span><span class="o">.</span><span class="n">ColorWHITE</span><span class="p">)</span>
+<span class="n">N</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">modes</span><span class="p">)</span>
+<span class="n">K</span> <span class="o">=</span> <span class="p">(</span><span class="n">N</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">//</span> <span class="mi">3</span> <span class="o">+</span> <span class="mi">1</span>
+<span class="k">assert</span> <span class="n">K</span> <span class="o">*</span> <span class="mi">64</span> <span class="o">&gt;=</span> <span class="mi">640</span><span class="p">,</span> <span class="s2">&quot;Not tall enough&quot;</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">N</span><span class="p">):</span>
+    <span class="k">with</span> <span class="n">skia</span><span class="o">.</span><span class="n">AutoCanvasRestore</span><span class="p">(</span><span class="n">canvas</span><span class="p">):</span>
+        <span class="n">canvas</span><span class="o">.</span><span class="n">translate</span><span class="p">(</span><span class="mf">192.0</span> <span class="o">*</span> <span class="p">(</span><span class="n">i</span> <span class="o">//</span> <span class="n">K</span><span class="p">),</span> <span class="mf">64.0</span> <span class="o">*</span> <span class="p">(</span><span class="n">i</span> <span class="o">%</span> <span class="n">K</span><span class="p">))</span>
+        <span class="n">desc</span> <span class="o">=</span> <span class="n">skia</span><span class="o">.</span><span class="n">BlendMode_Name</span><span class="p">(</span><span class="n">modes</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+        <span class="n">draw_utf8_string</span><span class="p">(</span><span class="n">canvas</span><span class="p">,</span> <span class="n">desc</span><span class="p">,</span> <span class="mf">68.0</span><span class="p">,</span> <span class="mf">30.0</span><span class="p">,</span> <span class="n">font</span><span class="p">,</span> <span class="n">skia</span><span class="o">.</span><span class="n">Paint</span><span class="p">())</span>
+        <span class="n">canvas</span><span class="o">.</span><span class="n">clipRect</span><span class="p">(</span><span class="n">skia</span><span class="o">.</span><span class="n">Rect</span><span class="p">(</span><span class="mf">64.0</span><span class="p">,</span> <span class="mf">64.0</span><span class="p">))</span>
+        <span class="n">canvas</span><span class="o">.</span><span class="n">drawColor</span><span class="p">(</span><span class="n">skia</span><span class="o">.</span><span class="n">ColorLTGRAY</span><span class="p">)</span>
+        <span class="n">canvas</span><span class="o">.</span><span class="n">saveLayer</span><span class="p">()</span>
+        <span class="n">canvas</span><span class="o">.</span><span class="n">clear</span><span class="p">(</span><span class="n">skia</span><span class="o">.</span><span class="n">ColorTRANSPARENT</span><span class="p">)</span>
+        <span class="n">canvas</span><span class="o">.</span><span class="n">drawPaint</span><span class="p">(</span><span class="n">dst</span><span class="p">)</span>
+        <span class="n">src</span><span class="o">.</span><span class="n">setBlendMode</span><span class="p">(</span><span class="n">modes</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+        <span class="n">canvas</span><span class="o">.</span><span class="n">drawPaint</span><span class="p">(</span><span class="n">src</span><span class="p">)</span>
+        <span class="n">canvas</span><span class="o">.</span><span class="n">drawRect</span><span class="p">(</span><span class="n">rect</span><span class="p">,</span> <span class="n">stroke</span><span class="p">)</span>
+</pre></div>
+</div>
+<img alt="Paint 4" src="../_images/paint-4.png" />
+</div>
+<div class="section" id="shader">
+<span id="id2"></span><h2>Shader<a class="headerlink" href="#shader" title="Permalink to this headline">¶</a></h2>
+<p>Several shaders are defined (besides the linear gradient already mentioned):</p>
+<div class="section" id="bitmap-shader">
+<h3>Bitmap Shader<a class="headerlink" href="#bitmap-shader" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">image</span> <span class="o">=</span> <span class="n">skia</span><span class="o">.</span><span class="n">Image</span><span class="o">.</span><span class="n">DecodeToRaster</span><span class="p">(</span>
+    <span class="n">skia</span><span class="o">.</span><span class="n">Data</span><span class="o">.</span><span class="n">MakeFromFileName</span><span class="p">(</span><span class="s1">&#39;../skia/resources/images/color_wheel.png&#39;</span><span class="p">))</span>
+
+<span class="n">canvas</span><span class="o">.</span><span class="n">clear</span><span class="p">(</span><span class="n">skia</span><span class="o">.</span><span class="n">ColorWHITE</span><span class="p">)</span>
+<span class="n">matrix</span> <span class="o">=</span> <span class="n">skia</span><span class="o">.</span><span class="n">Matrix</span><span class="p">()</span>
+<span class="n">matrix</span><span class="o">.</span><span class="n">setScale</span><span class="p">(</span><span class="mf">0.75</span><span class="p">,</span> <span class="mf">0.75</span><span class="p">)</span>
+<span class="n">matrix</span><span class="o">.</span><span class="n">preRotate</span><span class="p">(</span><span class="mf">30.0</span><span class="p">)</span>
+<span class="n">canvas</span><span class="o">.</span><span class="n">drawPaint</span><span class="p">({</span>
+    <span class="s1">&#39;Shader&#39;</span><span class="p">:</span> <span class="n">image</span><span class="o">.</span><span class="n">makeShader</span><span class="p">(</span>
+        <span class="n">skia</span><span class="o">.</span><span class="n">TileMode</span><span class="o">.</span><span class="n">kRepeat</span><span class="p">,</span>
+        <span class="n">skia</span><span class="o">.</span><span class="n">TileMode</span><span class="o">.</span><span class="n">kRepeat</span><span class="p">,</span>
+        <span class="n">matrix</span>
+    <span class="p">)</span>
+<span class="p">})</span>
+</pre></div>
+</div>
+<img alt="Bitmap Shader" src="../_images/paint-bitmap-shader.png" />
+</div>
+<div class="section" id="radial-gradient-shader">
+<h3>Radial Gradient Shader<a class="headerlink" href="#radial-gradient-shader" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">canvas</span><span class="o">.</span><span class="n">drawPaint</span><span class="p">({</span>
+    <span class="s1">&#39;Shader&#39;</span><span class="p">:</span> <span class="n">skia</span><span class="o">.</span><span class="n">GradientShader</span><span class="o">.</span><span class="n">MakeRadial</span><span class="p">(</span>
+        <span class="n">center</span><span class="o">=</span><span class="p">(</span><span class="mf">128.0</span><span class="p">,</span> <span class="mf">128.0</span><span class="p">),</span>
+        <span class="n">radius</span><span class="o">=</span><span class="mf">180.0</span><span class="p">,</span>
+        <span class="n">colors</span><span class="o">=</span><span class="p">[</span><span class="n">skia</span><span class="o">.</span><span class="n">ColorBLUE</span><span class="p">,</span> <span class="n">skia</span><span class="o">.</span><span class="n">ColorYELLOW</span><span class="p">]</span>
+    <span class="p">)</span>
+<span class="p">})</span>
+</pre></div>
+</div>
+<img alt="Radial Gradient Shader" src="../_images/paint-radial-gradient-shader.png" />
+</div>
+<div class="section" id="two-point-conical-gradient-shader">
+<h3>Two-Point Conical Gradient Shader<a class="headerlink" href="#two-point-conical-gradient-shader" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">canvas</span><span class="o">.</span><span class="n">drawPaint</span><span class="p">({</span>
+    <span class="s1">&#39;Shader&#39;</span><span class="p">:</span> <span class="n">skia</span><span class="o">.</span><span class="n">GradientShader</span><span class="o">.</span><span class="n">MakeTwoPointConical</span><span class="p">(</span>
+        <span class="n">start</span><span class="o">=</span><span class="p">(</span><span class="mf">128.0</span><span class="p">,</span> <span class="mf">128.0</span><span class="p">),</span>
+        <span class="n">startRadius</span><span class="o">=</span><span class="mf">128.0</span><span class="p">,</span>
+        <span class="n">end</span><span class="o">=</span><span class="p">(</span><span class="mf">128.0</span><span class="p">,</span> <span class="mf">16.0</span><span class="p">),</span>
+        <span class="n">endRadius</span><span class="o">=</span><span class="mf">16.0</span><span class="p">,</span>
+        <span class="n">colors</span><span class="o">=</span><span class="p">[</span><span class="n">skia</span><span class="o">.</span><span class="n">ColorBLUE</span><span class="p">,</span> <span class="n">skia</span><span class="o">.</span><span class="n">ColorYELLOW</span><span class="p">]</span>
+    <span class="p">)</span>
+<span class="p">})</span>
+</pre></div>
+</div>
+<img alt="Two-Point Conical Gradient Shader" src="../_images/paint-two-point-conical-gradient-shader.png" />
+</div>
+<div class="section" id="sweep-gradient-shader">
+<h3>Sweep Gradient Shader<a class="headerlink" href="#sweep-gradient-shader" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">canvas</span><span class="o">.</span><span class="n">drawPaint</span><span class="p">({</span>
+    <span class="s1">&#39;Shader&#39;</span><span class="p">:</span> <span class="n">skia</span><span class="o">.</span><span class="n">GradientShader</span><span class="o">.</span><span class="n">MakeSweep</span><span class="p">(</span>
+        <span class="n">cx</span><span class="o">=</span><span class="mf">128.0</span><span class="p">,</span>
+        <span class="n">cy</span><span class="o">=</span><span class="mf">128.0</span><span class="p">,</span>
+        <span class="n">colors</span><span class="o">=</span><span class="p">[</span>
+            <span class="n">skia</span><span class="o">.</span><span class="n">ColorCYAN</span><span class="p">,</span>
+            <span class="n">skia</span><span class="o">.</span><span class="n">ColorMAGENTA</span><span class="p">,</span>
+            <span class="n">skia</span><span class="o">.</span><span class="n">ColorYELLOW</span><span class="p">,</span>
+            <span class="n">skia</span><span class="o">.</span><span class="n">ColorCYAN</span>
+        <span class="p">]</span>
+    <span class="p">)</span>
+<span class="p">})</span>
+</pre></div>
+</div>
+<img alt="Sweep Gradient Shader" src="../_images/paint-sweep-gradient-shader.png" />
+</div>
+<div class="section" id="fractal-perlin-noise-shader">
+<h3>Fractal Perlin Noise Shader<a class="headerlink" href="#fractal-perlin-noise-shader" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">canvas</span><span class="o">.</span><span class="n">drawPaint</span><span class="p">({</span>
+    <span class="s1">&#39;Shader&#39;</span><span class="p">:</span> <span class="n">skia</span><span class="o">.</span><span class="n">PerlinNoiseShader</span><span class="o">.</span><span class="n">MakeFractalNoise</span><span class="p">(</span><span class="mf">0.05</span><span class="p">,</span> <span class="mf">0.05</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">)</span>
+<span class="p">})</span>
+</pre></div>
+</div>
+<img alt="Fractal Perlin Noise Shader" src="../_images/paint-fractal-perlin-noise-shader.png" />
+</div>
+<div class="section" id="turbulence-perlin-noise-shader">
+<h3>Turbulence Perlin Noise Shader<a class="headerlink" href="#turbulence-perlin-noise-shader" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">canvas</span><span class="o">.</span><span class="n">drawPaint</span><span class="p">({</span>
+    <span class="s1">&#39;Shader&#39;</span><span class="p">:</span> <span class="n">skia</span><span class="o">.</span><span class="n">PerlinNoiseShader</span><span class="o">.</span><span class="n">MakeTurbulence</span><span class="p">(</span><span class="mf">0.05</span><span class="p">,</span> <span class="mf">0.05</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">)</span>
+<span class="p">})</span>
+</pre></div>
+</div>
+<img alt="Turbulence Perlin Noise Shader" src="../_images/paint-turbulence-perlin-noise-shader.png" />
+</div>
+<div class="section" id="compose-shader">
+<h3>Compose Shader<a class="headerlink" href="#compose-shader" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">shader</span> <span class="o">=</span> <span class="n">skia</span><span class="o">.</span><span class="n">Shaders</span><span class="o">.</span><span class="n">Blend</span><span class="p">(</span>
+    <span class="n">skia</span><span class="o">.</span><span class="n">BlendMode</span><span class="o">.</span><span class="n">kDifference</span><span class="p">,</span>
+    <span class="n">skia</span><span class="o">.</span><span class="n">GradientShader</span><span class="o">.</span><span class="n">MakeRadial</span><span class="p">((</span><span class="mf">128.0</span><span class="p">,</span> <span class="mf">128.0</span><span class="p">),</span> <span class="mf">180.0</span><span class="p">,</span> <span class="p">[</span><span class="n">skia</span><span class="o">.</span><span class="n">ColorBLUE</span><span class="p">,</span> <span class="n">skia</span><span class="o">.</span><span class="n">ColorYELLOW</span><span class="p">]),</span>
+    <span class="n">skia</span><span class="o">.</span><span class="n">PerlinNoiseShader</span><span class="o">.</span><span class="n">MakeTurbulence</span><span class="p">(</span><span class="mf">0.025</span><span class="p">,</span> <span class="mf">0.025</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">))</span>
+<span class="n">canvas</span><span class="o">.</span><span class="n">drawPaint</span><span class="p">({</span><span class="s1">&#39;Shader&#39;</span><span class="p">:</span> <span class="n">shader</span><span class="p">})</span>
+</pre></div>
+</div>
+<img alt="Compose Shader" src="../_images/paint-compose-shader.png" />
+</div>
+</div>
+<div class="section" id="imagefilter">
+<span id="id3"></span><h2>ImageFilter<a class="headerlink" href="#imagefilter" title="Permalink to this headline">¶</a></h2>
+<p>See <a class="reference internal" href="../reference/skia.ImageFilters.html#skia.ImageFilters" title="skia.ImageFilters"><code class="xref py py-class docutils literal notranslate"><span class="pre">ImageFilters</span></code></a> for a list of available filters.</p>
+<div class="section" id="drop-shadow">
+<h3>Drop Shadow<a class="headerlink" href="#drop-shadow" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">canvas</span><span class="o">.</span><span class="n">drawColor</span><span class="p">(</span><span class="n">skia</span><span class="o">.</span><span class="n">ColorWHITE</span><span class="p">)</span>
+<span class="n">paint</span> <span class="o">=</span> <span class="n">skia</span><span class="o">.</span><span class="n">Paint</span><span class="p">(</span>
+    <span class="n">ImageFilter</span><span class="o">=</span><span class="n">skia</span><span class="o">.</span><span class="n">ImageFilters</span><span class="o">.</span><span class="n">DropShadow</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="n">skia</span><span class="o">.</span><span class="n">ColorBLACK</span><span class="p">)</span>
+<span class="p">)</span>
+<span class="n">blob</span> <span class="o">=</span> <span class="n">skia</span><span class="o">.</span><span class="n">TextBlob</span><span class="p">(</span><span class="s2">&quot;Skia&quot;</span><span class="p">,</span> <span class="n">skia</span><span class="o">.</span><span class="n">Font</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="mi">120</span><span class="p">))</span>
+<span class="n">canvas</span><span class="o">.</span><span class="n">drawTextBlob</span><span class="p">(</span><span class="n">blob</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">160</span><span class="p">,</span> <span class="n">paint</span><span class="p">)</span>
+</pre></div>
+</div>
+<img alt="Drop Shadow Image Filter" src="../_images/paint-drop-shadow-image-filter.png" />
+</div>
+<div class="section" id="dilate">
+<h3>Dilate<a class="headerlink" href="#dilate" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">canvas</span><span class="o">.</span><span class="n">drawColor</span><span class="p">(</span><span class="n">skia</span><span class="o">.</span><span class="n">ColorWHITE</span><span class="p">)</span>
+<span class="n">paint</span> <span class="o">=</span> <span class="n">skia</span><span class="o">.</span><span class="n">Paint</span><span class="p">(</span>
+    <span class="n">ImageFilter</span><span class="o">=</span><span class="n">skia</span><span class="o">.</span><span class="n">ImageFilters</span><span class="o">.</span><span class="n">Dilate</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<span class="p">)</span>
+<span class="n">blob</span> <span class="o">=</span> <span class="n">skia</span><span class="o">.</span><span class="n">TextBlob</span><span class="p">(</span><span class="s2">&quot;Skia&quot;</span><span class="p">,</span> <span class="n">skia</span><span class="o">.</span><span class="n">Font</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="mi">120</span><span class="p">))</span>
+<span class="n">canvas</span><span class="o">.</span><span class="n">drawTextBlob</span><span class="p">(</span><span class="n">blob</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">160</span><span class="p">,</span> <span class="n">paint</span><span class="p">)</span>
+</pre></div>
+</div>
+<img alt="Dilate Image Filter" src="../_images/paint-dilate-image-filter.png" />
+</div>
+<div class="section" id="erode">
+<h3>Erode<a class="headerlink" href="#erode" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">canvas</span><span class="o">.</span><span class="n">drawColor</span><span class="p">(</span><span class="n">skia</span><span class="o">.</span><span class="n">ColorWHITE</span><span class="p">)</span>
+<span class="n">paint</span> <span class="o">=</span> <span class="n">skia</span><span class="o">.</span><span class="n">Paint</span><span class="p">(</span>
+    <span class="n">ImageFilter</span><span class="o">=</span><span class="n">skia</span><span class="o">.</span><span class="n">ImageFilters</span><span class="o">.</span><span class="n">Erode</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<span class="p">)</span>
+<span class="n">blob</span> <span class="o">=</span> <span class="n">skia</span><span class="o">.</span><span class="n">TextBlob</span><span class="p">(</span><span class="s2">&quot;Skia&quot;</span><span class="p">,</span> <span class="n">skia</span><span class="o">.</span><span class="n">Font</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="mi">120</span><span class="p">))</span>
+<span class="n">canvas</span><span class="o">.</span><span class="n">drawTextBlob</span><span class="p">(</span><span class="n">blob</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">160</span><span class="p">,</span> <span class="n">paint</span><span class="p">)</span>
+</pre></div>
+</div>
+<img alt="Erode Image Filter" src="../_images/paint-erode-image-filter.png" />
+</div>
+</div>
+<div class="section" id="maskfilter">
+<span id="id4"></span><h2>MaskFilter<a class="headerlink" href="#maskfilter" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="blur-mask-filter">
+<h3>Blur Mask Filter<a class="headerlink" href="#blur-mask-filter" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">canvas</span><span class="o">.</span><span class="n">drawColor</span><span class="p">(</span><span class="n">skia</span><span class="o">.</span><span class="n">ColorWHITE</span><span class="p">)</span>
+<span class="n">paint</span> <span class="o">=</span> <span class="n">skia</span><span class="o">.</span><span class="n">Paint</span><span class="p">(</span>
+    <span class="n">MaskFilter</span><span class="o">=</span><span class="n">skia</span><span class="o">.</span><span class="n">MaskFilter</span><span class="o">.</span><span class="n">MakeBlur</span><span class="p">(</span><span class="n">skia</span><span class="o">.</span><span class="n">kNormal_BlurStyle</span><span class="p">,</span> <span class="mf">5.0</span><span class="p">)</span>
+<span class="p">)</span>
+<span class="n">blob</span> <span class="o">=</span> <span class="n">skia</span><span class="o">.</span><span class="n">TextBlob</span><span class="p">(</span><span class="s2">&quot;Skia&quot;</span><span class="p">,</span> <span class="n">skia</span><span class="o">.</span><span class="n">Font</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="mi">120</span><span class="p">))</span>
+<span class="n">canvas</span><span class="o">.</span><span class="n">drawTextBlob</span><span class="p">(</span><span class="n">blob</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">160</span><span class="p">,</span> <span class="n">paint</span><span class="p">)</span>
+</pre></div>
+</div>
+<img alt="Blur Mask Filter" src="../_images/paint-blur-mask-filter.png" />
+</div>
+</div>
+<div class="section" id="colorfilter">
+<span id="id5"></span><h2>ColorFilter<a class="headerlink" href="#colorfilter" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="color-matrix-color-filter">
+<h3>Color Matrix Color Filter<a class="headerlink" href="#color-matrix-color-filter" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">image</span> <span class="o">=</span> <span class="n">skia</span><span class="o">.</span><span class="n">Image</span><span class="o">.</span><span class="n">DecodeToRaster</span><span class="p">(</span>
+    <span class="n">skia</span><span class="o">.</span><span class="n">Data</span><span class="o">.</span><span class="n">MakeFromFileName</span><span class="p">(</span>
+        <span class="s1">&#39;../skia/resources/images/mandrill_512_q075.jpg&#39;</span><span class="p">))</span>
+
+<span class="k">def</span> <span class="nf">f</span><span class="p">(</span><span class="n">canvas</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">colorMatrix</span><span class="p">):</span>
+    <span class="n">canvas</span><span class="o">.</span><span class="n">drawImage</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">skia</span><span class="o">.</span><span class="n">Paint</span><span class="p">(</span>
+        <span class="n">ColorFilter</span><span class="o">=</span><span class="n">skia</span><span class="o">.</span><span class="n">ColorFilters</span><span class="o">.</span><span class="n">Matrix</span><span class="p">(</span><span class="n">colorMatrix</span><span class="p">),</span>
+    <span class="p">))</span>
+
+<span class="n">canvas</span><span class="o">.</span><span class="n">scale</span><span class="p">(</span><span class="mf">0.25</span><span class="p">,</span> <span class="mf">0.25</span><span class="p">)</span>
+<span class="n">colorMatrix</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span>
+    <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span>
+    <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span>
+    <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span>
+<span class="p">]</span>
+<span class="n">f</span><span class="p">(</span><span class="n">canvas</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">colorMatrix</span><span class="p">)</span>
+
+<span class="n">grayscale</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="mf">0.21</span><span class="p">,</span> <span class="mf">0.72</span><span class="p">,</span> <span class="mf">0.07</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span>
+    <span class="mf">0.21</span><span class="p">,</span> <span class="mf">0.72</span><span class="p">,</span> <span class="mf">0.07</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span>
+    <span class="mf">0.21</span><span class="p">,</span> <span class="mf">0.72</span><span class="p">,</span> <span class="mf">0.07</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span>
+    <span class="mf">0.0</span><span class="p">,</span>  <span class="mf">0.0</span><span class="p">,</span>  <span class="mf">0.0</span><span class="p">,</span>  <span class="mf">1.0</span><span class="p">,</span> <span class="mf">0.0</span>
+<span class="p">]</span>
+<span class="n">f</span><span class="p">(</span><span class="n">canvas</span><span class="p">,</span> <span class="mi">512</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">grayscale</span><span class="p">)</span>
+</pre></div>
+</div>
+<img alt="Color Matrix Color Filter" src="../_images/paint-color-matrix-color-filter.png" />
+</div>
+<div class="section" id="color-table-color-filter">
+<h3>Color Table Color Filter<a class="headerlink" href="#color-table-color-filter" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">canvas</span><span class="o">.</span><span class="n">scale</span><span class="p">(</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">)</span>
+<span class="n">ct</span> <span class="o">=</span> <span class="nb">bytearray</span><span class="p">(</span><span class="mi">256</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">256</span><span class="p">):</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="p">(</span><span class="n">i</span> <span class="o">-</span> <span class="mi">96</span><span class="p">)</span> <span class="o">*</span> <span class="mi">255</span> <span class="o">//</span> <span class="mi">64</span>
+    <span class="n">ct</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="mi">255</span><span class="p">,</span> <span class="nb">max</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">x</span><span class="p">))</span>
+<span class="n">paint</span> <span class="o">=</span> <span class="n">skia</span><span class="o">.</span><span class="n">Paint</span><span class="p">(</span>
+    <span class="n">ColorFilter</span><span class="o">=</span><span class="n">skia</span><span class="o">.</span><span class="n">TableColorFilter</span><span class="o">.</span><span class="n">MakeARGB</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="n">ct</span><span class="p">,</span> <span class="n">ct</span><span class="p">,</span> <span class="n">ct</span><span class="p">)</span>
+<span class="p">)</span>
+<span class="n">canvas</span><span class="o">.</span><span class="n">drawImage</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">paint</span><span class="p">)</span>
+</pre></div>
+</div>
+<img alt="Color Table Color Filter" src="../_images/paint-color-table-color-filter.png" />
+</div>
+</div>
+<div class="section" id="patheffect">
+<span id="id6"></span><h2>PathEffect<a class="headerlink" href="#patheffect" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="path-2d-path-effect">
+<h3>Path 2D Path Effect<a class="headerlink" href="#path-2d-path-effect" title="Permalink to this headline">¶</a></h3>
+<p>Stamp the specified path to fill the shape, using the matrix to define the
+latice.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">scale</span> <span class="o">=</span> <span class="mf">10.0</span>
+<span class="n">path</span> <span class="o">=</span> <span class="n">skia</span><span class="o">.</span><span class="n">Path</span><span class="p">()</span>
+<span class="n">pts</span> <span class="o">=</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span>
+       <span class="mi">5</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span>
+<span class="n">path</span><span class="o">.</span><span class="n">moveTo</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">scale</span><span class="p">,</span> <span class="mi">3</span> <span class="o">*</span> <span class="n">scale</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">pts</span><span class="p">),</span> <span class="mi">2</span><span class="p">):</span>
+    <span class="n">path</span><span class="o">.</span><span class="n">lineTo</span><span class="p">(</span><span class="n">pts</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">*</span> <span class="n">scale</span><span class="p">,</span> <span class="n">pts</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="n">scale</span><span class="p">)</span>
+<span class="n">path</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+
+<span class="n">matrix</span> <span class="o">=</span> <span class="n">skia</span><span class="o">.</span><span class="n">Matrix</span><span class="o">.</span><span class="n">MakeScale</span><span class="p">(</span><span class="mi">4</span> <span class="o">*</span> <span class="n">scale</span><span class="p">,</span> <span class="mi">4</span> <span class="o">*</span> <span class="n">scale</span><span class="p">)</span>
+<span class="n">paint</span> <span class="o">=</span> <span class="n">skia</span><span class="o">.</span><span class="n">Paint</span><span class="p">(</span>
+    <span class="n">AntiAlias</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">PathEffect</span><span class="o">=</span><span class="n">skia</span><span class="o">.</span><span class="n">Path2DPathEffect</span><span class="o">.</span><span class="n">Make</span><span class="p">(</span><span class="n">matrix</span><span class="p">,</span> <span class="n">path</span><span class="p">),</span>
+<span class="p">)</span>
+<span class="n">canvas</span><span class="o">.</span><span class="n">clear</span><span class="p">(</span><span class="n">skia</span><span class="o">.</span><span class="n">ColorWHITE</span><span class="p">)</span>
+<span class="n">bounds</span> <span class="o">=</span> <span class="n">skia</span><span class="o">.</span><span class="n">Rect</span><span class="p">(</span><span class="o">-</span><span class="mi">4</span> <span class="o">*</span> <span class="n">scale</span><span class="p">,</span> <span class="o">-</span><span class="mi">4</span> <span class="o">*</span> <span class="n">scale</span><span class="p">,</span> <span class="mi">256</span><span class="p">,</span> <span class="mi">256</span><span class="p">)</span>
+<span class="n">canvas</span><span class="o">.</span><span class="n">drawRect</span><span class="p">(</span><span class="n">bounds</span><span class="p">,</span> <span class="n">paint</span><span class="p">)</span>
+</pre></div>
+</div>
+<img alt="Path 2D Path Effect" src="../_images/paint-path-2d-path-effect.png" />
+</div>
+<div class="section" id="line-2d-path-effect">
+<h3>Line 2D Path Effect<a class="headerlink" href="#line-2d-path-effect" title="Permalink to this headline">¶</a></h3>
+<p>A special case of Path2DPathEffect where the path is a straight line to be
+stroked, not a path to be filled.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">lattice</span> <span class="o">=</span> <span class="n">skia</span><span class="o">.</span><span class="n">Matrix</span><span class="p">()</span>
+<span class="n">lattice</span><span class="o">.</span><span class="n">setScale</span><span class="p">(</span><span class="mf">8.0</span><span class="p">,</span> <span class="mf">8.0</span><span class="p">)</span>
+<span class="n">lattice</span><span class="o">.</span><span class="n">preRotate</span><span class="p">(</span><span class="mf">30.0</span><span class="p">)</span>
+<span class="n">paint</span> <span class="o">=</span> <span class="n">skia</span><span class="o">.</span><span class="n">Paint</span><span class="p">(</span>
+    <span class="n">AntiAlias</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">PathEffect</span><span class="o">=</span><span class="n">skia</span><span class="o">.</span><span class="n">Line2DPathEffect</span><span class="o">.</span><span class="n">Make</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">lattice</span><span class="p">)</span>
+<span class="p">)</span>
+<span class="n">bounds</span> <span class="o">=</span> <span class="n">skia</span><span class="o">.</span><span class="n">Rect</span><span class="p">(</span><span class="mi">256</span><span class="p">,</span> <span class="mi">256</span><span class="p">)</span>
+<span class="n">bounds</span><span class="o">.</span><span class="n">outset</span><span class="p">(</span><span class="mf">8.0</span><span class="p">,</span> <span class="mf">8.0</span><span class="p">)</span>
+<span class="n">canvas</span><span class="o">.</span><span class="n">clear</span><span class="p">(</span><span class="n">skia</span><span class="o">.</span><span class="n">ColorWHITE</span><span class="p">)</span>
+<span class="n">canvas</span><span class="o">.</span><span class="n">drawRect</span><span class="p">(</span><span class="n">bounds</span><span class="p">,</span> <span class="n">paint</span><span class="p">)</span>
+</pre></div>
+</div>
+<img alt="Line 2D Path Effect" src="../_images/paint-line-2d-path-effect.png" />
+</div>
+<div class="section" id="path-1d-path-effect">
+<h3>Path 1D Path Effect<a class="headerlink" href="#path-1d-path-effect" title="Permalink to this headline">¶</a></h3>
+<p>Create dash-like effects by replicating the specified path along the drawn path.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">path</span> <span class="o">=</span> <span class="n">skia</span><span class="o">.</span><span class="n">Path</span><span class="p">()</span>
+<span class="n">path</span><span class="o">.</span><span class="n">addOval</span><span class="p">(</span><span class="n">skia</span><span class="o">.</span><span class="n">Rect</span><span class="p">(</span><span class="mf">16.0</span><span class="p">,</span> <span class="mf">6.0</span><span class="p">))</span>
+<span class="n">paint</span> <span class="o">=</span> <span class="n">skia</span><span class="o">.</span><span class="n">Paint</span><span class="p">(</span>
+    <span class="n">AntiAlias</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">PathEffect</span><span class="o">=</span><span class="n">skia</span><span class="o">.</span><span class="n">Path1DPathEffect</span><span class="o">.</span><span class="n">Make</span><span class="p">(</span>
+        <span class="n">path</span><span class="p">,</span> <span class="mf">32.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="n">skia</span><span class="o">.</span><span class="n">Path1DPathEffect</span><span class="o">.</span><span class="n">kRotate_Style</span><span class="p">),</span>
+<span class="p">)</span>
+<span class="n">canvas</span><span class="o">.</span><span class="n">clear</span><span class="p">(</span><span class="n">skia</span><span class="o">.</span><span class="n">ColorWHITE</span><span class="p">)</span>
+<span class="n">canvas</span><span class="o">.</span><span class="n">drawCircle</span><span class="p">(</span><span class="mf">128.0</span><span class="p">,</span> <span class="mf">128.0</span><span class="p">,</span> <span class="mf">122.0</span><span class="p">,</span> <span class="n">paint</span><span class="p">)</span>
+</pre></div>
+</div>
+<img alt="Path 1D Path Effect" src="../_images/paint-path-1d-path-effect.png" />
+</div>
+<div class="section" id="corner-path-effect">
+<h3>Corner Path Effect<a class="headerlink" href="#corner-path-effect" title="Permalink to this headline">¶</a></h3>
+<p>A path effect that can turn sharp corners into various treatments (e.g. rounded
+corners).</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">star</span><span class="p">():</span>
+    <span class="kn">from</span> <span class="nn">math</span> <span class="kn">import</span> <span class="n">cos</span><span class="p">,</span> <span class="n">sin</span>
+    <span class="n">R</span><span class="p">,</span> <span class="n">C</span> <span class="o">=</span> <span class="mf">115.2</span><span class="p">,</span> <span class="mf">128.0</span>
+    <span class="n">path</span> <span class="o">=</span> <span class="n">skia</span><span class="o">.</span><span class="n">Path</span><span class="p">()</span>
+    <span class="n">path</span><span class="o">.</span><span class="n">moveTo</span><span class="p">(</span><span class="n">C</span> <span class="o">+</span> <span class="n">R</span><span class="p">,</span> <span class="n">C</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">7</span><span class="p">):</span>
+        <span class="n">a</span> <span class="o">=</span> <span class="mf">2.6927937</span> <span class="o">*</span> <span class="n">i</span>
+        <span class="n">path</span><span class="o">.</span><span class="n">lineTo</span><span class="p">(</span><span class="n">C</span> <span class="o">+</span> <span class="n">R</span> <span class="o">*</span> <span class="n">cos</span><span class="p">(</span><span class="n">a</span><span class="p">),</span> <span class="n">C</span> <span class="o">+</span> <span class="n">R</span> <span class="o">*</span> <span class="n">sin</span><span class="p">(</span><span class="n">a</span><span class="p">))</span>
+    <span class="n">path</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">path</span>
+
+<span class="n">paint</span> <span class="o">=</span> <span class="n">skia</span><span class="o">.</span><span class="n">Paint</span><span class="p">(</span>
+    <span class="n">AntiAlias</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">PathEffect</span><span class="o">=</span><span class="n">skia</span><span class="o">.</span><span class="n">CornerPathEffect</span><span class="o">.</span><span class="n">Make</span><span class="p">(</span><span class="mf">32.0</span><span class="p">),</span>
+    <span class="n">Style</span><span class="o">=</span><span class="n">skia</span><span class="o">.</span><span class="n">Paint</span><span class="o">.</span><span class="n">kStroke_Style</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="n">canvas</span><span class="o">.</span><span class="n">clear</span><span class="p">(</span><span class="n">skia</span><span class="o">.</span><span class="n">ColorWHITE</span><span class="p">)</span>
+<span class="n">path</span> <span class="o">=</span> <span class="n">star</span><span class="p">()</span>
+<span class="n">canvas</span><span class="o">.</span><span class="n">drawPath</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">paint</span><span class="p">)</span>
+</pre></div>
+</div>
+<img alt="Corner Path Effect" src="../_images/paint-corner-path-effect.png" />
+</div>
+<div class="section" id="dash-path-effect">
+<h3>Dash Path Effect<a class="headerlink" href="#dash-path-effect" title="Permalink to this headline">¶</a></h3>
+<p>A path effect that implements dashing.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">paint</span> <span class="o">=</span> <span class="n">skia</span><span class="o">.</span><span class="n">Paint</span><span class="p">(</span>
+    <span class="n">AntiAlias</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">PathEffect</span><span class="o">=</span><span class="n">skia</span><span class="o">.</span><span class="n">DashPathEffect</span><span class="o">.</span><span class="n">Make</span><span class="p">([</span><span class="mf">10.0</span><span class="p">,</span> <span class="mf">5.0</span><span class="p">,</span> <span class="mf">2.0</span><span class="p">,</span> <span class="mf">5.0</span><span class="p">],</span> <span class="mf">0.0</span><span class="p">),</span>
+    <span class="n">StrokeWidth</span><span class="o">=</span><span class="mf">2.0</span><span class="p">,</span>
+    <span class="n">Style</span><span class="o">=</span><span class="n">skia</span><span class="o">.</span><span class="n">Paint</span><span class="o">.</span><span class="n">kStroke_Style</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="n">canvas</span><span class="o">.</span><span class="n">clear</span><span class="p">(</span><span class="n">skia</span><span class="o">.</span><span class="n">ColorWHITE</span><span class="p">)</span>
+<span class="n">path</span> <span class="o">=</span> <span class="n">star</span><span class="p">()</span>
+<span class="n">canvas</span><span class="o">.</span><span class="n">drawPath</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">paint</span><span class="p">)</span>
+</pre></div>
+</div>
+<img alt="Dash Path Effect" src="../_images/paint-dash-path-effect.png" />
+</div>
+<div class="section" id="discrete-path-effect">
+<h3>Discrete Path Effect<a class="headerlink" href="#discrete-path-effect" title="Permalink to this headline">¶</a></h3>
+<p>This path effect chops a path into discrete segments, and randomly displaces
+them.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">paint</span> <span class="o">=</span> <span class="n">skia</span><span class="o">.</span><span class="n">Paint</span><span class="p">(</span>
+    <span class="n">AntiAlias</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">PathEffect</span><span class="o">=</span><span class="n">skia</span><span class="o">.</span><span class="n">DiscretePathEffect</span><span class="o">.</span><span class="n">Make</span><span class="p">(</span><span class="mf">10.0</span><span class="p">,</span> <span class="mf">4.0</span><span class="p">),</span>
+    <span class="n">StrokeWidth</span><span class="o">=</span><span class="mf">2.0</span><span class="p">,</span>
+    <span class="n">Style</span><span class="o">=</span><span class="n">skia</span><span class="o">.</span><span class="n">Paint</span><span class="o">.</span><span class="n">kStroke_Style</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="n">canvas</span><span class="o">.</span><span class="n">clear</span><span class="p">(</span><span class="n">skia</span><span class="o">.</span><span class="n">ColorWHITE</span><span class="p">)</span>
+<span class="n">path</span> <span class="o">=</span> <span class="n">star</span><span class="p">()</span>
+<span class="n">canvas</span><span class="o">.</span><span class="n">drawPath</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">paint</span><span class="p">)</span>
+</pre></div>
+</div>
+<img alt="Discrete Path Effect" src="../_images/paint-dash-path-effect.png" />
+</div>
+<div class="section" id="compose-path-effect">
+<h3>Compose Path Effect<a class="headerlink" href="#compose-path-effect" title="Permalink to this headline">¶</a></h3>
+<p>A pathEffect whose effect is to apply first the inner pathEffect and the the
+outer pathEffect (i.e. outer(inner(path))).</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">path_effect</span> <span class="o">=</span> <span class="n">skia</span><span class="o">.</span><span class="n">PathEffect</span><span class="o">.</span><span class="n">MakeCompose</span><span class="p">(</span>
+    <span class="n">skia</span><span class="o">.</span><span class="n">DashPathEffect</span><span class="o">.</span><span class="n">Make</span><span class="p">([</span><span class="mf">10.0</span><span class="p">,</span> <span class="mf">5.0</span><span class="p">,</span> <span class="mf">2.0</span><span class="p">,</span> <span class="mf">5.0</span><span class="p">],</span> <span class="mf">0.0</span><span class="p">),</span>
+    <span class="n">skia</span><span class="o">.</span><span class="n">DiscretePathEffect</span><span class="o">.</span><span class="n">Make</span><span class="p">(</span><span class="mf">10.0</span><span class="p">,</span> <span class="mf">4.0</span><span class="p">)</span>
+<span class="p">)</span>
+<span class="n">paint</span> <span class="o">=</span> <span class="n">skia</span><span class="o">.</span><span class="n">Paint</span><span class="p">(</span>
+    <span class="n">AntiAlias</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">PathEffect</span><span class="o">=</span><span class="n">path_effect</span><span class="p">,</span>
+    <span class="n">StrokeWidth</span><span class="o">=</span><span class="mf">2.0</span><span class="p">,</span>
+    <span class="n">Style</span><span class="o">=</span><span class="n">skia</span><span class="o">.</span><span class="n">Paint</span><span class="o">.</span><span class="n">kStroke_Style</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="n">canvas</span><span class="o">.</span><span class="n">clear</span><span class="p">(</span><span class="n">skia</span><span class="o">.</span><span class="n">ColorWHITE</span><span class="p">)</span>
+<span class="n">path</span> <span class="o">=</span> <span class="n">star</span><span class="p">()</span>
+<span class="n">canvas</span><span class="o">.</span><span class="n">drawPath</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">paint</span><span class="p">)</span>
+</pre></div>
+</div>
+<img alt="Compose Path Effect" src="../_images/paint-compose-path-effect.png" />
+</div>
+<div class="section" id="sum-path-effect">
+<h3>Sum Path Effect<a class="headerlink" href="#sum-path-effect" title="Permalink to this headline">¶</a></h3>
+<p>A pathEffect whose effect is to apply two effects, in sequence (i.e. first(path)
++ second(path)).</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">path_effect</span> <span class="o">=</span> <span class="n">skia</span><span class="o">.</span><span class="n">PathEffect</span><span class="o">.</span><span class="n">MakeSum</span><span class="p">(</span>
+    <span class="n">skia</span><span class="o">.</span><span class="n">DiscretePathEffect</span><span class="o">.</span><span class="n">Make</span><span class="p">(</span><span class="mf">10.0</span><span class="p">,</span> <span class="mf">4.0</span><span class="p">),</span>
+    <span class="n">skia</span><span class="o">.</span><span class="n">DiscretePathEffect</span><span class="o">.</span><span class="n">Make</span><span class="p">(</span><span class="mf">10.0</span><span class="p">,</span> <span class="mf">4.0</span><span class="p">,</span> <span class="mi">1245</span><span class="p">)</span>
+<span class="p">)</span>
+<span class="n">paint</span> <span class="o">=</span> <span class="n">skia</span><span class="o">.</span><span class="n">Paint</span><span class="p">(</span>
+    <span class="n">AntiAlias</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">PathEffect</span><span class="o">=</span><span class="n">path_effect</span><span class="p">,</span>
+    <span class="n">StrokeWidth</span><span class="o">=</span><span class="mf">2.0</span><span class="p">,</span>
+    <span class="n">Style</span><span class="o">=</span><span class="n">skia</span><span class="o">.</span><span class="n">Paint</span><span class="o">.</span><span class="n">kStroke_Style</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="n">canvas</span><span class="o">.</span><span class="n">clear</span><span class="p">(</span><span class="n">skia</span><span class="o">.</span><span class="n">ColorWHITE</span><span class="p">)</span>
+<span class="n">path</span> <span class="o">=</span> <span class="n">star</span><span class="p">()</span>
+<span class="n">canvas</span><span class="o">.</span><span class="n">drawPath</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">paint</span><span class="p">)</span>
+</pre></div>
+</div>
+<img alt="Sum Path Effect" src="../_images/paint-sum-path-effect.png" />
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../development.html" class="btn btn-neutral float-right" title="Development" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="path.html" class="btn btn-neutral float-left" title="Path Overview" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2020, Kota Yamaguchi
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

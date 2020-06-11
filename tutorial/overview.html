@@ -1,0 +1,387 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Overview &mdash; skia-python 0.0.4 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Canvas Creation" href="canvas.html" />
+    <link rel="prev" title="Tutorial" href="index.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> skia-python
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.0.4
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../install.html">Install</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Tutorial</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Overview</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#canvas-details">Canvas details</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#more-drawings">More drawings</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#apis-at-a-glance">APIs at a glance</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="canvas.html">Canvas Creation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="path.html">Path Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="paint.html">Paint Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="index.html#notebook-examples">Notebook examples</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../development.html">Development</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../reference.html">Reference</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">skia-python</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="index.html">Tutorial</a> &raquo;</li>
+        
+      <li>Overview</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/tutorial/overview.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="overview">
+<h1>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h1>
+<p>Skia is organized around the <a class="reference internal" href="../reference/skia.Canvas.html#skia.Canvas" title="skia.Canvas"><code class="xref py py-class docutils literal notranslate"><span class="pre">Canvas</span></code></a> object. It is the host for
+the <cite>draw</cite> calls: <a class="reference internal" href="../reference/skia.Canvas.html#skia.Canvas.drawRect" title="skia.Canvas.drawRect"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Canvas.drawRect()</span></code></a>,
+<a class="reference internal" href="../reference/skia.Canvas.html#skia.Canvas.drawPath" title="skia.Canvas.drawPath"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Canvas.drawPath()</span></code></a>, <a class="reference internal" href="../reference/skia.Canvas.html#skia.Canvas.drawTextBlob" title="skia.Canvas.drawTextBlob"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Canvas.drawTextBlob()</span></code></a>, etc.
+Each of these has two components: the primitive being drawn
+(<a class="reference internal" href="../reference/skia.Rect.html#skia.Rect" title="skia.Rect"><code class="xref py py-class docutils literal notranslate"><span class="pre">Rect</span></code></a>, <a class="reference internal" href="../reference/skia.Path.html#skia.Path" title="skia.Path"><code class="xref py py-class docutils literal notranslate"><span class="pre">Path</span></code></a>, etc.) and color/style
+attributes (<a class="reference internal" href="../reference/skia.Paint.html#skia.Paint" title="skia.Paint"><code class="xref py py-class docutils literal notranslate"><span class="pre">Paint</span></code></a>). The following example creates a canvas,
+draws a rectangle with specified paint, and writes the result to an image file:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">skia</span>
+
+<span class="n">surface</span> <span class="o">=</span> <span class="n">skia</span><span class="o">.</span><span class="n">Surface</span><span class="p">(</span><span class="mi">128</span><span class="p">,</span> <span class="mi">128</span><span class="p">)</span>
+<span class="n">canvas</span> <span class="o">=</span> <span class="n">surface</span><span class="o">.</span><span class="n">getCanvas</span><span class="p">()</span>
+<span class="n">rect</span> <span class="o">=</span> <span class="n">skia</span><span class="o">.</span><span class="n">Rect</span><span class="p">(</span><span class="mi">32</span><span class="p">,</span> <span class="mi">32</span><span class="p">,</span> <span class="mi">96</span><span class="p">,</span> <span class="mi">96</span><span class="p">)</span>
+<span class="n">paint</span> <span class="o">=</span> <span class="n">skia</span><span class="o">.</span><span class="n">Paint</span><span class="p">(</span>
+    <span class="n">Color</span><span class="o">=</span><span class="n">skia</span><span class="o">.</span><span class="n">ColorBLUE</span><span class="p">,</span>
+    <span class="n">Style</span><span class="o">=</span><span class="n">skia</span><span class="o">.</span><span class="n">Paint</span><span class="o">.</span><span class="n">kFill_Style</span><span class="p">)</span>
+<span class="n">canvas</span><span class="o">.</span><span class="n">drawRect</span><span class="p">(</span><span class="n">rect</span><span class="p">,</span> <span class="n">paint</span><span class="p">)</span>
+
+<span class="n">image</span> <span class="o">=</span> <span class="n">surface</span><span class="o">.</span><span class="n">makeImageSnapshot</span><span class="p">()</span>
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;output.png&#39;</span><span class="p">,</span> <span class="s1">&#39;wb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+    <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">image</span><span class="o">.</span><span class="n">encodeToData</span><span class="p">())</span>
+</pre></div>
+</div>
+<a class="reference internal image-reference" href="../_images/overview-rect-blue.png"><img alt="Output rectangle image" src="../_images/overview-rect-blue.png" style="width: 128px;" /></a>
+<p>The paint holds much of the state describing how the rectangle (in this case) is
+drawn: what color it is, if it is filled or stroked, how it should blend with
+what was previously drawn:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">paint</span><span class="o">.</span><span class="n">setBlendMode</span><span class="p">(</span><span class="n">skia</span><span class="o">.</span><span class="n">kScreen</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The canvas holds relatively little state. It points to the actual pixels being
+drawn, and it maintains a stack of matrices and clips. Thus in the above call,
+the canvas’ current matrix may transform the coordinates of the rectangle (
+translation, rotation, skewing, perspective), and the canvas’ current clip may
+restrict where on the canvas the rectangle will be drawn, but all other
+stylistic attributes of the drawing are controlled by the paint.</p>
+<div class="section" id="canvas-details">
+<h2>Canvas details<a class="headerlink" href="#canvas-details" title="Permalink to this headline">¶</a></h2>
+<p><a class="reference internal" href="../reference/skia.Canvas.html#skia.Canvas" title="skia.Canvas"><code class="xref py py-class docutils literal notranslate"><span class="pre">Canvas</span></code></a> is the drawing context for Skia. It knows where to
+direct the drawing (i.e. where the screen of offscreen pixels are), and
+maintains a stack of matrices and clips. Note however, that unlike similar
+contexts in other APIs like postscript, cairo, or awt, Skia does not store any
+other drawing attributes in the context (e.g. color, pen size). Rather, these
+are specified explicitly in each draw call, via a <a class="reference internal" href="../reference/skia.Paint.html#skia.Paint" title="skia.Paint"><code class="xref py py-class docutils literal notranslate"><span class="pre">Paint</span></code></a>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">skia</span>
+
+<span class="n">surface</span> <span class="o">=</span> <span class="n">skia</span><span class="o">.</span><span class="n">Surface</span><span class="p">(</span><span class="mi">256</span><span class="p">,</span> <span class="mi">256</span><span class="p">)</span>
+<span class="n">canvas</span> <span class="o">=</span> <span class="n">surface</span><span class="o">.</span><span class="n">getCanvas</span><span class="p">()</span>
+<span class="n">canvas</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
+<span class="n">canvas</span><span class="o">.</span><span class="n">translate</span><span class="p">(</span><span class="mf">128.</span><span class="p">,</span> <span class="mf">128.</span><span class="p">)</span>
+<span class="n">canvas</span><span class="o">.</span><span class="n">rotate</span><span class="p">(</span><span class="mf">45.</span><span class="p">)</span>
+<span class="n">rect</span> <span class="o">=</span> <span class="n">skia</span><span class="o">.</span><span class="n">Rect</span><span class="p">(</span><span class="o">-</span><span class="mf">90.5</span><span class="p">,</span> <span class="o">-</span><span class="mf">90.5</span><span class="p">,</span> <span class="mf">90.5</span><span class="p">,</span> <span class="mf">90.5</span><span class="p">)</span>
+<span class="n">paint</span> <span class="o">=</span> <span class="n">skia</span><span class="o">.</span><span class="n">Paint</span><span class="p">(</span><span class="n">Color</span><span class="o">=</span><span class="n">skia</span><span class="o">.</span><span class="n">Color</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">255</span><span class="p">))</span>
+<span class="n">canvas</span><span class="o">.</span><span class="n">drawRect</span><span class="p">(</span><span class="n">rect</span><span class="p">,</span> <span class="n">paint</span><span class="p">)</span>
+<span class="n">canvas</span><span class="o">.</span><span class="n">restore</span><span class="p">()</span>
+
+<span class="n">image</span> <span class="o">=</span> <span class="n">surface</span><span class="o">.</span><span class="n">makeImageSnapshot</span><span class="p">()</span>
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;output.png&#39;</span><span class="p">,</span> <span class="s1">&#39;wb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+    <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">image</span><span class="o">.</span><span class="n">encodeToData</span><span class="p">())</span>
+</pre></div>
+</div>
+<a class="reference internal image-reference" href="../_images/overview-rotated-rect.png"><img alt="Rotated rectangle" src="../_images/overview-rotated-rect.png" style="width: 256px;" /></a>
+<p>The code above will draw a rectangle rotated by 45 degrees. Exactly what color
+and style the rect will be drawn in is described by the paint, not the canvas.</p>
+<p>To begin with, we might want to erase the entire canvas. We can do this by
+drawing an enormous rectangle, but there are easier ways to do it:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">paint</span> <span class="o">=</span> <span class="n">skia</span><span class="o">.</span><span class="n">Paint</span><span class="p">(</span><span class="n">Color</span><span class="o">=</span><span class="n">skia</span><span class="o">.</span><span class="n">ColorWHITE</span><span class="p">)</span>
+<span class="n">canvas</span><span class="o">.</span><span class="n">drawPaint</span><span class="p">(</span><span class="n">paint</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>This fills the entire canvas (though respecting the current clip of course) with
+whatever color or shader (and xfermode) is specified by the paint. If there is a
+shader in the paint, then it will respect the current matrix on the canvas as
+well (see <a class="reference internal" href="../reference/skia.Shader.html#skia.Shader" title="skia.Shader"><code class="xref py py-class docutils literal notranslate"><span class="pre">Shader</span></code></a>). If you just want to draw a color (with an
+optional xfermode), you can just call <a class="reference internal" href="../reference/skia.Canvas.html#skia.Canvas.drawColor" title="skia.Canvas.drawColor"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Canvas.drawColor()</span></code></a>, and
+save yourself having to allocate a paint:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">canvas</span><span class="o">.</span><span class="n">drawColor</span><span class="p">(</span><span class="n">skia</span><span class="o">.</span><span class="n">ColorWHITE</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="more-drawings">
+<h2>More drawings<a class="headerlink" href="#more-drawings" title="Permalink to this headline">¶</a></h2>
+<p>All of the other draw APIs are similar, each one ending with a paint parameter.
+The following example demonstrates drawing of shape primitives,
+<a class="reference internal" href="../reference/skia.Path.html#skia.Path" title="skia.Path"><code class="xref py py-class docutils literal notranslate"><span class="pre">Path</span></code></a>, external <code class="xref py py-class docutils literal notranslate"><span class="pre">image</span></code>, or
+<a class="reference internal" href="../reference/skia.TextBlob.html#skia.TextBlob" title="skia.TextBlob"><code class="xref py py-class docutils literal notranslate"><span class="pre">TextBlob</span></code></a> objects onto the canvas:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">skia</span>
+
+<span class="n">surface</span> <span class="o">=</span> <span class="n">skia</span><span class="o">.</span><span class="n">Surface</span><span class="p">(</span><span class="mi">256</span><span class="p">,</span> <span class="mi">256</span><span class="p">)</span>
+<span class="n">canvas</span> <span class="o">=</span> <span class="n">surface</span><span class="o">.</span><span class="n">getCanvas</span><span class="p">()</span>
+
+<span class="n">rect</span> <span class="o">=</span> <span class="n">skia</span><span class="o">.</span><span class="n">Rect</span><span class="p">(</span><span class="mi">50</span><span class="p">,</span> <span class="mi">50</span><span class="p">,</span> <span class="mi">90</span><span class="p">,</span> <span class="mi">110</span><span class="p">)</span>
+<span class="n">paint</span> <span class="o">=</span> <span class="n">skia</span><span class="o">.</span><span class="n">Paint</span><span class="p">(</span>
+    <span class="n">AntiAlias</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">Style</span><span class="o">=</span><span class="n">skia</span><span class="o">.</span><span class="n">Paint</span><span class="o">.</span><span class="n">kStroke_Style</span><span class="p">,</span>
+    <span class="n">StrokeWidth</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span>
+    <span class="n">Color</span><span class="o">=</span><span class="n">skia</span><span class="o">.</span><span class="n">ColorRED</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="n">canvas</span><span class="o">.</span><span class="n">drawColor</span><span class="p">(</span><span class="n">skia</span><span class="o">.</span><span class="n">ColorWHITE</span><span class="p">)</span>
+<span class="n">canvas</span><span class="o">.</span><span class="n">drawRect</span><span class="p">(</span><span class="n">rect</span><span class="p">,</span> <span class="n">paint</span><span class="p">)</span>
+
+<span class="n">oval</span> <span class="o">=</span> <span class="n">skia</span><span class="o">.</span><span class="n">RRect</span><span class="o">.</span><span class="n">MakeOval</span><span class="p">(</span><span class="n">rect</span><span class="p">)</span>
+<span class="n">oval</span><span class="o">.</span><span class="n">offset</span><span class="p">(</span><span class="mi">40</span><span class="p">,</span> <span class="mi">60</span><span class="p">)</span>
+<span class="n">paint</span><span class="o">.</span><span class="n">setColor</span><span class="p">(</span><span class="n">skia</span><span class="o">.</span><span class="n">ColorBLUE</span><span class="p">)</span>
+<span class="n">canvas</span><span class="o">.</span><span class="n">drawRRect</span><span class="p">(</span><span class="n">oval</span><span class="p">,</span> <span class="n">paint</span><span class="p">)</span>
+
+<span class="n">paint</span><span class="o">.</span><span class="n">setColor</span><span class="p">(</span><span class="n">skia</span><span class="o">.</span><span class="n">ColorCYAN</span><span class="p">)</span>
+<span class="n">canvas</span><span class="o">.</span><span class="n">drawCircle</span><span class="p">(</span><span class="mi">180</span><span class="p">,</span> <span class="mi">50</span><span class="p">,</span> <span class="mi">25</span><span class="p">,</span> <span class="n">paint</span><span class="p">)</span>
+
+<span class="n">rect</span><span class="o">.</span><span class="n">offset</span><span class="p">(</span><span class="mi">80</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+<span class="n">paint</span><span class="o">.</span><span class="n">setColor</span><span class="p">(</span><span class="n">skia</span><span class="o">.</span><span class="n">ColorYELLOW</span><span class="p">)</span>
+<span class="n">canvas</span><span class="o">.</span><span class="n">drawRoundRect</span><span class="p">(</span><span class="n">rect</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="n">paint</span><span class="p">)</span>
+
+<span class="n">path</span> <span class="o">=</span> <span class="n">skia</span><span class="o">.</span><span class="n">Path</span><span class="p">()</span>
+<span class="n">path</span><span class="o">.</span><span class="n">cubicTo</span><span class="p">(</span><span class="mi">768</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">512</span><span class="p">,</span> <span class="mi">256</span><span class="p">,</span> <span class="mi">256</span><span class="p">,</span> <span class="mi">256</span><span class="p">)</span>
+<span class="n">paint</span><span class="o">.</span><span class="n">setColor</span><span class="p">(</span><span class="n">skia</span><span class="o">.</span><span class="n">ColorGREEN</span><span class="p">)</span>
+<span class="n">canvas</span><span class="o">.</span><span class="n">drawPath</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">paint</span><span class="p">)</span>
+
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;../skia/resources/images/color_wheel.png&#39;</span><span class="p">,</span> <span class="s1">&#39;rb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+    <span class="n">image</span> <span class="o">=</span> <span class="n">skia</span><span class="o">.</span><span class="n">Image</span><span class="o">.</span><span class="n">DecodeToRaster</span><span class="p">(</span><span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">())</span>
+<span class="n">canvas</span><span class="o">.</span><span class="n">drawImage</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="mi">128</span><span class="p">,</span> <span class="mi">128</span><span class="p">,</span> <span class="n">paint</span><span class="p">)</span>
+
+<span class="n">rect2</span> <span class="o">=</span> <span class="n">skia</span><span class="o">.</span><span class="n">Rect</span><span class="p">(</span><span class="mi">40</span><span class="p">,</span> <span class="mi">60</span><span class="p">)</span>
+<span class="n">canvas</span><span class="o">.</span><span class="n">drawImageRect</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">rect2</span><span class="p">,</span> <span class="n">paint</span><span class="p">)</span>
+
+<span class="n">paint2</span> <span class="o">=</span> <span class="n">skia</span><span class="o">.</span><span class="n">Paint</span><span class="p">()</span>
+<span class="n">text</span> <span class="o">=</span> <span class="n">skia</span><span class="o">.</span><span class="n">TextBlob</span><span class="p">(</span><span class="s1">&#39;Hello, Skia!&#39;</span><span class="p">,</span> <span class="n">skia</span><span class="o">.</span><span class="n">Font</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="mi">18</span><span class="p">))</span>
+<span class="n">canvas</span><span class="o">.</span><span class="n">drawTextBlob</span><span class="p">(</span><span class="n">text</span><span class="p">,</span> <span class="mi">50</span><span class="p">,</span> <span class="mi">25</span><span class="p">,</span> <span class="n">paint2</span><span class="p">)</span>
+
+<span class="n">image</span> <span class="o">=</span> <span class="n">surface</span><span class="o">.</span><span class="n">makeImageSnapshot</span><span class="p">()</span>
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;output.png&#39;</span><span class="p">,</span> <span class="s1">&#39;wb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+    <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">image</span><span class="o">.</span><span class="n">encodeToData</span><span class="p">())</span>
+</pre></div>
+</div>
+<a class="reference internal image-reference" href="../_images/overview-various-draws.png"><img alt="Various drawings" src="../_images/overview-various-draws.png" style="width: 256px;" /></a>
+</div>
+<div class="section" id="apis-at-a-glance">
+<h2>APIs at a glance<a class="headerlink" href="#apis-at-a-glance" title="Permalink to this headline">¶</a></h2>
+<p>Skia has various APIs from low to high level. Some key class objects are:</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="../reference/skia.AutoCanvasRestore.html#skia.AutoCanvasRestore" title="skia.AutoCanvasRestore"><code class="xref py py-class docutils literal notranslate"><span class="pre">AutoCanvasRestore</span></code></a> - Canvas save stack manager</p></li>
+<li><p><a class="reference internal" href="../reference/skia.Bitmap.html#skia.Bitmap" title="skia.Bitmap"><code class="xref py py-class docutils literal notranslate"><span class="pre">Bitmap</span></code></a> - two-dimensional raster pixel array</p></li>
+<li><p><a class="reference internal" href="../reference/skia.BlendMode.html#skia.BlendMode" title="skia.BlendMode"><code class="xref py py-class docutils literal notranslate"><span class="pre">BlendMode</span></code></a> - pixel color arithmetic</p></li>
+<li><p><a class="reference internal" href="../reference/skia.Canvas.html#skia.Canvas" title="skia.Canvas"><code class="xref py py-class docutils literal notranslate"><span class="pre">Canvas</span></code></a> - drawing context</p></li>
+<li><p><a class="reference internal" href="../reference/skia.html#skia.Color" title="skia.Color"><code class="xref py py-class docutils literal notranslate"><span class="pre">Color</span></code></a> - color encoding using integer numbers</p></li>
+<li><p><a class="reference internal" href="../reference/skia.Font.html#skia.Font" title="skia.Font"><code class="xref py py-class docutils literal notranslate"><span class="pre">Font</span></code></a> - text style and typeface</p></li>
+<li><p><a class="reference internal" href="../reference/skia.Image.html#skia.Image" title="skia.Image"><code class="xref py py-class docutils literal notranslate"><span class="pre">Image</span></code></a> - two dimensional array of pixels to draw</p></li>
+<li><p><a class="reference internal" href="../reference/skia.ImageInfo.html#skia.ImageInfo" title="skia.ImageInfo"><code class="xref py py-class docutils literal notranslate"><span class="pre">ImageInfo</span></code></a> - pixel dimensions and characteristics</p></li>
+<li><p><a class="reference internal" href="../reference/skia.IPoint.html#skia.IPoint" title="skia.IPoint"><code class="xref py py-class docutils literal notranslate"><span class="pre">IPoint</span></code></a> - two integer coordinates</p></li>
+<li><p><a class="reference internal" href="../reference/skia.IRect.html#skia.IRect" title="skia.IRect"><code class="xref py py-class docutils literal notranslate"><span class="pre">IRect</span></code></a> - integer rectangle</p></li>
+<li><p><a class="reference internal" href="../reference/skia.Matrix.html#skia.Matrix" title="skia.Matrix"><code class="xref py py-class docutils literal notranslate"><span class="pre">Matrix</span></code></a> - 3x3 transformation matrix</p></li>
+<li><p><a class="reference internal" href="../reference/skia.Paint.html#skia.Paint" title="skia.Paint"><code class="xref py py-class docutils literal notranslate"><span class="pre">Paint</span></code></a> - color, stroke, font, effects</p></li>
+<li><p><a class="reference internal" href="../reference/skia.Path.html#skia.Path" title="skia.Path"><code class="xref py py-class docutils literal notranslate"><span class="pre">Path</span></code></a> - sequence of connected lines and curves</p></li>
+<li><p><a class="reference internal" href="../reference/skia.Picture.html#skia.Picture" title="skia.Picture"><code class="xref py py-class docutils literal notranslate"><span class="pre">Picture</span></code></a> - sequence of drawing commands</p></li>
+<li><p><a class="reference internal" href="../reference/skia.Pixmap.html#skia.Pixmap" title="skia.Pixmap"><code class="xref py py-class docutils literal notranslate"><span class="pre">Pixmap</span></code></a> - pixel map: image info and pixel address</p></li>
+<li><p><a class="reference internal" href="../reference/skia.Point.html#skia.Point" title="skia.Point"><code class="xref py py-class docutils literal notranslate"><span class="pre">Point</span></code></a> - two floating point coordinates</p></li>
+<li><p><a class="reference internal" href="../reference/skia.RRect.html#skia.RRect" title="skia.RRect"><code class="xref py py-class docutils literal notranslate"><span class="pre">RRect</span></code></a> - floating point rounded rectangle</p></li>
+<li><p><a class="reference internal" href="../reference/skia.Rect.html#skia.Rect" title="skia.Rect"><code class="xref py py-class docutils literal notranslate"><span class="pre">Rect</span></code></a> - floating point rectangle</p></li>
+<li><p><a class="reference internal" href="../reference/skia.Region.html#skia.Region" title="skia.Region"><code class="xref py py-class docutils literal notranslate"><span class="pre">Region</span></code></a> - compressed clipping mask</p></li>
+<li><p><a class="reference internal" href="../reference/skia.Surface.html#skia.Surface" title="skia.Surface"><code class="xref py py-class docutils literal notranslate"><span class="pre">Surface</span></code></a> - drawing destination</p></li>
+<li><p><a class="reference internal" href="../reference/skia.TextBlob.html#skia.TextBlob" title="skia.TextBlob"><code class="xref py py-class docutils literal notranslate"><span class="pre">TextBlob</span></code></a> - runs of glyphs</p></li>
+<li><p><a class="reference internal" href="../reference/skia.TextBlobBuilder.html#skia.TextBlobBuilder" title="skia.TextBlobBuilder"><code class="xref py py-class docutils literal notranslate"><span class="pre">TextBlobBuilder</span></code></a> - constructor for runs of glyphs</p></li>
+</ul>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="canvas.html" class="btn btn-neutral float-right" title="Canvas Creation" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="index.html" class="btn btn-neutral float-left" title="Tutorial" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2020, Kota Yamaguchi
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

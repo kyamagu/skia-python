@@ -1,0 +1,352 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Path Overview &mdash; skia-python 0.0.4 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Paint Overview" href="paint.html" />
+    <link rel="prev" title="Canvas Creation" href="canvas.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> skia-python
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.0.4
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../install.html">Install</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Tutorial</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="overview.html">Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="canvas.html">Canvas Creation</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Path Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="paint.html">Paint Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="index.html#notebook-examples">Notebook examples</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../development.html">Development</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../reference.html">Reference</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">skia-python</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="index.html">Tutorial</a> &raquo;</li>
+        
+      <li>Path Overview</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/tutorial/path.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="path-overview">
+<h1>Path Overview<a class="headerlink" href="#path-overview" title="Permalink to this headline">¶</a></h1>
+<p><a class="reference internal" href="../reference/skia.Path.html#skia.Path" title="skia.Path"><code class="xref py py-class docutils literal notranslate"><span class="pre">Path</span></code></a> contains Lines and Curves which can be stroked or filled.
+Contour is composed of a series of connected Lines and Curves. <a class="reference internal" href="../reference/skia.Path.html#skia.Path" title="skia.Path"><code class="xref py py-class docutils literal notranslate"><span class="pre">Path</span></code></a>
+may contain zero, one, or more Contours. Each Line and Curve are described by
+<a class="reference internal" href="../reference/skia.Path.Verb.html#skia.Path.Verb" title="skia.Path.Verb"><code class="xref py py-class docutils literal notranslate"><span class="pre">Verb</span></code></a>, list of <a class="reference internal" href="../reference/skia.Point.html#skia.Point" title="skia.Point"><code class="xref py py-class docutils literal notranslate"><span class="pre">Point</span></code></a>, and optional
+Path_Conic_Weight.</p>
+<p>Each pair of connected Lines and Curves share common <a class="reference internal" href="../reference/skia.Point.html#skia.Point" title="skia.Point"><code class="xref py py-class docutils literal notranslate"><span class="pre">Point</span></code></a>; for
+instance, <a class="reference internal" href="../reference/skia.Path.html#skia.Path" title="skia.Path"><code class="xref py py-class docutils literal notranslate"><span class="pre">Path</span></code></a> containing two connected Lines are described the
+Path_Verb sequence: <code class="xref py py-attr docutils literal notranslate"><span class="pre">Path.kMove</span></code>, <code class="xref py py-attr docutils literal notranslate"><span class="pre">Path.kLine</span></code>,
+<code class="xref py py-attr docutils literal notranslate"><span class="pre">Path.kLine</span></code>; and a Point sequence with three entries, sharing the
+middle entry as the end of the first Line and the start of the second Line.</p>
+<p><a class="reference internal" href="../reference/skia.Path.html#skia.Path" title="skia.Path"><code class="xref py py-class docutils literal notranslate"><span class="pre">Path</span></code></a> components Arc, Rect, Round_Rect, Circle, and Oval are
+composed of Lines and Curves with as many Verbs and Points required for an exact
+description. Once added to <a class="reference internal" href="../reference/skia.Path.html#skia.Path" title="skia.Path"><code class="xref py py-class docutils literal notranslate"><span class="pre">Path</span></code></a>, these components may lose their
+identity; although <a class="reference internal" href="../reference/skia.Path.html#skia.Path" title="skia.Path"><code class="xref py py-class docutils literal notranslate"><span class="pre">Path</span></code></a> can be inspected to determine if it
+describes a single Rect, Oval, Round_Rect, and so on.</p>
+<p><cite>Example</cite>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">paint</span> <span class="o">=</span> <span class="n">skia</span><span class="o">.</span><span class="n">Paint</span><span class="p">(</span><span class="n">AntiAlias</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">path</span> <span class="o">=</span> <span class="n">skia</span><span class="o">.</span><span class="n">Path</span><span class="p">()</span>
+<span class="n">path</span><span class="o">.</span><span class="n">moveTo</span><span class="p">(</span><span class="mi">124</span><span class="p">,</span> <span class="mi">108</span><span class="p">)</span>
+<span class="n">path</span><span class="o">.</span><span class="n">lineTo</span><span class="p">(</span><span class="mi">172</span><span class="p">,</span> <span class="mi">24</span><span class="p">)</span>
+<span class="n">path</span><span class="o">.</span><span class="n">addCircle</span><span class="p">(</span><span class="mi">50</span><span class="p">,</span> <span class="mi">50</span><span class="p">,</span> <span class="mi">30</span><span class="p">)</span>
+<span class="n">path</span><span class="o">.</span><span class="n">moveTo</span><span class="p">(</span><span class="mi">36</span><span class="p">,</span> <span class="mi">148</span><span class="p">)</span>
+<span class="n">path</span><span class="o">.</span><span class="n">quadTo</span><span class="p">(</span><span class="mi">66</span><span class="p">,</span> <span class="mi">188</span><span class="p">,</span> <span class="mi">120</span><span class="p">,</span> <span class="mi">136</span><span class="p">)</span>
+<span class="n">canvas</span><span class="o">.</span><span class="n">drawPath</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">paint</span><span class="p">)</span>
+
+<span class="n">paint</span><span class="o">.</span><span class="n">setStyle</span><span class="p">(</span><span class="n">skia</span><span class="o">.</span><span class="n">Paint</span><span class="o">.</span><span class="n">kStroke_Style</span><span class="p">);</span>
+<span class="n">paint</span><span class="o">.</span><span class="n">setColor</span><span class="p">(</span><span class="n">skia</span><span class="o">.</span><span class="n">ColorBLUE</span><span class="p">)</span>
+<span class="n">paint</span><span class="o">.</span><span class="n">setStrokeWidth</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+<span class="n">canvas</span><span class="o">.</span><span class="n">drawPath</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">paint</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Path contains three Contours: Line, Circle, and Quad. Line is stroked but not
+filled. Circle is stroked and filled; Circle stroke forms a loop. Quad is
+stroked and filled, but since it is not closed, Quad does not stroke a loop.</p>
+<img alt="Path 1" src="../_images/path-1.png" />
+<p>Path contains a Path_Fill_Type which determines whether overlapping Contours
+form fills or holes. Path_Fill_Type also determines whether area inside or
+outside Lines and Curves is filled:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">paint</span> <span class="o">=</span> <span class="n">skia</span><span class="o">.</span><span class="n">Paint</span><span class="p">(</span><span class="n">AntiAlias</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">path</span> <span class="o">=</span> <span class="n">skia</span><span class="o">.</span><span class="n">Path</span><span class="p">()</span>
+<span class="n">path</span><span class="o">.</span><span class="n">moveTo</span><span class="p">(</span><span class="mi">36</span><span class="p">,</span> <span class="mi">48</span><span class="p">)</span>
+<span class="n">path</span><span class="o">.</span><span class="n">quadTo</span><span class="p">(</span><span class="mi">66</span><span class="p">,</span> <span class="mi">88</span><span class="p">,</span> <span class="mi">120</span><span class="p">,</span> <span class="mi">36</span><span class="p">)</span>
+<span class="n">canvas</span><span class="o">.</span><span class="n">drawPath</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">paint</span><span class="p">)</span>
+
+<span class="n">paint</span><span class="o">.</span><span class="n">setStyle</span><span class="p">(</span><span class="n">skia</span><span class="o">.</span><span class="n">Paint</span><span class="o">.</span><span class="n">kStroke_Style</span><span class="p">)</span>
+<span class="n">paint</span><span class="o">.</span><span class="n">setColor</span><span class="p">(</span><span class="n">skia</span><span class="o">.</span><span class="n">ColorBLUE</span><span class="p">)</span>
+<span class="n">paint</span><span class="o">.</span><span class="n">setStrokeWidth</span><span class="p">(</span><span class="mi">8</span><span class="p">)</span>
+<span class="n">canvas</span><span class="o">.</span><span class="n">translate</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">50</span><span class="p">)</span>
+<span class="n">canvas</span><span class="o">.</span><span class="n">drawPath</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">paint</span><span class="p">)</span>
+
+<span class="n">paint</span><span class="o">.</span><span class="n">setStyle</span><span class="p">(</span><span class="n">skia</span><span class="o">.</span><span class="n">Paint</span><span class="o">.</span><span class="n">kStrokeAndFill_Style</span><span class="p">)</span>
+<span class="n">paint</span><span class="o">.</span><span class="n">setColor</span><span class="p">(</span><span class="n">skia</span><span class="o">.</span><span class="n">ColorRED</span><span class="p">)</span>
+<span class="n">canvas</span><span class="o">.</span><span class="n">translate</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">50</span><span class="p">)</span>
+<span class="n">canvas</span><span class="o">.</span><span class="n">drawPath</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">paint</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Path is drawn filled, then stroked, then stroked and filled.</p>
+<img alt="Path 2" src="../_images/path-2.png" />
+<p><a class="reference internal" href="../reference/skia.Path.html#skia.Path" title="skia.Path"><code class="xref py py-class docutils literal notranslate"><span class="pre">Path</span></code></a> contents are never shared. Copying <a class="reference internal" href="../reference/skia.Path.html#skia.Path" title="skia.Path"><code class="xref py py-class docutils literal notranslate"><span class="pre">Path</span></code></a> by value
+effectively creates a new <a class="reference internal" href="../reference/skia.Path.html#skia.Path" title="skia.Path"><code class="xref py py-class docutils literal notranslate"><span class="pre">Path</span></code></a> independent of the original.
+Internally, the copy does not duplicate its contents until it is edited, to
+reduce memory use and improve performance.</p>
+<hr class="docutils" />
+<p>Contour contains one or more Verbs, and as many Points as are required to
+satisfy Path_Verb_Array. First Path_Verb in <a class="reference internal" href="../reference/skia.Path.html#skia.Path" title="skia.Path"><code class="xref py py-class docutils literal notranslate"><span class="pre">Path</span></code></a> is always
+<a class="reference internal" href="../reference/skia.PathVerb.html#skia.PathVerb.kMove" title="skia.PathVerb.kMove"><code class="xref py py-attr docutils literal notranslate"><span class="pre">PathVerb.kMove</span></code></a>; each <a class="reference internal" href="../reference/skia.PathVerb.html#skia.PathVerb.kMove" title="skia.PathVerb.kMove"><code class="xref py py-attr docutils literal notranslate"><span class="pre">PathVerb.kMove</span></code></a> that follows starts a
+new Contour.</p>
+<p><cite>Example</cite>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">font</span> <span class="o">=</span> <span class="n">skia</span><span class="o">.</span><span class="n">Font</span><span class="p">()</span>
+<span class="n">paint</span> <span class="o">=</span> <span class="n">skia</span><span class="o">.</span><span class="n">Paint</span><span class="p">(</span><span class="n">AntiAlias</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">canvas</span><span class="o">.</span><span class="n">drawString</span><span class="p">(</span><span class="s2">&quot;1st contour&quot;</span><span class="p">,</span> <span class="mi">150</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="n">font</span><span class="p">,</span> <span class="n">paint</span><span class="p">)</span>
+<span class="n">canvas</span><span class="o">.</span><span class="n">drawString</span><span class="p">(</span><span class="s2">&quot;2nd contour&quot;</span><span class="p">,</span> <span class="mi">130</span><span class="p">,</span> <span class="mi">160</span><span class="p">,</span> <span class="n">font</span><span class="p">,</span> <span class="n">paint</span><span class="p">)</span>
+<span class="n">canvas</span><span class="o">.</span><span class="n">drawString</span><span class="p">(</span><span class="s2">&quot;3rd contour&quot;</span><span class="p">,</span> <span class="mi">40</span><span class="p">,</span> <span class="mi">30</span><span class="p">,</span> <span class="n">font</span><span class="p">,</span> <span class="n">paint</span><span class="p">)</span>
+<span class="n">paint</span><span class="o">.</span><span class="n">setStyle</span><span class="p">(</span><span class="n">skia</span><span class="o">.</span><span class="n">Paint</span><span class="o">.</span><span class="n">kStroke_Style</span><span class="p">)</span>
+<span class="n">path</span> <span class="o">=</span> <span class="n">skia</span><span class="o">.</span><span class="n">Path</span><span class="p">()</span>
+<span class="n">path</span><span class="o">.</span><span class="n">moveTo</span><span class="p">(</span><span class="mi">124</span><span class="p">,</span> <span class="mi">108</span><span class="p">)</span>
+<span class="n">path</span><span class="o">.</span><span class="n">lineTo</span><span class="p">(</span><span class="mi">172</span><span class="p">,</span> <span class="mi">24</span><span class="p">)</span>
+<span class="n">path</span><span class="o">.</span><span class="n">moveTo</span><span class="p">(</span><span class="mi">36</span><span class="p">,</span> <span class="mi">148</span><span class="p">)</span>
+<span class="n">path</span><span class="o">.</span><span class="n">quadTo</span><span class="p">(</span><span class="mi">66</span><span class="p">,</span> <span class="mi">188</span><span class="p">,</span> <span class="mi">120</span><span class="p">,</span> <span class="mi">136</span><span class="p">)</span>
+<span class="n">path</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+<span class="n">path</span><span class="o">.</span><span class="n">conicTo</span><span class="p">(</span><span class="mi">70</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">110</span><span class="p">,</span> <span class="mi">40</span><span class="p">,</span> <span class="mf">0.6</span><span class="p">)</span>
+<span class="n">canvas</span><span class="o">.</span><span class="n">drawPath</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">paint</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Each <a class="reference internal" href="../reference/skia.Path.html#skia.Path.moveTo" title="skia.Path.moveTo"><code class="xref py py-meth docutils literal notranslate"><span class="pre">moveTo()</span></code></a> starts a new Contour, and content after
+<a class="reference internal" href="../reference/skia.Path.html#skia.Path.close" title="skia.Path.close"><code class="xref py py-meth docutils literal notranslate"><span class="pre">close()</span></code></a> also starts a new Contour. Since <a class="reference internal" href="../reference/skia.Path.html#skia.Path.conicTo" title="skia.Path.conicTo"><code class="xref py py-meth docutils literal notranslate"><span class="pre">conicTo()</span></code></a>
+is not preceded by <a class="reference internal" href="../reference/skia.Path.html#skia.Path.moveTo" title="skia.Path.moveTo"><code class="xref py py-meth docutils literal notranslate"><span class="pre">moveTo()</span></code></a>, the first Point of the third Contour
+starts at the last Point of the second Contour.</p>
+<img alt="Path 3" src="../_images/path-3.png" />
+<p>If final <a class="reference internal" href="../reference/skia.PathVerb.html#skia.PathVerb" title="skia.PathVerb"><code class="xref py py-class docutils literal notranslate"><span class="pre">PathVerb</span></code></a> in Contour is <a class="reference internal" href="../reference/skia.PathVerb.html#skia.PathVerb.kClose" title="skia.PathVerb.kClose"><code class="xref py py-attr docutils literal notranslate"><span class="pre">kClose</span></code></a>, Line
+connects Path_Last_Point in Contour with first Point. A closed Contour, stroked,
+draws Paint_Stroke_Join at Path_Last_Point and first Point. Without
+<a class="reference internal" href="../reference/skia.PathVerb.html#skia.PathVerb.kClose" title="skia.PathVerb.kClose"><code class="xref py py-attr docutils literal notranslate"><span class="pre">kClose</span></code></a> as final Verb, Path_Last_Point and first Point are
+not connected; Contour remains open. An open Contour, stroked, draws
+Paint_Stroke_Cap at Path_Last_Point and first Point.</p>
+<p><cite>Example</cite>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">paint</span> <span class="o">=</span> <span class="n">skia</span><span class="o">.</span><span class="n">Paint</span><span class="p">(</span>
+    <span class="n">AntiAlias</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">Style</span><span class="o">=</span><span class="n">skia</span><span class="o">.</span><span class="n">Paint</span><span class="o">.</span><span class="n">kStroke_Style</span><span class="p">,</span>
+    <span class="n">StrokeWidth</span><span class="o">=</span><span class="mi">8</span><span class="p">)</span>
+<span class="n">path</span> <span class="o">=</span> <span class="n">skia</span><span class="o">.</span><span class="n">Path</span><span class="p">()</span>
+<span class="n">path</span><span class="o">.</span><span class="n">moveTo</span><span class="p">(</span><span class="mi">36</span><span class="p">,</span> <span class="mi">48</span><span class="p">)</span>
+<span class="n">path</span><span class="o">.</span><span class="n">quadTo</span><span class="p">(</span><span class="mi">66</span><span class="p">,</span> <span class="mi">88</span><span class="p">,</span> <span class="mi">120</span><span class="p">,</span> <span class="mi">36</span><span class="p">)</span>
+<span class="n">canvas</span><span class="o">.</span><span class="n">drawPath</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">paint</span><span class="p">)</span>
+<span class="n">path</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+<span class="n">canvas</span><span class="o">.</span><span class="n">translate</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">50</span><span class="p">)</span>
+<span class="n">canvas</span><span class="o">.</span><span class="n">drawPath</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">paint</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Path is drawn stroked, with an open Contour and a closed Contour.</p>
+<img alt="Path 4" src="../_images/path-4.png" />
+<hr class="docutils" />
+<p>Contour length is distance traveled from first Point to Path_Last_Point, plus,
+if Contour is closed, distance from Path_Last_Point to first Point. Even if
+Contour length is zero, stroked Lines are drawn if Paint_Stroke_Cap makes them
+visible.</p>
+<p><cite>Example</cite>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">paint</span> <span class="o">=</span> <span class="n">skia</span><span class="o">.</span><span class="n">Paint</span><span class="p">(</span>
+    <span class="n">AntiAlias</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">Style</span><span class="o">=</span><span class="n">skia</span><span class="o">.</span><span class="n">Paint</span><span class="o">.</span><span class="n">kStroke_Style</span><span class="p">,</span>
+    <span class="n">StrokeWidth</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span>
+    <span class="n">StrokeCap</span><span class="o">=</span><span class="n">skia</span><span class="o">.</span><span class="n">Paint</span><span class="o">.</span><span class="n">kRound_Cap</span><span class="p">)</span>
+<span class="n">path</span> <span class="o">=</span> <span class="n">skia</span><span class="o">.</span><span class="n">Path</span><span class="p">()</span>
+<span class="n">path</span><span class="o">.</span><span class="n">moveTo</span><span class="p">(</span><span class="mi">36</span><span class="p">,</span> <span class="mi">48</span><span class="p">)</span>
+<span class="n">path</span><span class="o">.</span><span class="n">lineTo</span><span class="p">(</span><span class="mi">36</span><span class="p">,</span> <span class="mi">48</span><span class="p">)</span>
+<span class="n">canvas</span><span class="o">.</span><span class="n">drawPath</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">paint</span><span class="p">)</span>
+<span class="n">path</span><span class="o">.</span><span class="n">reset</span><span class="p">()</span>
+<span class="n">paint</span><span class="o">.</span><span class="n">setStrokeCap</span><span class="p">(</span><span class="n">skia</span><span class="o">.</span><span class="n">Paint</span><span class="o">.</span><span class="n">kSquare_Cap</span><span class="p">)</span>
+<span class="n">path</span><span class="o">.</span><span class="n">moveTo</span><span class="p">(</span><span class="mi">56</span><span class="p">,</span> <span class="mi">48</span><span class="p">)</span>
+<span class="n">path</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+<span class="n">canvas</span><span class="o">.</span><span class="n">drawPath</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">paint</span><span class="p">)</span>
+</pre></div>
+</div>
+<img alt="Path 5" src="../_images/path-5.png" />
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="paint.html" class="btn btn-neutral float-right" title="Paint Overview" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="canvas.html" class="btn btn-neutral float-left" title="Canvas Creation" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2020, Kota Yamaguchi
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>
