@@ -157,6 +157,7 @@
 <li class="toctree-l3"><a class="reference internal" href="skia.FontStyleSet.html">FontStyleSet</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.GrBackendApi.html">GrBackendApi</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.GrBackendFormat.html">GrBackendFormat</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.GrBackendRenderTarget.html">GrBackendRenderTarget</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.GrBackendSemaphore.html">GrBackendSemaphore</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.GrBackendTexture.html">GrBackendTexture</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.GrColorType.html">GrColorType</a></li>
@@ -341,9 +342,6 @@
 <p>Members:</p>
 <blockquote>
 <div><dl>
-<dt>kKeep :</dt><dd><p>The next frame should be drawn on top of this one.</p>
-<p>In a GIF, a value of 0 (not specified) is also treated as Keep.</p>
-</dd>
 <dt>kRestorePrevious :</dt><dd><p>The next frame should be drawn on top of the previous frame - i.e.
 disregarding this one.</p>
 <p>In a GIF, a value of 4 is also treated as RestorePrevious.</p>
@@ -351,6 +349,9 @@ disregarding this one.</p>
 <dt>kRestoreBGColor :</dt><dd><p>Similar to Keep, except the area inside this frame’s rectangle
 should be cleared to the BackGround color (transparent) before
 drawing the next frame.</p>
+</dd>
+<dt>kKeep :</dt><dd><p>The next frame should be drawn on top of this one.</p>
+<p>In a GIF, a value of 0 (not specified) is also treated as Keep.</p>
 </dd>
 </dl>
 </div></blockquote>
