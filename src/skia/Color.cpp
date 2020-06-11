@@ -241,6 +241,20 @@ m.def("Color",
     R"docstring(
     Returns color value from 8-bit component values.
 
+    In Skia, colors are represented as 32-bit ARGB word, where each component
+    has 8-bit. Colors can be specified by Python literal or constructed from the
+    functions.
+
+    Floating point representation is available via :py:class:`Color4f`.
+
+    Example::
+
+        c = 0xFFFF0000  # ARGB
+        c = skia.Color(255, 0, 0)  # RGB
+        c = skia.Color(255, 0, 0, 255)  # RGBA
+        c = skia.ColorSetRGB(255, 255, 0, 0)  # RGB
+        c = skia.ColorSetARGB(255, 255, 0, 0)  # ARGB
+
     Asserts if SK_DEBUG is defined if a, r, g, or b exceed 255. Since color is
     unpremultiplied, a may be smaller than the largest of r, g, and b.
 

@@ -21,8 +21,9 @@ Documentation
 
    install
    tutorial/index
-   reference/index
    development
+   reference
+
 
 Indices and tables
 ------------------
