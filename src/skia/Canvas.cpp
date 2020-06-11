@@ -1,4 +1,5 @@
 #include "common.h"
+#include <include/svg/SkSVGCanvas.h>
 #include <pybind11/numpy.h>
 #include <pybind11/stl.h>
 
@@ -2480,4 +2481,36 @@ canvas
     ;
 
     m.def("MakeNullCanvas", &SkMakeNullCanvas);
+
+py::class_<SkSVGCanvas>(m, "SVGCanvas")
+    .def_static("Make", &SkSVGCanvas::Make,
+        R"docstring(
+        Returns a new canvas that will generate SVG commands from its draw
+        calls, and send them to the provided stream. Ownership of the stream is
+        not transfered, and it must remain valid for the lifetime of the
+        returned canvas::
+
+            stream = skia.FILEWStream('output.svg')
+            canvas = skia.SVGCanvas.Make((640, 480), stream)
+            draw(canvas)
+            # Make sure to delete the canvas before the stream goes out of scope
+            del canvas
+            stream.flush()
+
+        The canvas may buffer some drawing calls, so the output is not
+        guaranteed to be valid or complete until the canvas instance is deleted.
+
+        The 'bounds' parameter defines an initial SVG viewport (viewBox
+        attribute on the root SVG element).
+        )docstring",
+        py::arg("bounds"), py::arg("stream"), py::arg("flags") = 0)
+    .def_property_readonly_static("kConvertTextToPaths_Flag",
+        [] (py::object obj) {
+            return uint32_t(SkSVGCanvas::kConvertTextToPaths_Flag);
+        })
+    .def_property_readonly_static("kNoPrettyXML_Flag",
+        [] (py::object obj) {
+            return uint32_t(SkSVGCanvas::kNoPrettyXML_Flag);
+        })
+    ;
 }
