@@ -1,6 +1,9 @@
 #include "common.h"
 
 
+typedef struct _PyPDF {} PyPDF;
+
+
 void initDocument(py::module &m) {
 
 py::class_<SkDocument, sk_sp<SkDocument>, SkRefCnt>(m, "Document",
@@ -64,7 +67,7 @@ py::class_<SkDocument, sk_sp<SkDocument>, SkRefCnt>(m, "Document",
         )docstring")
     ;
 
-py::module pdf = m.def_submodule("PDF");
+py::class_<PyPDF> pdf(m, "PDF");
 
 py::enum_<SkPDF::DocumentStructureType>(pdf, "DocumentStructureType")
     .value("kDocument", SkPDF::DocumentStructureType::kDocument)
@@ -135,42 +138,42 @@ py::class_<SkPDF::Metadata>(pdf, "Metadata")
     .def(py::init<>())
     ;
 
-pdf.def("SetNodeId", &SkPDF::SetNodeId,
-    R"docstring(
-    Associate a node ID with subsequent drawing commands in an
-    :py:class:`Canvas`.
+pdf
+    .def_static("SetNodeId", &SkPDF::SetNodeId,
+        R"docstring(
+        Associate a node ID with subsequent drawing commands in an
+        :py:class:`Canvas`.
 
-    The same node ID can appear in a :py:class:`~PDF.StructureElementNode`
-    in order to associate a document's structure element tree with its
-    content.
+        The same node ID can appear in a :py:class:`~PDF.StructureElementNode`
+        in order to associate a document's structure element tree with its
+        content.
 
-    A node ID of zero indicates no node ID.
+        A node ID of zero indicates no node ID.
 
-    :param canvas: The canvas used to draw to the PDF.
-    :param nodeId: The node ID for subsequent drawing commands.
-    )docstring",
-    py::arg("canvas"), py::arg("nodeId"));
+        :param canvas: The canvas used to draw to the PDF.
+        :param nodeId: The node ID for subsequent drawing commands.
+        )docstring",
+        py::arg("canvas"), py::arg("nodeId"))
+    .def_static("MakeDocument",
+        [] (SkWStream* stream, const SkPDF::Metadata* metadata) {
+            if (metadata)
+                return SkPDF::MakeDocument(stream, *metadata);
+            return SkPDF::MakeDocument(stream);
+        },
+        R"docstring(
+        Create a PDF-backed document, writing the results into a
+        :py:class:`WStream`.
 
-pdf.def("MakeDocument",
-    [] (SkWStream* stream, const SkPDF::Metadata* metadata) {
-        if (metadata)
-            return SkPDF::MakeDocument(stream, *metadata);
-        return SkPDF::MakeDocument(stream);
-    },
-    R"docstring(
-    Create a PDF-backed document, writing the results into a
-    :py:class:`WStream`.
+        PDF pages are sized in point units. 1 pt == 1/72 inch == 127/360 mm.
 
-    PDF pages are sized in point units. 1 pt == 1/72 inch == 127/360 mm.
-
-    :param stream:  A PDF document will be written to this stream. The
-        document may write to the stream at anytime during its lifetime,
-        until either :py:meth:`~Document.close` is called or the document is
-        deleted.
-    :param metadata:  a PDFmetadata object. Any fields may be left empty.
-    :return: NULL if there is an error, otherwise a newly created PDF-backed
-        :py:class:`Document`.
-    )docstring",
-    py::arg("stream"),  py::arg("metadata") = nullptr);
+        :param stream:  A PDF document will be written to this stream. The
+            document may write to the stream at anytime during its lifetime,
+            until either :py:meth:`~Document.close` is called or the document is
+            deleted.
+        :param metadata:  a PDFmetadata object. Any fields may be left empty.
+        :return: NULL if there is an error, otherwise a newly created PDF-backed
+            :py:class:`Document`.
+        )docstring",
+        py::arg("stream"),  py::arg("metadata") = nullptr);
 
 }  // initDocument

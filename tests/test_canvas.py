@@ -484,3 +484,11 @@ def test_AutoCanvasRestore(canvas, doSave):
 def test_AutoCanvasRestore_with(canvas, doSave):
     with skia.AutoCanvasRestore(canvas, doSave):
         pass
+
+
+def test_SVGCanvas_Make():
+    stream = skia.DynamicMemoryWStream()
+    canvas = skia.SVGCanvas.Make((256, 256), stream)
+    assert isinstance(canvas, skia.Canvas)
+    del canvas
+    data = stream.detachAsData()

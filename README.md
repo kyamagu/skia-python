@@ -51,7 +51,7 @@ For unsupported environment, check the [build instruction](https://kyamagu.githu
 https://kyamagu.github.io/skia-python
 
 - [Tutorial](https://kyamagu.github.io/skia-python/tutorial/)
-- [Reference](https://kyamagu.github.io/skia-python/reference/)
+- [Reference](https://kyamagu.github.io/skia-python/reference.html)
 
 ## Contributing
 
