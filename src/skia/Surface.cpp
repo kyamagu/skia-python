@@ -113,18 +113,6 @@ py::class_<SkSurface, sk_sp<SkSurface>> surface(
     by the surface). :py:class:`Surface` always has non-zero dimensions. If
     there is a request for a new surface, and either of the requested dimensions
     are zero, then nullptr will be returned.
-
-    .. rubric:: Classes
-
-    .. autosummary::
-        :nosignatures:
-
-        AsyncReadResult
-        ContentChangeMode
-        BackendHandleAccess
-        RescaleGamma
-        BackendSurfaceAccess
-        FlushFlags
     )docstring");
 
 py::class_<SkSurface::AsyncReadResult>(surface, "AsyncReadResult", R"docstring(
@@ -238,13 +226,60 @@ surface
     // .def("notifyContentWillChange", &SkSurface::notifyContentWillChange,
     //     "Notifies that SkSurface contents will be changed by code outside of "
     //     "Skia.")
-    // .def("getBackendTexture", &SkSurface::getBackendTexture,
-    //     "Retrieves the back-end texture.")
-    // .def("getBackendRenderTarget", &SkSurface::getBackendRenderTarget,
-    //     "Retrieves the back-end render target.")
-    // .def("replaceBackendTexture", &SkSurface::replaceBackendTexture,
-    //     "If the surface was made via MakeFromBackendTexture then it's "
-    //     "backing texture may be substituted with a different texture.")
+    .def("getContext", &SkSurface::getContext,
+        R"docstring(
+        Returns the GPU context of the GPU surface.
+
+        :return: GPU context, if available; nullptr otherwise
+        )docstring",
+        py::return_value_policy::reference)
+    .def("getBackendTexture", &SkSurface::getBackendTexture,
+        R"docstring(
+        Retrieves the back-end texture.
+
+        If :py:class:`Surface` has no back-end texture, an invalid object is
+        returned. Call :py:meth:`GrBackendTexture.isValid` to determine if the
+        result is valid.
+
+        The returned :py:class:`GrBackendTexture` should be discarded if the
+        :py:class:`Surface` is drawn to or deleted.
+
+        :return: GPU texture reference; invalid on failure
+        )docstring",
+        py::arg("backendHandleAccess"))
+    .def("getBackendRenderTarget", &SkSurface::getBackendRenderTarget,
+        R"docstring(
+        Retrieves the back-end render target.
+
+        If :py:class:`Surface` has no back-end render target, an invalid object
+        is returned. Call :py:meth:`GrBackendRenderTarget.isValid` to determine
+        if the result is valid.
+
+        The returned :py:class:`GrBackendRenderTarget` should be discarded if
+        the :py:class:`Surface` is drawn to or deleted.
+
+        :return: GPU render target reference; invalid on failure
+        )docstring",
+        py::arg("backendHandleAccess"))
+    .def("replaceBackendTexture",
+        [] (SkSurface& surface, const GrBackendTexture& backendTexture,
+            GrSurfaceOrigin origin, SkSurface::ContentChangeMode mode) {
+            return surface.replaceBackendTexture(backendTexture, origin, mode);
+        },
+        R"docstring(
+        If the surface was made via :py:meth:`MakeFromBackendTexture` then it's
+        backing texture may be substituted with a different texture.
+
+        The contents of the previous backing texture are copied into the new
+        texture. :py:class:`Canvas` state is preserved. The original sample
+        count is used. The :py:class:`GrBackendFormat` and dimensions of
+        replacement texture must match that of the original.
+
+        :param backendTexture:  the new backing texture for the surface
+        :param mode:    Retain or discard current Content
+        )docstring",
+        py::arg("backendTexture"), py::arg("origin"),
+        py::arg("mode") = SkSurface::kRetain_ContentChangeMode)
     .def("getCanvas", &SkSurface::getCanvas,
         R"docstring(
         Returns :py:class:`Canvas` that draws into :py:class:`Surface`.
@@ -284,7 +319,7 @@ surface
     .def("makeImageSnapshot",
         py::overload_cast<>(&SkSurface::makeImageSnapshot),
         R"docstring(
-        Returns SkImage capturing SkSurface contents.
+        Returns :py:class:`Image` capturing :py:class:`Surface` contents.
 
         Subsequent drawing to :py:class:`Surface` contents are not captured.
         :py:class:`Image` allocation is accounted for if :py:class:`Surface` was
@@ -343,7 +378,8 @@ surface
         :param skia.Pixmap pixmap: storage for pixel state if pixels are
             readable; otherwise, ignored
         :return: true if :py:class:`Surface` has direct access to pixels
-        )docstring")
+        )docstring",
+        py::arg("pixmap"))
     .def("readPixels",
         py::overload_cast<const SkPixmap&, int, int>(&SkSurface::readPixels),
         R"docstring(
@@ -525,35 +561,83 @@ surface
         :return: LCD striping orientation and setting for device independent
             fonts
         )docstring")
-    .def("flush",
-        py::overload_cast<>(&SkSurface::flush),
+    .def("flushAndSubmit",
+        py::overload_cast<>(&SkSurface::flushAndSubmit),
         R"docstring(
-        Issues pending SkSurface commands to the GPU-backed API and resolves any
-        :py:class:`Surface` MSAA.
+        Call to ensure all reads/writes of the surface have been issued to the
+        underlying 3D API.
 
-        Skia flushes as needed, so it is not necessary to call this if Skia
-        manages drawing and object lifetime. Call when interleaving Skia calls
-        with native GPU calls.
+        Skia will correctly order its own draws and pixel operations. This must
+        to be used to ensure correct ordering when the surface backing store is
+        accessed outside Skia (e.g. direct use of the 3D API or a windowing
+        system). :py:class:`GrContext` has additional flush and submit methods
+        that apply to all surfaces and images created from a
+        :py:class:`GrContext`. This is equivalent to calling :py:meth:`flush`
+        with a default :py:class:`GrFlushInfo` followed by
+        :py:meth:`GrContext.submit`.
         )docstring")
-    // .def("flush",
-    //     py::overload_cast<BackendSurfaceAccess, const GrFlushInfo&>(
-    //         &SkSurface::flush),
-    //     "Issues pending SkSurface commands to the GPU-backed API and resolves "
-    //     "any SkSurface MSAA.")
-    // .def("flush",
-    //     py::overload_cast<BackendSurfaceAccess, GrFlushFlags, int,
-    //     GrBackendSemaphore[], GrGpuFinishedProc, GrGpuFinishedContext>(
-    //         &SkSurface::flush),
-    //     "Deprecated.")
-    // .def("flush",
-    //     py::overload_cast<BackendSurfaceAccess, FlushFlags, int,
-    //     GrBackendSemaphore[]>(&SkSurface::flush))
-    // .def("flushAndSignalSemaphores", &SkSurface::flushAndSignalSemaphores,
-    //     "Deprecated.")
-    // .def("wait", &SkSurface::wait,
-    //     "Inserts a list of GPU semaphores that the current GPU-backed API "
-    //     "must wait on before executing any more commands on the GPU for this "
-    //     "surface.")
+    .def("flush",
+        py::overload_cast<SkSurface::BackendSurfaceAccess, const GrFlushInfo&>(
+            &SkSurface::flush),
+        R"docstring(
+        Issues pending :py:class:`Surface` commands to the GPU-backed API
+        objects and resolves any :py:class:`Surface` MSAA.
+
+        A call to :py:meth:`GrContext.submit` is always required to ensure work
+        is actually sent to the gpu. Some specific API details:
+
+        :GL: Commands are actually sent to the driver, but glFlush is never
+            called. Thus some sync objects from the flush will not be valid
+            until a submission occurs.
+
+        :Vulkan/Metal/D3D/Dawn: Commands are recorded to the backend APIs
+            corresponding command buffer or encoder objects. However, these
+            objects are not sent to the gpu until a submission occurs.
+
+        The work that is submitted to the GPU will be dependent on the
+        :py:class:`BackendSurfaceAccess` that is passed in.
+
+        If :py:attr:`BackendSurfaceAccess.kNoAccess` is passed in all commands
+        will be issued to the GPU.
+
+        If :py:attr:`BackendSurfaceAccess.kPresent` is passed in and the backend
+        API is not Vulkan, it is treated the same as kNoAccess. If the backend
+        API is Vulkan, the VkImage that backs the :py:class:`Surface` will be
+        transferred back to its original queue. If the :py:class:`Surface` was
+        created by wrapping a VkImage, the queue will be set to the queue which
+        was originally passed in on the GrVkImageInfo. Additionally, if the
+        original queue was not external or foreign the layout of the VkImage
+        will be set to VK_IMAGE_LAYOUT_PRESENT_SRC_KHR.
+
+        The :py:class:`GrFlushInfo` describes additional options to flush.
+        Please see documentation at :py:class:`GrFlushInfo` for more info.
+
+        If the return is :py:attr:`GrSemaphoresSubmitted.kYes`, only initialized
+        :py:class:`GrBackendSemaphores` will be submitted to the gpu during the
+        next submit call (it is possible Skia failed to create a subset of the
+        semaphores). The client should not wait on these semaphores until after
+        submit has been called, but must keep them alive until then. If a submit
+        flag was passed in with the flush these valid semaphores can we waited
+        on immediately. If this call returns
+        :py:attr:`GrSemaphoresSubmitted.kNo`, the GPU backend will not submit
+        any semaphores to be signaled on the GPU. Thus the client should not
+        have the GPU wait on any of the semaphores passed in with the
+        :py:class:`GrFlushInfo`. Regardless of whether semaphores were submitted
+        to the GPU or not, the client is still responsible for deleting any
+        initialized semaphores. Regardleess of semaphore submission the context
+        will still be flushed. It should be emphasized that a return value of
+        :py:attr:`GrSemaphoresSubmitted.kNo` does not mean the flush did not
+        happen. It simply means there were no semaphores submitted to the GPU. A
+        caller should only take this as a failure if they passed in semaphores
+        to be submitted.
+
+        Pending surface commands are flushed regardless of the return result.
+
+        :param access:  type of access the call will do on the backend object
+            after flush
+        :param info:    flush options
+        )docstring",
+        py::arg("access"), py::arg("info"))
     .def("characterize", &SkSurface::characterize,
         R"docstring(
         Initializes :py:class:`SurfaceCharacterization` that can be used to
@@ -676,23 +760,18 @@ surface
 
         If rowBytes is zero, a suitable value will be chosen internally.
 
-        :param skia.ImageInfo imageInfo: width, height, :py:class:`ColorType`,
+        :imageInfo: width, height, :py:class:`ColorType`,
             :py:class:`AlphaType`, :py:class:`ColorSpace`, of raster surface;
             width and height must be greater than zero
-        :param int rowBytes: interval from one :py:class:`Surface` row to the
+        :rowBytes: interval from one :py:class:`Surface` row to the
             next; may be zero
-        :param skia.SurfaceProps surfaceProps: LCD striping orientation and
+        :skia.SurfaceProps surfaceProps: LCD striping orientation and
             setting for device independent fonts; may be nullptr
         :return: :py:class:`Surface` if all parameters are valid; otherwise,
             nullptr
         )docstring",
         py::arg("imageInfo"), py::arg("rowBytes") = 0,
         py::arg("surfaceProps") = nullptr)
-    // .def_static("MakeRaster",
-    //     py::overload_cast<const SkImageInfo&, const SkSurfaceProps*>(
-    //         &SkSurface::MakeRaster),
-    //     "Allocates raster SkSurface.",
-    //     py::arg("imageInfo"), py::arg("surfaceProps") = nullptr)
     .def_static("MakeRasterN32Premul", &SkSurface::MakeRasterN32Premul,
         R"docstring(
         Allocates raster :py:class:`Surface`.
@@ -720,14 +799,128 @@ surface
             nullptr
         )docstring",
         py::arg("width"), py::arg("height"), py::arg("surfaceProps") = nullptr)
-    // .def_static("MakeFromBackendTexture", &SkSurface::MakeFromBackendTexture,
-    //     "Wraps a GPU-backed texture into SkSurface.")
-    // .def_static("MakeFromBackendRenderTarget",
-    //     &SkSurface::MakeFromBackendRenderTarget,
-    //     "Wraps a GPU-backed buffer into SkSurface.")
-    // .def_static("MakeFromBackendTextureAsRenderTarget",
-    //     &SkSurface::MakeFromBackendTextureAsRenderTarget,
-    //     "Wraps a GPU-backed texture into SkSurface.")
+    .def_static("MakeFromBackendTexture",
+        [] (GrContext* context, const GrBackendTexture& backendTexture,
+            GrSurfaceOrigin origin, int sampleCnt, SkColorType colorType,
+            sk_sp<SkColorSpace> colorSpace,
+            const SkSurfaceProps* surfaceProps) {
+            return SkSurface::MakeFromBackendTexture(
+                context, backendTexture, origin, sampleCnt, colorType,
+                colorSpace, surfaceProps);
+        },
+        R"docstring(
+        Wraps a GPU-backed texture into :py:class:`Surface`.
+
+        Caller must ensure the texture is valid for the lifetime of returned
+        :py:class:`Surface`. If sampleCnt greater than zero, creates an
+        intermediate MSAA :py:class:`Surface` which is used for drawing
+        backendTexture.
+
+        :py:class:`Surface` is returned if all parameters are valid.
+        backendTexture is valid if its pixel configuration agrees with
+        colorSpace and context; for instance, if backendTexture has an sRGB
+        configuration, then context must support sRGB, and colorSpace must be
+        present. Further, backendTexture width and height must not exceed
+        context capabilities, and the context must be able to support back-end
+        textures.
+
+        Upon success textureReleaseProc is called when it is safe to delete the
+        texture in the backend API (accounting only for use of the texture by
+        this surface). If :py:class:`Surface` creation fails textureReleaseProc
+        is called before this function returns.
+
+        If SK_SUPPORT_GPU is defined as zero, has no effect and returns nullptr.
+
+        :context: GPU context
+        :backendTexture:  texture residing on GPU
+        :sampleCnt:  samples per pixel, or 0 to disable full scene anti-aliasing
+        :colorSpace:  range of colors; may be nullptr
+        :surfaceProps:    LCD striping orientation and setting for device
+            independent fonts; may be nullptr
+        :textureReleaseProc:  function called when texture can be released
+        :releaseContext:  state passed to textureReleaseProc
+        :return: :py:class:`Surface` if all parameters are valid; otherwise,
+            nullptr
+        )docstring",
+        py::arg("context"), py::arg("backendTexture"), py::arg("origin"),
+        py::arg("sampleCnt"), py::arg("colorType"), py::arg("colorSpace"),
+        py::arg("surfaceProps"))
+    .def_static("MakeFromBackendTexture",
+        [] (GrContext* context,
+            const SkSurfaceCharacterization& characterzation,
+            const GrBackendTexture& backendTexture) {
+            return SkSurface::MakeFromBackendTexture(
+                context, characterzation, backendTexture);
+        },
+        R"docstring(
+        Wraps a backend texture in an :py:class:`Surface` - setting up the
+        surface to match the provided characterization.
+
+        The caller must ensure the texture is valid for the lifetime of returned
+        :py:class:`Surface`.
+
+        If the backend texture and surface characterization are incompatible
+        then null will be returned.
+
+        Usually, the :py:meth:`GrContext.createBackendTexture` variant that
+        takes a surface characterization should be used to create the backend
+        texture. If not, :py:meth:`SurfaceCharacterization.isCompatible` can be
+        used to determine if a given backend texture is compatible with a
+        specific surface characterization.
+
+        Upon success textureReleaseProc is called when it is safe to delete the
+        texture in the backend API (accounting only for use of the texture by
+        this surface). If :py:class:`Surface` creation fails textureReleaseProc
+        is called before this function returns.
+
+        :context: GPU context
+        :characterization:    characterization of the desired surface
+        :backendTexture:  texture residing on GPU
+        :return: :py:class:`Surface` if all parameters are compatible;
+            otherwise, nullptr
+        )docstring",
+        py::arg("context"), py::arg("characterization"),
+        py::arg("backendTexture"))
+    .def_static("MakeFromBackendRenderTarget",
+        [] (GrContext* context, const GrBackendRenderTarget& target,
+            GrSurfaceOrigin origin, SkColorType colorType,
+            sk_sp<SkColorSpace> colorSpace,
+            const SkSurfaceProps* surfaceProps) {
+            return SkSurface::MakeFromBackendRenderTarget(
+                context, target, origin, colorType, colorSpace, surfaceProps);
+        },
+        R"docstring(
+        Wraps a GPU-backed buffer into :py:class:`Surface`.
+
+        Caller must ensure backendRenderTarget is valid for the lifetime of
+        returned :py:class:`Surface`.
+
+        :py:class:`Surface` is returned if all parameters are valid.
+        backendRenderTarget is valid if its pixel configuration agrees with
+        colorSpace and context; for instance, if backendRenderTarget has an sRGB
+        configuration, then context must support sRGB, and colorSpace must be
+        present. Further, backendRenderTarget width and height must not exceed
+        context capabilities, and the context must be able to support back-end
+        render targets.
+
+        Upon success releaseProc is called when it is safe to delete the render
+        target in the backend API (accounting only for use of the render target
+        by this surface). If :py:class:`Surface` creation fails releaseProc is
+        called before this function returns.
+
+        If SK_SUPPORT_GPU is defined as zero, has no effect and returns nullptr.
+
+        :param context: GPU context
+        :param backendRenderTarget: GPU intermediate memory buffer
+        :param colorSpace:  range of colors
+        :param surfaceProps:    LCD striping orientation and setting for device
+            independent fonts; may be nullptr
+        :return: :py:class:`Surface` if all parameters are valid; otherwise,
+            nullptr
+        )docstring",
+        py::arg("context"), py::arg("backendRenderTarget"), py::arg("origin"),
+        py::arg("colorType"), py::arg("colorSpace"),
+        py::arg("surfaceProps") = nullptr)
     .def_static("MakeRenderTarget",
         py::overload_cast<GrContext*, SkBudgeted, const SkImageInfo&, int,
         GrSurfaceOrigin, const SkSurfaceProps*, bool>(
@@ -773,26 +966,74 @@ surface
         py::arg("surfaceOrigin") = GrSurfaceOrigin::kBottomLeft_GrSurfaceOrigin,
         py::arg("surfaceProps") = nullptr,
         py::arg("shouldCreateWithMips") = false)
-    // .def_static("MakeRenderTarget",
-    //     py::overload_cast<GrContext*, SkBudgeted, const SkImageInfo&, int,
-    //     const SkSurfaceProps*>(&SkSurface::MakeRenderTarget),
-    //     "Returns SkSurface on GPU indicated by context.",
-    //     py::arg("context"), py::arg("budgeted"), py::arg("imageInfo"),
-    //     py::arg("sampleCount"), py::arg("surfaceProps"))
-    // .def_static("MakeRenderTarget",
-    //     py::overload_cast<GrContext*, SkBudgeted, const SkImageInfo&>(
-    //         &SkSurface::MakeRenderTarget),
-    //     "Returns SkSurface on GPU indicated by context.",
-    //     py::arg("context"), py::arg("budgeted"), py::arg("imageInfo"))
-    // .def_static("MakeRenderTarget",
-    //     py::overload_cast<GrRecordingContext*,
-    //     const SkSurfaceCharacterization&, SkBudgeted>(
-    //         &SkSurface::MakeRenderTarget),
-    //     "Returns SkSurface on GPU indicated by context that is compatible with "
-    //     "the provided characterization.")
-    // .def_static("MakeFromBackendTexture", &SkSurface::MakeFromBackendTexture,
-    //     "Wraps a backend texture in an SkSurface - setting up the surface to "
-    //     "match the provided characterization.")
+    .def_static("MakeRenderTarget",
+        py::overload_cast<GrContext*, SkBudgeted, const SkImageInfo&, int,
+            const SkSurfaceProps*>(&SkSurface::MakeRenderTarget),
+        R"docstring(
+        Returns :py:class:`Surface` on GPU indicated by context.
+
+        Allocates memory for pixels, based on the width, height, and
+        :py:class:`ColorType` in :py:class:`ImageInfo`. budgeted selects whether
+        allocation for pixels is tracked by context. imageInfo describes the
+        pixel format in :py:class:`ColorType`, and transparency in
+        :py:class:`AlphaType`, and color matching in :py:class:`ColorSpace`.
+
+        sampleCount requests the number of samples per pixel. Pass zero to
+        disable multi-sample anti-aliasing. The request is rounded up to the
+        next supported count, or rounded down if it is larger than the maximum
+        supported count.
+
+        :py:class:`Surface` bottom-left corner is pinned to the origin.
+
+        :context: GPU context
+        :imageInfo:   width, height, :py:class:`ColorType`,
+            :py:class:`AlphaType`, :py:class:`ColorSpace`; width, or height, or
+            both, may be zero
+        :sampleCount: samples per pixel, or 0 to disable full scene
+            anti-aliasing
+        :surfaceProps:    LCD striping orientation and setting for device
+            independent fonts; may be nullptr
+        :return: :py:class:`Surface` if all parameters are valid; otherwise,
+            nullptr
+        )docstring",
+        py::arg("context"), py::arg("budgeted"), py::arg("imageInfo"),
+        py::arg("sampleCount"), py::arg("surfaceProps"))
+    .def_static("MakeRenderTarget",
+        py::overload_cast<GrContext*, SkBudgeted, const SkImageInfo&>(
+            &SkSurface::MakeRenderTarget),
+        R"docstring(
+        Returns :py:class:`Surface` on GPU indicated by context.
+
+        Allocates memory for pixels, based on the width, height, and
+        :py:class:`ColorType` in :py:class:`ImageInfo`. budgeted selects whether
+        allocation for pixels is tracked by context. imageInfo describes the
+        pixel format in :py:class:`ColorType`, and transparency in
+        :py:class:`AlphaType`, and color matching in :py:class:`ColorSpace`.
+
+        :py:class:`Surface` bottom-left corner is pinned to the origin.
+
+        :context: GPU context
+        :imageInfo:   width, height, :py:class:`ColorType`,
+            :py:class:`AlphaType`, :py:class:`ColorSpace`; width, or height, or
+            both, may be zero
+        )docstring",
+        py::arg("context"), py::arg("budgeted"), py::arg("imageInfo"))
+    .def_static("MakeRenderTarget",
+        py::overload_cast<GrRecordingContext*,
+        const SkSurfaceCharacterization&, SkBudgeted>(
+            &SkSurface::MakeRenderTarget),
+        R"docstring(
+        Returns :py:class:`Surface` on GPU indicated by context that is
+        compatible with the provided characterization.
+
+        budgeted selects whether allocation for pixels is tracked by context.
+
+        :context: GPU context
+        :characterization: description of the desired :py:class:`Surface`
+        :return: :py:class:`Surface` if all parameters are valid; otherwise,
+            nullptr
+        )docstring",
+        py::arg("context"), py::arg("characterization"), py::arg("budgeted"))
     .def_static("MakeNull", &SkSurface::MakeNull,
         R"docstring(
         Returns :py:class:`Surface` without backing pixels.

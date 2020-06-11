@@ -27,6 +27,30 @@ def test_Surface_imageInfo(surface):
     assert isinstance(surface.imageInfo(), skia.ImageInfo)
 
 
+def test_Surface_getContext(surface):
+    assert isinstance(surface.getContext(), (type(None), skia.GrContext))
+
+
+def test_Surface_getBackendTexture(surface):
+    assert isinstance(
+        surface.getBackendTexture(skia.Surface.kFlushRead_BackendHandleAccess),
+        skia.GrBackendTexture)
+
+
+def test_Surface_getBackendRenderTarget(surface):
+    assert isinstance(
+        surface.getBackendRenderTarget(
+            skia.Surface.kFlushRead_BackendHandleAccess),
+        skia.GrBackendRenderTarget)
+
+
+def test_Surface_replaceBackendTexture(surface):
+    assert isinstance(
+        surface.replaceBackendTexture(
+            skia.GrBackendTexture(), skia.kTopLeft_GrSurfaceOrigin),
+        bool)
+
+
 def test_Surface_getCanvas(surface):
     assert isinstance(surface.getCanvas(), skia.Canvas)
 
@@ -81,8 +105,12 @@ def test_Surface_props(surface):
     assert isinstance(surface.props(), skia.SurfaceProps)
 
 
+def test_Surface_flushAndSubmit(surface):
+    surface.flushAndSubmit()
+
+
 def test_Surface_flush(surface):
-    surface.flush()
+    surface.flush(skia.Surface.kNoAccess, skia.GrFlushInfo())
 
 
 def test_Surface_characterize(surface):
@@ -135,6 +163,32 @@ def test_Surface_MakeRasterN32Premul(args):
     check_surface(skia.Surface.MakeRasterN32Premul(*args))
 
 
+def test_Surface_MakeFromBackendTexture(context):
+    texture = skia.GrBackendTexture()
+    assert isinstance(
+        skia.Surface.MakeFromBackendTexture(
+            context, texture, skia.kTopLeft_GrSurfaceOrigin, 0,
+            skia.kRGBA_8888_ColorType, skia.ColorSpace.MakeSRGB(), None),
+        (type(None), skia.Surface))
+
+
+def test_Surface_MakeFromBackendTexture_2(context):
+    characterization = skia.SurfaceCharacterization()
+    texture = skia.GrBackendTexture()
+    assert isinstance(
+        skia.Surface.MakeFromBackendTexture(context, characterization, texture),
+        (type(None), skia.Surface))
+
+
+def test_Surface_MakeFromBackendRenderTarget(context):
+    target = skia.GrBackendRenderTarget()
+    assert isinstance(
+        skia.Surface.MakeFromBackendRenderTarget(
+            context, target, skia.kTopLeft_GrSurfaceOrigin,
+            skia.kRGBA_8888_ColorType, skia.ColorSpace.MakeSRGB()),
+        (type(None), skia.Surface))
+
+
 @pytest.mark.parametrize('args', [
     tuple(),
     (
@@ -143,11 +197,22 @@ def test_Surface_MakeRasterN32Premul(args):
         None,
         False,
     ),
+    (
+        0,
+        None,
+    ),
 ])
 def test_Surface_MakeRenderTarget(args, context):
     info = skia.ImageInfo.MakeN32Premul(320, 240)
     check_surface(skia.Surface.MakeRenderTarget(
         context, skia.Budgeted.kNo, info, *args))
+
+
+@pytest.mark.skip(reason='GrRecordingContext not implemented')
+def test_Surface_MakeRenderTarget_2(context):
+    characterization = skia.SurfaceCharacterization()
+    check_surface(skia.Surface.MakeRenderTarget(
+        context, characterization, skia.Budgeted.kNo))
 
 
 def test_Surface_MakeNull():

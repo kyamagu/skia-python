@@ -260,6 +260,12 @@ py::class_<GrMockOptions>(m, "GrMockOptions")
     // TODO: Implement me!
     ;
 
+py::class_<GrBackendRenderTarget>(m, "GrBackendRenderTarget")
+    .def(py::init<>())
+    .def("isValid", &GrBackendRenderTarget::isValid)
+    .def("isFramebufferOnly", &GrBackendRenderTarget::isFramebufferOnly)
+    ;
+
 py::class_<GrContext, sk_sp<GrContext>, SkRefCnt>(m, "GrContext")
     .def("resetContext", &GrContext::resetContext,
         R"docstring(
@@ -493,35 +499,35 @@ py::class_<GrContext, sk_sp<GrContext>, SkRefCnt>(m, "GrContext")
         This is equivalent to calling :py:meth:`flush` with a default
         :py:class:`GrFlushInfo`.
         )docstring")
-    // .def("flushAndSubmit", &GrContext::flushAndSubmit,
-    //     R"docstring(
-    //     Call to ensure all drawing to the context has been flushed and submitted
-    //     to the underlying 3D API.
+    .def("flushAndSubmit", &GrContext::flushAndSubmit,
+        R"docstring(
+        Call to ensure all drawing to the context has been flushed and submitted
+        to the underlying 3D API.
 
-    //     This is equivalent to calling :py:meth:`flush` with a default
-    //     :py:class:`GrFlushInfo` followed by :py:meth:`submit`.
-    //     )docstring")
-    // .def("submit", &GrContext::submit,
-    //     R"docstring(
-    //     Submit outstanding work to the gpu from all previously un-submitted
-    //     flushes.
+        This is equivalent to calling :py:meth:`flush` with a default
+        :py:class:`GrFlushInfo` followed by :py:meth:`submit`.
+        )docstring")
+    .def("submit", &GrContext::submit,
+        R"docstring(
+        Submit outstanding work to the gpu from all previously un-submitted
+        flushes.
 
-    //     The return value of the submit will indicate whether or not the
-    //     submission to the GPU was successful.
+        The return value of the submit will indicate whether or not the
+        submission to the GPU was successful.
 
-    //     If the call returns true, all previously passed in semaphores in flush
-    //     calls will have been submitted to the GPU and they can safely be waited
-    //     on. The caller should wait on those semaphores or perform some other
-    //     global synchronization before deleting the semaphores.
+        If the call returns true, all previously passed in semaphores in flush
+        calls will have been submitted to the GPU and they can safely be waited
+        on. The caller should wait on those semaphores or perform some other
+        global synchronization before deleting the semaphores.
 
-    //     If it returns false, then those same semaphores will not have been
-    //     submitted and we will not try to submit them again. The caller is free
-    //     to delete the semaphores at any time.
+        If it returns false, then those same semaphores will not have been
+        submitted and we will not try to submit them again. The caller is free
+        to delete the semaphores at any time.
 
-    //     If the syncCpu flag is true this function will return once the gpu has
-    //     finished with all submitted work.
-    //     )docstring",
-    //     py::arg("syncCpu") = false)
+        If the syncCpu flag is true this function will return once the gpu has
+        finished with all submitted work.
+        )docstring",
+        py::arg("syncCpu") = false)
     .def("checkAsyncWorkCompletion", &GrContext::checkAsyncWorkCompletion,
         R"docstring(
         Checks whether any asynchronous work is complete and if so calls related
@@ -672,6 +678,54 @@ py::class_<GrContext, sk_sp<GrContext>, SkRefCnt>(m, "GrContext")
         },
         py::arg("pixmap"), py::arg("renderable"),
         py::arg("isProtected") = GrProtected::kNo)
+    .def("updateBackendTexture",
+        [] (GrContext& context, const GrBackendTexture& texture,
+            const SkColor4f& color) {
+            return context.updateBackendTexture(
+                texture, color, nullptr, nullptr);
+        },
+        R"docstring(
+        If possible, updates a backend texture to be filled to a particular
+        color.
+
+        The client should check the return value to see if the update was
+        successful. The client can pass in a finishedProc to be notified when
+        the data has been uploaded by the gpu and the texture can be deleted.
+        The client is required to call :py:meth:`GrContext.submit` to send the
+        upload work to the gpu. The finishedProc will always get called even if
+        we failed to update the :py:class:`GrBackendTexture`. For the Vulkan
+        backend after a successful update the layout of the created VkImage will
+        be: VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL
+        )docstring",
+        py::arg("backendTexture"), py::arg("color"))
+    .def("updateBackendTexture",
+        [] (GrContext& context, const GrBackendTexture& texture,
+            const std::vector<SkPixmap>& srcData) {
+            return context.updateBackendTexture(
+                texture, &srcData[0], srcData.size(), nullptr, nullptr);
+        },
+        R"docstring(
+        If possible, updates a backend texture to be filled to a particular
+        color.
+
+        The client should check the return value to see if the update was
+        successful. The client can pass in a finishedProc to be notified when
+        the data has been uploaded by the gpu and the texture can be deleted.
+        The client is required to call :py:meth:`GrContext.submit` to send the
+        upload work to the gpu. The finishedProc will always get called even if
+        we failed to update the :py:class:`GrBackendTexture`. The backend
+        texture must be compatible with the provided pixmap(s). Compatible, in
+        this case, means that the backend format is compatible with the base
+        pixmap's colortype. The src data can be deleted when this call returns.
+        If the backend texture is mip mapped, the data for all the mipmap levels
+        must be provided. In the mipmapped case all the colortypes of the
+        provided pixmaps must be the same. Additionally, all the miplevels must
+        be sized correctly (please see SkMipMap::ComputeLevelSize and
+        ComputeLevelCount). Note: the pixmap's alphatypes and colorspaces are
+        ignored. For the Vulkan backend after a successful update the layout of
+        the created VkImage will be: VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL
+        )docstring",
+        py::arg("backendTexture"), py::arg("srcData"))
     .def("compressedBackendFormat", &GrContext::compressedBackendFormat,
         R"docstring(
         Retrieve the :py:class:`GrBackendFormat` for a given
