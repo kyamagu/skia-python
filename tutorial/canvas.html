@@ -93,6 +93,7 @@
 <li class="toctree-l3"><a class="reference internal" href="#gpu">GPU</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#pdf">PDF</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#picture">Picture</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#svg">SVG</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="path.html">Path Overview</a></li>
@@ -177,6 +178,7 @@ commands, including:</p>
 <li><p><a class="reference internal" href="#gpu">GPU</a> - Skia’s GPU-accelerated backend.</p></li>
 <li><p><a class="reference internal" href="#pdf">PDF</a> - PDF document creation.</p></li>
 <li><p><a class="reference internal" href="#picture">Picture</a> - Skia’s display list format.</p></li>
+<li><p><a class="reference internal" href="#svg">SVG</a> - Experimental SVG backend.</p></li>
 </ul>
 <p>Each backend has a unique way of creating a <a class="reference internal" href="../reference/skia.Canvas.html#skia.Canvas" title="skia.Canvas"><code class="xref py py-class docutils literal notranslate"><span class="pre">Canvas</span></code></a>. This page
 gives an example for each.</p>
@@ -269,7 +271,7 @@ Skia calls are made.</p>
 </div>
 <div class="section" id="pdf">
 <h2>PDF<a class="headerlink" href="#pdf" title="Permalink to this headline">¶</a></h2>
-<p>The <code class="xref py py-mod docutils literal notranslate"><span class="pre">PDF</span></code> backend uses <a class="reference internal" href="../reference/skia.Document.html#skia.Document" title="skia.Document"><code class="xref py py-class docutils literal notranslate"><span class="pre">Document</span></code></a> instead of
+<p>The <a class="reference internal" href="../reference/skia.PDF.html#skia.PDF" title="skia.PDF"><code class="xref py py-class docutils literal notranslate"><span class="pre">PDF</span></code></a> backend uses <a class="reference internal" href="../reference/skia.Document.html#skia.Document" title="skia.Document"><code class="xref py py-class docutils literal notranslate"><span class="pre">Document</span></code></a> instead of
 <a class="reference internal" href="../reference/skia.Surface.html#skia.Surface" title="skia.Surface"><code class="xref py py-class docutils literal notranslate"><span class="pre">Surface</span></code></a>, since a document must include multiple pages. The
 following demonstrates how to write a single-page PDF document to a file:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">skia</span>
@@ -300,6 +302,20 @@ instead of <a class="reference internal" href="../reference/skia.Surface.html#sk
 </div>
 <p>Recorded picture can later be drawn onto another canvas:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">picture</span><span class="o">.</span><span class="n">playback</span><span class="p">(</span><span class="n">canvas</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="svg">
+<h2>SVG<a class="headerlink" href="#svg" title="Permalink to this headline">¶</a></h2>
+<p>The (still experimental) <a class="reference internal" href="../reference/skia.SVGCanvas.html#skia.SVGCanvas" title="skia.SVGCanvas"><code class="xref py py-class docutils literal notranslate"><span class="pre">SVGCanvas</span></code></a> writes into an SVG document.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">skia</span>
+
+<span class="n">width</span><span class="p">,</span> <span class="n">height</span> <span class="o">=</span> <span class="mi">200</span><span class="p">,</span> <span class="mi">200</span>
+<span class="n">stream</span> <span class="o">=</span> <span class="n">skia</span><span class="o">.</span><span class="n">FILEWStream</span><span class="p">(</span><span class="s1">&#39;output.svg&#39;</span><span class="p">)</span>
+<span class="n">canvas</span> <span class="o">=</span> <span class="n">skia</span><span class="o">.</span><span class="n">SVGCanvas</span><span class="o">.</span><span class="n">Make</span><span class="p">((</span><span class="n">width</span><span class="p">,</span> <span class="n">height</span><span class="p">),</span> <span class="n">stream</span><span class="p">)</span>
+<span class="n">draw</span><span class="p">(</span><span class="n">canvas</span><span class="p">)</span>
+<span class="k">del</span> <span class="n">canvas</span>
+<span class="n">stream</span><span class="o">.</span><span class="n">flush</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>

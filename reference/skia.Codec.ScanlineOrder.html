@@ -198,6 +198,7 @@
 <li class="toctree-l3"><a class="reference internal" href="skia.NullWStream.html">NullWStream</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.OffsetImageFilter.html">OffsetImageFilter</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.OverdrawColorFilter.html">OverdrawColorFilter</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.PDF.html">PDF</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.Paint.html">Paint</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.PaintImageFilter.html">PaintImageFilter</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.Path.html">Path</a></li>
@@ -224,6 +225,7 @@
 <li class="toctree-l3"><a class="reference internal" href="skia.RefCnt.html">RefCnt</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.RefCntBase.html">RefCntBase</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.Region.html">Region</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.SVGCanvas.html">SVGCanvas</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.Shader.html">Shader</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.ShaderMaskFilter.html">ShaderMaskFilter</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.Shaders.html">Shaders</a></li>
@@ -339,6 +341,10 @@ output row orderings.</p>
 <p>Members:</p>
 <blockquote>
 <div><dl>
+<dt>kKeep :</dt><dd><p>By far the most common, this indicates that the image can be decoded
+reliably using the scanline decoder, and that rows will be output in
+the logical order.</p>
+</dd>
 <dt>kRestoreBGColor :</dt><dd><p>This indicates that the scanline decoder reliably outputs rows, but
 they will be returned in reverse order.  If the scanline format is
 kBottomUp, the nextScanline() API can be used to determine the actual
@@ -355,10 +361,6 @@ with caution.  As with full image decodes, the decoder will handle
 inverting the requested rows, but rows will still be delivered
 starting from the bottom of the image.</p>
 <p>Upside down bmps are an example.</p>
-</dd>
-<dt>kKeep :</dt><dd><p>By far the most common, this indicates that the image can be decoded
-reliably using the scanline decoder, and that rows will be output in
-the logical order.</p>
 </dd>
 </dl>
 </div></blockquote>

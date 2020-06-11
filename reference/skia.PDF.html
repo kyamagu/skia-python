@@ -1,0 +1,878 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>PDF &mdash; skia-python 0.0.4 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="PDF.AttributeList" href="skia.PDF.AttributeList.html" />
+    <link rel="prev" title="OverdrawColorFilter" href="skia.OverdrawColorFilter.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> skia-python
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.0.4
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../install.html">Install</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tutorial/index.html">Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../development.html">Development</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../reference.html">Reference</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="skia.html">skia</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="skia.AlphaThresholdFilter.html">AlphaThresholdFilter</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.AlphaType.html">AlphaType</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.ApplyPerspectiveClip.html">ApplyPerspectiveClip</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.ArithmeticImageFilter.html">ArithmeticImageFilter</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.AutoCanvasRestore.html">AutoCanvasRestore</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.BBHFactory.html">BBHFactory</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.BBoxHierarchy.html">BBoxHierarchy</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.BackingFit.html">BackingFit</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.Bitmap.html">Bitmap</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.BlendMode.html">BlendMode</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.BlendModeCoeff.html">BlendModeCoeff</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.BlurImageFilter.html">BlurImageFilter</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.BlurMaskFilter.html">BlurMaskFilter</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.BlurStyle.html">BlurStyle</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.Budgeted.html">Budgeted</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.Canvas.html">Canvas</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.ClipOp.html">ClipOp</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.Codec.html">Codec</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.Color4f.html">Color4f</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.ColorChannel.html">ColorChannel</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.ColorChannelFlag.html">ColorChannelFlag</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.ColorFilter.html">ColorFilter</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.ColorFilterImageFilter.html">ColorFilterImageFilter</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.ColorFilters.html">ColorFilters</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.ColorInfo.html">ColorInfo</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.ColorMatrix.html">ColorMatrix</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.ColorMatrixFilter.html">ColorMatrixFilter</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.ColorSpace.html">ColorSpace</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.ColorType.html">ColorType</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.ConvergeMode.html">ConvergeMode</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.CornerPathEffect.html">CornerPathEffect</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.DashPathEffect.html">DashPathEffect</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.Data.html">Data</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.DilateImageFilter.html">DilateImageFilter</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.DiscretePathEffect.html">DiscretePathEffect</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.DisplacementMapEffect.html">DisplacementMapEffect</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.Document.html">Document</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.Drawable.html">Drawable</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.DropShadowImageFilter.html">DropShadowImageFilter</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.DynamicMemoryWStream.html">DynamicMemoryWStream</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.EncodedImageFormat.html">EncodedImageFormat</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.EncodedOrigin.html">EncodedOrigin</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.ErodeImageFilter.html">ErodeImageFilter</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.FILEStream.html">FILEStream</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.FILEWStream.html">FILEWStream</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.FilterQuality.html">FilterQuality</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.Flattanable.html">Flattanable</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.Font.html">Font</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.FontArguments.html">FontArguments</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.FontHinting.html">FontHinting</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.FontMetrics.html">FontMetrics</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.FontMgr.html">FontMgr</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.FontStyle.html">FontStyle</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.FontStyleSet.html">FontStyleSet</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.GrBackendApi.html">GrBackendApi</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.GrBackendFormat.html">GrBackendFormat</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.GrBackendSemaphore.html">GrBackendSemaphore</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.GrBackendTexture.html">GrBackendTexture</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.GrColorType.html">GrColorType</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.GrContext.html">GrContext</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.GrContextOptions.html">GrContextOptions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.GrFlushFlags.html">GrFlushFlags</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.GrFlushInfo.html">GrFlushInfo</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.GrGLBackendState.html">GrGLBackendState</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.GrGLInterface.html">GrGLInterface</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.GrGLTextureInfo.html">GrGLTextureInfo</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.GrMipMapped.html">GrMipMapped</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.GrMockOptions.html">GrMockOptions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.GrMockTextureInfo.html">GrMockTextureInfo</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.GrProtected.html">GrProtected</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.GrRenderable.html">GrRenderable</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.GrSemaphoresSubmitted.html">GrSemaphoresSubmitted</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.GrSurfaceOrigin.html">GrSurfaceOrigin</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.GrTextureType.html">GrTextureType</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.GradientShader.html">GradientShader</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.HighContrastConfig.html">HighContrastConfig</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.HighContrastFilter.html">HighContrastFilter</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.IPoint.html">IPoint</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.IRect.html">IRect</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.ISize.html">ISize</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.Image.html">Image</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.ImageFilter.html">ImageFilter</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.ImageFilters.html">ImageFilters</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.ImageInfo.html">ImageInfo</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.LightingImageFilter.html">LightingImageFilter</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.Line2DPathEffect.html">Line2DPathEffect</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.LumaColorFilter.html">LumaColorFilter</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.M44.html">M44</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.MagnifierImageFilter.html">MagnifierImageFilter</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.MaskFilter.html">MaskFilter</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.Matrix.html">Matrix</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.MatrixPathEffect.html">MatrixPathEffect</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.MemoryStream.html">MemoryStream</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.MergePathEffect.html">MergePathEffect</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.NullWStream.html">NullWStream</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.OffsetImageFilter.html">OffsetImageFilter</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.OverdrawColorFilter.html">OverdrawColorFilter</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">PDF</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="skia.PDF.AttributeList.html">PDF.AttributeList</a></li>
+<li class="toctree-l4"><a class="reference internal" href="skia.PDF.DocumentStructureType.html">PDF.DocumentStructureType</a></li>
+<li class="toctree-l4"><a class="reference internal" href="skia.PDF.Metadata.html">PDF.Metadata</a></li>
+<li class="toctree-l4"><a class="reference internal" href="skia.PDF.StructureElementNode.html">PDF.StructureElementNode</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#methods">Methods</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#attributes">Attributes</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="skia.Paint.html">Paint</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.PaintImageFilter.html">PaintImageFilter</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.Path.html">Path</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.Path1DPathEffect.html">Path1DPathEffect</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.Path2DPathEffect.html">Path2DPathEffect</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.PathConvexityType.html">PathConvexityType</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.PathDirection.html">PathDirection</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.PathEffect.html">PathEffect</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.PathFillType.html">PathFillType</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.PathOp.html">PathOp</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.PathSegmentMask.html">PathSegmentMask</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.PathVerb.html">PathVerb</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.PerlinNoiseShader.html">PerlinNoiseShader</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.Picture.html">Picture</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.PictureRecorder.html">PictureRecorder</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.PixelGeometry.html">PixelGeometry</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.PixelRef.html">PixelRef</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.Pixmap.html">Pixmap</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.Point.html">Point</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.Point3.html">Point3</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.RRect.html">RRect</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.RSXform.html">RSXform</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.Rect.html">Rect</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.RefCnt.html">RefCnt</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.RefCntBase.html">RefCntBase</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.Region.html">Region</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.SVGCanvas.html">SVGCanvas</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.Shader.html">Shader</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.ShaderMaskFilter.html">ShaderMaskFilter</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.Shaders.html">Shaders</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.Size.html">Size</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.Stream.html">Stream</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.StreamAsset.html">StreamAsset</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.StreamMemory.html">StreamMemory</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.StreamRewindable.html">StreamRewindable</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.StreamSeekable.html">StreamSeekable</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.StrokePathEffect.html">StrokePathEffect</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.StrokeRec.html">StrokeRec</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.Surface.html">Surface</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.SurfaceCharacterization.html">SurfaceCharacterization</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.SurfaceProps.html">SurfaceProps</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.TableColorFilter.html">TableColorFilter</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.TableMaskFilter.html">TableMaskFilter</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.TextBlob.html">TextBlob</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.TextBlobBuilder.html">TextBlobBuilder</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.TextEncoding.html">TextEncoding</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.TileImageFilter.html">TileImageFilter</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.TileMode.html">TileMode</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.TrimPathEffect.html">TrimPathEffect</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.Typeface.html">Typeface</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.Vertices.html">Vertices</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.WStream.html">WStream</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.XfermodeImageFilter.html">XfermodeImageFilter</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.YUVColorSpace.html">YUVColorSpace</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.html#functions">Functions</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">skia-python</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../reference.html">Reference</a> &raquo;</li>
+        
+          <li><a href="skia.html">skia</a> &raquo;</li>
+        
+      <li>PDF</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/reference/skia.PDF.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="pdf">
+<h1>PDF<a class="headerlink" href="#pdf" title="Permalink to this headline">¶</a></h1>
+<dl class="py class">
+<dt id="skia.PDF">
+<em class="property">class </em><code class="sig-name descname">PDF</code><a class="headerlink" href="#skia.PDF" title="Permalink to this definition">¶</a></dt>
+<dd><p class="rubric">Classes</p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="skia.PDF.AttributeList.html#skia.PDF.AttributeList" title="skia.PDF.AttributeList"><code class="xref py py-obj docutils literal notranslate"><span class="pre">AttributeList</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="skia.PDF.DocumentStructureType.html#skia.PDF.DocumentStructureType" title="skia.PDF.DocumentStructureType"><code class="xref py py-obj docutils literal notranslate"><span class="pre">DocumentStructureType</span></code></a></p></td>
+<td><p>Members:</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="skia.PDF.Metadata.html#skia.PDF.Metadata" title="skia.PDF.Metadata"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Metadata</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="skia.PDF.StructureElementNode.html#skia.PDF.StructureElementNode" title="skia.PDF.StructureElementNode"><code class="xref py py-obj docutils literal notranslate"><span class="pre">StructureElementNode</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Methods</p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.PDF.MakeDocument" title="skia.PDF.MakeDocument"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MakeDocument</span></code></a></p></td>
+<td><p>Create a PDF-backed document, writing the results into a <a class="reference internal" href="skia.WStream.html#skia.WStream" title="skia.WStream"><code class="xref py py-class docutils literal notranslate"><span class="pre">WStream</span></code></a>.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.PDF.SetNodeId" title="skia.PDF.SetNodeId"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SetNodeId</span></code></a></p></td>
+<td><p>Associate a node ID with subsequent drawing commands in an <a class="reference internal" href="skia.Canvas.html#skia.Canvas" title="skia.Canvas"><code class="xref py py-class docutils literal notranslate"><span class="pre">Canvas</span></code></a>.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.PDF.__init__" title="skia.PDF.__init__"><code class="xref py py-obj docutils literal notranslate"><span class="pre">__init__</span></code></a></p></td>
+<td><p>Initialize self.</p></td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Attributes</p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.PDF.kAnnot" title="skia.PDF.kAnnot"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kAnnot</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.PDF.kArt" title="skia.PDF.kArt"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kArt</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.PDF.kBibEntry" title="skia.PDF.kBibEntry"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kBibEntry</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.PDF.kBlockQuote" title="skia.PDF.kBlockQuote"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kBlockQuote</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.PDF.kCaption" title="skia.PDF.kCaption"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kCaption</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.PDF.kCode" title="skia.PDF.kCode"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kCode</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.PDF.kDiv" title="skia.PDF.kDiv"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kDiv</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.PDF.kDocument" title="skia.PDF.kDocument"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kDocument</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.PDF.kFigure" title="skia.PDF.kFigure"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kFigure</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.PDF.kForm" title="skia.PDF.kForm"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kForm</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.PDF.kFormula" title="skia.PDF.kFormula"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kFormula</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.PDF.kH" title="skia.PDF.kH"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kH</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.PDF.kH1" title="skia.PDF.kH1"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kH1</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.PDF.kH2" title="skia.PDF.kH2"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kH2</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.PDF.kH3" title="skia.PDF.kH3"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kH3</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.PDF.kH4" title="skia.PDF.kH4"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kH4</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.PDF.kH5" title="skia.PDF.kH5"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kH5</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.PDF.kH6" title="skia.PDF.kH6"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kH6</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.PDF.kIndex" title="skia.PDF.kIndex"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kIndex</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.PDF.kL" title="skia.PDF.kL"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kL</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.PDF.kLBody" title="skia.PDF.kLBody"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kLBody</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.PDF.kLI" title="skia.PDF.kLI"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kLI</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.PDF.kLbl" title="skia.PDF.kLbl"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kLbl</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.PDF.kLink" title="skia.PDF.kLink"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kLink</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.PDF.kNonStruct" title="skia.PDF.kNonStruct"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kNonStruct</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.PDF.kNote" title="skia.PDF.kNote"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kNote</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.PDF.kP" title="skia.PDF.kP"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kP</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.PDF.kPart" title="skia.PDF.kPart"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kPart</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.PDF.kPrivate" title="skia.PDF.kPrivate"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kPrivate</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.PDF.kQuote" title="skia.PDF.kQuote"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kQuote</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.PDF.kRB" title="skia.PDF.kRB"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kRB</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.PDF.kRP" title="skia.PDF.kRP"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kRP</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.PDF.kRT" title="skia.PDF.kRT"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kRT</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.PDF.kReference" title="skia.PDF.kReference"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kReference</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.PDF.kRuby" title="skia.PDF.kRuby"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kRuby</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.PDF.kSect" title="skia.PDF.kSect"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kSect</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.PDF.kSpan" title="skia.PDF.kSpan"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kSpan</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.PDF.kTBody" title="skia.PDF.kTBody"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kTBody</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.PDF.kTD" title="skia.PDF.kTD"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kTD</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.PDF.kTFoot" title="skia.PDF.kTFoot"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kTFoot</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.PDF.kTH" title="skia.PDF.kTH"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kTH</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.PDF.kTHead" title="skia.PDF.kTHead"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kTHead</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.PDF.kTOC" title="skia.PDF.kTOC"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kTOC</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.PDF.kTOCI" title="skia.PDF.kTOCI"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kTOCI</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.PDF.kTR" title="skia.PDF.kTR"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kTR</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.PDF.kTable" title="skia.PDF.kTable"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kTable</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.PDF.kWP" title="skia.PDF.kWP"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kWP</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.PDF.kWT" title="skia.PDF.kWT"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kWT</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.PDF.kWarichu" title="skia.PDF.kWarichu"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kWarichu</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<div class="section" id="methods">
+<h2>Methods<a class="headerlink" href="#methods" title="Permalink to this headline">¶</a></h2>
+<dl class="py method">
+<dt id="skia.PDF.MakeDocument">
+<em class="property">static </em><code class="sig-prename descclassname">PDF.</code><code class="sig-name descname">MakeDocument</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">stream</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.WStream.html#skia.WStream" title="skia.WStream">skia.WStream</a></span></em>, <em class="sig-param"><span class="n">metadata</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.PDF.Metadata.html#skia.PDF.Metadata" title="skia.PDF.Metadata">skia.PDF.Metadata</a></span> <span class="o">=</span> <span class="default_value">None</span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="skia.Document.html#skia.Document" title="skia.Document">skia.Document</a><a class="headerlink" href="#skia.PDF.MakeDocument" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a PDF-backed document, writing the results into a
+<a class="reference internal" href="skia.WStream.html#skia.WStream" title="skia.WStream"><code class="xref py py-class docutils literal notranslate"><span class="pre">WStream</span></code></a>.</p>
+<p>PDF pages are sized in point units. 1 pt == 1/72 inch == 127/360 mm.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>stream</strong> – A PDF document will be written to this stream. The
+document may write to the stream at anytime during its lifetime,
+until either <a class="reference internal" href="skia.Document.html#skia.Document.close" title="skia.Document.close"><code class="xref py py-meth docutils literal notranslate"><span class="pre">close()</span></code></a> is called or the document is
+deleted.</p></li>
+<li><p><strong>metadata</strong> – a PDFmetadata object. Any fields may be left empty.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>NULL if there is an error, otherwise a newly created PDF-backed
+<a class="reference internal" href="skia.Document.html#skia.Document" title="skia.Document"><code class="xref py py-class docutils literal notranslate"><span class="pre">Document</span></code></a>.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="skia.PDF.SetNodeId">
+<em class="property">static </em><code class="sig-prename descclassname">PDF.</code><code class="sig-name descname">SetNodeId</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">canvas</span><span class="p">:</span> <span class="n">SkCanvas</span></em>, <em class="sig-param"><span class="n">nodeId</span><span class="p">:</span> <span class="n">int</span></em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#skia.PDF.SetNodeId" title="Permalink to this definition">¶</a></dt>
+<dd><p>Associate a node ID with subsequent drawing commands in an
+<a class="reference internal" href="skia.Canvas.html#skia.Canvas" title="skia.Canvas"><code class="xref py py-class docutils literal notranslate"><span class="pre">Canvas</span></code></a>.</p>
+<p>The same node ID can appear in a <a class="reference internal" href="skia.PDF.StructureElementNode.html#skia.PDF.StructureElementNode" title="skia.PDF.StructureElementNode"><code class="xref py py-class docutils literal notranslate"><span class="pre">StructureElementNode</span></code></a>
+in order to associate a document’s structure element tree with its
+content.</p>
+<p>A node ID of zero indicates no node ID.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>canvas</strong> – The canvas used to draw to the PDF.</p></li>
+<li><p><strong>nodeId</strong> – The node ID for subsequent drawing commands.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="skia.PDF.__init__">
+<code class="sig-prename descclassname">PDF.</code><code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span><span class="n">args</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#skia.PDF.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Initialize self.  See help(type(self)) for accurate signature.</p>
+</dd></dl>
+
+</div>
+<div class="section" id="attributes">
+<h2>Attributes<a class="headerlink" href="#attributes" title="Permalink to this headline">¶</a></h2>
+<dl class="py attribute">
+<dt id="skia.PDF.kAnnot">
+<code class="sig-prename descclassname">PDF.</code><code class="sig-name descname">kAnnot</code><em class="property"> = DocumentStructureType.kAnnot</em><a class="headerlink" href="#skia.PDF.kAnnot" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="skia.PDF.kArt">
+<code class="sig-prename descclassname">PDF.</code><code class="sig-name descname">kArt</code><em class="property"> = DocumentStructureType.kArt</em><a class="headerlink" href="#skia.PDF.kArt" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="skia.PDF.kBibEntry">
+<code class="sig-prename descclassname">PDF.</code><code class="sig-name descname">kBibEntry</code><em class="property"> = DocumentStructureType.kBibEntry</em><a class="headerlink" href="#skia.PDF.kBibEntry" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="skia.PDF.kBlockQuote">
+<code class="sig-prename descclassname">PDF.</code><code class="sig-name descname">kBlockQuote</code><em class="property"> = DocumentStructureType.kBlockQuote</em><a class="headerlink" href="#skia.PDF.kBlockQuote" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="skia.PDF.kCaption">
+<code class="sig-prename descclassname">PDF.</code><code class="sig-name descname">kCaption</code><em class="property"> = DocumentStructureType.kCaption</em><a class="headerlink" href="#skia.PDF.kCaption" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="skia.PDF.kCode">
+<code class="sig-prename descclassname">PDF.</code><code class="sig-name descname">kCode</code><em class="property"> = DocumentStructureType.kCode</em><a class="headerlink" href="#skia.PDF.kCode" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="skia.PDF.kDiv">
+<code class="sig-prename descclassname">PDF.</code><code class="sig-name descname">kDiv</code><em class="property"> = DocumentStructureType.kDiv</em><a class="headerlink" href="#skia.PDF.kDiv" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="skia.PDF.kDocument">
+<code class="sig-prename descclassname">PDF.</code><code class="sig-name descname">kDocument</code><em class="property"> = DocumentStructureType.kDocument</em><a class="headerlink" href="#skia.PDF.kDocument" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="skia.PDF.kFigure">
+<code class="sig-prename descclassname">PDF.</code><code class="sig-name descname">kFigure</code><em class="property"> = DocumentStructureType.kFigure</em><a class="headerlink" href="#skia.PDF.kFigure" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="skia.PDF.kForm">
+<code class="sig-prename descclassname">PDF.</code><code class="sig-name descname">kForm</code><em class="property"> = DocumentStructureType.kForm</em><a class="headerlink" href="#skia.PDF.kForm" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="skia.PDF.kFormula">
+<code class="sig-prename descclassname">PDF.</code><code class="sig-name descname">kFormula</code><em class="property"> = DocumentStructureType.kFormula</em><a class="headerlink" href="#skia.PDF.kFormula" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="skia.PDF.kH">
+<code class="sig-prename descclassname">PDF.</code><code class="sig-name descname">kH</code><em class="property"> = DocumentStructureType.kH</em><a class="headerlink" href="#skia.PDF.kH" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="skia.PDF.kH1">
+<code class="sig-prename descclassname">PDF.</code><code class="sig-name descname">kH1</code><em class="property"> = DocumentStructureType.kH1</em><a class="headerlink" href="#skia.PDF.kH1" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="skia.PDF.kH2">
+<code class="sig-prename descclassname">PDF.</code><code class="sig-name descname">kH2</code><em class="property"> = DocumentStructureType.kH2</em><a class="headerlink" href="#skia.PDF.kH2" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="skia.PDF.kH3">
+<code class="sig-prename descclassname">PDF.</code><code class="sig-name descname">kH3</code><em class="property"> = DocumentStructureType.kH3</em><a class="headerlink" href="#skia.PDF.kH3" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="skia.PDF.kH4">
+<code class="sig-prename descclassname">PDF.</code><code class="sig-name descname">kH4</code><em class="property"> = DocumentStructureType.kH4</em><a class="headerlink" href="#skia.PDF.kH4" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="skia.PDF.kH5">
+<code class="sig-prename descclassname">PDF.</code><code class="sig-name descname">kH5</code><em class="property"> = DocumentStructureType.kH5</em><a class="headerlink" href="#skia.PDF.kH5" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="skia.PDF.kH6">
+<code class="sig-prename descclassname">PDF.</code><code class="sig-name descname">kH6</code><em class="property"> = DocumentStructureType.kH6</em><a class="headerlink" href="#skia.PDF.kH6" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="skia.PDF.kIndex">
+<code class="sig-prename descclassname">PDF.</code><code class="sig-name descname">kIndex</code><em class="property"> = DocumentStructureType.kIndex</em><a class="headerlink" href="#skia.PDF.kIndex" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="skia.PDF.kL">
+<code class="sig-prename descclassname">PDF.</code><code class="sig-name descname">kL</code><em class="property"> = DocumentStructureType.kL</em><a class="headerlink" href="#skia.PDF.kL" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="skia.PDF.kLBody">
+<code class="sig-prename descclassname">PDF.</code><code class="sig-name descname">kLBody</code><em class="property"> = DocumentStructureType.kLBody</em><a class="headerlink" href="#skia.PDF.kLBody" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="skia.PDF.kLI">
+<code class="sig-prename descclassname">PDF.</code><code class="sig-name descname">kLI</code><em class="property"> = DocumentStructureType.kLI</em><a class="headerlink" href="#skia.PDF.kLI" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="skia.PDF.kLbl">
+<code class="sig-prename descclassname">PDF.</code><code class="sig-name descname">kLbl</code><em class="property"> = DocumentStructureType.kLbl</em><a class="headerlink" href="#skia.PDF.kLbl" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="skia.PDF.kLink">
+<code class="sig-prename descclassname">PDF.</code><code class="sig-name descname">kLink</code><em class="property"> = DocumentStructureType.kLink</em><a class="headerlink" href="#skia.PDF.kLink" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="skia.PDF.kNonStruct">
+<code class="sig-prename descclassname">PDF.</code><code class="sig-name descname">kNonStruct</code><em class="property"> = DocumentStructureType.kNonStruct</em><a class="headerlink" href="#skia.PDF.kNonStruct" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="skia.PDF.kNote">
+<code class="sig-prename descclassname">PDF.</code><code class="sig-name descname">kNote</code><em class="property"> = DocumentStructureType.kNote</em><a class="headerlink" href="#skia.PDF.kNote" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="skia.PDF.kP">
+<code class="sig-prename descclassname">PDF.</code><code class="sig-name descname">kP</code><em class="property"> = DocumentStructureType.kP</em><a class="headerlink" href="#skia.PDF.kP" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="skia.PDF.kPart">
+<code class="sig-prename descclassname">PDF.</code><code class="sig-name descname">kPart</code><em class="property"> = DocumentStructureType.kPart</em><a class="headerlink" href="#skia.PDF.kPart" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="skia.PDF.kPrivate">
+<code class="sig-prename descclassname">PDF.</code><code class="sig-name descname">kPrivate</code><em class="property"> = DocumentStructureType.kPrivate</em><a class="headerlink" href="#skia.PDF.kPrivate" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="skia.PDF.kQuote">
+<code class="sig-prename descclassname">PDF.</code><code class="sig-name descname">kQuote</code><em class="property"> = DocumentStructureType.kQuote</em><a class="headerlink" href="#skia.PDF.kQuote" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="skia.PDF.kRB">
+<code class="sig-prename descclassname">PDF.</code><code class="sig-name descname">kRB</code><em class="property"> = DocumentStructureType.kRB</em><a class="headerlink" href="#skia.PDF.kRB" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="skia.PDF.kRP">
+<code class="sig-prename descclassname">PDF.</code><code class="sig-name descname">kRP</code><em class="property"> = DocumentStructureType.kRP</em><a class="headerlink" href="#skia.PDF.kRP" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="skia.PDF.kRT">
+<code class="sig-prename descclassname">PDF.</code><code class="sig-name descname">kRT</code><em class="property"> = DocumentStructureType.kRT</em><a class="headerlink" href="#skia.PDF.kRT" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="skia.PDF.kReference">
+<code class="sig-prename descclassname">PDF.</code><code class="sig-name descname">kReference</code><em class="property"> = DocumentStructureType.kReference</em><a class="headerlink" href="#skia.PDF.kReference" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="skia.PDF.kRuby">
+<code class="sig-prename descclassname">PDF.</code><code class="sig-name descname">kRuby</code><em class="property"> = DocumentStructureType.kRuby</em><a class="headerlink" href="#skia.PDF.kRuby" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="skia.PDF.kSect">
+<code class="sig-prename descclassname">PDF.</code><code class="sig-name descname">kSect</code><em class="property"> = DocumentStructureType.kSect</em><a class="headerlink" href="#skia.PDF.kSect" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="skia.PDF.kSpan">
+<code class="sig-prename descclassname">PDF.</code><code class="sig-name descname">kSpan</code><em class="property"> = DocumentStructureType.kSpan</em><a class="headerlink" href="#skia.PDF.kSpan" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="skia.PDF.kTBody">
+<code class="sig-prename descclassname">PDF.</code><code class="sig-name descname">kTBody</code><em class="property"> = DocumentStructureType.kTBody</em><a class="headerlink" href="#skia.PDF.kTBody" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="skia.PDF.kTD">
+<code class="sig-prename descclassname">PDF.</code><code class="sig-name descname">kTD</code><em class="property"> = DocumentStructureType.kTD</em><a class="headerlink" href="#skia.PDF.kTD" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="skia.PDF.kTFoot">
+<code class="sig-prename descclassname">PDF.</code><code class="sig-name descname">kTFoot</code><em class="property"> = DocumentStructureType.kTFoot</em><a class="headerlink" href="#skia.PDF.kTFoot" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="skia.PDF.kTH">
+<code class="sig-prename descclassname">PDF.</code><code class="sig-name descname">kTH</code><em class="property"> = DocumentStructureType.kTH</em><a class="headerlink" href="#skia.PDF.kTH" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="skia.PDF.kTHead">
+<code class="sig-prename descclassname">PDF.</code><code class="sig-name descname">kTHead</code><em class="property"> = DocumentStructureType.kTHead</em><a class="headerlink" href="#skia.PDF.kTHead" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="skia.PDF.kTOC">
+<code class="sig-prename descclassname">PDF.</code><code class="sig-name descname">kTOC</code><em class="property"> = DocumentStructureType.kTOC</em><a class="headerlink" href="#skia.PDF.kTOC" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="skia.PDF.kTOCI">
+<code class="sig-prename descclassname">PDF.</code><code class="sig-name descname">kTOCI</code><em class="property"> = DocumentStructureType.kTOCI</em><a class="headerlink" href="#skia.PDF.kTOCI" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="skia.PDF.kTR">
+<code class="sig-prename descclassname">PDF.</code><code class="sig-name descname">kTR</code><em class="property"> = DocumentStructureType.kTR</em><a class="headerlink" href="#skia.PDF.kTR" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="skia.PDF.kTable">
+<code class="sig-prename descclassname">PDF.</code><code class="sig-name descname">kTable</code><em class="property"> = DocumentStructureType.kTable</em><a class="headerlink" href="#skia.PDF.kTable" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="skia.PDF.kWP">
+<code class="sig-prename descclassname">PDF.</code><code class="sig-name descname">kWP</code><em class="property"> = DocumentStructureType.kWP</em><a class="headerlink" href="#skia.PDF.kWP" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="skia.PDF.kWT">
+<code class="sig-prename descclassname">PDF.</code><code class="sig-name descname">kWT</code><em class="property"> = DocumentStructureType.kWT</em><a class="headerlink" href="#skia.PDF.kWT" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="skia.PDF.kWarichu">
+<code class="sig-prename descclassname">PDF.</code><code class="sig-name descname">kWarichu</code><em class="property"> = DocumentStructureType.kWarichu</em><a class="headerlink" href="#skia.PDF.kWarichu" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="skia.PDF.AttributeList.html" class="btn btn-neutral float-right" title="PDF.AttributeList" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="skia.OverdrawColorFilter.html" class="btn btn-neutral float-left" title="OverdrawColorFilter" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2020, Kota Yamaguchi
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>
