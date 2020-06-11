@@ -41,8 +41,9 @@ def test_GrBackendFormat_isValid(backend_format):
 
 
 @pytest.fixture(scope='module')
-def backend_texture():
-    return skia.GrBackendTexture()
+def backend_texture(context):
+    gl_info = skia.GrGLTextureInfo()
+    return skia.GrBackendTexture(256, 256, skia.GrMipMapped.kNo, gl_info)
 
 
 def test_GrBackendTexture_init_glInfo():
@@ -270,29 +271,36 @@ def test_GrContext_defaultBackendFormat(context):
     pytest.param(
         (skia.SurfaceCharacterization(), 0xFFFFFFFF),
         marks=pytest.mark.skip),
-    ('pixmap[]',),
-    ('pixmap',),
 ])
 def test_GrContext_createBackendTexture(context, args, request):
-    if isinstance(args[0], str):
-        pixmap = request.getfixturevalue('pixmap')
-        if args[0] == 'pixmap[]':
-            assert isinstance(context.createBackendTexture(
-                [pixmap], skia.GrRenderable.kNo), skia.GrBackendTexture)
-        else:
-            assert isinstance(context.createBackendTexture(
-                pixmap, skia.GrRenderable.kNo), skia.GrBackendTexture)
-    else:
-        assert isinstance(
-            context.createBackendTexture(*args), skia.GrBackendTexture)
+    assert isinstance(
+        context.createBackendTexture(*args), skia.GrBackendTexture)
 
 
-def test_GrContext_updateBackendTexture_1(context, backend_texture):
+def test_GrContext_createBackendTexture_2(context, pixmap):
+    assert isinstance(
+        context.createBackendTexture([pixmap], skia.GrRenderable.kNo),
+        skia.GrBackendTexture)
+
+
+def test_GrContext_createBackendTexture_3(context, pixmap):
+    assert isinstance(
+        context.createBackendTexture(pixmap, skia.GrRenderable.kNo),
+        skia.GrBackendTexture)
+
+
+def test_GrContext_updateBackendTexture_1(context):
+    backend_texture = context.createBackendTexture(
+        64, 64, skia.ColorType.kRGBA_8888_ColorType, 0xFFFFFFFF,
+        skia.GrMipMapped.kNo, skia.GrRenderable.kNo)
     assert isinstance(
         context.updateBackendTexture(backend_texture, skia.ColorBLACK), bool)
 
 
-def test_GrContext_updateBackendTexture_2(context, backend_texture, pixmap):
+def test_GrContext_updateBackendTexture_2(context, pixmap):
+    backend_texture = context.createBackendTexture(
+        64, 64, skia.ColorType.kRGBA_8888_ColorType, 0xFFFFFFFF,
+        skia.GrMipMapped.kNo, skia.GrRenderable.kNo)
     assert isinstance(
         context.updateBackendTexture(backend_texture, [pixmap]), bool)
 
@@ -315,9 +323,10 @@ def test_GrContext_createCompressedBackendTexture(context, args):
         skia.GrBackendTexture)
 
 
-def test_GrContext_deleteBackendTexture(context, pixmap):
+def test_GrContext_deleteBackendTexture(context):
     backend_texture = context.createBackendTexture(
-        pixmap, skia.GrRenderable.kNo)
+        64, 64, skia.ColorType.kRGBA_8888_ColorType, 0xFFFFFFFF,
+        skia.GrMipMapped.kNo, skia.GrRenderable.kNo)
     context.deleteBackendTexture(backend_texture)
 
 
