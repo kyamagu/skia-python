@@ -113,18 +113,6 @@ py::class_<SkSurface, sk_sp<SkSurface>> surface(
     by the surface). :py:class:`Surface` always has non-zero dimensions. If
     there is a request for a new surface, and either of the requested dimensions
     are zero, then nullptr will be returned.
-
-    .. rubric:: Classes
-
-    .. autosummary::
-        :nosignatures:
-
-        AsyncReadResult
-        ContentChangeMode
-        BackendHandleAccess
-        RescaleGamma
-        BackendSurfaceAccess
-        FlushFlags
     )docstring");
 
 py::class_<SkSurface::AsyncReadResult>(surface, "AsyncReadResult", R"docstring(
