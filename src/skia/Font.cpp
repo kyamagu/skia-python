@@ -7,12 +7,35 @@ using Coordinate = SkFontArguments::VariationPosition::Coordinate;
 
 PYBIND11_MAKE_OPAQUE(std::vector<Coordinate>);
 
+
+namespace {
+
 void SetVariationPositionCoordinates(
     SkFontArguments::VariationPosition& vp,
     const std::vector<Coordinate>& coords) {
     vp.coordinates = &coords[0];
     vp.coordinateCount = coords.size();
 }
+
+
+py::tuple SkFontStyleSet_getStyle(SkFontStyleSet* self, int index) {
+    SkFontStyle style;
+    SkString name;
+    if (index < 0 || index >= self->count())
+        throw py::index_error();
+    self->getStyle(index, &style, &name);
+    return py::make_tuple(style, py::str(name.c_str(), name.size()));
+}
+
+py::str SkFontMgr_getFamilyName(const SkFontMgr& fontmgr, int index) {
+    SkString familyName;
+    if (index < 0 || index >= fontmgr.countFamilies())
+        throw py::index_error();
+    fontmgr.getFamilyName(index, &familyName);
+    return py::str(familyName.c_str(), familyName.size());
+}
+
+}  // namespace
 
 
 void initFont(py::module &m) {
@@ -54,6 +77,13 @@ py::enum_<SkFontStyle::Slant>(fontstyle, "Slant")
 fontstyle
     .def(py::init<int, int, SkFontStyle::Slant>())
     .def(py::init<>())
+    .def("__repr__",
+        [] (const SkFontStyle& self) {
+            std::stringstream stream;
+            stream << "FontStyle(weight=" << self.weight() << ", width="
+                << self.width() << ", slant=" << py::cast(self.slant()) << ")";
+            return stream.str();
+        })
     .def("weight", &SkFontStyle::weight)
     .def("width", &SkFontStyle::width)
     .def("slant", &SkFontStyle::slant)
@@ -165,6 +195,15 @@ py::enum_<SkTypeface::SerializeBehavior>(typeface, "SerializeBehavior",
     .export_values();
 
 typeface
+    .def("__repr__",
+        [] (const SkTypeface& self) {
+            std::stringstream stream;
+            SkString name;
+            self.getFamilyName(&name);
+            stream << "Typeface('" << name.c_str() << "', " <<
+                py::cast(self.fontStyle()) << ")";
+            return stream.str();
+        })
     .def("fontStyle", &SkTypeface::fontStyle,
         R"docstring(
         Returns the typeface's intrinsic style attributes.
@@ -411,9 +450,11 @@ typeface
         Returns the default normal typeface, which is never nullptr.
         )docstring")
     .def_static("MakeFromName",
-        [] (const std::string* familyName, const SkFontStyle& fontStyle) {
+        [] (py::object familyName, const SkFontStyle* fontStyle) {
             return SkTypeface::MakeFromName(
-                (familyName) ? familyName->c_str() : nullptr, fontStyle);
+                (familyName.is_none()) ?
+                    nullptr : familyName.cast<std::string>().c_str(),
+                (fontStyle) ? *fontStyle : SkFontStyle());
         },
         R"docstring(
         Creates a new reference to the typeface that most closely matches the
@@ -426,7 +467,7 @@ typeface
         :param skia.FontStyle fontStyle: The style of the typeface.
         :return: reference to the closest-matching typeface.
         )docstring",
-        py::arg("familyName"), py::arg("fontStyle"))
+        py::arg("familyName"), py::arg("fontStyle") = nullptr)
     .def_static("MakeFromFile",
         [] (const std::string& path, int index) {
             return SkTypeface::MakeFromFile(&path[0], index);
@@ -467,22 +508,40 @@ typeface
 
 // FontMgr
 py::class_<SkFontStyleSet, sk_sp<SkFontStyleSet>, SkRefCnt>(m, "FontStyleSet")
+    .def("__getitem__", &SkFontStyleSet_getStyle, py::arg("index"))
+    .def("__len__", &SkFontStyleSet::count)
+    .def("__repr__",
+        [] (SkFontStyleSet& self) {
+            std::stringstream stream;
+            stream << "FontStyleSet(" << self.count() << ")";
+            return stream.str();
+        })
     .def("count", &SkFontStyleSet::count)
-    .def("getStyle", &SkFontStyleSet::getStyle)
-    .def("createTypeface", &SkFontStyleSet::createTypeface)
-    .def("matchStyle", &SkFontStyleSet::matchStyle)
+    .def("getStyle", &SkFontStyleSet_getStyle, py::arg("index"))
+    .def("createTypeface", &SkFontStyleSet::createTypeface, py::arg("index"))
+    .def("matchStyle", &SkFontStyleSet::matchStyle, py::arg("pattern"))
     .def_static("CreateEmpty", &SkFontStyleSet::CreateEmpty)
     ;
 
-py::class_<SkFontMgr, sk_sp<SkFontMgr>, SkRefCnt>(m, "FontMgr")
+py::class_<SkFontMgr, sk_sp<SkFontMgr>, SkRefCnt>(m, "FontMgr",
+    R"docstring(
+    Font manager that knows system fonts.
+
+    Example::
+
+        fontmgr = skia.FontMgr()
+        print(list(fontmgr))
+        familyName = fontmgr[0]
+
+        typeface = fontmgr.matchFamilyStyle(familyName, skia.FontStyle.Normal())
+        assert typeface is not None
+
+    )docstring")
+    .def(py::init([] () { return SkFontMgr::RefDefault(); }))
+    .def("__getitem__", &SkFontMgr_getFamilyName, py::arg("index"))
+    .def("__len__", &SkFontMgr::countFamilies)
     .def("countFamilies", &SkFontMgr::countFamilies)
-    .def("getFamilyName",
-        [] (const SkFontMgr& fontmgr, int index) {
-            SkString familyName;
-            fontmgr.getFamilyName(index, &familyName);
-            return py::str(familyName.c_str(), familyName.size());
-        },
-        py::arg("index"))
+    .def("getFamilyName", &SkFontMgr_getFamilyName, py::arg("index"))
     .def("createStyleSet",
         [] (const SkFontMgr& fontmgr, int index) {
             return sk_sp<SkFontStyleSet>(fontmgr.createStyleSet(index));
@@ -622,6 +681,15 @@ py::enum_<SkFont::Edging>(font, "Edging", R"docstring(
     .export_values();
 
 font
+    .def("__repr__",
+        [] (const SkFont& self) {
+            std::stringstream stream;
+            SkString name;
+            self.getTypefaceOrDefault()->getFamilyName(&name);
+            stream << "Font('" << name.c_str() << "', " << self.getSize()
+                << ", " << self.getScaleX() << ", " << self.getSkewX() << ")";
+            return stream.str();
+        })
     .def(py::init<>(),
         R"docstring(
         Constructs :py:class:`Font` with default values.
