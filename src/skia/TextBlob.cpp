@@ -4,11 +4,6 @@
 template<>
 struct py::detail::has_operator_delete<SkTextBlob, void> : std::false_type {};
 
-sk_sp<SkTextBlob> MakeFromText(
-    const std::string& text, const SkFont& font, SkTextEncoding encoding) {
-    return SkTextBlob::MakeFromText(text.c_str(), text.size(), font, encoding);
-}
-
 void initTextBlob(py::module &m) {
 py::class_<SkTextBlob, sk_sp<SkTextBlob>> textblob(m, "TextBlob", R"docstring(
     :py:class:`TextBlob` combines multiple text runs into an immutable
@@ -17,6 +12,12 @@ py::class_<SkTextBlob, sk_sp<SkTextBlob>> textblob(m, "TextBlob", R"docstring(
     Each text run consists of glyphs, :py:class:`Paint`, and position. Only
     parts of :py:class:`Paint` related to fonts and text rendering are used by
     run.
+
+    Example::
+
+        textblob = skia.TextBlob('text', skia.Font())
+        for run in textblob:
+            print(run.fGlyphIndices)
     )docstring");
 
 py::class_<SkTextBlob::Iter> iter(textblob, "Iter",
@@ -29,10 +30,25 @@ py::class_<SkTextBlob::Iter> iter(textblob, "Iter",
         it = skia.TextBlob.Iter(textblob)
         while it.next(run):
             print(run)
+
+        for run in textblob():
+            print(run)
     )docstring");
 
 py::class_<SkTextBlob::Iter::Run>(iter, "Run")
     .def(py::init<>())
+    .def("__repr__",
+        [] (const SkTextBlob::Iter::Run& run) {
+            std::stringstream stream;
+            stream << "Run([";
+            for (int i = 0; i < run.fGlyphCount; ++i) {
+                stream << run.fGlyphIndices[i];
+                if (i < run.fGlyphCount - 1)
+                    stream << ", ";
+            }
+            stream << "])";
+            return stream.str();
+        })
     .def_readonly("fTypeface", &SkTextBlob::Iter::Run::fTypeface,
         py::return_value_policy::reference)
     .def_readonly("fGlyphCount", &SkTextBlob::Iter::Run::fGlyphCount)
@@ -45,11 +61,32 @@ py::class_<SkTextBlob::Iter::Run>(iter, "Run")
 
 iter
     .def(py::init<const SkTextBlob&>())
+    .def("__next__",
+        [] (SkTextBlob::Iter& it) {
+            SkTextBlob::Iter::Run run;
+            if (it.next(&run))
+                return run;
+            throw py::stop_iteration();
+        })
     .def("next", &SkTextBlob::Iter::next)
     ;
 
 textblob
-    .def(py::init(&MakeFromText),
+    .def(py::init(
+        [] (const std::string& text, const SkFont& font, py::object pos,
+            SkTextEncoding encoding) {
+            if (pos.is_none())
+                return SkTextBlob::MakeFromText(
+                    text.c_str(), text.size(), font, encoding);
+            std::vector<SkPoint> pos_(pos.cast<std::vector<SkPoint>>());
+            if (text.size() != pos_.size())
+                throw py::value_error(
+                    py::str(
+                        "len(text) = {} does not match len(pos) = {}").format(
+                        text.size(), pos_.size()));
+            return SkTextBlob::MakeFromPosText(
+                text.c_str(), text.size(), &pos_[0], font, encoding);
+        }),
         R"docstring(
         Creates :py:class:`TextBlob` with a single run.
 
@@ -64,10 +101,16 @@ textblob
         :param str text: character code points or glyphs drawn
         :param skia.Font font: text size, typeface, text scale, and so on, used
             to draw
+        :param List[skia.Point] positions: array of positions, must contain
+            values for all of the character points.
         :param skia.TextEncoding encoding: text encoding used in the text array
         )docstring",
-        py::arg("text"), py::arg("font"),
+        py::arg("text"), py::arg("font"), py::arg("positions") = nullptr,
         py::arg("encoding") = SkTextEncoding::kUTF8)
+    .def("__iter__",
+        [] (const SkTextBlob& textblob) {
+            return SkTextBlob::Iter(textblob);
+        })
     .def("bounds", &SkTextBlob::bounds,
         R"docstring(
         Returns conservative bounding box.
@@ -146,7 +189,12 @@ textblob
     .def("unref", &SkTextBlob::unref)
     .def("deref", &SkTextBlob::deref)
     .def("refCntGreaterThan", &SkTextBlob::refCntGreaterThan)
-    .def_static("MakeFromText", &MakeFromText,
+    .def_static("MakeFromText",
+        [] (const std::string& text, const SkFont& font,
+            SkTextEncoding encoding) {
+            return SkTextBlob::MakeFromText(
+                text.c_str(), text.size(), font, encoding);
+        },
         R"docstring(
         Creates :py:class:`TextBlob` with a single run.
 
@@ -314,11 +362,13 @@ textblobbuilder
         :return: :py:class:`TextBlob` or nullptr
         )docstring")
     .def("allocRun",
-        [] (SkTextBlobBuilder& builder, const SkFont& font,
-            const std::vector<SkGlyphID>& glyphs, SkScalar x, SkScalar y,
-            const SkRect* bounds) {
-            auto run = builder.allocRun(font, glyphs.size(), x, y, bounds);
-            std::copy(glyphs.begin(), glyphs.end(), run.glyphs);
+        [] (SkTextBlobBuilder& builder, const std::string& text,
+            const SkFont& font, SkScalar x, SkScalar y,
+            const SkRect* bounds, SkTextEncoding encoding) {
+            int glyphCount = font.countText(&text[0], text.size(), encoding);
+            auto run = builder.allocRun(font, glyphCount, x, y, bounds);
+            font.textToGlyphs(
+                &text[0], text.size(), encoding, run.glyphs, glyphCount);
         },
         R"docstring(
         Sets a new run with glyphs.
@@ -334,13 +384,16 @@ textblobbuilder
         from (x, y) and RunBuffer::glyphs metrics.
 
         :param skia.Font font: :py:class:`Font` used for this run
-        :param List[int] glyphs: array of glyph IDs
+        :param str text: text for the run
         :param float x: horizontal offset within the blob
         :param float y: vertical offset within the blob
         :param skia.Rect bounds: optional run bounding box
+        :param skia.TextEncoding encoding: specifies the encoding of the text
+            array
         )docstring",
-        py::arg("font"), py::arg("glyphs"), py::arg("x"), py::arg("y"),
-        py::arg("bounds") = nullptr)
+        py::arg("text"), py::arg("font"), py::arg("x"), py::arg("y"),
+        py::arg("bounds") = nullptr,
+        py::arg("encoding") = SkTextEncoding::kUTF8)
     .def("allocRunPosH",
         [] (SkTextBlobBuilder& builder, const SkFont& font,
             const std::vector<SkGlyphID>& glyphs, py::iterable xpos,

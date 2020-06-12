@@ -35,6 +35,15 @@ py::str SkFontMgr_getFamilyName(const SkFontMgr& fontmgr, int index) {
     return py::str(familyName.c_str(), familyName.size());
 }
 
+sk_sp<SkTypeface> SkTypeface_MakeFromName(
+    py::object familyName,
+    const SkFontStyle* fontStyle) {
+    return SkTypeface::MakeFromName(
+        (familyName.is_none()) ?
+            nullptr : familyName.cast<std::string>().c_str(),
+        (fontStyle) ? *fontStyle : SkFontStyle());
+}
+
 }  // namespace
 
 
@@ -79,10 +88,8 @@ fontstyle
     .def(py::init<>())
     .def("__repr__",
         [] (const SkFontStyle& self) {
-            std::stringstream stream;
-            stream << "FontStyle(weight=" << self.weight() << ", width="
-                << self.width() << ", slant=" << py::cast(self.slant()) << ")";
-            return stream.str();
+            return py::str("FontStyle({}, {}, {})").format(
+                self.weight(), self.width(), self.slant());
         })
     .def("weight", &SkFontStyle::weight)
     .def("width", &SkFontStyle::width)
@@ -179,6 +186,14 @@ py::class_<SkTypeface, sk_sp<SkTypeface>, SkRefCnt> typeface(
     appears when drawn (and measured).
 
     Typeface objects are immutable, and so they can be shared between threads.
+
+
+    Example::
+
+        typeface = skia.Typeface()
+        typeface = skia.Typeface('Arial')
+        typeface = skia.Typeface('Arial', skia.FontStyle.Bold())
+
     )docstring");
 
 py::enum_<SkTypeface::SerializeBehavior>(typeface, "SerializeBehavior",
@@ -195,14 +210,29 @@ py::enum_<SkTypeface::SerializeBehavior>(typeface, "SerializeBehavior",
     .export_values();
 
 typeface
+    .def(py::init([] () { return SkTypeface::MakeDefault(); }),
+        R"docstring(
+        Returns the default normal typeface.
+        )docstring")
+    .def(py::init(&SkTypeface_MakeFromName),
+        R"docstring(
+        Creates a new reference to the typeface that most closely matches the
+        requested familyName and fontStyle.
+
+        This method allows extended font face specifiers as in the
+        :py:class:`FontStyle` type. Will never return null.
+
+        :param str familyName: May be NULL. The name of the font family.
+        :param skia.FontStyle fontStyle: The style of the typeface.
+        :return: reference to the closest-matching typeface.
+        )docstring",
+        py::arg("familyName"), py::arg("fontStyle") = nullptr)
     .def("__repr__",
         [] (const SkTypeface& self) {
-            std::stringstream stream;
             SkString name;
             self.getFamilyName(&name);
-            stream << "Typeface('" << name.c_str() << "', " <<
-                py::cast(self.fontStyle()) << ")";
-            return stream.str();
+            return py::str("Typeface('{}', {})").format(
+                name.c_str(), self.fontStyle());
         })
     .def("fontStyle", &SkTypeface::fontStyle,
         R"docstring(
@@ -449,13 +479,7 @@ typeface
         R"docstring(
         Returns the default normal typeface, which is never nullptr.
         )docstring")
-    .def_static("MakeFromName",
-        [] (py::object familyName, const SkFontStyle* fontStyle) {
-            return SkTypeface::MakeFromName(
-                (familyName.is_none()) ?
-                    nullptr : familyName.cast<std::string>().c_str(),
-                (fontStyle) ? *fontStyle : SkFontStyle());
-        },
+    .def_static("MakeFromName", &SkTypeface_MakeFromName,
         R"docstring(
         Creates a new reference to the typeface that most closely matches the
         requested familyName and fontStyle.
@@ -512,9 +536,7 @@ py::class_<SkFontStyleSet, sk_sp<SkFontStyleSet>, SkRefCnt>(m, "FontStyleSet")
     .def("__len__", &SkFontStyleSet::count)
     .def("__repr__",
         [] (SkFontStyleSet& self) {
-            std::stringstream stream;
-            stream << "FontStyleSet(" << self.count() << ")";
-            return stream.str();
+            return py::str("FontStyleSet({})").format(self.count());
         })
     .def("count", &SkFontStyleSet::count)
     .def("getStyle", &SkFontStyleSet_getStyle, py::arg("index"))
@@ -683,12 +705,9 @@ py::enum_<SkFont::Edging>(font, "Edging", R"docstring(
 font
     .def("__repr__",
         [] (const SkFont& self) {
-            std::stringstream stream;
-            SkString name;
-            self.getTypefaceOrDefault()->getFamilyName(&name);
-            stream << "Font('" << name.c_str() << "', " << self.getSize()
-                << ", " << self.getScaleX() << ", " << self.getSkewX() << ")";
-            return stream.str();
+            return py::str("Font({}, {}, {}, {})").format(
+                self.getTypefaceOrDefault(), self.getSize(), self.getScaleX(),
+                self.getSkewX());
         })
     .def(py::init<>(),
         R"docstring(
@@ -1141,7 +1160,13 @@ font
         :return: glyphs x-positions
         )docstring",
         py::arg("glyphs"), py::arg("origin") = 0)
-    .def("getPath", &SkFont::getPath,
+    .def("getPath",
+        [] (const SkFont& font, SkGlyphID glyphID) -> py::object {
+            SkPath path;
+            if (font.getPath(glyphID, &path))
+                return py::cast(path);
+            return py::none();
+        },
         R"docstring(
         Modifies path to be the outline of the glyph.
 
@@ -1151,11 +1176,33 @@ font
         returns false and ignores path parameter.
 
         :param int glyphID: index of glyph
-        :param skia.Path path: pointer to existing :py:class:`Path`
         :return: true if glyphID is described by path
         )docstring",
-        py::arg("glyphID"), py::arg("path"))
-    // .def("getPaths", &SkFont::getPaths)
+        py::arg("glyphID"))
+    .def("getPaths",
+        [] (const SkFont& font,
+            const std::vector<SkGlyphID>& glyphIDs) -> py::object {
+            std::vector<SkPath> paths;
+            paths.reserve(glyphIDs.size());
+            font.getPaths(
+                &glyphIDs[0],
+                glyphIDs.size(),
+                [] (const SkPath* pathOrNull, const SkMatrix& mx, void* ctx) {
+                    auto paths_ = static_cast<std::vector<SkPath>*>(ctx);
+                    if (pathOrNull)
+                        paths_->push_back(*pathOrNull);
+                },
+                static_cast<void*>(&paths));
+            if (paths.empty())
+                return py::none();
+            return py::cast(paths);
+        },
+        R"docstring(
+        Returns path corresponding to glyph array.
+
+        :param glyphIDs: array of glyph indices
+        :return: list of :py:class:`Path`
+        )docstring")
     .def("getMetrics",
         [] (const SkFont& font) {
             SkFontMetrics metrics;
@@ -1225,6 +1272,28 @@ py::enum_<SkFontMetrics::FontMetricsFlags>(fontmetrics, "FontMetricsFlags",
 
 fontmetrics
     .def(py::init<>())
+    .def("__repr__",
+        [] (const SkFontMetrics& self) {
+            std::stringstream stream;
+            stream << "FontMetrics("
+                << "Flags=" << self.fFlags << ", "
+                << "Top=" << self.fTop << ", "
+                << "Ascent=" << self.fAscent << ", "
+                << "Descent=" << self.fDescent << ", "
+                << "Bottom=" << self.fBottom << ", "
+                << "Leading=" << self.fLeading << ", "
+                << "AvgCharWidth=" << self.fAvgCharWidth << ", "
+                << "MaxCharWidth=" << self.fMaxCharWidth << ", "
+                << "XMin=" << self.fXMin << ", "
+                << "XMax=" << self.fXMax << ", "
+                << "XHeight=" << self.fXHeight << ", "
+                << "CapHeight=" << self.fCapHeight << ", "
+                << "UnderlineThickness=" << self.fUnderlineThickness << ", "
+                << "UnderlinePosition=" << self.fUnderlinePosition << ", "
+                << "StrikeoutThickness=" << self.fStrikeoutThickness << ", "
+                << "StrikeoutPosition=" << self.fStrikeoutPosition << ")";
+            return stream.str();
+        })
     .def("hasUnderlineThickness", &SkFontMetrics::hasUnderlineThickness,
         R"docstring(
         Returns true if :py:class:`FontMetrics` has a valid underline thickness,

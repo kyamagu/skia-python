@@ -501,8 +501,11 @@ def test_Font_getXPos(font, glyphs):
 
 
 def test_Font_getPath(font, glyphs):
-    path = skia.Path()
-    assert isinstance(font.getPath(glyphs[0], path), bool)
+    assert isinstance(font.getPath(glyphs[0]), skia.Path)
+
+
+def test_Font_getPaths(font, glyphs):
+    assert isinstance(font.getPaths(glyphs), list)
 
 
 def test_Font_getMetrics(font):

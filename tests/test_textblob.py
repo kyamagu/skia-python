@@ -7,8 +7,17 @@ def textblob():
     return skia.TextBlob('foo', skia.Font())
 
 
-def test_TextBlob_init():
-    assert isinstance(skia.TextBlob('foo', skia.Font()), skia.TextBlob)
+@pytest.mark.parametrize('args', [
+    ('foo', skia.Font()),
+    ('foo', skia.Font(), [(0, 10), (5, 10), (10, 10)]),
+])
+def test_TextBlob_init(args):
+    assert isinstance(skia.TextBlob(*args), skia.TextBlob)
+
+
+def test_TextBlob_iter(textblob):
+    for run in textblob:
+        assert isinstance(run, skia.TextBlob.Iter.Run)
 
 
 def test_TextBlob_bounds(textblob):
@@ -85,6 +94,10 @@ def run(textblob):
     yield run
 
 
+def test_TextBlob_Iter_Run_repr(run):
+    assert isinstance(repr(run), str)
+
+
 def test_TextBlob_Iter_Run_fTypeface(run):
     assert isinstance(run.fTypeface, (skia.Typeface, type(None)))
 
@@ -107,26 +120,30 @@ def test_TextBlobBuilder_init():
 
 
 def test_TextBlobBuilder_allocRun(builder):
-    builder.allocRun(skia.Font(), [0x20, 0x21], 0, 0)
+    builder.allocRun('foo', skia.Font(), 0, 0)
 
 
 def test_TextBlobBuilder_allocRunPosH(builder):
-    builder.allocRunPosH(skia.Font(), [0x20, 0x21], [0, 1], 0)
+    font = skia.Font()
+    builder.allocRunPosH(font, font.textToGlyphs('foo'), [0, 1, 2], 0)
 
 
 def test_TextBlobBuilder_allocRunPos(builder):
+    font = skia.Font()
     builder.allocRunPos(
-        skia.Font(), [0x20, 0x21], [skia.Point(0, 0), skia.Point(1, 0)])
+        skia.Font(), font.textToGlyphs('foo'), [(0, 0), (1, 0), (2, 0)])
 
 
 def test_TextBlobBuilder_allocRunRSXform(builder):
+    font = skia.Font()
     xform = [
         skia.RSXform(1, 0, 0, 0),
         skia.RSXform(1, 0, 1, 0),
+        skia.RSXform(1, 0, 2, 0),
     ]
-    builder.allocRunRSXform(skia.Font(), [0x20, 0x21], xform)
+    builder.allocRunRSXform(font, font.textToGlyphs('foo'), xform)
 
 
 def test_TextBlobBuilder_make(builder):
-    builder.allocRun(skia.Font(), [0x20, 0x21], 0, 0)
+    builder.allocRun('foo', skia.Font(), 0, 0)
     assert isinstance(builder.make(), skia.TextBlob)
