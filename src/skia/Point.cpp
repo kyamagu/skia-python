@@ -126,7 +126,7 @@ py::class_<SkIPoint>(m, "IPoint", R"docstring(
     .def("__iter__",
         [] (const SkIPoint& p) {
             return py::make_iterator(&p.fX, &p.fX + 2);
-        })
+        }, py::keep_alive<0, 1>())
     .def("__len__", [] (const SkIPoint& p) { return 2; })
     .def("__repr__",
         [] (const SkIPoint& p) {
@@ -546,7 +546,7 @@ py::class_<SkPoint>(m, "Point", R"docstring(
     .def("__iter__",
         [] (const SkPoint& p) {
             return py::make_iterator(&p.fX, &p.fX + 2);
-        })
+        }, py::keep_alive<0, 1>())
     .def("__len__", [] (const SkPoint& p) { return 2; })
     .def("__repr__",
         [] (const SkPoint& p) {
@@ -665,7 +665,7 @@ py::class_<SkPoint3>(m, "Point3",
     .def("__iter__",
         [] (const SkPoint3& p) {
             return py::make_iterator(&p.fX, &p.fX + 3);
-        })
+        }, py::keep_alive<0, 1>())
     .def("__len__", [] (const SkPoint3& p) { return 3; })
     .def("__repr__",
         [] (const SkPoint3& p) {

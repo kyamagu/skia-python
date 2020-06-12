@@ -168,9 +168,13 @@ def test_Typeface_MakeDefault(typeface):
     assert isinstance(skia.Typeface.MakeDefault(), skia.Typeface)
 
 
-def test_Typeface_MakeFromName(typeface):
-    assert isinstance(
-        skia.Typeface.MakeFromName('Arial', skia.FontStyle()), skia.Typeface)
+@pytest.mark.parametrize('args', [
+    ('monospace', skia.FontStyle.Normal()),
+    ('monospace',),
+    (None,),
+])
+def test_Typeface_MakeFromName(typeface, args):
+    assert isinstance(skia.Typeface.MakeFromName(*args), skia.Typeface)
 
 
 @pytest.mark.parametrize('args', [
@@ -197,22 +201,63 @@ def test_Typeface_MakeDeserialize(typeface):
 
 
 @pytest.fixture
-def fontstyleset():
-    return skia.FontStyleSet.CreateEmpty()
+def fontstyleset(fontmgr):
+    return fontmgr.createStyleSet(0)
 
 
-def test_FontStyleSet_unique(fontstyleset):
-    assert isinstance(fontstyleset.unique(), bool)
+def test_FontStyleSet_init(fontstyleset):
+    assert isinstance(fontstyleset, skia.FontStyleSet)
 
 
-def test_FontStyleSet_ref_unref(fontstyleset):
-    fontstyleset.ref()
-    fontstyleset.unref()
+def test_FontStyleSet_getitem(fontstyleset):
+    assert isinstance(fontstyleset[0], tuple)
 
 
-@pytest.fixture()
+def test_FontStyleSet_len(fontstyleset):
+    assert isinstance(len(fontstyleset), int)
+
+
+def test_FontStyleSet_list(fontstyleset):
+    assert isinstance(list(fontstyleset), list)
+
+
+def test_FontStyleSet_count(fontstyleset):
+    assert isinstance(fontstyleset.count(), int)
+
+
+def test_FontStyleSet_createTypeface(fontstyleset):
+    assert isinstance(fontstyleset.createTypeface(0), skia.Typeface)
+
+
+def test_FontStyleSet_getStyle(fontstyleset):
+    style, name = fontstyleset.getStyle(0)
+    assert isinstance(style, skia.FontStyle)
+    assert isinstance(name, str)
+
+
+def test_FontStyleSet_matchStyle(fontstyleset, fontstyle):
+    assert isinstance(fontstyleset.matchStyle(fontstyle), skia.Typeface)
+
+
+def test_FontStyleSet_CreateEmpty():
+    assert isinstance(skia.FontStyleSet.CreateEmpty(), skia.FontStyleSet)
+
+
+@pytest.fixture(scope='module')
 def fontmgr():
-    return skia.FontMgr.RefDefault()
+    return skia.FontMgr()
+
+
+def test_FontMgr_getitem(fontmgr):
+    assert isinstance(fontmgr[0], str)
+
+
+def test_FontMgr_len(fontmgr):
+    assert isinstance(len(fontmgr), int)
+
+
+def test_FontMgr_list(fontmgr):
+    assert isinstance(list(fontmgr), list)
 
 
 def test_FontMgr_countFamilies(fontmgr):
@@ -456,8 +501,11 @@ def test_Font_getXPos(font, glyphs):
 
 
 def test_Font_getPath(font, glyphs):
-    path = skia.Path()
-    assert isinstance(font.getPath(glyphs[0], path), bool)
+    assert isinstance(font.getPath(glyphs[0]), skia.Path)
+
+
+def test_Font_getPaths(font, glyphs):
+    assert isinstance(font.getPaths(glyphs), list)
 
 
 def test_Font_getMetrics(font):

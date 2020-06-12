@@ -7,12 +7,44 @@ using Coordinate = SkFontArguments::VariationPosition::Coordinate;
 
 PYBIND11_MAKE_OPAQUE(std::vector<Coordinate>);
 
+
+namespace {
+
 void SetVariationPositionCoordinates(
     SkFontArguments::VariationPosition& vp,
     const std::vector<Coordinate>& coords) {
     vp.coordinates = &coords[0];
     vp.coordinateCount = coords.size();
 }
+
+
+py::tuple SkFontStyleSet_getStyle(SkFontStyleSet* self, int index) {
+    SkFontStyle style;
+    SkString name;
+    if (index < 0 || index >= self->count())
+        throw py::index_error();
+    self->getStyle(index, &style, &name);
+    return py::make_tuple(style, py::str(name.c_str(), name.size()));
+}
+
+py::str SkFontMgr_getFamilyName(const SkFontMgr& fontmgr, int index) {
+    SkString familyName;
+    if (index < 0 || index >= fontmgr.countFamilies())
+        throw py::index_error();
+    fontmgr.getFamilyName(index, &familyName);
+    return py::str(familyName.c_str(), familyName.size());
+}
+
+sk_sp<SkTypeface> SkTypeface_MakeFromName(
+    py::object familyName,
+    const SkFontStyle* fontStyle) {
+    return SkTypeface::MakeFromName(
+        (familyName.is_none()) ?
+            nullptr : familyName.cast<std::string>().c_str(),
+        (fontStyle) ? *fontStyle : SkFontStyle());
+}
+
+}  // namespace
 
 
 void initFont(py::module &m) {
@@ -54,6 +86,11 @@ py::enum_<SkFontStyle::Slant>(fontstyle, "Slant")
 fontstyle
     .def(py::init<int, int, SkFontStyle::Slant>())
     .def(py::init<>())
+    .def("__repr__",
+        [] (const SkFontStyle& self) {
+            return py::str("FontStyle({}, {}, {})").format(
+                self.weight(), self.width(), self.slant());
+        })
     .def("weight", &SkFontStyle::weight)
     .def("width", &SkFontStyle::width)
     .def("slant", &SkFontStyle::slant)
@@ -149,6 +186,14 @@ py::class_<SkTypeface, sk_sp<SkTypeface>, SkRefCnt> typeface(
     appears when drawn (and measured).
 
     Typeface objects are immutable, and so they can be shared between threads.
+
+
+    Example::
+
+        typeface = skia.Typeface()
+        typeface = skia.Typeface('Arial')
+        typeface = skia.Typeface('Arial', skia.FontStyle.Bold())
+
     )docstring");
 
 py::enum_<SkTypeface::SerializeBehavior>(typeface, "SerializeBehavior",
@@ -165,6 +210,30 @@ py::enum_<SkTypeface::SerializeBehavior>(typeface, "SerializeBehavior",
     .export_values();
 
 typeface
+    .def(py::init([] () { return SkTypeface::MakeDefault(); }),
+        R"docstring(
+        Returns the default normal typeface.
+        )docstring")
+    .def(py::init(&SkTypeface_MakeFromName),
+        R"docstring(
+        Creates a new reference to the typeface that most closely matches the
+        requested familyName and fontStyle.
+
+        This method allows extended font face specifiers as in the
+        :py:class:`FontStyle` type. Will never return null.
+
+        :param str familyName: May be NULL. The name of the font family.
+        :param skia.FontStyle fontStyle: The style of the typeface.
+        :return: reference to the closest-matching typeface.
+        )docstring",
+        py::arg("familyName"), py::arg("fontStyle") = nullptr)
+    .def("__repr__",
+        [] (const SkTypeface& self) {
+            SkString name;
+            self.getFamilyName(&name);
+            return py::str("Typeface('{}', {})").format(
+                name.c_str(), self.fontStyle());
+        })
     .def("fontStyle", &SkTypeface::fontStyle,
         R"docstring(
         Returns the typeface's intrinsic style attributes.
@@ -410,11 +479,7 @@ typeface
         R"docstring(
         Returns the default normal typeface, which is never nullptr.
         )docstring")
-    .def_static("MakeFromName",
-        [] (const std::string* familyName, const SkFontStyle& fontStyle) {
-            return SkTypeface::MakeFromName(
-                (familyName) ? familyName->c_str() : nullptr, fontStyle);
-        },
+    .def_static("MakeFromName", &SkTypeface_MakeFromName,
         R"docstring(
         Creates a new reference to the typeface that most closely matches the
         requested familyName and fontStyle.
@@ -426,7 +491,7 @@ typeface
         :param skia.FontStyle fontStyle: The style of the typeface.
         :return: reference to the closest-matching typeface.
         )docstring",
-        py::arg("familyName"), py::arg("fontStyle"))
+        py::arg("familyName"), py::arg("fontStyle") = nullptr)
     .def_static("MakeFromFile",
         [] (const std::string& path, int index) {
             return SkTypeface::MakeFromFile(&path[0], index);
@@ -467,22 +532,38 @@ typeface
 
 // FontMgr
 py::class_<SkFontStyleSet, sk_sp<SkFontStyleSet>, SkRefCnt>(m, "FontStyleSet")
+    .def("__getitem__", &SkFontStyleSet_getStyle, py::arg("index"))
+    .def("__len__", &SkFontStyleSet::count)
+    .def("__repr__",
+        [] (SkFontStyleSet& self) {
+            return py::str("FontStyleSet({})").format(self.count());
+        })
     .def("count", &SkFontStyleSet::count)
-    .def("getStyle", &SkFontStyleSet::getStyle)
-    .def("createTypeface", &SkFontStyleSet::createTypeface)
-    .def("matchStyle", &SkFontStyleSet::matchStyle)
+    .def("getStyle", &SkFontStyleSet_getStyle, py::arg("index"))
+    .def("createTypeface", &SkFontStyleSet::createTypeface, py::arg("index"))
+    .def("matchStyle", &SkFontStyleSet::matchStyle, py::arg("pattern"))
     .def_static("CreateEmpty", &SkFontStyleSet::CreateEmpty)
     ;
 
-py::class_<SkFontMgr, sk_sp<SkFontMgr>, SkRefCnt>(m, "FontMgr")
+py::class_<SkFontMgr, sk_sp<SkFontMgr>, SkRefCnt>(m, "FontMgr",
+    R"docstring(
+    Font manager that knows system fonts.
+
+    Example::
+
+        fontmgr = skia.FontMgr()
+        print(list(fontmgr))
+        familyName = fontmgr[0]
+
+        typeface = fontmgr.matchFamilyStyle(familyName, skia.FontStyle.Normal())
+        assert typeface is not None
+
+    )docstring")
+    .def(py::init([] () { return SkFontMgr::RefDefault(); }))
+    .def("__getitem__", &SkFontMgr_getFamilyName, py::arg("index"))
+    .def("__len__", &SkFontMgr::countFamilies)
     .def("countFamilies", &SkFontMgr::countFamilies)
-    .def("getFamilyName",
-        [] (const SkFontMgr& fontmgr, int index) {
-            SkString familyName;
-            fontmgr.getFamilyName(index, &familyName);
-            return py::str(familyName.c_str(), familyName.size());
-        },
-        py::arg("index"))
+    .def("getFamilyName", &SkFontMgr_getFamilyName, py::arg("index"))
     .def("createStyleSet",
         [] (const SkFontMgr& fontmgr, int index) {
             return sk_sp<SkFontStyleSet>(fontmgr.createStyleSet(index));
@@ -622,6 +703,12 @@ py::enum_<SkFont::Edging>(font, "Edging", R"docstring(
     .export_values();
 
 font
+    .def("__repr__",
+        [] (const SkFont& self) {
+            return py::str("Font({}, {}, {}, {})").format(
+                self.getTypefaceOrDefault(), self.getSize(), self.getScaleX(),
+                self.getSkewX());
+        })
     .def(py::init<>(),
         R"docstring(
         Constructs :py:class:`Font` with default values.
@@ -1073,7 +1160,13 @@ font
         :return: glyphs x-positions
         )docstring",
         py::arg("glyphs"), py::arg("origin") = 0)
-    .def("getPath", &SkFont::getPath,
+    .def("getPath",
+        [] (const SkFont& font, SkGlyphID glyphID) -> py::object {
+            SkPath path;
+            if (font.getPath(glyphID, &path))
+                return py::cast(path);
+            return py::none();
+        },
         R"docstring(
         Modifies path to be the outline of the glyph.
 
@@ -1083,11 +1176,33 @@ font
         returns false and ignores path parameter.
 
         :param int glyphID: index of glyph
-        :param skia.Path path: pointer to existing :py:class:`Path`
         :return: true if glyphID is described by path
         )docstring",
-        py::arg("glyphID"), py::arg("path"))
-    // .def("getPaths", &SkFont::getPaths)
+        py::arg("glyphID"))
+    .def("getPaths",
+        [] (const SkFont& font,
+            const std::vector<SkGlyphID>& glyphIDs) -> py::object {
+            std::vector<SkPath> paths;
+            paths.reserve(glyphIDs.size());
+            font.getPaths(
+                &glyphIDs[0],
+                glyphIDs.size(),
+                [] (const SkPath* pathOrNull, const SkMatrix& mx, void* ctx) {
+                    auto paths_ = static_cast<std::vector<SkPath>*>(ctx);
+                    if (pathOrNull)
+                        paths_->push_back(*pathOrNull);
+                },
+                static_cast<void*>(&paths));
+            if (paths.empty())
+                return py::none();
+            return py::cast(paths);
+        },
+        R"docstring(
+        Returns path corresponding to glyph array.
+
+        :param glyphIDs: array of glyph indices
+        :return: list of :py:class:`Path`
+        )docstring")
     .def("getMetrics",
         [] (const SkFont& font) {
             SkFontMetrics metrics;
@@ -1157,6 +1272,28 @@ py::enum_<SkFontMetrics::FontMetricsFlags>(fontmetrics, "FontMetricsFlags",
 
 fontmetrics
     .def(py::init<>())
+    .def("__repr__",
+        [] (const SkFontMetrics& self) {
+            std::stringstream stream;
+            stream << "FontMetrics("
+                << "Flags=" << self.fFlags << ", "
+                << "Top=" << self.fTop << ", "
+                << "Ascent=" << self.fAscent << ", "
+                << "Descent=" << self.fDescent << ", "
+                << "Bottom=" << self.fBottom << ", "
+                << "Leading=" << self.fLeading << ", "
+                << "AvgCharWidth=" << self.fAvgCharWidth << ", "
+                << "MaxCharWidth=" << self.fMaxCharWidth << ", "
+                << "XMin=" << self.fXMin << ", "
+                << "XMax=" << self.fXMax << ", "
+                << "XHeight=" << self.fXHeight << ", "
+                << "CapHeight=" << self.fCapHeight << ", "
+                << "UnderlineThickness=" << self.fUnderlineThickness << ", "
+                << "UnderlinePosition=" << self.fUnderlinePosition << ", "
+                << "StrikeoutThickness=" << self.fStrikeoutThickness << ", "
+                << "StrikeoutPosition=" << self.fStrikeoutPosition << ")";
+            return stream.str();
+        })
     .def("hasUnderlineThickness", &SkFontMetrics::hasUnderlineThickness,
         R"docstring(
         Returns true if :py:class:`FontMetrics` has a valid underline thickness,
