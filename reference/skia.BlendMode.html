@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>BlendMode &mdash; skia-python 0.0.4 documentation</title>
+  <title>BlendMode &mdash; skia-python 0.0.5 documentation</title>
   
 
   
@@ -60,7 +60,7 @@
             
             
               <div class="version">
-                0.0.4
+                0.0.5
               </div>
             
           
@@ -326,38 +326,38 @@
 <dt id="skia.BlendMode">
 <em class="property">class </em><code class="sig-name descname">BlendMode</code><a class="headerlink" href="#skia.BlendMode" title="Permalink to this definition">¶</a></dt>
 <dd><p>Members:</p>
+<p>kPlus : sum of colors</p>
+<p>kXor : each of source and destination trimmed outside the other</p>
+<p>kDifference : subtract darker from lighter with higher contrast</p>
+<p>kSrcOver : source over destination</p>
+<p>kColorDodge : brighten destination to reflect source</p>
+<p>kSrcIn : source trimmed inside destination</p>
+<p>kExclusion : subtract darker from lighter with lower contrast</p>
+<p>kHardLight : multiply or screen, depending on source</p>
+<p>kDstOut : destination trimmed outside source</p>
+<p>kScreen : multiply inverse of pixels, inverting result; brightens destination</p>
+<p>kSrcATop : source inside destination blended with destination</p>
+<p>kColor : hue and saturation of source with luminosity of destination</p>
+<p>kDstATop : destination inside source blended with source</p>
+<p>kDarken : darker of source and destination</p>
+<p>kSrcOut : source trimmed outside destination</p>
+<p>kLastCoeffMode : last porter duff blend mode</p>
+<p>kClear : replaces destination with zero: fully transparent</p>
+<p>kColorBurn : darken destination to reflect source</p>
 <p>kSrc : replaces destination</p>
+<p>kLastSeparableMode : last blend mode operating separately on components</p>
+<p>kMultiply : multiply source with destination, darkening image</p>
 <p>kSoftLight : lighten or darken, depending on source</p>
 <p>kOverlay : multiply or screen, depending on destination</p>
-<p>kSrcATop : source inside destination blended with destination</p>
-<p>kSrcIn : source trimmed inside destination</p>
-<p>kHardLight : multiply or screen, depending on source</p>
-<p>kColorBurn : darken destination to reflect source</p>
-<p>kDarken : darker of source and destination</p>
-<p>kMultiply : multiply source with destination, darkening image</p>
-<p>kSaturation : saturation of source with hue and luminosity of destination</p>
-<p>kModulate : product of premultiplied colors; darkens destination</p>
-<p>kColor : hue and saturation of source with luminosity of destination</p>
-<p>kDifference : subtract darker from lighter with higher contrast</p>
-<p>kExclusion : subtract darker from lighter with lower contrast</p>
 <p>kDst : preserves destination</p>
-<p>kClear : replaces destination with zero: fully transparent</p>
-<p>kXor : each of source and destination trimmed outside the other</p>
-<p>kScreen : multiply inverse of pixels, inverting result; brightens destination</p>
-<p>kDstOut : destination trimmed outside source</p>
-<p>kLuminosity : luminosity of source with hue and saturation of destination</p>
-<p>kHue : hue of source with saturation and luminosity of destination</p>
-<p>kLastCoeffMode : last porter duff blend mode</p>
-<p>kPlus : sum of colors</p>
-<p>kColorDodge : brighten destination to reflect source</p>
-<p>kDstOver : destination over source</p>
-<p>kSrcOver : source over destination</p>
-<p>kSrcOut : source trimmed outside destination</p>
+<p>kModulate : product of premultiplied colors; darkens destination</p>
 <p>kLastMode : last valid value</p>
 <p>kDstIn : destination trimmed by source</p>
-<p>kLastSeparableMode : last blend mode operating separately on components</p>
+<p>kLuminosity : luminosity of source with hue and saturation of destination</p>
+<p>kDstOver : destination over source</p>
+<p>kSaturation : saturation of source with hue and luminosity of destination</p>
 <p>kLighten : lighter of source and destination</p>
-<p>kDstATop : destination inside source blended with source</p>
+<p>kHue : hue of source with saturation and luminosity of destination</p>
 <p class="rubric">Methods</p>
 <table class="longtable docutils align-default">
 <colgroup>
@@ -567,12 +567,12 @@
 
 <dl class="py attribute">
 <dt id="skia.BlendMode.kLastMode">
-<code class="sig-prename descclassname">BlendMode.</code><code class="sig-name descname">kLastMode</code><em class="property"> = BlendMode.kLuminosity</em><a class="headerlink" href="#skia.BlendMode.kLastMode" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">BlendMode.</code><code class="sig-name descname">kLastMode</code><em class="property"> = BlendMode.kLastMode</em><a class="headerlink" href="#skia.BlendMode.kLastMode" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt id="skia.BlendMode.kLastSeparableMode">
-<code class="sig-prename descclassname">BlendMode.</code><code class="sig-name descname">kLastSeparableMode</code><em class="property"> = BlendMode.kMultiply</em><a class="headerlink" href="#skia.BlendMode.kLastSeparableMode" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">BlendMode.</code><code class="sig-name descname">kLastSeparableMode</code><em class="property"> = BlendMode.kLastSeparableMode</em><a class="headerlink" href="#skia.BlendMode.kLastSeparableMode" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
@@ -582,7 +582,7 @@
 
 <dl class="py attribute">
 <dt id="skia.BlendMode.kLuminosity">
-<code class="sig-prename descclassname">BlendMode.</code><code class="sig-name descname">kLuminosity</code><em class="property"> = BlendMode.kLuminosity</em><a class="headerlink" href="#skia.BlendMode.kLuminosity" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">BlendMode.</code><code class="sig-name descname">kLuminosity</code><em class="property"> = BlendMode.kLastMode</em><a class="headerlink" href="#skia.BlendMode.kLuminosity" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
@@ -592,7 +592,7 @@
 
 <dl class="py attribute">
 <dt id="skia.BlendMode.kMultiply">
-<code class="sig-prename descclassname">BlendMode.</code><code class="sig-name descname">kMultiply</code><em class="property"> = BlendMode.kMultiply</em><a class="headerlink" href="#skia.BlendMode.kMultiply" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">BlendMode.</code><code class="sig-name descname">kMultiply</code><em class="property"> = BlendMode.kLastSeparableMode</em><a class="headerlink" href="#skia.BlendMode.kMultiply" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">

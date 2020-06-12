@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Typeface &mdash; skia-python 0.0.4 documentation</title>
+  <title>Typeface &mdash; skia-python 0.0.5 documentation</title>
   
 
   
@@ -60,7 +60,7 @@
             
             
               <div class="version">
-                0.0.4
+                0.0.5
               </div>
             
           
@@ -332,6 +332,12 @@ a font.</p>
 textSize, textSkewX, textScaleX, kFakeBoldText_Mask, to specify how text
 appears when drawn (and measured).</p>
 <p>Typeface objects are immutable, and so they can be shared between threads.</p>
+<p>Example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">typeface</span> <span class="o">=</span> <span class="n">skia</span><span class="o">.</span><span class="n">Typeface</span><span class="p">()</span>
+<span class="n">typeface</span> <span class="o">=</span> <span class="n">skia</span><span class="o">.</span><span class="n">Typeface</span><span class="p">(</span><span class="s1">&#39;Arial&#39;</span><span class="p">)</span>
+<span class="n">typeface</span> <span class="o">=</span> <span class="n">skia</span><span class="o">.</span><span class="n">Typeface</span><span class="p">(</span><span class="s1">&#39;Arial&#39;</span><span class="p">,</span> <span class="n">skia</span><span class="o">.</span><span class="n">FontStyle</span><span class="o">.</span><span class="n">Bold</span><span class="p">())</span>
+</pre></div>
+</div>
 <p class="rubric">Classes</p>
 <table class="longtable docutils align-default">
 <colgroup>
@@ -373,7 +379,7 @@ appears when drawn (and measured).</p>
 <td><p>Return the uniqueID for the specified typeface.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#skia.Typeface.__init__" title="skia.Typeface.__init__"><code class="xref py py-obj docutils literal notranslate"><span class="pre">__init__</span></code></a></p></td>
-<td><p>Initialize self.</p></td>
+<td><p>Overloaded function.</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#skia.Typeface.copyTableData" title="skia.Typeface.copyTableData"><code class="xref py py-obj docutils literal notranslate"><span class="pre">copyTableData</span></code></a></p></td>
 <td><p>Return an immutable copy of the requested font table, or nullptr if that table was not found.</p></td>
@@ -510,7 +516,7 @@ nullptr.</p>
 
 <dl class="py method">
 <dt id="skia.Typeface.MakeFromName">
-<em class="property">static </em><code class="sig-prename descclassname">Typeface.</code><code class="sig-name descname">MakeFromName</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">familyName</span><span class="p">:</span> <span class="n">str</span></em>, <em class="sig-param"><span class="n">fontStyle</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.FontStyle.html#skia.FontStyle" title="skia.FontStyle">skia.FontStyle</a></span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="#skia.Typeface" title="skia.Typeface">skia.Typeface</a><a class="headerlink" href="#skia.Typeface.MakeFromName" title="Permalink to this definition">¶</a></dt>
+<em class="property">static </em><code class="sig-prename descclassname">Typeface.</code><code class="sig-name descname">MakeFromName</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">familyName</span><span class="p">:</span> <span class="n">object</span></em>, <em class="sig-param"><span class="n">fontStyle</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.FontStyle.html#skia.FontStyle" title="skia.FontStyle">skia.FontStyle</a></span> <span class="o">=</span> <span class="default_value">None</span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="#skia.Typeface" title="skia.Typeface">skia.Typeface</a><a class="headerlink" href="#skia.Typeface.MakeFromName" title="Permalink to this definition">¶</a></dt>
 <dd><p>Creates a new reference to the typeface that most closely matches the
 requested familyName and fontStyle.</p>
 <p>This method allows extended font face specifiers as in the
@@ -539,7 +545,33 @@ uniqueID. Will never return 0.</p>
 <dl class="py method">
 <dt id="skia.Typeface.__init__">
 <code class="sig-prename descclassname">Typeface.</code><code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span><span class="n">args</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#skia.Typeface.__init__" title="Permalink to this definition">¶</a></dt>
-<dd><p>Initialize self.  See help(type(self)) for accurate signature.</p>
+<dd><p>Overloaded function.</p>
+<ol class="arabic">
+<li><p>__init__(self: skia.Typeface) -&gt; None</p>
+<blockquote>
+<div><p>Returns the default normal typeface.</p>
+</div></blockquote>
+</li>
+<li><p>__init__(self: skia.Typeface, familyName: object, fontStyle: skia.FontStyle = None) -&gt; None</p>
+<blockquote>
+<div><p>Creates a new reference to the typeface that most closely matches the
+requested familyName and fontStyle.</p>
+<p>This method allows extended font face specifiers as in the
+<a class="reference internal" href="skia.FontStyle.html#skia.FontStyle" title="skia.FontStyle"><code class="xref py py-class docutils literal notranslate"><span class="pre">FontStyle</span></code></a> type. Will never return null.</p>
+<dl class="field-list simple">
+<dt class="field-odd">param str familyName</dt>
+<dd class="field-odd"><p>May be NULL. The name of the font family.</p>
+</dd>
+<dt class="field-even">param skia.FontStyle fontStyle</dt>
+<dd class="field-even"><p>The style of the typeface.</p>
+</dd>
+<dt class="field-odd">return</dt>
+<dd class="field-odd"><p>reference to the closest-matching typeface.</p>
+</dd>
+</dl>
+</div></blockquote>
+</li>
+</ol>
 </dd></dl>
 
 <dl class="py method">
