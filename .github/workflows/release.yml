@@ -23,7 +23,7 @@ jobs:
         submodules: true
     - name: Install system dependencies
       run: |
-        yum install -y fontconfig-devel mesa-libGL-devel xorg-x11-server-Xvfb mesa-dri-drivers
+        yum --disablerepo=epel install -y fontconfig-devel mesa-libGL-devel xorg-x11-server-Xvfb mesa-dri-drivers
         yum clean all
         rm -rf /var/cache/yum
     - name: Set PATH
