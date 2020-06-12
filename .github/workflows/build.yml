@@ -24,7 +24,7 @@ jobs:
     - name: Print submodule commits
       run: git submodule status > submodule.txt
     - name: Install system dependencies
-      run: yum install -y fontconfig-devel mesa-libGL-devel xorg-x11-server-Xvfb mesa-dri-drivers
+      run: yum --disablerepo=epel install -y fontconfig-devel mesa-libGL-devel xorg-x11-server-Xvfb mesa-dri-drivers
     - uses: actions/cache@v1
       id: cache
       with:
