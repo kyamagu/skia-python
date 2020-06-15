@@ -56,6 +56,12 @@ py::class_<SkPixmap>(m, "Pixmap", R"docstring(
     Use :py:class:`PixelRef` to manage pixel memory; :py:class:`PixelRef` is
     safe across threads.
     )docstring")
+    .def("__repr__",
+        [] (const SkPixmap& pixmap) {
+            return py::str("Pixmap({}, {}, {}, {})").format(
+                pixmap.width(), pixmap.height(), pixmap.colorType(),
+                pixmap.alphaType());
+        })
     .def(py::init<>(),
         R"docstring(
         Creates an empty :py:class:`Pixmap` without pixels, with
@@ -428,16 +434,7 @@ py::class_<SkPixmap>(m, "Pixmap", R"docstring(
         :return: writable generic base pointer to pixels
         :rtype: memoryview
         )docstring")
-    .def("readPixels",
-        [] (const SkPixmap& pixmap, const SkImageInfo& info, py::buffer dst,
-            size_t dstRowBytes, int srcX, int srcY) {
-            auto buffer = dst.request();
-            size_t given = (buffer.ndim) ?
-                buffer.shape[0] * buffer.strides[0] : 0;
-            if (given < info.computeByteSize(dstRowBytes))
-                throw std::runtime_error("Buffer is smaller than required.");
-            return pixmap.readPixels(info, buffer.ptr, dstRowBytes, srcX, srcY);
-        },
+    .def("readPixels", &ReadPixels<SkPixmap>,
         R"docstring(
         Copies :py:class:`Rect` of pixels to dstPixels.
 
@@ -477,7 +474,7 @@ py::class_<SkPixmap>(m, "Pixmap", R"docstring(
             :py:meth:`height`
         :return: true if pixels are copied to dstPixels
         )docstring",
-        py::arg("dstInfo"), py::arg("dstPixels"), py::arg("dstRowBytes"),
+        py::arg("dstInfo"), py::arg("dstPixels"), py::arg("dstRowBytes") = 0,
         py::arg("srcX") = 0, py::arg("srcY") = 0)
     .def("readPixels",
         py::overload_cast<const SkPixmap&, int, int>(

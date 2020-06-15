@@ -61,8 +61,10 @@ def test_Canvas_getSurface(canvas):
     assert isinstance(canvas.getSurface(), (skia.Surface, type(None)))
 
 
-# def test_Canvas_accessTopLayerPixels(canvas):
-#     canvas.accessTopLayerPixels()
+def test_Canvas_accessTopLayerPixels(canvas):
+    point = skia.IPoint(0, 0)
+    assert isinstance(
+        canvas.accessTopLayerPixels(point), (type(None), memoryview))
 
 
 def test_Canvas_peekPixels(canvas):
@@ -71,8 +73,15 @@ def test_Canvas_peekPixels(canvas):
 
 @pytest.mark.parametrize('args', [
     (skia.Pixmap(), 0, 0),
-    (np.zeros((240, 320, 4), dtype=np.uint8), 0, 0),
-    (np.zeros((240, 320, 4), dtype=np.uint8),),
+    (
+        skia.ImageInfo.MakeN32Premul(320, 240),
+        bytearray(240 * 320 * 4),
+        320 * 4,
+    ),
+    (
+        skia.ImageInfo.MakeN32Premul(320, 240),
+        np.zeros((240, 320, 4), dtype=np.uint8),
+    ),
     (skia.Bitmap(), 0, 0),
 ])
 def test_Canvas_readPixels(canvas, args):
@@ -80,8 +89,15 @@ def test_Canvas_readPixels(canvas, args):
 
 
 @pytest.mark.parametrize('args', [
-    (np.zeros((240, 320, 4), dtype=np.uint8), 0, 0),
-    (np.zeros((240, 320, 4), dtype=np.uint8),),
+    (
+        skia.ImageInfo.MakeN32Premul(320, 240),
+        bytearray(240 * 320 * 4),
+        320 * 4,
+    ),
+    (
+        skia.ImageInfo.MakeN32Premul(320, 240),
+        np.zeros((240, 320, 4), dtype=np.uint8),
+    ),
     (skia.Bitmap(), 0, 0),
 ])
 def test_Canvas_writePixels(canvas, args):

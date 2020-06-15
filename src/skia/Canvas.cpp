@@ -1,10 +1,7 @@
 #include "common.h"
 #include <include/svg/SkSVGCanvas.h>
-#include <pybind11/numpy.h>
 #include <pybind11/stl.h>
-
-template<typename T>
-using NumPy = py::array_t<T, py::array::c_style | py::array::forcecast>;
+#include <pybind11/numpy.h>
 
 void initCanvas(py::module &m) {
 py::class_<SkAutoCanvasRestore>(m, "AutoCanvasRestore", R"docstring(
@@ -310,32 +307,33 @@ canvas
         Creates an empty :py:class:`Canvas` with no backing device or pixels,
         with a width and height of zero.
         )docstring")
-    .def(py::init([](NumPy<uint8_t> array) {
-            py::buffer_info info = array.request();
-            if (info.ndim != 3)
-                throw std::runtime_error(
-                    "Number of dimensions must be 2 or more.");
-            if (info.shape[2] < 4)
-                throw std::runtime_error("Color channels must be 4.");
-            auto canvas = SkCanvas::MakeRasterDirectN32(
-                info.shape[1], info.shape[0], static_cast<SkPMColor*>(info.ptr),
-                info.strides[0]);
+    .def(py::init(
+        [] (py::array array, SkColorType ct, SkAlphaType at,
+            const SkColorSpace* cs, const SkSurfaceProps *surfaceProps) {
+            auto imageInfo = NumPyToImageInfo(array, ct, at, cs);
+            auto canvas = SkCanvas::MakeRasterDirect(
+                imageInfo, array.mutable_data(), array.strides(0),
+                surfaceProps);
             if (!canvas)
                 throw std::runtime_error("Failed to create Canvas");
             return canvas;
         }),
         R"docstring(
-        Creates raster :py:class:`Canvas` backed by NumPy array.
+        Creates raster :py:class:`Canvas` backed by numpy array.
 
-        Subsequent :py:class:`Canvas` calls draw into pixels.
-        :py:class:`ColorType` is set to :py:attr:`ColorType.kN32_ColorType`.
-        :py:class:`AlphaType` is set to :py:attr:`AlphaType.kPremul_AlphaType`.
-        To access pixels after drawing, call flush() or peekPixels().
+        Subsequent :py:class:`Canvas` calls draw into pixels. To access pixels
+        after drawing, call flush() or peekPixels().
 
-        :array: NumPy array of dtype = uint8 and dimensions
-            (height, width, 4).
+        :array: numpy ndarray of shape=(height, width, channels). Must have
+            non-zero width and height, and the valid number of channels for the
+            specified color type.
+        :colorType: color type of the array
+        :alphaType: alpha type of the array
+        :colorSpace: range of colors; may be nullptr
         )docstring",
-        py::arg("array"))
+        py::arg("array"), py::arg("colorType") = kN32_SkColorType,
+        py::arg("alphaType") = kUnpremul_SkAlphaType,
+        py::arg("colorSpace") = nullptr, py::arg("surfaceProps") = nullptr)
     .def(py::init<int, int, const SkSurfaceProps*>(),
         R"docstring(
         Creates :py:class:`Canvas` of the specified dimensions without a
@@ -467,10 +465,51 @@ canvas
         :rtype: skia.Surface or None
         )docstring",
         py::return_value_policy::reference)
-    // .def("accessTopLayerPixels", &SkCanvas::accessTopLayerPixels,
-    //     "Returns the pixel base address, SkImageInfo, rowBytes, and origin if "
-    //     "the pixels can be read directly.",
-    //     py::return_value_policy::reference)
+    .def("accessTopLayerPixels",
+        [] (SkCanvas& canvas, SkIPoint* origin) -> py::object {
+            SkImageInfo info;
+            size_t rowBytes;
+            void* addr = canvas.accessTopLayerPixels(&info, &rowBytes, origin);
+            if (!addr)
+                return py::none();
+            ssize_t bytesPerPixel = info.bytesPerPixel();
+            const std::string& format =
+                (bytesPerPixel == 1) ?
+                    py::format_descriptor<uint8_t>::format() :
+                (bytesPerPixel == 2) ?
+                    py::format_descriptor<uint16_t>::format() :
+                (bytesPerPixel == 4) ?
+                    py::format_descriptor<uint32_t>::format() :
+                (bytesPerPixel == 8) ?
+                    py::format_descriptor<uint64_t>::format() :
+                py::format_descriptor<uint8_t>::format();
+            return py::memoryview(
+                py::buffer_info(
+                    addr,
+                    bytesPerPixel,
+                    format,
+                    2,
+                    { info.width(), info.height() },
+                    { ssize_t(rowBytes), bytesPerPixel },
+                    true
+                )
+            );
+        },
+        R"docstring(
+        Returns the pixel base address, and origin if the pixels can be read
+        directly.
+
+        The returned address is only valid while :py:class:`Canvas` is in scope
+        and unchanged. Any :py:class:`Canvas` call or :py:class:`Surface` call
+        may invalidate the returned address and other returned values.
+
+        If pixels are inaccessible, returns None.
+
+        :param origin: storage for :py:class:`Canvas` top layer origin, its
+            top-left corner; may be nullptr
+        :return: address of pixels, or nullptr if inaccessible
+        )docstring",
+        py::arg("origin") = nullptr)
     // .def("accessTopRasterHandle", &SkCanvas::accessTopRasterHandle,
     //     "Returns custom context that tracks the SkMatrix and clip.")
     .def("peekPixels", &SkCanvas::peekPixels,
@@ -493,23 +532,10 @@ canvas
         :rtype: bool
         )docstring",
         py::arg("pixmap"))
-    .def("readPixels",
-        // py::overload_cast<const SkImageInfo&, void*, size_t, int, int>(
-        //     &SkCanvas::readPixels),
-        [] (SkCanvas& canvas, NumPy<uint8_t> array, int srcX, int srcY) {
-            py::buffer_info info = array.request();
-            if (info.ndim <= 2)
-                throw std::runtime_error(
-                    "Number of dimensions must be 3 or more.");
-            if (info.shape[2] < 4)
-                throw std::runtime_error("Color channels must be 4.");
-            auto imageinfo = SkImageInfo::MakeN32Premul(
-                info.shape[1], info.shape[0]);
-            return canvas.readPixels(
-                imageinfo, info.ptr, info.strides[0], srcX, srcY);
-        },
+    .def("readPixels", &ReadPixels<SkCanvas>,
         R"docstring(
-        Copies :py:class:`Rect` of pixels from :py:class:`Canvas` into array.
+        Copies :py:class:`Rect` of pixels from :py:class:`Canvas` into numpy
+        array.
 
         :py:class:`Matrix` and clip are ignored.
 
@@ -545,12 +571,18 @@ canvas
         - :py:class:`Canvas` pixels are not readable; for instance,
         - :py:class:`Canvas` is document-based.
 
-        :array: storage for pixels
+        :dstInfo: width, height, :py:class:`ColorType`, and
+            :py:class:`AlphaType` of dstPixels
+        :dstPixels: storage for pixels; dstInfo.height() times dstRowBytes, or
+            larger
+        :dstRowBytes: size of one destination row; dstInfo.width() times pixel
+            size, or larger. Ignored when dstPixels has more than one-dimension.
         :srcX: offset into readable pixels on x-axis; may be negative
         :srcY: offset into readable pixels on y-axis; may be negative
         :return: true if pixels were copied
         )docstring",
-        py::arg("array"), py::arg("srcX") = 0, py::arg("srcY") = 0)
+        py::arg("dstInfo"), py::arg("dstPixels"), py::arg("dstRowBytes") = 0,
+        py::arg("srcX") = 0, py::arg("srcY") = 0)
     .def("readPixels",
         py::overload_cast<const SkPixmap&, int, int>(&SkCanvas::readPixels),
         R"docstring(
@@ -647,19 +679,12 @@ canvas
         )docstring",
         py::arg("bitmap"), py::arg("srcX") = 0, py::arg("srcY") = 0)
     .def("writePixels",
-        // py::overload_cast<const SkImageInfo&, const void*, size_t, int, int>(
-        //     &SkCanvas::writePixels),
-        [] (SkCanvas& canvas, NumPy<uint8_t> array, int x, int y) {
-            py::buffer_info info = array.request();
-            if (info.ndim <= 2)
-                throw std::runtime_error(
-                    "Number of dimensions must be 3 or more.");
-            if (info.shape[2] < 4)
-                throw std::runtime_error("Color channels must be 4.");
-            auto imageinfo = SkImageInfo::MakeN32Premul(
-                info.shape[1], info.shape[0]);
-            return canvas.writePixels(
-                imageinfo, info.ptr, info.strides[0], x, y);
+        [] (SkCanvas& canvas, const SkImageInfo& imageInfo, py::buffer pixels,
+            size_t srcRowBytes, int x, int y) {
+            auto info = pixels.request();
+            auto rowBytes = ValidateBufferToImageInfo(
+                imageInfo, info, srcRowBytes);
+            return canvas.writePixels(imageInfo, info.ptr, rowBytes, x, y);
         },
         R"docstring(
         Copies :py:class:`Rect` from pixels to :py:class:`Canvas`.
@@ -704,7 +729,8 @@ canvas
 
         :return: true if pixels were written to :py:class:`Canvas`
         )docstring",
-        py::arg("array"), py::arg("x") = 0, py::arg("y") = 0)
+        py::arg("info"), py::arg("pixels"), py::arg("rowBytes") = 0,
+        py::arg("x") = 0, py::arg("y") = 0)
     .def("writePixels",
         py::overload_cast<const SkBitmap&, int, int>(&SkCanvas::writePixels),
         R"docstring(
@@ -2387,17 +2413,13 @@ canvas
     // Static methods.
     .def_static("MakeRasterDirect",
         // &SkCanvas::MakeRasterDirect,
-        [](const SkImageInfo& image_info, py::buffer pixels, size_t rowBytes,
+        [](const SkImageInfo& imageInfo, py::buffer pixels, size_t srcRowBytes,
             const SkSurfaceProps* surfaceProps) {
             py::buffer_info info = pixels.request();
-            size_t given_size = (info.ndim > 0) ?
-                info.shape[0] * info.strides[0] : 0;
-            rowBytes = (rowBytes == 0) ? image_info.minRowBytes() : rowBytes;
-            auto required = rowBytes * image_info.height();
-            if (given_size < required)
-                throw std::runtime_error("Buffer is smaller than required");
+            auto rowBytes = ValidateBufferToImageInfo(
+                imageInfo, info, srcRowBytes);
             auto canvas = SkCanvas::MakeRasterDirect(
-                image_info, info.ptr, rowBytes, surfaceProps);
+                imageInfo, info.ptr, rowBytes, surfaceProps);
             if (!canvas)
                 throw std::runtime_error("Failed to create Canvas");
             return canvas;
@@ -2429,21 +2451,14 @@ canvas
         :param skia.SurfaceProps props: LCD striping orientation and setting for
             device independent fonts; may be `None`
         )docstring",
-        py::arg("image_info"), py::arg("pixels"), py::arg("rowBytes") = 0,
+        py::arg("imageInfo"), py::arg("pixels"), py::arg("rowBytes") = 0,
         py::arg("surfaceProps") = nullptr)
     .def_static("MakeRasterDirectN32",
-        // &SkCanvas::MakeRasterDirectN32,
-        [](int width, int height, py::buffer pixels, size_t rowBytes) {
-            py::buffer_info info = pixels.request();
-            if (width < 0 || height < 0)
-                throw std::runtime_error(
-                    "width and height must be greater than 0");
-            rowBytes = (rowBytes == 0) ? width * sizeof(SkPMColor) : rowBytes;
-            size_t given_size = (info.ndim > 0) ?
-                info.shape[0] * info.strides[0] : 0;
-            auto required = rowBytes * height;
-            if (given_size < required)
-                throw std::runtime_error("Buffer is smaller than required");
+        [](int width, int height, py::buffer pixels, size_t srcRowBytes) {
+            auto info = pixels.request();
+            auto imageInfo = SkImageInfo::MakeN32Premul(width, height);
+            auto rowBytes = ValidateBufferToImageInfo(
+                imageInfo, info, srcRowBytes);
             auto canvas = SkCanvas::MakeRasterDirectN32(
                 width, height, static_cast<SkPMColor*>(info.ptr), rowBytes);
             if (!canvas)

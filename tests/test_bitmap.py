@@ -14,6 +14,10 @@ def bitmap(info):
     return bitmap
 
 
+def test_Bitmap_repr(bitmap):
+    assert isinstance(repr(bitmap), str)
+
+
 def test_Bitmap_buffer(bitmap):
     import numpy as np
     assert isinstance(memoryview(bitmap), memoryview)

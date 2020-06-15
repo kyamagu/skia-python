@@ -2,9 +2,6 @@
 #include <pybind11/operators.h>
 #include <pybind11/numpy.h>
 
-template<typename T>
-using NumPy = py::array_t<T, py::array::c_style | py::array::forcecast>;
-
 const SkSurfaceProps::Flags SkSurfaceProps::kUseDistanceFieldFonts_Flag;
 
 void initSurface(py::module &m) {
@@ -163,28 +160,44 @@ py::enum_<SkSurface::FlushFlags>(surface, "FlushFlags", py::arithmetic())
     .export_values();
 
 surface
+    .def("__repr__",
+        [] (const SkSurface& surface) {
+            return py::str("Surface({}, {})").format(
+                surface.width(), surface.height());
+        })
     .def(py::init(&SkSurface::MakeRasterN32Premul),
         R"docstring(
         See :py:meth:`~MakeRasterN32Premul`
         )docstring",
         py::arg("width"), py::arg("height"), py::arg("surfaceProps") = nullptr)
-    .def(py::init([](NumPy<uint8_t> array) {
-        py::buffer_info info = array.request();
-        if (info.ndim <= 1)
-            throw std::runtime_error("Number of dimensions must be 2 or more.");
-        if (info.shape[0] == 0 || info.shape[1] == 0)
-            throw std::runtime_error(
-                "Width and height must be greater than 0.");
-        return SkSurface::MakeRasterDirect(
-            SkImageInfo::MakeN32Premul(info.shape[1], info.shape[0], nullptr),
-            info.ptr, info.strides[0]);
+    .def(py::init(
+        [] (py::array array, SkColorType ct, SkAlphaType at,
+            const SkColorSpace* cs, const SkSurfaceProps *surfaceProps) {
+            auto imageInfo = NumPyToImageInfo(array, ct, at, cs);
+            auto surface = SkSurface::MakeRasterDirect(
+                imageInfo, array.mutable_data(), array.strides(0),
+                surfaceProps);
+            if (!surface)
+                throw std::runtime_error("Failed to create Canvas");
+            return surface;
         }),
         R"docstring(
-        Create a raster surface on numpy array. Input array must have uint8
-        with more than two dimensions. This constructor does not allocate
-        memory. Do not destroy numpy array while using this surface.
+        Create a raster surface on numpy array.
+
+        Input array must have compatible shape with the given color type.
+
+        Do not destroy numpy array while using this surface.
+
+        :array: numpy ndarray of shape=(height, width, channels). Must have
+            non-zero width and height, and the valid number of channels for the
+            specified color type.
+        :colorType: color type of the array
+        :alphaType: alpha type of the array
+        :colorSpace: range of colors; may be nullptr
         )docstring",
-        py::arg("array"))
+        py::arg("array"), py::arg("colorType") = kN32_SkColorType,
+        py::arg("alphaType") = kUnpremul_SkAlphaType,
+        py::arg("colorSpace") = nullptr, py::arg("surfaceProps") = nullptr)
     .def("isCompatible", &SkSurface::isCompatible,
         R"docstring(
         Is this surface compatible with the provided characterization?
@@ -416,21 +429,7 @@ surface
         :return: true if pixels were copied
         )docstring",
         py::arg("dst"), py::arg("srcX") = 0, py::arg("srcY") = 0)
-    .def("readPixels",
-        // py::overload_cast<const SkImageInfo&, void*, size_t, int, int>(
-        //     &SkSurface::readPixels),
-        [] (SkSurface& surface, NumPy<uint8_t> array, int srcX, int srcY) {
-            py::buffer_info info = array.request();
-            if (info.ndim <= 2)
-                throw std::runtime_error(
-                    "Number of dimensions must be 3 or more.");
-            if (info.shape[2] < 4)
-                throw std::runtime_error("Color channels must be 4.");
-            auto imageinfo = SkImageInfo::MakeN32Premul(
-                info.shape[1], info.shape[0]);
-            return surface.readPixels(
-                imageinfo, info.ptr, info.strides[0], srcX, srcY);
-        },
+    .def("readPixels", &ReadPixels<SkSurface>,
         R"docstring(
         Copies :py:class:`Rect` of pixels from :py:class:`Canvas` into array.
 
@@ -461,12 +460,18 @@ surface
         - :py:class:`Surface` pixels could not be converted to
             :py:attr:`ColorType.kN32` or :py:attr:`AlphaType.kPremul`.
 
-        :array: storage for pixels
+        :dstInfo: width, height, :py:class:`ColorType`, and
+            :py:class:`AlphaType` of dstPixels
+        :dstPixels: storage for pixels; dstInfo.height() times dstRowBytes, or
+            larger
+        :dstRowBytes: size of one destination row; dstInfo.width() times pixel
+            size, or larger. Ignored when dstPixels has more than one-dimension.
         :srcX: offset into readable pixels on x-axis; may be negative
         :srcY: offset into readable pixels on y-axis; may be negative
         :return: true if pixels were copied
         )docstring",
-        py::arg("array"), py::arg("srcX") = 0, py::arg("srcY") = 0)
+        py::arg("dstInfo"), py::arg("dstPixels"), py::arg("dstRowBytes") = 0,
+        py::arg("srcX") = 0, py::arg("srcY") = 0)
     .def("readPixels",
         py::overload_cast<const SkBitmap&, int, int>(&SkSurface::readPixels),
         R"docstring(

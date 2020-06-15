@@ -10,6 +10,10 @@ def test_Pixmap_init(args):
     assert isinstance(skia.Pixmap(*args), skia.Pixmap)
 
 
+def test_Pixmap_repr(pixmap):
+    assert isinstance(repr(pixmap), str)
+
+
 @pytest.mark.parametrize('args', [
     tuple(),
     (skia.ImageInfo.MakeN32Premul(100, 100), None, 400),

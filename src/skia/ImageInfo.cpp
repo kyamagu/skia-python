@@ -1,9 +1,5 @@
 #include "common.h"
 
-sk_sp<SkColorSpace> CloneColorSpace(const SkColorSpace* cs) {
-    return (cs) ? CloneFlattenable(*cs) : sk_sp<SkColorSpace>(nullptr);
-}
-
 void initImageInfo(py::module &m) {
 py::enum_<SkAlphaType>(m, "AlphaType")
     .value("kUnknown_AlphaType", SkAlphaType::kUnknown_SkAlphaType,
@@ -54,6 +50,7 @@ py::enum_<SkColorType>(m, "ColorType")
     .value("kA16_float_ColorType", SkColorType::kA16_float_SkColorType)
     .value("kR16G16_float_ColorType", SkColorType::kR16G16_float_SkColorType)
     .value("kA16_unorm_ColorType", SkColorType::kA16_unorm_SkColorType)
+    .value("kN32_ColorType", SkColorType::kN32_SkColorType)
     .export_values();
 
 py::enum_<SkYUVColorSpace>(m, "YUVColorSpace")
@@ -88,6 +85,12 @@ py::class_<SkColorInfo>(m, "ColorInfo",
     red, blue, and green; and :py:class:`ColorSpace`, the range and linearity of
     colors.
     )docstring")
+    .def("__repr__",
+        [] (const SkImageInfo& info) {
+            return py::str("ImageInfo({}, {}, {}, {})").format(
+                info.width(), info.height(), info.colorType(),
+                info.alphaType());
+        })
     .def(py::init<>(),
         R"docstring(
         Creates an :py:class:`ColorInfo` with

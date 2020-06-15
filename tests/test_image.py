@@ -3,6 +3,33 @@ import pytest
 import numpy as np
 
 
+@pytest.mark.parametrize(['args', 'color_type', 'error'], [
+    (((100, 100), np.uint8), skia.kAlpha_8_ColorType, None),
+    (((100, 100), np.uint8), skia.kGray_8_ColorType, None),
+    (((100, 100, 4), np.uint8), skia.kRGB_888x_ColorType, None),
+    (((100, 100, 4), np.uint8), skia.kBGRA_8888_ColorType, None),
+    (((100, 100, 4), np.uint8), skia.kRGBA_8888_ColorType, None),
+    (((100, 100, 1), np.float16), skia.kA16_float_ColorType, None),
+    (((100, 100, 4), np.float16), skia.kRGBA_F16_ColorType, None),
+    (((100, 100, 4), np.float32), skia.kRGBA_F32_ColorType, None),
+    (((100, 100), np.uint8), skia.kRGBA_8888_ColorType, ValueError),
+    (((100, 100, 1), np.uint8), skia.kRGBA_8888_ColorType, ValueError),
+    (((0, 100, 4), np.uint8), skia.kRGBA_8888_ColorType, ValueError),
+    (((100, 0, 4), np.uint8), skia.kRGBA_8888_ColorType, ValueError),
+    (((10, 10, 3), np.float64), skia.kRGBA_8888_ColorType, ValueError),
+])
+def test_Image_init(args, color_type, error):
+    if error is not None:
+        with pytest.raises(error):
+            skia.Image(np.zeros(*args), color_type)
+    else:
+        assert isinstance(skia.Image(np.zeros(*args), color_type), skia.Image)
+
+
+def test_Image_repr(image):
+    assert isinstance(repr(image), str)
+
+
 def test_Image_imageInfo(image):
     assert isinstance(image.imageInfo(), skia.ImageInfo)
 
@@ -76,14 +103,19 @@ def test_Image_flush(image, context):
     image.flush(context)
 
 
-@pytest.mark.parametrize('array_fn', [
-    lambda w, h, c: np.zeros((h, w, c), dtype=np.uint8),
-    lambda w, h, c: bytearray(w * h * c),
+@pytest.mark.parametrize('args', [
+    (
+        skia.ImageInfo.MakeN32Premul(320, 240),
+        bytearray(240 * 320 * 4),
+        320 * 4,
+    ),
+    (
+        skia.ImageInfo.MakeN32Premul(320, 240),
+        np.zeros((240, 320, 4), np.uint8),
+    ),
 ])
-def test_Image_readPixels(image, array_fn):
-    c = image.imageInfo().bytesPerPixel()
-    array = array_fn(image.width(), image.height(), c)
-    assert isinstance(image.readPixels(array), bool)
+def test_Image_readPixels(image, args):
+    assert isinstance(image.readPixels(*args), bool)
 
 
 def test_Image_readPixels2(image):

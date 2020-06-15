@@ -19,17 +19,6 @@ py::buffer_info GetPixels(const SkBitmap& bitmap) {
 }
 
 
-void* GetBufferPtr(const SkImageInfo& info, py::buffer& b, size_t rowBytes) {
-    auto buffer = b.request();
-    size_t given = (buffer.ndim) ? buffer.shape[0] * buffer.strides[0] : 0;
-    size_t required = (rowBytes) ?
-        info.computeByteSize(rowBytes) : info.computeMinByteSize();
-    if (given < required)
-        throw std::runtime_error("Buffer is smaller than required.");
-    return buffer.ptr;
-}
-
-
 void initBitmap(py::module &m) {
 py::enum_<SkTileMode>(m, "TileMode")
     .value("kClamp", SkTileMode::kClamp,
@@ -96,6 +85,12 @@ py::enum_<SkBitmap::AllocFlags>(bitmap, "AllocFlags", py::arithmetic())
     .export_values();
 
 bitmap
+    .def("__repr__",
+        [] (const SkBitmap& bitmap) {
+            return py::str("Bitmap({}, {})").format(
+                bitmap.width(), bitmap.height(), bitmap.colorType(),
+                bitmap.alphaType());
+        })
     .def_buffer(&GetPixels)
     .def(py::init<>(
         [] (const SkBitmap* src) {
@@ -621,13 +616,15 @@ bitmap
         )docstring",
         py::arg("width"), py::arg("height"), py::arg("isOpaque"))
     .def("installPixels",
-        [] (SkBitmap& bitmap, const SkImageInfo& info, py::object obj,
-            size_t rowBytes) {
+        [] (SkBitmap& bitmap, const SkImageInfo& imageInfo, py::object obj,
+            size_t srcRowBytes) {
             if (obj.is_none())
-                return bitmap.installPixels(info, nullptr, rowBytes);
+                return bitmap.installPixels(imageInfo, nullptr, srcRowBytes);
             auto buffer = obj.cast<py::buffer>();
-            auto ptr = GetBufferPtr(info, buffer, rowBytes);
-            return bitmap.installPixels(info, ptr, rowBytes);
+            auto info = buffer.request();
+            auto rowBytes = ValidateBufferToImageInfo(
+                imageInfo, info, srcRowBytes);
+            return bitmap.installPixels(imageInfo, info.ptr, rowBytes);
         },
         R"docstring(
         Sets :py:class:`ImageInfo` to info following the rules in
@@ -673,8 +670,9 @@ bitmap
         py::arg("pixmap"))
     .def("setPixels",
         [] (SkBitmap& bitmap, py::buffer b) {
-            return bitmap.setPixels(
-                GetBufferPtr(bitmap.info(), b, bitmap.rowBytes()));
+            auto info = b.request();
+            ValidateBufferToImageInfo(bitmap.info(), info, bitmap.rowBytes());
+            return bitmap.setPixels(info.ptr);
         },
         R"docstring(
         Replaces :py:class:`PixelRef` with pixels, preserving
@@ -844,12 +842,7 @@ bitmap
         :return: true if dst is replaced by subset
         )docstring",
         py::arg("dst").none(false), py::arg("subset"))
-    .def("readPixels",
-        [] (const SkBitmap& bitmap, const SkImageInfo& info, py::buffer b,
-            size_t rowBytes, int srcX, int srcY) {
-            return bitmap.readPixels(
-                info, GetBufferPtr(info, b, rowBytes), rowBytes, srcX, srcY);
-        },
+    .def("readPixels", &ReadPixels<SkBitmap>,
         R"docstring(
         Copies a :py:class:`Rect` of pixels from :py:class:`Bitmap` to
         dstPixels.
@@ -889,7 +882,7 @@ bitmap
         :srcY: row index whose absolute value is less than :py:meth:`height`
         :return: true if pixels are copied to dstPixels
         )docstring",
-        py::arg("dstInfo"), py::arg("dstPixels"), py::arg("dstRowBytes"),
+        py::arg("dstInfo"), py::arg("dstPixels"), py::arg("dstRowBytes") = 0,
         py::arg("srcX") = 0, py::arg("srcY") = 0)
     .def("readPixels",
         py::overload_cast<const SkPixmap&, int, int>(
