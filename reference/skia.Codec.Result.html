@@ -340,29 +340,29 @@
 <p>Members:</p>
 <blockquote>
 <div><dl>
-<dt>kSuccess :</dt><dd><p>General return value for success.</p>
+<dt>kUnimplemented :</dt><dd><p>This method is not implemented by this codec.</p>
 </dd>
-<dt>kInvalidConversion :</dt><dd><p>The generator cannot convert to match the request, ignoring dimensions.</p>
+<dt>kInvalidParameters :</dt><dd><p>Parameters (besides info) are invalid. e.g. NULL pixels, rowBytes too
+small, etc.</p>
+</dd>
+<dt>kInternalError :</dt><dd><p>An internal error, such as OOM.</p>
 </dd>
 <dt>kErrorInInput :</dt><dd><p>Like kIncompleteInput, except the input had an error.</p>
 <p>If returned from an incremental decode, decoding cannot continue, even
 with more data.</p>
 </dd>
-<dt>kCouldNotRewind :</dt><dd><p>Fulfilling this request requires rewinding the input, which is not
-supported for this input.</p>
-</dd>
-<dt>kInternalError :</dt><dd><p>An internal error, such as OOM.</p>
-</dd>
-<dt>kUnimplemented :</dt><dd><p>This method is not implemented by this codec.</p>
-</dd>
-<dt>kIncompleteInput :</dt><dd><p>The input is incomplete. A partial image was generated.</p>
+<dt>kInvalidConversion :</dt><dd><p>The generator cannot convert to match the request, ignoring dimensions.</p>
 </dd>
 <dt>kInvalidInput :</dt><dd><p>The input did not contain a valid image.</p>
 </dd>
 <dt>kInvalidScale :</dt><dd><p>The generator cannot scale to requested size.</p>
 </dd>
-<dt>kInvalidParameters :</dt><dd><p>Parameters (besides info) are invalid. e.g. NULL pixels, rowBytes too
-small, etc.</p>
+<dt>kIncompleteInput :</dt><dd><p>The input is incomplete. A partial image was generated.</p>
+</dd>
+<dt>kSuccess :</dt><dd><p>General return value for success.</p>
+</dd>
+<dt>kCouldNotRewind :</dt><dd><p>Fulfilling this request requires rewinding the input, which is not
+supported for this input.</p>
 </dd>
 </dl>
 </div></blockquote>

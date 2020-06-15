@@ -906,11 +906,27 @@ nullptr</p>
 <div><p>See <a class="reference internal" href="#skia.Surface.MakeRasterN32Premul" title="skia.Surface.MakeRasterN32Premul"><code class="xref py py-meth docutils literal notranslate"><span class="pre">MakeRasterN32Premul()</span></code></a></p>
 </div></blockquote>
 </li>
-<li><p>__init__(self: skia.Surface, array: numpy.ndarray[uint8]) -&gt; None</p>
+<li><p>__init__(self: skia.Surface, array: array, colorType: skia.ColorType = ColorType.kRGBA_8888_ColorType, alphaType: skia.AlphaType = AlphaType.kUnpremul_AlphaType, colorSpace: skia.ColorSpace = None, surfaceProps: skia.SurfaceProps = None) -&gt; None</p>
 <blockquote>
-<div><p>Create a raster surface on numpy array. Input array must have uint8
-with more than two dimensions. This constructor does not allocate
-memory. Do not destroy numpy array while using this surface.</p>
+<div><p>Create a raster surface on numpy array.</p>
+<p>Input array must have compatible shape with the given color type.</p>
+<p>Do not destroy numpy array while using this surface.</p>
+<dl class="field-list simple">
+<dt class="field-odd">array</dt>
+<dd class="field-odd"><p>numpy ndarray of shape=(height, width, channels). Must have
+non-zero width and height, and the valid number of channels for the
+specified color type.</p>
+</dd>
+<dt class="field-even">colorType</dt>
+<dd class="field-even"><p>color type of the array</p>
+</dd>
+<dt class="field-odd">alphaType</dt>
+<dd class="field-odd"><p>alpha type of the array</p>
+</dd>
+<dt class="field-even">colorSpace</dt>
+<dd class="field-even"><p>range of colors; may be nullptr</p>
+</dd>
+</dl>
 </div></blockquote>
 </li>
 </ol>
@@ -1324,7 +1340,7 @@ destination.</p>
 </dl>
 </div></blockquote>
 </li>
-<li><p>readPixels(self: skia.Surface, array: numpy.ndarray[uint8], srcX: int = 0, srcY: int = 0) -&gt; bool</p>
+<li><p>readPixels(self: skia.Surface, dstInfo: skia.ImageInfo, dstPixels: buffer, dstRowBytes: int = 0, srcX: int = 0, srcY: int = 0) -&gt; bool</p>
 <blockquote>
 <div><p>Copies <a class="reference internal" href="skia.Rect.html#skia.Rect" title="skia.Rect"><code class="xref py py-class docutils literal notranslate"><span class="pre">Rect</span></code></a> of pixels from <a class="reference internal" href="skia.Canvas.html#skia.Canvas" title="skia.Canvas"><code class="xref py py-class docutils literal notranslate"><span class="pre">Canvas</span></code></a> into array.</p>
 <p><a class="reference internal" href="skia.Matrix.html#skia.Matrix" title="skia.Matrix"><code class="xref py py-class docutils literal notranslate"><span class="pre">Matrix</span></code></a> and clip are ignored.</p>
@@ -1352,8 +1368,17 @@ destination.</p>
 </li>
 </ul>
 <dl class="field-list simple">
-<dt class="field-odd">array</dt>
-<dd class="field-odd"><p>storage for pixels</p>
+<dt class="field-odd">dstInfo</dt>
+<dd class="field-odd"><p>width, height, <a class="reference internal" href="skia.ColorType.html#skia.ColorType" title="skia.ColorType"><code class="xref py py-class docutils literal notranslate"><span class="pre">ColorType</span></code></a>, and
+<a class="reference internal" href="skia.AlphaType.html#skia.AlphaType" title="skia.AlphaType"><code class="xref py py-class docutils literal notranslate"><span class="pre">AlphaType</span></code></a> of dstPixels</p>
+</dd>
+<dt class="field-even">dstPixels</dt>
+<dd class="field-even"><p>storage for pixels; dstInfo.height() times dstRowBytes, or
+larger</p>
+</dd>
+<dt class="field-odd">dstRowBytes</dt>
+<dd class="field-odd"><p>size of one destination row; dstInfo.width() times pixel
+size, or larger. Ignored when dstPixels has more than one-dimension.</p>
 </dd>
 <dt class="field-even">srcX</dt>
 <dd class="field-even"><p>offset into readable pixels on x-axis; may be negative</p>

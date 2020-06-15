@@ -412,13 +412,13 @@ Supported encoding details vary with platform.</p>
 <td><p>Creates <a class="reference internal" href="#skia.Image" title="skia.Image"><code class="xref py py-class docutils literal notranslate"><span class="pre">Image</span></code></a> from <a class="reference internal" href="skia.ImageInfo.html#skia.ImageInfo" title="skia.ImageInfo"><code class="xref py py-class docutils literal notranslate"><span class="pre">ImageInfo</span></code></a>, sharing pixels.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#skia.Image.MakeRasterFromCompressed" title="skia.Image.MakeRasterFromCompressed"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MakeRasterFromCompressed</span></code></a></p></td>
-<td><p>Creates a CPU-backed SkImage from compressed data.</p></td>
+<td><p>Creates a CPU-backed <a class="reference internal" href="#skia.Image" title="skia.Image"><code class="xref py py-class docutils literal notranslate"><span class="pre">Image</span></code></a> from compressed data.</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#skia.Image.MakeTextureFromCompressed" title="skia.Image.MakeTextureFromCompressed"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MakeTextureFromCompressed</span></code></a></p></td>
 <td><p>Creates a GPU-backed <a class="reference internal" href="#skia.Image" title="skia.Image"><code class="xref py py-class docutils literal notranslate"><span class="pre">Image</span></code></a> from compressed data.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#skia.Image.__init__" title="skia.Image.__init__"><code class="xref py py-obj docutils literal notranslate"><span class="pre">__init__</span></code></a></p></td>
-<td><p></p></td>
+<td><p>Creates a new <a class="reference internal" href="#skia.Image" title="skia.Image"><code class="xref py py-class docutils literal notranslate"><span class="pre">Image</span></code></a> from numpy array.</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#skia.Image.alphaType" title="skia.Image.alphaType"><code class="xref py py-obj docutils literal notranslate"><span class="pre">alphaType</span></code></a></p></td>
 <td><p>Returns <a class="reference internal" href="skia.AlphaType.html#skia.AlphaType" title="skia.AlphaType"><code class="xref py py-class docutils literal notranslate"><span class="pre">AlphaType</span></code></a>.</p></td>
@@ -613,7 +613,7 @@ image to return. may be null.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p>created SkImage, or nullptr</p>
+<dd class="field-even"><p>created <a class="reference internal" href="#skia.Image" title="skia.Image"><code class="xref py py-class docutils literal notranslate"><span class="pre">Image</span></code></a>, or nullptr</p>
 </dd>
 </dl>
 </dd></dl>
@@ -912,7 +912,7 @@ for <a class="reference internal" href="#skia.Image" title="skia.Image"><code cl
 <dl class="py method">
 <dt id="skia.Image.MakeRasterFromCompressed">
 <em class="property">static </em><code class="sig-prename descclassname">Image.</code><code class="sig-name descname">MakeRasterFromCompressed</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">data</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.Data.html#skia.Data" title="skia.Data">skia.Data</a></span></em>, <em class="sig-param"><span class="n">width</span><span class="p">:</span> <span class="n">int</span></em>, <em class="sig-param"><span class="n">height</span><span class="p">:</span> <span class="n">int</span></em>, <em class="sig-param"><span class="n">type</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.Image.CompressionType.html#skia.Image.CompressionType" title="skia.Image.CompressionType">skia.Image.CompressionType</a></span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="#skia.Image" title="skia.Image">skia.Image</a><a class="headerlink" href="#skia.Image.MakeRasterFromCompressed" title="Permalink to this definition">¶</a></dt>
-<dd><p>Creates a CPU-backed SkImage from compressed data.</p>
+<dd><p>Creates a CPU-backed <a class="reference internal" href="#skia.Image" title="skia.Image"><code class="xref py py-class docutils literal notranslate"><span class="pre">Image</span></code></a> from compressed data.</p>
 <p>This method will decompress the compressed data and create an image
 wrapping it. Any mipmap levels present in the compressed data are
 discarded.</p>
@@ -962,8 +962,22 @@ DRM protection (on Vulkan)?</p></li>
 
 <dl class="py method">
 <dt id="skia.Image.__init__">
-<code class="sig-prename descclassname">Image.</code><code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Image" title="skia.Image">skia.Image</a></span></em>, <em class="sig-param"><span class="n">arg0</span><span class="p">:</span> <span class="n">numpy.ndarray<span class="p">[</span>uint8<span class="p">]</span></span></em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#skia.Image.__init__" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<code class="sig-prename descclassname">Image.</code><code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Image" title="skia.Image">skia.Image</a></span></em>, <em class="sig-param"><span class="n">array</span><span class="p">:</span> <span class="n">array</span></em>, <em class="sig-param"><span class="n">colorType</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.ColorType.html#skia.ColorType" title="skia.ColorType">skia.ColorType</a></span> <span class="o">=</span> <span class="default_value">ColorType.kRGBA_8888_ColorType</span></em>, <em class="sig-param"><span class="n">alphaType</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.AlphaType.html#skia.AlphaType" title="skia.AlphaType">skia.AlphaType</a></span> <span class="o">=</span> <span class="default_value">AlphaType.kUnpremul_AlphaType</span></em>, <em class="sig-param"><span class="n">colorSpace</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.ColorSpace.html#skia.ColorSpace" title="skia.ColorSpace">skia.ColorSpace</a></span> <span class="o">=</span> <span class="default_value">None</span></em>, <em class="sig-param"><span class="n">copy</span><span class="p">:</span> <span class="n">bool</span> <span class="o">=</span> <span class="default_value">False</span></em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#skia.Image.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates a new <a class="reference internal" href="#skia.Image" title="skia.Image"><code class="xref py py-class docutils literal notranslate"><span class="pre">Image</span></code></a> from numpy array.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>array</strong> (<em>numpy.ndarray</em>) – numpy ndarray of shape=(height, width,
+channels) and dtype=uint8. Must have non-zero width and height, and
+the valid number of channels for the specified color type.</p></li>
+<li><p><strong>colorType</strong> (<a class="reference internal" href="skia.ColorType.html#skia.ColorType" title="skia.ColorType"><em>skia.ColorType</em></a>) – color type of the array</p></li>
+<li><p><strong>alphaType</strong> (<a class="reference internal" href="skia.AlphaType.html#skia.AlphaType" title="skia.AlphaType"><em>skia.AlphaType</em></a>) – alpha type of the array</p></li>
+<li><p><strong>colorSpace</strong> (<a class="reference internal" href="skia.ColorSpace.html#skia.ColorSpace" title="skia.ColorSpace"><em>skia.ColorSpace</em></a>) – range of colors; may be nullptr</p></li>
+<li><p><strong>copy</strong> (<em>bool</em>) – Whether to copy pixels.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="py method">
 <dt id="skia.Image.alphaType">
@@ -1432,7 +1446,7 @@ readable; otherwise, ignored</p>
 <code class="sig-prename descclassname">Image.</code><code class="sig-name descname">readPixels</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span><span class="n">args</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#skia.Image.readPixels" title="Permalink to this definition">¶</a></dt>
 <dd><p>Overloaded function.</p>
 <ol class="arabic">
-<li><p>readPixels(self: skia.Image, array: buffer, srcX: int = 0, srcY: int = 0, cachingHint: skia.Image.CachingHint = CachingHint.kAllow_CachingHint) -&gt; bool</p>
+<li><p>readPixels(self: skia.Image, dstInfo: skia.ImageInfo, dstPixels: buffer, dstRowBytes: int = 0, srcX: int = 0, srcY: int = 0, cachingHint: skia.Image.CachingHint = CachingHint.kAllow_CachingHint) -&gt; bool</p>
 <blockquote>
 <div><p>Copies <a class="reference internal" href="skia.Rect.html#skia.Rect" title="skia.Rect"><code class="xref py py-class docutils literal notranslate"><span class="pre">Rect</span></code></a> of pixels from <a class="reference internal" href="#skia.Image" title="skia.Image"><code class="xref py py-class docutils literal notranslate"><span class="pre">Image</span></code></a> to array.</p>
 <p>Copy starts at offset (srcX, srcY), and does not exceed
@@ -1680,7 +1694,7 @@ been allocated via new, and not on the stack.</p>
 
 <dl class="py attribute">
 <dt id="skia.Image.kBC1_RGBA8_UNORM">
-<code class="sig-prename descclassname">Image.</code><code class="sig-name descname">kBC1_RGBA8_UNORM</code><em class="property"> = CompressionType.kLast</em><a class="headerlink" href="#skia.Image.kBC1_RGBA8_UNORM" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">Image.</code><code class="sig-name descname">kBC1_RGBA8_UNORM</code><em class="property"> = CompressionType.kBC1_RGBA8_UNORM</em><a class="headerlink" href="#skia.Image.kBC1_RGBA8_UNORM" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
@@ -1700,7 +1714,7 @@ been allocated via new, and not on the stack.</p>
 
 <dl class="py attribute">
 <dt id="skia.Image.kLast">
-<code class="sig-prename descclassname">Image.</code><code class="sig-name descname">kLast</code><em class="property"> = CompressionType.kLast</em><a class="headerlink" href="#skia.Image.kLast" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">Image.</code><code class="sig-name descname">kLast</code><em class="property"> = CompressionType.kBC1_RGBA8_UNORM</em><a class="headerlink" href="#skia.Image.kLast" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
