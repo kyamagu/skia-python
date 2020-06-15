@@ -1,14 +1,6 @@
 #include "common.h"
 #include <pybind11/stl.h>
 
-template <>
-sk_sp<SkShader> CloneFlattenable(const SkShader& shader) {
-    auto data = shader.serialize();
-    auto flat = SkShader::Deserialize(
-        shader.getFlattenableType(), data->data(), data->size());
-    return sk_sp<SkShader>(reinterpret_cast<SkShader*>(flat.release()));
-}
-
 #define GET_SKSCALAR_PTR(pos) \
 ((pos.is_none()) ? nullptr : &(pos.cast<std::vector<SkScalar>>())[0])
 

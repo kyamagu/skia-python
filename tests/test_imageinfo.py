@@ -94,6 +94,10 @@ def test_ImageInfo_init():
     check_imageinfo(skia.ImageInfo())
 
 
+def test_ImageInfo_repr(imageinfo):
+    assert isinstance(repr(imageinfo), str)
+
+
 def test_ImageInfo_width(imageinfo):
     assert imageinfo.width() == 320
 

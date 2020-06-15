@@ -4,6 +4,8 @@
 #define CLONE(input) \
 (input) ? CloneFlattenable(*input) : sk_sp<SkImageFilter>(nullptr)
 
+namespace {
+
 py::object IsColorFilterNode(const SkImageFilter& filter) {
     SkColorFilter* colorfilter;
     if (filter.isColorFilterNode(&colorfilter))
@@ -11,12 +13,7 @@ py::object IsColorFilterNode(const SkImageFilter& filter) {
     return py::none();
 }
 
-sk_sp<SkImage> CloneImage(const SkImage& image) {
-    SkPixmap pixmap;
-    if (image.peekPixels(&pixmap))
-        return SkImage::MakeRasterCopy(pixmap);
-    return SkImage::MakeFromEncoded(image.encodeToData());
-}
+}  // namespace
 
 const int SkDropShadowImageFilter::kShadowModeCount;
 

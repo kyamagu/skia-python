@@ -1,43 +1,27 @@
 #include "common.h"
 #include <pybind11/numpy.h>
 
-template<typename T>
-using NumPy = py::array_t<T, py::array::c_style | py::array::forcecast>;
-
 namespace {
 
-void* GetBufferPtr(const SkImageInfo& info, py::buffer& data, size_t rowBytes,
-                    size_t* size) {
-    auto buffer = data.request();
-    size_t given = (buffer.ndim) ? buffer.shape[0] * buffer.strides[0] : 0;
-    if (given < info.computeByteSize(rowBytes))
-        throw std::runtime_error("Buffer is smaller than required.");
-    if (size)
-        *size = given;
-    return buffer.ptr;
+bool Image_ReadPixels(
+    const SkImage& image, const SkImageInfo& imageInfo, py::buffer dstPixels,
+    size_t dstRowBytes, int srcX, int srcY, SkImage::CachingHint hint) {
+    auto info = dstPixels.request(true);
+    auto rowBytes = ValidateBufferToImageInfo(imageInfo, info, dstRowBytes);
+    return image.readPixels(imageInfo, info.ptr, rowBytes, srcX, srcY, hint);
 }
 
-bool ReadPixels(const SkImage& image, py::buffer obj, int srcX, int srcY,
-                SkImage::CachingHint hint) {
-    auto buffer = obj.request(true);
-    auto info = image.imageInfo();
-    if (buffer.ndim == 0)
-        throw py::value_error("Empty buffer is given");
-    size_t rowBytes = info.minRowBytes();
-    if (buffer.ndim > 1) {
-        if (buffer.shape[0] != image.height())
-            throw py::value_error("Height does not match");
-        if (size_t(buffer.strides[0]) < rowBytes)
-            throw py::value_error("Row stride is smaller than required");
-        rowBytes = buffer.strides[0];
-    }
-    size_t size = buffer.shape[0] * buffer.strides[0];
-    if (size < info.computeByteSize(rowBytes))
-        throw std::runtime_error("Buffer is smaller than required.");
-    return image.readPixels(info, buffer.ptr, rowBytes, srcX, srcY, hint);
+sk_sp<SkImage> NumPyToImage(py::array array, SkColorType ct, SkAlphaType at,
+                            const SkColorSpace* cs, bool copy) {
+    auto imageInfo = NumPyToImageInfo(array, ct, at, cs);
+    size_t size = array.shape(0) * array.strides(0);
+    auto data = (copy) ?
+        SkData::MakeWithCopy(array.data(), size) :
+        SkData::MakeWithoutCopy(array.data(), size);
+    return SkImage::MakeRasterData(imageInfo, data, array.strides(0));
 }
 
-}
+}  // namespace
 
 void initImage(py::module &m) {
 py::enum_<SkBudgeted>(m, "Budgeted", R"docstring(
@@ -129,20 +113,27 @@ py::enum_<SkImage::LegacyBitmapMode>(image, "LegacyBitmapMode")
     .export_values();
 
 image
-    .def(py::init([] (NumPy<uint8_t> array) {
-        py::buffer_info info = array.request();
-        if (info.ndim <= 1)
-            throw std::runtime_error(
-                "Number of dimensions must be 2 or more.");
-        if (info.shape[0] == 0 || info.shape[1] == 0)
-            throw std::runtime_error(
-                "Width and height must be greater than 0.");
-        auto imageinfo = SkImageInfo::MakeN32Premul(
-            info.shape[1], info.shape[0]);
-        auto data = SkData::MakeWithoutCopy(
-            info.ptr, info.shape[0] * info.strides[0]);
-        return SkImage::MakeRasterData(imageinfo, data, info.strides[0]);
-    }))
+    .def(py::init(&NumPyToImage),
+        R"docstring(
+        Creates a new :py:class:`Image` from numpy array.
+
+        :param numpy.ndarray array: numpy ndarray of shape=(height, width,
+            channels) and dtype=uint8. Must have non-zero width and height, and
+            the valid number of channels for the specified color type.
+        :param skia.ColorType colorType: color type of the array
+        :param skia.AlphaType alphaType: alpha type of the array
+        :param skia.ColorSpace colorSpace: range of colors; may be nullptr
+        :param bool copy: Whether to copy pixels.
+        )docstring",
+        py::arg("array"), py::arg("colorType") = kRGBA_8888_SkColorType,
+        py::arg("alphaType") = kUnpremul_SkAlphaType,
+        py::arg("colorSpace") = nullptr, py::arg("copy") = false)
+    .def("__repr__",
+        [] (const SkImage& image) {
+            return py::str("Image({}, {}, {}, {})").format(
+                image.width(), image.height(), image.colorType(),
+                image.alphaType());
+        })
     .def("imageInfo", &SkImage::imageInfo,
         R"docstring(
         Returns a :py:class:`ImageInfo` describing the width, height, color
@@ -326,7 +317,7 @@ image
         py::arg("context").none(false))
     // .def("getBackendTexture", &SkImage::getBackendTexture,
     //     "Retrieves the back-end texture.")
-    .def("readPixels", &ReadPixels,
+    .def("readPixels", &Image_ReadPixels,
         R"docstring(
         Copies :py:class:`Rect` of pixels from :py:class:`Image` to array.
 
@@ -355,7 +346,8 @@ image
             :py:meth:`height`
         :return: true if pixels are copied to array
         )docstring",
-        py::arg("array"), py::arg("srcX") = 0, py::arg("srcY") = 0,
+        py::arg("dstInfo"), py::arg("dstPixels"), py::arg("dstRowBytes") = 0,
+        py::arg("srcX") = 0, py::arg("srcY") = 0,
         py::arg("cachingHint") = SkImage::kAllow_CachingHint)
     .def("readPixels",
         py::overload_cast<const SkPixmap&, int, int, SkImage::CachingHint>(
@@ -721,11 +713,13 @@ image
         )docstring",
         py::arg("pixmap"))
     .def_static("MakeRasterData",
-        [] (const SkImageInfo& info, py::buffer data, size_t rowBytes) {
-            size_t size = 0;
-            auto ptr = GetBufferPtr(info, data, rowBytes, &size);
-            return SkImage::MakeRasterData(
-                info, SkData::MakeWithoutCopy(ptr, size), rowBytes);
+        [] (const SkImageInfo& imageInfo, py::buffer b, size_t dstRowBytes) {
+            auto info = b.request();
+            auto rowBytes = ValidateBufferToImageInfo(
+                imageInfo, info, dstRowBytes);
+            auto data = SkData::MakeWithoutCopy(
+                info.ptr, info.strides[0] * info.shape[0]);
+            return SkImage::MakeRasterData(imageInfo, data, rowBytes);
         },
         R"docstring(
         Creates :py:class:`Image` from :py:class:`ImageInfo`, sharing pixels.
@@ -859,7 +853,7 @@ image
         :param Union[bytes,bytearray,memoryview] encoded: the encoded data
         :param skia.IRect subset: the bounds of the pixels within the decoded
             image to return. may be null.
-        :return: created SkImage, or nullptr
+        :return: created :py:class:`Image`, or nullptr
         )docstring",
         py::arg("context"), py::arg("encoded"), py::arg("subset") = nullptr)
     .def_static("MakeTextureFromCompressed",
@@ -893,7 +887,7 @@ image
     //     "To be deprecated.")
     .def_static("MakeRasterFromCompressed", &SkImage::MakeRasterFromCompressed,
         R"docstring(
-        Creates a CPU-backed SkImage from compressed data.
+        Creates a CPU-backed :py:class:`Image` from compressed data.
 
         This method will decompress the compressed data and create an image
         wrapping it. Any mipmap levels present in the compressed data are

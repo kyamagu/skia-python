@@ -9,10 +9,15 @@ def check_surface(x):
 
 
 @pytest.mark.parametrize('args', [
+    (240, 320),
     (np.zeros((240, 320, 4), dtype=np.uint8),),
 ])
 def test_Surface_init(args):
     check_surface(skia.Surface(*args))
+
+
+def test_Surface_repr(surface):
+    assert isinstance(repr(surface), str)
 
 
 def test_Surface_width(surface):
@@ -85,8 +90,15 @@ def test_Surface_peekPixels(surface):
 
 @pytest.mark.parametrize('args', [
     (skia.Pixmap(), 0, 0),
-    (np.zeros((240, 320, 4), dtype=np.uint8), 0, 0),
-    (np.zeros((240, 320, 4), dtype=np.uint8),),
+    (
+        skia.ImageInfo.MakeN32Premul(320, 240),
+        bytearray(240 * 320 * 4),
+        320 * 4,
+    ),
+    (
+        skia.ImageInfo.MakeN32Premul(320, 240),
+        np.zeros((240, 320, 4), dtype=np.uint8),
+    ),
     (skia.Bitmap(), 0, 0),
 ])
 def test_Surface_readPixels(surface, args):
