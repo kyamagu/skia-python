@@ -1,4 +1,7 @@
 #include "common.h"
+#include <pybind11/numpy.h>
+
+namespace {
 
 template <typename T, bool readonly = true>
 py::memoryview AddrN(const SkPixmap& pixmap) {
@@ -19,28 +22,15 @@ py::memoryview AddrN(const SkPixmap& pixmap) {
 
 template <bool readonly = true>
 py::memoryview Addr(const SkPixmap& pixmap) {
-    ssize_t bytesPerPixel = pixmap.info().bytesPerPixel();
-    const std::string& format =
-        (bytesPerPixel == 1) ? py::format_descriptor<uint8_t>::format() :
-        (bytesPerPixel == 2) ? py::format_descriptor<uint16_t>::format() :
-        (bytesPerPixel == 4) ? py::format_descriptor<uint32_t>::format() :
-        (bytesPerPixel == 8) ? py::format_descriptor<uint64_t>::format() :
-        py::format_descriptor<uint8_t>::format();
-    return py::memoryview(
-        py::buffer_info(
-            pixmap.writable_addr(),
-            bytesPerPixel,
-            format,
-            2,
-            { pixmap.rowBytesAsPixels(), pixmap.height() },
-            { ssize_t(pixmap.rowBytes()), bytesPerPixel },
-            readonly
-        )
-    );
+    return py::memoryview(ImageInfoToBufferInfo(
+        pixmap.info(), pixmap.writable_addr(), pixmap.rowBytes(), readonly));
 }
 
+}  // namespace
+
 void initPixmap(py::module &m) {
-py::class_<SkPixmap>(m, "Pixmap", R"docstring(
+py::class_<SkPixmap>(m, "Pixmap",
+    R"docstring(
     :py:class:`Pixmap` provides a utility to pair :py:class:`ImageInfo` with
     pixels and row bytes.
 
@@ -55,12 +45,53 @@ py::class_<SkPixmap>(m, "Pixmap", R"docstring(
     :py:class:`Pixmap` does not try to manage the lifetime of the pixel memory.
     Use :py:class:`PixelRef` to manage pixel memory; :py:class:`PixelRef` is
     safe across threads.
-    )docstring")
+
+    :py:class:`Pixmap` supports buffer protocol. It is possible to mount
+    :py:class:`Pixmap` as array::
+
+        array = np.array(pixmap, copy=False)
+
+    Or mount array as :py:class:`Pixmap` with :py:class:`ImageInfo`::
+
+        buffer = np.zeros((100, 100, 4), np.uint8)
+        array = skia.Pixmap(skia.ImageInfo.MakeN32Premul(100, 100), buffer)
+
+    )docstring",
+    py::buffer_protocol())
+    .def_buffer([] (SkPixmap& pixmap) {
+        return ImageInfoToBufferInfo(
+            pixmap.info(), pixmap.writable_addr(), pixmap.rowBytes(), false);
+    })
     .def("__repr__",
         [] (const SkPixmap& pixmap) {
             return py::str("Pixmap({}, {}, {}, {})").format(
                 pixmap.width(), pixmap.height(), pixmap.colorType(),
                 pixmap.alphaType());
+        })
+    .def("__len__",
+        [] (const SkPixmap& pixmap) {
+            return pixmap.width() * pixmap.height();
+        })
+    .def("__getitem__",
+        [] (const SkPixmap& pixmap, py::object object) {
+            int x = 0;
+            int y = 0;
+            if (py::isinstance<py::tuple>(object)) {
+                auto t = object.cast<py::tuple>();
+                if (t.size() != 2)
+                    throw py::index_error("Index must be two dimension.");
+                x = t[0].cast<int>();
+                y = t[1].cast<int>();
+            }
+            else {
+                int offset = object.cast<int>();
+                x = offset % pixmap.width();
+                y = offset / pixmap.height();
+            }
+            if (x < 0 || pixmap.width() <= x ||
+                y < 0 || pixmap.height() <= y)
+                throw std::out_of_range("Index out of range.");
+            return pixmap.getColor(x, y);
         })
     .def(py::init<>(),
         R"docstring(
@@ -76,16 +107,12 @@ py::class_<SkPixmap>(m, "Pixmap", R"docstring(
         :return: empty :py:class:`Pixmap`
         )docstring")
     .def(py::init(
-        [] (const SkImageInfo& info, py::object data, size_t rowBytes) {
+        [] (const SkImageInfo& imageInfo, py::object data, size_t rowBytes) {
             if (data.is_none())
-                return SkPixmap(info, nullptr, rowBytes);
-            auto buffer = data.cast<py::buffer>().request();
-            size_t size = (buffer.ndim) ?
-                buffer.shape[0] * buffer.strides[0] : 0;
-            if (size < info.computeByteSize(rowBytes))
-                throw std::runtime_error(
-                    "Buffer size is smaller than required.");
-            return SkPixmap(info, buffer.ptr, rowBytes);
+                return SkPixmap(imageInfo, nullptr, rowBytes);
+            auto info = data.cast<py::buffer>().request();
+            rowBytes = ValidateBufferToImageInfo(imageInfo, info, rowBytes);
+            return SkPixmap(imageInfo, info.ptr, rowBytes);
         }),
         R"docstring(
         Creates :py:class:`Pixmap` from info width, height,
@@ -111,6 +138,28 @@ py::class_<SkPixmap>(m, "Pixmap", R"docstring(
             larger
         )docstring",
         py::arg("info").none(false), py::arg("data"), py::arg("rowBytes"))
+    .def(py::init(
+        [] (py::array array, SkColorType ct, SkAlphaType at,
+            const SkColorSpace* cs) {
+            auto imageInfo = NumPyToImageInfo(array, ct, at, cs);
+            return SkPixmap(imageInfo, array.mutable_data(), array.strides(0));
+        }),
+        R"docstring(
+        Creates :py:class:`Pixmap` backed by numpy array.
+
+        The memory lifetime of pixels is managed by the caller. When
+        :py:class:`Pixmap` goes out of scope, data is unaffected.
+
+        :array: numpy ndarray of shape=(height, width, channels). Must have
+            non-zero width and height, and the valid number of channels for the
+            specified color type.
+        :colorType: color type of the array
+        :alphaType: alpha type of the array
+        :colorSpace: range of colors; may be nullptr
+        )docstring",
+        py::arg("array"), py::arg("colorType") = kN32_SkColorType,
+        py::arg("alphaType") = kUnpremul_SkAlphaType,
+        py::arg("colorSpace") = nullptr)
     .def("reset",
         py::overload_cast<>(&SkPixmap::reset),
         R"docstring(
@@ -122,19 +171,15 @@ py::class_<SkPixmap>(m, "Pixmap", R"docstring(
         pixels memory if desired.
         )docstring")
     .def("reset",
-        [] (SkPixmap& pixmap, const SkImageInfo& info, py::object data,
+        [] (SkPixmap& pixmap, const SkImageInfo& imageInfo, py::object data,
             size_t rowBytes) {
             if (data.is_none()) {
-                pixmap.reset(info, nullptr, rowBytes);
+                pixmap.reset(imageInfo, nullptr, rowBytes);
                 return;
             }
-            auto buffer = data.cast<py::buffer>().request();
-            size_t size = (buffer.ndim) ?
-                buffer.shape[0] * buffer.strides[0] : 0;
-            if (size < info.computeByteSize(rowBytes))
-                throw std::runtime_error(
-                    "Buffer size is smaller than required.");
-            pixmap.reset(info, buffer.ptr, rowBytes);
+            auto info = data.cast<py::buffer>().request();
+            rowBytes = ValidateBufferToImageInfo(imageInfo, info, rowBytes);
+            pixmap.reset(imageInfo, info.ptr, rowBytes);
         },
         R"docstring(
         Sets width, height, :py:class:`AlphaType`, and :py:class:`ColorType`

@@ -25,7 +25,7 @@ sk_sp<SkImage> CloneImage(const SkImage& image);
 
 size_t ValidateBufferToImageInfo(
     const SkImageInfo& imageInfo, const py::buffer_info& buffer,
-    size_t rowBytes);
+    size_t rowBytes = 0);
 
 template <typename T>
 bool ReadPixels(T& readable, const SkImageInfo& imageInfo, py::buffer dstPixels,
@@ -38,5 +38,8 @@ bool ReadPixels(T& readable, const SkImageInfo& imageInfo, py::buffer dstPixels,
 SkImageInfo NumPyToImageInfo(
     py::array array, SkColorType ct, SkAlphaType at, const SkColorSpace* cs);
 
+py::buffer_info ImageInfoToBufferInfo(
+    const SkImageInfo& imageInfo, void* data, ssize_t rowBytes = 0,
+    bool readonly = true);
 
 #endif  // _COMMON_H_

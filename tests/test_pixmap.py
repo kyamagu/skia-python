@@ -1,10 +1,11 @@
 import skia
 import pytest
-
+import numpy as np
 
 @pytest.mark.parametrize('args', [
     tuple(),
     (skia.ImageInfo.MakeN32Premul(100, 100), None, 400),
+    (np.zeros((100, 100, 4), np.uint8),),
 ])
 def test_Pixmap_init(args):
     assert isinstance(skia.Pixmap(*args), skia.Pixmap)
@@ -12,6 +13,21 @@ def test_Pixmap_init(args):
 
 def test_Pixmap_repr(pixmap):
     assert isinstance(repr(pixmap), str)
+
+
+def test_Pixmap_buffer(pixmap):
+    array = np.array(pixmap, copy=False)
+    assert array.shape[0] == pixmap.height()
+    assert array.shape[1] == pixmap.width()
+
+
+def test_Pixmap_len(pixmap):
+    assert len(pixmap) == pixmap.width() * pixmap.height()
+
+
+@pytest.mark.parametrize('index', [0, (0, 0)])
+def test_Pixmap_getitem(pixmap, index):
+    assert isinstance(pixmap[index], int)
 
 
 @pytest.mark.parametrize('args', [

@@ -33,7 +33,7 @@ size_t ValidateBufferToImageInfo(
     else if (buffer.ndim > 1)
         rowBytes = buffer.strides[0];
 
-    if (rowBytes < imageInfo.minRowBytes())
+    if (!imageInfo.validRowBytes(rowBytes))
         throw py::value_error(py::str(
             "Row bytes is smaller than required (expected {}, given {})"
             ).format(imageInfo.minRowBytes(), rowBytes));
@@ -67,4 +67,88 @@ SkImageInfo NumPyToImageInfo(py::array array, SkColorType ct, SkAlphaType at,
             "given {} bytes per pixel).").format(
             imageInfo.bytesPerPixel(), pixelSize));
     return imageInfo;
+}
+
+py::buffer_info ImageInfoToBufferInfo(
+    const SkImageInfo& imageInfo, void* data, ssize_t rowBytes, bool readonly) {
+    if (!data)
+        throw std::runtime_error("Null pointer exception.");
+    ssize_t width = imageInfo.width();
+    ssize_t height = imageInfo.height();
+    ssize_t bytesPerPixel = imageInfo.bytesPerPixel();
+    if (!rowBytes)
+        rowBytes = imageInfo.minRowBytes();
+    switch (imageInfo.colorType()) {
+        case kAlpha_8_SkColorType:
+        case kGray_8_SkColorType:
+            return py::buffer_info(
+                data, bytesPerPixel, "B", 2, { width, height },
+                { rowBytes, bytesPerPixel }, readonly);
+
+        case kRGB_565_SkColorType:
+        case kARGB_4444_SkColorType:
+            return py::buffer_info(
+                data, bytesPerPixel, "H", 2, { width, height },
+                { rowBytes, bytesPerPixel }, readonly);
+
+        case kRGBA_8888_SkColorType:
+        case kRGB_888x_SkColorType:
+        case kBGRA_8888_SkColorType:
+            return py::buffer_info(
+                data, 1, "B", 3, { width, height, ssize_t(4) },
+                { rowBytes, bytesPerPixel, ssize_t(1) }, readonly);
+
+        case kRGBA_1010102_SkColorType:
+        case kBGRA_1010102_SkColorType:
+        case kRGB_101010x_SkColorType:
+        case kBGR_101010x_SkColorType:
+            return py::buffer_info(
+                data, bytesPerPixel, "I", 2, { width, height },
+                { rowBytes, bytesPerPixel }, readonly);
+
+        case kRGBA_F16Norm_SkColorType:
+        case kRGBA_F16_SkColorType:
+            return py::buffer_info(
+                data, 2, "e", 3, { width, height, ssize_t(4) },
+                { rowBytes, bytesPerPixel, ssize_t(2) }, readonly);
+
+        case kRGBA_F32_SkColorType:
+            return py::buffer_info(
+                data, 4, "f", 3, { width, height, ssize_t(4) },
+                { rowBytes, bytesPerPixel, ssize_t(4) }, readonly);
+
+        case kR8G8_unorm_SkColorType:
+            return py::buffer_info(
+                data, 1, "B", 3, { width, height, ssize_t(2) },
+                { rowBytes, bytesPerPixel, ssize_t(1) }, readonly);
+
+        case kA16_float_SkColorType:
+            return py::buffer_info(
+                data, 2, "e", 2, { width, height },
+                { rowBytes, bytesPerPixel }, readonly);
+
+        case kR16G16_float_SkColorType:
+            return py::buffer_info(
+                data, 2, "e", 3, { width, height, ssize_t(2) },
+                { rowBytes, bytesPerPixel, ssize_t(2) }, readonly);
+
+        case kA16_unorm_SkColorType:
+            return py::buffer_info(
+                data, 2, "<H", 2, { width, height },
+                { rowBytes, bytesPerPixel }, readonly);
+
+        case kR16G16_unorm_SkColorType:
+            return py::buffer_info(
+                data, 2, "<H", 3, { width, height, ssize_t(2) },
+                { rowBytes, bytesPerPixel, ssize_t(2) }, readonly);
+
+        case kR16G16B16A16_unorm_SkColorType:
+            return py::buffer_info(
+                data, 2, "<H", 3, { width, height, ssize_t(4) },
+                { rowBytes, bytesPerPixel, ssize_t(2) }, readonly);
+
+        case kUnknown_SkColorType:
+        default:
+            throw std::runtime_error("Unsupported color type");
+    }
 }
