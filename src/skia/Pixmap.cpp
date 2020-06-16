@@ -93,6 +93,14 @@ py::class_<SkPixmap>(m, "Pixmap",
                 throw std::out_of_range("Index out of range.");
             return pixmap.getColor(x, y);
         })
+    .def_property_readonly("__array_interface__",
+        [] (const SkPixmap& pixmap) {
+            return ImageInfoToArrayInterface(pixmap.info(), pixmap.rowBytes());
+        })
+    .def("tobytes",
+        [] (const SkPixmap& pixmap) -> py::object {
+            return py::module::import("builtins").attr("bytes")(pixmap);
+        })
     .def(py::init<>(),
         R"docstring(
         Creates an empty :py:class:`Pixmap` without pixels, with

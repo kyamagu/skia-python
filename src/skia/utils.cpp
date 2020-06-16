@@ -152,3 +152,126 @@ py::buffer_info ImageInfoToBufferInfo(
             throw std::runtime_error("Unsupported color type");
     }
 }
+
+
+py::dict ImageInfoToArrayInterface(
+    const SkImageInfo& imageInfo, size_t rowBytes) {
+    using namespace pybind11::literals;
+    auto byteorder = py::module::import("sys")
+        .attr("byteorder").cast<std::string>();
+    std::string bytemark((byteorder == "little") ? "<" : ">");
+    int width = imageInfo.width();
+    int height = imageInfo.height();
+    int bytesPerPixel = imageInfo.bytesPerPixel();
+    if (!rowBytes)
+        rowBytes = imageInfo.minRowBytes();
+    switch (imageInfo.colorType()) {
+        case kAlpha_8_SkColorType:
+        case kGray_8_SkColorType:
+            return py::dict(
+                "shape"_a = py::make_tuple(height, width),
+                "typestr"_a = py::str("|u1"),
+                "strides"_a = py::make_tuple(rowBytes, bytesPerPixel),
+                "version"_a = 3
+            );
+
+        case kRGB_565_SkColorType:
+        case kARGB_4444_SkColorType:
+            return py::dict(
+                "shape"_a = py::make_tuple(height, width),
+                "typestr"_a = py::str("{}u2").format(bytemark),
+                "strides"_a = py::make_tuple(rowBytes, bytesPerPixel),
+                "version"_a = 3
+            );
+
+        case kRGBA_8888_SkColorType:
+        case kRGB_888x_SkColorType:
+        case kBGRA_8888_SkColorType:
+            return py::dict(
+                "shape"_a = py::make_tuple(height, width, 4),
+                "typestr"_a = py::str("|u1"),
+                "strides"_a = py::make_tuple(rowBytes, bytesPerPixel, 1),
+                "version"_a = 3
+            );
+
+        case kRGBA_1010102_SkColorType:
+        case kBGRA_1010102_SkColorType:
+        case kRGB_101010x_SkColorType:
+        case kBGR_101010x_SkColorType:
+            return py::dict(
+                "shape"_a = py::make_tuple(height, width),
+                "typestr"_a = py::str("{}u4").format(bytemark),
+                "strides"_a = py::make_tuple(rowBytes, bytesPerPixel),
+                "version"_a = 3
+            );
+
+        case kRGBA_F16Norm_SkColorType:
+        case kRGBA_F16_SkColorType:
+            return py::dict(
+                "shape"_a = py::make_tuple(height, width, 4),
+                "typestr"_a = py::str("{}f2").format(bytemark),
+                "strides"_a = py::make_tuple(rowBytes, bytesPerPixel, 2),
+                "version"_a = 3
+            );
+
+        case kRGBA_F32_SkColorType:
+            return py::dict(
+                "shape"_a = py::make_tuple(height, width, 4),
+                "typestr"_a = py::str("{}f4").format(bytemark),
+                "strides"_a = py::make_tuple(rowBytes, bytesPerPixel, 4),
+                "version"_a = 3
+            );
+
+        case kR8G8_unorm_SkColorType:
+            return py::dict(
+                "shape"_a = py::make_tuple(height, width, 2),
+                "typestr"_a = py::str("|u1"),
+                "strides"_a = py::make_tuple(rowBytes, bytesPerPixel, 1),
+                "version"_a = 3
+            );
+
+        case kA16_float_SkColorType:
+            return py::dict(
+                "shape"_a = py::make_tuple(height, width),
+                "typestr"_a = py::str("{}f2").format(bytemark),
+                "strides"_a = py::make_tuple(rowBytes, bytesPerPixel),
+                "version"_a = 3
+            );
+
+        case kR16G16_float_SkColorType:
+            return py::dict(
+                "shape"_a = py::make_tuple(height, width, 2),
+                "typestr"_a = py::str("{}f2").format(bytemark),
+                "strides"_a = py::make_tuple(rowBytes, bytesPerPixel, 2),
+                "version"_a = 3
+            );
+
+        case kA16_unorm_SkColorType:
+            return py::dict(
+                "shape"_a = py::make_tuple(height, width),
+                "typestr"_a = py::str("<u2"),
+                "strides"_a = py::make_tuple(rowBytes, bytesPerPixel),
+                "version"_a = 3
+            );
+
+        case kR16G16_unorm_SkColorType:
+            return py::dict(
+                "shape"_a = py::make_tuple(height, width, 2),
+                "typestr"_a = py::str("<u2"),
+                "strides"_a = py::make_tuple(rowBytes, bytesPerPixel, 2),
+                "version"_a = 3
+            );
+
+        case kR16G16B16A16_unorm_SkColorType:
+            return py::dict(
+                "shape"_a = py::make_tuple(height, width, 4),
+                "typestr"_a = py::str("<f2"),
+                "strides"_a = py::make_tuple(rowBytes, bytesPerPixel, 2),
+                "version"_a = 3
+            );
+
+        case kUnknown_SkColorType:
+        default:
+            throw std::runtime_error("Unsupported color type");
+    }
+}

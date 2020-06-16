@@ -30,6 +30,11 @@ def test_Pixmap_getitem(pixmap, index):
     assert isinstance(pixmap[index], int)
 
 
+def test_Pixmap_array_interface(pixmap):
+    from PIL import Image
+    assert isinstance(Image.fromarray(pixmap), Image.Image)
+
+
 @pytest.mark.parametrize('args', [
     tuple(),
     (skia.ImageInfo.MakeN32Premul(100, 100), None, 400),

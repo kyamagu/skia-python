@@ -70,6 +70,21 @@ def test_Bitmap_getitem(bitmap, index):
     assert isinstance(bitmap[index], int)
 
 
+@pytest.mark.parametrize('color_type, shape, dtype', [
+     (skia.kAlpha_8_ColorType, (32, 16,), np.uint8),
+     (skia.kRGBA_8888_ColorType, (32, 16, 4), np.uint8),
+     (skia.kGray_8_ColorType, (32, 16,), np.uint8),
+     (skia.kA16_unorm_ColorType, (32, 16,), np.uint16),
+])
+def test_Bitmap_array_interface(color_type, shape, dtype):
+    from PIL import Image
+    bitmap = skia.Bitmap()
+    bitmap.allocPixels(
+        skia.ImageInfo.Make(16, 32, color_type, skia.kUnpremul_AlphaType))
+    assert not bitmap.isNull()
+    assert isinstance(Image.fromarray(bitmap), Image.Image)
+
+
 @pytest.mark.parametrize('args', [
     tuple(),
     (skia.Bitmap(),),

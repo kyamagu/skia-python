@@ -117,6 +117,14 @@ bitmap
                 throw std::out_of_range("Index out of range.");
             return bitmap.getColor(x, y);
         })
+    .def_property_readonly("__array_interface__",
+        [] (const SkBitmap& bitmap) {
+            return ImageInfoToArrayInterface(bitmap.info(), bitmap.rowBytes());
+        })
+    .def("tobytes",
+        [] (const SkBitmap& bitmap) -> py::object {
+            return py::module::import("builtins").attr("bytes")(bitmap);
+        })
     .def(py::init<>(
         [] (const SkBitmap* src) {
             return (src) ? SkBitmap(*src) : SkBitmap();

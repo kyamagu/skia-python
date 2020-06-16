@@ -67,7 +67,7 @@ jobs:
         python setup.py install
     - name: Test
       run: |
-        python -m pip install pytest glfw
+        python -m pip install pytest glfw pillow
         xvfb-run -s "-screen 0 640x480x24" python -m pytest tests
   build-macos:
     runs-on: macos-latest
@@ -116,7 +116,7 @@ jobs:
         python setup.py install
     - name: Test
       run: |
-        python -m pip install pytest pyopengl pyopengl-accelerate
+        python -m pip install pytest pyopengl pyopengl-accelerate pillow
         python -m pytest tests
     - name: Build docs
       run: |
@@ -185,5 +185,5 @@ jobs:
         python setup.py install
     - name: Test
       run: |
-        python -m pip install pytest glfw
+        python -m pip install pytest glfw pillow
         python -m pytest tests
