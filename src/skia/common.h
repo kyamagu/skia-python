@@ -9,6 +9,8 @@ namespace pybind11 { class array; }  // namespace pybind11
 
 namespace py = pybind11;
 
+#define CHECK_NOTNULL(ptr) \
+if (!ptr) throw std::runtime_error("Null pointer exception.")
 
 PYBIND11_DECLARE_HOLDER_TYPE(T, sk_sp<T>);
 
@@ -33,6 +35,21 @@ bool ReadPixels(T& readable, const SkImageInfo& imageInfo, py::buffer dstPixels,
     auto info = dstPixels.request(true);
     auto rowBytes = ValidateBufferToImageInfo(imageInfo, info, dstRowBytes);
     return readable.readPixels(imageInfo, info.ptr, rowBytes, srcX, srcY);
+}
+
+template <typename T, typename R = py::array>
+R ReadToNumpy(T& readable, int srcX, int srcY, SkColorType colorType,
+              SkAlphaType alphaType, const SkColorSpace* colorSpace) {
+    if (colorType == kUnknown_SkColorType)
+        colorType = readable.imageInfo().colorType();
+    auto imageInfo = SkImageInfo::Make(
+        readable.imageInfo().dimensions(), colorType, alphaType,
+        CloneColorSpace(colorSpace));
+    R array(ImageInfoToBufferInfo(imageInfo, nullptr));
+    if (!readable.readPixels(
+        imageInfo, array.mutable_data(), array.strides(0), srcX, srcY))
+        throw std::runtime_error("Failed to convert to numpy array.");
+    return array;
 }
 
 SkImageInfo NumPyToImageInfo(

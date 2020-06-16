@@ -71,6 +71,10 @@ def test_Canvas_peekPixels(canvas):
     assert isinstance(canvas.peekPixels(skia.Pixmap()), bool)
 
 
+def test_Canvas_numpy(canvas):
+    assert isinstance(canvas.numpy(), np.ndarray)
+
+
 @pytest.mark.parametrize('args', [
     (skia.Pixmap(), 0, 0),
     (

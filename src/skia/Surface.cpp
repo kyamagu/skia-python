@@ -165,6 +165,11 @@ surface
             return py::str("Surface({}, {})").format(
                 surface.width(), surface.height());
         })
+    .def("numpy", &ReadToNumpy<SkSurface>,
+        py::arg("srcX") = 0, py::arg("srcY") = 0,
+        py::arg("colorType") = kUnknown_SkColorType,
+        py::arg("alphaType") = kUnpremul_SkAlphaType,
+        py::arg("colorSpace") = nullptr)
     .def(py::init(&SkSurface::MakeRasterN32Premul),
         R"docstring(
         See :py:meth:`~MakeRasterN32Premul`

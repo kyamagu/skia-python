@@ -16,6 +16,10 @@ def test_Surface_init(args):
     check_surface(skia.Surface(*args))
 
 
+def test_Surface_numpy(surface):
+    assert isinstance(surface.numpy(), np.ndarray)
+
+
 def test_Surface_repr(surface):
     assert isinstance(repr(surface), str)
 
