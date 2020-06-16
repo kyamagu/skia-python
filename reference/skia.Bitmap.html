@@ -348,6 +348,18 @@ configuration, not its contents.</p>
 <p><a class="reference internal" href="#skia.Bitmap" title="skia.Bitmap"><code class="xref py py-class docutils literal notranslate"><span class="pre">Bitmap</span></code></a> is not thread safe. Each thread must have its own copy of
 <a class="reference internal" href="#skia.Bitmap" title="skia.Bitmap"><code class="xref py py-class docutils literal notranslate"><span class="pre">Bitmap</span></code></a> fields, although threads may share the underlying pixel
 array.</p>
+<p><a class="reference internal" href="#skia.Bitmap" title="skia.Bitmap"><code class="xref py py-class docutils literal notranslate"><span class="pre">Bitmap</span></code></a> supports buffer protocol. It is possible to mount
+<a class="reference internal" href="#skia.Bitmap" title="skia.Bitmap"><code class="xref py py-class docutils literal notranslate"><span class="pre">Bitmap</span></code></a> as array:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">array</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">pixmap</span><span class="p">,</span> <span class="n">copy</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Or mount array as <a class="reference internal" href="#skia.Bitmap" title="skia.Bitmap"><code class="xref py py-class docutils literal notranslate"><span class="pre">Bitmap</span></code></a> with <a class="reference internal" href="skia.ImageInfo.html#skia.ImageInfo" title="skia.ImageInfo"><code class="xref py py-class docutils literal notranslate"><span class="pre">ImageInfo</span></code></a>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">buffer</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">100</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">4</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">uint8</span><span class="p">)</span>
+<span class="n">bitmap</span> <span class="o">=</span> <span class="n">skia</span><span class="o">.</span><span class="n">Bitmap</span><span class="p">()</span>
+<span class="n">bitmap</span><span class="o">.</span><span class="n">setInfo</span><span class="p">(</span><span class="n">skia</span><span class="o">.</span><span class="n">ImageInfo</span><span class="o">.</span><span class="n">MakeN32Premul</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="mi">100</span><span class="p">))</span>
+<span class="n">bitmap</span><span class="o">.</span><span class="n">setPixels</span><span class="p">(</span><span class="n">buffer</span><span class="p">)</span>
+</pre></div>
+</div>
 <p class="rubric">Classes</p>
 <table class="longtable docutils align-default">
 <colgroup>

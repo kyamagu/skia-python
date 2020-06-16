@@ -335,6 +335,16 @@ destination.</p>
 <p><a class="reference internal" href="#skia.Pixmap" title="skia.Pixmap"><code class="xref py py-class docutils literal notranslate"><span class="pre">Pixmap</span></code></a> does not try to manage the lifetime of the pixel memory.
 Use <a class="reference internal" href="skia.PixelRef.html#skia.PixelRef" title="skia.PixelRef"><code class="xref py py-class docutils literal notranslate"><span class="pre">PixelRef</span></code></a> to manage pixel memory; <a class="reference internal" href="skia.PixelRef.html#skia.PixelRef" title="skia.PixelRef"><code class="xref py py-class docutils literal notranslate"><span class="pre">PixelRef</span></code></a> is
 safe across threads.</p>
+<p><a class="reference internal" href="#skia.Pixmap" title="skia.Pixmap"><code class="xref py py-class docutils literal notranslate"><span class="pre">Pixmap</span></code></a> supports buffer protocol. It is possible to mount
+<a class="reference internal" href="#skia.Pixmap" title="skia.Pixmap"><code class="xref py py-class docutils literal notranslate"><span class="pre">Pixmap</span></code></a> as array:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">array</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">pixmap</span><span class="p">,</span> <span class="n">copy</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Or mount array as <a class="reference internal" href="#skia.Pixmap" title="skia.Pixmap"><code class="xref py py-class docutils literal notranslate"><span class="pre">Pixmap</span></code></a> with <a class="reference internal" href="skia.ImageInfo.html#skia.ImageInfo" title="skia.ImageInfo"><code class="xref py py-class docutils literal notranslate"><span class="pre">ImageInfo</span></code></a>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">buffer</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">100</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">4</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">uint8</span><span class="p">)</span>
+<span class="n">array</span> <span class="o">=</span> <span class="n">skia</span><span class="o">.</span><span class="n">Pixmap</span><span class="p">(</span><span class="n">skia</span><span class="o">.</span><span class="n">ImageInfo</span><span class="o">.</span><span class="n">MakeN32Premul</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="mi">100</span><span class="p">),</span> <span class="n">buffer</span><span class="p">)</span>
+</pre></div>
+</div>
 <p class="rubric">Methods</p>
 <table class="longtable docutils align-default">
 <colgroup>
@@ -483,6 +493,29 @@ allocated by caller; may be nullptr</p>
 <dt class="field-odd">rowBytes</dt>
 <dd class="field-odd"><p>size of one row of data; width times pixel size, or
 larger</p>
+</dd>
+</dl>
+</div></blockquote>
+</li>
+<li><p>__init__(self: skia.Pixmap, array: array, colorType: skia.ColorType = ColorType.kN32_ColorType, alphaType: skia.AlphaType = AlphaType.kUnpremul_AlphaType, colorSpace: skia.ColorSpace = None) -&gt; None</p>
+<blockquote>
+<div><p>Creates <a class="reference internal" href="#skia.Pixmap" title="skia.Pixmap"><code class="xref py py-class docutils literal notranslate"><span class="pre">Pixmap</span></code></a> backed by numpy array.</p>
+<p>The memory lifetime of pixels is managed by the caller. When
+<a class="reference internal" href="#skia.Pixmap" title="skia.Pixmap"><code class="xref py py-class docutils literal notranslate"><span class="pre">Pixmap</span></code></a> goes out of scope, data is unaffected.</p>
+<dl class="field-list simple">
+<dt class="field-odd">array</dt>
+<dd class="field-odd"><p>numpy ndarray of shape=(height, width, channels). Must have
+non-zero width and height, and the valid number of channels for the
+specified color type.</p>
+</dd>
+<dt class="field-even">colorType</dt>
+<dd class="field-even"><p>color type of the array</p>
+</dd>
+<dt class="field-odd">alphaType</dt>
+<dd class="field-odd"><p>alpha type of the array</p>
+</dd>
+<dt class="field-even">colorSpace</dt>
+<dd class="field-even"><p>range of colors; may be nullptr</p>
 </dd>
 </dl>
 </div></blockquote>
