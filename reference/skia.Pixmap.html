@@ -436,10 +436,13 @@ safe across threads.</p>
 <tr class="row-even"><td><p><a class="reference internal" href="#skia.Pixmap.shiftPerPixel" title="skia.Pixmap.shiftPerPixel"><code class="xref py py-obj docutils literal notranslate"><span class="pre">shiftPerPixel</span></code></a></p></td>
 <td><p>Returns bit shift converting row bytes to row pixels.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Pixmap.width" title="skia.Pixmap.width"><code class="xref py py-obj docutils literal notranslate"><span class="pre">width</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Pixmap.tobytes" title="skia.Pixmap.tobytes"><code class="xref py py-obj docutils literal notranslate"><span class="pre">tobytes</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.Pixmap.width" title="skia.Pixmap.width"><code class="xref py py-obj docutils literal notranslate"><span class="pre">width</span></code></a></p></td>
 <td><p>Returns pixel count in each pixel row.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#skia.Pixmap.writable_addr" title="skia.Pixmap.writable_addr"><code class="xref py py-obj docutils literal notranslate"><span class="pre">writable_addr</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Pixmap.writable_addr" title="skia.Pixmap.writable_addr"><code class="xref py py-obj docutils literal notranslate"><span class="pre">writable_addr</span></code></a></p></td>
 <td><p>Returns writable base pixel address.</p></td>
 </tr>
 </tbody>
@@ -497,7 +500,7 @@ larger</p>
 </dl>
 </div></blockquote>
 </li>
-<li><p>__init__(self: skia.Pixmap, array: array, colorType: skia.ColorType = ColorType.kN32_ColorType, alphaType: skia.AlphaType = AlphaType.kUnpremul_AlphaType, colorSpace: skia.ColorSpace = None) -&gt; None</p>
+<li><p>__init__(self: skia.Pixmap, array: array, colorType: skia.ColorType = ColorType.kN32_ColorType, alphaType: skia.AlphaType = AlphaType.kLastEnum_AlphaType, colorSpace: skia.ColorSpace = None) -&gt; None</p>
 <blockquote>
 <div><p>Creates <a class="reference internal" href="#skia.Pixmap" title="skia.Pixmap"><code class="xref py py-class docutils literal notranslate"><span class="pre">Pixmap</span></code></a> backed by numpy array.</p>
 <p>The memory lifetime of pixels is managed by the caller. When
@@ -1087,6 +1090,11 @@ width, height, <a class="reference internal" href="skia.AlphaType.html#skia.Alph
 </dd>
 </dl>
 </dd></dl>
+
+<dl class="py method">
+<dt id="skia.Pixmap.tobytes">
+<code class="sig-prename descclassname">Pixmap.</code><code class="sig-name descname">tobytes</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Pixmap" title="skia.Pixmap">skia.Pixmap</a></span></em><span class="sig-paren">)</span> &#x2192; object<a class="headerlink" href="#skia.Pixmap.tobytes" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
 
 <dl class="py method">
 <dt id="skia.Pixmap.width">
