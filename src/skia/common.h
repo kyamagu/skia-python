@@ -41,5 +41,6 @@ SkImageInfo NumPyToImageInfo(
 py::buffer_info ImageInfoToBufferInfo(
     const SkImageInfo& imageInfo, void* data, ssize_t rowBytes = 0,
     bool readonly = true);
-
+py::dict ImageInfoToArrayInterface(
+    const SkImageInfo& imageInfo, size_t rowBytes = 0);
 #endif  // _COMMON_H_
