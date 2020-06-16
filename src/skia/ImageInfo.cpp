@@ -50,6 +50,12 @@ py::enum_<SkColorType>(m, "ColorType")
     .value("kA16_float_ColorType", SkColorType::kA16_float_SkColorType)
     .value("kR16G16_float_ColorType", SkColorType::kR16G16_float_SkColorType)
     .value("kA16_unorm_ColorType", SkColorType::kA16_unorm_SkColorType)
+    .value("kR16G16_unorm_ColorType",
+        SkColorType::kR16G16_unorm_SkColorType,
+        "pixel with a little endian uint16_t for red and green")
+    .value("kR16G16B16A16_unorm_ColorType",
+        SkColorType::kR16G16B16A16_unorm_SkColorType,
+        "pixel with a little endian uint16_t for red, green, blue")
     .value("kN32_ColorType", SkColorType::kN32_SkColorType)
     .export_values();
 

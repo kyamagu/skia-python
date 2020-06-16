@@ -1,5 +1,6 @@
 import skia
 import pytest
+import numpy as np
 
 
 @pytest.fixture
@@ -11,7 +12,8 @@ def info():
 def bitmap(info):
     bitmap = skia.Bitmap()
     bitmap.allocPixels(info)
-    return bitmap
+    assert not bitmap.isNull()
+    yield bitmap
 
 
 def test_Bitmap_repr(bitmap):
@@ -19,12 +21,53 @@ def test_Bitmap_repr(bitmap):
 
 
 def test_Bitmap_buffer(bitmap):
-    import numpy as np
     assert isinstance(memoryview(bitmap), memoryview)
-    array = np.array(bitmap)
-    assert array.ndim == 2
+    array = np.array(bitmap, copy=False)
+    assert array.ndim == 3
     assert array.shape[0] == 80
     assert array.shape[1] == 120
+    assert array.shape[2] == 4
+
+
+@pytest.mark.parametrize('color_type, shape, dtype', [
+     (skia.kAlpha_8_ColorType, (32, 16,), np.uint8),
+     (skia.kRGB_565_ColorType, (32, 16,), np.uint16),
+     (skia.kARGB_4444_ColorType, (32, 16,), np.uint16),
+     (skia.kRGBA_8888_ColorType, (32, 16, 4), np.uint8),
+     (skia.kRGB_888x_ColorType, (32, 16, 4), np.uint8),
+     (skia.kBGRA_8888_ColorType, (32, 16, 4), np.uint8),
+     (skia.kRGBA_1010102_ColorType, (32, 16,), np.uint32),
+     (skia.kBGRA_1010102_ColorType, (32, 16,), np.uint32),
+     (skia.kRGB_101010x_ColorType, (32, 16,), np.uint32),
+     (skia.kBGR_101010x_ColorType, (32, 16,), np.uint32),
+     (skia.kGray_8_ColorType, (32, 16,), np.uint8),
+     (skia.kRGBA_F16Norm_ColorType, (32, 16, 4), np.float16),
+     (skia.kRGBA_F16_ColorType, (32, 16, 4), np.float16),
+     (skia.kRGBA_F32_ColorType, (32, 16, 4), np.float32),
+     (skia.kR8G8_unorm_ColorType, (32, 16, 2), np.uint8),
+     (skia.kA16_float_ColorType, (32, 16,), np.float16),
+     (skia.kR16G16_float_ColorType, (32, 16, 2), np.float16),
+     (skia.kA16_unorm_ColorType, (32, 16,), np.uint16),
+     (skia.kR16G16_unorm_ColorType, (32, 16, 2), np.uint16),
+     (skia.kR16G16B16A16_unorm_ColorType, (32, 16, 4), np.uint16),
+])
+def test_Bitmap_buffer_shape_dtype(color_type, shape, dtype):
+    bitmap = skia.Bitmap()
+    bitmap.allocPixels(
+        skia.ImageInfo.Make(16, 32, color_type, skia.kUnpremul_AlphaType))
+    assert not bitmap.isNull()
+    array = np.array(bitmap, copy=False)
+    assert array.shape == shape
+    assert array.dtype == dtype
+
+
+def test_Bitmap_len(bitmap):
+    assert len(bitmap) == bitmap.width() * bitmap.height()
+
+
+@pytest.mark.parametrize('index', [0, (0, 0)])
+def test_Bitmap_getitem(bitmap, index):
+    assert isinstance(bitmap[index], int)
 
 
 @pytest.mark.parametrize('args', [
@@ -108,7 +151,7 @@ def test_Bitmap_setAlphaType(bitmap):
 def test_Bitmap_getPixels(bitmap):
     view = bitmap.getPixels()
     assert isinstance(view, memoryview)
-    assert view.shape == (80, 120)
+    assert view.shape == (80, 120, 4)
 
 
 def test_Bitmap_computeByteSize(bitmap):

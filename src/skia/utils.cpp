@@ -82,20 +82,20 @@ py::buffer_info ImageInfoToBufferInfo(
         case kAlpha_8_SkColorType:
         case kGray_8_SkColorType:
             return py::buffer_info(
-                data, bytesPerPixel, "B", 2, { width, height },
+                data, bytesPerPixel, "B", 2, { height, width },
                 { rowBytes, bytesPerPixel }, readonly);
 
         case kRGB_565_SkColorType:
         case kARGB_4444_SkColorType:
             return py::buffer_info(
-                data, bytesPerPixel, "H", 2, { width, height },
+                data, bytesPerPixel, "H", 2, { height, width },
                 { rowBytes, bytesPerPixel }, readonly);
 
         case kRGBA_8888_SkColorType:
         case kRGB_888x_SkColorType:
         case kBGRA_8888_SkColorType:
             return py::buffer_info(
-                data, 1, "B", 3, { width, height, ssize_t(4) },
+                data, 1, "B", 3, { height, width, ssize_t(4) },
                 { rowBytes, bytesPerPixel, ssize_t(1) }, readonly);
 
         case kRGBA_1010102_SkColorType:
@@ -103,48 +103,48 @@ py::buffer_info ImageInfoToBufferInfo(
         case kRGB_101010x_SkColorType:
         case kBGR_101010x_SkColorType:
             return py::buffer_info(
-                data, bytesPerPixel, "I", 2, { width, height },
+                data, bytesPerPixel, "I", 2, { height, width },
                 { rowBytes, bytesPerPixel }, readonly);
 
         case kRGBA_F16Norm_SkColorType:
         case kRGBA_F16_SkColorType:
             return py::buffer_info(
-                data, 2, "e", 3, { width, height, ssize_t(4) },
+                data, 2, "e", 3, { height, width, ssize_t(4) },
                 { rowBytes, bytesPerPixel, ssize_t(2) }, readonly);
 
         case kRGBA_F32_SkColorType:
             return py::buffer_info(
-                data, 4, "f", 3, { width, height, ssize_t(4) },
+                data, 4, "f", 3, { height, width, ssize_t(4) },
                 { rowBytes, bytesPerPixel, ssize_t(4) }, readonly);
 
         case kR8G8_unorm_SkColorType:
             return py::buffer_info(
-                data, 1, "B", 3, { width, height, ssize_t(2) },
+                data, 1, "B", 3, { height, width, ssize_t(2) },
                 { rowBytes, bytesPerPixel, ssize_t(1) }, readonly);
 
         case kA16_float_SkColorType:
             return py::buffer_info(
-                data, 2, "e", 2, { width, height },
+                data, 2, "e", 2, { height, width },
                 { rowBytes, bytesPerPixel }, readonly);
 
         case kR16G16_float_SkColorType:
             return py::buffer_info(
-                data, 2, "e", 3, { width, height, ssize_t(2) },
+                data, 2, "e", 3, { height, width, ssize_t(2) },
                 { rowBytes, bytesPerPixel, ssize_t(2) }, readonly);
 
         case kA16_unorm_SkColorType:
             return py::buffer_info(
-                data, 2, "<H", 2, { width, height },
+                data, 2, "<H", 2, { height, width },
                 { rowBytes, bytesPerPixel }, readonly);
 
         case kR16G16_unorm_SkColorType:
             return py::buffer_info(
-                data, 2, "<H", 3, { width, height, ssize_t(2) },
+                data, 2, "<H", 3, { height, width, ssize_t(2) },
                 { rowBytes, bytesPerPixel, ssize_t(2) }, readonly);
 
         case kR16G16B16A16_unorm_SkColorType:
             return py::buffer_info(
-                data, 2, "<H", 3, { width, height, ssize_t(4) },
+                data, 2, "<H", 3, { height, width, ssize_t(4) },
                 { rowBytes, bytesPerPixel, ssize_t(2) }, readonly);
 
         case kUnknown_SkColorType:

@@ -2,23 +2,6 @@
 #include <algorithm>
 
 
-py::buffer_info GetPixels(const SkBitmap& bitmap) {
-    if (!bitmap.getPixels())
-        throw std::bad_alloc();
-    return py::buffer_info(
-        bitmap.getPixels(),
-        bitmap.bytesPerPixel(),
-        (bitmap.bytesPerPixel() == 1) ? "B" :
-        (bitmap.bytesPerPixel() == 2) ? "H" :
-        (bitmap.bytesPerPixel() == 4) ? "I" :
-        (bitmap.bytesPerPixel() == 8) ? "Q" : "B",
-        2,
-        { ssize_t(bitmap.height()), ssize_t(bitmap.width()) },  // Transposed.
-        { ssize_t(bitmap.rowBytes()), ssize_t(bitmap.bytesPerPixel()) }
-    );
-}
-
-
 void initBitmap(py::module &m) {
 py::enum_<SkTileMode>(m, "TileMode")
     .value("kClamp", SkTileMode::kClamp,
@@ -75,6 +58,19 @@ py::class_<SkBitmap> bitmap(m, "Bitmap", py::buffer_protocol(),
     :py:class:`Bitmap` is not thread safe. Each thread must have its own copy of
     :py:class:`Bitmap` fields, although threads may share the underlying pixel
     array.
+
+    :py:class:`Bitmap` supports buffer protocol. It is possible to mount
+    :py:class:`Bitmap` as array::
+
+        array = np.array(pixmap, copy=False)
+
+    Or mount array as :py:class:`Bitmap` with :py:class:`ImageInfo`::
+
+        buffer = np.zeros((100, 100, 4), np.uint8)
+        bitmap = skia.Bitmap()
+        bitmap.setInfo(skia.ImageInfo.MakeN32Premul(100, 100))
+        bitmap.setPixels(buffer)
+
     )docstring");
 
 py::enum_<SkBitmap::AllocFlags>(bitmap, "AllocFlags", py::arithmetic())
@@ -85,13 +81,42 @@ py::enum_<SkBitmap::AllocFlags>(bitmap, "AllocFlags", py::arithmetic())
     .export_values();
 
 bitmap
+    .def_buffer(
+        [] (const SkBitmap& bitmap) {
+            return ImageInfoToBufferInfo(
+                bitmap.info(), bitmap.getPixels(), bitmap.rowBytes(), false);
+        })
     .def("__repr__",
         [] (const SkBitmap& bitmap) {
             return py::str("Bitmap({}, {})").format(
                 bitmap.width(), bitmap.height(), bitmap.colorType(),
                 bitmap.alphaType());
         })
-    .def_buffer(&GetPixels)
+    .def("__len__",
+        [] (const SkBitmap& bitmap) {
+            return bitmap.width() * bitmap.height();
+        })
+    .def("__getitem__",
+        [] (const SkBitmap& bitmap, py::object object) {
+            int x = 0;
+            int y = 0;
+            if (py::isinstance<py::tuple>(object)) {
+                auto t = object.cast<py::tuple>();
+                if (t.size() != 2)
+                    throw py::index_error("Index must be two dimension.");
+                x = t[0].cast<int>();
+                y = t[1].cast<int>();
+            }
+            else {
+                int offset = object.cast<int>();
+                x = offset % bitmap.width();
+                y = offset / bitmap.height();
+            }
+            if (x < 0 || bitmap.width() <= x ||
+                y < 0 || bitmap.height() <= y)
+                throw std::out_of_range("Index out of range.");
+            return bitmap.getColor(x, y);
+        })
     .def(py::init<>(
         [] (const SkBitmap* src) {
             return (src) ? SkBitmap(*src) : SkBitmap();
@@ -303,7 +328,8 @@ bitmap
         [] (const SkBitmap& bitmap) -> py::object {
             if (!bitmap.getPixels())
                 return py::none();
-            return py::memoryview(GetPixels(bitmap));
+            return py::memoryview(ImageInfoToBufferInfo(
+                bitmap.info(), bitmap.getPixels(), bitmap.rowBytes(), false));
         },
         R"docstring(
         Returns pixel address, the base address corresponding to the pixel
