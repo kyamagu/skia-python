@@ -22,6 +22,7 @@ py::memoryview AddrN(const SkPixmap& pixmap) {
 
 template <bool readonly = true>
 py::memoryview Addr(const SkPixmap& pixmap) {
+    CHECK_NOTNULL(pixmap.addr());
     return py::memoryview(ImageInfoToBufferInfo(
         pixmap.info(), pixmap.writable_addr(), pixmap.rowBytes(), readonly));
 }
@@ -59,6 +60,7 @@ py::class_<SkPixmap>(m, "Pixmap",
     )docstring",
     py::buffer_protocol())
     .def_buffer([] (SkPixmap& pixmap) {
+        CHECK_NOTNULL(pixmap.addr());
         return ImageInfoToBufferInfo(
             pixmap.info(), pixmap.writable_addr(), pixmap.rowBytes(), false);
     })

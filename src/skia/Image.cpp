@@ -128,6 +128,11 @@ image
         py::arg("array"), py::arg("colorType") = kRGBA_8888_SkColorType,
         py::arg("alphaType") = kUnpremul_SkAlphaType,
         py::arg("colorSpace") = nullptr, py::arg("copy") = false)
+    .def("numpy", &ReadToNumpy<SkImage>,
+        py::arg("srcX") = 0, py::arg("srcY") = 0,
+        py::arg("colorType") = kUnknown_SkColorType,
+        py::arg("alphaType") = kUnpremul_SkAlphaType,
+        py::arg("colorSpace") = nullptr)
     .def("__repr__",
         [] (const SkImage& image) {
             return py::str("Image({}, {}, {}, {})").format(

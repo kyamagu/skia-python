@@ -386,6 +386,11 @@ canvas
             independent fonts
         )docstring",
         py::arg("bitmap"), py::arg("props"))
+    .def("numpy", &ReadToNumpy<SkCanvas>,
+        py::arg("srcX") = 0, py::arg("srcY") = 0,
+        py::arg("colorType") = kUnknown_SkColorType,
+        py::arg("alphaType") = kUnpremul_SkAlphaType,
+        py::arg("colorSpace") = nullptr)
     .def("imageInfo", &SkCanvas::imageInfo,
         R"docstring(
         Returns :py:class:`ImageInfo` for :py:class:`Canvas`.
@@ -534,8 +539,8 @@ canvas
         py::arg("pixmap"))
     .def("readPixels", &ReadPixels<SkCanvas>,
         R"docstring(
-        Copies :py:class:`Rect` of pixels from :py:class:`Canvas` into numpy
-        array.
+        Copies :py:class:`Rect` of pixels from :py:class:`Canvas` into
+        dstPixels.
 
         :py:class:`Matrix` and clip are ignored.
 

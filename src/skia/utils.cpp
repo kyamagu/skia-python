@@ -71,8 +71,6 @@ SkImageInfo NumPyToImageInfo(py::array array, SkColorType ct, SkAlphaType at,
 
 py::buffer_info ImageInfoToBufferInfo(
     const SkImageInfo& imageInfo, void* data, ssize_t rowBytes, bool readonly) {
-    if (!data)
-        throw std::runtime_error("Null pointer exception.");
     ssize_t width = imageInfo.width();
     ssize_t height = imageInfo.height();
     ssize_t bytesPerPixel = imageInfo.bytesPerPixel();

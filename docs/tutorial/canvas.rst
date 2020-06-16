@@ -61,7 +61,6 @@ into numpy array.
     plot.imshow(array)
     plot.show()
 
-
 GPU
 ---
 

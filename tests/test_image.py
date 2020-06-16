@@ -26,6 +26,10 @@ def test_Image_init(args, color_type, error):
         assert isinstance(skia.Image(np.zeros(*args), color_type), skia.Image)
 
 
+def test_Image_numpy(image):
+    assert isinstance(image.numpy(), np.ndarray)
+
+
 def test_Image_repr(image):
     assert isinstance(repr(image), str)
 

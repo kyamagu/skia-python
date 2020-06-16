@@ -83,6 +83,7 @@ py::enum_<SkBitmap::AllocFlags>(bitmap, "AllocFlags", py::arithmetic())
 bitmap
     .def_buffer(
         [] (const SkBitmap& bitmap) {
+            CHECK_NOTNULL(bitmap.getPixels());
             return ImageInfoToBufferInfo(
                 bitmap.info(), bitmap.getPixels(), bitmap.rowBytes(), false);
         })
@@ -334,8 +335,7 @@ bitmap
         py::arg("alphaType"))
     .def("getPixels",
         [] (const SkBitmap& bitmap) -> py::object {
-            if (!bitmap.getPixels())
-                return py::none();
+            CHECK_NOTNULL(bitmap.getPixels());
             return py::memoryview(ImageInfoToBufferInfo(
                 bitmap.info(), bitmap.getPixels(), bitmap.rowBytes(), false));
         },
