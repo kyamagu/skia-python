@@ -15,8 +15,15 @@ A few differences are:
 - All bindings reside in ``skia`` module.
 - Removes class name prefix ``Sk``; e.g., ``SkCanvas`` is ``skia.Canvas``.
 - Some method signatures adapt to Python style; e.g.,
-  - :py:meth:`skia.Surface.__init__` accepts additional args
+
+  - :py:meth:`skia.Surface.__init__` accepts additional args.
   - :py:class:`skia.Paint` is implicitly convertible from ``dict``.
+  - Args taking `void* ptr` use buffer protocol.
+  - Methods returning a raw memory address wrap in ``memoryview``.
+
+- NumPy export method is added to ``Surface``, ``Canvas``, ``Image``.
+- Buffer protocol support in ``Bitmap``, ``Pixmap``.
+
 
 Contributing
 ------------

@@ -90,6 +90,7 @@
 <li class="toctree-l2 current"><a class="current reference internal" href="#">Overview</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#canvas-details">Canvas details</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#more-drawings">More drawings</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#python-interoperability">Python interoperability</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#apis-at-a-glance">APIs at a glance</a></li>
 </ul>
 </li>
@@ -252,7 +253,7 @@ save yourself having to allocate a paint:</p>
 <h2>More drawings<a class="headerlink" href="#more-drawings" title="Permalink to this headline">¶</a></h2>
 <p>All of the other draw APIs are similar, each one ending with a paint parameter.
 The following example demonstrates drawing of shape primitives,
-<a class="reference internal" href="../reference/skia.Path.html#skia.Path" title="skia.Path"><code class="xref py py-class docutils literal notranslate"><span class="pre">Path</span></code></a>, external <code class="xref py py-class docutils literal notranslate"><span class="pre">image</span></code>, or
+<a class="reference internal" href="../reference/skia.Path.html#skia.Path" title="skia.Path"><code class="xref py py-class docutils literal notranslate"><span class="pre">Path</span></code></a>, external <a class="reference internal" href="../reference/skia.Image.html#skia.Image" title="skia.Image"><code class="xref py py-class docutils literal notranslate"><span class="pre">Image</span></code></a>, or
 <a class="reference internal" href="../reference/skia.TextBlob.html#skia.TextBlob" title="skia.TextBlob"><code class="xref py py-class docutils literal notranslate"><span class="pre">TextBlob</span></code></a> objects onto the canvas:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">skia</span>
 
@@ -304,6 +305,23 @@ The following example demonstrates drawing of shape primitives,
 </pre></div>
 </div>
 <a class="reference internal image-reference" href="../_images/overview-various-draws.png"><img alt="Various drawings" src="../_images/overview-various-draws.png" style="width: 256px;" /></a>
+</div>
+<div class="section" id="python-interoperability">
+<h2>Python interoperability<a class="headerlink" href="#python-interoperability" title="Permalink to this headline">¶</a></h2>
+<p><cite>skia-python</cite> supports numpy array in several methods. The following directly
+draws into numpy array:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="n">array</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">320</span><span class="p">,</span> <span class="mi">240</span><span class="p">,</span> <span class="mi">4</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">uint8</span><span class="p">)</span>
+<span class="n">canvas</span> <span class="o">=</span> <span class="n">skia</span><span class="o">.</span><span class="n">Canvas</span><span class="p">(</span><span class="n">array</span><span class="p">)</span>
+<span class="n">paint</span> <span class="o">=</span> <span class="n">skia</span><span class="o">.</span><span class="n">Paint</span><span class="p">(</span><span class="n">AntiAlias</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">Color</span><span class="o">=</span><span class="n">skia</span><span class="o">.</span><span class="n">ColorCYAN</span><span class="p">)</span>
+<span class="n">canvas</span><span class="o">.</span><span class="n">drawCircle</span><span class="p">(</span><span class="mi">180</span><span class="p">,</span> <span class="mi">50</span><span class="p">,</span> <span class="mi">25</span><span class="p">,</span> <span class="n">paint</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Alternatively, <a class="reference internal" href="../reference/skia.Canvas.html#skia.Canvas" title="skia.Canvas"><code class="xref py py-class docutils literal notranslate"><span class="pre">Canvas</span></code></a> content can be exported to numpy array.</p>
+<blockquote>
+<div><p>array = canvas.numpy()</p>
+</div></blockquote>
 </div>
 <div class="section" id="apis-at-a-glance">
 <h2>APIs at a glance<a class="headerlink" href="#apis-at-a-glance" title="Permalink to this headline">¶</a></h2>

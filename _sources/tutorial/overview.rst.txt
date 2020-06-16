@@ -97,7 +97,7 @@ More drawings
 
 All of the other draw APIs are similar, each one ending with a paint parameter.
 The following example demonstrates drawing of shape primitives,
-:py:class:`Path`, external :py:class:`image`, or
+:py:class:`Path`, external :py:class:`Image`, or
 :py:class:`TextBlob` objects onto the canvas::
 
     import skia
@@ -152,6 +152,22 @@ The following example demonstrates drawing of shape primitives,
     :width: 256
     :alt: Various drawings
 
+Python interoperability
+-----------------------
+
+`skia-python` supports numpy array in several methods. The following directly
+draws into numpy array::
+
+    import numpy as np
+
+    array = np.zeros((320, 240, 4), np.uint8)
+    canvas = skia.Canvas(array)
+    paint = skia.Paint(AntiAlias=True, Color=skia.ColorCYAN)
+    canvas.drawCircle(180, 50, 25, paint)
+
+Alternatively, :py:class:`Canvas` content can be exported to numpy array.
+
+    array = canvas.numpy()
 
 APIs at a glance
 ----------------
