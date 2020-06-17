@@ -118,8 +118,9 @@ image
         Creates a new :py:class:`Image` from numpy array.
 
         :param numpy.ndarray array: numpy ndarray of shape=(height, width,
-            channels) and dtype=uint8. Must have non-zero width and height, and
-            the valid number of channels for the specified color type.
+            channels) and appropriate dtype. Must have non-zero width and
+            height, and the valid number of channels for the specified color
+            type.
         :param skia.ColorType colorType: color type of the array
         :param skia.AlphaType alphaType: alpha type of the array
         :param skia.ColorSpace colorSpace: range of colors; may be nullptr
@@ -129,7 +130,47 @@ image
         py::arg("alphaType") = kUnpremul_SkAlphaType,
         py::arg("colorSpace") = nullptr, py::arg("copy") = false)
     .def("numpy", &ReadToNumpy<SkImage>,
+        R"docstring(
+        Exports a ``numpy.ndarray``.
+
+        :param srcX: offset into readable pixels on x-axis; may be negative
+        :param srcY: offset into readable pixels on y-axis; may be negative
+        :param colorType: target :py:class:`ColorType`
+        :param alphaType: target :py:class:`AlphaType`
+        :param colorSpace: target :py:class:`ColorSpace`
+        :return: numpy.ndarray
+        )docstring",
         py::arg("srcX") = 0, py::arg("srcY") = 0,
+        py::arg("colorType") = kUnknown_SkColorType,
+        py::arg("alphaType") = kUnpremul_SkAlphaType,
+        py::arg("colorSpace") = nullptr)
+    .def("bitmap",
+        [] (const SkImage& image, SkColorType ct, SkAlphaType at,
+            const SkColorSpace* cs) {
+            SkBitmap bitmap;
+            if (ct == kUnknown_SkColorType)
+                ct = image.colorType();
+            auto imageInfo = SkImageInfo::Make(
+                image.width(), image.height(), ct, at, CloneColorSpace(cs));
+            if (!bitmap.tryAllocPixels(imageInfo))
+                throw std::runtime_error("Failed to allocate bitmap.");
+            if (!image.readPixels(
+                imageInfo, bitmap.getPixels(), bitmap.rowBytes(), 0, 0))
+                throw std::runtime_error("Failed to read pixels.");
+            return bitmap;
+        },
+        R"docstring(
+        Exports :py:class:`Image` to :py:class:`Bitmap`.
+
+        Pixels are always allocated and copied.
+
+        :param colorType: color type of :py:class:`Bitmap`. If
+            :py:attr:`~skia.kUnknown_ColorType`, uses the same colorType as
+            :py:class:`Image`.
+        :param alphaType: alpha type of :py:class:`Bitmap`.
+        :param colorSpace: color space of :py:class:`Bitmap`.
+        :return: :py:class:`Bitmap`
+        )docstring",
         py::arg("colorType") = kUnknown_SkColorType,
         py::arg("alphaType") = kUnpremul_SkAlphaType,
         py::arg("colorSpace") = nullptr)
