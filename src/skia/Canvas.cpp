@@ -324,9 +324,9 @@ canvas
         Subsequent :py:class:`Canvas` calls draw into pixels. To access pixels
         after drawing, call flush() or peekPixels().
 
-        :array: numpy ndarray of shape=(height, width, channels). Must have
-            non-zero width and height, and the valid number of channels for the
-            specified color type.
+        :array: numpy ndarray of shape=(height, width, channels) and appropriate
+            dtype. Must have non-zero width and height, and the valid number of
+            channels for the specified color type.
         :colorType: color type of the array
         :alphaType: alpha type of the array
         :colorSpace: range of colors; may be nullptr
@@ -387,6 +387,16 @@ canvas
         )docstring",
         py::arg("bitmap"), py::arg("props"))
     .def("numpy", &ReadToNumpy<SkCanvas>,
+        R"docstring(
+        Exports a ``numpy.ndarray``.
+
+        :param srcX: offset into readable pixels on x-axis; may be negative
+        :param srcY: offset into readable pixels on y-axis; may be negative
+        :param colorType: target :py:class:`ColorType`
+        :param alphaType: target :py:class:`AlphaType`
+        :param colorSpace: target :py:class:`ColorSpace`
+        :return: numpy.ndarray
+        )docstring",
         py::arg("srcX") = 0, py::arg("srcY") = 0,
         py::arg("colorType") = kUnknown_SkColorType,
         py::arg("alphaType") = kUnpremul_SkAlphaType,

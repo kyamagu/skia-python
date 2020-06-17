@@ -30,6 +30,10 @@ def test_Image_numpy(image):
     assert isinstance(image.numpy(), np.ndarray)
 
 
+def test_Image_bitmap(image):
+    assert isinstance(image.bitmap(), skia.Bitmap)
+
+
 def test_Image_repr(image):
     assert isinstance(repr(image), str)
 
