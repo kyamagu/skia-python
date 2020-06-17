@@ -551,7 +551,7 @@ future.</p>
 <td><p>Creates <a class="reference internal" href="skia.Surface.html#skia.Surface" title="skia.Surface"><code class="xref py py-class docutils literal notranslate"><span class="pre">Surface</span></code></a> matching info and props, and associates it with <a class="reference internal" href="#skia.Canvas" title="skia.Canvas"><code class="xref py py-class docutils literal notranslate"><span class="pre">Canvas</span></code></a>.</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#skia.Canvas.numpy" title="skia.Canvas.numpy"><code class="xref py py-obj docutils literal notranslate"><span class="pre">numpy</span></code></a></p></td>
-<td><p></p></td>
+<td><p>Exports a <code class="docutils literal notranslate"><span class="pre">numpy.ndarray</span></code>.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#skia.Canvas.peekPixels" title="skia.Canvas.peekPixels"><code class="xref py py-obj docutils literal notranslate"><span class="pre">peekPixels</span></code></a></p></td>
 <td><p>Returns true if <a class="reference internal" href="#skia.Canvas" title="skia.Canvas"><code class="xref py py-class docutils literal notranslate"><span class="pre">Canvas</span></code></a> has direct access to its pixels.</p></td>
@@ -741,9 +741,9 @@ with a width and height of zero.</p>
 after drawing, call flush() or peekPixels().</p>
 <dl class="field-list simple">
 <dt class="field-odd">array</dt>
-<dd class="field-odd"><p>numpy ndarray of shape=(height, width, channels). Must have
-non-zero width and height, and the valid number of channels for the
-specified color type.</p>
+<dd class="field-odd"><p>numpy ndarray of shape=(height, width, channels) and appropriate
+dtype. Must have non-zero width and height, and the valid number of
+channels for the specified color type.</p>
 </dd>
 <dt class="field-even">colorType</dt>
 <dd class="field-even"><p>color type of the array</p>
@@ -2388,7 +2388,22 @@ available</p>
 <dl class="py method">
 <dt id="skia.Canvas.numpy">
 <code class="sig-prename descclassname">Canvas.</code><code class="sig-name descname">numpy</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Canvas" title="skia.Canvas">skia.Canvas</a></span></em>, <em class="sig-param"><span class="n">srcX</span><span class="p">:</span> <span class="n">int</span> <span class="o">=</span> <span class="default_value">0</span></em>, <em class="sig-param"><span class="n">srcY</span><span class="p">:</span> <span class="n">int</span> <span class="o">=</span> <span class="default_value">0</span></em>, <em class="sig-param"><span class="n">colorType</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.ColorType.html#skia.ColorType" title="skia.ColorType">skia.ColorType</a></span> <span class="o">=</span> <span class="default_value">ColorType.kUnknown_ColorType</span></em>, <em class="sig-param"><span class="n">alphaType</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.AlphaType.html#skia.AlphaType" title="skia.AlphaType">skia.AlphaType</a></span> <span class="o">=</span> <span class="default_value">AlphaType.kLastEnum_AlphaType</span></em>, <em class="sig-param"><span class="n">colorSpace</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.ColorSpace.html#skia.ColorSpace" title="skia.ColorSpace">skia.ColorSpace</a></span> <span class="o">=</span> <span class="default_value">None</span></em><span class="sig-paren">)</span> &#x2192; array<a class="headerlink" href="#skia.Canvas.numpy" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Exports a <code class="docutils literal notranslate"><span class="pre">numpy.ndarray</span></code>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>srcX</strong> – offset into readable pixels on x-axis; may be negative</p></li>
+<li><p><strong>srcY</strong> – offset into readable pixels on y-axis; may be negative</p></li>
+<li><p><strong>colorType</strong> – target <a class="reference internal" href="skia.ColorType.html#skia.ColorType" title="skia.ColorType"><code class="xref py py-class docutils literal notranslate"><span class="pre">ColorType</span></code></a></p></li>
+<li><p><strong>alphaType</strong> – target <a class="reference internal" href="skia.AlphaType.html#skia.AlphaType" title="skia.AlphaType"><code class="xref py py-class docutils literal notranslate"><span class="pre">AlphaType</span></code></a></p></li>
+<li><p><strong>colorSpace</strong> – target <a class="reference internal" href="skia.ColorSpace.html#skia.ColorSpace" title="skia.ColorSpace"><code class="xref py py-class docutils literal notranslate"><span class="pre">ColorSpace</span></code></a></p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>numpy.ndarray</p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="py method">
 <dt id="skia.Canvas.peekPixels">
