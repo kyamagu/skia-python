@@ -32,6 +32,10 @@ py::class_<SkData, sk_sp<SkData>>(m, "Data", py::buffer_protocol(),
         np.array(data)
     )docstring")
     .def_buffer([] (SkData& data) { return GetBuffer(data); })
+    .def("__repr__",
+        [] (const SkData& data) {
+            return py::str("Data(size={})").format(data.size());
+        })
     .def(py::init([] (py::buffer b, bool copy) {
         py::buffer_info info = b.request();
         auto length = (info.ndim) ? info.strides[0] * info.shape[0] : 0;

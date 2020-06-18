@@ -15,6 +15,10 @@ def test_Data_init(args):
     assert isinstance(skia.Data(*args), skia.Data)
 
 
+def test_Data_repr(data):
+    assert isinstance(repr(data), str)
+
+
 def test_Data_buffer(data):
     import numpy as np
     assert isinstance(np.array(data), np.ndarray)
