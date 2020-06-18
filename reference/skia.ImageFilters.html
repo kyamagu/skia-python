@@ -1,8 +1,7 @@
 
 
 <!DOCTYPE html>
-<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<html class="writer-html5" lang="en" >
 <head>
   <meta charset="utf-8">
   
@@ -12,12 +11,18 @@
   
 
   
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+
+  
   
   
   
 
   
-  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
@@ -29,10 +34,6 @@
     <script type="text/javascript" src="../_static/js/theme.js"></script>
 
     
-
-  
-  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="ImageInfo" href="skia.ImageInfo.html" />
@@ -50,7 +51,7 @@
           
 
           
-            <a href="../index.html" class="icon icon-home"> skia-python
+            <a href="../index.html" class="icon icon-home" alt="Documentation Home"> skia-python
           
 
           
@@ -77,6 +78,7 @@
           
         </div>
 
+        
         <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
           
             
@@ -256,6 +258,7 @@
             
           
         </div>
+        
       </div>
     </nav>
 
@@ -294,7 +297,7 @@
 
   <ul class="wy-breadcrumbs">
     
-      <li><a href="../index.html">Docs</a> &raquo;</li>
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
         
           <li><a href="../reference.html">Reference</a> &raquo;</li>
         
@@ -481,7 +484,7 @@ output.</p></li>
 
 <dl class="py method">
 <dt id="skia.ImageFilters.Blur">
-<em class="property">static </em><code class="sig-prename descclassname">ImageFilters.</code><code class="sig-name descname">Blur</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">sigmaX</span><span class="p">:</span> <span class="n">float</span></em>, <em class="sig-param"><span class="n">sigmaY</span><span class="p">:</span> <span class="n">float</span></em>, <em class="sig-param"><span class="n">tileMode</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.TileMode.html#skia.TileMode" title="skia.TileMode">skia.TileMode</a></span> <span class="o">=</span> <span class="default_value">TileMode.kLastTileMode</span></em>, <em class="sig-param"><span class="n">input</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.ImageFilter.html#skia.ImageFilter" title="skia.ImageFilter">skia.ImageFilter</a></span> <span class="o">=</span> <span class="default_value">None</span></em>, <em class="sig-param"><span class="n">cropRect</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.IRect.html#skia.IRect" title="skia.IRect">skia.IRect</a></span> <span class="o">=</span> <span class="default_value">None</span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="skia.ImageFilter.html#skia.ImageFilter" title="skia.ImageFilter">skia.ImageFilter</a><a class="headerlink" href="#skia.ImageFilters.Blur" title="Permalink to this definition">¶</a></dt>
+<em class="property">static </em><code class="sig-prename descclassname">ImageFilters.</code><code class="sig-name descname">Blur</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">sigmaX</span><span class="p">:</span> <span class="n">float</span></em>, <em class="sig-param"><span class="n">sigmaY</span><span class="p">:</span> <span class="n">float</span></em>, <em class="sig-param"><span class="n">tileMode</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.TileMode.html#skia.TileMode" title="skia.TileMode">skia.TileMode</a></span> <span class="o">=</span> <span class="default_value">TileMode.kDecal</span></em>, <em class="sig-param"><span class="n">input</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.ImageFilter.html#skia.ImageFilter" title="skia.ImageFilter">skia.ImageFilter</a></span> <span class="o">=</span> <span class="default_value">None</span></em>, <em class="sig-param"><span class="n">cropRect</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.IRect.html#skia.IRect" title="skia.IRect">skia.IRect</a></span> <span class="o">=</span> <span class="default_value">None</span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="skia.ImageFilter.html#skia.ImageFilter" title="skia.ImageFilter">skia.ImageFilter</a><a class="headerlink" href="#skia.ImageFilters.Blur" title="Permalink to this definition">¶</a></dt>
 <dd><p>Create a filter that blurs its input by the separate X and Y sigmas.</p>
 <p>The provided tile mode is used when the blur kernel goes outside the
 input image.</p>
@@ -709,7 +712,7 @@ output.</p></li>
 <em class="property">static </em><code class="sig-prename descclassname">ImageFilters.</code><code class="sig-name descname">Image</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span><span class="n">args</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#skia.ImageFilters.Image" title="Permalink to this definition">¶</a></dt>
 <dd><p>Overloaded function.</p>
 <ol class="arabic">
-<li><p>Image(image: skia.Image, srcRect: skia.Rect, dstRect: skia.Rect, filterQuality: skia.FilterQuality = FilterQuality.kHigh_FilterQuality) -&gt; skia.ImageFilter</p>
+<li><p>Image(image: skia.Image, srcRect: skia.Rect, dstRect: skia.Rect, filterQuality: skia.FilterQuality = FilterQuality.kLast_FilterQuality) -&gt; skia.ImageFilter</p>
 <blockquote>
 <div><p>Create a filter that draws the ‘srcRect’ portion of image into ‘dstRect’
 using the given filter quality.</p>
@@ -1063,11 +1066,19 @@ output.</p></li>
 
   <div role="contentinfo">
     <p>
+        
         &copy; Copyright 2020, Kota Yamaguchi
 
     </p>
   </div>
-  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
 
 </footer>
 
@@ -1078,7 +1089,6 @@ output.</p></li>
 
   </div>
   
-
 
   <script type="text/javascript">
       jQuery(function () {
