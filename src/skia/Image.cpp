@@ -21,6 +21,64 @@ sk_sp<SkImage> NumPyToImage(py::array array, SkColorType ct, SkAlphaType at,
     return SkImage::MakeRasterData(imageInfo, data, array.strides(0));
 }
 
+std::unique_ptr<SkBitmap> ImageToBitmap(
+    const SkImage& image, SkColorType ct, SkAlphaType at,
+    const SkColorSpace* cs) {
+    std::unique_ptr<SkBitmap> bitmap(new SkBitmap());
+    if (!bitmap)
+        throw std::bad_alloc();
+    if (ct == kUnknown_SkColorType)
+        ct = image.colorType();
+    if (at == kUnknown_SkAlphaType)
+        at = image.alphaType();
+    auto imageInfo = SkImageInfo::Make(
+        image.width(), image.height(), ct, at, CloneColorSpace(cs));
+    if (!bitmap->tryAllocPixels(imageInfo))
+        throw std::bad_alloc();
+    if (!image.readPixels(
+        imageInfo, bitmap->getPixels(), bitmap->rowBytes(), 0, 0))
+        throw std::runtime_error("Failed to read pixels.");
+    return bitmap;
+}
+
+sk_sp<SkImage> ConvertImage(
+    const SkImage& image, SkColorType ct, SkAlphaType at,
+    const SkColorSpace* cs) {
+    if (ct == kUnknown_SkColorType)
+        ct = image.colorType();
+    if (at == kUnknown_SkAlphaType)
+        at = image.alphaType();
+    if (at == image.alphaType()) {
+        if (ct == image.colorType())
+            return image.makeColorSpace(CloneColorSpace(cs));
+        return image.makeColorTypeAndColorSpace(ct, CloneColorSpace(cs));
+    }
+
+    auto imageInfo = SkImageInfo::Make(
+        image.width(), image.height(), ct, at, CloneColorSpace(cs));
+    auto buffer = SkData::MakeUninitialized(imageInfo.computeMinByteSize());
+    if (!buffer)
+        throw std::bad_alloc();
+    if (!image.readPixels(
+        imageInfo, buffer->writable_data(), imageInfo.minRowBytes(), 0, 0))
+        throw std::runtime_error("Failed to convert pixels.");
+    return SkImage::MakeRasterData(imageInfo, buffer, imageInfo.minRowBytes());
+}
+
+sk_sp<SkImage> ResizeImage(
+    const SkImage& image, int width, int height, SkFilterQuality filterQuality,
+    SkImage::CachingHint cachingHint) {
+    auto imageInfo = image.imageInfo().makeWH(width, height);
+    auto buffer = SkData::MakeUninitialized(imageInfo.computeMinByteSize());
+    if (!buffer)
+        throw std::bad_alloc();
+    auto pixmap = SkPixmap(
+        imageInfo, buffer->writable_data(), imageInfo.minRowBytes());
+    if (!image.scalePixels(pixmap, filterQuality, cachingHint))
+        throw std::runtime_error("Failed to resize image.");
+    return SkImage::MakeRasterData(imageInfo, buffer, imageInfo.minRowBytes());
+}
+
 }  // namespace
 
 void initImage(py::module &m) {
@@ -85,6 +143,16 @@ py::class_<SkImage, sk_sp<SkImage>, SkRefCnt> image(m, "Image",
     streams, GPU texture, YUV_ColorSpace data, or hardware buffer. Encoded
     streams supported include BMP, GIF, HEIF, ICO, JPEG, PNG, WBMP, WebP.
     Supported encoding details vary with platform.
+
+    ``skia-python`` supports a few high-level methods in addition to C++ API::
+
+        image = skia.Image.open('/path/to/image.png')
+        resized = image.resize(120, 120)
+        bitmap = image.bitmap()
+        image.save('/path/to/output.jpg', skia.kJPEG)
+
+        array = image.numpy()  # Export to numpy array
+
     )docstring");
 
 py::enum_<SkImage::CompressionType>(image, "CompressionType")
@@ -144,41 +212,175 @@ image
         py::arg("colorType") = kUnknown_SkColorType,
         py::arg("alphaType") = kUnpremul_SkAlphaType,
         py::arg("colorSpace") = nullptr)
-    .def("bitmap",
-        [] (const SkImage& image, SkColorType ct, SkAlphaType at,
-            const SkColorSpace* cs) {
-            SkBitmap bitmap;
-            if (ct == kUnknown_SkColorType)
-                ct = image.colorType();
-            auto imageInfo = SkImageInfo::Make(
-                image.width(), image.height(), ct, at, CloneColorSpace(cs));
-            if (!bitmap.tryAllocPixels(imageInfo))
-                throw std::runtime_error("Failed to allocate bitmap.");
-            if (!image.readPixels(
-                imageInfo, bitmap.getPixels(), bitmap.rowBytes(), 0, 0))
-                throw std::runtime_error("Failed to read pixels.");
-            return bitmap;
+    .def_static("open",
+        [] (py::object fp, const SkIRect* subset) {
+            sk_sp<SkData> data(nullptr);
+            if (hasattr(fp, "seek") && hasattr(fp, "read")) {
+                fp.attr("seek")(0);
+                auto buffer = fp.attr("read")().cast<py::buffer>();
+                // TODO: Check maximum file size.
+                auto info = buffer.request();
+                size_t size = (info.ndim) ? info.strides[0] * info.shape[0] : 0;
+                data = SkData::MakeWithCopy(info.ptr, size);
+                if (!data)
+                    throw std::bad_alloc();
+            }
+            else {
+                auto path = fp.cast<std::string>();
+                data = SkData::MakeFromFileName(path.c_str());
+                if (!data)
+                    throw py::value_error(
+                        py::str("File not found: {}").format(path));
+            }
+            auto image = SkImage::MakeFromEncoded(data, subset);
+            if (!image)
+                throw std::runtime_error("Failed to decode an image");
+            return image;
         },
         R"docstring(
-        Exports :py:class:`Image` to :py:class:`Bitmap`.
+        Creates :py:attr:`Image` from file path or file-like object.
+
+        Shortcut for the following::
+
+            if hasattr(fp, 'read') and hasattr(fp, 'seek'):
+                fp.seek(0)
+                data = skia.Data.MakeWithCopy(fp.read())
+            else:
+                data = skia.Data.MakeFromFileName(fp)
+            image = skia.Image.MakeFromEncoded(data, subset)
+
+        :param fp: file path or file-like object that has `seek` and `read`
+            method. file must be opened in binary mode.
+        :param skia.IRect subset: the bounds of the pixels within the decoded
+            image to return. may be null.
+        )docstring",
+        py::arg("fp"), py::arg("subset") = nullptr)
+    .def("save",
+        [] (const SkImage& image, py::object fp,
+            SkEncodedImageFormat format, int quality) {
+            auto data = image.encodeToData(format, quality);
+            if (!data)
+                throw std::runtime_error("Failed to encode an image.");
+            if (hasattr(fp, "write"))
+                fp.attr("write")(data);
+            else {
+                auto path = fp.cast<std::string>();
+                SkFILEWStream stream(path.c_str());
+                stream.write(data->data(), data->size());
+            }
+        },
+        R"docstring(
+        Saves :py:attr:`Image` to file path or file-like object.
+
+        Shortcut for the following::
+
+            data = image.encodeToData(encodedImageFormat, quality)
+            if hasattr(fp, 'write'):
+                fp.write(data)
+            else:
+                with open(fp, 'wb') as f:
+                    f.write(data)
+
+        :param fp: file path or file-like object that has `write` method. file
+            must be opened in writable binary mode.
+        :param skia.EncodedImageFormat encodedImageFormat:
+            one of: :py:attr:`~EncodedImageFormat.kJPEG`,
+            :py:attr:`~EncodedImageFormat.kPNG`,
+            :py:attr:`~EncodedImageFormat.kWEBP`
+        :param int quality: encoder specific metric with 100 equaling best
+        )docstring",
+        py::arg("fp"),
+        py::arg("encodedImageFormat") = SkEncodedImageFormat::kPNG,
+        py::arg("quality") = 100)
+    .def("bitmap", &ImageToBitmap,
+        R"docstring(
+        Creates :py:class:`Bitmap` from :py:class:`Image`.
 
         Pixels are always allocated and copied.
 
         :param colorType: color type of :py:class:`Bitmap`. If
             :py:attr:`~skia.kUnknown_ColorType`, uses the same colorType as
             :py:class:`Image`.
-        :param alphaType: alpha type of :py:class:`Bitmap`.
+        :param alphaType: alpha type of :py:class:`Bitmap`. If
+            :py:attr:`~skia.kUnknown_AlphaType`, uses the same alphaType as
+            :py:class:`Image`.
         :param colorSpace: color space of :py:class:`Bitmap`.
         :return: :py:class:`Bitmap`
         )docstring",
         py::arg("colorType") = kUnknown_SkColorType,
         py::arg("alphaType") = kUnpremul_SkAlphaType,
         py::arg("colorSpace") = nullptr)
+    .def("convert", &ConvertImage,
+        R"docstring(
+        Creates :py:class:`Image` in target :py:class:`ColorType`,
+        :py:class:`AlphatType`, and :py:class:`ColorSpace`. Raises if
+        :py:class:`Image` could not be created.
+
+        Pixels are converted only if pixel conversion is possible. If
+        :py:class:`Image` :py:class:`ColorType` is
+        :py:attr:`~ColorType.kGray_8_ColorType`, or
+        :py:attr:`~ColorType.kAlpha_8_ColorType`; colorType must
+        be the same. If :py:class:`Image` :py:class:`ColorType` is
+        :py:attr:`~ColorType.kGray_8_ColorType`, colorSpace must
+        be the same. If :py:class:`Image` :py:class:`AlphaType` is
+        :py:attr:`~AlphaType.kOpaque_AlphaType`, alphaType must be the same.
+        If :py:class:`Image` :py:class:`ColorSpace` is nullptr,
+        colorSpace must be the same. Raises if pixel conversion is
+        not possible.
+
+        :param colorType: target color type. If
+            :py:attr:`~skia.kUnknown_ColorType` is given, uses the same
+            colorType as :py:class:`Image`.
+        :param alphaType: target alpha type. If
+            :py:attr:`~skia.kUnknown_AlphaType` is given, uses the same
+            alphaType as :py:class:`Image`.
+        :param colorSpace: target color space.
+        :return: :py:class:`Image`
+        )docstring",
+        py::arg("colorType") = kUnknown_SkColorType,
+        py::arg("alphaType") = kUnknown_SkAlphaType,
+        py::arg("colorSpace") = nullptr)
+    .def("resize", &ResizeImage,
+        R"docstring(
+        Creates :py:class:`Image` by scaling pixels to fit width and height.
+        Raises if :py:class:`Image` could not be scaled.
+
+        Scales the image, with filterQuality, to match width and height.
+        filterQuality :py:attr:`~FilterQuality.None_FilterQuality` is fastest,
+        typically implemented with nearest neighbor filter.
+        :py:attr:`~FilterQuality.kLow_FilterQuality` is typically implemented
+        with bilerp filter. :py:attr:`~FilterQuality.kMedium_FilterQuality` is
+        typically implemented with bilerp filter, and mip-map filter when size
+        is reduced. :py:attr:`~FilterQuality.kHigh_FilterQuality` is slowest,
+        typically implemented with bicubic filter.
+
+        If cachingHint is :py:attr:`~Image.CachingHint.kAllow_CachingHint`,
+        pixels may be retained locally. If cachingHint is
+        :py:attr:`~Image.CachingHint.kDisallow_CachingHint`, pixels are not
+        added to the local cache.
+
+        :param int width: target width
+        :param int height: target height
+        :param skia.FilterQuality filterQuality: Filter quality
+        :param skia.Image.CachingHint cachingHint: Caching hint
+        :return: :py:class:`Image`
+        )docstring",
+        py::arg("width"), py::arg("height"),
+        py::arg("filterQuality") = SkFilterQuality::kMedium_SkFilterQuality,
+        py::arg("cachingHint") = SkImage::kAllow_CachingHint)
     .def("__repr__",
         [] (const SkImage& image) {
             return py::str("Image({}, {}, {}, {})").format(
                 image.width(), image.height(), image.colorType(),
                 image.alphaType());
+        })
+    .def("_repr_png_",
+        [] (const SkImage& image) {
+            auto data = image.encodeToData();
+            if (!data)
+                throw std::runtime_error("Failed to encode an image.");
+            return py::bytes(
+                static_cast<const char*>(data->data()), data->size());
         })
     .def("imageInfo", &SkImage::imageInfo,
         R"docstring(

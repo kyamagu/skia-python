@@ -12,6 +12,10 @@ def check_canvas(x):
     assert isinstance(x, skia.Canvas)
 
 
+def test_Canvas_repr(canvas):
+    assert isinstance(repr(canvas), str)
+
+
 @pytest.mark.parametrize('args', [
     tuple(),
     (np.zeros((16, 16, 4), dtype=np.uint8),),

@@ -161,9 +161,21 @@ py::enum_<SkSurface::FlushFlags>(surface, "FlushFlags", py::arithmetic())
 
 surface
     .def("__repr__",
-        [] (const SkSurface& surface) {
-            return py::str("Surface({}, {})").format(
-                surface.width(), surface.height());
+        [] (SkSurface& surface) {
+            return py::str("Surface({}, {}, '{}')").format(
+                surface.width(), surface.height(),
+                (surface.getContext()) ? "GPU" : "Raster");
+        })
+    .def("_repr_png_",
+        [] (SkSurface& surface) {
+            auto image = surface.makeImageSnapshot();
+            if (!image)
+                throw std::runtime_error("Failed to make an image snapshot.");
+            auto data = image->encodeToData();
+            if (!data)
+                throw std::runtime_error("Failed to encode an image.");
+            return py::bytes(
+                static_cast<const char*>(data->data()), data->size());
         })
     .def("numpy", &ReadToNumpy<SkSurface>,
         R"docstring(

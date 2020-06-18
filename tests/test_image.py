@@ -26,6 +26,24 @@ def test_Image_init(args, color_type, error):
         assert isinstance(skia.Image(np.zeros(*args), color_type), skia.Image)
 
 
+def test_Image_open(png_path):
+    assert isinstance(skia.Image.open(png_path), skia.Image)
+    with open(png_path, 'rb') as f:
+        assert isinstance(skia.Image.open(f), skia.Image)
+
+
+def test_Image_save(image):
+    import io
+    import os
+    import tempfile
+
+    with io.BytesIO() as f:
+        image.save(f)
+
+    with tempfile.NamedTemporaryFile(dir=os.path.dirname(__file__)) as t:
+        image.save(t.name)
+
+
 def test_Image_numpy(image):
     assert isinstance(image.numpy(), np.ndarray)
 
@@ -34,8 +52,25 @@ def test_Image_bitmap(image):
     assert isinstance(image.bitmap(), skia.Bitmap)
 
 
+def test_Image_convert(image):
+    converted = image.convert(alphaType=skia.kUnpremul_AlphaType)
+    assert isinstance(converted, skia.Image)
+    assert converted.alphaType() == skia.kUnpremul_AlphaType
+
+
+def test_Image_resize(image):
+    resized = image.resize(50, 40)
+    assert isinstance(resized, skia.Image)
+    assert resized.width() == 50
+    assert resized.height() == 40
+
+
 def test_Image_repr(image):
     assert isinstance(repr(image), str)
+
+
+def test_Image_repr_png(image):
+    assert isinstance(image._repr_png_(), bytes)
 
 
 def test_Image_imageInfo(image):
