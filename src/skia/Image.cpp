@@ -21,6 +21,64 @@ sk_sp<SkImage> NumPyToImage(py::array array, SkColorType ct, SkAlphaType at,
     return SkImage::MakeRasterData(imageInfo, data, array.strides(0));
 }
 
+std::unique_ptr<SkBitmap> ImageToBitmap(
+    const SkImage& image, SkColorType ct, SkAlphaType at,
+    const SkColorSpace* cs) {
+    std::unique_ptr<SkBitmap> bitmap(new SkBitmap());
+    if (!bitmap)
+        throw std::bad_alloc();
+    if (ct == kUnknown_SkColorType)
+        ct = image.colorType();
+    if (at == kUnknown_SkAlphaType)
+        at = image.alphaType();
+    auto imageInfo = SkImageInfo::Make(
+        image.width(), image.height(), ct, at, CloneColorSpace(cs));
+    if (!bitmap->tryAllocPixels(imageInfo))
+        throw std::bad_alloc();
+    if (!image.readPixels(
+        imageInfo, bitmap->getPixels(), bitmap->rowBytes(), 0, 0))
+        throw std::runtime_error("Failed to read pixels.");
+    return bitmap;
+}
+
+sk_sp<SkImage> ConvertImage(
+    const SkImage& image, SkColorType ct, SkAlphaType at,
+    const SkColorSpace* cs) {
+    if (ct == kUnknown_SkColorType)
+        ct = image.colorType();
+    if (at == kUnknown_SkAlphaType)
+        at = image.alphaType();
+    if (at == image.alphaType()) {
+        if (ct == image.colorType())
+            return image.makeColorSpace(CloneColorSpace(cs));
+        return image.makeColorTypeAndColorSpace(ct, CloneColorSpace(cs));
+    }
+
+    auto imageInfo = SkImageInfo::Make(
+        image.width(), image.height(), ct, at, CloneColorSpace(cs));
+    auto buffer = SkData::MakeUninitialized(imageInfo.computeMinByteSize());
+    if (!buffer)
+        throw std::bad_alloc();
+    if (!image.readPixels(
+        imageInfo, buffer->writable_data(), imageInfo.minRowBytes(), 0, 0))
+        throw std::runtime_error("Failed to convert pixels.");
+    return SkImage::MakeRasterData(imageInfo, buffer, imageInfo.minRowBytes());
+}
+
+sk_sp<SkImage> ResizeImage(
+    const SkImage& image, int width, int height, SkFilterQuality filterQuality,
+    SkImage::CachingHint cachingHint) {
+    auto imageInfo = image.imageInfo().makeWH(width, height);
+    auto buffer = SkData::MakeUninitialized(imageInfo.computeMinByteSize());
+    if (!buffer)
+        throw std::bad_alloc();
+    auto pixmap = SkPixmap(
+        imageInfo, buffer->writable_data(), imageInfo.minRowBytes());
+    if (!image.scalePixels(pixmap, filterQuality, cachingHint))
+        throw std::runtime_error("Failed to resize image.");
+    return SkImage::MakeRasterData(imageInfo, buffer, imageInfo.minRowBytes());
+}
+
 }  // namespace
 
 void initImage(py::module &m) {
@@ -144,21 +202,7 @@ image
         py::arg("colorType") = kUnknown_SkColorType,
         py::arg("alphaType") = kUnpremul_SkAlphaType,
         py::arg("colorSpace") = nullptr)
-    .def("bitmap",
-        [] (const SkImage& image, SkColorType ct, SkAlphaType at,
-            const SkColorSpace* cs) {
-            SkBitmap bitmap;
-            if (ct == kUnknown_SkColorType)
-                ct = image.colorType();
-            auto imageInfo = SkImageInfo::Make(
-                image.width(), image.height(), ct, at, CloneColorSpace(cs));
-            if (!bitmap.tryAllocPixels(imageInfo))
-                throw std::runtime_error("Failed to allocate bitmap.");
-            if (!image.readPixels(
-                imageInfo, bitmap.getPixels(), bitmap.rowBytes(), 0, 0))
-                throw std::runtime_error("Failed to read pixels.");
-            return bitmap;
-        },
+    .def("bitmap", &ImageToBitmap,
         R"docstring(
         Exports :py:class:`Image` to :py:class:`Bitmap`.
 
@@ -174,6 +218,62 @@ image
         py::arg("colorType") = kUnknown_SkColorType,
         py::arg("alphaType") = kUnpremul_SkAlphaType,
         py::arg("colorSpace") = nullptr)
+    .def("convert", &ConvertImage,
+        R"docstring(
+        Creates :py:class:`Image` in target :py:class:`ColorType`,
+        :py:class:`AlphatType` and :py:class:`ColorSpace`. Raises if
+        :py:class:`Image` could not be created.
+
+        Pixels are converted only if pixel conversion is possible. If
+        :py:class:`Image` :py:class:`ColorType` is
+        :py:attr:`~ColorType.kGray_8_ColorType`, or
+        :py:attr:`~ColorType.kAlpha_8_ColorType`; colorType must
+        match. If :py:class:`Image` :py:class:`ColorType` is
+        :py:attr:`~ColorType.kGray_8_ColorType`, colorSpace must
+        match. If :py:class:`Image` :py:class:`AlphaType` is
+        :py:attr:`~AlphaType.kOpaque_AlphaType`, alphaType must match.
+        If :py:class:`Image` :py:class:`ColorSpace` is nullptr,
+        colorSpace must match. Returns false if pixel conversion is
+        not possible.
+
+        :param colorType: color type of :py:class:`Bitmap`. If
+            :py:attr:`~skia.kUnknown_ColorType`, uses the same colorType as
+            :py:class:`Image`.
+        :param alphaType: alpha type of :py:class:`Bitmap`.
+        :param colorSpace: color space of :py:class:`Bitmap`.
+        :return: :py:class:`Image` or nullptr
+        )docstring",
+        py::arg("colorType") = kUnknown_SkColorType,
+        py::arg("alphaType") = kUnknown_SkAlphaType,
+        py::arg("colorSpace") = nullptr)
+    .def("resize", &ResizeImage,
+        R"docstring(
+        Creates :py:class:`Image` by scaling pixels to fit width and height.
+        Raises if :py:class:`Image` could not be scaled.
+
+        Scales the image, with filterQuality, to match width and height.
+        filterQuality :py:attr:`~FilterQuality.None_FilterQuality` is fastest,
+        typically implemented with nearest neighbor filter.
+        :py:attr:`~FilterQuality.kLow_FilterQuality` is typically implemented
+        with bilerp filter. :py:attr:`~FilterQuality.kMedium_FilterQuality` is
+        typically implemented with bilerp filter, and mip-map filter when size
+        is reduced. :py:attr:`~FilterQuality.kHigh_FilterQuality` is slowest,
+        typically implemented with bicubic filter.
+
+        If cachingHint is :py:attr:`~Image.CachingHint.kAllow_CachingHint`,
+        pixels may be retained locally. If cachingHint is
+        :py:attr:`~Image.CachingHint.kDisallow_CachingHint`, pixels are not
+        added to the local cache.
+
+        :param int width: destination width
+        :param int height: destination height
+        :param skia.FilterQuality filterQuality: Filter quality
+        :param skia.Image.CachingHint cachingHint: Caching hint
+        :return: :py:class:`Image`
+        )docstring",
+        py::arg("width"), py::arg("height"),
+        py::arg("filterQuality") = SkFilterQuality::kMedium_SkFilterQuality,
+        py::arg("cachingHint") = SkImage::kAllow_CachingHint)
     .def("__repr__",
         [] (const SkImage& image) {
             return py::str("Image({}, {}, {}, {})").format(

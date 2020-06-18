@@ -34,6 +34,19 @@ def test_Image_bitmap(image):
     assert isinstance(image.bitmap(), skia.Bitmap)
 
 
+def test_Image_convert(image):
+    converted = image.convert(alphaType=skia.kUnpremul_AlphaType)
+    assert isinstance(converted, skia.Image)
+    assert converted.alphaType() == skia.kUnpremul_AlphaType
+
+
+def test_Image_resize(image):
+    resized = image.resize(50, 40)
+    assert isinstance(resized, skia.Image)
+    assert resized.width() == 50
+    assert resized.height() == 40
+
+
 def test_Image_repr(image):
     assert isinstance(repr(image), str)
 
