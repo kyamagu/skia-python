@@ -24,6 +24,10 @@ def test_Surface_repr(surface):
     assert isinstance(repr(surface), str)
 
 
+def test_Image_repr_png(surface):
+    assert isinstance(surface._repr_png_(), bytes)
+
+
 def test_Surface_width(surface):
     assert surface.width() == 320
 

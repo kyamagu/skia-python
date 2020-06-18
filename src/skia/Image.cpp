@@ -180,6 +180,14 @@ image
                 image.width(), image.height(), image.colorType(),
                 image.alphaType());
         })
+    .def("_repr_png_",
+        [] (const SkImage& image) {
+            auto data = image.encodeToData();
+            if (!data)
+                throw std::runtime_error("Failed to encode an image.");
+            return py::bytes(
+                static_cast<const char*>(data->data()), data->size());
+        })
     .def("imageInfo", &SkImage::imageInfo,
         R"docstring(
         Returns a :py:class:`ImageInfo` describing the width, height, color

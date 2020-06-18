@@ -38,6 +38,10 @@ def test_Image_repr(image):
     assert isinstance(repr(image), str)
 
 
+def test_Image_repr_png(image):
+    assert isinstance(image._repr_png_(), bytes)
+
+
 def test_Image_imageInfo(image):
     assert isinstance(image.imageInfo(), skia.ImageInfo)
 
