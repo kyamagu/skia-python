@@ -3,7 +3,7 @@
 
 namespace {
 
-bool Image_ReadPixels(
+bool ImageReadPixels(
     const SkImage& image, const SkImageInfo& imageInfo, py::buffer dstPixels,
     size_t dstRowBytes, int srcX, int srcY, SkImage::CachingHint hint) {
     auto info = dstPixels.request(true);
@@ -11,7 +11,20 @@ bool Image_ReadPixels(
     return image.readPixels(imageInfo, info.ptr, rowBytes, srcX, srcY, hint);
 }
 
-sk_sp<SkImage> NumPyToImage(py::array array, SkColorType ct, SkAlphaType at,
+sk_sp<SkImage> ImageFromBuffer(
+    py::buffer b, const SkISize dimensions, SkColorType ct, SkAlphaType at,
+    const SkColorSpace* cs, bool copy) {
+    auto info = b.request();
+    auto imageInfo = SkImageInfo::Make(dimensions, ct, at, CloneColorSpace(cs));
+    size_t rowBytes = ValidateBufferToImageInfo(imageInfo, info);
+    size_t size = imageInfo.computeByteSize(rowBytes);
+    auto data = (copy) ?
+        SkData::MakeWithCopy(info.ptr, size) :
+        SkData::MakeWithoutCopy(info.ptr, size);
+    return SkImage::MakeRasterData(imageInfo, data, rowBytes);
+}
+
+sk_sp<SkImage> ImageFromArray(py::array array, SkColorType ct, SkAlphaType at,
                             const SkColorSpace* cs, bool copy) {
     auto imageInfo = NumPyToImageInfo(array, ct, at, cs);
     size_t size = array.shape(0) * array.strides(0);
@@ -41,7 +54,46 @@ std::unique_ptr<SkBitmap> ImageToBitmap(
     return bitmap;
 }
 
-sk_sp<SkImage> ConvertImage(
+sk_sp<SkImage> ImageOpen(py::object fp, const SkIRect* subset) {
+    sk_sp<SkData> data(nullptr);
+    if (hasattr(fp, "seek") && hasattr(fp, "read")) {
+        fp.attr("seek")(0);
+        auto buffer = fp.attr("read")().cast<py::buffer>();
+        // TODO: Check maximum file size.
+        auto info = buffer.request();
+        size_t size = (info.ndim) ? info.strides[0] * info.shape[0] : 0;
+        data = SkData::MakeWithCopy(info.ptr, size);
+        if (!data)
+            throw std::bad_alloc();
+    }
+    else {
+        auto path = fp.cast<std::string>();
+        data = SkData::MakeFromFileName(path.c_str());
+        if (!data)
+            throw py::value_error(
+                py::str("File not found: {}").format(path));
+    }
+    auto image = SkImage::MakeFromEncoded(data, subset);
+    if (!image)
+        throw std::runtime_error("Failed to decode an image");
+    return image;
+}
+
+void ImageSave(const SkImage& image, py::object fp,
+               SkEncodedImageFormat format, int quality) {
+    auto data = image.encodeToData(format, quality);
+    if (!data)
+        throw std::runtime_error("Failed to encode an image.");
+    if (hasattr(fp, "write"))
+        fp.attr("write")(data);
+    else {
+        auto path = fp.cast<std::string>();
+        SkFILEWStream stream(path.c_str());
+        stream.write(data->data(), data->size());
+    }
+}
+
+sk_sp<SkImage> ImageConvert(
     const SkImage& image, SkColorType ct, SkAlphaType at,
     const SkColorSpace* cs) {
     if (ct == kUnknown_SkColorType)
@@ -65,7 +117,7 @@ sk_sp<SkImage> ConvertImage(
     return SkImage::MakeRasterData(imageInfo, buffer, imageInfo.minRowBytes());
 }
 
-sk_sp<SkImage> ResizeImage(
+sk_sp<SkImage> ImageResize(
     const SkImage& image, int width, int height, SkFilterQuality filterQuality,
     SkImage::CachingHint cachingHint) {
     auto imageInfo = image.imageInfo().makeWH(width, height);
@@ -148,12 +200,21 @@ py::class_<SkImage, sk_sp<SkImage>, SkRefCnt> image(m, "Image",
 
         image = skia.Image.open('/path/to/image.png')
         resized = image.resize(120, 120)
-        bitmap = image.bitmap()
         image.save('/path/to/output.jpg', skia.kJPEG)
 
-        array = image.numpy()  # Export to numpy array
+    NumPy arrays can be directly imported or exported::
 
-    )docstring");
+        image = skia.Image.fromarray(array)
+        array = image.toarray()
+
+    General pixel buffers can be exchanged in the following approach::
+
+        image = skia.Image.frombytes(
+            pixels, (100, 100), skia.kRGBA_8888_ColorType)
+        pixels = image.makeRasterImage().tobytes()
+
+    )docstring",
+    py::buffer_protocol());
 
 py::enum_<SkImage::CompressionType>(image, "CompressionType")
     .value("kNone", SkImage::CompressionType::kNone)
@@ -181,7 +242,37 @@ py::enum_<SkImage::LegacyBitmapMode>(image, "LegacyBitmapMode")
     .export_values();
 
 image
-    .def(py::init(&NumPyToImage),
+    // Python methods.
+    .def_buffer([] (const SkImage& image) {
+        auto pixmap = PeekPixels<const SkImage>(image);
+        return ImageInfoToBufferInfo(
+            pixmap->info(), pixmap->writable_addr(), pixmap->rowBytes());
+    })
+    .def_property_readonly("__array_interface__",
+        [] (const SkImage& image) {
+            auto pixmap = PeekPixels<const SkImage>(image);
+            return ImageInfoToArrayInterface(
+                pixmap->info(), pixmap->rowBytes());
+        })
+    .def("tobytes",
+        [] (const SkImage& image) -> py::object {
+            return py::module::import("builtins").attr("bytes")(image);
+        })
+    .def_static("frombytes", &ImageFromBuffer,
+        R"docstring(
+        Creates a new :py:class:`Image` from bytes.
+
+        :param pixels: raw bytes of pixels
+        :param skia.ISize dimensions: (width, height) tuple
+        :param skia.ColorType colorType: color type of the array
+        :param skia.AlphaType alphaType: alpha type of the array
+        :param skia.ColorSpace colorSpace: range of colors; may be nullptr
+        :param bool copy: Whether to copy pixels.
+        )docstring",
+        py::arg("array"), py::arg("dimensions"), py::arg("colorType"),
+        py::arg("alphaType") = kUnpremul_SkAlphaType,
+        py::arg("colorSpace") = nullptr, py::arg("copy") = true)
+    .def_static("fromarray", &ImageFromArray,
         R"docstring(
         Creates a new :py:class:`Image` from numpy array.
 
@@ -196,8 +287,8 @@ image
         )docstring",
         py::arg("array"), py::arg("colorType") = kRGBA_8888_SkColorType,
         py::arg("alphaType") = kUnpremul_SkAlphaType,
-        py::arg("colorSpace") = nullptr, py::arg("copy") = false)
-    .def("numpy", &ReadToNumpy<SkImage>,
+        py::arg("colorSpace") = nullptr, py::arg("copy") = true)
+    .def("toarray", &ReadToNumpy<SkImage>,
         R"docstring(
         Exports a ``numpy.ndarray``.
 
@@ -212,31 +303,7 @@ image
         py::arg("colorType") = kUnknown_SkColorType,
         py::arg("alphaType") = kUnpremul_SkAlphaType,
         py::arg("colorSpace") = nullptr)
-    .def_static("open",
-        [] (py::object fp, const SkIRect* subset) {
-            sk_sp<SkData> data(nullptr);
-            if (hasattr(fp, "seek") && hasattr(fp, "read")) {
-                fp.attr("seek")(0);
-                auto buffer = fp.attr("read")().cast<py::buffer>();
-                // TODO: Check maximum file size.
-                auto info = buffer.request();
-                size_t size = (info.ndim) ? info.strides[0] * info.shape[0] : 0;
-                data = SkData::MakeWithCopy(info.ptr, size);
-                if (!data)
-                    throw std::bad_alloc();
-            }
-            else {
-                auto path = fp.cast<std::string>();
-                data = SkData::MakeFromFileName(path.c_str());
-                if (!data)
-                    throw py::value_error(
-                        py::str("File not found: {}").format(path));
-            }
-            auto image = SkImage::MakeFromEncoded(data, subset);
-            if (!image)
-                throw std::runtime_error("Failed to decode an image");
-            return image;
-        },
+    .def_static("open", &ImageOpen,
         R"docstring(
         Creates :py:attr:`Image` from file path or file-like object.
 
@@ -255,20 +322,7 @@ image
             image to return. may be null.
         )docstring",
         py::arg("fp"), py::arg("subset") = nullptr)
-    .def("save",
-        [] (const SkImage& image, py::object fp,
-            SkEncodedImageFormat format, int quality) {
-            auto data = image.encodeToData(format, quality);
-            if (!data)
-                throw std::runtime_error("Failed to encode an image.");
-            if (hasattr(fp, "write"))
-                fp.attr("write")(data);
-            else {
-                auto path = fp.cast<std::string>();
-                SkFILEWStream stream(path.c_str());
-                stream.write(data->data(), data->size());
-            }
-        },
+    .def("save", &ImageSave,
         R"docstring(
         Saves :py:attr:`Image` to file path or file-like object.
 
@@ -310,7 +364,7 @@ image
         py::arg("colorType") = kUnknown_SkColorType,
         py::arg("alphaType") = kUnpremul_SkAlphaType,
         py::arg("colorSpace") = nullptr)
-    .def("convert", &ConvertImage,
+    .def("convert", &ImageConvert,
         R"docstring(
         Creates :py:class:`Image` in target :py:class:`ColorType`,
         :py:class:`AlphatType`, and :py:class:`ColorSpace`. Raises if
@@ -340,7 +394,7 @@ image
         py::arg("colorType") = kUnknown_SkColorType,
         py::arg("alphaType") = kUnknown_SkAlphaType,
         py::arg("colorSpace") = nullptr)
-    .def("resize", &ResizeImage,
+    .def("resize", &ImageResize,
         R"docstring(
         Creates :py:class:`Image` by scaling pixels to fit width and height.
         Raises if :py:class:`Image` could not be scaled.
@@ -382,6 +436,8 @@ image
             return py::bytes(
                 static_cast<const char*>(data->data()), data->size());
         })
+
+    // C++ wrappers.
     .def("imageInfo", &SkImage::imageInfo,
         R"docstring(
         Returns a :py:class:`ImageInfo` describing the width, height, color
@@ -511,20 +567,15 @@ image
         )docstring",
         py::arg("tmx") = SkTileMode::kClamp,
         py::arg("tmy") = SkTileMode::kClamp, py::arg("localMatrix") = nullptr)
-    .def("peekPixels", &SkImage::peekPixels,
+    .def("peekPixels", &PeekPixels<const SkImage>,
         R"docstring(
-        Copies :py:class:`Image` pixel address, row bytes, and
-        :py:class:`ImageInfo` to pixmap, if address is available, and returns
-        true.
+        Creates :py:class:`Pixmap` from :py:class:`Image` pixel address, row
+        bytes, and :py:class:`ImageInfo` to pixmap, if address is available.
 
-        If pixel address is not available, return false and leave pixmap
-        unchanged.
+        Raises if pixel address is not available.
 
-        :param skia.Pixmap pixmap: storage for pixel state if pixels are
-            readable; otherwise, ignored
-        :return: true if :py:class:`Image` has direct access to pixels
-        )docstring",
-        py::arg("pixmap").none(false))
+        :return: :py:class:`Pixmap`
+        )docstring")
     .def("isTextureBacked", &SkImage::isTextureBacked,
         R"docstring(
         Returns true the contents of :py:class:`Image` was created on or
@@ -565,7 +616,7 @@ image
         py::arg("context").none(false))
     // .def("getBackendTexture", &SkImage::getBackendTexture,
     //     "Retrieves the back-end texture.")
-    .def("readPixels", &Image_ReadPixels,
+    .def("readPixels", &ImageReadPixels,
         R"docstring(
         Copies :py:class:`Rect` of pixels from :py:class:`Image` to array.
 

@@ -16,16 +16,12 @@ def test_Surface_init(args):
     check_surface(skia.Surface(*args))
 
 
-def test_Surface_numpy(surface):
-    assert isinstance(surface.numpy(), np.ndarray)
+def test_Surface_toarray(surface):
+    assert isinstance(surface.toarray(), np.ndarray)
 
 
 def test_Surface_repr(surface):
     assert isinstance(repr(surface), str)
-
-
-def test_Image_repr_png(surface):
-    assert isinstance(surface._repr_png_(), bytes)
 
 
 def test_Surface_width(surface):
@@ -93,7 +89,8 @@ def test_Surface_draw(surface):
 
 
 def test_Surface_peekPixels(surface):
-    assert isinstance(surface.peekPixels(skia.Pixmap()), bool)
+    if surface.getContext() is None:
+        assert isinstance(surface.peekPixels(), skia.Pixmap)
 
 
 @pytest.mark.parametrize('args', [
