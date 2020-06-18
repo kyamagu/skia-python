@@ -161,23 +161,11 @@ py::enum_<SkSurface::FlushFlags>(surface, "FlushFlags", py::arithmetic())
 
 surface
     .def("__repr__",
-        [] (SkSurface& surface) {
-            return py::str("Surface({}, {}, '{}')").format(
-                surface.width(), surface.height(),
-                (surface.getContext()) ? "GPU" : "Raster");
+        [] (const SkSurface& surface) {
+            return py::str("Surface({}, {})").format(
+                surface.width(), surface.height());
         })
-    .def("_repr_png_",
-        [] (SkSurface& surface) {
-            auto image = surface.makeImageSnapshot();
-            if (!image)
-                throw std::runtime_error("Failed to make an image snapshot.");
-            auto data = image->encodeToData();
-            if (!data)
-                throw std::runtime_error("Failed to encode an image.");
-            return py::bytes(
-                static_cast<const char*>(data->data()), data->size());
-        })
-    .def("numpy", &ReadToNumpy<SkSurface>,
+    .def("toarray", &ReadToNumpy<SkSurface>,
         R"docstring(
         Exports a ``numpy.ndarray``.
 
@@ -403,23 +391,18 @@ surface
         )docstring",
         py::arg("canvas"), py::arg("x"), py::arg("y"),
         py::arg("paint") = nullptr)
-    .def("peekPixels", &SkSurface::peekPixels,
+    .def("peekPixels", &PeekPixels<SkSurface>,
         R"docstring(
-        Copies :py:class:`Surface` pixel address, row bytes, and
-        :py:class:`ImageInfo` to :py:class:`Pixmap`, if address is available,
-        and returns true.
+        Creates :py:class:`Pixmap` from :py:class:`Surface` pixel address, row
+        bytes, and :py:class:`ImageInfo` to pixmap, if address is available.
 
-        If pixel address is not available, return false and leave
-        :py:class:`Pixmap` unchanged.
+        Raises if pixel address is not available.
 
-        pixmap contents become invalid on any future change to
+        :py:class:`Pixmap` contents become invalid on any future change to
         :py:class:`Surface`.
 
-        :param skia.Pixmap pixmap: storage for pixel state if pixels are
-            readable; otherwise, ignored
-        :return: true if :py:class:`Surface` has direct access to pixels
-        )docstring",
-        py::arg("pixmap"))
+        :return: :py:class:`Pixmap`
+        )docstring")
     .def("readPixels",
         py::overload_cast<const SkPixmap&, int, int>(&SkSurface::readPixels),
         R"docstring(

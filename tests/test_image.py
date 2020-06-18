@@ -18,12 +18,23 @@ import numpy as np
     (((100, 0, 4), np.uint8), skia.kRGBA_8888_ColorType, ValueError),
     (((10, 10, 3), np.float64), skia.kRGBA_8888_ColorType, ValueError),
 ])
-def test_Image_init(args, color_type, error):
+def test_Image_fromarray(args, color_type, error):
     if error is not None:
         with pytest.raises(error):
-            skia.Image(np.zeros(*args), color_type)
+            skia.Image.fromarray(np.zeros(*args), color_type)
     else:
-        assert isinstance(skia.Image(np.zeros(*args), color_type), skia.Image)
+        assert isinstance(
+            skia.Image.fromarray(np.zeros(*args), color_type), skia.Image)
+
+
+def test_Image_frombytes(png_path):
+    from PIL import Image
+    pil_image = Image.open(png_path)
+    image = skia.Image.frombytes(
+        pil_image.tobytes(),
+        (pil_image.width, pil_image.height),
+        skia.kRGBA_8888_ColorType)
+    assert isinstance(image, skia.Image)
 
 
 def test_Image_open(png_path):
@@ -44,8 +55,8 @@ def test_Image_save(image):
         image.save(t.name)
 
 
-def test_Image_numpy(image):
-    assert isinstance(image.numpy(), np.ndarray)
+def test_Image_toarray(image):
+    assert isinstance(image.toarray(), np.ndarray)
 
 
 def test_Image_bitmap(image):
@@ -130,8 +141,7 @@ def test_Image_makeShader(image, args):
 
 
 def test_Image_peekPixels(image):
-    pixmap = skia.Pixmap()
-    assert isinstance(image.peekPixels(pixmap), bool)
+    assert isinstance(image.makeRasterImage().peekPixels(), skia.Pixmap)
 
 
 def test_Image_isTextureBacked(image):

@@ -72,11 +72,12 @@ def test_Canvas_accessTopLayerPixels(canvas):
 
 
 def test_Canvas_peekPixels(canvas):
-    assert isinstance(canvas.peekPixels(skia.Pixmap()), bool)
+    if canvas.getGrContext() is None:
+        assert isinstance(canvas.peekPixels(), skia.Pixmap)
 
 
-def test_Canvas_numpy(canvas):
-    assert isinstance(canvas.numpy(), np.ndarray)
+def test_Canvas_toarray(canvas):
+    assert isinstance(canvas.toarray(), np.ndarray)
 
 
 @pytest.mark.parametrize('args', [

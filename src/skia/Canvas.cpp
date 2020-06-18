@@ -394,7 +394,7 @@ canvas
             independent fonts
         )docstring",
         py::arg("bitmap"), py::arg("props"))
-    .def("numpy", &ReadToNumpy<SkCanvas>,
+    .def("toarray", &ReadToNumpy<SkCanvas>,
         R"docstring(
         Exports a ``numpy.ndarray``.
 
@@ -535,9 +535,11 @@ canvas
         py::arg("origin") = nullptr)
     // .def("accessTopRasterHandle", &SkCanvas::accessTopRasterHandle,
     //     "Returns custom context that tracks the SkMatrix and clip.")
-    .def("peekPixels", &SkCanvas::peekPixels,
+    .def("peekPixels", &PeekPixels<SkCanvas>,
         R"docstring(
-        Returns true if :py:class:`Canvas` has direct access to its pixels.
+        Creates :py:class:`Pixmap` from :py:class:`Canvas` pixel address, row
+        bytes, and :py:class:`ImageInfo` to pixmap, if :py:class:`Canvas` has
+        direct access to its pixels.
 
         Pixels are readable when :py:class:`BaseDevice` is raster. Pixels are
         not readable when :py:class:`Canvas` is returned from GPU surface,
@@ -545,16 +547,14 @@ canvas
         :py:meth:`PictureRecorder.beginRecording`, or :py:class:`Canvas` is
         the base of a utility class like DebugCanvas.
 
+        Raises if pixel address is not available.
+
         pixmap is valid only while :py:class:`Canvas` is in scope and unchanged.
         Any :py:class:`Canvas` or :py:class:`Surface` call may invalidate the
         pixmap values.
 
-        :param skia.Pixmap pixmap: storage for pixel state if pixels are
-            readable; otherwise, ignored
-        :return: true if :py:class:`Canvas` has direct access to pixels
-        :rtype: bool
-        )docstring",
-        py::arg("pixmap"))
+        :return: :py:class:`Pixmap`
+        )docstring")
     .def("readPixels", &ReadPixels<SkCanvas>,
         R"docstring(
         Copies :py:class:`Rect` of pixels from :py:class:`Canvas` into
