@@ -204,14 +204,16 @@ image
         py::arg("colorSpace") = nullptr)
     .def("bitmap", &ImageToBitmap,
         R"docstring(
-        Exports :py:class:`Image` to :py:class:`Bitmap`.
+        Creates :py:class:`Bitmap` from :py:class:`Image`.
 
         Pixels are always allocated and copied.
 
         :param colorType: color type of :py:class:`Bitmap`. If
             :py:attr:`~skia.kUnknown_ColorType`, uses the same colorType as
             :py:class:`Image`.
-        :param alphaType: alpha type of :py:class:`Bitmap`.
+        :param alphaType: alpha type of :py:class:`Bitmap`. If
+            :py:attr:`~skia.kUnknown_AlphaType`, uses the same alphaType as
+            :py:class:`Image`.
         :param colorSpace: color space of :py:class:`Bitmap`.
         :return: :py:class:`Bitmap`
         )docstring",
@@ -221,27 +223,29 @@ image
     .def("convert", &ConvertImage,
         R"docstring(
         Creates :py:class:`Image` in target :py:class:`ColorType`,
-        :py:class:`AlphatType` and :py:class:`ColorSpace`. Raises if
+        :py:class:`AlphatType`, and :py:class:`ColorSpace`. Raises if
         :py:class:`Image` could not be created.
 
         Pixels are converted only if pixel conversion is possible. If
         :py:class:`Image` :py:class:`ColorType` is
         :py:attr:`~ColorType.kGray_8_ColorType`, or
         :py:attr:`~ColorType.kAlpha_8_ColorType`; colorType must
-        match. If :py:class:`Image` :py:class:`ColorType` is
+        be the same. If :py:class:`Image` :py:class:`ColorType` is
         :py:attr:`~ColorType.kGray_8_ColorType`, colorSpace must
-        match. If :py:class:`Image` :py:class:`AlphaType` is
-        :py:attr:`~AlphaType.kOpaque_AlphaType`, alphaType must match.
+        be the same. If :py:class:`Image` :py:class:`AlphaType` is
+        :py:attr:`~AlphaType.kOpaque_AlphaType`, alphaType must be the same.
         If :py:class:`Image` :py:class:`ColorSpace` is nullptr,
-        colorSpace must match. Returns false if pixel conversion is
+        colorSpace must be the same. Raises if pixel conversion is
         not possible.
 
-        :param colorType: color type of :py:class:`Bitmap`. If
-            :py:attr:`~skia.kUnknown_ColorType`, uses the same colorType as
-            :py:class:`Image`.
-        :param alphaType: alpha type of :py:class:`Bitmap`.
-        :param colorSpace: color space of :py:class:`Bitmap`.
-        :return: :py:class:`Image` or nullptr
+        :param colorType: target color type. If
+            :py:attr:`~skia.kUnknown_ColorType` is given, uses the same
+            colorType as :py:class:`Image`.
+        :param alphaType: target alpha type. If
+            :py:attr:`~skia.kUnknown_AlphaType` is given, uses the same
+            alphaType as :py:class:`Image`.
+        :param colorSpace: target color space.
+        :return: :py:class:`Image`
         )docstring",
         py::arg("colorType") = kUnknown_SkColorType,
         py::arg("alphaType") = kUnknown_SkAlphaType,
@@ -265,8 +269,8 @@ image
         :py:attr:`~Image.CachingHint.kDisallow_CachingHint`, pixels are not
         added to the local cache.
 
-        :param int width: destination width
-        :param int height: destination height
+        :param int width: target width
+        :param int height: target height
         :param skia.FilterQuality filterQuality: Filter quality
         :param skia.Image.CachingHint cachingHint: Caching hint
         :return: :py:class:`Image`
