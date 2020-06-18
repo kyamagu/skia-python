@@ -161,9 +161,10 @@ py::enum_<SkSurface::FlushFlags>(surface, "FlushFlags", py::arithmetic())
 
 surface
     .def("__repr__",
-        [] (const SkSurface& surface) {
-            return py::str("Surface({}, {})").format(
-                surface.width(), surface.height());
+        [] (SkSurface& surface) {
+            return py::str("Surface({}, {}, '{}')").format(
+                surface.width(), surface.height(),
+                (surface.getContext()) ? "GPU" : "Raster");
         })
     .def("_repr_png_",
         [] (SkSurface& surface) {

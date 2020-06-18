@@ -302,6 +302,14 @@ lattice
     ;
 
 canvas
+    .def("__repr__",
+        [] (const SkCanvas& canvas) {
+            auto size = canvas.getBaseLayerSize();
+            auto imageInfo = canvas.imageInfo();
+            return py::str("Surface({}, {}, {}, {}, saveCount={})").format(
+                size.width(), size.height(), imageInfo.colorType(),
+                imageInfo.alphaType(), canvas.getSaveCount());
+        })
     .def(py::init<>(),
         R"docstring(
         Creates an empty :py:class:`Canvas` with no backing device or pixels,
