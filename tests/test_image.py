@@ -26,6 +26,24 @@ def test_Image_init(args, color_type, error):
         assert isinstance(skia.Image(np.zeros(*args), color_type), skia.Image)
 
 
+def test_Image_open(png_path):
+    assert isinstance(skia.Image.open(png_path), skia.Image)
+    with open(png_path, 'rb') as f:
+        assert isinstance(skia.Image.open(f), skia.Image)
+
+
+def test_Image_save(image):
+    import io
+    import os
+    import tempfile
+
+    with io.BytesIO() as f:
+        image.save(f)
+
+    with tempfile.NamedTemporaryFile(dir=os.path.dirname(__file__)) as t:
+        image.save(t.name)
+
+
 def test_Image_numpy(image):
     assert isinstance(image.numpy(), np.ndarray)
 

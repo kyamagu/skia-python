@@ -143,6 +143,16 @@ py::class_<SkImage, sk_sp<SkImage>, SkRefCnt> image(m, "Image",
     streams, GPU texture, YUV_ColorSpace data, or hardware buffer. Encoded
     streams supported include BMP, GIF, HEIF, ICO, JPEG, PNG, WBMP, WebP.
     Supported encoding details vary with platform.
+
+    ``skia-python`` supports a few high-level methods in addition to C++ API::
+
+        image = skia.Image.open('/path/to/image.png')
+        resized = image.resize(120, 120)
+        bitmap = image.bitmap()
+        image.save('/path/to/output.jpg', skia.kJPEG)
+
+        array = image.numpy()  # Export to numpy array
+
     )docstring");
 
 py::enum_<SkImage::CompressionType>(image, "CompressionType")
@@ -202,6 +212,86 @@ image
         py::arg("colorType") = kUnknown_SkColorType,
         py::arg("alphaType") = kUnpremul_SkAlphaType,
         py::arg("colorSpace") = nullptr)
+    .def_static("open",
+        [] (py::object fp, const SkIRect* subset) {
+            sk_sp<SkData> data(nullptr);
+            if (hasattr(fp, "seek") && hasattr(fp, "read")) {
+                fp.attr("seek")(0);
+                auto buffer = fp.attr("read")().cast<py::buffer>();
+                // TODO: Check maximum file size.
+                auto info = buffer.request();
+                size_t size = (info.ndim) ? info.strides[0] * info.shape[0] : 0;
+                data = SkData::MakeWithCopy(info.ptr, size);
+                if (!data)
+                    throw std::bad_alloc();
+            }
+            else {
+                auto path = fp.cast<std::string>();
+                data = SkData::MakeFromFileName(path.c_str());
+                if (!data)
+                    throw py::value_error(
+                        py::str("File not found: {}").format(path));
+            }
+            auto image = SkImage::MakeFromEncoded(data, subset);
+            if (!image)
+                throw std::runtime_error("Failed to decode an image");
+            return image;
+        },
+        R"docstring(
+        Creates :py:attr:`Image` from file path or file-like object.
+
+        Shortcut for the following::
+
+            if hasattr(fp, 'read') and hasattr(fp, 'seek'):
+                fp.seek(0)
+                data = skia.Data.MakeWithCopy(fp.read())
+            else:
+                data = skia.Data.MakeFromFileName(fp)
+            image = skia.Image.MakeFromEncoded(data, subset)
+
+        :param fp: file path or file-like object that has `seek` and `read`
+            method. file must be opened in binary mode.
+        :param skia.IRect subset: the bounds of the pixels within the decoded
+            image to return. may be null.
+        )docstring",
+        py::arg("fp"), py::arg("subset") = nullptr)
+    .def("save",
+        [] (const SkImage& image, py::object fp,
+            SkEncodedImageFormat format, int quality) {
+            auto data = image.encodeToData(format, quality);
+            if (!data)
+                throw std::runtime_error("Failed to encode an image.");
+            if (hasattr(fp, "write"))
+                fp.attr("write")(data);
+            else {
+                auto path = fp.cast<std::string>();
+                SkFILEWStream stream(path.c_str());
+                stream.write(data->data(), data->size());
+            }
+        },
+        R"docstring(
+        Saves :py:attr:`Image` to file path or file-like object.
+
+        Shortcut for the following::
+
+            data = image.encodeToData(encodedImageFormat, quality)
+            if hasattr(fp, 'write'):
+                fp.write(data)
+            else:
+                with open(fp, 'wb') as f:
+                    f.write(data)
+
+        :param fp: file path or file-like object that has `write` method. file
+            must be opened in writable binary mode.
+        :param skia.EncodedImageFormat encodedImageFormat:
+            one of: :py:attr:`~EncodedImageFormat.kJPEG`,
+            :py:attr:`~EncodedImageFormat.kPNG`,
+            :py:attr:`~EncodedImageFormat.kWEBP`
+        :param int quality: encoder specific metric with 100 equaling best
+        )docstring",
+        py::arg("fp"),
+        py::arg("encodedImageFormat") = SkEncodedImageFormat::kPNG,
+        py::arg("quality") = 100)
     .def("bitmap", &ImageToBitmap,
         R"docstring(
         Creates :py:class:`Bitmap` from :py:class:`Image`.
