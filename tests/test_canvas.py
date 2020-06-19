@@ -72,8 +72,7 @@ def test_Canvas_accessTopLayerPixels(canvas):
 
 
 def test_Canvas_peekPixels(canvas):
-    if canvas.getGrContext() is None:
-        assert isinstance(canvas.peekPixels(), skia.Pixmap)
+    assert isinstance(canvas.peekPixels(skia.Pixmap()), bool)
 
 
 def test_Canvas_toarray(canvas):

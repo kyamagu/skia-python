@@ -48,8 +48,7 @@ std::unique_ptr<SkBitmap> ImageToBitmap(
         image.width(), image.height(), ct, at, CloneColorSpace(cs));
     if (!bitmap->tryAllocPixels(imageInfo))
         throw std::bad_alloc();
-    if (!image.readPixels(
-        imageInfo, bitmap->getPixels(), bitmap->rowBytes(), 0, 0))
+    if (!image.readPixels(bitmap->pixmap(), 0, 0))
         throw std::runtime_error("Failed to read pixels.");
     return bitmap;
 }
@@ -199,7 +198,8 @@ py::class_<SkImage, sk_sp<SkImage>, SkRefCnt> image(m, "Image",
     ``skia-python`` supports a few high-level methods in addition to C++ API::
 
         image = skia.Image.open('/path/to/image.png')
-        resized = image.resize(120, 120)
+        image = image.resize(120, 120)
+        image = image.convert(alphaType=skia.kUnpremul_AlphaType)
         image.save('/path/to/output.jpg', skia.kJPEG)
 
     NumPy arrays can be directly imported or exported::
@@ -209,9 +209,8 @@ py::class_<SkImage, sk_sp<SkImage>, SkRefCnt> image(m, "Image",
 
     General pixel buffers can be exchanged in the following approach::
 
-        image = skia.Image.frombytes(
-            pixels, (100, 100), skia.kRGBA_8888_ColorType)
-        pixels = image.makeRasterImage().tobytes()
+        image = skia.Image.frombytes(pixels, (100, 100))
+        pixels = image.tobytes()
 
     )docstring",
     py::buffer_protocol());
@@ -244,20 +243,47 @@ py::enum_<SkImage::LegacyBitmapMode>(image, "LegacyBitmapMode")
 image
     // Python methods.
     .def_buffer([] (const SkImage& image) {
-        auto pixmap = PeekPixels<const SkImage>(image);
+        SkPixmap pixmap;
+        if (!image.peekPixels(&pixmap))
+            throw std::runtime_error(
+                "Image is not raster, call makeRasterImage().");
         return ImageInfoToBufferInfo(
-            pixmap->info(), pixmap->writable_addr(), pixmap->rowBytes());
+            pixmap.info(), pixmap.writable_addr(), pixmap.rowBytes());
     })
     .def_property_readonly("__array_interface__",
         [] (const SkImage& image) {
-            auto pixmap = PeekPixels<const SkImage>(image);
-            return ImageInfoToArrayInterface(
-                pixmap->info(), pixmap->rowBytes());
+            SkPixmap pixmap;
+            if (image.peekPixels(&pixmap))
+                return ImageInfoToArrayInterface(
+                    pixmap.info(), pixmap.rowBytes());
+            else {
+                auto imageInfo = image.imageInfo();
+                return ImageInfoToArrayInterface(
+                    imageInfo, imageInfo.minRowBytes());
+            }
         })
     .def("tobytes",
         [] (const SkImage& image) -> py::object {
-            return py::module::import("builtins").attr("bytes")(image);
-        })
+            SkPixmap pixmap;
+            if (image.peekPixels(&pixmap))
+                return py::module::import("builtins").attr("bytes")(pixmap);
+            else {
+                auto imageInfo = image.imageInfo();
+                py::bytes bytes(nullptr, imageInfo.computeMinByteSize());
+                void* ptr = reinterpret_cast<void*>(
+                    PyBytes_AS_STRING(bytes.ptr()));
+                if (!image.readPixels(
+                    imageInfo, ptr, imageInfo.minRowBytes(), 0, 0))
+                    throw std::runtime_error("Failed to read pixels.");
+                return std::move(bytes);
+            }
+        },
+        R"docstring(
+        Creates python `bytes` object from internal pixels.
+
+        When the image is raster, the returned bytes share the internal buffer.
+        Otherwise, pixels are copied to a newly allocated python `bytes`.
+        )docstring")
     .def_static("frombytes", &ImageFromBuffer,
         R"docstring(
         Creates a new :py:class:`Image` from bytes.
@@ -267,9 +293,11 @@ image
         :param skia.ColorType colorType: color type of the array
         :param skia.AlphaType alphaType: alpha type of the array
         :param skia.ColorSpace colorSpace: range of colors; may be nullptr
-        :param bool copy: Whether to copy pixels.
+        :param bool copy: Whether to copy pixels. When false is specified,
+            :py:class:`Image` shares the pixel buffer without copy.
         )docstring",
-        py::arg("array"), py::arg("dimensions"), py::arg("colorType"),
+        py::arg("array"), py::arg("dimensions"),
+        py::arg("colorType") = kN32_SkColorType,
         py::arg("alphaType") = kUnpremul_SkAlphaType,
         py::arg("colorSpace") = nullptr, py::arg("copy") = true)
     .def_static("fromarray", &ImageFromArray,
@@ -285,7 +313,7 @@ image
         :param skia.ColorSpace colorSpace: range of colors; may be nullptr
         :param bool copy: Whether to copy pixels.
         )docstring",
-        py::arg("array"), py::arg("colorType") = kRGBA_8888_SkColorType,
+        py::arg("array"), py::arg("colorType") = kN32_SkColorType,
         py::arg("alphaType") = kUnpremul_SkAlphaType,
         py::arg("colorSpace") = nullptr, py::arg("copy") = true)
     .def("toarray", &ReadToNumpy<SkImage>,
@@ -362,7 +390,7 @@ image
         :return: :py:class:`Bitmap`
         )docstring",
         py::arg("colorType") = kUnknown_SkColorType,
-        py::arg("alphaType") = kUnpremul_SkAlphaType,
+        py::arg("alphaType") = kUnknown_SkAlphaType,
         py::arg("colorSpace") = nullptr)
     .def("convert", &ImageConvert,
         R"docstring(
@@ -567,15 +595,20 @@ image
         )docstring",
         py::arg("tmx") = SkTileMode::kClamp,
         py::arg("tmy") = SkTileMode::kClamp, py::arg("localMatrix") = nullptr)
-    .def("peekPixels", &PeekPixels<const SkImage>,
+    .def("peekPixels", &SkImage::peekPixels,
         R"docstring(
-        Creates :py:class:`Pixmap` from :py:class:`Image` pixel address, row
-        bytes, and :py:class:`ImageInfo` to pixmap, if address is available.
+        Copies :py:class:`Image` pixel address, row bytes, and
+        :py:class:`ImageInfo` to pixmap, if address is available, and returns
+        true.
 
-        Raises if pixel address is not available.
+        If pixel address is not available, return false and leave pixmap
+        unchanged.
 
-        :return: :py:class:`Pixmap`
-        )docstring")
+        :param skia.Pixmap pixmap: storage for pixel state if pixels are
+            readable; otherwise, ignored
+        :return: true if :py:class:`Image` has direct access to pixels
+        )docstring",
+        py::arg("pixmap"))
     .def("isTextureBacked", &SkImage::isTextureBacked,
         R"docstring(
         Returns true the contents of :py:class:`Image` was created on or

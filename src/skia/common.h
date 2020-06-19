@@ -30,15 +30,6 @@ size_t ValidateBufferToImageInfo(
     size_t rowBytes = 0);
 
 template <typename T>
-std::unique_ptr<SkPixmap> PeekPixels(T& peekable) {
-    std::unique_ptr<SkPixmap> pixmap(new SkPixmap());
-    if (!peekable.peekPixels(pixmap.get()))
-        throw std::runtime_error("Failed to peek pixels, perhaps not raster.");
-    CHECK_NOTNULL(pixmap->addr());
-    return pixmap;
-}
-
-template <typename T>
 bool ReadPixels(T& readable, const SkImageInfo& imageInfo, py::buffer dstPixels,
                 size_t dstRowBytes, int srcX, int srcY) {
     auto info = dstPixels.request(true);

@@ -3,6 +3,10 @@ import pytest
 import numpy as np
 
 
+def test_Image_buffer(image):
+    assert isinstance(memoryview(image.makeRasterImage()), memoryview)
+
+
 @pytest.mark.parametrize(['args', 'color_type', 'error'], [
     (((100, 100), np.uint8), skia.kAlpha_8_ColorType, None),
     (((100, 100), np.uint8), skia.kGray_8_ColorType, None),
@@ -31,10 +35,13 @@ def test_Image_frombytes(png_path):
     from PIL import Image
     pil_image = Image.open(png_path)
     image = skia.Image.frombytes(
-        pil_image.tobytes(),
-        (pil_image.width, pil_image.height),
-        skia.kRGBA_8888_ColorType)
+        pil_image.tobytes(), pil_image.size, skia.kRGBA_8888_ColorType)
     assert isinstance(image, skia.Image)
+
+
+def test_Image_tobytes(image):
+    assert isinstance(image.tobytes(), bytes)
+    assert isinstance(image.makeRasterImage().tobytes(), bytes)
 
 
 def test_Image_open(png_path):
@@ -141,7 +148,7 @@ def test_Image_makeShader(image, args):
 
 
 def test_Image_peekPixels(image):
-    assert isinstance(image.makeRasterImage().peekPixels(), skia.Pixmap)
+    assert isinstance(image.peekPixels(skia.Pixmap()), bool)
 
 
 def test_Image_isTextureBacked(image):

@@ -305,10 +305,8 @@ canvas
     .def("__repr__",
         [] (const SkCanvas& canvas) {
             auto size = canvas.getBaseLayerSize();
-            auto imageInfo = canvas.imageInfo();
-            return py::str("Surface({}, {}, {}, {}, saveCount={})").format(
-                size.width(), size.height(), imageInfo.colorType(),
-                imageInfo.alphaType(), canvas.getSaveCount());
+            return py::str("Canvas({}, {}, saveCount={})").format(
+                size.width(), size.height(), canvas.getSaveCount());
         })
     .def(py::init<>(),
         R"docstring(
@@ -535,26 +533,25 @@ canvas
         py::arg("origin") = nullptr)
     // .def("accessTopRasterHandle", &SkCanvas::accessTopRasterHandle,
     //     "Returns custom context that tracks the SkMatrix and clip.")
-    .def("peekPixels", &PeekPixels<SkCanvas>,
+    .def("peekPixels", &SkCanvas::peekPixels,
         R"docstring(
-        Creates :py:class:`Pixmap` from :py:class:`Canvas` pixel address, row
-        bytes, and :py:class:`ImageInfo` to pixmap, if :py:class:`Canvas` has
-        direct access to its pixels.
+        Returns true if :py:class:`Canvas` has direct access to its pixels.
 
         Pixels are readable when :py:class:`BaseDevice` is raster. Pixels are
         not readable when :py:class:`Canvas` is returned from GPU surface,
-        returned by :py:meth:`Document.beginPage`, returned by
-        :py:meth:`PictureRecorder.beginRecording`, or :py:class:`Canvas` is
+        returned by :py:class:`Document`::beginPage, returned by
+        :py:class:`PictureRecorder`::beginRecording, or :py:class:`Canvas` is
         the base of a utility class like DebugCanvas.
-
-        Raises if pixel address is not available.
 
         pixmap is valid only while :py:class:`Canvas` is in scope and unchanged.
         Any :py:class:`Canvas` or :py:class:`Surface` call may invalidate the
         pixmap values.
 
-        :return: :py:class:`Pixmap`
-        )docstring")
+        :param skia.Pixmap pixmap: storage for pixel state if pixels are
+            readable; otherwise, ignored
+        :return: true if :py:class:`Canvas` has direct access to pixels
+        )docstring",
+        py::arg("pixmap"))
     .def("readPixels", &ReadPixels<SkCanvas>,
         R"docstring(
         Copies :py:class:`Rect` of pixels from :py:class:`Canvas` into
