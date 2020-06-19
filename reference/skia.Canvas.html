@@ -554,7 +554,7 @@ future.</p>
 <td><p>Creates <a class="reference internal" href="skia.Surface.html#skia.Surface" title="skia.Surface"><code class="xref py py-class docutils literal notranslate"><span class="pre">Surface</span></code></a> matching info and props, and associates it with <a class="reference internal" href="#skia.Canvas" title="skia.Canvas"><code class="xref py py-class docutils literal notranslate"><span class="pre">Canvas</span></code></a>.</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#skia.Canvas.peekPixels" title="skia.Canvas.peekPixels"><code class="xref py py-obj docutils literal notranslate"><span class="pre">peekPixels</span></code></a></p></td>
-<td><p>Creates <a class="reference internal" href="skia.Pixmap.html#skia.Pixmap" title="skia.Pixmap"><code class="xref py py-class docutils literal notranslate"><span class="pre">Pixmap</span></code></a> from <a class="reference internal" href="#skia.Canvas" title="skia.Canvas"><code class="xref py py-class docutils literal notranslate"><span class="pre">Canvas</span></code></a> pixel address, row bytes, and <a class="reference internal" href="skia.ImageInfo.html#skia.ImageInfo" title="skia.ImageInfo"><code class="xref py py-class docutils literal notranslate"><span class="pre">ImageInfo</span></code></a> to pixmap, if <a class="reference internal" href="#skia.Canvas" title="skia.Canvas"><code class="xref py py-class docutils literal notranslate"><span class="pre">Canvas</span></code></a> has direct access to its pixels.</p></td>
+<td><p>Returns true if <a class="reference internal" href="#skia.Canvas" title="skia.Canvas"><code class="xref py py-class docutils literal notranslate"><span class="pre">Canvas</span></code></a> has direct access to its pixels.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#skia.Canvas.quickReject" title="skia.Canvas.quickReject"><code class="xref py py-obj docutils literal notranslate"><span class="pre">quickReject</span></code></a></p></td>
 <td><p>Overloaded function.</p></td>
@@ -2390,22 +2390,23 @@ available</p>
 
 <dl class="py method">
 <dt id="skia.Canvas.peekPixels">
-<code class="sig-prename descclassname">Canvas.</code><code class="sig-name descname">peekPixels</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Canvas" title="skia.Canvas">skia.Canvas</a></span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="skia.Pixmap.html#skia.Pixmap" title="skia.Pixmap">skia.Pixmap</a><a class="headerlink" href="#skia.Canvas.peekPixels" title="Permalink to this definition">¶</a></dt>
-<dd><p>Creates <a class="reference internal" href="skia.Pixmap.html#skia.Pixmap" title="skia.Pixmap"><code class="xref py py-class docutils literal notranslate"><span class="pre">Pixmap</span></code></a> from <a class="reference internal" href="#skia.Canvas" title="skia.Canvas"><code class="xref py py-class docutils literal notranslate"><span class="pre">Canvas</span></code></a> pixel address, row
-bytes, and <a class="reference internal" href="skia.ImageInfo.html#skia.ImageInfo" title="skia.ImageInfo"><code class="xref py py-class docutils literal notranslate"><span class="pre">ImageInfo</span></code></a> to pixmap, if <a class="reference internal" href="#skia.Canvas" title="skia.Canvas"><code class="xref py py-class docutils literal notranslate"><span class="pre">Canvas</span></code></a> has
-direct access to its pixels.</p>
+<code class="sig-prename descclassname">Canvas.</code><code class="sig-name descname">peekPixels</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Canvas" title="skia.Canvas">skia.Canvas</a></span></em>, <em class="sig-param"><span class="n">pixmap</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.Pixmap.html#skia.Pixmap" title="skia.Pixmap">skia.Pixmap</a></span></em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#skia.Canvas.peekPixels" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns true if <a class="reference internal" href="#skia.Canvas" title="skia.Canvas"><code class="xref py py-class docutils literal notranslate"><span class="pre">Canvas</span></code></a> has direct access to its pixels.</p>
 <p>Pixels are readable when <code class="xref py py-class docutils literal notranslate"><span class="pre">BaseDevice</span></code> is raster. Pixels are
 not readable when <a class="reference internal" href="#skia.Canvas" title="skia.Canvas"><code class="xref py py-class docutils literal notranslate"><span class="pre">Canvas</span></code></a> is returned from GPU surface,
-returned by <a class="reference internal" href="skia.Document.html#skia.Document.beginPage" title="skia.Document.beginPage"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Document.beginPage()</span></code></a>, returned by
-<a class="reference internal" href="skia.PictureRecorder.html#skia.PictureRecorder.beginRecording" title="skia.PictureRecorder.beginRecording"><code class="xref py py-meth docutils literal notranslate"><span class="pre">PictureRecorder.beginRecording()</span></code></a>, or <a class="reference internal" href="#skia.Canvas" title="skia.Canvas"><code class="xref py py-class docutils literal notranslate"><span class="pre">Canvas</span></code></a> is
+returned by <a class="reference internal" href="skia.Document.html#skia.Document" title="skia.Document"><code class="xref py py-class docutils literal notranslate"><span class="pre">Document</span></code></a>::beginPage, returned by
+<a class="reference internal" href="skia.PictureRecorder.html#skia.PictureRecorder" title="skia.PictureRecorder"><code class="xref py py-class docutils literal notranslate"><span class="pre">PictureRecorder</span></code></a>::beginRecording, or <a class="reference internal" href="#skia.Canvas" title="skia.Canvas"><code class="xref py py-class docutils literal notranslate"><span class="pre">Canvas</span></code></a> is
 the base of a utility class like DebugCanvas.</p>
-<p>Raises if pixel address is not available.</p>
 <p>pixmap is valid only while <a class="reference internal" href="#skia.Canvas" title="skia.Canvas"><code class="xref py py-class docutils literal notranslate"><span class="pre">Canvas</span></code></a> is in scope and unchanged.
 Any <a class="reference internal" href="#skia.Canvas" title="skia.Canvas"><code class="xref py py-class docutils literal notranslate"><span class="pre">Canvas</span></code></a> or <a class="reference internal" href="skia.Surface.html#skia.Surface" title="skia.Surface"><code class="xref py py-class docutils literal notranslate"><span class="pre">Surface</span></code></a> call may invalidate the
 pixmap values.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p><a class="reference internal" href="skia.Pixmap.html#skia.Pixmap" title="skia.Pixmap"><code class="xref py py-class docutils literal notranslate"><span class="pre">Pixmap</span></code></a></p>
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>pixmap</strong> (<a class="reference internal" href="skia.Pixmap.html#skia.Pixmap" title="skia.Pixmap"><em>skia.Pixmap</em></a>) – storage for pixel state if pixels are
+readable; otherwise, ignored</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>true if <a class="reference internal" href="#skia.Canvas" title="skia.Canvas"><code class="xref py py-class docutils literal notranslate"><span class="pre">Canvas</span></code></a> has direct access to pixels</p>
 </dd>
 </dl>
 </dd></dl>

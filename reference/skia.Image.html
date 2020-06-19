@@ -349,7 +349,8 @@ streams supported include BMP, GIF, HEIF, ICO, JPEG, PNG, WBMP, WebP.
 Supported encoding details vary with platform.</p>
 <p><code class="docutils literal notranslate"><span class="pre">skia-python</span></code> supports a few high-level methods in addition to C++ API:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">image</span> <span class="o">=</span> <span class="n">skia</span><span class="o">.</span><span class="n">Image</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s1">&#39;/path/to/image.png&#39;</span><span class="p">)</span>
-<span class="n">resized</span> <span class="o">=</span> <span class="n">image</span><span class="o">.</span><span class="n">resize</span><span class="p">(</span><span class="mi">120</span><span class="p">,</span> <span class="mi">120</span><span class="p">)</span>
+<span class="n">image</span> <span class="o">=</span> <span class="n">image</span><span class="o">.</span><span class="n">resize</span><span class="p">(</span><span class="mi">120</span><span class="p">,</span> <span class="mi">120</span><span class="p">)</span>
+<span class="n">image</span> <span class="o">=</span> <span class="n">image</span><span class="o">.</span><span class="n">convert</span><span class="p">(</span><span class="n">alphaType</span><span class="o">=</span><span class="n">skia</span><span class="o">.</span><span class="n">kUnpremul_AlphaType</span><span class="p">)</span>
 <span class="n">image</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="s1">&#39;/path/to/output.jpg&#39;</span><span class="p">,</span> <span class="n">skia</span><span class="o">.</span><span class="n">kJPEG</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -359,9 +360,8 @@ Supported encoding details vary with platform.</p>
 </pre></div>
 </div>
 <p>General pixel buffers can be exchanged in the following approach:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">image</span> <span class="o">=</span> <span class="n">skia</span><span class="o">.</span><span class="n">Image</span><span class="o">.</span><span class="n">frombytes</span><span class="p">(</span>
-    <span class="n">pixels</span><span class="p">,</span> <span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="mi">100</span><span class="p">),</span> <span class="n">skia</span><span class="o">.</span><span class="n">kRGBA_8888_ColorType</span><span class="p">)</span>
-<span class="n">pixels</span> <span class="o">=</span> <span class="n">image</span><span class="o">.</span><span class="n">makeRasterImage</span><span class="p">()</span><span class="o">.</span><span class="n">tobytes</span><span class="p">()</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">image</span> <span class="o">=</span> <span class="n">skia</span><span class="o">.</span><span class="n">Image</span><span class="o">.</span><span class="n">frombytes</span><span class="p">(</span><span class="n">pixels</span><span class="p">,</span> <span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="mi">100</span><span class="p">))</span>
+<span class="n">pixels</span> <span class="o">=</span> <span class="n">image</span><span class="o">.</span><span class="n">tobytes</span><span class="p">()</span>
 </pre></div>
 </div>
 <p class="rubric">Classes</p>
@@ -525,7 +525,7 @@ Supported encoding details vary with platform.</p>
 <td><p>Creates <a class="reference internal" href="#skia.Image" title="skia.Image"><code class="xref py py-attr docutils literal notranslate"><span class="pre">Image</span></code></a> from file path or file-like object.</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#skia.Image.peekPixels" title="skia.Image.peekPixels"><code class="xref py py-obj docutils literal notranslate"><span class="pre">peekPixels</span></code></a></p></td>
-<td><p>Creates <a class="reference internal" href="skia.Pixmap.html#skia.Pixmap" title="skia.Pixmap"><code class="xref py py-class docutils literal notranslate"><span class="pre">Pixmap</span></code></a> from <a class="reference internal" href="#skia.Image" title="skia.Image"><code class="xref py py-class docutils literal notranslate"><span class="pre">Image</span></code></a> pixel address, row bytes, and <a class="reference internal" href="skia.ImageInfo.html#skia.ImageInfo" title="skia.ImageInfo"><code class="xref py py-class docutils literal notranslate"><span class="pre">ImageInfo</span></code></a> to pixmap, if address is available.</p></td>
+<td><p>Copies <a class="reference internal" href="#skia.Image" title="skia.Image"><code class="xref py py-class docutils literal notranslate"><span class="pre">Image</span></code></a> pixel address, row bytes, and <a class="reference internal" href="skia.ImageInfo.html#skia.ImageInfo" title="skia.ImageInfo"><code class="xref py py-class docutils literal notranslate"><span class="pre">ImageInfo</span></code></a> to pixmap, if address is available, and returns true.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#skia.Image.readPixels" title="skia.Image.readPixels"><code class="xref py py-obj docutils literal notranslate"><span class="pre">readPixels</span></code></a></p></td>
 <td><p>Overloaded function.</p></td>
@@ -555,7 +555,7 @@ Supported encoding details vary with platform.</p>
 <td><p>Exports a <code class="docutils literal notranslate"><span class="pre">numpy.ndarray</span></code>.</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#skia.Image.tobytes" title="skia.Image.tobytes"><code class="xref py py-obj docutils literal notranslate"><span class="pre">tobytes</span></code></a></p></td>
-<td><p></p></td>
+<td><p>Creates python <cite>bytes</cite> object from internal pixels.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#skia.Image.unique" title="skia.Image.unique"><code class="xref py py-obj docutils literal notranslate"><span class="pre">unique</span></code></a></p></td>
 <td><p>May return true if the caller is the only owner.</p></td>
@@ -1050,7 +1050,7 @@ write did not succeed.</p>
 
 <dl class="py method">
 <dt id="skia.Image.bitmap">
-<code class="sig-prename descclassname">Image.</code><code class="sig-name descname">bitmap</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Image" title="skia.Image">skia.Image</a></span></em>, <em class="sig-param"><span class="n">colorType</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.ColorType.html#skia.ColorType" title="skia.ColorType">skia.ColorType</a></span> <span class="o">=</span> <span class="default_value">ColorType.kUnknown_ColorType</span></em>, <em class="sig-param"><span class="n">alphaType</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.AlphaType.html#skia.AlphaType" title="skia.AlphaType">skia.AlphaType</a></span> <span class="o">=</span> <span class="default_value">AlphaType.kUnpremul_AlphaType</span></em>, <em class="sig-param"><span class="n">colorSpace</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.ColorSpace.html#skia.ColorSpace" title="skia.ColorSpace">skia.ColorSpace</a></span> <span class="o">=</span> <span class="default_value">None</span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="skia.Bitmap.html#skia.Bitmap" title="skia.Bitmap">skia.Bitmap</a><a class="headerlink" href="#skia.Image.bitmap" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">Image.</code><code class="sig-name descname">bitmap</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Image" title="skia.Image">skia.Image</a></span></em>, <em class="sig-param"><span class="n">colorType</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.ColorType.html#skia.ColorType" title="skia.ColorType">skia.ColorType</a></span> <span class="o">=</span> <span class="default_value">ColorType.kUnknown_ColorType</span></em>, <em class="sig-param"><span class="n">alphaType</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.AlphaType.html#skia.AlphaType" title="skia.AlphaType">skia.AlphaType</a></span> <span class="o">=</span> <span class="default_value">AlphaType.kUnknown_AlphaType</span></em>, <em class="sig-param"><span class="n">colorSpace</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.ColorSpace.html#skia.ColorSpace" title="skia.ColorSpace">skia.ColorSpace</a></span> <span class="o">=</span> <span class="default_value">None</span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="skia.Bitmap.html#skia.Bitmap" title="skia.Bitmap">skia.Bitmap</a><a class="headerlink" href="#skia.Image.bitmap" title="Permalink to this definition">¶</a></dt>
 <dd><p>Creates <a class="reference internal" href="skia.Bitmap.html#skia.Bitmap" title="skia.Bitmap"><code class="xref py py-class docutils literal notranslate"><span class="pre">Bitmap</span></code></a> from <a class="reference internal" href="#skia.Image" title="skia.Image"><code class="xref py py-class docutils literal notranslate"><span class="pre">Image</span></code></a>.</p>
 <p>Pixels are always allocated and copied.</p>
 <dl class="field-list simple">
@@ -1246,7 +1246,7 @@ type.</p></li>
 
 <dl class="py method">
 <dt id="skia.Image.frombytes">
-<em class="property">static </em><code class="sig-prename descclassname">Image.</code><code class="sig-name descname">frombytes</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">array</span><span class="p">:</span> <span class="n">buffer</span></em>, <em class="sig-param"><span class="n">dimensions</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.ISize.html#skia.ISize" title="skia.ISize">skia.ISize</a></span></em>, <em class="sig-param"><span class="n">colorType</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.ColorType.html#skia.ColorType" title="skia.ColorType">skia.ColorType</a></span></em>, <em class="sig-param"><span class="n">alphaType</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.AlphaType.html#skia.AlphaType" title="skia.AlphaType">skia.AlphaType</a></span> <span class="o">=</span> <span class="default_value">AlphaType.kUnpremul_AlphaType</span></em>, <em class="sig-param"><span class="n">colorSpace</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.ColorSpace.html#skia.ColorSpace" title="skia.ColorSpace">skia.ColorSpace</a></span> <span class="o">=</span> <span class="default_value">None</span></em>, <em class="sig-param"><span class="n">copy</span><span class="p">:</span> <span class="n">bool</span> <span class="o">=</span> <span class="default_value">True</span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="#skia.Image" title="skia.Image">skia.Image</a><a class="headerlink" href="#skia.Image.frombytes" title="Permalink to this definition">¶</a></dt>
+<em class="property">static </em><code class="sig-prename descclassname">Image.</code><code class="sig-name descname">frombytes</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">array</span><span class="p">:</span> <span class="n">buffer</span></em>, <em class="sig-param"><span class="n">dimensions</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.ISize.html#skia.ISize" title="skia.ISize">skia.ISize</a></span></em>, <em class="sig-param"><span class="n">colorType</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.ColorType.html#skia.ColorType" title="skia.ColorType">skia.ColorType</a></span> <span class="o">=</span> <span class="default_value">ColorType.kN32_ColorType</span></em>, <em class="sig-param"><span class="n">alphaType</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.AlphaType.html#skia.AlphaType" title="skia.AlphaType">skia.AlphaType</a></span> <span class="o">=</span> <span class="default_value">AlphaType.kUnpremul_AlphaType</span></em>, <em class="sig-param"><span class="n">colorSpace</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.ColorSpace.html#skia.ColorSpace" title="skia.ColorSpace">skia.ColorSpace</a></span> <span class="o">=</span> <span class="default_value">None</span></em>, <em class="sig-param"><span class="n">copy</span><span class="p">:</span> <span class="n">bool</span> <span class="o">=</span> <span class="default_value">True</span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="#skia.Image" title="skia.Image">skia.Image</a><a class="headerlink" href="#skia.Image.frombytes" title="Permalink to this definition">¶</a></dt>
 <dd><p>Creates a new <a class="reference internal" href="#skia.Image" title="skia.Image"><code class="xref py py-class docutils literal notranslate"><span class="pre">Image</span></code></a> from bytes.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -1256,7 +1256,8 @@ type.</p></li>
 <li><p><strong>colorType</strong> (<a class="reference internal" href="skia.ColorType.html#skia.ColorType" title="skia.ColorType"><em>skia.ColorType</em></a>) – color type of the array</p></li>
 <li><p><strong>alphaType</strong> (<a class="reference internal" href="skia.AlphaType.html#skia.AlphaType" title="skia.AlphaType"><em>skia.AlphaType</em></a>) – alpha type of the array</p></li>
 <li><p><strong>colorSpace</strong> (<a class="reference internal" href="skia.ColorSpace.html#skia.ColorSpace" title="skia.ColorSpace"><em>skia.ColorSpace</em></a>) – range of colors; may be nullptr</p></li>
-<li><p><strong>copy</strong> (<em>bool</em>) – Whether to copy pixels.</p></li>
+<li><p><strong>copy</strong> (<em>bool</em>) – Whether to copy pixels. When false is specified,
+<a class="reference internal" href="#skia.Image" title="skia.Image"><code class="xref py py-class docutils literal notranslate"><span class="pre">Image</span></code></a> shares the pixel buffer without copy.</p></li>
 </ul>
 </dd>
 </dl>
@@ -1579,13 +1580,19 @@ image to return. may be null.</p></li>
 
 <dl class="py method">
 <dt id="skia.Image.peekPixels">
-<code class="sig-prename descclassname">Image.</code><code class="sig-name descname">peekPixels</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Image" title="skia.Image">skia.Image</a></span></em><span class="sig-paren">)</span> &#x2192; SkPixmap<a class="headerlink" href="#skia.Image.peekPixels" title="Permalink to this definition">¶</a></dt>
-<dd><p>Creates <a class="reference internal" href="skia.Pixmap.html#skia.Pixmap" title="skia.Pixmap"><code class="xref py py-class docutils literal notranslate"><span class="pre">Pixmap</span></code></a> from <a class="reference internal" href="#skia.Image" title="skia.Image"><code class="xref py py-class docutils literal notranslate"><span class="pre">Image</span></code></a> pixel address, row
-bytes, and <a class="reference internal" href="skia.ImageInfo.html#skia.ImageInfo" title="skia.ImageInfo"><code class="xref py py-class docutils literal notranslate"><span class="pre">ImageInfo</span></code></a> to pixmap, if address is available.</p>
-<p>Raises if pixel address is not available.</p>
+<code class="sig-prename descclassname">Image.</code><code class="sig-name descname">peekPixels</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Image" title="skia.Image">skia.Image</a></span></em>, <em class="sig-param"><span class="n">pixmap</span><span class="p">:</span> <span class="n">SkPixmap</span></em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#skia.Image.peekPixels" title="Permalink to this definition">¶</a></dt>
+<dd><p>Copies <a class="reference internal" href="#skia.Image" title="skia.Image"><code class="xref py py-class docutils literal notranslate"><span class="pre">Image</span></code></a> pixel address, row bytes, and
+<a class="reference internal" href="skia.ImageInfo.html#skia.ImageInfo" title="skia.ImageInfo"><code class="xref py py-class docutils literal notranslate"><span class="pre">ImageInfo</span></code></a> to pixmap, if address is available, and returns
+true.</p>
+<p>If pixel address is not available, return false and leave pixmap
+unchanged.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p><a class="reference internal" href="skia.Pixmap.html#skia.Pixmap" title="skia.Pixmap"><code class="xref py py-class docutils literal notranslate"><span class="pre">Pixmap</span></code></a></p>
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>pixmap</strong> (<a class="reference internal" href="skia.Pixmap.html#skia.Pixmap" title="skia.Pixmap"><em>skia.Pixmap</em></a>) – storage for pixel state if pixels are
+readable; otherwise, ignored</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>true if <a class="reference internal" href="#skia.Image" title="skia.Image"><code class="xref py py-class docutils literal notranslate"><span class="pre">Image</span></code></a> has direct access to pixels</p>
 </dd>
 </dl>
 </dd></dl>
@@ -1869,7 +1876,10 @@ added to the local cache.</p>
 <dl class="py method">
 <dt id="skia.Image.tobytes">
 <code class="sig-prename descclassname">Image.</code><code class="sig-name descname">tobytes</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Image" title="skia.Image">skia.Image</a></span></em><span class="sig-paren">)</span> &#x2192; object<a class="headerlink" href="#skia.Image.tobytes" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Creates python <cite>bytes</cite> object from internal pixels.</p>
+<p>When the image is raster, the returned bytes share the internal buffer.
+Otherwise, pixels are copied to a newly allocated python <cite>bytes</cite>.</p>
+</dd></dl>
 
 <dl class="py method">
 <dt id="skia.Image.unique">

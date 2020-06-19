@@ -482,7 +482,7 @@ array.</p>
 <td><p>Marks that pixels in <a class="reference internal" href="skia.PixelRef.html#skia.PixelRef" title="skia.PixelRef"><code class="xref py py-class docutils literal notranslate"><span class="pre">PixelRef</span></code></a> have changed.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#skia.Bitmap.peekPixels" title="skia.Bitmap.peekPixels"><code class="xref py py-obj docutils literal notranslate"><span class="pre">peekPixels</span></code></a></p></td>
-<td><p>Creates <a class="reference internal" href="skia.Pixmap.html#skia.Pixmap" title="skia.Pixmap"><code class="xref py py-class docutils literal notranslate"><span class="pre">Pixmap</span></code></a> from <a class="reference internal" href="#skia.Bitmap" title="skia.Bitmap"><code class="xref py py-class docutils literal notranslate"><span class="pre">Bitmap</span></code></a> pixel address, row bytes, and <a class="reference internal" href="skia.ImageInfo.html#skia.ImageInfo" title="skia.ImageInfo"><code class="xref py py-class docutils literal notranslate"><span class="pre">ImageInfo</span></code></a> to pixmap, if address is available.</p></td>
+<td><p>Copies <a class="reference internal" href="#skia.Bitmap" title="skia.Bitmap"><code class="xref py py-class docutils literal notranslate"><span class="pre">Bitmap</span></code></a> pixel address, row bytes, and <a class="reference internal" href="skia.ImageInfo.html#skia.ImageInfo" title="skia.ImageInfo"><code class="xref py py-class docutils literal notranslate"><span class="pre">ImageInfo</span></code></a> to pixmap, if address is available, and returns true.</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#skia.Bitmap.pixmap" title="skia.Bitmap.pixmap"><code class="xref py py-obj docutils literal notranslate"><span class="pre">pixmap</span></code></a></p></td>
 <td><p>Returns a constant reference to the <a class="reference internal" href="skia.Pixmap.html#skia.Pixmap" title="skia.Pixmap"><code class="xref py py-class docutils literal notranslate"><span class="pre">Pixmap</span></code></a> holding the <a class="reference internal" href="#skia.Bitmap" title="skia.Bitmap"><code class="xref py py-class docutils literal notranslate"><span class="pre">Bitmap</span></code></a> pixel address, row bytes, and <a class="reference internal" href="skia.ImageInfo.html#skia.ImageInfo" title="skia.ImageInfo"><code class="xref py py-class docutils literal notranslate"><span class="pre">ImageInfo</span></code></a>.</p></td>
@@ -1136,15 +1136,21 @@ volatile.</p>
 
 <dl class="py method">
 <dt id="skia.Bitmap.peekPixels">
-<code class="sig-prename descclassname">Bitmap.</code><code class="sig-name descname">peekPixels</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Bitmap" title="skia.Bitmap">skia.Bitmap</a></span></em><span class="sig-paren">)</span> &#x2192; SkPixmap<a class="headerlink" href="#skia.Bitmap.peekPixels" title="Permalink to this definition">¶</a></dt>
-<dd><p>Creates <a class="reference internal" href="skia.Pixmap.html#skia.Pixmap" title="skia.Pixmap"><code class="xref py py-class docutils literal notranslate"><span class="pre">Pixmap</span></code></a> from <a class="reference internal" href="#skia.Bitmap" title="skia.Bitmap"><code class="xref py py-class docutils literal notranslate"><span class="pre">Bitmap</span></code></a> pixel address, row
-bytes, and <a class="reference internal" href="skia.ImageInfo.html#skia.ImageInfo" title="skia.ImageInfo"><code class="xref py py-class docutils literal notranslate"><span class="pre">ImageInfo</span></code></a> to pixmap, if address is available.</p>
-<p>Raises if pixel address is not available.</p>
-<p><a class="reference internal" href="skia.Pixmap.html#skia.Pixmap" title="skia.Pixmap"><code class="xref py py-class docutils literal notranslate"><span class="pre">Pixmap</span></code></a> contents become invalid on any future change to
+<code class="sig-prename descclassname">Bitmap.</code><code class="sig-name descname">peekPixels</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Bitmap" title="skia.Bitmap">skia.Bitmap</a></span></em>, <em class="sig-param"><span class="n">pixmap</span><span class="p">:</span> <span class="n">SkPixmap</span></em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#skia.Bitmap.peekPixels" title="Permalink to this definition">¶</a></dt>
+<dd><p>Copies <a class="reference internal" href="#skia.Bitmap" title="skia.Bitmap"><code class="xref py py-class docutils literal notranslate"><span class="pre">Bitmap</span></code></a> pixel address, row bytes, and
+<a class="reference internal" href="skia.ImageInfo.html#skia.ImageInfo" title="skia.ImageInfo"><code class="xref py py-class docutils literal notranslate"><span class="pre">ImageInfo</span></code></a> to pixmap, if address is available, and returns
+true.</p>
+<p>If pixel address is not available, return false and leave pixmap
+unchanged.</p>
+<p>pixmap contents become invalid on any future change to
 <a class="reference internal" href="#skia.Bitmap" title="skia.Bitmap"><code class="xref py py-class docutils literal notranslate"><span class="pre">Bitmap</span></code></a>.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p><a class="reference internal" href="skia.Pixmap.html#skia.Pixmap" title="skia.Pixmap"><code class="xref py py-class docutils literal notranslate"><span class="pre">Pixmap</span></code></a></p>
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>pixmap</strong> (<a class="reference internal" href="skia.Pixmap.html#skia.Pixmap" title="skia.Pixmap"><em>skia.Pixmap</em></a>) – storage for pixel state if pixels are
+readable; otherwise, ignored</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>true if <a class="reference internal" href="#skia.Bitmap" title="skia.Bitmap"><code class="xref py py-class docutils literal notranslate"><span class="pre">Bitmap</span></code></a> has direct access to pixels</p>
 </dd>
 </dl>
 </dd></dl>
