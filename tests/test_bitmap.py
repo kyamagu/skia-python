@@ -321,7 +321,7 @@ def test_Bitmap_extractAlpha(bitmap):
 
 
 def test_Bitmap_peekPixels(bitmap):
-    assert isinstance(bitmap.peekPixels(), skia.Pixmap)
+    assert isinstance(bitmap.peekPixels(skia.Pixmap()), bool)
 
 
 def test_Bitmap_makeShader(bitmap):

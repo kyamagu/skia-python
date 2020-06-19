@@ -68,6 +68,10 @@ def test_Surface_generationID(surface):
     assert isinstance(surface.generationID(), int)
 
 
+def test_Surface_notifyContentWillChange(surface):
+    surface.notifyContentWillChange(skia.Surface.kDiscard_ContentChangeMode)
+
+
 @pytest.mark.parametrize('args', [
     (skia.ImageInfo.MakeN32Premul(120, 120),),
     (120, 120),
@@ -89,8 +93,7 @@ def test_Surface_draw(surface):
 
 
 def test_Surface_peekPixels(surface):
-    if surface.getContext() is None:
-        assert isinstance(surface.peekPixels(), skia.Pixmap)
+    assert isinstance(surface.peekPixels(skia.Pixmap()), bool)
 
 
 @pytest.mark.parametrize('args', [

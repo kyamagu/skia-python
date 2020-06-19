@@ -86,7 +86,9 @@ py::class_<SkSurfaceCharacterization>(m, "SurfaceCharacterization")
     .def("isValid", &SkSurfaceCharacterization::isValid)
     .def("width", &SkSurfaceCharacterization::width)
     .def("height", &SkSurfaceCharacterization::height)
-    // .def("stencilCount", &SkSurfaceCharacterization::stencilCount)
+    #if !SK_SUPPORT_GPU
+    .def("stencilCount", &SkSurfaceCharacterization::stencilCount)
+    #endif
     .def("isTextureable", &SkSurfaceCharacterization::isTextureable)
     .def("isMipMapped", &SkSurfaceCharacterization::isMipMapped)
     .def("usesGLFBO0", &SkSurfaceCharacterization::usesGLFBO0)
@@ -98,7 +100,7 @@ py::class_<SkSurfaceCharacterization>(m, "SurfaceCharacterization")
     .def("surfaceProps", &SkSurfaceCharacterization::surfaceProps)
     ;
 
-py::class_<SkSurface, sk_sp<SkSurface>> surface(
+py::class_<SkSurface, sk_sp<SkSurface>, SkRefCnt> surface(
     m, "Surface", py::buffer_protocol(), R"docstring(
     :py:class:`Surface` is responsible for managing the pixels that a canvas
     draws into.
@@ -251,9 +253,14 @@ surface
 
         :return: unique content identifier
         )docstring")
-    // .def("notifyContentWillChange", &SkSurface::notifyContentWillChange,
-    //     "Notifies that SkSurface contents will be changed by code outside of "
-    //     "Skia.")
+    .def("notifyContentWillChange", &SkSurface::notifyContentWillChange,
+        R"docstring(
+        Notifies that :py:class:`Surface` contents will be changed by code
+        outside of Skia.
+
+        Subsequent calls to :py:meth:`generationID` return a different value.
+        )docstring",
+        py::arg("mode"))
     .def("getContext", &SkSurface::getContext,
         R"docstring(
         Returns the GPU context of the GPU surface.
@@ -391,18 +398,23 @@ surface
         )docstring",
         py::arg("canvas"), py::arg("x"), py::arg("y"),
         py::arg("paint") = nullptr)
-    .def("peekPixels", &PeekPixels<SkSurface>,
+    .def("peekPixels", &SkSurface::peekPixels,
         R"docstring(
-        Creates :py:class:`Pixmap` from :py:class:`Surface` pixel address, row
-        bytes, and :py:class:`ImageInfo` to pixmap, if address is available.
+        Copies :py:class:`Surface` pixel address, row bytes, and
+        :py:class:`ImageInfo` to :py:class:`Pixmap`, if address is available,
+        and returns true.
 
-        Raises if pixel address is not available.
+        If pixel address is not available, return false and leave
+        :py:class:`Pixmap` unchanged.
 
-        :py:class:`Pixmap` contents become invalid on any future change to
+        pixmap contents become invalid on any future change to
         :py:class:`Surface`.
 
-        :return: :py:class:`Pixmap`
-        )docstring")
+        :param skia.Pixmap pixmap: storage for pixel state if pixels are
+            readable; otherwise, ignored
+        :return: true if :py:class:`Surface` has direct access to pixels
+        )docstring",
+        py::arg("pixmap"))
     .def("readPixels",
         py::overload_cast<const SkPixmap&, int, int>(&SkSurface::readPixels),
         R"docstring(
@@ -686,41 +698,13 @@ surface
         :return: false if deferredDisplayList is not compatible
         )docstring",
         py::arg("deferredDisplayList"))
-    .def("unique", &SkSurface::unique,
-        R"docstring(
-        May return true if the caller is the only owner.
-
-        Ensures that all previous owner's actions are complete.
-        )docstring")
-    .def("ref", &SkSurface::ref,
-        R"docstring(
-        Increment the reference count.
-
-        Must be balanced by a call to unref().
-        )docstring")
-    .def("unref", &SkSurface::unref,
-        R"docstring(
-        Decrement the reference count.
-
-        If the reference count is 1 before the decrement, then delete the
-        object. Note that if this is the case, then the object needs to have
-        been allocated via new, and not on the stack.
-        )docstring")
     .def_static("MakeRasterDirect",
-        [](const SkImageInfo& image_info, py::buffer pixels, size_t rowBytes,
+        [](const SkImageInfo& imageInfo, py::buffer b, size_t rowBytes,
             const SkSurfaceProps* surfaceProps) {
-            py::buffer_info info = pixels.request();
-            size_t given_size = (info.ndim > 0) ?
-                info.shape[0] * info.strides[0] : 0;
-            rowBytes = (rowBytes == 0) ? image_info.minRowBytes() : rowBytes;
-            auto required = rowBytes * image_info.height();
-            if (given_size < required)
-                throw std::runtime_error("Buffer is smaller than required");
-            auto surface = SkSurface::MakeRasterDirect(
-                image_info, info.ptr, rowBytes, surfaceProps);
-            if (!surface)
-                throw std::runtime_error("Failed to create Surface");
-            return surface;
+            py::buffer_info info = b.request();
+            rowBytes = ValidateBufferToImageInfo(imageInfo, info, rowBytes);
+            return SkSurface::MakeRasterDirect(
+                imageInfo, info.ptr, rowBytes, surfaceProps);
         },
         R"docstring(
         Allocates raster :py:class:`Surface`.

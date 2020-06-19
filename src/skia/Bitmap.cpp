@@ -1022,18 +1022,23 @@ bitmap
         :return: true if alpha layer was constructed in dst :py:class:`PixelRef`
         )docstring",
         py::arg("dst"), py::arg("paint") = nullptr, py::arg("offset") = nullptr)
-    .def("peekPixels", &PeekPixels<const SkBitmap>,
+    .def("peekPixels", &SkBitmap::peekPixels,
         R"docstring(
-        Creates :py:class:`Pixmap` from :py:class:`Bitmap` pixel address, row
-        bytes, and :py:class:`ImageInfo` to pixmap, if address is available.
+        Copies :py:class:`Bitmap` pixel address, row bytes, and
+        :py:class:`ImageInfo` to pixmap, if address is available, and returns
+        true.
 
-        Raises if pixel address is not available.
+        If pixel address is not available, return false and leave pixmap
+        unchanged.
 
-        :py:class:`Pixmap` contents become invalid on any future change to
+        pixmap contents become invalid on any future change to
         :py:class:`Bitmap`.
 
-        :return: :py:class:`Pixmap`
-        )docstring")
+        :param skia.Pixmap pixmap: storage for pixel state if pixels are
+            readable; otherwise, ignored
+        :return: true if :py:class:`Bitmap` has direct access to pixels
+        )docstring",
+        py::arg("pixmap"))
     .def("makeShader",
         py::overload_cast<SkTileMode, SkTileMode, const SkMatrix*>(
             &SkBitmap::makeShader, py::const_),
