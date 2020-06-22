@@ -22,8 +22,7 @@ draws a rectangle with specified paint, and writes the result to an image file::
     canvas.drawRect(rect, paint)
 
     image = surface.makeImageSnapshot()
-    with open('output.png', 'wb') as f:
-        f.write(image.encodeToData())
+    image.save('output.png', skia.kPNG)
 
 .. image:: /_static/overview-rect-blue.png
   :width: 128
@@ -66,8 +65,7 @@ are specified explicitly in each draw call, via a :py:class:`Paint`::
     canvas.restore()
 
     image = surface.makeImageSnapshot()
-    with open('output.png', 'wb') as f:
-        f.write(image.encodeToData())
+    image.save('output.png', skia.kPNG)
 
 .. image:: /_static/overview-rotated-rect.png
     :width: 256
@@ -133,8 +131,7 @@ The following example demonstrates drawing of shape primitives,
     paint.setColor(skia.ColorGREEN)
     canvas.drawPath(path, paint)
 
-    with open('../skia/resources/images/color_wheel.png', 'rb') as f:
-        image = skia.Image.DecodeToRaster(f.read())
+    image = skia.Image.open('../skia/resources/images/color_wheel.png')
     canvas.drawImage(image, 128, 128, paint)
 
     rect2 = skia.Rect(40, 60)
@@ -145,8 +142,7 @@ The following example demonstrates drawing of shape primitives,
     canvas.drawTextBlob(text, 50, 25, paint2)
 
     image = surface.makeImageSnapshot()
-    with open('output.png', 'wb') as f:
-        f.write(image.encodeToData())
+    image.save('output.png', skia.kPNG)
 
 .. image:: /_static/overview-various-draws.png
     :width: 256
@@ -165,9 +161,23 @@ draws into numpy array::
     paint = skia.Paint(AntiAlias=True, Color=skia.ColorCYAN)
     canvas.drawCircle(180, 50, 25, paint)
 
-Alternatively, :py:class:`Canvas` content can be exported to numpy array.
+Alternatively, :py:class:`Canvas` content can be exported to numpy array::
 
-    array = canvas.numpy()
+    array = canvas.toarray()
+
+:py:class:`skia.Image` is convertible to ``PIL`` image::
+
+    skia_image = skia.Image.open('/path/to/input.png')
+    pil_image = PIL.Image.fromarray(
+        skia_image.convert(alphaType=skia.kUnpremul_AlphaType))
+
+    skia_image = skia.Image.frombytes(
+        pil_image.convert('RGBA').tobytes(),
+        pil_image.size,
+        skia.kRGBA_8888_ColorType)
+
+For more examples, check the
+`Python Image I/O notebook <https://github.com/kyamagu/skia-python/blob/master/notebooks/Python-Image-IO.ipynb>`_.
 
 APIs at a glance
 ----------------
