@@ -1,8 +1,23 @@
 #include "common.h"
 
+namespace {
 
 typedef struct _PyPDF {} PyPDF;
 
+// Helper to support with statement.
+class PyAutoDocumentPage {
+public:
+    PyAutoDocumentPage(SkDocument* document, SkScalar width, SkScalar height)
+        : width_(width), height_(height), document_(document) {}
+    SkCanvas* beginPage() { return document_->beginPage(width_, height_); }
+    void endPage() { document_->endPage(); }
+private:
+    SkScalar width_;
+    SkScalar height_;
+    SkDocument* document_;
+};
+
+}
 
 void initDocument(py::module &m) {
 
@@ -21,16 +36,24 @@ py::class_<SkDocument, sk_sp<SkDocument>, SkRefCnt>(m, "Document",
 
     3. Close the document with doc.close().
 
-    Example::
+    ``skia-python`` supports ``with`` syntax to build a document::
 
         stream = skia.FILEWStream('output.pdf')
-        document = skia.PDF.MakeDocument(stream)
-        canvas = document.beginPage(480, 640)
-        draw(canvas)
-        document.endPage()
-        document.close()
+        with skia.PDF.MakeDocument(stream) as document:
+            with document.page(480, 640) as canvas:
+                draw(canvas)
 
     )docstring")
+    .def("__enter__",
+        [] (const SkDocument* document) { return document; })
+    .def("__exit__",
+        [] (SkDocument* document, py::object exc_type, py::object exc_value,
+            py::object traceback) { document->close(); })
+    .def("page",
+        [] (SkDocument* document, SkScalar width, SkScalar height) {
+            return PyAutoDocumentPage(document, width, height);
+        },
+        py::arg("width"), py::arg("height"))
     .def("beginPage", &SkDocument::beginPage,
         R"docstring(
         Begin a new page for the document, returning the canvas that will draw
@@ -65,6 +88,15 @@ py::class_<SkDocument, sk_sp<SkDocument>, SkRefCnt>(m, "Document",
 
         The stream output must be ignored, and should not be trusted.
         )docstring")
+    ;
+
+py::class_<PyAutoDocumentPage>(m, "_AutoDocumentPage")
+    .def("__enter__",
+        [] (PyAutoDocumentPage& page) { return page.beginPage(); },
+        py::return_value_policy::reference)
+    .def("__exit__",
+        [] (PyAutoDocumentPage& page, py::object exc_type, py::object exc_value,
+            py::object traceback) { page.endPage(); })
     ;
 
 py::class_<PyPDF> pdf(m, "PDF");

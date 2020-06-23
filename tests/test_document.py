@@ -22,6 +22,16 @@ def document_canvas(document):
     document.endPage()
 
 
+def test_Document_enter_exit(stream):
+    with skia.PDF.MakeDocument(stream) as document:
+        assert isinstance(document, skia.Document)
+
+
+def test_Document_page(document):
+    with document.page(100, 100) as canvas:
+        assert isinstance(canvas, skia.Canvas)
+
+
 def test_Document_beginPage_endPage(document_canvas):
     assert isinstance(document_canvas, skia.Canvas)
 
