@@ -41,6 +41,13 @@ def test_Picture_makeShader(picture):
         skia.Shader)
 
 
+def test_Picture_MakeFromStream(picture):
+    data = picture.serialize()
+    stream = skia.MemoryStream(data)
+    assert isinstance(
+        skia.Picture.MakeFromStream(stream), skia.Picture)
+
+
 def test_Picture_MakeFromData(picture):
     assert isinstance(
         skia.Picture.MakeFromData(picture.serialize()), skia.Picture)
