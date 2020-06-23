@@ -231,6 +231,11 @@ def test_FILEStream_isValid(file_stream):
     assert file_stream.isValid()
 
 
+def test_FILEStream_context(png_path):
+    with skia.FILEStream(png_path) as f:
+        assert isinstance(f, skia.FILEStream)
+
+
 @pytest.mark.parametrize('args', [
     tuple(),
     (128,),
