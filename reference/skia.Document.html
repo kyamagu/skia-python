@@ -342,13 +342,11 @@
 </li>
 <li><p>Close the document with doc.close().</p></li>
 </ol>
-<p>Example:</p>
+<p><code class="docutils literal notranslate"><span class="pre">skia-python</span></code> supports <code class="docutils literal notranslate"><span class="pre">with</span></code> syntax to build a document:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">stream</span> <span class="o">=</span> <span class="n">skia</span><span class="o">.</span><span class="n">FILEWStream</span><span class="p">(</span><span class="s1">&#39;output.pdf&#39;</span><span class="p">)</span>
-<span class="n">document</span> <span class="o">=</span> <span class="n">skia</span><span class="o">.</span><span class="n">PDF</span><span class="o">.</span><span class="n">MakeDocument</span><span class="p">(</span><span class="n">stream</span><span class="p">)</span>
-<span class="n">canvas</span> <span class="o">=</span> <span class="n">document</span><span class="o">.</span><span class="n">beginPage</span><span class="p">(</span><span class="mi">480</span><span class="p">,</span> <span class="mi">640</span><span class="p">)</span>
-<span class="n">draw</span><span class="p">(</span><span class="n">canvas</span><span class="p">)</span>
-<span class="n">document</span><span class="o">.</span><span class="n">endPage</span><span class="p">()</span>
-<span class="n">document</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+<span class="k">with</span> <span class="n">skia</span><span class="o">.</span><span class="n">PDF</span><span class="o">.</span><span class="n">MakeDocument</span><span class="p">(</span><span class="n">stream</span><span class="p">)</span> <span class="k">as</span> <span class="n">document</span><span class="p">:</span>
+    <span class="k">with</span> <span class="n">document</span><span class="o">.</span><span class="n">page</span><span class="p">(</span><span class="mi">480</span><span class="p">,</span> <span class="mi">640</span><span class="p">)</span> <span class="k">as</span> <span class="n">canvas</span><span class="p">:</span>
+        <span class="n">draw</span><span class="p">(</span><span class="n">canvas</span><span class="p">)</span>
 </pre></div>
 </div>
 <p class="rubric">Methods</p>
@@ -373,13 +371,16 @@
 <tr class="row-odd"><td><p><a class="reference internal" href="#skia.Document.endPage" title="skia.Document.endPage"><code class="xref py py-obj docutils literal notranslate"><span class="pre">endPage</span></code></a></p></td>
 <td><p>Call <a class="reference internal" href="#skia.Document.endPage" title="skia.Document.endPage"><code class="xref py py-meth docutils literal notranslate"><span class="pre">endPage()</span></code></a> when the content for the current page has been drawn (into the canvas returned by <a class="reference internal" href="#skia.Document.beginPage" title="skia.Document.beginPage"><code class="xref py py-meth docutils literal notranslate"><span class="pre">beginPage()</span></code></a>).</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#skia.Document.ref" title="skia.Document.ref"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ref</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.Document.page" title="skia.Document.page"><code class="xref py py-obj docutils literal notranslate"><span class="pre">page</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Document.ref" title="skia.Document.ref"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ref</span></code></a></p></td>
 <td><p>Increment the reference count.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Document.unique" title="skia.Document.unique"><code class="xref py py-obj docutils literal notranslate"><span class="pre">unique</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.Document.unique" title="skia.Document.unique"><code class="xref py py-obj docutils literal notranslate"><span class="pre">unique</span></code></a></p></td>
 <td><p>May return true if the caller is the only owner.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#skia.Document.unref" title="skia.Document.unref"><code class="xref py py-obj docutils literal notranslate"><span class="pre">unref</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Document.unref" title="skia.Document.unref"><code class="xref py py-obj docutils literal notranslate"><span class="pre">unref</span></code></a></p></td>
 <td><p>Decrement the reference count.</p></td>
 </tr>
 </tbody>
@@ -429,6 +430,11 @@ drawn (into the canvas returned by <a class="reference internal" href="#skia.Doc
 <p>After this call the canvas returned by <a class="reference internal" href="#skia.Document.beginPage" title="skia.Document.beginPage"><code class="xref py py-meth docutils literal notranslate"><span class="pre">beginPage()</span></code></a> will be
 out-of-scope.</p>
 </dd></dl>
+
+<dl class="py method">
+<dt id="skia.Document.page">
+<code class="sig-prename descclassname">Document.</code><code class="sig-name descname">page</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Document" title="skia.Document">skia.Document</a></span></em>, <em class="sig-param"><span class="n">width</span><span class="p">:</span> <span class="n">float</span></em>, <em class="sig-param"><span class="n">height</span><span class="p">:</span> <span class="n">float</span></em><span class="sig-paren">)</span> &#x2192; (anonymous namespace)::PyAutoDocumentPage<a class="headerlink" href="#skia.Document.page" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
 
 <dl class="py method">
 <dt id="skia.Document.ref">
