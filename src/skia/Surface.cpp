@@ -112,6 +112,14 @@ py::class_<SkSurface, sk_sp<SkSurface>, SkRefCnt> surface(
     by the surface). :py:class:`Surface` always has non-zero dimensions. If
     there is a request for a new surface, and either of the requested dimensions
     are zero, then nullptr will be returned.
+
+    Example::
+
+        surface = skia.Surface(640, 480)
+        with surface as canvas:
+            draw(canvas)
+        image = surface.makeImageSnapshot()
+
     )docstring");
 
 py::class_<SkSurface::AsyncReadResult>(surface, "AsyncReadResult", R"docstring(
@@ -167,6 +175,12 @@ surface
             return py::str("Surface({}, {})").format(
                 surface.width(), surface.height());
         })
+    .def("__enter__",
+        [] (SkSurface& surface) { return surface.getCanvas(); },
+        py::return_value_policy::reference)
+    .def("__exit__",
+        [] (const SkSurface& surface, py::object exc_type, py::object exc_value,
+            py::object traceback) { })
     .def("toarray", &ReadToNumpy<SkSurface>,
         R"docstring(
         Exports a ``numpy.ndarray``.

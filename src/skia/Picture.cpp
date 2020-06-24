@@ -1,5 +1,7 @@
 #include "common.h"
 
+namespace {
+
 class PyPicture : public SkPicture {
 public:
     void playback(
@@ -31,6 +33,8 @@ public:
         PYBIND11_OVERLOAD_PURE(size_t, SkBBoxHierarchy, bytesUsed);
     }
 };
+
+}  // namespace
 
 void initPicture(py::module &m) {
 py::class_<SkPicture, PyPicture, sk_sp<SkPicture>, SkRefCnt>(
@@ -156,8 +160,21 @@ py::class_<SkPicture, PyPicture, sk_sp<SkPicture>, SkRefCnt>(
         )docstring",
         py::arg("tmx"), py::arg("tmy"), py::arg("localMatrix") = nullptr,
         py::arg("tile") = nullptr)
-    // .def_static("MakeFromStream", &SkPicture::MakeFromStream,
-    //     "Recreates SkPicture that was serialized into a stream.")
+    .def_static("MakeFromStream",
+        [] (SkStream* stream) {
+            return SkPicture::MakeFromStream(stream);
+        },
+        R"docstring(
+        Recreates :py:class:`Picture` that was serialized into a stream.
+
+        Returns constructed :py:class:`Picture` if successful; otherwise,
+        returns nullptr. Fails if data does not permit constructing valid
+        :py:class:`Picture`.
+
+        :param stream: container for serial data
+        :return: :py:class:`Picture` constructed from stream data
+        )docstring",
+        py::arg("stream"))
     .def_static("MakeFromData",
         [] (const SkData* data) {
             auto picture = SkPicture::MakeFromData(data);

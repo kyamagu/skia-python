@@ -619,6 +619,10 @@ py::class_<SkNullWStream, PyWStreamImpl<SkNullWStream>, SkWStream>(
 
 py::class_<SkFILEStream, PyStreamImpl<SkFILEStream>, SkStreamAsset>(
     m, "FILEStream")
+    .def("__enter__", [] (const SkFILEStream* stream) { return stream; })
+    .def("__exit__",
+        [] (SkFILEStream& stream, py::object exc_type, py::object exc_value,
+            py::object traceback) { stream.close(); })
     .def(py::init(
         [] (const std::string& path) {
             const char* path_ = path.c_str();
