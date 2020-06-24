@@ -16,6 +16,11 @@ def test_Surface_init(args):
     check_surface(skia.Surface(*args))
 
 
+def test_Surface_enter_exit(surface):
+    with surface as canvas:
+        assert isinstance(canvas, skia.Canvas)
+
+
 def test_Surface_toarray(surface):
     assert isinstance(surface.toarray(), np.ndarray)
 
