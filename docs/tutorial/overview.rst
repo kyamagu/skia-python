@@ -14,12 +14,13 @@ draws a rectangle with specified paint, and writes the result to an image file::
     import skia
 
     surface = skia.Surface(128, 128)
-    canvas = surface.getCanvas()
-    rect = skia.Rect(32, 32, 96, 96)
-    paint = skia.Paint(
-        Color=skia.ColorBLUE,
-        Style=skia.Paint.kFill_Style)
-    canvas.drawRect(rect, paint)
+
+    with surface as canvas:
+        rect = skia.Rect(32, 32, 96, 96)
+        paint = skia.Paint(
+            Color=skia.ColorBLUE,
+            Style=skia.Paint.kFill_Style)
+        canvas.drawRect(rect, paint)
 
     image = surface.makeImageSnapshot()
     image.save('output.png', skia.kPNG)
@@ -55,14 +56,15 @@ are specified explicitly in each draw call, via a :py:class:`Paint`::
     import skia
 
     surface = skia.Surface(256, 256)
-    canvas = surface.getCanvas()
-    canvas.save()
-    canvas.translate(128., 128.)
-    canvas.rotate(45.)
-    rect = skia.Rect(-90.5, -90.5, 90.5, 90.5)
-    paint = skia.Paint(Color=skia.Color(0, 0, 255))
-    canvas.drawRect(rect, paint)
-    canvas.restore()
+
+    with surface as canvas:
+        canvas.save()
+        canvas.translate(128., 128.)
+        canvas.rotate(45.)
+        rect = skia.Rect(-90.5, -90.5, 90.5, 90.5)
+        paint = skia.Paint(Color=skia.Color(0, 0, 255))
+        canvas.drawRect(rect, paint)
+        canvas.restore()
 
     image = surface.makeImageSnapshot()
     image.save('output.png', skia.kPNG)
@@ -101,45 +103,45 @@ The following example demonstrates drawing of shape primitives,
     import skia
 
     surface = skia.Surface(256, 256)
-    canvas = surface.getCanvas()
 
-    rect = skia.Rect(50, 50, 90, 110)
-    paint = skia.Paint(
-        AntiAlias=True,
-        Style=skia.Paint.kStroke_Style,
-        StrokeWidth=4,
-        Color=skia.ColorRED,
-    )
+    with surface as canvas:
+        rect = skia.Rect(50, 50, 90, 110)
+        paint = skia.Paint(
+            AntiAlias=True,
+            Style=skia.Paint.kStroke_Style,
+            StrokeWidth=4,
+            Color=skia.ColorRED,
+        )
 
-    canvas.drawColor(skia.ColorWHITE)
-    canvas.drawRect(rect, paint)
+        canvas.drawColor(skia.ColorWHITE)
+        canvas.drawRect(rect, paint)
 
-    oval = skia.RRect.MakeOval(rect)
-    oval.offset(40, 60)
-    paint.setColor(skia.ColorBLUE)
-    canvas.drawRRect(oval, paint)
+        oval = skia.RRect.MakeOval(rect)
+        oval.offset(40, 60)
+        paint.setColor(skia.ColorBLUE)
+        canvas.drawRRect(oval, paint)
 
-    paint.setColor(skia.ColorCYAN)
-    canvas.drawCircle(180, 50, 25, paint)
+        paint.setColor(skia.ColorCYAN)
+        canvas.drawCircle(180, 50, 25, paint)
 
-    rect.offset(80, 0)
-    paint.setColor(skia.ColorYELLOW)
-    canvas.drawRoundRect(rect, 10, 10, paint)
+        rect.offset(80, 0)
+        paint.setColor(skia.ColorYELLOW)
+        canvas.drawRoundRect(rect, 10, 10, paint)
 
-    path = skia.Path()
-    path.cubicTo(768, 0, -512, 256, 256, 256)
-    paint.setColor(skia.ColorGREEN)
-    canvas.drawPath(path, paint)
+        path = skia.Path()
+        path.cubicTo(768, 0, -512, 256, 256, 256)
+        paint.setColor(skia.ColorGREEN)
+        canvas.drawPath(path, paint)
 
-    image = skia.Image.open('../skia/resources/images/color_wheel.png')
-    canvas.drawImage(image, 128, 128, paint)
+        image = skia.Image.open('../skia/resources/images/color_wheel.png')
+        canvas.drawImage(image, 128, 128, paint)
 
-    rect2 = skia.Rect(40, 60)
-    canvas.drawImageRect(image, rect2, paint)
+        rect2 = skia.Rect(40, 60)
+        canvas.drawImageRect(image, rect2, paint)
 
-    paint2 = skia.Paint()
-    text = skia.TextBlob('Hello, Skia!', skia.Font(None, 18))
-    canvas.drawTextBlob(text, 50, 25, paint2)
+        paint2 = skia.Paint()
+        text = skia.TextBlob('Hello, Skia!', skia.Font(None, 18))
+        canvas.drawTextBlob(text, 50, 25, paint2)
 
     image = surface.makeImageSnapshot()
     image.save('output.png', skia.kPNG)

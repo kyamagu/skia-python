@@ -31,14 +31,12 @@ into which the canvas commands are drawn.
 
     width, height = 200, 200
     surface = skia.Surface(width, height)
-    canvas = surface.getCanvas()
 
-    canvas.drawCircle(100, 100, 40, skia.Paint(Color=skia.ColorGREEN))
+    with surface as canvas:
+        canvas.drawCircle(100, 100, 40, skia.Paint(Color=skia.ColorGREEN))
 
     image = surface.makeImageSnapshot()
-    assert image is not None
-    with open('output.png') as f:
-        f.write(image.encodeToData())
+    image.save('output.png', skia.kPNG)
 
 
 Alternatively, we could have specified the memory for the surface explicitly,
@@ -53,10 +51,9 @@ into numpy array.
 
     width, height = 200, 200
     array = np.zeros((height, width, 4), dtype=np.uint8)
-    surface = skia.Surface(array)
-    canvas = surface.getCanvas()
 
-    canvas.drawCircle(100, 100, 40, skia.Paint(Color=skia.ColorGREEN))
+    with skia.Surface(array) as canvas:
+        canvas.drawCircle(100, 100, 40, skia.Paint(Color=skia.ColorGREEN))
 
     plot.imshow(array)
     plot.show()
@@ -105,12 +102,13 @@ The following example uses glfw package to create an OpenGL context. Install
         info = skia.ImageInfo.MakeN32Premul(width, height)
         surface = skia.Surface.MakeRenderTarget(context, skia.Budgeted.kNo, info)
         assert surface is not None
-        canvas = surface.getCanvas()
-        canvas.drawCircle(100, 100, 40, skia.Paint(Color=skia.ColorGREEN))
+
+        with surface as canvas:
+            canvas.drawCircle(100, 100, 40, skia.Paint(Color=skia.ColorGREEN))
+
         image = surface.makeImageSnapshot()
         assert image is not None
-        with open('output.png', 'wb') as f:
-            f.write(image.encodeToData())
+        image.save('output.png', skia.kPNG)
 
 
 PDF
@@ -124,11 +122,9 @@ following demonstrates how to write a single-page PDF document to a file::
 
     width, height = 200, 200
     stream = skia.FILEWStream('output.pdf')
-    document = skia.PDF.MakeDocument(stream)
-    canvas = document.beginPage(width, height)
-    canvas.drawCircle(100, 100, 40, skia.Paint(Color=skia.ColorGREEN))
-    document.endPage()
-    document.close()
+    with skia.PDF.MakeDocument(stream) as document:
+        with document.page(width, height) as canvas:
+            canvas.drawCircle(100, 100, 40, skia.Paint(Color=skia.ColorGREEN))
 
 
 Picture

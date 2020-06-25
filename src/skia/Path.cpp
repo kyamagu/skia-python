@@ -3,32 +3,48 @@
 #include <pybind11/stl.h>
 #include <pybind11/iostream.h>
 
+namespace {
 
-template <typename T>
-py::tuple Iter_next(T& it) {
-    std::vector<SkPoint> pts(4);
-    SkPath::Verb result = it.next(&pts[0]);
-    switch (result) {
+void StripPts(const SkPath::Verb verb, std::vector<SkPoint>* pts) {
+    switch (verb) {
         case SkPath::Verb::kDone_Verb:
-            pts.erase(pts.begin(), pts.end());
+            pts->erase(pts->begin(), pts->end());
             break;
         case SkPath::Verb::kMove_Verb:
         case SkPath::Verb::kClose_Verb:
-            pts.erase(pts.begin() + 1, pts.end());
+            pts->erase(pts->begin() + 1, pts->end());
             break;
         case SkPath::Verb::kLine_Verb:
-            pts.erase(pts.begin() + 2, pts.end());
+            pts->erase(pts->begin() + 2, pts->end());
             break;
         case SkPath::Verb::kQuad_Verb:
         case SkPath::Verb::kConic_Verb:
-            pts.erase(pts.begin() + 3, pts.end());
+            pts->erase(pts->begin() + 3, pts->end());
             break;
         case SkPath::Verb::kCubic_Verb:
             break;
     }
-    return py::make_tuple(result, pts);
 }
 
+template <typename T>
+py::tuple Iter_next(T& it) {
+    std::vector<SkPoint> pts(4);
+    SkPath::Verb verb = it.next(&pts[0]);
+    StripPts(verb, &pts);
+    return py::make_tuple(verb, pts);
+}
+
+template <typename T>
+py::tuple Iter___next__(T& it) {
+    std::vector<SkPoint> pts(4);
+    SkPath::Verb verb = it.next(&pts[0]);
+    StripPts(verb, &pts);
+    if (verb == SkPath::kDone_Verb)
+        throw py::stop_iteration();
+    return py::make_tuple(verb, pts);
+}
+
+}  // namespace
 
 void initPath(py::module &m) {
 // PathTypes
@@ -128,6 +144,15 @@ py::class_<SkPath> path(m, "Path", R"docstring(
     Internally, :py:class:`Path` lazily computes metrics likes bounds and
     convexity. Call :py:meth:`Path.updateBoundsCache` to make :py:class:`Path`
     thread safe.
+
+    Example::
+
+        path = skia.Path()
+        path.addCircle(25, 25, 10)
+        path.addRect((50, 60, 70, 70))
+
+        for verb, points in path:
+            print(verb)
     )docstring");
 
 py::enum_<SkPath::ArcSize>(path, "ArcSize")
@@ -151,7 +176,7 @@ py::enum_<SkPath::SegmentMask>(path, "SegmentMask")
     .value("kCubic_SegmentMask", SkPath::SegmentMask::kCubic_SegmentMask)
     .export_values();
 
-py::enum_<SkPath::Verb>(path, "Verb")
+py::enum_<SkPath::Verb>(path, "Verb", py::arithmetic())
     .value("kMove_Verb", SkPath::Verb::kMove_Verb)
     .value("kLine_Verb", SkPath::Verb::kLine_Verb)
     .value("kQuad_Verb", SkPath::Verb::kQuad_Verb)
@@ -167,6 +192,12 @@ py::class_<SkPath::Iter>(path, "Iter", R"docstring(
 
     Provides options to treat open contours as closed, and to ignore degenerate
     data.
+
+    Example::
+
+        for verb, points in skia.Path.Iter(path, forceClose=True):
+            print(verb)
+            print(points)
     )docstring")
     .def(py::init(),
         R"docstring(
@@ -259,6 +290,8 @@ py::class_<SkPath::Iter>(path, "Iter", R"docstring(
 
         :return: true if contour is closed
         )docstring")
+    .def("__iter__", [] (const SkPath::Iter& it) { return it; })
+    .def("__next__", &Iter___next__<SkPath::Iter>)
     ;
 
 py::class_<SkPath::RawIter>(path, "RawIter", R"docstring(
@@ -328,9 +361,13 @@ py::class_<SkPath::RawIter>(path, "RawIter", R"docstring(
         :return: conic weight for conic :py:class:`Point` returned by
             :py:meth:`next`
         )docstring")
+    .def("__iter__", [] (const SkPath::RawIter& it) { return it; })
+    .def("__next__", &Iter___next__<SkPath::RawIter>)
     ;
 
 path
+    .def("__iter__",
+        [] (const SkPath& path) { return SkPath::Iter(path, false); })
     .def(py::init<>(), R"docstring(
         Constructs an empty :py:class:`Path`.
 
@@ -655,11 +692,16 @@ path
         )docstring")
     .def("getVerbs",
         [] (const SkPath& path, int max) {
-            std::vector<uint8_t> verbs((max == 0) ? path.countVerbs() : max);
+            if (max == 0)
+                max = path.countVerbs();
+            std::vector<uint8_t> verbs(max);
             auto length = path.getVerbs(&verbs[0], max);
             if (length < max)
                 verbs.erase(verbs.begin() + length, verbs.end());
-            return verbs;
+            std::vector<SkPath::Verb> verbs_(verbs.size());
+            std::transform(verbs.begin(), verbs.end(), verbs_.begin(),
+                [] (const uint8_t& x) { return static_cast<SkPath::Verb>(x); });
+            return verbs_;
         },
         R"docstring(
         Returns verbs in the path.
@@ -1756,11 +1798,23 @@ path
         :return: true if :py:class:`Point` is in :py:class:`Path`
         )docstring",
         py::arg("x"), py::arg("y"))
-    // .def("dump",
-    //     py::overload_cast<SkWStream*, bool, bool>(&SkPath::dump),
-    //     "Writes text representation of SkPath to stream.")
     .def("dump",
-        // py::overload_cast<>(&SkPath::dump, py::const_),
+        py::overload_cast<SkWStream*, bool, bool>(&SkPath::dump, py::const_),
+        R"docstring(
+        Writes text representation of :py:class:`Path` to stream.
+
+        If stream is nullptr, writes to standard output. Set forceClose to true
+        to get edges used to fill :py:class:`Path`. Set dumpAsHex true to
+        generate exact binary representations of floating point numbers used in
+        :py:class:`Point` array and conic weights.
+
+        :stream: writable :py:class:`WStream` receiving :py:class:`Path` text
+            representation; may be nullptr
+        :forceClose: true if missing kClose_Verb is output
+        :dumpAsHex: true if :py:class:`Scalar` values are written as hexadecimal
+        )docstring",
+        py::arg("stream"), py::arg("forceClose"), py::arg("dumpAsHex"))
+    .def("dump",
         [] (const SkPath& path) {
             py::scoped_ostream_redirect stream;
             path.dump();
@@ -1773,7 +1827,6 @@ path
         reconstruct original :py:class:`Path` from output.
         )docstring")
     .def("dumpHex",
-        // &SkPath::dumpHex,
         [] (const SkPath& path) {
             py::scoped_ostream_redirect stream;
             path.dumpHex();
