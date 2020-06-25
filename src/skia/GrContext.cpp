@@ -1,12 +1,19 @@
 #include "common.h"
+#include <include/gpu/vk/GrVkBackendContext.h>
 #include <pybind11/chrono.h>
 #include <pybind11/stl.h>
 
+void initGrContext_gl(py::module&);
+void initGrContext_mock(py::module&);
+void initGrContext_vk(py::module&);
+
 void initGrContext(py::module &m) {
 
-py::enum_<GrBackendApi>(m, "GrBackendApi", R"docstring(
+py::enum_<GrBackendApi>(m, "GrBackendApi",
+    R"docstring(
     Possible 3D APIs that may be used by Ganesh.
-    )docstring")
+    )docstring",
+    py::arithmetic())
     .value("kOpenGL", GrBackendApi::kOpenGL)
     .value("kVulkan", GrBackendApi::kVulkan)
     .value("kMetal", GrBackendApi::kMetal)
@@ -24,27 +31,32 @@ py::enum_<GrBackendApi>(m, "GrBackendApi", R"docstring(
         )docstring")
     .export_values();
 
-py::enum_<GrMipMapped>(m, "GrMipMapped", R"docstring(
+py::enum_<GrMipMapped>(m, "GrMipMapped",
+    R"docstring(
     Used to say whether a texture has mip levels allocated or not.
-    )docstring")
+    )docstring",
+    py::arithmetic())
     .value("kNo", GrMipMapped::kNo)
     .value("kYes", GrMipMapped::kYes)
     .export_values();
 
-py::enum_<GrRenderable>(m, "GrRenderable")
+py::enum_<GrRenderable>(m, "GrRenderable", py::arithmetic())
     .value("kNo", GrRenderable::kNo)
     .value("kYes", GrRenderable::kYes)
     .export_values();
 
-py::enum_<GrProtected>(m, "GrProtected")
+py::enum_<GrProtected>(m, "GrProtected", py::arithmetic())
     .value("kNo", GrProtected::kNo)
     .value("kYes", GrProtected::kYes)
     .export_values();
 
-py::enum_<GrSurfaceOrigin>(m, "GrSurfaceOrigin", R"docstring(
-    GPU SkImage and SkSurfaces can be stored such that (0, 0) in texture space
-    may correspond to either the top-left or bottom-left content pixel.
-    )docstring")
+py::enum_<GrSurfaceOrigin>(m, "GrSurfaceOrigin",
+    R"docstring(
+    GPU :py:class:`Image` and :py:class:`Surfaces` can be stored such that
+    (0, 0) in texture space may correspond to either the top-left or bottom-left
+    content pixel.
+    )docstring",
+    py::arithmetic())
     .value("kTopLeft_GrSurfaceOrigin",
         GrSurfaceOrigin::kTopLeft_GrSurfaceOrigin)
     .value("kBottomLeft_GrSurfaceOrigin",
@@ -93,6 +105,46 @@ py::enum_<GrFlushFlags>(m, "GrFlushFlags", R"docstring(
     .value("kSyncCpu_GrFlushFlag", GrFlushFlags::kSyncCpu_GrFlushFlag)
     .export_values();
 
+py::class_<GrFlushInfo>(m, "GrFlushInfo",
+    R"docstring(
+    Struct to supply options to flush calls.
+
+    After issuing all commands, fNumSemaphore semaphores will be signaled by the
+    gpu. The client passes in an array of fNumSemaphores GrBackendSemaphores. In
+    general these :py:class:`GrBackendSemaphore`'s can be either initialized or
+    not. If they are initialized, the backend uses the passed in semaphore. If
+    it is not initialized, a new semaphore is created and the
+    :py:class:`GrBackendSemaphore` object is initialized with that semaphore.
+
+    The client will own and be responsible for deleting the underlying
+    semaphores that are stored and returned in initialized
+    :py:class:`GrBackendSemaphore` objects. The :py:class:`GrBackendSemaphore`
+    objects themselves can be deleted as soon as this function returns.
+
+    If a finishedProc is provided, the finishedProc will be called when all work
+    submitted to the gpu from this flush call and all previous flush calls has
+    finished on the GPU. If the flush call fails due to an error and nothing
+    ends up getting sent to the GPU, the finished proc is called immediately.
+    )docstring")
+    .def(py::init<>())
+    .def_readwrite("fFlags", &GrFlushInfo::fFlags)
+    .def_readonly("fNumSemaphores", &GrFlushInfo::fNumSemaphores)
+    .def_property("semaphores",
+        [] (const GrFlushInfo& info) -> py::object {
+            auto begin = info.fSignalSemaphores;
+            if (!begin)
+                return py::none();
+            return py::cast(std::vector<GrBackendSemaphore>(
+                begin, begin + info.fNumSemaphores));
+        },
+        [] (GrFlushInfo& info,
+            std::vector<GrBackendSemaphore>& semaphores) {
+            info.fNumSemaphores = semaphores.size();
+            info.fSignalSemaphores = (semaphores.size()) ?
+                &semaphores[0] : (GrBackendSemaphore*) nullptr;
+        })
+    ;
+
 py::enum_<GrSemaphoresSubmitted>(m, "GrSemaphoresSubmitted")
     .value("kNo", GrSemaphoresSubmitted::kNo)
     .value("kYes", GrSemaphoresSubmitted::kYes)
@@ -138,12 +190,26 @@ py::enum_<GrTextureType>(m, "GrTextureType")
 
 py::class_<GrBackendSemaphore>(m, "GrBackendSemaphore")
     .def(py::init())
-    // .def("initGL", &GrBackendSemaphore::initGL)
-    // .def("initVulkan", &GrBackendSemaphore::initVulkan)
+    .def("initGL",
+        [] (GrBackendSemaphore& semaphore, void* glsync) {
+            semaphore.initGL(reinterpret_cast<GrGLsync>(glsync));
+        },
+        py::arg("glsync"))
+    .def("initVulkan",
+        [] (GrBackendSemaphore& semaphore, void* vksemaphore) {
+            semaphore.initVulkan(reinterpret_cast<VkSemaphore>(vksemaphore));
+        },
+        py::arg("semaphore"))
     // .def("initMetal", &GrBackendSemaphore::initMetal)
     .def("isInitialized", &GrBackendSemaphore::isInitialized)
-    // .def("glSync", &GrBackendSemaphore::glSync)
-    // .def("vkSemaphore", &GrBackendSemaphore::vkSemaphore)
+    .def("glSync",
+        [] (GrBackendSemaphore& semaphore) {
+            return reinterpret_cast<void*>(semaphore.glSync());
+        })
+    .def("vkSemaphore",
+        [] (GrBackendSemaphore& semaphore) {
+            return reinterpret_cast<void*>(semaphore.vkSemaphore());
+        })
     // .def("mtlSemaphore", &GrBackendSemaphore::mtlSemaphore)
     // .def("mtlValue", &GrBackendSemaphore::mtlValue)
     ;
@@ -151,30 +217,30 @@ py::class_<GrBackendSemaphore>(m, "GrBackendSemaphore")
 py::class_<GrBackendFormat>(m, "GrBackendFormat")
     .def(py::init<>())
     .def(py::init<const GrBackendFormat&>())
-    .def_static("MakeGL", &GrBackendFormat::MakeGL)
+    .def_static("MakeGL", &GrBackendFormat::MakeGL,
+        py::arg("format"), py::arg("target"))
+    .def_static("MakeVk", py::overload_cast<VkFormat>(&GrBackendFormat::MakeVk),
+        py::arg("format"))
+    .def_static("MakeVk",
+        py::overload_cast<const GrVkYcbcrConversionInfo&>(
+            &GrBackendFormat::MakeVk),
+        py::arg("ycbcrInfo"))
     .def_static("MakeMock", &GrBackendFormat::MakeMock)
+    .def("__eq__", &GrBackendFormat::operator==, py::arg("other"),
+        py::is_operator())
+    .def("__ne__", &GrBackendFormat::operator!=, py::arg("other"),
+        py::is_operator())
     .def("backend", &GrBackendFormat::backend)
     .def("textureType", &GrBackendFormat::textureType)
-    // .def("channelMask", &GrBackendFormat::channelMask)
+    .def("channelMask", &GrBackendFormat::channelMask)
     .def("asGLFormat", &GrBackendFormat::asGLFormat)
+    .def("asVkFormat", &GrBackendFormat::asVkFormat, py::arg("format"))
+    .def("getVkYcbcrConversionInfo",
+        &GrBackendFormat::getVkYcbcrConversionInfo)
     .def("asMockColorType", &GrBackendFormat::asMockColorType)
     .def("asMockCompressionType", &GrBackendFormat::asMockCompressionType)
     .def("makeTexture2D", &GrBackendFormat::makeTexture2D)
     .def("isValid", &GrBackendFormat::isValid)
-    ;
-
-py::class_<GrGLTextureInfo>(m, "GrGLTextureInfo")
-    .def(py::init<>())
-    .def_readwrite("fTarget", &GrGLTextureInfo::fTarget)
-    .def_readwrite("fID", &GrGLTextureInfo::fID)
-    .def_readwrite("fFormat", &GrGLTextureInfo::fFormat)
-    .def("__eq__", &GrGLTextureInfo::operator==, py::is_operator())
-    ;
-
-py::class_<GrMockTextureInfo>(m, "GrMockTextureInfo")
-    .def(py::init<>())
-    .def(py::init<GrColorType, SkImage::CompressionType, int>())
-    .def("__eq__", &GrMockTextureInfo::operator==, py::is_operator())
     ;
 
 py::class_<GrBackendTexture>(m, "GrBackendTexture")
@@ -182,9 +248,14 @@ py::class_<GrBackendTexture>(m, "GrBackendTexture")
     .def(py::init<int, int, GrMipMapped, const GrGLTextureInfo&>(),
         py::arg("width"), py::arg("height"), py::arg("mipMapped"),
         py::arg("glInfo"))
+#ifdef SK_VULKAN
+    .def(py::init<int, int, const GrVkImageInfo&>(),
+        py::arg("width"), py::arg("height"), py::arg("vkInfo"))
+#endif
     .def(py::init<int, int, GrMipMapped, const GrMockTextureInfo&>(),
         py::arg("width"), py::arg("height"), py::arg("mipMapped"),
         py::arg("mockInfo"))
+    .def(py::init<const GrBackendTexture&>(), py::arg("that"))
     .def("dimensions", &GrBackendTexture::dimensions)
     .def("width", &GrBackendTexture::width)
     .def("height", &GrBackendTexture::height)
@@ -193,61 +264,14 @@ py::class_<GrBackendTexture>(m, "GrBackendTexture")
     .def("getGLTextureInfo", &GrBackendTexture::getGLTextureInfo)
     .def("glTextureParametersModified",
         &GrBackendTexture::glTextureParametersModified)
+    .def("getVkImageInfo", &GrBackendTexture::getVkImageInfo)
+    .def("setVkImageLayout", &GrBackendTexture::setVkImageLayout)
     .def("getBackendFormat", &GrBackendTexture::getBackendFormat)
     .def("getMockTextureInfo", &GrBackendTexture::getMockTextureInfo)
+    // .def("setMutableState", &GrBackendTexture::setMutableState)
     .def("isProtected", &GrBackendTexture::isProtected)
     .def("isValid", &GrBackendTexture::isValid)
     .def("isSameTexture", &GrBackendTexture::isSameTexture)
-    ;
-
-py::class_<GrGLInterface, sk_sp<GrGLInterface>, SkRefCnt>(
-    m, "GrGLInterface")
-    .def(py::init([] {
-        sk_sp<const GrGLInterface> interface = GrGLMakeNativeInterface();
-        if (!interface.get())
-            throw std::runtime_error("null pointer exception.");
-        const GrGLInterface* ptr = interface.release();
-        return const_cast<GrGLInterface*>(ptr);
-    }));
-
-py::class_<GrFlushInfo>(m, "GrFlushInfo",
-    R"docstring(
-    Struct to supply options to flush calls.
-
-    After issuing all commands, fNumSemaphore semaphores will be signaled by the
-    gpu. The client passes in an array of fNumSemaphores GrBackendSemaphores. In
-    general these :py:class:`GrBackendSemaphore`'s can be either initialized or
-    not. If they are initialized, the backend uses the passed in semaphore. If
-    it is not initialized, a new semaphore is created and the
-    :py:class:`GrBackendSemaphore` object is initialized with that semaphore.
-
-    The client will own and be responsible for deleting the underlying
-    semaphores that are stored and returned in initialized
-    :py:class:`GrBackendSemaphore` objects. The :py:class:`GrBackendSemaphore`
-    objects themselves can be deleted as soon as this function returns.
-
-    If a finishedProc is provided, the finishedProc will be called when all work
-    submitted to the gpu from this flush call and all previous flush calls has
-    finished on the GPU. If the flush call fails due to an error and nothing
-    ends up getting sent to the GPU, the finished proc is called immediately.
-    )docstring")
-    .def(py::init<>())
-    .def_readwrite("fFlags", &GrFlushInfo::fFlags)
-    .def_readonly("fNumSemaphores", &GrFlushInfo::fNumSemaphores)
-    .def_property("semaphores",
-        [] (const GrFlushInfo& info) -> py::object {
-            auto begin = info.fSignalSemaphores;
-            if (!begin)
-                return py::none();
-            return py::cast(std::vector<GrBackendSemaphore>(
-                begin, begin + info.fNumSemaphores));
-        },
-        [] (GrFlushInfo& info,
-            std::vector<GrBackendSemaphore>& semaphores) {
-            info.fNumSemaphores = semaphores.size();
-            info.fSignalSemaphores = (semaphores.size()) ?
-                &semaphores[0] : (GrBackendSemaphore*) nullptr;
-        })
     ;
 
 py::class_<GrContextOptions>(m, "GrContextOptions")
@@ -255,15 +279,77 @@ py::class_<GrContextOptions>(m, "GrContextOptions")
     // TODO: Implement me!
     ;
 
-py::class_<GrMockOptions>(m, "GrMockOptions")
-    .def(py::init<>())
-    // TODO: Implement me!
+/*
+py::class_<GrBackendSurfaceMutableState>(m, "GrBackendSurfaceMutableState",
+    R"docstring(
+    Since Skia and clients can both modify gpu textures and their connected
+    state, Skia needs a way for clients to inform us if they have modifiend any
+    of this state.
+
+    In order to not need setters for every single API and state, we use this
+    class to be a generic wrapper around all the mutable state. This class is
+    used for calls that inform Skia of these texture/image state changes by the
+    client as well as for requesting state changes to be done by Skia. The
+    backend specific state that is wrapped by this class are:
+
+        Vulkan: VkImageLayout and QueueFamilyIndex
+    )docstring")
+    .def(py::init<VkImageLayout, uint32_t>())
     ;
+*/
 
 py::class_<GrBackendRenderTarget>(m, "GrBackendRenderTarget")
     .def(py::init<>())
-    .def("isValid", &GrBackendRenderTarget::isValid)
+    .def(py::init<int, int, int, int, const GrGLFramebufferInfo&>())
+#ifdef SK_VULKAN
+    .def(py::init<int, int, int, int, const GrVkImageInfo&>())
+    .def(py::init<int, int, int, const GrVkImageInfo&>())
+#endif
+    .def(py::init<int, int, int, int, const GrMockRenderTargetInfo&>())
+    .def("dimensions", &GrBackendRenderTarget::dimensions)
+    .def("width", &GrBackendRenderTarget::width)
+    .def("height", &GrBackendRenderTarget::height)
+    .def("sampleCnt", &GrBackendRenderTarget::sampleCnt)
+    .def("stencilBits", &GrBackendRenderTarget::stencilBits)
+    .def("backend", &GrBackendRenderTarget::backend)
     .def("isFramebufferOnly", &GrBackendRenderTarget::isFramebufferOnly)
+    .def("getGLFramebufferInfo", &GrBackendRenderTarget::getGLFramebufferInfo,
+        R"docstring(
+        If the backend API is GL, copies a snapshot of the GrGLFramebufferInfo
+        struct into the passed in pointer and returns true. Otherwise returns
+        false if the backend API is not GL.
+        )docstring",
+        py::arg("info"))
+    .def("getVkImageInfo", &GrBackendRenderTarget::getVkImageInfo,
+        R"docstring(
+        If the backend API is Vulkan, copies a snapshot of the GrVkImageInfo
+        struct into the passed in pointer and returns true. This snapshot will
+        set the fImageLayout to the current layout state. Otherwise returns
+        false if the backend API is not Vulkan.
+        )docstring",
+        py::arg("info"))
+    .def("setVkImageLayout", &GrBackendRenderTarget::setVkImageLayout,
+        R"docstring(
+        Anytime the client changes the VkImageLayout of the VkImage captured by
+        this GrBackendRenderTarget, they must call this function to notify Skia
+        of the changed layout.
+        )docstring")
+    .def("getBackendFormat", &GrBackendRenderTarget::getBackendFormat,
+        R"docstring(
+        Get the GrBackendFormat for this render target (or an invalid format if
+        this is not valid).
+        )docstring")
+    .def("getMockRenderTargetInfo",
+        &GrBackendRenderTarget::getMockRenderTargetInfo,
+        R"docstring(
+        If the backend API is Mock, copies a snapshot of the GrMockTextureInfo
+        struct into the passed in pointer and returns true. Otherwise returns
+        false if the backend API is not Mock.
+        )docstring",
+        py::arg("info"))
+    // .def("setMutableState", &GrBackendRenderTarget::setMutableState)
+    .def("isProtected", &GrBackendRenderTarget::isProtected)
+    .def("isValid", &GrBackendRenderTarget::isValid)
     ;
 
 py::class_<GrContext, sk_sp<GrContext>, SkRefCnt>(m, "GrContext")
@@ -805,14 +891,17 @@ py::class_<GrContext, sk_sp<GrContext>, SkRefCnt>(m, "GrContext")
         py::overload_cast<const GrContextOptions&>(&GrContext::MakeGL),
         py::arg("options"))
     .def_static("MakeGL", py::overload_cast<>(&GrContext::MakeGL))
-    // .def_static("MakeVulkan",
-    //     (sk_sp<GrContext> (*)(const GrVkBackendContext&,
-    //         const GrContextOptions&)) &GrContext::MakeVulkan,
-    //     "The Vulkan context (VkQueue, VkDevice, VkInstance) must be kept "
-    //     "alive until the returned GrContext is first destroyed or abandoned.")
-    // .def_static("MakeVulkan",
-    //     (sk_sp<GrContext> (*)(const GrVkBackendContext&))
-    //     &GrContext::MakeVulkan)
+    .def_static("MakeVulkan",
+        py::overload_cast<const GrVkBackendContext&, const GrContextOptions&>(
+            &GrContext::MakeVulkan),
+        R"docstring(
+        The Vulkan context (VkQueue, VkDevice, VkInstance) must be kept alive
+        until the returned GrContext is first destroyed or abandoned.
+        )docstring",
+        py::arg("backendContext"), py::arg("options"))
+    .def_static("MakeVulkan",
+        py::overload_cast<const GrVkBackendContext&>(&GrContext::MakeVulkan),
+        py::arg("backendContext"))
     .def_static("MakeMock",
         py::overload_cast<const GrMockOptions*, const GrContextOptions&>(
             &GrContext::MakeMock),
@@ -821,4 +910,8 @@ py::class_<GrContext, sk_sp<GrContext>, SkRefCnt>(m, "GrContext")
         py::overload_cast<const GrMockOptions*>(&GrContext::MakeMock),
         py::arg("mockOptions"))
     ;
+
+initGrContext_gl(m);
+initGrContext_vk(m);
+initGrContext_mock(m);
 }
