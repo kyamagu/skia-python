@@ -3,29 +3,62 @@ import pytest
 from datetime import timedelta
 
 
-@pytest.fixture(scope='module')
+@pytest.fixture
 def backend_semaphore():
     return skia.GrBackendSemaphore()
+
+
+def test_GrBackendSemaphore_initGL(backend_semaphore):
+    backend_semaphore.initGL(None)
+
+
+def test_GrBackendSemaphore_initVulkan(backend_semaphore):
+    backend_semaphore.initVulkan(None)
 
 
 def test_GrBackendSemaphore_isInitialized(backend_semaphore):
     assert isinstance(backend_semaphore.isInitialized(), bool)
 
 
+def test_GrBackendSemaphore_glSync(backend_semaphore):
+    backend_semaphore.glSync()
+
+
+def test_GrBackendSemaphore_vkSemaphore(backend_semaphore):
+    backend_semaphore.vkSemaphore()
+
+
 @pytest.fixture(scope='module')
 def backend_format():
-    return skia.GrBackendFormat()
+    return skia.GrBackendFormat.MakeMock(
+            skia.GrColorType.kBGRA_8888, skia.Image.kBC1_RGBA8_UNORM)
 
 
-# def test_GrBackendFormat_MakeGL(backend_format):
-#     assert isinstance(backend_format.MakeGL(), skia.GrBackendFormat)
+def test_GrBackendFormat_MakeGL():
+    assert isinstance(skia.GrBackendFormat.MakeGL(0, 0), skia.GrBackendFormat)
+
+
+def test_GrBackendFormat_MakeVk_1():
+    assert isinstance(
+        skia.GrBackendFormat.MakeVk(0), (type(None), skia.GrBackendFormat))
+
+
+def test_GrBackendFormat_MakeVk_2():
+    assert isinstance(
+        skia.GrBackendFormat.MakeVk(skia.GrVkYcbcrConversionInfo()),
+        (type(None), skia.GrBackendFormat))
 
 
 def test_GrBackendFormat_MakeMock(backend_format):
-    assert isinstance(
-        backend_format.MakeMock(
-            skia.GrColorType.kBGRA_8888, skia.Image.kBC1_RGBA8_UNORM),
-        skia.GrBackendFormat)
+    assert isinstance(backend_format, skia.GrBackendFormat)
+
+
+def test_GrBackendFormat_eq(backend_format):
+    assert backend_format == backend_format
+
+
+def test_GrBackendFormat_ne(backend_format):
+    assert backend_format != skia.GrBackendFormat()
 
 
 def test_GrBackendFormat_backend(backend_format):
@@ -36,27 +69,45 @@ def test_GrBackendFormat_textureType(backend_format):
     assert isinstance(backend_format.textureType(), skia.GrTextureType)
 
 
+def test_GrBackendFormat_channelMask(backend_format):
+    assert isinstance(backend_format.channelMask(), int)
+
+
+def test_GrBackendFormat_asVkFormat(backend_format):
+    fmt = 1
+    assert isinstance(backend_format.asVkFormat(fmt), bool)
+
+
+def test_GrBackendFormat_asGLFormat(backend_format):
+    assert isinstance(backend_format.asGLFormat(), skia.GrGLFormat)
+
+
+def test_GrBackendFormat_getVkYcbcrConversionInfo(backend_format):
+    assert isinstance(
+        backend_format.getVkYcbcrConversionInfo(),
+        (type(None), skia.GrVkYcbcrConversionInfo))
+
+
 def test_GrBackendFormat_isValid(backend_format):
     assert isinstance(backend_format.isValid(), bool)
 
 
 @pytest.fixture(scope='module')
-def backend_texture(context):
-    gl_info = skia.GrGLTextureInfo()
-    return skia.GrBackendTexture(256, 256, skia.GrMipMapped.kNo, gl_info)
+def backend_texture(context, gl_texture_info):
+    return skia.GrBackendTexture(
+        256, 256, skia.GrMipMapped.kNo, gl_texture_info)
 
 
-def test_GrBackendTexture_init_glInfo():
-    gl_info = skia.GrGLTextureInfo()
+def test_GrBackendTexture_init_glInfo(gl_texture_info):
     assert isinstance(
-        skia.GrBackendTexture(128, 128, skia.GrMipMapped.kNo, gl_info),
+        skia.GrBackendTexture(128, 128, skia.GrMipMapped.kNo, gl_texture_info),
         skia.GrBackendTexture)
 
 
-def test_GrBackendTexture_init_mockInfo():
-    mock_info = skia.GrMockTextureInfo()
+def test_GrBackendTexture_init_mockInfo(mock_texture_info):
     assert isinstance(
-        skia.GrBackendTexture(128, 128, skia.GrMipMapped.kNo, mock_info),
+        skia.GrBackendTexture(
+            128, 128, skia.GrMipMapped.kNo, mock_texture_info),
         skia.GrBackendTexture)
 
 
@@ -76,9 +127,8 @@ def test_GrBackendTexture_hasMipMaps(backend_texture):
     assert isinstance(backend_texture.hasMipMaps(), bool)
 
 
-def test_GrBackendTexture_getGLTextureInfo(backend_texture):
-    gl_info = skia.GrGLTextureInfo()
-    assert isinstance(backend_texture.getGLTextureInfo(gl_info), bool)
+def test_GrBackendTexture_getGLTextureInfo(backend_texture, gl_texture_info):
+    assert isinstance(backend_texture.getGLTextureInfo(gl_texture_info), bool)
 
 
 def test_GrBackendTexture_glTextureParametersModified(backend_texture):
@@ -89,9 +139,10 @@ def test_GrBackendTexture_getBackendFormat(backend_texture):
     assert isinstance(backend_texture.getBackendFormat(), skia.GrBackendFormat)
 
 
-def test_GrBackendTexture_getMockTextureInfo(backend_texture):
-    mock_info = skia.GrMockTextureInfo()
-    assert isinstance(backend_texture.getMockTextureInfo(mock_info), bool)
+def test_GrBackendTexture_getMockTextureInfo(
+    backend_texture, mock_texture_info):
+    assert isinstance(
+        backend_texture.getMockTextureInfo(mock_texture_info), bool)
 
 
 def test_GrBackendTexture_isProtected(backend_texture):
@@ -129,16 +180,75 @@ def backend_render_target():
     return skia.GrBackendRenderTarget()
 
 
-def test_GrBackendRenderTarget_init(backend_render_target):
-    assert isinstance(backend_render_target, skia.GrBackendRenderTarget)
+@pytest.mark.parametrize('args', [
+    tuple(),
+    (128, 128, 2, 8, skia.GrGLFramebufferInfo()),
+    # (128, 128, 2, 8, skia.GrVkImageInfo()),
+    (128, 128, 2, 8, skia.GrMockRenderTargetInfo()),
+])
+def test_GrBackendRenderTarget_init(args):
+    assert isinstance(
+        skia.GrBackendRenderTarget(*args), skia.GrBackendRenderTarget)
 
 
-def test_GrBackendRenderTarget_isValid(backend_render_target):
-    assert isinstance(backend_render_target.isValid(), bool)
+def test_GrBackendRenderTarget_dimensions(backend_render_target):
+    assert isinstance(backend_render_target.dimensions(), skia.ISize)
+
+
+def test_GrBackendRenderTarget_width(backend_render_target):
+    assert isinstance(backend_render_target.width(), int)
+
+
+def test_GrBackendRenderTarget_height(backend_render_target):
+    assert isinstance(backend_render_target.height(), int)
+
+
+def test_GrBackendRenderTarget_sampleCnt(backend_render_target):
+    assert isinstance(backend_render_target.sampleCnt(), int)
+
+
+def test_GrBackendRenderTarget_stencilBits(backend_render_target):
+    assert isinstance(backend_render_target.stencilBits(), int)
+
+
+def test_GrBackendRenderTarget_backend(backend_render_target):
+    assert isinstance(backend_render_target.backend(), skia.GrBackendApi)
 
 
 def test_GrBackendRenderTarget_isFramebufferOnly(backend_render_target):
     assert isinstance(backend_render_target.isFramebufferOnly(), bool)
+
+
+def test_GrBackendRenderTarget_getGLFramebufferInfo(backend_render_target):
+    info = skia.GrGLFramebufferInfo()
+    assert isinstance(backend_render_target.getGLFramebufferInfo(info), bool)
+
+
+def test_GrBackendRenderTarget_getVkImageInfo(backend_render_target):
+    info = skia.GrVkImageInfo()
+    assert isinstance(backend_render_target.getVkImageInfo(info), bool)
+
+
+def test_GrBackendRenderTarget_setVkImageLayout(backend_render_target):
+    backend_render_target.setVkImageLayout(0)
+
+
+def test_GrBackendRenderTarget_getBackendFormat(backend_render_target):
+    assert isinstance(
+        backend_render_target.getBackendFormat(), skia.GrBackendFormat)
+
+
+def test_GrBackendRenderTarget_getMockRenderTargetInfo(backend_render_target):
+    info = skia.GrMockRenderTargetInfo()
+    assert isinstance(backend_render_target.getMockRenderTargetInfo(info), bool)
+
+
+def test_GrBackendRenderTarget_isProtected(backend_render_target):
+    assert isinstance(backend_render_target.isProtected(), bool)
+
+
+def test_GrBackendRenderTarget_isValid(backend_render_target):
+    assert isinstance(backend_render_target.isValid(), bool)
 
 
 def test_GrContext_resetContext(context):
@@ -347,7 +457,62 @@ def test_GrContext_MakeGL(context):
     assert isinstance(context, skia.GrContext)
 
 
+def test_GrContext_MakeVulkan():
+    context = skia.GrVkBackendContext()
+    options = skia.GrContextOptions()
+    assert isinstance(
+        skia.GrContext.MakeVulkan(context),
+        (type(None), skia.GrContext))
+    assert isinstance(
+        skia.GrContext.MakeVulkan(context, options),
+        (type(None), skia.GrContext))
+
+
 def test_GrContext_MakeMock():
     assert isinstance(
         skia.GrContext.MakeMock(skia.GrMockOptions(), skia.GrContextOptions()),
         skia.GrContext)
+
+
+@pytest.fixture(scope='module')
+def gl_texture_info():
+    return skia.GrGLTextureInfo()
+
+
+def test_GrGLTextureInfo_init(gl_texture_info):
+    assert isinstance(gl_texture_info, skia.GrGLTextureInfo)
+
+
+@pytest.fixture(scope='module')
+def mock_texture_info():
+    return skia.GrMockTextureInfo()
+
+
+def test_GrMockTextureInfo_init(mock_texture_info):
+    assert isinstance(mock_texture_info, skia.GrMockTextureInfo)
+
+
+@pytest.fixture(scope='module')
+def mock_render_target_info():
+    return skia.GrMockRenderTargetInfo()
+
+
+def test_GrMockRenderTargetInfo_init(mock_render_target_info):
+    assert isinstance(mock_render_target_info, skia.GrMockRenderTargetInfo)
+
+
+@pytest.fixture(scope='module')
+def gl_framebuffer_info():
+    return skia.GrGLFramebufferInfo()
+
+
+def test_GrGLFramebufferInfo_init(gl_framebuffer_info):
+    assert isinstance(gl_framebuffer_info, skia.GrGLFramebufferInfo)
+
+
+def test_GrVkImageInfo_init():
+    assert isinstance(skia.GrVkImageInfo(), skia.GrVkImageInfo)
+
+
+def test_GrVkBackendContext_init():
+    assert isinstance(skia.GrVkBackendContext(), skia.GrVkBackendContext)
