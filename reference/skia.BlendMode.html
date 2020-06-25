@@ -161,16 +161,26 @@
 <li class="toctree-l3"><a class="reference internal" href="skia.GrFlushFlags.html">GrFlushFlags</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.GrFlushInfo.html">GrFlushInfo</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.GrGLBackendState.html">GrGLBackendState</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.GrGLFormat.html">GrGLFormat</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.GrGLFramebufferInfo.html">GrGLFramebufferInfo</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.GrGLInterface.html">GrGLInterface</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.GrGLTextureInfo.html">GrGLTextureInfo</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.GrMipMapped.html">GrMipMapped</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.GrMockOptions.html">GrMockOptions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.GrMockRenderTargetInfo.html">GrMockRenderTargetInfo</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.GrMockTextureInfo.html">GrMockTextureInfo</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.GrProtected.html">GrProtected</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.GrRenderable.html">GrRenderable</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.GrSemaphoresSubmitted.html">GrSemaphoresSubmitted</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.GrSurfaceOrigin.html">GrSurfaceOrigin</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.GrTextureType.html">GrTextureType</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.GrVkAlloc.html">GrVkAlloc</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.GrVkBackendContext.html">GrVkBackendContext</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.GrVkDrawableInfo.html">GrVkDrawableInfo</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.GrVkExtensionFlags.html">GrVkExtensionFlags</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.GrVkFeatureFlags.html">GrVkFeatureFlags</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.GrVkImageInfo.html">GrVkImageInfo</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.GrVkYcbcrConversionInfo.html">GrVkYcbcrConversionInfo</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.GradientShader.html">GradientShader</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.HighContrastConfig.html">HighContrastConfig</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.HighContrastFilter.html">HighContrastFilter</a></li>
@@ -246,6 +256,8 @@
 <li class="toctree-l3"><a class="reference internal" href="skia.TrimPathEffect.html">TrimPathEffect</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.Typeface.html">Typeface</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.Vertices.html">Vertices</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.VkFormat.html">VkFormat</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.VkImageLayout.html">VkImageLayout</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.WStream.html">WStream</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.XfermodeImageFilter.html">XfermodeImageFilter</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.YUVColorSpace.html">YUVColorSpace</a></li>
@@ -329,38 +341,38 @@
 <dt id="skia.BlendMode">
 <em class="property">class </em><code class="sig-name descname">BlendMode</code><a class="headerlink" href="#skia.BlendMode" title="Permalink to this definition">¶</a></dt>
 <dd><p>Members:</p>
-<p>kDst : preserves destination</p>
-<p>kDarken : darker of source and destination</p>
-<p>kHardLight : multiply or screen, depending on source</p>
-<p>kSrcIn : source trimmed inside destination</p>
-<p>kLastMode : last valid value</p>
-<p>kXor : each of source and destination trimmed outside the other</p>
-<p>kSrcOver : source over destination</p>
-<p>kDifference : subtract darker from lighter with higher contrast</p>
-<p>kLighten : lighter of source and destination</p>
-<p>kDstIn : destination trimmed by source</p>
 <p>kColor : hue and saturation of source with luminosity of destination</p>
-<p>kDstOver : destination over source</p>
-<p>kColorBurn : darken destination to reflect source</p>
-<p>kSaturation : saturation of source with hue and luminosity of destination</p>
-<p>kDstOut : destination trimmed outside source</p>
-<p>kScreen : multiply inverse of pixels, inverting result; brightens destination</p>
-<p>kClear : replaces destination with zero: fully transparent</p>
+<p>kDarken : darker of source and destination</p>
 <p>kColorDodge : brighten destination to reflect source</p>
-<p>kHue : hue of source with saturation and luminosity of destination</p>
-<p>kPlus : sum of colors</p>
-<p>kSrcOut : source trimmed outside destination</p>
-<p>kLastCoeffMode : last porter duff blend mode</p>
-<p>kExclusion : subtract darker from lighter with lower contrast</p>
-<p>kLuminosity : luminosity of source with hue and saturation of destination</p>
-<p>kDstATop : destination inside source blended with source</p>
 <p>kSrcATop : source inside destination blended with destination</p>
+<p>kLighten : lighter of source and destination</p>
+<p>kLuminosity : luminosity of source with hue and saturation of destination</p>
+<p>kColorBurn : darken destination to reflect source</p>
+<p>kDst : preserves destination</p>
+<p>kSrcOver : source over destination</p>
+<p>kPlus : sum of colors</p>
 <p>kSrc : replaces destination</p>
+<p>kScreen : multiply inverse of pixels, inverting result; brightens destination</p>
 <p>kLastSeparableMode : last blend mode operating separately on components</p>
-<p>kMultiply : multiply source with destination, darkening image</p>
-<p>kOverlay : multiply or screen, depending on destination</p>
+<p>kSrcOut : source trimmed outside destination</p>
+<p>kSrcIn : source trimmed inside destination</p>
+<p>kXor : each of source and destination trimmed outside the other</p>
+<p>kExclusion : subtract darker from lighter with lower contrast</p>
+<p>kHue : hue of source with saturation and luminosity of destination</p>
+<p>kClear : replaces destination with zero: fully transparent</p>
+<p>kDifference : subtract darker from lighter with higher contrast</p>
+<p>kLastMode : last valid value</p>
+<p>kHardLight : multiply or screen, depending on source</p>
+<p>kDstOut : destination trimmed outside source</p>
 <p>kModulate : product of premultiplied colors; darkens destination</p>
+<p>kDstIn : destination trimmed by source</p>
+<p>kSaturation : saturation of source with hue and luminosity of destination</p>
+<p>kOverlay : multiply or screen, depending on destination</p>
+<p>kMultiply : multiply source with destination, darkening image</p>
 <p>kSoftLight : lighten or darken, depending on source</p>
+<p>kDstOver : destination over source</p>
+<p>kDstATop : destination inside source blended with source</p>
+<p>kLastCoeffMode : last porter duff blend mode</p>
 <p class="rubric">Methods</p>
 <table class="longtable docutils align-default">
 <colgroup>
@@ -570,7 +582,7 @@
 
 <dl class="py attribute">
 <dt id="skia.BlendMode.kLastMode">
-<code class="sig-prename descclassname">BlendMode.</code><code class="sig-name descname">kLastMode</code><em class="property"> = BlendMode.kLastMode</em><a class="headerlink" href="#skia.BlendMode.kLastMode" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">BlendMode.</code><code class="sig-name descname">kLastMode</code><em class="property"> = BlendMode.kLuminosity</em><a class="headerlink" href="#skia.BlendMode.kLastMode" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
@@ -585,7 +597,7 @@
 
 <dl class="py attribute">
 <dt id="skia.BlendMode.kLuminosity">
-<code class="sig-prename descclassname">BlendMode.</code><code class="sig-name descname">kLuminosity</code><em class="property"> = BlendMode.kLastMode</em><a class="headerlink" href="#skia.BlendMode.kLuminosity" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">BlendMode.</code><code class="sig-name descname">kLuminosity</code><em class="property"> = BlendMode.kLuminosity</em><a class="headerlink" href="#skia.BlendMode.kLuminosity" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">

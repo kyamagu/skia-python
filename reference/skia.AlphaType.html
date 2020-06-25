@@ -161,16 +161,26 @@
 <li class="toctree-l3"><a class="reference internal" href="skia.GrFlushFlags.html">GrFlushFlags</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.GrFlushInfo.html">GrFlushInfo</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.GrGLBackendState.html">GrGLBackendState</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.GrGLFormat.html">GrGLFormat</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.GrGLFramebufferInfo.html">GrGLFramebufferInfo</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.GrGLInterface.html">GrGLInterface</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.GrGLTextureInfo.html">GrGLTextureInfo</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.GrMipMapped.html">GrMipMapped</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.GrMockOptions.html">GrMockOptions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.GrMockRenderTargetInfo.html">GrMockRenderTargetInfo</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.GrMockTextureInfo.html">GrMockTextureInfo</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.GrProtected.html">GrProtected</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.GrRenderable.html">GrRenderable</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.GrSemaphoresSubmitted.html">GrSemaphoresSubmitted</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.GrSurfaceOrigin.html">GrSurfaceOrigin</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.GrTextureType.html">GrTextureType</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.GrVkAlloc.html">GrVkAlloc</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.GrVkBackendContext.html">GrVkBackendContext</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.GrVkDrawableInfo.html">GrVkDrawableInfo</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.GrVkExtensionFlags.html">GrVkExtensionFlags</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.GrVkFeatureFlags.html">GrVkFeatureFlags</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.GrVkImageInfo.html">GrVkImageInfo</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.GrVkYcbcrConversionInfo.html">GrVkYcbcrConversionInfo</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.GradientShader.html">GradientShader</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.HighContrastConfig.html">HighContrastConfig</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.HighContrastFilter.html">HighContrastFilter</a></li>
@@ -246,6 +256,8 @@
 <li class="toctree-l3"><a class="reference internal" href="skia.TrimPathEffect.html">TrimPathEffect</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.Typeface.html">Typeface</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.Vertices.html">Vertices</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.VkFormat.html">VkFormat</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.VkImageLayout.html">VkImageLayout</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.WStream.html">WStream</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.XfermodeImageFilter.html">XfermodeImageFilter</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.YUVColorSpace.html">YUVColorSpace</a></li>
@@ -330,9 +342,9 @@
 <em class="property">class </em><code class="sig-name descname">AlphaType</code><a class="headerlink" href="#skia.AlphaType" title="Permalink to this definition">¶</a></dt>
 <dd><p>Members:</p>
 <p>kPremul_AlphaType : pixel components are premultiplied by alpha</p>
-<p>kUnpremul_AlphaType : pixel components are independent of alpha</p>
-<p>kOpaque_AlphaType : pixel is opaque</p>
 <p>kLastEnum_AlphaType : last valid value</p>
+<p>kOpaque_AlphaType : pixel is opaque</p>
+<p>kUnpremul_AlphaType : pixel components are independent of alpha</p>
 <p>kUnknown_AlphaType : uninitialized</p>
 <p class="rubric">Methods</p>
 <table class="longtable docutils align-default">
@@ -387,7 +399,7 @@
 <h2>Attributes<a class="headerlink" href="#attributes" title="Permalink to this headline">¶</a></h2>
 <dl class="py attribute">
 <dt id="skia.AlphaType.kLastEnum_AlphaType">
-<code class="sig-prename descclassname">AlphaType.</code><code class="sig-name descname">kLastEnum_AlphaType</code><em class="property"> = AlphaType.kUnpremul_AlphaType</em><a class="headerlink" href="#skia.AlphaType.kLastEnum_AlphaType" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">AlphaType.</code><code class="sig-name descname">kLastEnum_AlphaType</code><em class="property"> = AlphaType.kLastEnum_AlphaType</em><a class="headerlink" href="#skia.AlphaType.kLastEnum_AlphaType" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
@@ -407,7 +419,7 @@
 
 <dl class="py attribute">
 <dt id="skia.AlphaType.kUnpremul_AlphaType">
-<code class="sig-prename descclassname">AlphaType.</code><code class="sig-name descname">kUnpremul_AlphaType</code><em class="property"> = AlphaType.kUnpremul_AlphaType</em><a class="headerlink" href="#skia.AlphaType.kUnpremul_AlphaType" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">AlphaType.</code><code class="sig-name descname">kUnpremul_AlphaType</code><em class="property"> = AlphaType.kLastEnum_AlphaType</em><a class="headerlink" href="#skia.AlphaType.kUnpremul_AlphaType" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">

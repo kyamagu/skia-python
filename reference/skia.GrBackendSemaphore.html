@@ -160,16 +160,26 @@
 <li class="toctree-l3"><a class="reference internal" href="skia.GrFlushFlags.html">GrFlushFlags</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.GrFlushInfo.html">GrFlushInfo</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.GrGLBackendState.html">GrGLBackendState</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.GrGLFormat.html">GrGLFormat</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.GrGLFramebufferInfo.html">GrGLFramebufferInfo</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.GrGLInterface.html">GrGLInterface</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.GrGLTextureInfo.html">GrGLTextureInfo</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.GrMipMapped.html">GrMipMapped</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.GrMockOptions.html">GrMockOptions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.GrMockRenderTargetInfo.html">GrMockRenderTargetInfo</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.GrMockTextureInfo.html">GrMockTextureInfo</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.GrProtected.html">GrProtected</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.GrRenderable.html">GrRenderable</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.GrSemaphoresSubmitted.html">GrSemaphoresSubmitted</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.GrSurfaceOrigin.html">GrSurfaceOrigin</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.GrTextureType.html">GrTextureType</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.GrVkAlloc.html">GrVkAlloc</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.GrVkBackendContext.html">GrVkBackendContext</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.GrVkDrawableInfo.html">GrVkDrawableInfo</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.GrVkExtensionFlags.html">GrVkExtensionFlags</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.GrVkFeatureFlags.html">GrVkFeatureFlags</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.GrVkImageInfo.html">GrVkImageInfo</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.GrVkYcbcrConversionInfo.html">GrVkYcbcrConversionInfo</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.GradientShader.html">GradientShader</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.HighContrastConfig.html">HighContrastConfig</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.HighContrastFilter.html">HighContrastFilter</a></li>
@@ -245,6 +255,8 @@
 <li class="toctree-l3"><a class="reference internal" href="skia.TrimPathEffect.html">TrimPathEffect</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.Typeface.html">Typeface</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.Vertices.html">Vertices</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.VkFormat.html">VkFormat</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.VkImageLayout.html">VkImageLayout</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.WStream.html">WStream</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.XfermodeImageFilter.html">XfermodeImageFilter</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.YUVColorSpace.html">YUVColorSpace</a></li>
@@ -337,7 +349,19 @@
 <tr class="row-odd"><td><p><a class="reference internal" href="#skia.GrBackendSemaphore.__init__" title="skia.GrBackendSemaphore.__init__"><code class="xref py py-obj docutils literal notranslate"><span class="pre">__init__</span></code></a></p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#skia.GrBackendSemaphore.isInitialized" title="skia.GrBackendSemaphore.isInitialized"><code class="xref py py-obj docutils literal notranslate"><span class="pre">isInitialized</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.GrBackendSemaphore.glSync" title="skia.GrBackendSemaphore.glSync"><code class="xref py py-obj docutils literal notranslate"><span class="pre">glSync</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.GrBackendSemaphore.initGL" title="skia.GrBackendSemaphore.initGL"><code class="xref py py-obj docutils literal notranslate"><span class="pre">initGL</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.GrBackendSemaphore.initVulkan" title="skia.GrBackendSemaphore.initVulkan"><code class="xref py py-obj docutils literal notranslate"><span class="pre">initVulkan</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.GrBackendSemaphore.isInitialized" title="skia.GrBackendSemaphore.isInitialized"><code class="xref py py-obj docutils literal notranslate"><span class="pre">isInitialized</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.GrBackendSemaphore.vkSemaphore" title="skia.GrBackendSemaphore.vkSemaphore"><code class="xref py py-obj docutils literal notranslate"><span class="pre">vkSemaphore</span></code></a></p></td>
 <td><p></p></td>
 </tr>
 </tbody>
@@ -352,8 +376,28 @@
 <dd></dd></dl>
 
 <dl class="py method">
+<dt id="skia.GrBackendSemaphore.glSync">
+<code class="sig-prename descclassname">GrBackendSemaphore.</code><code class="sig-name descname">glSync</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.GrBackendSemaphore" title="skia.GrBackendSemaphore">skia.GrBackendSemaphore</a></span></em><span class="sig-paren">)</span> &#x2192; capsule<a class="headerlink" href="#skia.GrBackendSemaphore.glSync" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="skia.GrBackendSemaphore.initGL">
+<code class="sig-prename descclassname">GrBackendSemaphore.</code><code class="sig-name descname">initGL</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.GrBackendSemaphore" title="skia.GrBackendSemaphore">skia.GrBackendSemaphore</a></span></em>, <em class="sig-param"><span class="n">glsync</span><span class="p">:</span> <span class="n">capsule</span></em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#skia.GrBackendSemaphore.initGL" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="skia.GrBackendSemaphore.initVulkan">
+<code class="sig-prename descclassname">GrBackendSemaphore.</code><code class="sig-name descname">initVulkan</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.GrBackendSemaphore" title="skia.GrBackendSemaphore">skia.GrBackendSemaphore</a></span></em>, <em class="sig-param"><span class="n">semaphore</span><span class="p">:</span> <span class="n">capsule</span></em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#skia.GrBackendSemaphore.initVulkan" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
 <dt id="skia.GrBackendSemaphore.isInitialized">
 <code class="sig-prename descclassname">GrBackendSemaphore.</code><code class="sig-name descname">isInitialized</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.GrBackendSemaphore" title="skia.GrBackendSemaphore">skia.GrBackendSemaphore</a></span></em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#skia.GrBackendSemaphore.isInitialized" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="skia.GrBackendSemaphore.vkSemaphore">
+<code class="sig-prename descclassname">GrBackendSemaphore.</code><code class="sig-name descname">vkSemaphore</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.GrBackendSemaphore" title="skia.GrBackendSemaphore">skia.GrBackendSemaphore</a></span></em><span class="sig-paren">)</span> &#x2192; capsule<a class="headerlink" href="#skia.GrBackendSemaphore.vkSemaphore" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </div>

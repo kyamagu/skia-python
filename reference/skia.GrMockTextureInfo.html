@@ -37,7 +37,7 @@
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="GrProtected" href="skia.GrProtected.html" />
-    <link rel="prev" title="GrMockOptions" href="skia.GrMockOptions.html" /> 
+    <link rel="prev" title="GrMockRenderTargetInfo" href="skia.GrMockRenderTargetInfo.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -157,10 +157,13 @@
 <li class="toctree-l3"><a class="reference internal" href="skia.GrFlushFlags.html">GrFlushFlags</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.GrFlushInfo.html">GrFlushInfo</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.GrGLBackendState.html">GrGLBackendState</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.GrGLFormat.html">GrGLFormat</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.GrGLFramebufferInfo.html">GrGLFramebufferInfo</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.GrGLInterface.html">GrGLInterface</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.GrGLTextureInfo.html">GrGLTextureInfo</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.GrMipMapped.html">GrMipMapped</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.GrMockOptions.html">GrMockOptions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.GrMockRenderTargetInfo.html">GrMockRenderTargetInfo</a></li>
 <li class="toctree-l3 current"><a class="current reference internal" href="#">GrMockTextureInfo</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#methods">Methods</a></li>
 </ul>
@@ -170,6 +173,13 @@
 <li class="toctree-l3"><a class="reference internal" href="skia.GrSemaphoresSubmitted.html">GrSemaphoresSubmitted</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.GrSurfaceOrigin.html">GrSurfaceOrigin</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.GrTextureType.html">GrTextureType</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.GrVkAlloc.html">GrVkAlloc</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.GrVkBackendContext.html">GrVkBackendContext</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.GrVkDrawableInfo.html">GrVkDrawableInfo</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.GrVkExtensionFlags.html">GrVkExtensionFlags</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.GrVkFeatureFlags.html">GrVkFeatureFlags</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.GrVkImageInfo.html">GrVkImageInfo</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.GrVkYcbcrConversionInfo.html">GrVkYcbcrConversionInfo</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.GradientShader.html">GradientShader</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.HighContrastConfig.html">HighContrastConfig</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.HighContrastFilter.html">HighContrastFilter</a></li>
@@ -245,6 +255,8 @@
 <li class="toctree-l3"><a class="reference internal" href="skia.TrimPathEffect.html">TrimPathEffect</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.Typeface.html">Typeface</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.Vertices.html">Vertices</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.VkFormat.html">VkFormat</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.VkImageLayout.html">VkImageLayout</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.WStream.html">WStream</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.XfermodeImageFilter.html">XfermodeImageFilter</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.YUVColorSpace.html">YUVColorSpace</a></li>
@@ -337,6 +349,18 @@
 <tr class="row-odd"><td><p><a class="reference internal" href="#skia.GrMockTextureInfo.__init__" title="skia.GrMockTextureInfo.__init__"><code class="xref py py-obj docutils literal notranslate"><span class="pre">__init__</span></code></a></p></td>
 <td><p>Overloaded function.</p></td>
 </tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.GrMockTextureInfo.colorType" title="skia.GrMockTextureInfo.colorType"><code class="xref py py-obj docutils literal notranslate"><span class="pre">colorType</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.GrMockTextureInfo.compressionType" title="skia.GrMockTextureInfo.compressionType"><code class="xref py py-obj docutils literal notranslate"><span class="pre">compressionType</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.GrMockTextureInfo.getBackendFormat" title="skia.GrMockTextureInfo.getBackendFormat"><code class="xref py py-obj docutils literal notranslate"><span class="pre">getBackendFormat</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.GrMockTextureInfo.id" title="skia.GrMockTextureInfo.id"><code class="xref py py-obj docutils literal notranslate"><span class="pre">id</span></code></a></p></td>
+<td><p></p></td>
+</tr>
 </tbody>
 </table>
 </dd></dl>
@@ -353,6 +377,26 @@
 </ol>
 </dd></dl>
 
+<dl class="py method">
+<dt id="skia.GrMockTextureInfo.colorType">
+<code class="sig-prename descclassname">GrMockTextureInfo.</code><code class="sig-name descname">colorType</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.GrMockTextureInfo" title="skia.GrMockTextureInfo">skia.GrMockTextureInfo</a></span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="skia.GrColorType.html#skia.GrColorType" title="skia.GrColorType">skia.GrColorType</a><a class="headerlink" href="#skia.GrMockTextureInfo.colorType" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="skia.GrMockTextureInfo.compressionType">
+<code class="sig-prename descclassname">GrMockTextureInfo.</code><code class="sig-name descname">compressionType</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.GrMockTextureInfo" title="skia.GrMockTextureInfo">skia.GrMockTextureInfo</a></span></em><span class="sig-paren">)</span> &#x2192; SkImage::CompressionType<a class="headerlink" href="#skia.GrMockTextureInfo.compressionType" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="skia.GrMockTextureInfo.getBackendFormat">
+<code class="sig-prename descclassname">GrMockTextureInfo.</code><code class="sig-name descname">getBackendFormat</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.GrMockTextureInfo" title="skia.GrMockTextureInfo">skia.GrMockTextureInfo</a></span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="skia.GrBackendFormat.html#skia.GrBackendFormat" title="skia.GrBackendFormat">skia.GrBackendFormat</a><a class="headerlink" href="#skia.GrMockTextureInfo.getBackendFormat" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="skia.GrMockTextureInfo.id">
+<code class="sig-prename descclassname">GrMockTextureInfo.</code><code class="sig-name descname">id</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.GrMockTextureInfo" title="skia.GrMockTextureInfo">skia.GrMockTextureInfo</a></span></em><span class="sig-paren">)</span> &#x2192; int<a class="headerlink" href="#skia.GrMockTextureInfo.id" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
 </div>
 </div>
 
@@ -367,7 +411,7 @@
         <a href="skia.GrProtected.html" class="btn btn-neutral float-right" title="GrProtected" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="skia.GrMockOptions.html" class="btn btn-neutral float-left" title="GrMockOptions" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="skia.GrMockRenderTargetInfo.html" class="btn btn-neutral float-left" title="GrMockRenderTargetInfo" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   

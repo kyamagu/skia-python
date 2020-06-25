@@ -160,16 +160,26 @@
 <li class="toctree-l3"><a class="reference internal" href="skia.GrFlushFlags.html">GrFlushFlags</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.GrFlushInfo.html">GrFlushInfo</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.GrGLBackendState.html">GrGLBackendState</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.GrGLFormat.html">GrGLFormat</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.GrGLFramebufferInfo.html">GrGLFramebufferInfo</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.GrGLInterface.html">GrGLInterface</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.GrGLTextureInfo.html">GrGLTextureInfo</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.GrMipMapped.html">GrMipMapped</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.GrMockOptions.html">GrMockOptions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.GrMockRenderTargetInfo.html">GrMockRenderTargetInfo</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.GrMockTextureInfo.html">GrMockTextureInfo</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.GrProtected.html">GrProtected</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.GrRenderable.html">GrRenderable</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.GrSemaphoresSubmitted.html">GrSemaphoresSubmitted</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.GrSurfaceOrigin.html">GrSurfaceOrigin</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.GrTextureType.html">GrTextureType</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.GrVkAlloc.html">GrVkAlloc</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.GrVkBackendContext.html">GrVkBackendContext</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.GrVkDrawableInfo.html">GrVkDrawableInfo</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.GrVkExtensionFlags.html">GrVkExtensionFlags</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.GrVkFeatureFlags.html">GrVkFeatureFlags</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.GrVkImageInfo.html">GrVkImageInfo</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.GrVkYcbcrConversionInfo.html">GrVkYcbcrConversionInfo</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.GradientShader.html">GradientShader</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.HighContrastConfig.html">HighContrastConfig</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.HighContrastFilter.html">HighContrastFilter</a></li>
@@ -245,6 +255,8 @@
 <li class="toctree-l3"><a class="reference internal" href="skia.TrimPathEffect.html">TrimPathEffect</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.Typeface.html">Typeface</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.Vertices.html">Vertices</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.VkFormat.html">VkFormat</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.VkImageLayout.html">VkImageLayout</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.WStream.html">WStream</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.XfermodeImageFilter.html">XfermodeImageFilter</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.YUVColorSpace.html">YUVColorSpace</a></li>
@@ -340,19 +352,31 @@
 <tr class="row-even"><td><p><a class="reference internal" href="#skia.GrBackendFormat.MakeMock" title="skia.GrBackendFormat.MakeMock"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MakeMock</span></code></a></p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#skia.GrBackendFormat.__init__" title="skia.GrBackendFormat.__init__"><code class="xref py py-obj docutils literal notranslate"><span class="pre">__init__</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.GrBackendFormat.MakeVk" title="skia.GrBackendFormat.MakeVk"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MakeVk</span></code></a></p></td>
 <td><p>Overloaded function.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#skia.GrBackendFormat.asGLFormat" title="skia.GrBackendFormat.asGLFormat"><code class="xref py py-obj docutils literal notranslate"><span class="pre">asGLFormat</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.GrBackendFormat.__init__" title="skia.GrBackendFormat.__init__"><code class="xref py py-obj docutils literal notranslate"><span class="pre">__init__</span></code></a></p></td>
+<td><p>Overloaded function.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.GrBackendFormat.asGLFormat" title="skia.GrBackendFormat.asGLFormat"><code class="xref py py-obj docutils literal notranslate"><span class="pre">asGLFormat</span></code></a></p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#skia.GrBackendFormat.asMockColorType" title="skia.GrBackendFormat.asMockColorType"><code class="xref py py-obj docutils literal notranslate"><span class="pre">asMockColorType</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.GrBackendFormat.asMockColorType" title="skia.GrBackendFormat.asMockColorType"><code class="xref py py-obj docutils literal notranslate"><span class="pre">asMockColorType</span></code></a></p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#skia.GrBackendFormat.asMockCompressionType" title="skia.GrBackendFormat.asMockCompressionType"><code class="xref py py-obj docutils literal notranslate"><span class="pre">asMockCompressionType</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.GrBackendFormat.asMockCompressionType" title="skia.GrBackendFormat.asMockCompressionType"><code class="xref py py-obj docutils literal notranslate"><span class="pre">asMockCompressionType</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.GrBackendFormat.asVkFormat" title="skia.GrBackendFormat.asVkFormat"><code class="xref py py-obj docutils literal notranslate"><span class="pre">asVkFormat</span></code></a></p></td>
 <td><p></p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#skia.GrBackendFormat.backend" title="skia.GrBackendFormat.backend"><code class="xref py py-obj docutils literal notranslate"><span class="pre">backend</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.GrBackendFormat.channelMask" title="skia.GrBackendFormat.channelMask"><code class="xref py py-obj docutils literal notranslate"><span class="pre">channelMask</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.GrBackendFormat.getVkYcbcrConversionInfo" title="skia.GrBackendFormat.getVkYcbcrConversionInfo"><code class="xref py py-obj docutils literal notranslate"><span class="pre">getVkYcbcrConversionInfo</span></code></a></p></td>
 <td><p></p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#skia.GrBackendFormat.isValid" title="skia.GrBackendFormat.isValid"><code class="xref py py-obj docutils literal notranslate"><span class="pre">isValid</span></code></a></p></td>
@@ -372,13 +396,23 @@
 <h2>Methods<a class="headerlink" href="#methods" title="Permalink to this headline">¶</a></h2>
 <dl class="py method">
 <dt id="skia.GrBackendFormat.MakeGL">
-<em class="property">static </em><code class="sig-prename descclassname">GrBackendFormat.</code><code class="sig-name descname">MakeGL</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">arg0</span><span class="p">:</span> <span class="n">int</span></em>, <em class="sig-param"><span class="n">arg1</span><span class="p">:</span> <span class="n">int</span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="#skia.GrBackendFormat" title="skia.GrBackendFormat">skia.GrBackendFormat</a><a class="headerlink" href="#skia.GrBackendFormat.MakeGL" title="Permalink to this definition">¶</a></dt>
+<em class="property">static </em><code class="sig-prename descclassname">GrBackendFormat.</code><code class="sig-name descname">MakeGL</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">format</span><span class="p">:</span> <span class="n">int</span></em>, <em class="sig-param"><span class="n">target</span><span class="p">:</span> <span class="n">int</span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="#skia.GrBackendFormat" title="skia.GrBackendFormat">skia.GrBackendFormat</a><a class="headerlink" href="#skia.GrBackendFormat.MakeGL" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
 <dt id="skia.GrBackendFormat.MakeMock">
 <em class="property">static </em><code class="sig-prename descclassname">GrBackendFormat.</code><code class="sig-name descname">MakeMock</code><span class="sig-paren">(</span><em class="sig-param">arg0: skia.GrColorType</em>, <em class="sig-param">arg1: SkImage::CompressionType</em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="#skia.GrBackendFormat" title="skia.GrBackendFormat">skia.GrBackendFormat</a><a class="headerlink" href="#skia.GrBackendFormat.MakeMock" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
+
+<dl class="py method">
+<dt id="skia.GrBackendFormat.MakeVk">
+<em class="property">static </em><code class="sig-prename descclassname">GrBackendFormat.</code><code class="sig-name descname">MakeVk</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span><span class="n">args</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#skia.GrBackendFormat.MakeVk" title="Permalink to this definition">¶</a></dt>
+<dd><p>Overloaded function.</p>
+<ol class="arabic simple">
+<li><p>MakeVk(format: VkFormat) -&gt; skia.GrBackendFormat</p></li>
+<li><p>MakeVk(ycbcrInfo: GrVkYcbcrConversionInfo) -&gt; skia.GrBackendFormat</p></li>
+</ol>
+</dd></dl>
 
 <dl class="py method">
 <dt id="skia.GrBackendFormat.__init__">
@@ -406,8 +440,23 @@
 <dd></dd></dl>
 
 <dl class="py method">
+<dt id="skia.GrBackendFormat.asVkFormat">
+<code class="sig-prename descclassname">GrBackendFormat.</code><code class="sig-name descname">asVkFormat</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.GrBackendFormat" title="skia.GrBackendFormat">skia.GrBackendFormat</a></span></em>, <em class="sig-param"><span class="n">format</span><span class="p">:</span> <span class="n">VkFormat</span></em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#skia.GrBackendFormat.asVkFormat" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
 <dt id="skia.GrBackendFormat.backend">
 <code class="sig-prename descclassname">GrBackendFormat.</code><code class="sig-name descname">backend</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.GrBackendFormat" title="skia.GrBackendFormat">skia.GrBackendFormat</a></span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="skia.GrBackendApi.html#skia.GrBackendApi" title="skia.GrBackendApi">skia.GrBackendApi</a><a class="headerlink" href="#skia.GrBackendFormat.backend" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="skia.GrBackendFormat.channelMask">
+<code class="sig-prename descclassname">GrBackendFormat.</code><code class="sig-name descname">channelMask</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.GrBackendFormat" title="skia.GrBackendFormat">skia.GrBackendFormat</a></span></em><span class="sig-paren">)</span> &#x2192; int<a class="headerlink" href="#skia.GrBackendFormat.channelMask" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="skia.GrBackendFormat.getVkYcbcrConversionInfo">
+<code class="sig-prename descclassname">GrBackendFormat.</code><code class="sig-name descname">getVkYcbcrConversionInfo</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.GrBackendFormat" title="skia.GrBackendFormat">skia.GrBackendFormat</a></span></em><span class="sig-paren">)</span> &#x2192; GrVkYcbcrConversionInfo<a class="headerlink" href="#skia.GrBackendFormat.getVkYcbcrConversionInfo" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">

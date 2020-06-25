@@ -157,16 +157,26 @@
 <li class="toctree-l3"><a class="reference internal" href="skia.GrFlushFlags.html">GrFlushFlags</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.GrFlushInfo.html">GrFlushInfo</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.GrGLBackendState.html">GrGLBackendState</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.GrGLFormat.html">GrGLFormat</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.GrGLFramebufferInfo.html">GrGLFramebufferInfo</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.GrGLInterface.html">GrGLInterface</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.GrGLTextureInfo.html">GrGLTextureInfo</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.GrMipMapped.html">GrMipMapped</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.GrMockOptions.html">GrMockOptions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.GrMockRenderTargetInfo.html">GrMockRenderTargetInfo</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.GrMockTextureInfo.html">GrMockTextureInfo</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.GrProtected.html">GrProtected</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.GrRenderable.html">GrRenderable</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.GrSemaphoresSubmitted.html">GrSemaphoresSubmitted</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.GrSurfaceOrigin.html">GrSurfaceOrigin</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.GrTextureType.html">GrTextureType</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.GrVkAlloc.html">GrVkAlloc</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.GrVkBackendContext.html">GrVkBackendContext</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.GrVkDrawableInfo.html">GrVkDrawableInfo</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.GrVkExtensionFlags.html">GrVkExtensionFlags</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.GrVkFeatureFlags.html">GrVkFeatureFlags</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.GrVkImageInfo.html">GrVkImageInfo</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.GrVkYcbcrConversionInfo.html">GrVkYcbcrConversionInfo</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.GradientShader.html">GradientShader</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.HighContrastConfig.html">HighContrastConfig</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.HighContrastFilter.html">HighContrastFilter</a></li>
@@ -249,6 +259,8 @@
 <li class="toctree-l3"><a class="reference internal" href="skia.TrimPathEffect.html">TrimPathEffect</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.Typeface.html">Typeface</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.Vertices.html">Vertices</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.VkFormat.html">VkFormat</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.VkImageLayout.html">VkImageLayout</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.WStream.html">WStream</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.XfermodeImageFilter.html">XfermodeImageFilter</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.YUVColorSpace.html">YUVColorSpace</a></li>
@@ -334,10 +346,10 @@
 <dt id="skia.Paint.Cap">
 <em class="property">class </em><code class="sig-prename descclassname">Paint.</code><code class="sig-name descname">Cap</code><a class="headerlink" href="#skia.Paint.Cap" title="Permalink to this definition">¶</a></dt>
 <dd><p>Members:</p>
-<p>kDefault_Cap : equivalent to kButt_Cap</p>
-<p>kSquare_Cap : adds square</p>
-<p>kLast_Cap : largest Cap value</p>
 <p>kButt_Cap : no stroke extension</p>
+<p>kDefault_Cap : equivalent to kButt_Cap</p>
+<p>kLast_Cap : largest Cap value</p>
+<p>kSquare_Cap : adds square</p>
 <p>kRound_Cap : adds circle</p>
 <p class="rubric">Methods</p>
 <table class="longtable docutils align-default">
@@ -392,17 +404,17 @@
 <h2>Attributes<a class="headerlink" href="#attributes" title="Permalink to this headline">¶</a></h2>
 <dl class="py attribute">
 <dt id="skia.Paint.Cap.kButt_Cap">
-<code class="sig-prename descclassname">Paint.Cap.</code><code class="sig-name descname">kButt_Cap</code><em class="property"> = Cap.kDefault_Cap</em><a class="headerlink" href="#skia.Paint.Cap.kButt_Cap" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">Paint.Cap.</code><code class="sig-name descname">kButt_Cap</code><em class="property"> = Cap.kButt_Cap</em><a class="headerlink" href="#skia.Paint.Cap.kButt_Cap" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt id="skia.Paint.Cap.kDefault_Cap">
-<code class="sig-prename descclassname">Paint.Cap.</code><code class="sig-name descname">kDefault_Cap</code><em class="property"> = Cap.kDefault_Cap</em><a class="headerlink" href="#skia.Paint.Cap.kDefault_Cap" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">Paint.Cap.</code><code class="sig-name descname">kDefault_Cap</code><em class="property"> = Cap.kButt_Cap</em><a class="headerlink" href="#skia.Paint.Cap.kDefault_Cap" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt id="skia.Paint.Cap.kLast_Cap">
-<code class="sig-prename descclassname">Paint.Cap.</code><code class="sig-name descname">kLast_Cap</code><em class="property"> = Cap.kSquare_Cap</em><a class="headerlink" href="#skia.Paint.Cap.kLast_Cap" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">Paint.Cap.</code><code class="sig-name descname">kLast_Cap</code><em class="property"> = Cap.kLast_Cap</em><a class="headerlink" href="#skia.Paint.Cap.kLast_Cap" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
@@ -412,7 +424,7 @@
 
 <dl class="py attribute">
 <dt id="skia.Paint.Cap.kSquare_Cap">
-<code class="sig-prename descclassname">Paint.Cap.</code><code class="sig-name descname">kSquare_Cap</code><em class="property"> = Cap.kSquare_Cap</em><a class="headerlink" href="#skia.Paint.Cap.kSquare_Cap" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">Paint.Cap.</code><code class="sig-name descname">kSquare_Cap</code><em class="property"> = Cap.kLast_Cap</em><a class="headerlink" href="#skia.Paint.Cap.kSquare_Cap" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">

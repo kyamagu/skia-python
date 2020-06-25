@@ -168,16 +168,26 @@
 <li class="toctree-l3"><a class="reference internal" href="skia.GrFlushFlags.html">GrFlushFlags</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.GrFlushInfo.html">GrFlushInfo</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.GrGLBackendState.html">GrGLBackendState</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.GrGLFormat.html">GrGLFormat</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.GrGLFramebufferInfo.html">GrGLFramebufferInfo</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.GrGLInterface.html">GrGLInterface</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.GrGLTextureInfo.html">GrGLTextureInfo</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.GrMipMapped.html">GrMipMapped</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.GrMockOptions.html">GrMockOptions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.GrMockRenderTargetInfo.html">GrMockRenderTargetInfo</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.GrMockTextureInfo.html">GrMockTextureInfo</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.GrProtected.html">GrProtected</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.GrRenderable.html">GrRenderable</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.GrSemaphoresSubmitted.html">GrSemaphoresSubmitted</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.GrSurfaceOrigin.html">GrSurfaceOrigin</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.GrTextureType.html">GrTextureType</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.GrVkAlloc.html">GrVkAlloc</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.GrVkBackendContext.html">GrVkBackendContext</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.GrVkDrawableInfo.html">GrVkDrawableInfo</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.GrVkExtensionFlags.html">GrVkExtensionFlags</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.GrVkFeatureFlags.html">GrVkFeatureFlags</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.GrVkImageInfo.html">GrVkImageInfo</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.GrVkYcbcrConversionInfo.html">GrVkYcbcrConversionInfo</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.GradientShader.html">GradientShader</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.HighContrastConfig.html">HighContrastConfig</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.HighContrastFilter.html">HighContrastFilter</a></li>
@@ -253,6 +263,8 @@
 <li class="toctree-l3"><a class="reference internal" href="skia.TrimPathEffect.html">TrimPathEffect</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.Typeface.html">Typeface</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.Vertices.html">Vertices</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.VkFormat.html">VkFormat</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.VkImageLayout.html">VkImageLayout</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.WStream.html">WStream</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.XfermodeImageFilter.html">XfermodeImageFilter</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.YUVColorSpace.html">YUVColorSpace</a></li>
@@ -343,25 +355,25 @@
 <p>Members:</p>
 <blockquote>
 <div><dl>
-<dt>kInternalError :</dt><dd><p>An internal error, such as OOM.</p>
-</dd>
-<dt>kUnimplemented :</dt><dd><p>This method is not implemented by this codec.</p>
-</dd>
-<dt>kSuccess :</dt><dd><p>General return value for success.</p>
-</dd>
 <dt>kInvalidParameters :</dt><dd><p>Parameters (besides info) are invalid. e.g. NULL pixels, rowBytes too
 small, etc.</p>
 </dd>
-<dt>kIncompleteInput :</dt><dd><p>The input is incomplete. A partial image was generated.</p>
-</dd>
 <dt>kInvalidInput :</dt><dd><p>The input did not contain a valid image.</p>
-</dd>
-<dt>kInvalidConversion :</dt><dd><p>The generator cannot convert to match the request, ignoring dimensions.</p>
-</dd>
-<dt>kInvalidScale :</dt><dd><p>The generator cannot scale to requested size.</p>
 </dd>
 <dt>kCouldNotRewind :</dt><dd><p>Fulfilling this request requires rewinding the input, which is not
 supported for this input.</p>
+</dd>
+<dt>kInvalidConversion :</dt><dd><p>The generator cannot convert to match the request, ignoring dimensions.</p>
+</dd>
+<dt>kSuccess :</dt><dd><p>General return value for success.</p>
+</dd>
+<dt>kUnimplemented :</dt><dd><p>This method is not implemented by this codec.</p>
+</dd>
+<dt>kInvalidScale :</dt><dd><p>The generator cannot scale to requested size.</p>
+</dd>
+<dt>kIncompleteInput :</dt><dd><p>The input is incomplete. A partial image was generated.</p>
+</dd>
+<dt>kInternalError :</dt><dd><p>An internal error, such as OOM.</p>
 </dd>
 <dt>kErrorInInput :</dt><dd><p>Like kIncompleteInput, except the input had an error.</p>
 <p>If returned from an incremental decode, decoding cannot continue, even
