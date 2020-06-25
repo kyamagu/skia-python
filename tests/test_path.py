@@ -2,19 +2,22 @@ import skia
 import pytest
 
 
-@pytest.fixture()
+@pytest.fixture
 def path():
-    return skia.Path()
+    path = skia.Path()
+    path.addCircle(25, 25, 10)
+    path.addRect((50, 60, 70, 70))
+    return path
 
 
-@pytest.fixture(scope='session')
-def itr():
-    return skia.Path.Iter()
+@pytest.fixture
+def itr(path):
+    return skia.Path.Iter(path, False)
 
 
-@pytest.fixture(scope='session')
-def rawiter():
-    return skia.Path.RawIter()
+@pytest.fixture
+def rawiter(path):
+    return skia.Path.RawIter(path)
 
 
 @pytest.mark.parametrize('args', [
@@ -55,6 +58,11 @@ def test_Path_Iter_isClosedContour(itr):
     assert isinstance(itr.isClosedContour(), bool)
 
 
+def test_Path_Iter_iter(itr):
+    for verb, points in itr:
+        assert isinstance(verb, skia.Path.Verb)
+
+
 @pytest.mark.parametrize('args', [
     tuple(),
     (skia.Path(),),
@@ -80,6 +88,11 @@ def test_Path_RawIter_peek(rawiter):
 
 # def test_Path_RawIter_conicWeight(rawiter):
 #     assert isinstance(rawiter.conicWeight())
+
+
+def test_Path_RawIter_iter(rawiter):
+    for verb, points in rawiter:
+        assert isinstance(verb, skia.Path.Verb)
 
 
 @pytest.mark.parametrize('args', [
@@ -196,6 +209,10 @@ def test_Path_getPoints(path, args):
 ])
 def test_Path_getVerbs(path, args):
     assert isinstance(path.getVerbs(*args), list)
+
+
+def test_Path_countVerbs(path):
+    assert isinstance(path.countVerbs(), int)
 
 
 def test_Path_approximateBytesUsed(path):
@@ -417,6 +434,11 @@ def test_Path_getSegmentMasks(path):
 
 
 def test_Path_dump(path):
+    stream = skia.DynamicMemoryWStream()
+    path.dump(stream, False, False)
+
+
+def test_Path_dump_2(path):
     path.dump()
 
 
@@ -469,3 +491,9 @@ def test_Path_eq(path):
 
 def test_Path_ne(path):
     assert not (path != path)
+
+
+def test_Path_iter(path):
+    for verb, points in path:
+        assert isinstance(verb, skia.Path.Verb)
+        assert isinstance(points, list)
