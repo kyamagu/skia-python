@@ -183,12 +183,13 @@ draws a rectangle with specified paint, and writes the result to an image file:<
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">skia</span>
 
 <span class="n">surface</span> <span class="o">=</span> <span class="n">skia</span><span class="o">.</span><span class="n">Surface</span><span class="p">(</span><span class="mi">128</span><span class="p">,</span> <span class="mi">128</span><span class="p">)</span>
-<span class="n">canvas</span> <span class="o">=</span> <span class="n">surface</span><span class="o">.</span><span class="n">getCanvas</span><span class="p">()</span>
-<span class="n">rect</span> <span class="o">=</span> <span class="n">skia</span><span class="o">.</span><span class="n">Rect</span><span class="p">(</span><span class="mi">32</span><span class="p">,</span> <span class="mi">32</span><span class="p">,</span> <span class="mi">96</span><span class="p">,</span> <span class="mi">96</span><span class="p">)</span>
-<span class="n">paint</span> <span class="o">=</span> <span class="n">skia</span><span class="o">.</span><span class="n">Paint</span><span class="p">(</span>
-    <span class="n">Color</span><span class="o">=</span><span class="n">skia</span><span class="o">.</span><span class="n">ColorBLUE</span><span class="p">,</span>
-    <span class="n">Style</span><span class="o">=</span><span class="n">skia</span><span class="o">.</span><span class="n">Paint</span><span class="o">.</span><span class="n">kFill_Style</span><span class="p">)</span>
-<span class="n">canvas</span><span class="o">.</span><span class="n">drawRect</span><span class="p">(</span><span class="n">rect</span><span class="p">,</span> <span class="n">paint</span><span class="p">)</span>
+
+<span class="k">with</span> <span class="n">surface</span> <span class="k">as</span> <span class="n">canvas</span><span class="p">:</span>
+    <span class="n">rect</span> <span class="o">=</span> <span class="n">skia</span><span class="o">.</span><span class="n">Rect</span><span class="p">(</span><span class="mi">32</span><span class="p">,</span> <span class="mi">32</span><span class="p">,</span> <span class="mi">96</span><span class="p">,</span> <span class="mi">96</span><span class="p">)</span>
+    <span class="n">paint</span> <span class="o">=</span> <span class="n">skia</span><span class="o">.</span><span class="n">Paint</span><span class="p">(</span>
+        <span class="n">Color</span><span class="o">=</span><span class="n">skia</span><span class="o">.</span><span class="n">ColorBLUE</span><span class="p">,</span>
+        <span class="n">Style</span><span class="o">=</span><span class="n">skia</span><span class="o">.</span><span class="n">Paint</span><span class="o">.</span><span class="n">kFill_Style</span><span class="p">)</span>
+    <span class="n">canvas</span><span class="o">.</span><span class="n">drawRect</span><span class="p">(</span><span class="n">rect</span><span class="p">,</span> <span class="n">paint</span><span class="p">)</span>
 
 <span class="n">image</span> <span class="o">=</span> <span class="n">surface</span><span class="o">.</span><span class="n">makeImageSnapshot</span><span class="p">()</span>
 <span class="n">image</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="s1">&#39;output.png&#39;</span><span class="p">,</span> <span class="n">skia</span><span class="o">.</span><span class="n">kPNG</span><span class="p">)</span>
@@ -218,14 +219,15 @@ are specified explicitly in each draw call, via a <a class="reference internal" 
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">skia</span>
 
 <span class="n">surface</span> <span class="o">=</span> <span class="n">skia</span><span class="o">.</span><span class="n">Surface</span><span class="p">(</span><span class="mi">256</span><span class="p">,</span> <span class="mi">256</span><span class="p">)</span>
-<span class="n">canvas</span> <span class="o">=</span> <span class="n">surface</span><span class="o">.</span><span class="n">getCanvas</span><span class="p">()</span>
-<span class="n">canvas</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
-<span class="n">canvas</span><span class="o">.</span><span class="n">translate</span><span class="p">(</span><span class="mf">128.</span><span class="p">,</span> <span class="mf">128.</span><span class="p">)</span>
-<span class="n">canvas</span><span class="o">.</span><span class="n">rotate</span><span class="p">(</span><span class="mf">45.</span><span class="p">)</span>
-<span class="n">rect</span> <span class="o">=</span> <span class="n">skia</span><span class="o">.</span><span class="n">Rect</span><span class="p">(</span><span class="o">-</span><span class="mf">90.5</span><span class="p">,</span> <span class="o">-</span><span class="mf">90.5</span><span class="p">,</span> <span class="mf">90.5</span><span class="p">,</span> <span class="mf">90.5</span><span class="p">)</span>
-<span class="n">paint</span> <span class="o">=</span> <span class="n">skia</span><span class="o">.</span><span class="n">Paint</span><span class="p">(</span><span class="n">Color</span><span class="o">=</span><span class="n">skia</span><span class="o">.</span><span class="n">Color</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">255</span><span class="p">))</span>
-<span class="n">canvas</span><span class="o">.</span><span class="n">drawRect</span><span class="p">(</span><span class="n">rect</span><span class="p">,</span> <span class="n">paint</span><span class="p">)</span>
-<span class="n">canvas</span><span class="o">.</span><span class="n">restore</span><span class="p">()</span>
+
+<span class="k">with</span> <span class="n">surface</span> <span class="k">as</span> <span class="n">canvas</span><span class="p">:</span>
+    <span class="n">canvas</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
+    <span class="n">canvas</span><span class="o">.</span><span class="n">translate</span><span class="p">(</span><span class="mf">128.</span><span class="p">,</span> <span class="mf">128.</span><span class="p">)</span>
+    <span class="n">canvas</span><span class="o">.</span><span class="n">rotate</span><span class="p">(</span><span class="mf">45.</span><span class="p">)</span>
+    <span class="n">rect</span> <span class="o">=</span> <span class="n">skia</span><span class="o">.</span><span class="n">Rect</span><span class="p">(</span><span class="o">-</span><span class="mf">90.5</span><span class="p">,</span> <span class="o">-</span><span class="mf">90.5</span><span class="p">,</span> <span class="mf">90.5</span><span class="p">,</span> <span class="mf">90.5</span><span class="p">)</span>
+    <span class="n">paint</span> <span class="o">=</span> <span class="n">skia</span><span class="o">.</span><span class="n">Paint</span><span class="p">(</span><span class="n">Color</span><span class="o">=</span><span class="n">skia</span><span class="o">.</span><span class="n">Color</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">255</span><span class="p">))</span>
+    <span class="n">canvas</span><span class="o">.</span><span class="n">drawRect</span><span class="p">(</span><span class="n">rect</span><span class="p">,</span> <span class="n">paint</span><span class="p">)</span>
+    <span class="n">canvas</span><span class="o">.</span><span class="n">restore</span><span class="p">()</span>
 
 <span class="n">image</span> <span class="o">=</span> <span class="n">surface</span><span class="o">.</span><span class="n">makeImageSnapshot</span><span class="p">()</span>
 <span class="n">image</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="s1">&#39;output.png&#39;</span><span class="p">,</span> <span class="n">skia</span><span class="o">.</span><span class="n">kPNG</span><span class="p">)</span>
@@ -259,45 +261,45 @@ The following example demonstrates drawing of shape primitives,
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">skia</span>
 
 <span class="n">surface</span> <span class="o">=</span> <span class="n">skia</span><span class="o">.</span><span class="n">Surface</span><span class="p">(</span><span class="mi">256</span><span class="p">,</span> <span class="mi">256</span><span class="p">)</span>
-<span class="n">canvas</span> <span class="o">=</span> <span class="n">surface</span><span class="o">.</span><span class="n">getCanvas</span><span class="p">()</span>
 
-<span class="n">rect</span> <span class="o">=</span> <span class="n">skia</span><span class="o">.</span><span class="n">Rect</span><span class="p">(</span><span class="mi">50</span><span class="p">,</span> <span class="mi">50</span><span class="p">,</span> <span class="mi">90</span><span class="p">,</span> <span class="mi">110</span><span class="p">)</span>
-<span class="n">paint</span> <span class="o">=</span> <span class="n">skia</span><span class="o">.</span><span class="n">Paint</span><span class="p">(</span>
-    <span class="n">AntiAlias</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-    <span class="n">Style</span><span class="o">=</span><span class="n">skia</span><span class="o">.</span><span class="n">Paint</span><span class="o">.</span><span class="n">kStroke_Style</span><span class="p">,</span>
-    <span class="n">StrokeWidth</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span>
-    <span class="n">Color</span><span class="o">=</span><span class="n">skia</span><span class="o">.</span><span class="n">ColorRED</span><span class="p">,</span>
-<span class="p">)</span>
+<span class="k">with</span> <span class="n">surface</span> <span class="k">as</span> <span class="n">canvas</span><span class="p">:</span>
+    <span class="n">rect</span> <span class="o">=</span> <span class="n">skia</span><span class="o">.</span><span class="n">Rect</span><span class="p">(</span><span class="mi">50</span><span class="p">,</span> <span class="mi">50</span><span class="p">,</span> <span class="mi">90</span><span class="p">,</span> <span class="mi">110</span><span class="p">)</span>
+    <span class="n">paint</span> <span class="o">=</span> <span class="n">skia</span><span class="o">.</span><span class="n">Paint</span><span class="p">(</span>
+        <span class="n">AntiAlias</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="n">Style</span><span class="o">=</span><span class="n">skia</span><span class="o">.</span><span class="n">Paint</span><span class="o">.</span><span class="n">kStroke_Style</span><span class="p">,</span>
+        <span class="n">StrokeWidth</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span>
+        <span class="n">Color</span><span class="o">=</span><span class="n">skia</span><span class="o">.</span><span class="n">ColorRED</span><span class="p">,</span>
+    <span class="p">)</span>
 
-<span class="n">canvas</span><span class="o">.</span><span class="n">drawColor</span><span class="p">(</span><span class="n">skia</span><span class="o">.</span><span class="n">ColorWHITE</span><span class="p">)</span>
-<span class="n">canvas</span><span class="o">.</span><span class="n">drawRect</span><span class="p">(</span><span class="n">rect</span><span class="p">,</span> <span class="n">paint</span><span class="p">)</span>
+    <span class="n">canvas</span><span class="o">.</span><span class="n">drawColor</span><span class="p">(</span><span class="n">skia</span><span class="o">.</span><span class="n">ColorWHITE</span><span class="p">)</span>
+    <span class="n">canvas</span><span class="o">.</span><span class="n">drawRect</span><span class="p">(</span><span class="n">rect</span><span class="p">,</span> <span class="n">paint</span><span class="p">)</span>
 
-<span class="n">oval</span> <span class="o">=</span> <span class="n">skia</span><span class="o">.</span><span class="n">RRect</span><span class="o">.</span><span class="n">MakeOval</span><span class="p">(</span><span class="n">rect</span><span class="p">)</span>
-<span class="n">oval</span><span class="o">.</span><span class="n">offset</span><span class="p">(</span><span class="mi">40</span><span class="p">,</span> <span class="mi">60</span><span class="p">)</span>
-<span class="n">paint</span><span class="o">.</span><span class="n">setColor</span><span class="p">(</span><span class="n">skia</span><span class="o">.</span><span class="n">ColorBLUE</span><span class="p">)</span>
-<span class="n">canvas</span><span class="o">.</span><span class="n">drawRRect</span><span class="p">(</span><span class="n">oval</span><span class="p">,</span> <span class="n">paint</span><span class="p">)</span>
+    <span class="n">oval</span> <span class="o">=</span> <span class="n">skia</span><span class="o">.</span><span class="n">RRect</span><span class="o">.</span><span class="n">MakeOval</span><span class="p">(</span><span class="n">rect</span><span class="p">)</span>
+    <span class="n">oval</span><span class="o">.</span><span class="n">offset</span><span class="p">(</span><span class="mi">40</span><span class="p">,</span> <span class="mi">60</span><span class="p">)</span>
+    <span class="n">paint</span><span class="o">.</span><span class="n">setColor</span><span class="p">(</span><span class="n">skia</span><span class="o">.</span><span class="n">ColorBLUE</span><span class="p">)</span>
+    <span class="n">canvas</span><span class="o">.</span><span class="n">drawRRect</span><span class="p">(</span><span class="n">oval</span><span class="p">,</span> <span class="n">paint</span><span class="p">)</span>
 
-<span class="n">paint</span><span class="o">.</span><span class="n">setColor</span><span class="p">(</span><span class="n">skia</span><span class="o">.</span><span class="n">ColorCYAN</span><span class="p">)</span>
-<span class="n">canvas</span><span class="o">.</span><span class="n">drawCircle</span><span class="p">(</span><span class="mi">180</span><span class="p">,</span> <span class="mi">50</span><span class="p">,</span> <span class="mi">25</span><span class="p">,</span> <span class="n">paint</span><span class="p">)</span>
+    <span class="n">paint</span><span class="o">.</span><span class="n">setColor</span><span class="p">(</span><span class="n">skia</span><span class="o">.</span><span class="n">ColorCYAN</span><span class="p">)</span>
+    <span class="n">canvas</span><span class="o">.</span><span class="n">drawCircle</span><span class="p">(</span><span class="mi">180</span><span class="p">,</span> <span class="mi">50</span><span class="p">,</span> <span class="mi">25</span><span class="p">,</span> <span class="n">paint</span><span class="p">)</span>
 
-<span class="n">rect</span><span class="o">.</span><span class="n">offset</span><span class="p">(</span><span class="mi">80</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
-<span class="n">paint</span><span class="o">.</span><span class="n">setColor</span><span class="p">(</span><span class="n">skia</span><span class="o">.</span><span class="n">ColorYELLOW</span><span class="p">)</span>
-<span class="n">canvas</span><span class="o">.</span><span class="n">drawRoundRect</span><span class="p">(</span><span class="n">rect</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="n">paint</span><span class="p">)</span>
+    <span class="n">rect</span><span class="o">.</span><span class="n">offset</span><span class="p">(</span><span class="mi">80</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="n">paint</span><span class="o">.</span><span class="n">setColor</span><span class="p">(</span><span class="n">skia</span><span class="o">.</span><span class="n">ColorYELLOW</span><span class="p">)</span>
+    <span class="n">canvas</span><span class="o">.</span><span class="n">drawRoundRect</span><span class="p">(</span><span class="n">rect</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="n">paint</span><span class="p">)</span>
 
-<span class="n">path</span> <span class="o">=</span> <span class="n">skia</span><span class="o">.</span><span class="n">Path</span><span class="p">()</span>
-<span class="n">path</span><span class="o">.</span><span class="n">cubicTo</span><span class="p">(</span><span class="mi">768</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">512</span><span class="p">,</span> <span class="mi">256</span><span class="p">,</span> <span class="mi">256</span><span class="p">,</span> <span class="mi">256</span><span class="p">)</span>
-<span class="n">paint</span><span class="o">.</span><span class="n">setColor</span><span class="p">(</span><span class="n">skia</span><span class="o">.</span><span class="n">ColorGREEN</span><span class="p">)</span>
-<span class="n">canvas</span><span class="o">.</span><span class="n">drawPath</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">paint</span><span class="p">)</span>
+    <span class="n">path</span> <span class="o">=</span> <span class="n">skia</span><span class="o">.</span><span class="n">Path</span><span class="p">()</span>
+    <span class="n">path</span><span class="o">.</span><span class="n">cubicTo</span><span class="p">(</span><span class="mi">768</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">512</span><span class="p">,</span> <span class="mi">256</span><span class="p">,</span> <span class="mi">256</span><span class="p">,</span> <span class="mi">256</span><span class="p">)</span>
+    <span class="n">paint</span><span class="o">.</span><span class="n">setColor</span><span class="p">(</span><span class="n">skia</span><span class="o">.</span><span class="n">ColorGREEN</span><span class="p">)</span>
+    <span class="n">canvas</span><span class="o">.</span><span class="n">drawPath</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">paint</span><span class="p">)</span>
 
-<span class="n">image</span> <span class="o">=</span> <span class="n">skia</span><span class="o">.</span><span class="n">Image</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s1">&#39;../skia/resources/images/color_wheel.png&#39;</span><span class="p">)</span>
-<span class="n">canvas</span><span class="o">.</span><span class="n">drawImage</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="mi">128</span><span class="p">,</span> <span class="mi">128</span><span class="p">,</span> <span class="n">paint</span><span class="p">)</span>
+    <span class="n">image</span> <span class="o">=</span> <span class="n">skia</span><span class="o">.</span><span class="n">Image</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s1">&#39;../skia/resources/images/color_wheel.png&#39;</span><span class="p">)</span>
+    <span class="n">canvas</span><span class="o">.</span><span class="n">drawImage</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="mi">128</span><span class="p">,</span> <span class="mi">128</span><span class="p">,</span> <span class="n">paint</span><span class="p">)</span>
 
-<span class="n">rect2</span> <span class="o">=</span> <span class="n">skia</span><span class="o">.</span><span class="n">Rect</span><span class="p">(</span><span class="mi">40</span><span class="p">,</span> <span class="mi">60</span><span class="p">)</span>
-<span class="n">canvas</span><span class="o">.</span><span class="n">drawImageRect</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">rect2</span><span class="p">,</span> <span class="n">paint</span><span class="p">)</span>
+    <span class="n">rect2</span> <span class="o">=</span> <span class="n">skia</span><span class="o">.</span><span class="n">Rect</span><span class="p">(</span><span class="mi">40</span><span class="p">,</span> <span class="mi">60</span><span class="p">)</span>
+    <span class="n">canvas</span><span class="o">.</span><span class="n">drawImageRect</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">rect2</span><span class="p">,</span> <span class="n">paint</span><span class="p">)</span>
 
-<span class="n">paint2</span> <span class="o">=</span> <span class="n">skia</span><span class="o">.</span><span class="n">Paint</span><span class="p">()</span>
-<span class="n">text</span> <span class="o">=</span> <span class="n">skia</span><span class="o">.</span><span class="n">TextBlob</span><span class="p">(</span><span class="s1">&#39;Hello, Skia!&#39;</span><span class="p">,</span> <span class="n">skia</span><span class="o">.</span><span class="n">Font</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="mi">18</span><span class="p">))</span>
-<span class="n">canvas</span><span class="o">.</span><span class="n">drawTextBlob</span><span class="p">(</span><span class="n">text</span><span class="p">,</span> <span class="mi">50</span><span class="p">,</span> <span class="mi">25</span><span class="p">,</span> <span class="n">paint2</span><span class="p">)</span>
+    <span class="n">paint2</span> <span class="o">=</span> <span class="n">skia</span><span class="o">.</span><span class="n">Paint</span><span class="p">()</span>
+    <span class="n">text</span> <span class="o">=</span> <span class="n">skia</span><span class="o">.</span><span class="n">TextBlob</span><span class="p">(</span><span class="s1">&#39;Hello, Skia!&#39;</span><span class="p">,</span> <span class="n">skia</span><span class="o">.</span><span class="n">Font</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="mi">18</span><span class="p">))</span>
+    <span class="n">canvas</span><span class="o">.</span><span class="n">drawTextBlob</span><span class="p">(</span><span class="n">text</span><span class="p">,</span> <span class="mi">50</span><span class="p">,</span> <span class="mi">25</span><span class="p">,</span> <span class="n">paint2</span><span class="p">)</span>
 
 <span class="n">image</span> <span class="o">=</span> <span class="n">surface</span><span class="o">.</span><span class="n">makeImageSnapshot</span><span class="p">()</span>
 <span class="n">image</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="s1">&#39;output.png&#39;</span><span class="p">,</span> <span class="n">skia</span><span class="o">.</span><span class="n">kPNG</span><span class="p">)</span>

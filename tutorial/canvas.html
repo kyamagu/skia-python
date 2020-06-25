@@ -196,14 +196,12 @@ into which the canvas commands are drawn.</p>
 
 <span class="n">width</span><span class="p">,</span> <span class="n">height</span> <span class="o">=</span> <span class="mi">200</span><span class="p">,</span> <span class="mi">200</span>
 <span class="n">surface</span> <span class="o">=</span> <span class="n">skia</span><span class="o">.</span><span class="n">Surface</span><span class="p">(</span><span class="n">width</span><span class="p">,</span> <span class="n">height</span><span class="p">)</span>
-<span class="n">canvas</span> <span class="o">=</span> <span class="n">surface</span><span class="o">.</span><span class="n">getCanvas</span><span class="p">()</span>
 
-<span class="n">canvas</span><span class="o">.</span><span class="n">drawCircle</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">40</span><span class="p">,</span> <span class="n">skia</span><span class="o">.</span><span class="n">Paint</span><span class="p">(</span><span class="n">Color</span><span class="o">=</span><span class="n">skia</span><span class="o">.</span><span class="n">ColorGREEN</span><span class="p">))</span>
+<span class="k">with</span> <span class="n">surface</span> <span class="k">as</span> <span class="n">canvas</span><span class="p">:</span>
+    <span class="n">canvas</span><span class="o">.</span><span class="n">drawCircle</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">40</span><span class="p">,</span> <span class="n">skia</span><span class="o">.</span><span class="n">Paint</span><span class="p">(</span><span class="n">Color</span><span class="o">=</span><span class="n">skia</span><span class="o">.</span><span class="n">ColorGREEN</span><span class="p">))</span>
 
 <span class="n">image</span> <span class="o">=</span> <span class="n">surface</span><span class="o">.</span><span class="n">makeImageSnapshot</span><span class="p">()</span>
-<span class="k">assert</span> <span class="n">image</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
-<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;output.png&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
-    <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">image</span><span class="o">.</span><span class="n">encodeToData</span><span class="p">())</span>
+<span class="n">image</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="s1">&#39;output.png&#39;</span><span class="p">,</span> <span class="n">skia</span><span class="o">.</span><span class="n">kPNG</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>Alternatively, we could have specified the memory for the surface explicitly,
@@ -215,10 +213,9 @@ into numpy array.</p>
 
 <span class="n">width</span><span class="p">,</span> <span class="n">height</span> <span class="o">=</span> <span class="mi">200</span><span class="p">,</span> <span class="mi">200</span>
 <span class="n">array</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">height</span><span class="p">,</span> <span class="n">width</span><span class="p">,</span> <span class="mi">4</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">uint8</span><span class="p">)</span>
-<span class="n">surface</span> <span class="o">=</span> <span class="n">skia</span><span class="o">.</span><span class="n">Surface</span><span class="p">(</span><span class="n">array</span><span class="p">)</span>
-<span class="n">canvas</span> <span class="o">=</span> <span class="n">surface</span><span class="o">.</span><span class="n">getCanvas</span><span class="p">()</span>
 
-<span class="n">canvas</span><span class="o">.</span><span class="n">drawCircle</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">40</span><span class="p">,</span> <span class="n">skia</span><span class="o">.</span><span class="n">Paint</span><span class="p">(</span><span class="n">Color</span><span class="o">=</span><span class="n">skia</span><span class="o">.</span><span class="n">ColorGREEN</span><span class="p">))</span>
+<span class="k">with</span> <span class="n">skia</span><span class="o">.</span><span class="n">Surface</span><span class="p">(</span><span class="n">array</span><span class="p">)</span> <span class="k">as</span> <span class="n">canvas</span><span class="p">:</span>
+    <span class="n">canvas</span><span class="o">.</span><span class="n">drawCircle</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">40</span><span class="p">,</span> <span class="n">skia</span><span class="o">.</span><span class="n">Paint</span><span class="p">(</span><span class="n">Color</span><span class="o">=</span><span class="n">skia</span><span class="o">.</span><span class="n">ColorGREEN</span><span class="p">))</span>
 
 <span class="n">plot</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">array</span><span class="p">)</span>
 <span class="n">plot</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
@@ -263,12 +260,13 @@ Skia calls are made.</p>
     <span class="n">info</span> <span class="o">=</span> <span class="n">skia</span><span class="o">.</span><span class="n">ImageInfo</span><span class="o">.</span><span class="n">MakeN32Premul</span><span class="p">(</span><span class="n">width</span><span class="p">,</span> <span class="n">height</span><span class="p">)</span>
     <span class="n">surface</span> <span class="o">=</span> <span class="n">skia</span><span class="o">.</span><span class="n">Surface</span><span class="o">.</span><span class="n">MakeRenderTarget</span><span class="p">(</span><span class="n">context</span><span class="p">,</span> <span class="n">skia</span><span class="o">.</span><span class="n">Budgeted</span><span class="o">.</span><span class="n">kNo</span><span class="p">,</span> <span class="n">info</span><span class="p">)</span>
     <span class="k">assert</span> <span class="n">surface</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
-    <span class="n">canvas</span> <span class="o">=</span> <span class="n">surface</span><span class="o">.</span><span class="n">getCanvas</span><span class="p">()</span>
-    <span class="n">canvas</span><span class="o">.</span><span class="n">drawCircle</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">40</span><span class="p">,</span> <span class="n">skia</span><span class="o">.</span><span class="n">Paint</span><span class="p">(</span><span class="n">Color</span><span class="o">=</span><span class="n">skia</span><span class="o">.</span><span class="n">ColorGREEN</span><span class="p">))</span>
+
+    <span class="k">with</span> <span class="n">surface</span> <span class="k">as</span> <span class="n">canvas</span><span class="p">:</span>
+        <span class="n">canvas</span><span class="o">.</span><span class="n">drawCircle</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">40</span><span class="p">,</span> <span class="n">skia</span><span class="o">.</span><span class="n">Paint</span><span class="p">(</span><span class="n">Color</span><span class="o">=</span><span class="n">skia</span><span class="o">.</span><span class="n">ColorGREEN</span><span class="p">))</span>
+
     <span class="n">image</span> <span class="o">=</span> <span class="n">surface</span><span class="o">.</span><span class="n">makeImageSnapshot</span><span class="p">()</span>
     <span class="k">assert</span> <span class="n">image</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
-    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;output.png&#39;</span><span class="p">,</span> <span class="s1">&#39;wb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
-        <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">image</span><span class="o">.</span><span class="n">encodeToData</span><span class="p">())</span>
+    <span class="n">image</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="s1">&#39;output.png&#39;</span><span class="p">,</span> <span class="n">skia</span><span class="o">.</span><span class="n">kPNG</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -281,11 +279,9 @@ following demonstrates how to write a single-page PDF document to a file:</p>
 
 <span class="n">width</span><span class="p">,</span> <span class="n">height</span> <span class="o">=</span> <span class="mi">200</span><span class="p">,</span> <span class="mi">200</span>
 <span class="n">stream</span> <span class="o">=</span> <span class="n">skia</span><span class="o">.</span><span class="n">FILEWStream</span><span class="p">(</span><span class="s1">&#39;output.pdf&#39;</span><span class="p">)</span>
-<span class="n">document</span> <span class="o">=</span> <span class="n">skia</span><span class="o">.</span><span class="n">PDF</span><span class="o">.</span><span class="n">MakeDocument</span><span class="p">(</span><span class="n">stream</span><span class="p">)</span>
-<span class="n">canvas</span> <span class="o">=</span> <span class="n">document</span><span class="o">.</span><span class="n">beginPage</span><span class="p">(</span><span class="n">width</span><span class="p">,</span> <span class="n">height</span><span class="p">)</span>
-<span class="n">canvas</span><span class="o">.</span><span class="n">drawCircle</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">40</span><span class="p">,</span> <span class="n">skia</span><span class="o">.</span><span class="n">Paint</span><span class="p">(</span><span class="n">Color</span><span class="o">=</span><span class="n">skia</span><span class="o">.</span><span class="n">ColorGREEN</span><span class="p">))</span>
-<span class="n">document</span><span class="o">.</span><span class="n">endPage</span><span class="p">()</span>
-<span class="n">document</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+<span class="k">with</span> <span class="n">skia</span><span class="o">.</span><span class="n">PDF</span><span class="o">.</span><span class="n">MakeDocument</span><span class="p">(</span><span class="n">stream</span><span class="p">)</span> <span class="k">as</span> <span class="n">document</span><span class="p">:</span>
+    <span class="k">with</span> <span class="n">document</span><span class="o">.</span><span class="n">page</span><span class="p">(</span><span class="n">width</span><span class="p">,</span> <span class="n">height</span><span class="p">)</span> <span class="k">as</span> <span class="n">canvas</span><span class="p">:</span>
+        <span class="n">canvas</span><span class="o">.</span><span class="n">drawCircle</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">40</span><span class="p">,</span> <span class="n">skia</span><span class="o">.</span><span class="n">Paint</span><span class="p">(</span><span class="n">Color</span><span class="o">=</span><span class="n">skia</span><span class="o">.</span><span class="n">ColorGREEN</span><span class="p">))</span>
 </pre></div>
 </div>
 </div>

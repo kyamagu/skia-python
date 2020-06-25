@@ -362,6 +362,15 @@ winding rule used to fill overlapping contours.</p>
 <p>Internally, <a class="reference internal" href="#skia.Path" title="skia.Path"><code class="xref py py-class docutils literal notranslate"><span class="pre">Path</span></code></a> lazily computes metrics likes bounds and
 convexity. Call <a class="reference internal" href="#skia.Path.updateBoundsCache" title="skia.Path.updateBoundsCache"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Path.updateBoundsCache()</span></code></a> to make <a class="reference internal" href="#skia.Path" title="skia.Path"><code class="xref py py-class docutils literal notranslate"><span class="pre">Path</span></code></a>
 thread safe.</p>
+<p>Example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">path</span> <span class="o">=</span> <span class="n">skia</span><span class="o">.</span><span class="n">Path</span><span class="p">()</span>
+<span class="n">path</span><span class="o">.</span><span class="n">addCircle</span><span class="p">(</span><span class="mi">25</span><span class="p">,</span> <span class="mi">25</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
+<span class="n">path</span><span class="o">.</span><span class="n">addRect</span><span class="p">((</span><span class="mi">50</span><span class="p">,</span> <span class="mi">60</span><span class="p">,</span> <span class="mi">70</span><span class="p">,</span> <span class="mi">70</span><span class="p">))</span>
+
+<span class="k">for</span> <span class="n">verb</span><span class="p">,</span> <span class="n">points</span> <span class="ow">in</span> <span class="n">path</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">verb</span><span class="p">)</span>
+</pre></div>
+</div>
 <p class="rubric">Classes</p>
 <table class="longtable docutils align-default">
 <colgroup>
@@ -466,7 +475,7 @@ thread safe.</p>
 <td><p>Overloaded function.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#skia.Path.dump" title="skia.Path.dump"><code class="xref py py-obj docutils literal notranslate"><span class="pre">dump</span></code></a></p></td>
-<td><p>Writes text representation of <a class="reference internal" href="#skia.Path" title="skia.Path"><code class="xref py py-class docutils literal notranslate"><span class="pre">Path</span></code></a> to standard output.</p></td>
+<td><p>Overloaded function.</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#skia.Path.dumpHex" title="skia.Path.dumpHex"><code class="xref py py-obj docutils literal notranslate"><span class="pre">dumpHex</span></code></a></p></td>
 <td><p>Writes text representation of <a class="reference internal" href="#skia.Path" title="skia.Path"><code class="xref py py-class docutils literal notranslate"><span class="pre">Path</span></code></a> to standard output.</p></td>
@@ -1694,11 +1703,39 @@ p1, p2, p3 to <a class="reference internal" href="skia.Point.html#skia.Point" ti
 
 <dl class="py method">
 <dt id="skia.Path.dump">
-<code class="sig-prename descclassname">Path.</code><code class="sig-name descname">dump</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Path" title="skia.Path">skia.Path</a></span></em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#skia.Path.dump" title="Permalink to this definition">¶</a></dt>
-<dd><p>Writes text representation of <a class="reference internal" href="#skia.Path" title="skia.Path"><code class="xref py py-class docutils literal notranslate"><span class="pre">Path</span></code></a> to standard output.</p>
+<code class="sig-prename descclassname">Path.</code><code class="sig-name descname">dump</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span><span class="n">args</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#skia.Path.dump" title="Permalink to this definition">¶</a></dt>
+<dd><p>Overloaded function.</p>
+<ol class="arabic">
+<li><p>dump(self: skia.Path, stream: skia.WStream, forceClose: bool, dumpAsHex: bool) -&gt; None</p>
+<blockquote>
+<div><p>Writes text representation of <a class="reference internal" href="#skia.Path" title="skia.Path"><code class="xref py py-class docutils literal notranslate"><span class="pre">Path</span></code></a> to stream.</p>
+<p>If stream is nullptr, writes to standard output. Set forceClose to true
+to get edges used to fill <a class="reference internal" href="#skia.Path" title="skia.Path"><code class="xref py py-class docutils literal notranslate"><span class="pre">Path</span></code></a>. Set dumpAsHex true to
+generate exact binary representations of floating point numbers used in
+<a class="reference internal" href="skia.Point.html#skia.Point" title="skia.Point"><code class="xref py py-class docutils literal notranslate"><span class="pre">Point</span></code></a> array and conic weights.</p>
+<dl class="field-list simple">
+<dt class="field-odd">stream</dt>
+<dd class="field-odd"><p>writable <a class="reference internal" href="skia.WStream.html#skia.WStream" title="skia.WStream"><code class="xref py py-class docutils literal notranslate"><span class="pre">WStream</span></code></a> receiving <a class="reference internal" href="#skia.Path" title="skia.Path"><code class="xref py py-class docutils literal notranslate"><span class="pre">Path</span></code></a> text
+representation; may be nullptr</p>
+</dd>
+<dt class="field-even">forceClose</dt>
+<dd class="field-even"><p>true if missing kClose_Verb is output</p>
+</dd>
+<dt class="field-odd">dumpAsHex</dt>
+<dd class="field-odd"><p>true if <code class="xref py py-class docutils literal notranslate"><span class="pre">Scalar</span></code> values are written as hexadecimal</p>
+</dd>
+</dl>
+</div></blockquote>
+</li>
+<li><p>dump(self: skia.Path) -&gt; None</p>
+<blockquote>
+<div><p>Writes text representation of <a class="reference internal" href="#skia.Path" title="skia.Path"><code class="xref py py-class docutils literal notranslate"><span class="pre">Path</span></code></a> to standard output.</p>
 <p>The representation may be directly compiled as C++ code. Floating point
 values are written with limited precision; it may not be possible to
 reconstruct original <a class="reference internal" href="#skia.Path" title="skia.Path"><code class="xref py py-class docutils literal notranslate"><span class="pre">Path</span></code></a> from output.</p>
+</div></blockquote>
+</li>
+</ol>
 </dd></dl>
 
 <dl class="py method">
@@ -1855,7 +1892,7 @@ conics, or cubics.</p>
 
 <dl class="py method">
 <dt id="skia.Path.getVerbs">
-<code class="sig-prename descclassname">Path.</code><code class="sig-name descname">getVerbs</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Path" title="skia.Path">skia.Path</a></span></em>, <em class="sig-param"><span class="n">max</span><span class="p">:</span> <span class="n">int</span> <span class="o">=</span> <span class="default_value">0</span></em><span class="sig-paren">)</span> &#x2192; List<span class="p">[</span>int<span class="p">]</span><a class="headerlink" href="#skia.Path.getVerbs" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">Path.</code><code class="sig-name descname">getVerbs</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Path" title="skia.Path">skia.Path</a></span></em>, <em class="sig-param"><span class="n">max</span><span class="p">:</span> <span class="n">int</span> <span class="o">=</span> <span class="default_value">0</span></em><span class="sig-paren">)</span> &#x2192; List<span class="p">[</span><a class="reference internal" href="skia.Path.Verb.html#skia.Path.Verb" title="skia.Path.Verb">skia.Path.Verb</a><span class="p">]</span><a class="headerlink" href="#skia.Path.getVerbs" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns verbs in the path.</p>
 <p>Up to max verbs are copied. The verbs are copied as one byte per verb.</p>
 <dl class="field-list simple">
