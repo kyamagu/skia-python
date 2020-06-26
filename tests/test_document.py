@@ -44,5 +44,69 @@ def test_PDF_SetNodeId(document_canvas):
     skia.PDF.SetNodeId(document_canvas, 1)
 
 
-def test_PDF_MakeDocument(stream):
+def test_PDF_MakeDocument_1(stream):
+    assert isinstance(
+        skia.PDF.MakeDocument(stream, skia.PDF.Metadata()), skia.Document)
+
+
+def test_PDF_MakeDocument_2(stream):
     assert isinstance(skia.PDF.MakeDocument(stream), skia.Document)
+
+
+def test_PDF_MakeDocument_3(stream):
+    assert isinstance(skia.PDF.MakeDocument(stream, Title='foo'), skia.Document)
+
+
+@pytest.fixture
+def attribute_list():
+    return skia.PDF.AttributeList()
+
+
+def test_PDF_AttributeList_init(attribute_list):
+    assert isinstance(attribute_list, skia.PDF.AttributeList)
+
+
+def test_PDF_AttributeList_appendInt(attribute_list):
+    attribute_list.appendInt('Layout', 'RowSpan', 1)
+
+
+def test_PDF_AttributeList_appendFloat(attribute_list):
+    attribute_list.appendFloat('Layout', 'RowSpan', 1.)
+
+
+def test_PDF_AttributeList_appendString(attribute_list):
+    attribute_list.appendString('Table', 'Title', 'foo')
+
+
+def test_PDF_AttributeList_appendFloatArray(attribute_list):
+    attribute_list.appendFloatArray('Table', 'BBox', [1., 2.])
+
+
+def test_PDF_AttributeList_appendStringArray(attribute_list):
+    attribute_list.appendStringArray('List', 'Label', ['foo', 'bar'])
+
+
+@pytest.mark.parametrize('args', [tuple(), ({},)])
+def test_PDF_Metadata_init(args):
+    assert isinstance(skia.PDF.Metadata(*args), skia.PDF.Metadata)
+
+
+def test_PDF_Metadata_init_kwargs():
+    metadata = skia.PDF.Metadata(dict(
+        Title='',
+        Author='',
+        Subject='',
+        Keywords='',
+        Creator='',
+        Producer='',
+        RasterDPI=96,
+        PDFA=True,
+        EncodingQuality=100,
+        StructureElementTreeRoot=None,
+        ))
+    assert isinstance(metadata, skia.PDF.Metadata)
+
+
+def test_PDF_StructureElementNode_init():
+    assert isinstance(
+        skia.PDF.StructureElementNode(), skia.PDF.StructureElementNode)

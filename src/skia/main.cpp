@@ -26,6 +26,7 @@ void initRefCnt(py::module &);
 void initRegion(py::module &);
 void initSize(py::module &);
 void initStream(py::module &);
+void initString(py::module &);
 void initSurface(py::module &);
 void initTextBlob(py::module &);
 void initVertices(py::module &);
@@ -48,6 +49,7 @@ PYBIND11_MODULE(skia, m) {
     initMatrix(m);
     initData(m);
     initStream(m);
+    initString(m);
 
     initCodec(m);
     initBitmap(m);
