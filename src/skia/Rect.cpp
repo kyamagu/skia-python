@@ -79,7 +79,8 @@ py::class_<SkIRect>(m, "IRect", R"docstring(
     .def("__iter__",
         [](const SkIRect& r) {
             return py::make_iterator(&r.fLeft, &r.fLeft + 4);
-        })
+        },
+        py::keep_alive<0, 1>())
     .def("__len__", [] (const SkIRect& r) { return 4; })
     .def("__repr__",
         [](const SkIRect& r) {
@@ -711,7 +712,8 @@ py::class_<SkRect>(m, "Rect", R"docstring(
     .def("__iter__",
         [](const SkRect& r) {
             return py::make_iterator(&r.fLeft, &r.fLeft + 4);
-        })
+        },
+        py::keep_alive<0, 1>())
     .def("__len__", [] (const SkRect& r) { return 4; })
     .def("__repr__", [](const SkRect& r) {
         std::stringstream s;

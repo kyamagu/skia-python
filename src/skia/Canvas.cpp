@@ -20,23 +20,23 @@ py::class_<SkAutoCanvasRestore>(m, "AutoCanvasRestore", R"docstring(
         R"docstring(
         Preserves :py:meth:`Canvas.save` count.
 
-        Optionally saves SkCanvas clip and SkCanvas matrix.
+        Optionally saves :py:class:`Canvas` clip and :py:class:`Canvas` matrix.
 
         :param skia.Canvas canvas: :py:class:`Canvas` to guard
         :param bool doSave: call :py:meth:`Canvas.save`
         :return: utility to restore :py:class:`Canvas` state on destructor
         )docstring",
-        py::arg("canvas"), py::arg("doSave") = true)
+        py::arg("canvas"), py::arg("doSave") = true,
+        py::keep_alive<0, 1>())
     .def("restore", &SkAutoCanvasRestore::restore,
         R"docstring(
         Restores :py:class:`Canvas` to saved state immediately.
 
         Subsequent calls and destructor have no effect.
         )docstring")
-    .def("__enter__", [] (SkAutoCanvasRestore& self) { return; })
-    .def("__exit__", [] (SkAutoCanvasRestore& self, py::args args) {
-        self.restore();
-    })
+    .def("__enter__", [] (SkAutoCanvasRestore& self) {})
+    .def("__exit__",
+        [] (SkAutoCanvasRestore& self, py::args args) { self.restore(); })
     ;
 
 py::enum_<SkClipOp>(m, "ClipOp")

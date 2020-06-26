@@ -85,7 +85,7 @@ py::class_<SkDocument, sk_sp<SkDocument>, SkRefCnt>(m, "Document",
         [] (SkDocument* document, SkScalar width, SkScalar height) {
             return PyAutoDocumentPage(document, width, height);
         },
-        py::arg("width"), py::arg("height"))
+        py::arg("width"), py::arg("height"), py::keep_alive<0, 1>())
     .def("beginPage", &SkDocument::beginPage,
         R"docstring(
         Begin a new page for the document, returning the canvas that will draw
