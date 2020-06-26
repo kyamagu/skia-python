@@ -18,6 +18,37 @@ private:
     SkDocument* document_;
 };
 
+SkPDF::Metadata DictToMetadata(py::dict dict) {
+    SkPDF::Metadata metadata;
+    for (auto item : dict) {
+        std::string key(item.first.cast<std::string>());
+        if (key == "Title")
+            metadata.fTitle = item.second.cast<SkString>();
+        else if (key == "Author")
+            metadata.fAuthor = item.second.cast<SkString>();
+        else if (key == "Subject")
+            metadata.fSubject = item.second.cast<SkString>();
+        else if (key == "Keywords")
+            metadata.fKeywords = item.second.cast<SkString>();
+        else if (key == "Creator")
+            metadata.fCreator = item.second.cast<SkString>();
+        else if (key == "Producer")
+            metadata.fProducer = item.second.cast<SkString>();
+        else if (key == "RasterDPI")
+            metadata.fRasterDPI = item.second.cast<SkScalar>();
+        else if (key == "PDFA")
+            metadata.fPDFA = item.second.cast<bool>();
+        else if (key == "EncodingQuality")
+            metadata.fEncodingQuality = item.second.cast<int>();
+        else if (key == "StructureElementTreeRoot")
+            metadata.fStructureElementTreeRoot =
+                item.second.cast<SkPDF::StructureElementNode*>();
+        else
+            throw py::key_error(py::str("Invalid key: {}").format(key));
+    }
+    return metadata;
+}
+
 }
 
 void initDocument(py::module &m) {
@@ -168,12 +199,127 @@ py::class_<SkPDF::AttributeList>(pdf, "AttributeList")
         py::arg("owner"), py::arg("name"), py::arg("value"))
     ;
 
-py::class_<SkPDF::StructureElementNode>(pdf, "StructureElementNode")
+py::class_<SkPDF::StructureElementNode>(pdf, "StructureElementNode",
+    R"docstring(
+    A node in a PDF structure tree, giving a semantic representation
+    of the content.  Each node ID is associated with content
+    by passing the :py:class:`Canvas` and node ID to :py:class:`PDF.SetNodeId`
+    when drawing. NodeIDs should be unique within each tree.
+    )docstring")
     .def(py::init<>())
+    .def_readwrite("fTypeString",
+        &SkPDF::StructureElementNode::fTypeString)
+    // .def_readwrite("fChildVector",
+    //     &SkPDF::StructureElementNode::fChildVector)
+    .def_readwrite("fNodeId",
+        &SkPDF::StructureElementNode::fNodeId)
+    .def_readonly("fAdditionalNodeIds",
+        &SkPDF::StructureElementNode::fAdditionalNodeIds)
+    .def_readonly("fAttributes",
+        &SkPDF::StructureElementNode::fAttributes)
+    .def_readwrite("fAlt",
+        &SkPDF::StructureElementNode::fAlt)
+    .def_readwrite("fLang",
+        &SkPDF::StructureElementNode::fLang)
     ;
 
-py::class_<SkPDF::Metadata>(pdf, "Metadata")
+py::class_<SkPDF::Metadata>(pdf, "Metadata",
+    R"docstring(
+    Optional metadata to be passed into the PDF factory function.
+    )docstring")
     .def(py::init<>())
+    .def(py::init(&DictToMetadata))
+    .def_readwrite("fTitle", &SkPDF::Metadata::fTitle,
+        R"docstring(
+        The document's title.
+        )docstring")
+    .def_readwrite("fAuthor", &SkPDF::Metadata::fAuthor,
+        R"docstring(
+        The name of the person who created the document.
+        )docstring")
+    .def_readwrite("fSubject", &SkPDF::Metadata::fSubject,
+        R"docstring(
+        The subject of the document.
+        )docstring")
+    .def_readwrite("fKeywords", &SkPDF::Metadata::fKeywords,
+        R"docstring(
+        Keywords associated with the document.  Commas may be used to delineate
+        keywords within the string.
+        )docstring")
+    .def_readwrite("fCreator", &SkPDF::Metadata::fCreator,
+        R"docstring(
+        If the document was converted to PDF from another format,
+        the name of the conforming product that created the
+        original document from which it was converted.
+        )docstring")
+    .def_readwrite("fProducer", &SkPDF::Metadata::fProducer,
+        R"docstring(
+        The product that is converting this document to PDF.
+        )docstring")
+    // TODO: Support datetime object conversion.
+    /*
+    .def_readwrite("fCreation", &SkPDF::Metadata::fCreation,
+        R"docstring(
+        The date and time the document was created.
+        The zero default value represents an unknown/unset time.
+        )docstring")
+    .def_readwrite("fModified", &SkPDF::Metadata::fModified,
+        R"docstring(
+        The date and time the document was most recently modified.
+        The zero default value represents an unknown/unset time.
+        )docstring")
+    */
+    .def_readwrite("fRasterDPI", &SkPDF::Metadata::fRasterDPI,
+        R"docstring(
+        The DPI (pixels-per-inch) at which features without native PDF support
+        will be rasterized (e.g. draw image with perspective, draw text with
+        perspective, ...)  A larger DPI would create a PDF that reflects the
+        original intent with better fidelity, but it can make for larger PDF
+        files too, which would use more memory while rendering, and it would be
+        slower to be processed or sent online or to printer.
+        )docstring")
+    .def_readwrite("fPDFA", &SkPDF::Metadata::fPDFA,
+        R"docstring(
+        If true, include XMP metadata, a document UUID, and sRGB output intent
+        information.  This adds length to the document and makes it
+        non-reproducable, but are necessary features for PDF/A-2b conformance
+        )docstring")
+    .def_readwrite("fEncodingQuality", &SkPDF::Metadata::fEncodingQuality,
+        R"docstring(
+        Encoding quality controls the trade-off between size and quality. By
+        default this is set to 101 percent, which corresponds to lossless
+        encoding. If this value is set to a value <= 100, and the image is
+        opaque, it will be encoded (using JPEG) with that quality setting.
+        )docstring")
+    .def_readwrite("fStructureElementTreeRoot",
+        &SkPDF::Metadata::fStructureElementTreeRoot,
+        R"docstring(
+        An optional tree of structured document tags that provide
+        a semantic representation of the content. The caller
+        should retain ownership.
+        )docstring")
+    /*
+    .def_readwrite("fExecutor", &SkPDF::Metadata::fExecutor,
+        R"docstring(
+        Executor to handle threaded work within PDF Backend. If this is nullptr,
+        then all work will be done serially on the main thread. To have worker
+        threads assist with various tasks, set this to a valid SkExecutor
+        instance. Currently used for executing Deflate algorithm in parallel.
+
+        If set, the PDF output will be non-reproducible in the order and
+        internal numbering of objects, but should render the same.
+
+        Experimental.
+        )docstring")
+    .def_readwrite("fSubsetter", &SkPDF::Metadata::fSubsetter,
+        R"docstring(
+        Preferred Subsetter. Only respected if both are compiled in.
+
+        The Sfntly subsetter is deprecated.
+
+        Experimental.
+        )docstring")
+    */
     ;
 
 pdf
@@ -193,25 +339,30 @@ pdf
         )docstring",
         py::arg("canvas"), py::arg("nodeId"))
     .def_static("MakeDocument",
-        [] (SkWStream* stream, const SkPDF::Metadata* metadata) {
-            if (metadata)
-                return SkPDF::MakeDocument(stream, *metadata);
-            return SkPDF::MakeDocument(stream);
-        },
+        py::overload_cast<SkWStream*, const SkPDF::Metadata&>(
+            &SkPDF::MakeDocument),
         R"docstring(
         Create a PDF-backed document, writing the results into a
         :py:class:`WStream`.
 
         PDF pages are sized in point units. 1 pt == 1/72 inch == 127/360 mm.
 
-        :param stream:  A PDF document will be written to this stream. The
+        :stream:  A PDF document will be written to this stream. The
             document may write to the stream at anytime during its lifetime,
             until either :py:meth:`~Document.close` is called or the document is
             deleted.
-        :param metadata:  a PDFmetadata object. Any fields may be left empty.
+        :metadata:  a PDFmetadata object. Any fields may be left empty.
         :return: NULL if there is an error, otherwise a newly created PDF-backed
             :py:class:`Document`.
         )docstring",
-        py::arg("stream"),  py::arg("metadata") = nullptr);
+        py::arg("stream"),  py::arg("metadata"))
+    .def_static("MakeDocument",
+        py::overload_cast<SkWStream*>(&SkPDF::MakeDocument),
+        py::arg("stream"))
+    .def_static("MakeDocument",
+        [] (SkWStream* stream, py::kwargs kwargs) {
+            return SkPDF::MakeDocument(stream, DictToMetadata(kwargs));
+        },
+        py::arg("stream"));
 
 }  // initDocument
