@@ -96,7 +96,7 @@ py::class_<SkDocument, sk_sp<SkDocument>, SkRefCnt>(m, "Document",
         deleted.
         )docstring",
         py::arg("width"), py::arg("height"), py::arg("content") = nullptr,
-        py::return_value_policy::reference)
+        py::return_value_policy::reference_internal)
     .def("endPage", &SkDocument::endPage,
         R"docstring(
         Call :py:meth:`endPage` when the content for the current page has been
@@ -125,7 +125,7 @@ py::class_<SkDocument, sk_sp<SkDocument>, SkRefCnt>(m, "Document",
 py::class_<PyAutoDocumentPage>(m, "_AutoDocumentPage")
     .def("__enter__",
         [] (PyAutoDocumentPage& page) { return page.beginPage(); },
-        py::return_value_policy::reference)
+        py::return_value_policy::reference_internal)
     .def("__exit__",
         [] (PyAutoDocumentPage& page, py::object exc_type, py::object exc_value,
             py::object traceback) { page.endPage(); })

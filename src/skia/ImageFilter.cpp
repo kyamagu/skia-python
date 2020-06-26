@@ -9,7 +9,7 @@ namespace {
 py::object IsColorFilterNode(const SkImageFilter& filter) {
     SkColorFilter* colorfilter;
     if (filter.isColorFilterNode(&colorfilter))
-        return py::cast(colorfilter);
+        return py::cast(sk_sp<SkColorFilter>(colorfilter));
     return py::none();
 }
 
@@ -130,18 +130,15 @@ imagefilter
     .def("isColorFilterNode", &IsColorFilterNode,
         R"docstring(
         Returns :py:class:`ColorFilter` if it can. Otherwise returns None.
-        )docstring",
-        py::return_value_policy::reference)
-    .def("asColorFilter", &IsColorFilterNode,
-        py::return_value_policy::reference)
+        )docstring")
+    .def("asColorFilter", &IsColorFilterNode)
     .def("asAColorFilter", &IsColorFilterNode,
         R"docstring(
         Returns colorfilter if this imagefilter can be completely replaced by
         the returned colorfilter. Otherwise None.
 
         i.e. the two effects will affect drawing in the same way.
-        )docstring",
-        py::return_value_policy::reference)
+        )docstring")
     .def("countInputs", &SkImageFilter::countInputs,
         R"docstring(
         Returns the number of inputs this filter will accept (some inputs can be

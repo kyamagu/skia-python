@@ -207,13 +207,11 @@ py::class_<SkCanvas::SaveLayerRec>(canvas, "SaveLayerRec",
     .def_readwrite("fBounds", &SkCanvas::SaveLayerRec::fBounds,
         R"docstring(
         hints at layer size limit
-        )docstring",
-        py::return_value_policy::reference)
+        )docstring")
     .def_readwrite("fPaint", &SkCanvas::SaveLayerRec::fPaint,
         R"docstring(
         modifies overlay
-        )docstring",
-        py::return_value_policy::reference)
+        )docstring")
     .def_readwrite("fBackdrop", &SkCanvas::SaveLayerRec::fBackdrop,
         R"docstring(
         If not null, this triggers the same initialization behavior as setting
@@ -222,18 +220,15 @@ py::class_<SkCanvas::SaveLayerRec>(canvas, "SaveLayerRec",
         layer, rather than initializing the new layer with transparent-black.
 
         This is then filtered by fBackdrop (respecting the current clip).
-        )docstring",
-        py::return_value_policy::reference)
+        )docstring")
     .def_readwrite("fClipMask", &SkCanvas::SaveLayerRec::fClipMask,
         R"docstring(
         clips layer with mask alpha
-        )docstring",
-        py::return_value_policy::reference)
+        )docstring")
     .def_readwrite("fClipMatrix", &SkCanvas::SaveLayerRec::fClipMatrix,
         R"docstring(
         transforms mask alpha used to clip
-        )docstring",
-        py::return_value_policy::reference)
+        )docstring")
     .def_readwrite("fSaveLayerFlags", &SkCanvas::SaveLayerRec::fSaveLayerFlags,
         R"docstring(
         preserves LCD text, creates with prior layer contents

@@ -212,7 +212,7 @@ bitmap
 
         :return: :py:class:`ColorSpace` in :py:class:`ImageInfo`, or nullptr
         )docstring",
-        py::return_value_policy::reference)
+        py::return_value_policy::reference_internal)
     .def("refColorSpace", &SkBitmap::refColorSpace,
         R"docstring(
         Returns smart pointer to :py:class:`ColorSpace`, the range of colors,

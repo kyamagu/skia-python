@@ -119,7 +119,7 @@ shader
             std::vector<SkTileMode>& xy) {
             if (xy.size() != 2)
                 throw std::runtime_error("xy must have two elements.");
-            return shader.isAImage(localMatrix, &xy[0]);
+            return sk_sp<SkImage>(shader.isAImage(localMatrix, &xy[0]));
         },
         R"docstring(
         Iff this shader is backed by a single :py:class:`Image`, return its ptr
@@ -128,8 +128,7 @@ shader
 
         If not, return nullptr.
         )docstring",
-        py::arg("localMatrix"), py::arg("xy") = nullptr,
-        py::return_value_policy::reference)
+        py::arg("localMatrix"), py::arg("xy") = nullptr)
     .def("isAImage", py::overload_cast<>(&SkShader::isAImage, py::const_))
     .def("asAGradient", &SkShader::asAGradient, py::arg("info"))
     .def("makeWithLocalMatrix", &SkShader::makeWithLocalMatrix,

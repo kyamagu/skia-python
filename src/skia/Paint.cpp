@@ -474,7 +474,7 @@ paint
 
         :return: :py:class:`Shader` if previously set, nullptr otherwise
         )docstring",
-        py::return_value_policy::reference)
+        py::return_value_policy::reference_internal)
     .def("refShader", &SkPaint::refShader,
         R"docstring(
         Returns optional colors used when filling a path, such as a gradient.
@@ -510,7 +510,7 @@ paint
 
         :return: :py:class:`ColorFilter` if previously set, nullptr otherwise
         )docstring",
-        py::return_value_policy::reference)
+        py::return_value_policy::reference_internal)
     .def("refColorFilter", &SkPaint::refColorFilter,
         R"docstring(
         Returns :py:class:`ColorFilter` if set, or nullptr.
@@ -570,7 +570,7 @@ paint
 
         :return: :py:class:`PathEffect` if previously set, nullptr otherwise
         )docstring",
-        py::return_value_policy::reference)
+        py::return_value_policy::reference_internal)
     .def("refPathEffect", &SkPaint::refPathEffect,
         R"docstring(
         Returns :py:class:`PathEffect` if set, or nullptr.
@@ -605,7 +605,7 @@ paint
 
         :return: :py:class:`MaskFilter` if previously set, nullptr otherwise
         )docstring",
-        py::return_value_policy::reference)
+        py::return_value_policy::reference_internal)
     .def("refMaskFilter", &SkPaint::refMaskFilter,
         R"docstring(
         Returns :py:class:`MaskFilter` if set, or nullptr.
@@ -641,7 +641,7 @@ paint
 
         :return: :py:class:`ImageFilter` if previously set, nullptr otherwise
         )docstring",
-        py::return_value_policy::reference)
+        py::return_value_policy::reference_internal)
     .def("refImageFilter", &SkPaint::refImageFilter,
         R"docstring(
         Returns :py:class:`ImageFilter` if set, or nullptr.
