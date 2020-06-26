@@ -1,4 +1,5 @@
 #include "common.h"
+#include <pybind11/stl.h>
 
 namespace {
 
@@ -155,11 +156,16 @@ py::enum_<SkPDF::DocumentStructureType>(pdf, "DocumentStructureType")
 
 py::class_<SkPDF::AttributeList>(pdf, "AttributeList")
     .def(py::init<>())
-    .def("appendInt", &SkPDF::AttributeList::appendInt)
-    .def("appendFloat", &SkPDF::AttributeList::appendFloat)
-    .def("appendString", &SkPDF::AttributeList::appendString)
-    .def("appendFloatArray", &SkPDF::AttributeList::appendFloatArray)
-    .def("appendStringArray", &SkPDF::AttributeList::appendStringArray)
+    .def("appendInt", &SkPDF::AttributeList::appendInt,
+        py::arg("owner"), py::arg("name"), py::arg("value"))
+    .def("appendFloat", &SkPDF::AttributeList::appendFloat,
+        py::arg("owner"), py::arg("name"), py::arg("value"))
+    .def("appendString", &SkPDF::AttributeList::appendString,
+        py::arg("owner"), py::arg("name"), py::arg("value"))
+    .def("appendFloatArray", &SkPDF::AttributeList::appendFloatArray,
+        py::arg("owner"), py::arg("name"), py::arg("value"))
+    .def("appendStringArray", &SkPDF::AttributeList::appendStringArray,
+        py::arg("owner"), py::arg("name"), py::arg("value"))
     ;
 
 py::class_<SkPDF::StructureElementNode>(pdf, "StructureElementNode")

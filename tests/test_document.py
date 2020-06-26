@@ -46,3 +46,32 @@ def test_PDF_SetNodeId(document_canvas):
 
 def test_PDF_MakeDocument(stream):
     assert isinstance(skia.PDF.MakeDocument(stream), skia.Document)
+
+
+@pytest.fixture
+def attribute_list():
+    return skia.PDF.AttributeList()
+
+
+def test_PDF_AttributeList_init(attribute_list):
+    assert isinstance(attribute_list, skia.PDF.AttributeList)
+
+
+def test_PDF_AttributeList_appendInt(attribute_list):
+    attribute_list.appendInt('Layout', 'RowSpan', 1)
+
+
+def test_PDF_AttributeList_appendFloat(attribute_list):
+    attribute_list.appendFloat('Layout', 'RowSpan', 1.)
+
+
+def test_PDF_AttributeList_appendString(attribute_list):
+    attribute_list.appendString('Table', 'Title', 'foo')
+
+
+def test_PDF_AttributeList_appendFloatArray(attribute_list):
+    attribute_list.appendFloatArray('Table', 'BBox', [1., 2.])
+
+
+def test_PDF_AttributeList_appendStringArray(attribute_list):
+    attribute_list.appendStringArray('List', 'Label', ['foo', 'bar'])
