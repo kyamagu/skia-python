@@ -12,7 +12,7 @@ except ImportError:
     pass
 
 NAME = 'skia-python'
-__version__ = '0.0.5'
+__version__ = '0.0.6'
 
 SKIA_PATH = os.getenv('SKIA_PATH', 'skia')
 SKIA_OUT_PATH = os.getenv(

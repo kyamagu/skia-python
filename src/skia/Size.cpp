@@ -44,7 +44,8 @@ py::class_<SkISize>(m, "ISize")
     .def("__iter__",
         [] (const SkISize& isize) {
             return py::make_iterator(&isize.fWidth, &isize.fWidth + 2);
-        })
+        },
+        py::keep_alive<0, 1>())
     .def("__len__", [] (const SkISize& isize) { return 2; })
     .def("__repr__",
         [] (const SkISize& isize) {
@@ -109,7 +110,8 @@ py::class_<SkSize>(m, "Size")
     .def("__iter__",
         [] (const SkSize& size) {
             return py::make_iterator(&size.fWidth, &size.fWidth + 2);
-        })
+        },
+        py::keep_alive<0, 1>())
     .def("__len__", [] (const SkSize& size) { return 2; })
     .def("__repr__",
         [] (const SkSize& size) {

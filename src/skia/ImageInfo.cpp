@@ -122,7 +122,7 @@ py::class_<SkColorInfo>(m, "ColorInfo",
     .def(py::init<const SkColorInfo&>())
     // .def(py::init<SkColorInfo&&>())
     .def("colorSpace", &SkColorInfo::colorSpace,
-        py::return_value_policy::reference)
+        py::return_value_policy::reference_internal)
     .def("refColorSpace", &SkColorInfo::refColorSpace)
     .def("colorType", &SkColorInfo::colorType)
     .def("alphaType", &SkColorInfo::alphaType)
@@ -230,7 +230,7 @@ py::class_<SkImageInfo>(m, "ImageInfo",
 
         :return: :py:class:`ColorSpace`, or nullptr
         )docstring",
-        py::return_value_policy::reference)
+        py::return_value_policy::reference_internal)
     .def("refColorSpace", &SkImageInfo::refColorSpace,
         R"docstring(
         Returns smart pointer to :py:class:`ColorSpace`, the range of colors.

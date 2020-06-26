@@ -306,7 +306,7 @@ py::class_<SkPixmap>(m, "Pixmap",
 
         :return: :py:class:`ColorSpace` in :py:class:`ImageInfo`, or nullptr
         )docstring",
-        py::return_value_policy::reference)
+        py::return_value_policy::reference_internal)
     .def("refColorSpace", &SkPixmap::refColorSpace,
         R"docstring(
         Returns smart pointer to :py:class:`ColorSpace`, the range of colors,

@@ -237,8 +237,10 @@ py::class_<SkDrawable, sk_sp<SkDrawable>, SkFlattenable>(m, "Drawable",
         py::overload_cast<SkCanvas*, SkScalar, SkScalar>(&SkDrawable::draw),
         py::arg("canvas").none(false), py::arg("x"), py::arg("y"))
     // .def("snapGpuDrawHandler", &SkDrawable::snapGpuDrawHandler)
-    .def("newPictureSnapshot", &SkDrawable::newPictureSnapshot,
-        py::return_value_policy::reference)
+    .def("newPictureSnapshot",
+        [] (SkDrawable& drawable) {
+            return sk_sp<SkPicture>(drawable.newPictureSnapshot());
+        })
     .def("getGenerationID", &SkDrawable::getGenerationID,
         R"docstring(
         Return a unique value for this instance.
@@ -327,14 +329,14 @@ picturerecorder
         :return: the canvas.
         )docstring",
         py::arg("bounds"), py::arg("recordFlags") = 0,
-        py::return_value_policy::reference)
+        py::return_value_policy::reference_internal)
     .def("beginRecording",
         [] (SkPictureRecorder& recorder, SkScalar width, SkScalar height,
             uint32_t flags) {
             return recorder.beginRecording(width, height, nullptr, flags);
         },
         py::arg("width"), py::arg("height"), py::arg("recordFlags") = 0,
-        py::return_value_policy::reference)
+        py::return_value_policy::reference_internal)
     .def("getRecordingCanvas", &SkPictureRecorder::getRecordingCanvas,
         R"docstring(
         Returns the recording canvas if one is active, or NULL if recording is
@@ -342,7 +344,7 @@ picturerecorder
 
         This does not alter the refcnt on the canvas (if present).
         )docstring",
-        py::return_value_policy::reference)
+        py::return_value_policy::reference_internal)
     .def("finishRecordingAsPicture",
         &SkPictureRecorder::finishRecordingAsPicture,
         R"docstring(

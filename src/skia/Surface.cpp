@@ -95,7 +95,7 @@ py::class_<SkSurfaceCharacterization>(m, "SurfaceCharacterization")
     .def("vulkanSecondaryCBCompatible",
         &SkSurfaceCharacterization::vulkanSecondaryCBCompatible)
     .def("colorSpace", &SkSurfaceCharacterization::colorSpace,
-        py::return_value_policy::reference)
+        py::return_value_policy::reference_internal)
     .def("refColorSpace", &SkSurfaceCharacterization::refColorSpace)
     .def("surfaceProps", &SkSurfaceCharacterization::surfaceProps)
     ;
@@ -177,7 +177,7 @@ surface
         })
     .def("__enter__",
         [] (SkSurface& surface) { return surface.getCanvas(); },
-        py::return_value_policy::reference)
+        py::return_value_policy::reference_internal)
     .def("__exit__",
         [] (const SkSurface& surface, py::object exc_type, py::object exc_value,
             py::object traceback) { })
@@ -281,7 +281,7 @@ surface
 
         :return: GPU context, if available; nullptr otherwise
         )docstring",
-        py::return_value_policy::reference)
+        py::return_value_policy::reference_internal)
     .def("getBackendTexture", &SkSurface::getBackendTexture,
         R"docstring(
         Retrieves the back-end texture.
@@ -339,7 +339,7 @@ surface
 
         :return: drawing :py:class:`Canvas` for :py:class:`Surface`
         )docstring",
-        py::return_value_policy::reference)
+        py::return_value_policy::reference_internal)
     .def("makeSurface",
         py::overload_cast<const SkImageInfo&>(&SkSurface::makeSurface),
         R"docstring(

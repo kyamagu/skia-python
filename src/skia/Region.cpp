@@ -622,7 +622,8 @@ region
         py::arg("data"))
     .def_readonly_static("kOpCnt", &SkRegion::kOpCnt)
     .def("__iter__",
-        [] (const SkRegion& region) { return SkRegion::Iterator(region); })
+        [] (const SkRegion& region) { return SkRegion::Iterator(region); },
+        py::keep_alive<0, 1>())
     .def("iterator",
         [] (const SkRegion& region) { return SkRegion::Iterator(region); },
         R"docstring(
@@ -633,7 +634,8 @@ region
 
             for rect in region.iterator():
                 pass
-        )docstring")
+        )docstring",
+        py::keep_alive<0, 1>())
     .def("cliperator",
         [] (const SkRegion& region, const SkIRect& clip) {
             return SkRegion::Cliperator(region, clip);
@@ -649,7 +651,8 @@ region
 
         :param skia.IRect clip: bounds of iteration
         )docstring",
-        py::arg("clip"))
+        py::arg("clip"),
+        py::keep_alive<0, 1>())
     .def("spanerator",
         [] (const SkRegion& region, int y, int left, int right) {
             return SkRegion::Spanerator(region, y, left, right);
@@ -667,7 +670,8 @@ region
         :param int left:  bounds of iteration
         :param int right: bounds of iteration
         )docstring",
-        py::arg("y"), py::arg("left"), py::arg("right"))
+        py::arg("y"), py::arg("left"), py::arg("right"),
+        py::keep_alive<0, 1>())
     .def("__sub__",
         &ApplyOp2<SkRegion, SkRegion, SkRegion::kDifference_Op>,
         py::is_operator())

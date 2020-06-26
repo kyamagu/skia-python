@@ -108,9 +108,8 @@ textblob
         py::arg("text"), py::arg("font"), py::arg("positions") = nullptr,
         py::arg("encoding") = SkTextEncoding::kUTF8)
     .def("__iter__",
-        [] (const SkTextBlob& textblob) {
-            return SkTextBlob::Iter(textblob);
-        })
+        [] (const SkTextBlob& textblob) { return SkTextBlob::Iter(textblob); },
+        py::keep_alive<0, 1>())
     .def("bounds", &SkTextBlob::bounds,
         R"docstring(
         Returns conservative bounding box.

@@ -367,7 +367,8 @@ py::class_<SkPath::RawIter>(path, "RawIter", R"docstring(
 
 path
     .def("__iter__",
-        [] (const SkPath& path) { return SkPath::Iter(path, false); })
+        [] (const SkPath& path) { return SkPath::Iter(path, false); },
+        py::keep_alive<0, 1>())
     .def(py::init<>(), R"docstring(
         Constructs an empty :py:class:`Path`.
 
