@@ -245,6 +245,7 @@
 <li class="toctree-l3"><a class="reference internal" href="skia.StreamMemory.html">StreamMemory</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.StreamRewindable.html">StreamRewindable</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.StreamSeekable.html">StreamSeekable</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.String.html">String</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.StrokePathEffect.html">StrokePathEffect</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.StrokeRec.html">StrokeRec</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.Surface.html">Surface</a></li>
@@ -358,10 +359,10 @@
 <td><p>Members:</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="skia.PDF.Metadata.html#skia.PDF.Metadata" title="skia.PDF.Metadata"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Metadata</span></code></a></p></td>
-<td><p></p></td>
+<td><p>Optional metadata to be passed into the PDF factory function.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="skia.PDF.StructureElementNode.html#skia.PDF.StructureElementNode" title="skia.PDF.StructureElementNode"><code class="xref py py-obj docutils literal notranslate"><span class="pre">StructureElementNode</span></code></a></p></td>
-<td><p></p></td>
+<td><p>A node in a PDF structure tree, giving a semantic representation of the content.</p></td>
 </tr>
 </tbody>
 </table>
@@ -373,7 +374,7 @@
 </colgroup>
 <tbody>
 <tr class="row-odd"><td><p><a class="reference internal" href="#skia.PDF.MakeDocument" title="skia.PDF.MakeDocument"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MakeDocument</span></code></a></p></td>
-<td><p>Create a PDF-backed document, writing the results into a <a class="reference internal" href="skia.WStream.html#skia.WStream" title="skia.WStream"><code class="xref py py-class docutils literal notranslate"><span class="pre">WStream</span></code></a>.</p></td>
+<td><p>Overloaded function.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#skia.PDF.SetNodeId" title="skia.PDF.SetNodeId"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SetNodeId</span></code></a></p></td>
 <td><p>Associate a node ID with subsequent drawing commands in an <a class="reference internal" href="skia.Canvas.html#skia.Canvas" title="skia.Canvas"><code class="xref py py-class docutils literal notranslate"><span class="pre">Canvas</span></code></a>.</p></td>
@@ -545,25 +546,34 @@
 <h2>Methods<a class="headerlink" href="#methods" title="Permalink to this headline">¶</a></h2>
 <dl class="py method">
 <dt id="skia.PDF.MakeDocument">
-<em class="property">static </em><code class="sig-prename descclassname">PDF.</code><code class="sig-name descname">MakeDocument</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">stream</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.WStream.html#skia.WStream" title="skia.WStream">skia.WStream</a></span></em>, <em class="sig-param"><span class="n">metadata</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.PDF.Metadata.html#skia.PDF.Metadata" title="skia.PDF.Metadata">skia.PDF.Metadata</a></span> <span class="o">=</span> <span class="default_value">None</span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="skia.Document.html#skia.Document" title="skia.Document">skia.Document</a><a class="headerlink" href="#skia.PDF.MakeDocument" title="Permalink to this definition">¶</a></dt>
-<dd><p>Create a PDF-backed document, writing the results into a
+<em class="property">static </em><code class="sig-prename descclassname">PDF.</code><code class="sig-name descname">MakeDocument</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span><span class="n">args</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#skia.PDF.MakeDocument" title="Permalink to this definition">¶</a></dt>
+<dd><p>Overloaded function.</p>
+<ol class="arabic">
+<li><p>MakeDocument(stream: skia.WStream, metadata: skia.PDF.Metadata) -&gt; skia.Document</p>
+<blockquote>
+<div><p>Create a PDF-backed document, writing the results into a
 <a class="reference internal" href="skia.WStream.html#skia.WStream" title="skia.WStream"><code class="xref py py-class docutils literal notranslate"><span class="pre">WStream</span></code></a>.</p>
 <p>PDF pages are sized in point units. 1 pt == 1/72 inch == 127/360 mm.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>stream</strong> – A PDF document will be written to this stream. The
+<dt class="field-odd">stream</dt>
+<dd class="field-odd"><p>A PDF document will be written to this stream. The
 document may write to the stream at anytime during its lifetime,
 until either <a class="reference internal" href="skia.Document.html#skia.Document.close" title="skia.Document.close"><code class="xref py py-meth docutils literal notranslate"><span class="pre">close()</span></code></a> is called or the document is
-deleted.</p></li>
-<li><p><strong>metadata</strong> – a PDFmetadata object. Any fields may be left empty.</p></li>
-</ul>
+deleted.</p>
 </dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p>NULL if there is an error, otherwise a newly created PDF-backed
+<dt class="field-even">metadata</dt>
+<dd class="field-even"><p>a PDFmetadata object. Any fields may be left empty.</p>
+</dd>
+<dt class="field-odd">return</dt>
+<dd class="field-odd"><p>NULL if there is an error, otherwise a newly created PDF-backed
 <a class="reference internal" href="skia.Document.html#skia.Document" title="skia.Document"><code class="xref py py-class docutils literal notranslate"><span class="pre">Document</span></code></a>.</p>
 </dd>
 </dl>
+</div></blockquote>
+</li>
+<li><p>MakeDocument(stream: skia.WStream) -&gt; skia.Document</p></li>
+<li><p>MakeDocument(stream: skia.WStream, <a href="#id1"><span class="problematic" id="id2">**</span></a>kwargs) -&gt; skia.Document</p></li>
+</ol>
 </dd></dl>
 
 <dl class="py method">

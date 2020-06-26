@@ -248,6 +248,7 @@
 <li class="toctree-l3"><a class="reference internal" href="skia.StreamMemory.html">StreamMemory</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.StreamRewindable.html">StreamRewindable</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.StreamSeekable.html">StreamSeekable</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.String.html">String</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.StrokePathEffect.html">StrokePathEffect</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.StrokeRec.html">StrokeRec</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.Surface.html">Surface</a></li>
@@ -357,16 +358,16 @@
 <p>Members:</p>
 <blockquote>
 <div><dl>
-<dt>kKeep :</dt><dd><p>The next frame should be drawn on top of this one.</p>
-<p>In a GIF, a value of 0 (not specified) is also treated as Keep.</p>
+<dt>kRestoreBGColor :</dt><dd><p>Similar to Keep, except the area inside this frame’s rectangle
+should be cleared to the BackGround color (transparent) before
+drawing the next frame.</p>
 </dd>
 <dt>kRestorePrevious :</dt><dd><p>The next frame should be drawn on top of the previous frame - i.e.
 disregarding this one.</p>
 <p>In a GIF, a value of 4 is also treated as RestorePrevious.</p>
 </dd>
-<dt>kRestoreBGColor :</dt><dd><p>Similar to Keep, except the area inside this frame’s rectangle
-should be cleared to the BackGround color (transparent) before
-drawing the next frame.</p>
+<dt>kKeep :</dt><dd><p>The next frame should be drawn on top of this one.</p>
+<p>In a GIF, a value of 0 (not specified) is also treated as Keep.</p>
 </dd>
 </dl>
 </div></blockquote>

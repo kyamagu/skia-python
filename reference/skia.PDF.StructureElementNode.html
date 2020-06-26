@@ -245,6 +245,7 @@
 <li class="toctree-l3"><a class="reference internal" href="skia.StreamMemory.html">StreamMemory</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.StreamRewindable.html">StreamRewindable</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.StreamSeekable.html">StreamSeekable</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.String.html">String</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.StrokePathEffect.html">StrokePathEffect</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.StrokeRec.html">StrokeRec</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.Surface.html">Surface</a></li>
@@ -346,7 +347,11 @@
 <dl class="py class">
 <dt id="skia.PDF.StructureElementNode">
 <em class="property">class </em><code class="sig-prename descclassname">PDF.</code><code class="sig-name descname">StructureElementNode</code><a class="headerlink" href="#skia.PDF.StructureElementNode" title="Permalink to this definition">¶</a></dt>
-<dd><p class="rubric">Methods</p>
+<dd><p>A node in a PDF structure tree, giving a semantic representation
+of the content.  Each node ID is associated with content
+by passing the <a class="reference internal" href="skia.Canvas.html#skia.Canvas" title="skia.Canvas"><code class="xref py py-class docutils literal notranslate"><span class="pre">Canvas</span></code></a> and node ID to <a class="reference internal" href="skia.PDF.html#skia.PDF.SetNodeId" title="skia.PDF.SetNodeId"><code class="xref py py-class docutils literal notranslate"><span class="pre">PDF.SetNodeId</span></code></a>
+when drawing. NodeIDs should be unique within each tree.</p>
+<p class="rubric">Methods</p>
 <table class="longtable docutils align-default">
 <colgroup>
 <col style="width: 10%" />
@@ -358,6 +363,33 @@
 </tr>
 </tbody>
 </table>
+<p class="rubric">Attributes</p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.PDF.StructureElementNode.fAdditionalNodeIds" title="skia.PDF.StructureElementNode.fAdditionalNodeIds"><code class="xref py py-obj docutils literal notranslate"><span class="pre">fAdditionalNodeIds</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.PDF.StructureElementNode.fAlt" title="skia.PDF.StructureElementNode.fAlt"><code class="xref py py-obj docutils literal notranslate"><span class="pre">fAlt</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.PDF.StructureElementNode.fAttributes" title="skia.PDF.StructureElementNode.fAttributes"><code class="xref py py-obj docutils literal notranslate"><span class="pre">fAttributes</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.PDF.StructureElementNode.fLang" title="skia.PDF.StructureElementNode.fLang"><code class="xref py py-obj docutils literal notranslate"><span class="pre">fLang</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.PDF.StructureElementNode.fNodeId" title="skia.PDF.StructureElementNode.fNodeId"><code class="xref py py-obj docutils literal notranslate"><span class="pre">fNodeId</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.PDF.StructureElementNode.fTypeString" title="skia.PDF.StructureElementNode.fTypeString"><code class="xref py py-obj docutils literal notranslate"><span class="pre">fTypeString</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <div class="section" id="methods">
@@ -365,6 +397,39 @@
 <dl class="py method">
 <dt id="skia.PDF.StructureElementNode.__init__">
 <code class="sig-prename descclassname">PDF.StructureElementNode.</code><code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.PDF.StructureElementNode" title="skia.PDF.StructureElementNode">skia.PDF.StructureElementNode</a></span></em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#skia.PDF.StructureElementNode.__init__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+<div class="section" id="attributes">
+<h2>Attributes<a class="headerlink" href="#attributes" title="Permalink to this headline">¶</a></h2>
+<dl class="py attribute">
+<dt id="skia.PDF.StructureElementNode.fAdditionalNodeIds">
+<code class="sig-prename descclassname">PDF.StructureElementNode.</code><code class="sig-name descname">fAdditionalNodeIds</code><a class="headerlink" href="#skia.PDF.StructureElementNode.fAdditionalNodeIds" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="skia.PDF.StructureElementNode.fAlt">
+<code class="sig-prename descclassname">PDF.StructureElementNode.</code><code class="sig-name descname">fAlt</code><a class="headerlink" href="#skia.PDF.StructureElementNode.fAlt" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="skia.PDF.StructureElementNode.fAttributes">
+<code class="sig-prename descclassname">PDF.StructureElementNode.</code><code class="sig-name descname">fAttributes</code><a class="headerlink" href="#skia.PDF.StructureElementNode.fAttributes" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="skia.PDF.StructureElementNode.fLang">
+<code class="sig-prename descclassname">PDF.StructureElementNode.</code><code class="sig-name descname">fLang</code><a class="headerlink" href="#skia.PDF.StructureElementNode.fLang" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="skia.PDF.StructureElementNode.fNodeId">
+<code class="sig-prename descclassname">PDF.StructureElementNode.</code><code class="sig-name descname">fNodeId</code><a class="headerlink" href="#skia.PDF.StructureElementNode.fNodeId" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="skia.PDF.StructureElementNode.fTypeString">
+<code class="sig-prename descclassname">PDF.StructureElementNode.</code><code class="sig-name descname">fTypeString</code><a class="headerlink" href="#skia.PDF.StructureElementNode.fTypeString" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </div>
