@@ -19,9 +19,8 @@ A clear and concise description of what you expected to happen.
 
 **Desktop (please complete the following information):**
  - OS: [e.g. macOS 10.15.4]
- - Architecture [e.g. x86, x86_64]
- - Python [e.g. 3.7]
- - skia-python version [e.g., v0.0.1]
+ - Python: [e.g. 3.7]
+ - skia-python version: [e.g., v0.0.1]
 
 **Additional context**
 Add any other context about the problem here.
