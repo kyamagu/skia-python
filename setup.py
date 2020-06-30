@@ -88,6 +88,7 @@ else:
     ]
     EXTRA_LINK_ARGS = [
         '-Wl,--gc-sections',
+        '-s',
         '-O3',
     ]
 
