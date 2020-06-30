@@ -1608,8 +1608,8 @@ matrix
 
         :return: true if matrix has only finite elements
         )docstring")
-    .def_static("MakeScale",
-        py::overload_cast<SkScalar, SkScalar>(&SkMatrix::MakeScale),
+    .def_static("Scale",
+        py::overload_cast<SkScalar, SkScalar>(&SkMatrix::Scale),
         R"docstring(
         Sets :py:class:`Matrix` to scale by (sx, sy).
 
@@ -1624,8 +1624,8 @@ matrix
         :return: :py:class:`Matrix` with scale
         )docstring",
         py::arg("sx"), py::arg("sy"))
-    .def_static("MakeTrans",
-        py::overload_cast<SkScalar, SkScalar>(&SkMatrix::MakeTrans),
+    .def_static("Translate",
+        py::overload_cast<SkScalar, SkScalar>(&SkMatrix::Translate),
         R"docstring(
         Sets :py:class:`Matrix` to translate by (dx, dy).
 
@@ -1640,10 +1640,19 @@ matrix
         :return: :py:class:`Matrix` with translation
         )docstring",
         py::arg("dx"), py::arg("dy"))
-    .def_static("MakeTrans",
-        py::overload_cast<SkVector>(&SkMatrix::MakeTrans))
-    .def_static("MakeTrans",
-        py::overload_cast<SkIVector>(&SkMatrix::MakeTrans))
+    .def_static("Translate",
+        py::overload_cast<SkVector>(&SkMatrix::Translate))
+    .def_static("Translate",
+        py::overload_cast<SkIVector>(&SkMatrix::Translate))
+    .def_static("RotateDeg", &SkMatrix::RotateDeg,
+        R"docstring(
+        Sets :py:class:`Matrix` to rotate by |deg| about a pivot point at
+        (0, 0).
+
+        :param deg: rotation angle in degrees (positive rotates clockwise)
+        :return: :py:class:`Matrix` with rotation
+        )docstring")
+    .def_static("RotateDeg", &SkMatrix::RotateRad)
     .def_static("MakeAll", &SkMatrix::MakeAll,
         R"docstring(
         Sets :py:class:`Matrix` to::

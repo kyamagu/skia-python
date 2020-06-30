@@ -264,6 +264,14 @@ def test_GrContext_abandonContext(context):
     context.abandonContext()
 
 
+def test_GrContext_abandoned(context):
+    assert isinstance(context.abandoned(), bool)
+
+
+def test_GrContext_oomed(context):
+    assert isinstance(context.oomed(), bool)
+
+
 @pytest.mark.skip(reason='This destroys the context')
 def test_GrContext_releaseResourcesAndAbandonContext(context):
     context.releaseResourcesAndAbandonContext()
@@ -335,10 +343,6 @@ def test_GrContext_wait(context, backend_semaphore):
 
 def test_GrContext_flush(context, grflushinfo):
     assert isinstance(context.flush(grflushinfo), skia.GrSemaphoresSubmitted)
-
-
-def test_GrContext_flush2(context):
-    context.flush()
 
 
 def test_GrContext_flushAndSubmit(context):

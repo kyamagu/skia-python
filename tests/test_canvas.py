@@ -246,13 +246,15 @@ def test_Canvas_getDeviceClipBounds(canvas, args, kls):
 @pytest.mark.parametrize('args', [
     (skia.ColorWHITE,),
     (skia.ColorWHITE, skia.BlendMode.kSrcOver),
+    (skia.Color4f.kWhite, skia.BlendMode.kSrcOver),
 ])
 def test_Canvas_drawColor(canvas, args):
     canvas.drawColor(*args)
 
 
-def test_Canvas_clear(canvas):
-    canvas.clear(skia.ColorWHITE)
+@pytest.mark.parametrize('args', [skia.ColorWHITE, skia.Color4f.kWhite])
+def test_Canvas_clear(canvas, args):
+    canvas.clear(args)
 
 
 def test_Canvas_discard(canvas):

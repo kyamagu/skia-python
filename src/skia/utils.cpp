@@ -10,6 +10,15 @@ sk_sp<SkShader> CloneFlattenable(const SkShader& shader) {
     return sk_sp<SkShader>(reinterpret_cast<SkShader*>(flat.release()));
 }
 
+template <>
+sk_sp<SkColorFilter> CloneFlattenable(const SkColorFilter& colorFilter) {
+    auto data = colorFilter.serialize();
+    auto flat = SkColorFilter::Deserialize(
+        colorFilter.getFlattenableType(), data->data(), data->size());
+    return sk_sp<SkColorFilter>(
+        reinterpret_cast<SkColorFilter*>(flat.release()));
+}
+
 sk_sp<SkColorSpace> CloneColorSpace(const SkColorSpace* cs) {
     return (cs) ? CloneFlattenable(*cs) : sk_sp<SkColorSpace>(nullptr);
 }

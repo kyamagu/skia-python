@@ -20,6 +20,8 @@ sk_sp<T> CloneFlattenable(const T& flattenable) {
     return T::Deserialize(data->data(), data->size());
 }
 template <> sk_sp<SkShader> CloneFlattenable(const SkShader& shader);
+template <>
+sk_sp<SkColorFilter> CloneFlattenable(const SkColorFilter& colorFilter);
 
 sk_sp<SkColorSpace> CloneColorSpace(const SkColorSpace* cs);
 

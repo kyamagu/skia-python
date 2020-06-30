@@ -164,11 +164,6 @@ py::enum_<SkSurface::BackendSurfaceAccess>(surface, "BackendSurfaceAccess")
         "back-end surface will be used for presenting to screen")
     .export_values();
 
-py::enum_<SkSurface::FlushFlags>(surface, "FlushFlags", py::arithmetic())
-    .value("kNone_FlushFlags", SkSurface::FlushFlags::kNone_FlushFlags)
-    .value("kSyncCpu_FlushFlag", SkSurface::FlushFlags::kSyncCpu_FlushFlag)
-    .export_values();
-
 surface
     .def("__repr__",
         [] (const SkSurface& surface) {
@@ -679,6 +674,62 @@ surface
         :param info:    flush options
         )docstring",
         py::arg("access"), py::arg("info"))
+    .def("flush",
+        py::overload_cast<
+            const GrFlushInfo&, const GrBackendSurfaceMutableState*>(
+            &SkSurface::flush),
+        R"docstring(
+        Issues pending :py:class:`Surface` commands to the GPU-backed API
+        objects and resolves any :py:class:`Surface` MSAA.
+
+        A call to :py:meth:`GrContext.submit` is always required to ensure work
+        is ctually sent to the gpu. Some specific API details:
+
+        :GL: Commands are actually sent to the driver, but glFlush is never
+            called. Thus some sync objects from the flush will not be valid
+            until a submission occurs.
+
+        :Vulkan/Metal/D3D/Dawn: Commands are recorded to the backend APIs
+            corresponding command buffer or encoder objects. However, these
+            objects are not sent to the gpu until a submission occurs.
+
+        The GrFlushInfo describes additional options to flush. Please see
+        documentation at GrFlushInfo for more info.
+
+        If a GrBackendSurfaceMutableState is passed in, at the end of the flush
+        we will transition the surface to be in the state requested by the
+        GrBackendSurfaceMutableState. If the surface (or :py:class:`Image` or
+        GrBackendSurface wrapping the same backend object) is used again after
+        this flush the state may be changed and no longer match what is
+        requested here. This is often used if the surface will be used for
+        presenting or external use and the client wants backend object to be
+        prepped for that use. A finishedProc or semaphore on the GrFlushInfo
+        will also include the work for any requested state change.
+
+        If the return is GrSemaphoresSubmitted::kYes, only initialized
+        GrBackendSemaphores will be submitted to the gpu during the next submit
+        call (it is possible Skia failed to create a subset of the semaphores).
+        The client should not wait on these semaphores until after submit has
+        been called, but must keep them alive until then. If a submit flag was
+        passed in with the flush these valid semaphores can we waited on
+        immediately. If this call returns GrSemaphoresSubmitted::kNo, the GPU
+        backend will not submit any semaphores to be signaled on the GPU. Thus
+        the client should not have the GPU wait on any of the semaphores passed
+        in with the GrFlushInfo. Regardless of whether semaphores were submitted
+        to the GPU or not, the client is still responsible for deleting any
+        initialized semaphores. Regardleess of semaphore submission the context
+        will still be flushed. It should be emphasized that a return value of
+        GrSemaphoresSubmitted::kNo does not mean the flush did not happen. It
+        simply means there were no semaphores submitted to the GPU. A caller
+        should only take this as a failure if they passed in semaphores to be
+        submitted.
+
+        Pending surface commands are flushed regardless of the return result.
+
+        :param info: flush options
+        :param newState: optional state change request after flush
+        )docstring",
+        py::arg("info"), py::arg("newState") = nullptr)
     .def("characterize", &SkSurface::characterize,
         R"docstring(
         Initializes :py:class:`SurfaceCharacterization` that can be used to

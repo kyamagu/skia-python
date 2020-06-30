@@ -398,6 +398,33 @@ py::class_<GrContext, sk_sp<GrContext>, SkRefCnt>(m, "GrContext")
         VkInstance used to create the GrContext must be alive before calling
         abandonContext.
         )docstring")
+    .def("abandoned", &GrContext::abandoned,
+        R"docstring(
+        Returns true if the context was abandoned or if the if the backend
+        specific context has gotten into an unrecoverarble, lost state (e.g.
+
+        in Vulkan backend if we've gotten a VK_ERROR_DEVICE_LOST). If the
+        backend context is lost, this call will also abandon the GrContext.
+        )docstring")
+    .def("oomed", &GrContext::oomed,
+        R"docstring(
+        Checks if the underlying 3D API reported an out-of-memory error.
+
+        If this returns true it is reset and will return false until another
+        out-of-memory error is reported by the 3D API. If the context is
+        abandoned then this will report false.
+
+        Currently this is implemented for:
+
+        OpenGL [ES] - Note that client calls to glGetError() may swallow
+        GL_OUT_OF_MEMORY errors and therefore hide the error from Skia. Also, it
+        is not advised to use this in combination with enabling
+        GrContextOptions::fSkipGLErrorChecks. That option may prevent GrContext
+        from ever checking the GL context for OOM.
+
+        Vulkan - Reports true if VK_ERROR_OUT_OF_HOST_MEMORY or
+        VK_ERROR_OUT_OF_DEVICE_MEMORY has occurred.
+        )docstring")
     .def("releaseResourcesAndAbandonContext",
         &GrContext::releaseResourcesAndAbandonContext,
         R"docstring(
@@ -577,14 +604,6 @@ py::class_<GrContext, sk_sp<GrContext>, SkRefCnt>(m, "GrContext")
         to be submitted.
         )docstring",
         py::arg("info"))
-    .def("flush", py::overload_cast<>(&GrContext::flush),
-        R"docstring(
-        Call to ensure all drawing to the context has been flushed to underlying
-        3D API specific objects.
-
-        This is equivalent to calling :py:meth:`flush` with a default
-        :py:class:`GrFlushInfo`.
-        )docstring")
     .def("flushAndSubmit", &GrContext::flushAndSubmit,
         R"docstring(
         Call to ensure all drawing to the context has been flushed and submitted
@@ -874,6 +893,10 @@ py::class_<GrContext, sk_sp<GrContext>, SkRefCnt>(m, "GrContext")
         },
         py::arg("width"), py::arg("height"), py::arg("type"), py::arg("data"),
         py::arg("mipMapped"), py::arg("isProtected") = GrProtected::kNo)
+    // .def("setBackendTextureState",
+    //     &GrContext::setBackendTextureState)
+    // .def("setBackendRenderTargetState",
+    //     &GrContext::setBackendRenderTargetState)
     .def("deleteBackendTexture", &GrContext::deleteBackendTexture,
         py::arg("texture"))
     .def("precompileShader", &GrContext::precompileShader,

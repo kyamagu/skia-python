@@ -18,10 +18,6 @@ def test_Vertices_approximateSize(vertices):
     assert isinstance(vertices.approximateSize(), int)
 
 
-def test_Vertices_encode(vertices):
-    assert isinstance(vertices.encode(), skia.Data)
-
-
 @pytest.mark.parametrize('args', [
     (
         skia.Vertices.kTriangles_VertexMode,
@@ -43,7 +39,3 @@ def test_Vertices_encode(vertices):
 ])
 def test_Vertices_MakeCopy(args):
     assert isinstance(skia.Vertices.MakeCopy(*args), skia.Vertices)
-
-
-def test_Vertices_Decode(vertices):
-    assert isinstance(skia.Vertices.Decode(vertices.encode()), skia.Vertices)
