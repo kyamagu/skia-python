@@ -150,6 +150,7 @@
 <li class="toctree-l3"><a class="reference internal" href="skia.GrBackendFormat.html">GrBackendFormat</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.GrBackendRenderTarget.html">GrBackendRenderTarget</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.GrBackendSemaphore.html">GrBackendSemaphore</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.GrBackendSurfaceMutableState.html">GrBackendSurfaceMutableState</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.GrBackendTexture.html">GrBackendTexture</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.GrColorType.html">GrColorType</a></li>
 <li class="toctree-l3 current"><a class="current reference internal" href="#">GrContext</a><ul>
@@ -365,56 +366,62 @@
 <tr class="row-even"><td><p><a class="reference internal" href="#skia.GrContext.abandonContext" title="skia.GrContext.abandonContext"><code class="xref py py-obj docutils literal notranslate"><span class="pre">abandonContext</span></code></a></p></td>
 <td><p>Abandons all GPU resources and assumes the underlying backend 3D API context is no longer usable.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#skia.GrContext.checkAsyncWorkCompletion" title="skia.GrContext.checkAsyncWorkCompletion"><code class="xref py py-obj docutils literal notranslate"><span class="pre">checkAsyncWorkCompletion</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.GrContext.abandoned" title="skia.GrContext.abandoned"><code class="xref py py-obj docutils literal notranslate"><span class="pre">abandoned</span></code></a></p></td>
+<td><p>Returns true if the context was abandoned or if the if the backend specific context has gotten into an unrecoverarble, lost state (e.g.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.GrContext.checkAsyncWorkCompletion" title="skia.GrContext.checkAsyncWorkCompletion"><code class="xref py py-obj docutils literal notranslate"><span class="pre">checkAsyncWorkCompletion</span></code></a></p></td>
 <td><p>Checks whether any asynchronous work is complete and if so calls related callbacks.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#skia.GrContext.colorTypeSupportedAsImage" title="skia.GrContext.colorTypeSupportedAsImage"><code class="xref py py-obj docutils literal notranslate"><span class="pre">colorTypeSupportedAsImage</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.GrContext.colorTypeSupportedAsImage" title="skia.GrContext.colorTypeSupportedAsImage"><code class="xref py py-obj docutils literal notranslate"><span class="pre">colorTypeSupportedAsImage</span></code></a></p></td>
 <td><p>Can a <a class="reference internal" href="skia.Image.html#skia.Image" title="skia.Image"><code class="xref py py-class docutils literal notranslate"><span class="pre">Image</span></code></a> be created with the given color type.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#skia.GrContext.colorTypeSupportedAsSurface" title="skia.GrContext.colorTypeSupportedAsSurface"><code class="xref py py-obj docutils literal notranslate"><span class="pre">colorTypeSupportedAsSurface</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.GrContext.colorTypeSupportedAsSurface" title="skia.GrContext.colorTypeSupportedAsSurface"><code class="xref py py-obj docutils literal notranslate"><span class="pre">colorTypeSupportedAsSurface</span></code></a></p></td>
 <td><p>Can a SkSurface be created with the given color type.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#skia.GrContext.compressedBackendFormat" title="skia.GrContext.compressedBackendFormat"><code class="xref py py-obj docutils literal notranslate"><span class="pre">compressedBackendFormat</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.GrContext.compressedBackendFormat" title="skia.GrContext.compressedBackendFormat"><code class="xref py py-obj docutils literal notranslate"><span class="pre">compressedBackendFormat</span></code></a></p></td>
 <td><p>Retrieve the <a class="reference internal" href="skia.GrBackendFormat.html#skia.GrBackendFormat" title="skia.GrBackendFormat"><code class="xref py py-class docutils literal notranslate"><span class="pre">GrBackendFormat</span></code></a> for a given <a class="reference internal" href="skia.Image.CompressionType.html#skia.Image.CompressionType" title="skia.Image.CompressionType"><code class="xref py py-class docutils literal notranslate"><span class="pre">Image.CompressionType</span></code></a>.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#skia.GrContext.createBackendTexture" title="skia.GrContext.createBackendTexture"><code class="xref py py-obj docutils literal notranslate"><span class="pre">createBackendTexture</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.GrContext.createBackendTexture" title="skia.GrContext.createBackendTexture"><code class="xref py py-obj docutils literal notranslate"><span class="pre">createBackendTexture</span></code></a></p></td>
 <td><p>Overloaded function.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#skia.GrContext.createCompressedBackendTexture" title="skia.GrContext.createCompressedBackendTexture"><code class="xref py py-obj docutils literal notranslate"><span class="pre">createCompressedBackendTexture</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.GrContext.createCompressedBackendTexture" title="skia.GrContext.createCompressedBackendTexture"><code class="xref py py-obj docutils literal notranslate"><span class="pre">createCompressedBackendTexture</span></code></a></p></td>
 <td><p>Overloaded function.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#skia.GrContext.defaultBackendFormat" title="skia.GrContext.defaultBackendFormat"><code class="xref py py-obj docutils literal notranslate"><span class="pre">defaultBackendFormat</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.GrContext.defaultBackendFormat" title="skia.GrContext.defaultBackendFormat"><code class="xref py py-obj docutils literal notranslate"><span class="pre">defaultBackendFormat</span></code></a></p></td>
 <td><p>Retrieve the default <a class="reference internal" href="skia.GrBackendFormat.html#skia.GrBackendFormat" title="skia.GrBackendFormat"><code class="xref py py-class docutils literal notranslate"><span class="pre">GrBackendFormat</span></code></a> for a given <a class="reference internal" href="skia.ColorType.html#skia.ColorType" title="skia.ColorType"><code class="xref py py-class docutils literal notranslate"><span class="pre">ColorType</span></code></a> and renderability.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#skia.GrContext.deleteBackendTexture" title="skia.GrContext.deleteBackendTexture"><code class="xref py py-obj docutils literal notranslate"><span class="pre">deleteBackendTexture</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.GrContext.deleteBackendTexture" title="skia.GrContext.deleteBackendTexture"><code class="xref py py-obj docutils literal notranslate"><span class="pre">deleteBackendTexture</span></code></a></p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#skia.GrContext.flush" title="skia.GrContext.flush"><code class="xref py py-obj docutils literal notranslate"><span class="pre">flush</span></code></a></p></td>
-<td><p>Overloaded function.</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.GrContext.flush" title="skia.GrContext.flush"><code class="xref py py-obj docutils literal notranslate"><span class="pre">flush</span></code></a></p></td>
+<td><p>Call to ensure all drawing to the context has been flushed to underlying 3D API specific objects.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#skia.GrContext.flushAndSubmit" title="skia.GrContext.flushAndSubmit"><code class="xref py py-obj docutils literal notranslate"><span class="pre">flushAndSubmit</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.GrContext.flushAndSubmit" title="skia.GrContext.flushAndSubmit"><code class="xref py py-obj docutils literal notranslate"><span class="pre">flushAndSubmit</span></code></a></p></td>
 <td><p>Call to ensure all drawing to the context has been flushed and submitted to the underlying 3D API.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#skia.GrContext.freeGpuResources" title="skia.GrContext.freeGpuResources"><code class="xref py py-obj docutils literal notranslate"><span class="pre">freeGpuResources</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.GrContext.freeGpuResources" title="skia.GrContext.freeGpuResources"><code class="xref py py-obj docutils literal notranslate"><span class="pre">freeGpuResources</span></code></a></p></td>
 <td><p>Frees GPU created by the context.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#skia.GrContext.getResourceCacheLimit" title="skia.GrContext.getResourceCacheLimit"><code class="xref py py-obj docutils literal notranslate"><span class="pre">getResourceCacheLimit</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.GrContext.getResourceCacheLimit" title="skia.GrContext.getResourceCacheLimit"><code class="xref py py-obj docutils literal notranslate"><span class="pre">getResourceCacheLimit</span></code></a></p></td>
 <td><p>Return the current GPU resource cache limit in bytes.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#skia.GrContext.getResourceCachePurgeableBytes" title="skia.GrContext.getResourceCachePurgeableBytes"><code class="xref py py-obj docutils literal notranslate"><span class="pre">getResourceCachePurgeableBytes</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.GrContext.getResourceCachePurgeableBytes" title="skia.GrContext.getResourceCachePurgeableBytes"><code class="xref py py-obj docutils literal notranslate"><span class="pre">getResourceCachePurgeableBytes</span></code></a></p></td>
 <td><p>Gets the number of bytes in the cache consumed by purgeable (e.g.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#skia.GrContext.getResourceCacheUsage" title="skia.GrContext.getResourceCacheUsage"><code class="xref py py-obj docutils literal notranslate"><span class="pre">getResourceCacheUsage</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.GrContext.getResourceCacheUsage" title="skia.GrContext.getResourceCacheUsage"><code class="xref py py-obj docutils literal notranslate"><span class="pre">getResourceCacheUsage</span></code></a></p></td>
 <td><p>Gets the current GPU resource cache usage.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#skia.GrContext.maxRenderTargetSize" title="skia.GrContext.maxRenderTargetSize"><code class="xref py py-obj docutils literal notranslate"><span class="pre">maxRenderTargetSize</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.GrContext.maxRenderTargetSize" title="skia.GrContext.maxRenderTargetSize"><code class="xref py py-obj docutils literal notranslate"><span class="pre">maxRenderTargetSize</span></code></a></p></td>
 <td><p>Gets the maximum supported render target size.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#skia.GrContext.maxSurfaceSampleCountForColorType" title="skia.GrContext.maxSurfaceSampleCountForColorType"><code class="xref py py-obj docutils literal notranslate"><span class="pre">maxSurfaceSampleCountForColorType</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.GrContext.maxSurfaceSampleCountForColorType" title="skia.GrContext.maxSurfaceSampleCountForColorType"><code class="xref py py-obj docutils literal notranslate"><span class="pre">maxSurfaceSampleCountForColorType</span></code></a></p></td>
 <td><p>Gets the maximum supported sample count for a color type.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#skia.GrContext.maxTextureSize" title="skia.GrContext.maxTextureSize"><code class="xref py py-obj docutils literal notranslate"><span class="pre">maxTextureSize</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.GrContext.maxTextureSize" title="skia.GrContext.maxTextureSize"><code class="xref py py-obj docutils literal notranslate"><span class="pre">maxTextureSize</span></code></a></p></td>
 <td><p>Gets the maximum supported texture size.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.GrContext.oomed" title="skia.GrContext.oomed"><code class="xref py py-obj docutils literal notranslate"><span class="pre">oomed</span></code></a></p></td>
+<td><p>Checks if the underlying 3D API reported an out-of-memory error.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#skia.GrContext.performDeferredCleanup" title="skia.GrContext.performDeferredCleanup"><code class="xref py py-obj docutils literal notranslate"><span class="pre">performDeferredCleanup</span></code></a></p></td>
 <td><p>Purge GPU resources that haven’t been used in the past ‘msNotUsed’ milliseconds or are otherwise marked for deletion, regardless of whether the context is under budget.</p></td>
@@ -439,6 +446,12 @@
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#skia.GrContext.resetGLTextureBindings" title="skia.GrContext.resetGLTextureBindings"><code class="xref py py-obj docutils literal notranslate"><span class="pre">resetGLTextureBindings</span></code></a></p></td>
 <td><p>If the backend is <a class="reference internal" href="skia.GrBackendApi.html#skia.GrBackendApi.kOpenGL" title="skia.GrBackendApi.kOpenGL"><code class="xref py py-attr docutils literal notranslate"><span class="pre">kOpenGL</span></code></a>, then all texture unit/target combinations for which the GrContext has modified the bound texture will have texture id 0 bound.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.GrContext.setBackendRenderTargetState" title="skia.GrContext.setBackendRenderTargetState"><code class="xref py py-obj docutils literal notranslate"><span class="pre">setBackendRenderTargetState</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.GrContext.setBackendTextureState" title="skia.GrContext.setBackendTextureState"><code class="xref py py-obj docutils literal notranslate"><span class="pre">setBackendTextureState</span></code></a></p></td>
+<td><p></p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#skia.GrContext.setResourceCacheLimit" title="skia.GrContext.setResourceCacheLimit"><code class="xref py py-obj docutils literal notranslate"><span class="pre">setResourceCacheLimit</span></code></a></p></td>
 <td><p>Specify the GPU resource cache limit.</p></td>
@@ -534,6 +547,15 @@ was lost and further API calls may crash.</p>
 <p>For Vulkan, even if the device becomes lost, the VkQueue, VkDevice, or
 VkInstance used to create the GrContext must be alive before calling
 abandonContext.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="skia.GrContext.abandoned">
+<code class="sig-prename descclassname">GrContext.</code><code class="sig-name descname">abandoned</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.GrContext" title="skia.GrContext">skia.GrContext</a></span></em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#skia.GrContext.abandoned" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns true if the context was abandoned or if the if the backend
+specific context has gotten into an unrecoverarble, lost state (e.g.</p>
+<p>in Vulkan backend if we’ve gotten a VK_ERROR_DEVICE_LOST). If the
+backend context is lost, this call will also abandon the GrContext.</p>
 </dd></dl>
 
 <dl class="py method">
@@ -681,58 +703,49 @@ following <a class="reference internal" href="skia.ColorType.html#skia.ColorType
 
 <dl class="py method">
 <dt id="skia.GrContext.flush">
-<code class="sig-prename descclassname">GrContext.</code><code class="sig-name descname">flush</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span><span class="n">args</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#skia.GrContext.flush" title="Permalink to this definition">¶</a></dt>
-<dd><p>Overloaded function.</p>
-<ol class="arabic">
-<li><p>flush(self: skia.GrContext, info: skia.GrFlushInfo) -&gt; skia.GrSemaphoresSubmitted</p>
-<blockquote>
-<div><p>Call to ensure all drawing to the context has been flushed to underlying
-3D API specific objects.</p>
-<p>A call to <a class="reference internal" href="#skia.GrContext.submit" title="skia.GrContext.submit"><code class="xref py py-meth docutils literal notranslate"><span class="pre">submit()</span></code></a> is always required to ensure work is
-actually sent to the gpu. Some specific API details: GL: Commands are
-actually sent to the driver, but glFlush is never called. Thus some sync
-objects from the flush will not be valid until a submission occurs.</p>
-<p>Vulkan/Metal/D3D/Dawn: Commands are recorded to the backend APIs
-corresponding command buffer or encoder objects. However, these objects
-are not sent to the gpu until a submission occurs.</p>
-<p>If the return is <a class="reference internal" href="skia.GrSemaphoresSubmitted.html#skia.GrSemaphoresSubmitted.kYes" title="skia.GrSemaphoresSubmitted.kYes"><code class="xref py py-attr docutils literal notranslate"><span class="pre">GrSemaphoresSubmitted.kYes</span></code></a>, only
-initialized GrBackendSemaphores will be submitted to the gpu during the
-next submit call (it is possible Skia failed to create a subset of the
-semaphores). The client should not wait on these semaphores until after
-submit has been called, but must keep them alive until then. If a submit
-flag was passed in with the flush these valid semaphores can we waited
-on immediately. If this call returns
-<a class="reference internal" href="skia.GrSemaphoresSubmitted.html#skia.GrSemaphoresSubmitted.kNo" title="skia.GrSemaphoresSubmitted.kNo"><code class="xref py py-attr docutils literal notranslate"><span class="pre">GrSemaphoresSubmitted.kNo</span></code></a>, the GPU backend will not submit
-any semaphores to be signaled on the GPU. Thus the client should not
-have the GPU wait on any of the semaphores passed in with the
-<a class="reference internal" href="skia.GrFlushInfo.html#skia.GrFlushInfo" title="skia.GrFlushInfo"><code class="xref py py-class docutils literal notranslate"><span class="pre">GrFlushInfo</span></code></a>. Regardless of whether semaphores were submitted
+<code class="sig-prename descclassname">GrContext.</code><code class="sig-name descname">flush</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.GrContext" title="skia.GrContext">skia.GrContext</a></span></em>, <em class="sig-param"><span class="n">info</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.GrFlushInfo.html#skia.GrFlushInfo" title="skia.GrFlushInfo">skia.GrFlushInfo</a></span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="skia.GrSemaphoresSubmitted.html#skia.GrSemaphoresSubmitted" title="skia.GrSemaphoresSubmitted">skia.GrSemaphoresSubmitted</a><a class="headerlink" href="#skia.GrContext.flush" title="Permalink to this definition">¶</a></dt>
+<dd><p>Call to ensure all drawing to the context has been flushed to underlying
+3D API specific objects. A call to <a class="reference internal" href="#skia.GrContext.submit" title="skia.GrContext.submit"><code class="xref py py-meth docutils literal notranslate"><span class="pre">GrContext.submit()</span></code></a> is always
+required to ensure work is actually sent to the gpu. Some specific API
+details:</p>
+<dl class="field-list simple">
+<dt class="field-odd">GL</dt>
+<dd class="field-odd"><p>Commands are actually sent to the driver, but glFlush is never
+called. Thus some sync objects from the flush will not be valid
+until a submission occurs.</p>
+</dd>
+<dt class="field-even">Vulkan/Metal/D3D/Dawn</dt>
+<dd class="field-even"><p>Commands are recorded to the backend APIs
+corresponding command buffer or encoder objects. However, these
+objects are not sent to the gpu until a submission occurs.</p>
+</dd>
+</dl>
+<p>If the return is GrSemaphoresSubmitted::kYes, only initialized
+GrBackendSemaphores will be submitted to the gpu during the next submit
+call (it is possible Skia failed to create a subset of the semaphores).
+The client should not wait on these semaphores until after submit has
+been called, but must keep them alive until then. If a submit flag was
+passed in with the flush these valid semaphores can we waited on
+immediately. If this call returns GrSemaphoresSubmitted::kNo, the GPU
+backend will not submit any semaphores to be signaled on the GPU. Thus
+the client should not have the GPU wait on any of the semaphores passed
+in with the GrFlushInfo. Regardless of whether semaphores were submitted
 to the GPU or not, the client is still responsible for deleting any
-initialized semaphores. Regardleess of semaphore submission the context
-will still be flushed. It should be emphasized that a return value of
-<a class="reference internal" href="skia.GrSemaphoresSubmitted.html#skia.GrSemaphoresSubmitted.kNo" title="skia.GrSemaphoresSubmitted.kNo"><code class="xref py py-attr docutils literal notranslate"><span class="pre">GrSemaphoresSubmitted.kNo</span></code></a> does not mean the flush did not
-happen. It simply means there were no semaphores submitted to the GPU. A
-caller should only take this as a failure if they passed in semaphores
-to be submitted.</p>
-</div></blockquote>
-</li>
-<li><p>flush(self: skia.GrContext) -&gt; None</p>
-<blockquote>
-<div><p>Call to ensure all drawing to the context has been flushed to underlying
-3D API specific objects.</p>
-<p>This is equivalent to calling <a class="reference internal" href="#skia.GrContext.flush" title="skia.GrContext.flush"><code class="xref py py-meth docutils literal notranslate"><span class="pre">flush()</span></code></a> with a default
-<a class="reference internal" href="skia.GrFlushInfo.html#skia.GrFlushInfo" title="skia.GrFlushInfo"><code class="xref py py-class docutils literal notranslate"><span class="pre">GrFlushInfo</span></code></a>.</p>
-</div></blockquote>
-</li>
-</ol>
+initialized semaphores.</p>
+<p>Regardleess of semaphore submission the context will still be flushed.
+It should be emphasized that a return value of
+GrSemaphoresSubmitted::kNo does not mean the flush did not happen. It
+simply means there were no semaphores submitted to the GPU. A caller
+should only take this as a failure if they passed in semaphores to be
+submitted.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt id="skia.GrContext.flushAndSubmit">
 <code class="sig-prename descclassname">GrContext.</code><code class="sig-name descname">flushAndSubmit</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.GrContext" title="skia.GrContext">skia.GrContext</a></span></em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#skia.GrContext.flushAndSubmit" title="Permalink to this definition">¶</a></dt>
 <dd><p>Call to ensure all drawing to the context has been flushed and submitted
-to the underlying 3D API.</p>
-<p>This is equivalent to calling <a class="reference internal" href="#skia.GrContext.flush" title="skia.GrContext.flush"><code class="xref py py-meth docutils literal notranslate"><span class="pre">flush()</span></code></a> with a default
-<a class="reference internal" href="skia.GrFlushInfo.html#skia.GrFlushInfo" title="skia.GrFlushInfo"><code class="xref py py-class docutils literal notranslate"><span class="pre">GrFlushInfo</span></code></a> followed by <a class="reference internal" href="#skia.GrContext.submit" title="skia.GrContext.submit"><code class="xref py py-meth docutils literal notranslate"><span class="pre">submit()</span></code></a>.</p>
+to the underlying 3D API. This is equivalent to calling <a class="reference internal" href="#skia.GrContext.flush" title="skia.GrContext.flush"><code class="xref py py-meth docutils literal notranslate"><span class="pre">flush()</span></code></a>
+with a default <a class="reference internal" href="skia.GrFlushInfo.html#skia.GrFlushInfo" title="skia.GrFlushInfo"><code class="xref py py-class docutils literal notranslate"><span class="pre">GrFlushInfo</span></code></a> followed by <a class="reference internal" href="#skia.GrContext.submit" title="skia.GrContext.submit"><code class="xref py py-meth docutils literal notranslate"><span class="pre">submit()</span></code></a>.</p>
 </dd></dl>
 
 <dl class="py method">
@@ -790,6 +803,23 @@ all.</p>
 <dt id="skia.GrContext.maxTextureSize">
 <code class="sig-prename descclassname">GrContext.</code><code class="sig-name descname">maxTextureSize</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.GrContext" title="skia.GrContext">skia.GrContext</a></span></em><span class="sig-paren">)</span> &#x2192; int<a class="headerlink" href="#skia.GrContext.maxTextureSize" title="Permalink to this definition">¶</a></dt>
 <dd><p>Gets the maximum supported texture size.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="skia.GrContext.oomed">
+<code class="sig-prename descclassname">GrContext.</code><code class="sig-name descname">oomed</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.GrContext" title="skia.GrContext">skia.GrContext</a></span></em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#skia.GrContext.oomed" title="Permalink to this definition">¶</a></dt>
+<dd><p>Checks if the underlying 3D API reported an out-of-memory error.</p>
+<p>If this returns true it is reset and will return false until another
+out-of-memory error is reported by the 3D API. If the context is
+abandoned then this will report false.</p>
+<p>Currently this is implemented for:</p>
+<p>OpenGL [ES] - Note that client calls to glGetError() may swallow
+GL_OUT_OF_MEMORY errors and therefore hide the error from Skia. Also, it
+is not advised to use this in combination with enabling
+GrContextOptions::fSkipGLErrorChecks. That option may prevent GrContext
+from ever checking the GL context for OOM.</p>
+<p>Vulkan - Reports true if VK_ERROR_OUT_OF_HOST_MEMORY or
+VK_ERROR_OUT_OF_DEVICE_MEMORY has occurred.</p>
 </dd></dl>
 
 <dl class="py method">
@@ -907,6 +937,16 @@ no-op.)</p>
 </dd></dl>
 
 <dl class="py method">
+<dt id="skia.GrContext.setBackendRenderTargetState">
+<code class="sig-prename descclassname">GrContext.</code><code class="sig-name descname">setBackendRenderTargetState</code><span class="sig-paren">(</span><em class="sig-param">self: skia.GrContext</em>, <em class="sig-param">arg0: skia.GrBackendRenderTarget</em>, <em class="sig-param">arg1: skia.GrBackendSurfaceMutableState</em>, <em class="sig-param">arg2: void (void*)</em>, <em class="sig-param">arg3: capsule</em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#skia.GrContext.setBackendRenderTargetState" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="skia.GrContext.setBackendTextureState">
+<code class="sig-prename descclassname">GrContext.</code><code class="sig-name descname">setBackendTextureState</code><span class="sig-paren">(</span><em class="sig-param">self: skia.GrContext</em>, <em class="sig-param">arg0: skia.GrBackendTexture</em>, <em class="sig-param">arg1: skia.GrBackendSurfaceMutableState</em>, <em class="sig-param">arg2: void (void*)</em>, <em class="sig-param">arg3: capsule</em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#skia.GrContext.setBackendTextureState" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
 <dt id="skia.GrContext.setResourceCacheLimit">
 <code class="sig-prename descclassname">GrContext.</code><code class="sig-name descname">setResourceCacheLimit</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.GrContext" title="skia.GrContext">skia.GrContext</a></span></em>, <em class="sig-param"><span class="n">maxResourceBytes</span><span class="p">:</span> <span class="n">int</span></em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#skia.GrContext.setResourceCacheLimit" title="Permalink to this definition">¶</a></dt>
 <dd><p>Specify the GPU resource cache limit.</p>
@@ -929,8 +969,7 @@ that can be held in the cache.</p>
 <dt id="skia.GrContext.submit">
 <code class="sig-prename descclassname">GrContext.</code><code class="sig-name descname">submit</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.GrContext" title="skia.GrContext">skia.GrContext</a></span></em>, <em class="sig-param"><span class="n">syncCpu</span><span class="p">:</span> <span class="n">bool</span> <span class="o">=</span> <span class="default_value">False</span></em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#skia.GrContext.submit" title="Permalink to this definition">¶</a></dt>
 <dd><p>Submit outstanding work to the gpu from all previously un-submitted
-flushes.</p>
-<p>The return value of the submit will indicate whether or not the
+flushes. The return value of the submit will indicate whether or not the
 submission to the GPU was successful.</p>
 <p>If the call returns true, all previously passed in semaphores in flush
 calls will have been submitted to the GPU and they can safely be waited

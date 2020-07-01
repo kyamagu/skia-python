@@ -160,6 +160,7 @@
 <li class="toctree-l3"><a class="reference internal" href="skia.GrBackendFormat.html">GrBackendFormat</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.GrBackendRenderTarget.html">GrBackendRenderTarget</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.GrBackendSemaphore.html">GrBackendSemaphore</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.GrBackendSurfaceMutableState.html">GrBackendSurfaceMutableState</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.GrBackendTexture.html">GrBackendTexture</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.GrColorType.html">GrColorType</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.GrContext.html">GrContext</a></li>
@@ -420,7 +421,7 @@ future.</p>
 <td><p>Sets the maximum clip rectangle, which can be set by <a class="reference internal" href="#skia.Canvas.clipRect" title="skia.Canvas.clipRect"><code class="xref py py-meth docutils literal notranslate"><span class="pre">clipRect()</span></code></a>, <a class="reference internal" href="#skia.Canvas.clipRRect" title="skia.Canvas.clipRRect"><code class="xref py py-meth docutils literal notranslate"><span class="pre">clipRRect()</span></code></a> and <a class="reference internal" href="#skia.Canvas.clipPath" title="skia.Canvas.clipPath"><code class="xref py py-meth docutils literal notranslate"><span class="pre">clipPath()</span></code></a> and intersect the current clip with the specified rect.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#skia.Canvas.clear" title="skia.Canvas.clear"><code class="xref py py-obj docutils literal notranslate"><span class="pre">clear</span></code></a></p></td>
-<td><p>Fills clip with color color using <a class="reference internal" href="skia.BlendMode.html#skia.BlendMode.kSrc" title="skia.BlendMode.kSrc"><code class="xref py py-attr docutils literal notranslate"><span class="pre">BlendMode.kSrc</span></code></a>.</p></td>
+<td><p>Overloaded function.</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#skia.Canvas.clipPath" title="skia.Canvas.clipPath"><code class="xref py py-obj docutils literal notranslate"><span class="pre">clipPath</span></code></a></p></td>
 <td><p>Overloaded function.</p></td>
@@ -459,7 +460,7 @@ future.</p>
 <td><p>Overloaded function.</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#skia.Canvas.drawColor" title="skia.Canvas.drawColor"><code class="xref py py-obj docutils literal notranslate"><span class="pre">drawColor</span></code></a></p></td>
-<td><p>Fills clip with color color.</p></td>
+<td><p>Overloaded function.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#skia.Canvas.drawDRRect" title="skia.Canvas.drawDRRect"><code class="xref py py-obj docutils literal notranslate"><span class="pre">drawDRRect</span></code></a></p></td>
 <td><p>Draws <a class="reference internal" href="skia.RRect.html#skia.RRect" title="skia.RRect"><code class="xref py py-class docutils literal notranslate"><span class="pre">RRect</span></code></a> outer and inner using clip, <a class="reference internal" href="skia.Matrix.html#skia.Matrix" title="skia.Matrix"><code class="xref py py-class docutils literal notranslate"><span class="pre">Matrix</span></code></a>, and <a class="reference internal" href="skia.Paint.html#skia.Paint" title="skia.Paint"><code class="xref py py-class docutils literal notranslate"><span class="pre">Paint</span></code></a> paint.</p></td>
@@ -750,7 +751,7 @@ next, or zero</p></li>
 with a width and height of zero.</p>
 </div></blockquote>
 </li>
-<li><p>__init__(self: skia.Canvas, array: array, colorType: skia.ColorType = ColorType.kN32_ColorType, alphaType: skia.AlphaType = AlphaType.kLastEnum_AlphaType, colorSpace: skia.ColorSpace = None, surfaceProps: SkSurfaceProps = None) -&gt; None</p>
+<li><p>__init__(self: skia.Canvas, array: array, colorType: skia.ColorType = ColorType.kRGBA_8888_ColorType, alphaType: skia.AlphaType = AlphaType.kLastEnum_AlphaType, colorSpace: skia.ColorSpace = None, surfaceProps: SkSurfaceProps = None) -&gt; None</p>
 <blockquote>
 <div><p>Creates raster <a class="reference internal" href="#skia.Canvas" title="skia.Canvas"><code class="xref py py-class docutils literal notranslate"><span class="pre">Canvas</span></code></a> backed by numpy array.</p>
 <p>Subsequent <a class="reference internal" href="#skia.Canvas" title="skia.Canvas"><code class="xref py py-class docutils literal notranslate"><span class="pre">Canvas</span></code></a> calls draw into pixels. To access pixels
@@ -875,15 +876,34 @@ by Android framework only.</p>
 
 <dl class="py method">
 <dt id="skia.Canvas.clear">
-<code class="sig-prename descclassname">Canvas.</code><code class="sig-name descname">clear</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Canvas" title="skia.Canvas">skia.Canvas</a></span></em>, <em class="sig-param"><span class="n">color</span><span class="p">:</span> <span class="n">int</span></em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#skia.Canvas.clear" title="Permalink to this definition">¶</a></dt>
-<dd><p>Fills clip with color color using <a class="reference internal" href="skia.BlendMode.html#skia.BlendMode.kSrc" title="skia.BlendMode.kSrc"><code class="xref py py-attr docutils literal notranslate"><span class="pre">BlendMode.kSrc</span></code></a>.</p>
+<code class="sig-prename descclassname">Canvas.</code><code class="sig-name descname">clear</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span><span class="n">args</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#skia.Canvas.clear" title="Permalink to this definition">¶</a></dt>
+<dd><p>Overloaded function.</p>
+<ol class="arabic">
+<li><p>clear(self: skia.Canvas, color: int) -&gt; None</p>
+<blockquote>
+<div><p>Fills clip with color color using <a class="reference internal" href="skia.BlendMode.html#skia.BlendMode.kSrc" title="skia.BlendMode.kSrc"><code class="xref py py-attr docutils literal notranslate"><span class="pre">BlendMode.kSrc</span></code></a>.</p>
 <p>This has the effect of replacing all pixels contained by clip with
 color.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>color</strong> (<em>int</em>) – unpremultiplied ARGB</p>
+<dt class="field-odd">param int color</dt>
+<dd class="field-odd"><p>unpremultiplied ARGB</p>
 </dd>
 </dl>
+</div></blockquote>
+</li>
+<li><p>clear(self: skia.Canvas, color: skia.Color4f) -&gt; None</p>
+<blockquote>
+<div><p>Fills clip with color color using <a class="reference internal" href="skia.BlendMode.html#skia.BlendMode.kSrc" title="skia.BlendMode.kSrc"><code class="xref py py-attr docutils literal notranslate"><span class="pre">BlendMode.kSrc</span></code></a>.</p>
+<p>This has the effect of replacing all pixels contained by clip with
+color.</p>
+<dl class="field-list simple">
+<dt class="field-odd">param color</dt>
+<dd class="field-odd"><p><a class="reference internal" href="skia.Color4f.html#skia.Color4f" title="skia.Color4f"><code class="xref py py-class docutils literal notranslate"><span class="pre">Color4f</span></code></a> representing unpremultiplied color.</p>
+</dd>
+</dl>
+</div></blockquote>
+</li>
+</ol>
 </dd></dl>
 
 <dl class="py method">
@@ -1419,18 +1439,40 @@ to draw</p>
 
 <dl class="py method">
 <dt id="skia.Canvas.drawColor">
-<code class="sig-prename descclassname">Canvas.</code><code class="sig-name descname">drawColor</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Canvas" title="skia.Canvas">skia.Canvas</a></span></em>, <em class="sig-param"><span class="n">color</span><span class="p">:</span> <span class="n">int</span></em>, <em class="sig-param"><span class="n">mode</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.BlendMode.html#skia.BlendMode" title="skia.BlendMode">skia.BlendMode</a></span> <span class="o">=</span> <span class="default_value">BlendMode.kSrcOver</span></em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#skia.Canvas.drawColor" title="Permalink to this definition">¶</a></dt>
-<dd><p>Fills clip with color color.</p>
+<code class="sig-prename descclassname">Canvas.</code><code class="sig-name descname">drawColor</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span><span class="n">args</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#skia.Canvas.drawColor" title="Permalink to this definition">¶</a></dt>
+<dd><p>Overloaded function.</p>
+<ol class="arabic">
+<li><p>drawColor(self: skia.Canvas, color: int, mode: skia.BlendMode = BlendMode.kSrcOver) -&gt; None</p>
+<blockquote>
+<div><p>Fills clip with color color.</p>
 <p>mode determines how ARGB is combined with destination.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>color</strong> (<em>int</em>) – unpremultiplied ARGB</p></li>
-<li><p><strong>mode</strong> (<a class="reference internal" href="skia.BlendMode.html#skia.BlendMode" title="skia.BlendMode"><em>skia.BlendMode</em></a>) – <a class="reference internal" href="skia.BlendMode.html#skia.BlendMode" title="skia.BlendMode"><code class="xref py py-class docutils literal notranslate"><span class="pre">BlendMode</span></code></a> used to combine source
-color and destination</p></li>
-</ul>
+<dt class="field-odd">param int color</dt>
+<dd class="field-odd"><p>unpremultiplied ARGB</p>
+</dd>
+<dt class="field-even">param skia.BlendMode mode</dt>
+<dd class="field-even"><p><a class="reference internal" href="skia.BlendMode.html#skia.BlendMode" title="skia.BlendMode"><code class="xref py py-class docutils literal notranslate"><span class="pre">BlendMode</span></code></a> used to combine source
+color and destination</p>
 </dd>
 </dl>
+</div></blockquote>
+</li>
+<li><p>drawColor(self: skia.Canvas, color: skia.Color4f, mode: skia.BlendMode = BlendMode.kSrcOver) -&gt; None</p>
+<blockquote>
+<div><p>Fills clip with color color.</p>
+<p>mode determines how ARGB is combined with destination.</p>
+<dl class="field-list simple">
+<dt class="field-odd">param color</dt>
+<dd class="field-odd"><p><a class="reference internal" href="skia.Color4f.html#skia.Color4f" title="skia.Color4f"><code class="xref py py-class docutils literal notranslate"><span class="pre">Color4f</span></code></a> representing unpremultiplied color.</p>
+</dd>
+<dt class="field-even">param skia.BlendMode mode</dt>
+<dd class="field-even"><p><a class="reference internal" href="skia.BlendMode.html#skia.BlendMode" title="skia.BlendMode"><code class="xref py py-class docutils literal notranslate"><span class="pre">BlendMode</span></code></a> used to combine source
+color and destination</p>
+</dd>
+</dl>
+</div></blockquote>
+</li>
+</ol>
 </dd></dl>
 
 <dl class="py method">
@@ -1787,7 +1829,8 @@ fourth point. The last <a class="reference internal" href="skia.Path.html#skia.P
 bottom-right, bottom-left order.</p>
 <p>If paint contains <a class="reference internal" href="skia.Shader.html#skia.Shader" title="skia.Shader"><code class="xref py py-class docutils literal notranslate"><span class="pre">Shader</span></code></a>, <a class="reference internal" href="skia.Point.html#skia.Point" title="skia.Point"><code class="xref py py-class docutils literal notranslate"><span class="pre">Point</span></code></a> array texCoords
 maps <a class="reference internal" href="skia.Shader.html#skia.Shader" title="skia.Shader"><code class="xref py py-class docutils literal notranslate"><span class="pre">Shader</span></code></a> as texture to corners in top-left, top-right,
-bottom-right, bottom-left order.</p>
+bottom-right, bottom-left order. If texCoords is nullptr,
+<a class="reference internal" href="skia.Shader.html#skia.Shader" title="skia.Shader"><code class="xref py py-class docutils literal notranslate"><span class="pre">Shader</span></code></a> is mapped using positions (derived from cubics).</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -2133,11 +2176,12 @@ size, typeface, and so on</p></li>
 <dt id="skia.Canvas.drawVertices">
 <code class="sig-prename descclassname">Canvas.</code><code class="sig-name descname">drawVertices</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Canvas" title="skia.Canvas">skia.Canvas</a></span></em>, <em class="sig-param"><span class="n">vertices</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.Vertices.html#skia.Vertices" title="skia.Vertices">skia.Vertices</a></span></em>, <em class="sig-param"><span class="n">paint</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.Paint.html#skia.Paint" title="skia.Paint">skia.Paint</a></span></em>, <em class="sig-param"><span class="n">mode</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.BlendMode.html#skia.BlendMode" title="skia.BlendMode">skia.BlendMode</a></span> <span class="o">=</span> <span class="default_value">BlendMode.kModulate</span></em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#skia.Canvas.drawVertices" title="Permalink to this definition">¶</a></dt>
 <dd><p>Draws <a class="reference internal" href="skia.Vertices.html#skia.Vertices" title="skia.Vertices"><code class="xref py py-class docutils literal notranslate"><span class="pre">Vertices</span></code></a> vertices, a triangle mesh, using clip and
-<a class="reference internal" href="skia.Matrix.html#skia.Matrix" title="skia.Matrix"><code class="xref py py-class docutils literal notranslate"><span class="pre">Matrix</span></code></a>.</p>
-<p>If vertices texs and vertices colors are defined in vertices, and
-<a class="reference internal" href="skia.Paint.html#skia.Paint" title="skia.Paint"><code class="xref py py-class docutils literal notranslate"><span class="pre">Paint</span></code></a> paint contains <a class="reference internal" href="skia.Shader.html#skia.Shader" title="skia.Shader"><code class="xref py py-class docutils literal notranslate"><span class="pre">Shader</span></code></a>,
-<a class="reference internal" href="skia.BlendMode.html#skia.BlendMode" title="skia.BlendMode"><code class="xref py py-class docutils literal notranslate"><span class="pre">BlendMode</span></code></a> mode combines vertices colors with
-<a class="reference internal" href="skia.Shader.html#skia.Shader" title="skia.Shader"><code class="xref py py-class docutils literal notranslate"><span class="pre">Shader</span></code></a>.</p>
+<a class="reference internal" href="skia.Matrix.html#skia.Matrix" title="skia.Matrix"><code class="xref py py-class docutils literal notranslate"><span class="pre">Matrix</span></code></a>. If paint contains an <a class="reference internal" href="skia.Shader.html#skia.Shader" title="skia.Shader"><code class="xref py py-class docutils literal notranslate"><span class="pre">Shader</span></code></a> and vertices
+does not contain texCoords, the shader is mapped using the vertices’
+positions.</p>
+<p>If vvertices colors are defined in vertices, and <a class="reference internal" href="skia.Paint.html#skia.Paint" title="skia.Paint"><code class="xref py py-class docutils literal notranslate"><span class="pre">Paint</span></code></a> paint
+contains <a class="reference internal" href="skia.Shader.html#skia.Shader" title="skia.Shader"><code class="xref py py-class docutils literal notranslate"><span class="pre">Shader</span></code></a>, <a class="reference internal" href="skia.BlendMode.html#skia.BlendMode" title="skia.BlendMode"><code class="xref py py-class docutils literal notranslate"><span class="pre">BlendMode</span></code></a> mode combines
+vertices colors with <a class="reference internal" href="skia.Shader.html#skia.Shader" title="skia.Shader"><code class="xref py py-class docutils literal notranslate"><span class="pre">Shader</span></code></a>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">

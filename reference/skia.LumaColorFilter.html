@@ -36,7 +36,7 @@
     
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="LumaColorFilter.Flags" href="skia.LumaColorFilter.Flags.html" />
+    <link rel="next" title="M44" href="skia.M44.html" />
     <link rel="prev" title="Line2DPathEffect.Type" href="skia.Line2DPathEffect.Type.html" /> 
 </head>
 
@@ -150,6 +150,7 @@
 <li class="toctree-l3"><a class="reference internal" href="skia.GrBackendFormat.html">GrBackendFormat</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.GrBackendRenderTarget.html">GrBackendRenderTarget</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.GrBackendSemaphore.html">GrBackendSemaphore</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.GrBackendSurfaceMutableState.html">GrBackendSurfaceMutableState</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.GrBackendTexture.html">GrBackendTexture</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.GrColorType.html">GrColorType</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.GrContext.html">GrContext</a></li>
@@ -190,10 +191,7 @@
 <li class="toctree-l3"><a class="reference internal" href="skia.LightingImageFilter.html">LightingImageFilter</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.Line2DPathEffect.html">Line2DPathEffect</a></li>
 <li class="toctree-l3 current"><a class="current reference internal" href="#">LumaColorFilter</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="skia.LumaColorFilter.Flags.html">LumaColorFilter.Flags</a></li>
-<li class="toctree-l4"><a class="reference internal" href="skia.LumaColorFilter.Type.html">LumaColorFilter.Type</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#methods">Methods</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#attributes">Attributes</a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="skia.M44.html">M44</a></li>
@@ -353,21 +351,6 @@ filter folds in the previous alpha, something an feColorMatrix cannot do.</p>
 compute luma, a dot-product of gamma-encoded color channels, not luminance,
 a dot-product of linear color channels. So at least
 <a class="reference internal" href="#skia.LumaColorFilter" title="skia.LumaColorFilter"><code class="xref py py-class docutils literal notranslate"><span class="pre">LumaColorFilter</span></code></a> and feColorMatrix+luminanceToAlpha agree there.)</p>
-<p class="rubric">Classes</p>
-<table class="longtable docutils align-default">
-<colgroup>
-<col style="width: 10%" />
-<col style="width: 90%" />
-</colgroup>
-<tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="skia.LumaColorFilter.Flags.html#skia.LumaColorFilter.Flags" title="skia.LumaColorFilter.Flags"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Flags</span></code></a></p></td>
-<td><p>Members:</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="skia.LumaColorFilter.Type.html#skia.LumaColorFilter.Type" title="skia.LumaColorFilter.Type"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Type</span></code></a></p></td>
-<td><p>Members:</p></td>
-</tr>
-</tbody>
-</table>
 <p class="rubric">Methods</p>
 <table class="longtable docutils align-default">
 <colgroup>
@@ -375,104 +358,11 @@ a dot-product of linear color channels. So at least
 <col style="width: 90%" />
 </colgroup>
 <tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="#skia.LumaColorFilter.Deserialize" title="skia.LumaColorFilter.Deserialize"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Deserialize</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.LumaColorFilter.Make" title="skia.LumaColorFilter.Make"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Make</span></code></a></p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#skia.LumaColorFilter.Make" title="skia.LumaColorFilter.Make"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Make</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#skia.LumaColorFilter.__init__" title="skia.LumaColorFilter.__init__"><code class="xref py py-obj docutils literal notranslate"><span class="pre">__init__</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.LumaColorFilter.__init__" title="skia.LumaColorFilter.__init__"><code class="xref py py-obj docutils literal notranslate"><span class="pre">__init__</span></code></a></p></td>
 <td><p>Initialize self.</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#skia.LumaColorFilter.affectsTransparentBlack" title="skia.LumaColorFilter.affectsTransparentBlack"><code class="xref py py-obj docutils literal notranslate"><span class="pre">affectsTransparentBlack</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#skia.LumaColorFilter.asAColorMatrix" title="skia.LumaColorFilter.asAColorMatrix"><code class="xref py py-obj docutils literal notranslate"><span class="pre">asAColorMatrix</span></code></a></p></td>
-<td><p>If the filter can be represented by a 5x4 matrix, this returns list of floats appropriately.</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#skia.LumaColorFilter.asAColorMode" title="skia.LumaColorFilter.asAColorMode"><code class="xref py py-obj docutils literal notranslate"><span class="pre">asAColorMode</span></code></a></p></td>
-<td><p>If the filter can be represented by a source color plus Mode, this returns color and mode appropriately.</p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#skia.LumaColorFilter.asColorMode" title="skia.LumaColorFilter.asColorMode"><code class="xref py py-obj docutils literal notranslate"><span class="pre">asColorMode</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#skia.LumaColorFilter.filterColor" title="skia.LumaColorFilter.filterColor"><code class="xref py py-obj docutils literal notranslate"><span class="pre">filterColor</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#skia.LumaColorFilter.filterColor4f" title="skia.LumaColorFilter.filterColor4f"><code class="xref py py-obj docutils literal notranslate"><span class="pre">filterColor4f</span></code></a></p></td>
-<td><p>Converts the src color (in src colorspace), into the dst colorspace, then applies this filter to it, returning the filtered color in the dst colorspace.</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#skia.LumaColorFilter.getFlags" title="skia.LumaColorFilter.getFlags"><code class="xref py py-obj docutils literal notranslate"><span class="pre">getFlags</span></code></a></p></td>
-<td><p>Returns the flags for this filter.</p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#skia.LumaColorFilter.getFlattenableType" title="skia.LumaColorFilter.getFlattenableType"><code class="xref py py-obj docutils literal notranslate"><span class="pre">getFlattenableType</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#skia.LumaColorFilter.getTypeName" title="skia.LumaColorFilter.getTypeName"><code class="xref py py-obj docutils literal notranslate"><span class="pre">getTypeName</span></code></a></p></td>
-<td><p>Returns the name of the object’s class.</p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#skia.LumaColorFilter.makeComposed" title="skia.LumaColorFilter.makeComposed"><code class="xref py py-obj docutils literal notranslate"><span class="pre">makeComposed</span></code></a></p></td>
-<td><p>Construct a colorfilter whose effect is to first apply the inner filter and then apply this filter, applied to the output of the inner filter.</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#skia.LumaColorFilter.ref" title="skia.LumaColorFilter.ref"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ref</span></code></a></p></td>
-<td><p>Increment the reference count.</p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#skia.LumaColorFilter.serialize" title="skia.LumaColorFilter.serialize"><code class="xref py py-obj docutils literal notranslate"><span class="pre">serialize</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#skia.LumaColorFilter.unique" title="skia.LumaColorFilter.unique"><code class="xref py py-obj docutils literal notranslate"><span class="pre">unique</span></code></a></p></td>
-<td><p>May return true if the caller is the only owner.</p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#skia.LumaColorFilter.unref" title="skia.LumaColorFilter.unref"><code class="xref py py-obj docutils literal notranslate"><span class="pre">unref</span></code></a></p></td>
-<td><p>Decrement the reference count.</p></td>
-</tr>
-</tbody>
-</table>
-<p class="rubric">Attributes</p>
-<table class="longtable docutils align-default">
-<colgroup>
-<col style="width: 10%" />
-<col style="width: 90%" />
-</colgroup>
-<tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="#skia.LumaColorFilter.kAlphaUnchanged_Flag" title="skia.LumaColorFilter.kAlphaUnchanged_Flag"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kAlphaUnchanged_Flag</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#skia.LumaColorFilter.kColorFilter_Type" title="skia.LumaColorFilter.kColorFilter_Type"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kColorFilter_Type</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#skia.LumaColorFilter.kDrawLooper_Type" title="skia.LumaColorFilter.kDrawLooper_Type"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kDrawLooper_Type</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#skia.LumaColorFilter.kDrawable_Type" title="skia.LumaColorFilter.kDrawable_Type"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kDrawable_Type</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#skia.LumaColorFilter.kImageFilter_Type" title="skia.LumaColorFilter.kImageFilter_Type"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kImageFilter_Type</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#skia.LumaColorFilter.kMaskFilter_Type" title="skia.LumaColorFilter.kMaskFilter_Type"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kMaskFilter_Type</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#skia.LumaColorFilter.kPathEffect_Type" title="skia.LumaColorFilter.kPathEffect_Type"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kPathEffect_Type</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#skia.LumaColorFilter.kPixelRef_Type" title="skia.LumaColorFilter.kPixelRef_Type"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kPixelRef_Type</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#skia.LumaColorFilter.kShaderBase_Type" title="skia.LumaColorFilter.kShaderBase_Type"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kShaderBase_Type</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#skia.LumaColorFilter.kUnused_Type" title="skia.LumaColorFilter.kUnused_Type"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kUnused_Type</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#skia.LumaColorFilter.kUnused_Type2" title="skia.LumaColorFilter.kUnused_Type2"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kUnused_Type2</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#skia.LumaColorFilter.kUnused_Type3" title="skia.LumaColorFilter.kUnused_Type3"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kUnused_Type3</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#skia.LumaColorFilter.kUnused_Type4" title="skia.LumaColorFilter.kUnused_Type4"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kUnused_Type4</span></code></a></p></td>
-<td><p></p></td>
 </tr>
 </tbody>
 </table>
@@ -480,11 +370,6 @@ a dot-product of linear color channels. So at least
 
 <div class="section" id="methods">
 <h2>Methods<a class="headerlink" href="#methods" title="Permalink to this headline">¶</a></h2>
-<dl class="py method">
-<dt id="skia.LumaColorFilter.Deserialize">
-<em class="property">static </em><code class="sig-prename descclassname">LumaColorFilter.</code><code class="sig-name descname">Deserialize</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">data</span><span class="p">:</span> <span class="n">buffer</span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="skia.ColorFilter.html#skia.ColorFilter" title="skia.ColorFilter">skia.ColorFilter</a><a class="headerlink" href="#skia.LumaColorFilter.Deserialize" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
 <dl class="py method">
 <dt id="skia.LumaColorFilter.Make">
 <em class="property">static </em><code class="sig-prename descclassname">LumaColorFilter.</code><code class="sig-name descname">Make</code><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="skia.ColorFilter.html#skia.ColorFilter" title="skia.ColorFilter">skia.ColorFilter</a><a class="headerlink" href="#skia.LumaColorFilter.Make" title="Permalink to this definition">¶</a></dt>
@@ -495,178 +380,6 @@ a dot-product of linear color channels. So at least
 <code class="sig-prename descclassname">LumaColorFilter.</code><code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span><span class="n">args</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#skia.LumaColorFilter.__init__" title="Permalink to this definition">¶</a></dt>
 <dd><p>Initialize self.  See help(type(self)) for accurate signature.</p>
 </dd></dl>
-
-<dl class="py method">
-<dt id="skia.LumaColorFilter.affectsTransparentBlack">
-<code class="sig-prename descclassname">LumaColorFilter.</code><code class="sig-name descname">affectsTransparentBlack</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.ColorFilter.html#skia.ColorFilter" title="skia.ColorFilter">skia.ColorFilter</a></span></em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#skia.LumaColorFilter.affectsTransparentBlack" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py method">
-<dt id="skia.LumaColorFilter.asAColorMatrix">
-<code class="sig-prename descclassname">LumaColorFilter.</code><code class="sig-name descname">asAColorMatrix</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.ColorFilter.html#skia.ColorFilter" title="skia.ColorFilter">skia.ColorFilter</a></span></em><span class="sig-paren">)</span> &#x2192; object<a class="headerlink" href="#skia.LumaColorFilter.asAColorMatrix" title="Permalink to this definition">¶</a></dt>
-<dd><p>If the filter can be represented by a 5x4 matrix, this returns list of
-floats appropriately.</p>
-<p>If not, this returns None.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>List[float] or None</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt id="skia.LumaColorFilter.asAColorMode">
-<code class="sig-prename descclassname">LumaColorFilter.</code><code class="sig-name descname">asAColorMode</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.ColorFilter.html#skia.ColorFilter" title="skia.ColorFilter">skia.ColorFilter</a></span></em><span class="sig-paren">)</span> &#x2192; object<a class="headerlink" href="#skia.LumaColorFilter.asAColorMode" title="Permalink to this definition">¶</a></dt>
-<dd><p>If the filter can be represented by a source color plus Mode, this
-returns color and mode appropriately.</p>
-<p>If not, this returns None.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>Tuple[int,<a class="reference internal" href="skia.BlendMode.html#skia.BlendMode" title="skia.BlendMode">skia.BlendMode</a>] or None</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt id="skia.LumaColorFilter.asColorMode">
-<code class="sig-prename descclassname">LumaColorFilter.</code><code class="sig-name descname">asColorMode</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.ColorFilter.html#skia.ColorFilter" title="skia.ColorFilter">skia.ColorFilter</a></span></em><span class="sig-paren">)</span> &#x2192; object<a class="headerlink" href="#skia.LumaColorFilter.asColorMode" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py method">
-<dt id="skia.LumaColorFilter.filterColor">
-<code class="sig-prename descclassname">LumaColorFilter.</code><code class="sig-name descname">filterColor</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.ColorFilter.html#skia.ColorFilter" title="skia.ColorFilter">skia.ColorFilter</a></span></em>, <em class="sig-param"><span class="n">color</span><span class="p">:</span> <span class="n">int</span></em><span class="sig-paren">)</span> &#x2192; int<a class="headerlink" href="#skia.LumaColorFilter.filterColor" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py method">
-<dt id="skia.LumaColorFilter.filterColor4f">
-<code class="sig-prename descclassname">LumaColorFilter.</code><code class="sig-name descname">filterColor4f</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.ColorFilter.html#skia.ColorFilter" title="skia.ColorFilter">skia.ColorFilter</a></span></em>, <em class="sig-param"><span class="n">srcColor</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.Color4f.html#skia.Color4f" title="skia.Color4f">skia.Color4f</a></span></em>, <em class="sig-param"><span class="n">srcCS</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.ColorSpace.html#skia.ColorSpace" title="skia.ColorSpace">skia.ColorSpace</a></span></em>, <em class="sig-param"><span class="n">dstCS</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.ColorSpace.html#skia.ColorSpace" title="skia.ColorSpace">skia.ColorSpace</a></span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="skia.Color4f.html#skia.Color4f" title="skia.Color4f">skia.Color4f</a><a class="headerlink" href="#skia.LumaColorFilter.filterColor4f" title="Permalink to this definition">¶</a></dt>
-<dd><p>Converts the src color (in src colorspace), into the dst colorspace,
-then applies this filter to it, returning the filtered color in the dst
-colorspace.</p>
-</dd></dl>
-
-<dl class="py method">
-<dt id="skia.LumaColorFilter.getFlags">
-<code class="sig-prename descclassname">LumaColorFilter.</code><code class="sig-name descname">getFlags</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.ColorFilter.html#skia.ColorFilter" title="skia.ColorFilter">skia.ColorFilter</a></span></em><span class="sig-paren">)</span> &#x2192; int<a class="headerlink" href="#skia.LumaColorFilter.getFlags" title="Permalink to this definition">¶</a></dt>
-<dd><p>Returns the flags for this filter.</p>
-<p>Override in subclasses to return custom flags.</p>
-</dd></dl>
-
-<dl class="py method">
-<dt id="skia.LumaColorFilter.getFlattenableType">
-<code class="sig-prename descclassname">LumaColorFilter.</code><code class="sig-name descname">getFlattenableType</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.Flattanable.html#skia.Flattanable" title="skia.Flattanable">skia.Flattanable</a></span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="skia.Flattanable.Type.html#skia.Flattanable.Type" title="skia.Flattanable.Type">skia.Flattanable.Type</a><a class="headerlink" href="#skia.LumaColorFilter.getFlattenableType" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py method">
-<dt id="skia.LumaColorFilter.getTypeName">
-<code class="sig-prename descclassname">LumaColorFilter.</code><code class="sig-name descname">getTypeName</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.Flattanable.html#skia.Flattanable" title="skia.Flattanable">skia.Flattanable</a></span></em><span class="sig-paren">)</span> &#x2192; str<a class="headerlink" href="#skia.LumaColorFilter.getTypeName" title="Permalink to this definition">¶</a></dt>
-<dd><p>Returns the name of the object’s class.</p>
-<p>Implemented in <a class="reference internal" href="skia.Drawable.html#skia.Drawable" title="skia.Drawable"><code class="xref py py-class docutils literal notranslate"><span class="pre">Drawable</span></code></a>.</p>
-</dd></dl>
-
-<dl class="py method">
-<dt id="skia.LumaColorFilter.makeComposed">
-<code class="sig-prename descclassname">LumaColorFilter.</code><code class="sig-name descname">makeComposed</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.ColorFilter.html#skia.ColorFilter" title="skia.ColorFilter">skia.ColorFilter</a></span></em>, <em class="sig-param"><span class="n">inner</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.ColorFilter.html#skia.ColorFilter" title="skia.ColorFilter">skia.ColorFilter</a></span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="skia.ColorFilter.html#skia.ColorFilter" title="skia.ColorFilter">skia.ColorFilter</a><a class="headerlink" href="#skia.LumaColorFilter.makeComposed" title="Permalink to this definition">¶</a></dt>
-<dd><p>Construct a colorfilter whose effect is to first apply the inner filter
-and then apply this filter, applied to the output of the inner filter.</p>
-<p>result = this(inner(…))</p>
-</dd></dl>
-
-<dl class="py method">
-<dt id="skia.LumaColorFilter.ref">
-<code class="sig-prename descclassname">LumaColorFilter.</code><code class="sig-name descname">ref</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.RefCntBase.html#skia.RefCntBase" title="skia.RefCntBase">skia.RefCntBase</a></span></em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#skia.LumaColorFilter.ref" title="Permalink to this definition">¶</a></dt>
-<dd><p>Increment the reference count.</p>
-<p>Must be balanced by a call to <a class="reference internal" href="#skia.LumaColorFilter.unref" title="skia.LumaColorFilter.unref"><code class="xref py py-meth docutils literal notranslate"><span class="pre">unref()</span></code></a>.</p>
-</dd></dl>
-
-<dl class="py method">
-<dt id="skia.LumaColorFilter.serialize">
-<code class="sig-prename descclassname">LumaColorFilter.</code><code class="sig-name descname">serialize</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.Flattanable.html#skia.Flattanable" title="skia.Flattanable">skia.Flattanable</a></span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="skia.Data.html#skia.Data" title="skia.Data">skia.Data</a><a class="headerlink" href="#skia.LumaColorFilter.serialize" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py method">
-<dt id="skia.LumaColorFilter.unique">
-<code class="sig-prename descclassname">LumaColorFilter.</code><code class="sig-name descname">unique</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.RefCntBase.html#skia.RefCntBase" title="skia.RefCntBase">skia.RefCntBase</a></span></em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#skia.LumaColorFilter.unique" title="Permalink to this definition">¶</a></dt>
-<dd><p>May return true if the caller is the only owner.</p>
-<p>Ensures that all previous owner’s actions are complete.</p>
-</dd></dl>
-
-<dl class="py method">
-<dt id="skia.LumaColorFilter.unref">
-<code class="sig-prename descclassname">LumaColorFilter.</code><code class="sig-name descname">unref</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.RefCntBase.html#skia.RefCntBase" title="skia.RefCntBase">skia.RefCntBase</a></span></em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#skia.LumaColorFilter.unref" title="Permalink to this definition">¶</a></dt>
-<dd><p>Decrement the reference count.</p>
-<p>If the reference count is 1 before the decrement, then delete the
-object. Note that if this is the case, then the object needs to have
-been allocated via new, and not on the stack.</p>
-</dd></dl>
-
-</div>
-<div class="section" id="attributes">
-<h2>Attributes<a class="headerlink" href="#attributes" title="Permalink to this headline">¶</a></h2>
-<dl class="py attribute">
-<dt id="skia.LumaColorFilter.kAlphaUnchanged_Flag">
-<code class="sig-prename descclassname">LumaColorFilter.</code><code class="sig-name descname">kAlphaUnchanged_Flag</code><em class="property"> = Flags.kAlphaUnchanged_Flag</em><a class="headerlink" href="#skia.LumaColorFilter.kAlphaUnchanged_Flag" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt id="skia.LumaColorFilter.kColorFilter_Type">
-<code class="sig-prename descclassname">LumaColorFilter.</code><code class="sig-name descname">kColorFilter_Type</code><em class="property"> = Type.kColorFilter_Type</em><a class="headerlink" href="#skia.LumaColorFilter.kColorFilter_Type" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt id="skia.LumaColorFilter.kDrawLooper_Type">
-<code class="sig-prename descclassname">LumaColorFilter.</code><code class="sig-name descname">kDrawLooper_Type</code><em class="property"> = Type.kDrawLooper_Type</em><a class="headerlink" href="#skia.LumaColorFilter.kDrawLooper_Type" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt id="skia.LumaColorFilter.kDrawable_Type">
-<code class="sig-prename descclassname">LumaColorFilter.</code><code class="sig-name descname">kDrawable_Type</code><em class="property"> = Type.kDrawable_Type</em><a class="headerlink" href="#skia.LumaColorFilter.kDrawable_Type" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt id="skia.LumaColorFilter.kImageFilter_Type">
-<code class="sig-prename descclassname">LumaColorFilter.</code><code class="sig-name descname">kImageFilter_Type</code><em class="property"> = Type.kImageFilter_Type</em><a class="headerlink" href="#skia.LumaColorFilter.kImageFilter_Type" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt id="skia.LumaColorFilter.kMaskFilter_Type">
-<code class="sig-prename descclassname">LumaColorFilter.</code><code class="sig-name descname">kMaskFilter_Type</code><em class="property"> = Type.kMaskFilter_Type</em><a class="headerlink" href="#skia.LumaColorFilter.kMaskFilter_Type" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt id="skia.LumaColorFilter.kPathEffect_Type">
-<code class="sig-prename descclassname">LumaColorFilter.</code><code class="sig-name descname">kPathEffect_Type</code><em class="property"> = Type.kPathEffect_Type</em><a class="headerlink" href="#skia.LumaColorFilter.kPathEffect_Type" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt id="skia.LumaColorFilter.kPixelRef_Type">
-<code class="sig-prename descclassname">LumaColorFilter.</code><code class="sig-name descname">kPixelRef_Type</code><em class="property"> = Type.kPixelRef_Type</em><a class="headerlink" href="#skia.LumaColorFilter.kPixelRef_Type" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt id="skia.LumaColorFilter.kShaderBase_Type">
-<code class="sig-prename descclassname">LumaColorFilter.</code><code class="sig-name descname">kShaderBase_Type</code><em class="property"> = Type.kShaderBase_Type</em><a class="headerlink" href="#skia.LumaColorFilter.kShaderBase_Type" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt id="skia.LumaColorFilter.kUnused_Type">
-<code class="sig-prename descclassname">LumaColorFilter.</code><code class="sig-name descname">kUnused_Type</code><em class="property"> = Type.kUnused_Type</em><a class="headerlink" href="#skia.LumaColorFilter.kUnused_Type" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt id="skia.LumaColorFilter.kUnused_Type2">
-<code class="sig-prename descclassname">LumaColorFilter.</code><code class="sig-name descname">kUnused_Type2</code><em class="property"> = Type.kUnused_Type2</em><a class="headerlink" href="#skia.LumaColorFilter.kUnused_Type2" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt id="skia.LumaColorFilter.kUnused_Type3">
-<code class="sig-prename descclassname">LumaColorFilter.</code><code class="sig-name descname">kUnused_Type3</code><em class="property"> = Type.kUnused_Type3</em><a class="headerlink" href="#skia.LumaColorFilter.kUnused_Type3" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt id="skia.LumaColorFilter.kUnused_Type4">
-<code class="sig-prename descclassname">LumaColorFilter.</code><code class="sig-name descname">kUnused_Type4</code><em class="property"> = Type.kUnused_Type4</em><a class="headerlink" href="#skia.LumaColorFilter.kUnused_Type4" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
 
 </div>
 </div>
@@ -679,7 +392,7 @@ been allocated via new, and not on the stack.</p>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="skia.LumaColorFilter.Flags.html" class="btn btn-neutral float-right" title="LumaColorFilter.Flags" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="skia.M44.html" class="btn btn-neutral float-right" title="M44" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
         <a href="skia.Line2DPathEffect.Type.html" class="btn btn-neutral float-left" title="Line2DPathEffect.Type" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>

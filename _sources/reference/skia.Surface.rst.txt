@@ -20,7 +20,6 @@ Surface
       ~skia.Surface.BackendHandleAccess
       ~skia.Surface.BackendSurfaceAccess
       ~skia.Surface.ContentChangeMode
-      ~skia.Surface.FlushFlags
       ~skia.Surface.RescaleGamma
    
 
@@ -39,6 +38,8 @@ Surface
       ~skia.Surface.MakeRasterN32Premul
       ~skia.Surface.MakeRenderTarget
       ~skia.Surface.__init__
+      ~skia.Surface.asyncRescaleAndReadPixels
+      ~skia.Surface.asyncRescaleAndReadPixelsYUV420
       ~skia.Surface.characterize
       ~skia.Surface.draw
       ~skia.Surface.flush
@@ -79,11 +80,9 @@ Surface
       ~skia.Surface.kFlushWrite_BackendHandleAccess
       ~skia.Surface.kLinear
       ~skia.Surface.kNoAccess
-      ~skia.Surface.kNone_FlushFlags
       ~skia.Surface.kPresent
       ~skia.Surface.kRetain_ContentChangeMode
       ~skia.Surface.kSrc
-      ~skia.Surface.kSyncCpu_FlushFlag
    
    
 
@@ -110,6 +109,10 @@ Methods
 .. automethod:: skia.Surface.MakeRenderTarget
 
 .. automethod:: skia.Surface.__init__
+
+.. automethod:: skia.Surface.asyncRescaleAndReadPixels
+
+.. automethod:: skia.Surface.asyncRescaleAndReadPixelsYUV420
 
 .. automethod:: skia.Surface.characterize
 
@@ -183,13 +186,9 @@ Attributes
 
 .. autoattribute:: skia.Surface.kNoAccess
 
-.. autoattribute:: skia.Surface.kNone_FlushFlags
-
 .. autoattribute:: skia.Surface.kPresent
 
 .. autoattribute:: skia.Surface.kRetain_ContentChangeMode
 
 .. autoattribute:: skia.Surface.kSrc
-
-.. autoattribute:: skia.Surface.kSyncCpu_FlushFlag
 
