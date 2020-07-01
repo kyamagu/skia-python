@@ -177,33 +177,6 @@ py::class_<SkCanvas::SaveLayerRec>(canvas, "SaveLayerRec",
         )docstring",
         py::arg("bounds"), py::arg("paint"), py::arg("backdrop"),
         py::arg("saveLayerFlags"))
-    .def(py::init<const SkRect*, const SkPaint*, const SkImageFilter*,
-        const SkImage*, const SkMatrix*, SkCanvas::SaveLayerFlags>(),
-        R"docstring(
-        Experimental.
-
-        Not ready for general use. Sets :py:attr:`fBounds`, :py:attr:`fPaint`,
-        :py:attr:`fBackdrop`, :py:attr:`fClipMask`, :py:attr:`fClipMatrix`, and
-        :py:attr:`fSaveLayerFlags`. clipMatrix uses alpha channel of image,
-        transformed by clipMatrix, to clip layer when drawn to
-        :py:class:`Canvas`.
-
-        :bounds: layer dimensions; may be nullptr
-        :paint: graphics state applied to layer when overlaying
-            prior layer; may be nullptr
-        :backdrop: If not null, this causes the current
-            layer to be filtered by backdrop, and then drawn into the new layer
-            (respecting the current clip). If null, the new layer is initialized
-            with transparent-black.
-        :clipMask: clip applied to layer; may be nullptr
-        :clipMatrix: matrix applied to clipMask; may be
-            nullptr to use identity matrix
-        :saveLayerFlags: SaveLayerRec options to
-            modify layer
-        )docstring",
-        py::arg("bounds"), py::arg("paint"), py::arg("backdrop"),
-        py::arg("clipMask"), py::arg("clipMatrix"),
-        py::arg("saveLayerFlags"))
     .def_readwrite("fBounds", &SkCanvas::SaveLayerRec::fBounds,
         R"docstring(
         hints at layer size limit
@@ -220,14 +193,6 @@ py::class_<SkCanvas::SaveLayerRec>(canvas, "SaveLayerRec",
         layer, rather than initializing the new layer with transparent-black.
 
         This is then filtered by fBackdrop (respecting the current clip).
-        )docstring")
-    .def_readwrite("fClipMask", &SkCanvas::SaveLayerRec::fClipMask,
-        R"docstring(
-        clips layer with mask alpha
-        )docstring")
-    .def_readwrite("fClipMatrix", &SkCanvas::SaveLayerRec::fClipMatrix,
-        R"docstring(
-        transforms mask alpha used to clip
         )docstring")
     .def_readwrite("fSaveLayerFlags", &SkCanvas::SaveLayerRec::fSaveLayerFlags,
         R"docstring(
@@ -1294,7 +1259,8 @@ canvas
         :return: bounds of clip in :py:class:`BaseDevice` coordinates
         )docstring",
         py::arg("bounds"))
-    .def("drawColor", &SkCanvas::drawColor,
+    .def("drawColor",
+        py::overload_cast<SkColor, SkBlendMode>(&SkCanvas::drawColor),
         R"docstring(
         Fills clip with color color.
 
@@ -1305,7 +1271,20 @@ canvas
             color and destination
         )docstring",
         py::arg("color"), py::arg("mode") = SkBlendMode::kSrcOver)
-    .def("clear", &SkCanvas::clear,
+    .def("drawColor",
+        py::overload_cast<const SkColor4f&, SkBlendMode>(&SkCanvas::drawColor),
+        R"docstring(
+        Fills clip with color color.
+
+        mode determines how ARGB is combined with destination.
+
+        :param color: :py:class:`Color4f` representing unpremultiplied color.
+        :param skia.BlendMode mode: :py:class:`BlendMode` used to combine source
+            color and destination
+        )docstring",
+        py::arg("color"), py::arg("mode") = SkBlendMode::kSrcOver)
+    .def("clear",
+        py::overload_cast<SkColor>(&SkCanvas::clear),
         R"docstring(
         Fills clip with color color using :py:attr:`BlendMode.kSrc`.
 
@@ -1313,6 +1292,17 @@ canvas
         color.
 
         :param int color: unpremultiplied ARGB
+        )docstring",
+        py::arg("color"))
+    .def("clear",
+        py::overload_cast<const SkColor4f&>(&SkCanvas::clear),
+        R"docstring(
+        Fills clip with color color using :py:attr:`BlendMode.kSrc`.
+
+        This has the effect of replacing all pixels contained by clip with
+        color.
+
+        :param color: :py:class:`Color4f` representing unpremultiplied color.
         )docstring",
         py::arg("color"))
     .def("discard", &SkCanvas::discard,
@@ -2185,12 +2175,13 @@ canvas
             SkBlendMode mode) { canvas.drawVertices(vertices, mode, paint); },
         R"docstring(
         Draws :py:class:`Vertices` vertices, a triangle mesh, using clip and
-        :py:class:`Matrix`.
+        :py:class:`Matrix`. If paint contains an :py:class:`Shader` and vertices
+        does not contain texCoords, the shader is mapped using the vertices'
+        positions.
 
-        If vertices texs and vertices colors are defined in vertices, and
-        :py:class:`Paint` paint contains :py:class:`Shader`,
-        :py:class:`BlendMode` mode combines vertices colors with
-        :py:class:`Shader`.
+        If vvertices colors are defined in vertices, and :py:class:`Paint` paint
+        contains :py:class:`Shader`, :py:class:`BlendMode` mode combines
+        vertices colors with :py:class:`Shader`.
 
         :param skia.Vertices vertices: triangle mesh to draw
         :param skia.BlendMode mode: combines vertices colors with
@@ -2253,7 +2244,8 @@ canvas
 
         If paint contains :py:class:`Shader`, :py:class:`Point` array texCoords
         maps :py:class:`Shader` as texture to corners in top-left, top-right,
-        bottom-right, bottom-left order.
+        bottom-right, bottom-left order. If texCoords is nullptr,
+        :py:class:`Shader` is mapped using positions (derived from cubics).
 
         :param List[skia.Point] cubics: :py:class:`Path` cubic array, sharing
             common points (length 12)

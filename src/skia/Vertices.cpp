@@ -74,13 +74,6 @@ vertices
     .def("uniqueID", &SkVertices::uniqueID)
     .def("bounds", &SkVertices::bounds)
     .def("approximateSize", &SkVertices::approximateSize)
-    .def("encode", &SkVertices::encode,
-        R"docstring(
-        Pack the vertices object into a byte buffer.
-
-        This can be used to recreate the vertices by calling :py:meth:`Decode`
-        with the buffer.
-        )docstring")
     .def("unique", &SkVertices::unique)
     .def("ref", &SkVertices::ref)
     .def("unref", &SkVertices::unref)
@@ -98,19 +91,5 @@ vertices
         )docstring",
         py::arg("mode"), py::arg("positions"), py::arg("texs") = nullptr,
         py::arg("colors") = nullptr, py::arg("indices") = nullptr)
-    .def_static("Decode",
-        [] (py::buffer b) {
-            auto info = b.request();
-            size_t size = (info.ndim) ? info.strides[0] * info.shape[0] : 0;
-            return SkVertices::Decode(info.ptr, size);
-        },
-        R"docstring(
-        Recreate a vertices from a buffer previously created by calling
-        :py:meth:`encode`.
-
-        Returns null if the data is corrupt or the length is incorrect for the
-        contents.
-        )docstring",
-        py::arg("data"))
     ;
 }

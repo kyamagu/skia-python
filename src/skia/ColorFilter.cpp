@@ -112,12 +112,14 @@ colorfilter
         result = this(inner(...))
         )docstring",
         py::arg("inner"))
-    .def("affectsTransparentBlack", &SkColorFilter::affectsTransparentBlack)
     .def_static("Deserialize",
         [] (py::buffer b) {
             auto info = b.request();
-            return SkColorFilter::Deserialize(
-                info.ptr, info.shape[0] * info.strides[0]);
+            auto flattenable = SkColorFilter::Deserialize(
+                SkColorFilter::GetFlattenableType(), info.ptr,
+                info.shape[0] * info.strides[0]);
+            return sk_sp<SkColorFilter>(
+                reinterpret_cast<SkColorFilter*>(flattenable.release()));
         },
         py::arg("data"))
     ;
@@ -223,7 +225,7 @@ py::class_<SkHighContrastFilter>(m, "HighContrastFilter",
     .def_static("Make", &SkHighContrastFilter::Make)
     ;
 
-py::class_<SkLumaColorFilter, sk_sp<SkLumaColorFilter>, SkColorFilter>(
+py::class_<SkLumaColorFilter>(
     m, "LumaColorFilter", R"docstring(
     :py:class:`LumaColorFilter` multiplies the luma of its input into the alpha
     channel, and sets the red, green, and blue channels to zero.

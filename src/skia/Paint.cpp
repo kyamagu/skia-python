@@ -521,9 +521,7 @@ paint
         )docstring")
     .def("setColorFilter",
         [] (SkPaint& paint, const SkColorFilter& colorFilter) {
-            auto data = colorFilter.serialize();
-            paint.setColorFilter(
-                SkColorFilter::Deserialize(data->data(), data->size()));
+            paint.setColorFilter(CloneFlattenable(colorFilter));
         },
         R"docstring(
         Sets :py:class:`ColorFilter` to filter, decreasing :py:class:`RefCnt` of

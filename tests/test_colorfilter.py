@@ -40,10 +40,6 @@ def test_ColorFilter_makeComposed(colorfilter):
         skia.TableColorFilter.Make(range(256))), skia.ColorFilter)
 
 
-def test_ColorFilter_affectsTransparentBlack(colorfilter):
-    assert isinstance(colorfilter.affectsTransparentBlack(), bool)
-
-
 def test_ColorFilter_Deserialize(colorfilter):
     assert isinstance(
         skia.ColorFilter.Deserialize(colorfilter.serialize()), skia.ColorFilter)

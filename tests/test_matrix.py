@@ -376,8 +376,8 @@ def test_Matrix_isFinite(matrix):
     assert isinstance(matrix.isFinite(), bool)
 
 
-def test_Matrix_MakeScale():
-    assert isinstance(skia.Matrix.MakeScale(1, 1), skia.Matrix)
+def test_Matrix_Scale():
+    assert isinstance(skia.Matrix.Scale(1, 1), skia.Matrix)
 
 
 @pytest.mark.parametrize('args', [
@@ -385,8 +385,16 @@ def test_Matrix_MakeScale():
     (skia.Point(0, 0),),
     (skia.IPoint(0, 0),),
 ])
-def test_Matrix_MakeTrans(args):
-    assert isinstance(skia.Matrix.MakeTrans(*args), skia.Matrix)
+def test_Matrix_Translate(args):
+    assert isinstance(skia.Matrix.Translate(*args), skia.Matrix)
+
+
+def test_Matrix_RotateDeg():
+    assert isinstance(skia.Matrix.RotateDeg(0), skia.Matrix)
+
+
+def test_Matrix_RotateRad():
+    assert isinstance(skia.Matrix.RotateDeg(0), skia.Matrix)
 
 
 def test_Matrix_MakeAll():
