@@ -2,6 +2,21 @@
 #include <pybind11/operators.h>
 #include <pybind11/numpy.h>
 
+namespace {
+
+void PyReadPixelsCallback (
+    void* context,
+    std::unique_ptr<const SkSurface::AsyncReadResult> result) {
+    if (!context)
+        throw std::runtime_error("Null pointer exception.");
+    auto callback = py::reinterpret_steal<py::function>(
+        reinterpret_cast<PyObject*>(context));
+    callback(result.get());
+}
+
+}  // namespace
+
+
 const SkSurfaceProps::Flags SkSurfaceProps::kUseDistanceFieldFonts_Flag;
 
 void initSurface(py::module &m) {
@@ -125,7 +140,11 @@ py::class_<SkSurface, sk_sp<SkSurface>, SkRefCnt> surface(
 py::class_<SkSurface::AsyncReadResult>(surface, "AsyncReadResult", R"docstring(
     The result from :py:meth:`Surface.asyncRescaleAndReadPixels` or
     :py:meth:`Surface.asyncRescaleAndReadPixelsYUV420`.
-    )docstring");
+    )docstring")
+    .def("count", &SkSurface::AsyncReadResult::count)
+    .def("data", &SkSurface::AsyncReadResult::data, py::arg("i"))
+    .def("rowBytes", &SkSurface::AsyncReadResult::rowBytes, py::arg("i"))
+    ;
 
 py::enum_<SkSurface::ContentChangeMode>(surface, "ContentChangeMode")
     .value("kDiscard_ContentChangeMode",
@@ -152,7 +171,7 @@ py::enum_<SkSurface::RescaleGamma>(surface, "RescaleGamma", R"docstring(
     Controls the gamma that rescaling occurs in for
     :py:meth:`Surface.asyncRescaleAndReadPixels` and
     :py:meth:`Surface.asyncRescaleAndReadPixelsYUV420`.
-    )docstring")
+    )docstring", py::arithmetic())
     .value("kSrc", SkSurface::RescaleGamma::kSrc)
     .value("kLinear", SkSurface::RescaleGamma::kLinear)
     .export_values();
@@ -541,13 +560,99 @@ surface
         :return: true if pixels were copied
         )docstring",
         py::arg("dst"), py::arg("srcX"), py::arg("srcY"))
-    // .def("asyncRescaleAndReadPixels", &SkSurface::asyncRescaleAndReadPixels,
-    //     "Makes surface pixel data available to caller, possibly "
-    //     "asynchronously.")
-    // .def("asyncRescaleAndReadPixelsYUV420",
-    //     &SkSurface::asyncRescaleAndReadPixelsYUV420,
-    //     "Similar to asyncRescaleAndReadPixels but performs an additional "
-    //     "conversion to YUV.")
+    .def("asyncRescaleAndReadPixels",
+        [] (SkSurface& surface, const SkImageInfo& info, const SkIRect& srcRect,
+            SkSurface::RescaleGamma rescaleGamma,
+            SkFilterQuality rescaleQuality, py::function callback) {
+            surface.asyncRescaleAndReadPixels(
+                info, srcRect, rescaleGamma, rescaleQuality,
+                &PyReadPixelsCallback, callback.release().ptr());
+        },
+        R"docstring(
+        Makes surface pixel data available to caller, possibly asynchronously.
+
+        It can also rescale the surface pixels.
+
+        Currently asynchronous reads are only supported on the GPU backend and
+        only when the underlying 3D API supports transfer buffers and CPU/GPU
+        synchronization primitives. In all other cases this operates
+        synchronously.
+
+        Data is read from the source sub-rectangle, is optionally converted to a
+        linear gamma, is rescaled to the size indicated by 'info', is then
+        converted to the color space, color type, and alpha type of 'info'. A
+        'srcRect' that is not contained by the bounds of the surface causes
+        failure.
+
+        When the pixel data is ready the caller's callback function is called
+        with a AsyncReadResult containing pixel data in the requested color
+        type, alpha type, and color space. The AsyncReadResult will have
+        count() == 1. Upon failure the callback is called with nullptr for
+        AsyncReadResult. For a GPU surface this flushes work but a submit must
+        occur to guarantee a finite time before the callback is called.
+
+        The data is valid for the lifetime of AsyncReadResult with the exception
+        that if the :py:class:`Surface` is GPU-backed the data is immediately
+        invalidated if the GrContext is abandoned or destroyed.
+
+        :param info:    info of the requested pixels
+        :param srcRect: subrectangle of surface to read
+        :param rescaleGamma:    controls whether rescaling is done in the
+            surface's gamma or whether the source data is transformed to a
+            linear gamma before rescaling.
+        :param rescaleQuality:  controls the quality (and cost) of the rescaling
+        :param callback: function to call with result of the read.  The callback
+            takes one argument of :py:class:`Surface.AsyncReadResult`
+        )docstring",
+        py::arg("info"), py::arg("srcRect"), py::arg("rescaleGamma"),
+        py::arg("rescaleQuality"), py::arg("callback"))
+    .def("asyncRescaleAndReadPixelsYUV420",
+        [] (SkSurface& surface, SkYUVColorSpace yuvColorSpace,
+            const SkColorSpace* dstColorSpace, const SkIRect& srcRect,
+            const SkISize& dstSize, SkSurface::RescaleGamma rescaleGamma,
+            SkFilterQuality rescaleQuality, py::function callback) {
+            surface.asyncRescaleAndReadPixelsYUV420(
+                yuvColorSpace, CloneColorSpace(dstColorSpace), srcRect, dstSize,
+                rescaleGamma, rescaleQuality, &PyReadPixelsCallback,
+                callback.release().ptr());
+        },
+        R"docstring(
+        Similar to :py:meth:`asyncRescaleAndReadPixels` but performs an
+        additional conversion to YUV.
+
+        The RGB->YUV conversion is controlled by 'yuvColorSpace'. The YUV data
+        is returned as three planes ordered y, u, v. The u and v planes are half
+        the width and height of the resized rectangle. The y, u, and v values
+        are single bytes. Currently this fails if 'dstSize' width and height are
+        not even. A 'srcRect' that is not contained by the bounds of the surface
+        causes failure.
+
+        When the pixel data is ready the caller's callback function is called
+        with a AsyncReadResult containing the planar data. The AsyncReadResult
+        will have count() == 3. Upon failure the callback is called with nullptr
+        for AsyncReadResult. For a GPU surface this flushes work but a submit
+        must occur to guarantee a finite time before the callback is called.
+
+        The data is valid for the lifetime of AsyncReadResult with the exception
+        that if the :py:class:`Surface` is GPU-backed the data is immediately
+        invalidated if the GrContext is abandoned or destroyed.
+
+        :param yuvColorSpace:   The transformation from RGB to YUV. Applied to
+            the resized image after it is converted to dstColorSpace.
+        :param dstColorSpace:   The color space to convert the resized image to,
+            after rescaling.
+        :param srcRect: The portion of the surface to rescale and convert to YUV
+            planes.
+        :param dstSize: The size to rescale srcRect to
+        :param rescaleGamma:    controls whether rescaling is done in the
+            surface's gamma or whether the source data is transformed to a
+            linear gamma before rescaling.
+        :param rescaleQuality:  controls the quality (and cost) of the rescaling
+        :param callback:    function to call with the planar read result
+        )docstring",
+        py::arg("yuvColorSpace"), py::arg("dstColorSpace"), py::arg("srcRect"),
+        py::arg("dstSize"), py::arg("rescaleGamma"), py::arg("rescaleQuality"),
+        py::arg("callback"))
     .def("writePixels",
         py::overload_cast<const SkPixmap&, int, int>(&SkSurface::writePixels),
         R"docstring(
@@ -617,9 +722,8 @@ surface
             &SkSurface::flush),
         R"docstring(
         Issues pending :py:class:`Surface` commands to the GPU-backed API
-        objects and resolves any :py:class:`Surface` MSAA.
-
-        A call to :py:meth:`GrContext.submit` is always required to ensure work
+        objects and resolves any :py:class:`Surface` MSAA. A call to
+        :py:meth:`GrContext.submit` is always required to ensure work
         is actually sent to the gpu. Some specific API details:
 
         :GL: Commands are actually sent to the driver, but glFlush is never

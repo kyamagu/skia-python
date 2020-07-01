@@ -118,6 +118,25 @@ def test_Surface_readPixels(surface, args):
     assert isinstance(surface.readPixels(*args), bool)
 
 
+def test_Surface_asyncRescaleAndReadPixels(surface):
+    info = skia.ImageInfo.MakeN32Premul(100, 100)
+    def assert_result(result):
+        assert isinstance(result, (type(None), skia.Surface.AsyncReadResult))
+    surface.asyncRescaleAndReadPixels(
+        info, (100, 100), skia.Surface.RescaleGamma.kSrc,
+        skia.kNone_FilterQuality, assert_result)
+    surface.flushAndSubmit()
+
+
+def test_Surface_asyncRescaleAndReadPixelsYUV420(surface):
+    def assert_result(result):
+        assert isinstance(result, (type(None), skia.Surface.AsyncReadResult))
+    surface.asyncRescaleAndReadPixelsYUV420(
+        skia.kRec709_YUVColorSpace, None, (100, 100), (100, 100),
+        skia.Surface.RescaleGamma.kSrc, skia.kNone_FilterQuality, assert_result)
+    surface.flushAndSubmit()
+
+
 @pytest.mark.parametrize('args', [
     (skia.Pixmap(), 0, 0),
     (skia.Bitmap(), 0, 0),

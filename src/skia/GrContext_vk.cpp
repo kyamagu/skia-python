@@ -23,7 +23,14 @@ py::class_<GrVkYcbcrConversionInfo>(m, "GrVkYcbcrConversionInfo")
     // TODO: Implement me!
     ;
 
-py::class_<GrVkImageInfo>(m, "GrVkImageInfo")
+py::class_<GrVkImageInfo>(m, "GrVkImageInfo",
+    R"docstring(
+    When wrapping a GrBackendTexture or GrBackendRendenderTarget, the
+    fCurrentQueueFamily should either be VK_QUEUE_FAMILY_IGNORED,
+    VK_QUEUE_FAMILY_EXTERNAL, or VK_QUEUE_FAMILY_FOREIGN_EXT. If fSharingMode is
+    VK_SHARING_MODE_EXCLUSIVE then fCurrentQueueFamily can also be the graphics
+    queue index passed into Skia.
+    )docstring")
     .def(py::init<>())
     // .def(py::init(
     //     [] (VkImage image,
@@ -57,6 +64,7 @@ py::class_<GrVkImageInfo>(m, "GrVkImageInfo")
     .def_readwrite("fCurrentQueueFamily", &GrVkImageInfo::fCurrentQueueFamily)
     .def_readwrite("fProtected", &GrVkImageInfo::fProtected)
     .def_readwrite("fYcbcrConversionInfo", &GrVkImageInfo::fYcbcrConversionInfo)
+    .def_readwrite("fSharingMode", &GrVkImageInfo::fSharingMode)
     ;
 
 py::class_<GrVkDrawableInfo>(m, "GrVkDrawableInfo")

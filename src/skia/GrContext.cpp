@@ -125,6 +125,26 @@ py::class_<GrFlushInfo>(m, "GrFlushInfo",
     submitted to the gpu from this flush call and all previous flush calls has
     finished on the GPU. If the flush call fails due to an error and nothing
     ends up getting sent to the GPU, the finished proc is called immediately.
+
+    If a submittedProc is provided, the submittedProc will be called when all
+    work from this flush call is submitted to the GPU. If the flush call fails
+    due to an error and nothing will get sent to the GPU, the submitted proc is
+    called immediately. It is possibly that when work is finally submitted, that
+    the submission actual fails. In this case we will not reattempt to do the
+    submission. Skia notifies the client of these via the success bool passed
+    into the submittedProc. The submittedProc is useful to the client to know
+    when semaphores that were sent with the flush have actually been submitted
+    to the GPU so that they can be waited on (or deleted if the submit fails).
+
+    Note about GL: In GL work gets sent to the driver immediately during the
+    flush call, but we don't really know when the driver sends the work to the
+    GPU. Therefore, we treat the submitted proc as we do in other backends. It
+    will be called when the next GrContext::submit is called after the flush (or
+    possibly during the flush if there is no work to be done for the flush). The
+    main use case for the submittedProc is to know when semaphores have been
+    sent to the GPU and even in GL it is required to call GrContext::submit to
+    flush them. So a client should be able to treat all backend APIs the same in
+    terms of how the submitted procs are treated.
     )docstring")
     .def(py::init<>())
     .def_readwrite("fFlags", &GrFlushInfo::fFlags)
@@ -143,6 +163,10 @@ py::class_<GrFlushInfo>(m, "GrFlushInfo",
             info.fSignalSemaphores = (semaphores.size()) ?
                 &semaphores[0] : (GrBackendSemaphore*) nullptr;
         })
+    // .def_readwrite("fFinishedProc", &GrFlushInfo::fFinishedProc)
+    // .def_readwrite("fFinishedContext", &GrFlushInfo::fFinishedContext)
+    // .def_readwrite("fSubmittedProc", &GrFlushInfo::fSubmittedProc)
+    // .def_readwrite("fSubmittedContext", &GrFlushInfo::fSubmittedContext)
     ;
 
 py::enum_<GrSemaphoresSubmitted>(m, "GrSemaphoresSubmitted")
@@ -279,7 +303,6 @@ py::class_<GrContextOptions>(m, "GrContextOptions")
     // TODO: Implement me!
     ;
 
-/*
 py::class_<GrBackendSurfaceMutableState>(m, "GrBackendSurfaceMutableState",
     R"docstring(
     Since Skia and clients can both modify gpu textures and their connected
@@ -294,9 +317,10 @@ py::class_<GrBackendSurfaceMutableState>(m, "GrBackendSurfaceMutableState",
 
         Vulkan: VkImageLayout and QueueFamilyIndex
     )docstring")
+#ifdef SK_VULKAN
     .def(py::init<VkImageLayout, uint32_t>())
+#endif
     ;
-*/
 
 py::class_<GrBackendRenderTarget>(m, "GrBackendRenderTarget")
     .def(py::init<>())
@@ -573,51 +597,52 @@ py::class_<GrContext, sk_sp<GrContext>, SkRefCnt>(m, "GrContext")
     .def("flush", py::overload_cast<const GrFlushInfo&>(&GrContext::flush),
         R"docstring(
         Call to ensure all drawing to the context has been flushed to underlying
-        3D API specific objects.
+        3D API specific objects. A call to :py:meth:`GrContext.submit` is always
+        required to ensure work is actually sent to the gpu. Some specific API
+        details:
 
-        A call to :py:meth:`submit` is always required to ensure work is
-        actually sent to the gpu. Some specific API details: GL: Commands are
-        actually sent to the driver, but glFlush is never called. Thus some sync
-        objects from the flush will not be valid until a submission occurs.
+        :GL: Commands are actually sent to the driver, but glFlush is never
+            called. Thus some sync objects from the flush will not be valid
+            until a submission occurs.
 
-        Vulkan/Metal/D3D/Dawn: Commands are recorded to the backend APIs
-        corresponding command buffer or encoder objects. However, these objects
-        are not sent to the gpu until a submission occurs.
+        :Vulkan/Metal/D3D/Dawn: Commands are recorded to the backend APIs
+            corresponding command buffer or encoder objects. However, these
+            objects are not sent to the gpu until a submission occurs.
 
-        If the return is :py:attr:`GrSemaphoresSubmitted.kYes`, only
-        initialized GrBackendSemaphores will be submitted to the gpu during the
-        next submit call (it is possible Skia failed to create a subset of the
-        semaphores). The client should not wait on these semaphores until after
-        submit has been called, but must keep them alive until then. If a submit
-        flag was passed in with the flush these valid semaphores can we waited
-        on immediately. If this call returns
-        :py:attr:`GrSemaphoresSubmitted.kNo`, the GPU backend will not submit
-        any semaphores to be signaled on the GPU. Thus the client should not
-        have the GPU wait on any of the semaphores passed in with the
-        :py:class:`GrFlushInfo`. Regardless of whether semaphores were submitted
+        If the return is GrSemaphoresSubmitted::kYes, only initialized
+        GrBackendSemaphores will be submitted to the gpu during the next submit
+        call (it is possible Skia failed to create a subset of the semaphores).
+        The client should not wait on these semaphores until after submit has
+        been called, but must keep them alive until then. If a submit flag was
+        passed in with the flush these valid semaphores can we waited on
+        immediately. If this call returns GrSemaphoresSubmitted::kNo, the GPU
+        backend will not submit any semaphores to be signaled on the GPU. Thus
+        the client should not have the GPU wait on any of the semaphores passed
+        in with the GrFlushInfo. Regardless of whether semaphores were submitted
         to the GPU or not, the client is still responsible for deleting any
-        initialized semaphores. Regardleess of semaphore submission the context
-        will still be flushed. It should be emphasized that a return value of
-        :py:attr:`GrSemaphoresSubmitted.kNo` does not mean the flush did not
-        happen. It simply means there were no semaphores submitted to the GPU. A
-        caller should only take this as a failure if they passed in semaphores
-        to be submitted.
+        initialized semaphores.
+
+        Regardleess of semaphore submission the context will still be flushed.
+        It should be emphasized that a return value of
+        GrSemaphoresSubmitted::kNo does not mean the flush did not happen. It
+        simply means there were no semaphores submitted to the GPU. A caller
+        should only take this as a failure if they passed in semaphores to be
+        submitted.
         )docstring",
         py::arg("info"))
+    // .def("flush",
+    //     py::overload_cast<const GrFlushInfo&,
+    //     const GrPrepareForExternalIORequests>(&GrContext::flush))
     .def("flushAndSubmit", &GrContext::flushAndSubmit,
         R"docstring(
         Call to ensure all drawing to the context has been flushed and submitted
-        to the underlying 3D API.
-
-        This is equivalent to calling :py:meth:`flush` with a default
-        :py:class:`GrFlushInfo` followed by :py:meth:`submit`.
+        to the underlying 3D API. This is equivalent to calling :py:meth:`flush`
+        with a default :py:class:`GrFlushInfo` followed by :py:meth:`submit`.
         )docstring")
     .def("submit", &GrContext::submit,
         R"docstring(
         Submit outstanding work to the gpu from all previously un-submitted
-        flushes.
-
-        The return value of the submit will indicate whether or not the
+        flushes. The return value of the submit will indicate whether or not the
         submission to the GPU was successful.
 
         If the call returns true, all previously passed in semaphores in flush
@@ -893,10 +918,10 @@ py::class_<GrContext, sk_sp<GrContext>, SkRefCnt>(m, "GrContext")
         },
         py::arg("width"), py::arg("height"), py::arg("type"), py::arg("data"),
         py::arg("mipMapped"), py::arg("isProtected") = GrProtected::kNo)
-    // .def("setBackendTextureState",
-    //     &GrContext::setBackendTextureState)
-    // .def("setBackendRenderTargetState",
-    //     &GrContext::setBackendRenderTargetState)
+    .def("setBackendTextureState",
+        &GrContext::setBackendTextureState)
+    .def("setBackendRenderTargetState",
+        &GrContext::setBackendRenderTargetState)
     .def("deleteBackendTexture", &GrContext::deleteBackendTexture,
         py::arg("texture"))
     .def("precompileShader", &GrContext::precompileShader,

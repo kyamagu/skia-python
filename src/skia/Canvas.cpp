@@ -2175,12 +2175,13 @@ canvas
             SkBlendMode mode) { canvas.drawVertices(vertices, mode, paint); },
         R"docstring(
         Draws :py:class:`Vertices` vertices, a triangle mesh, using clip and
-        :py:class:`Matrix`.
+        :py:class:`Matrix`. If paint contains an :py:class:`Shader` and vertices
+        does not contain texCoords, the shader is mapped using the vertices'
+        positions.
 
-        If vertices texs and vertices colors are defined in vertices, and
-        :py:class:`Paint` paint contains :py:class:`Shader`,
-        :py:class:`BlendMode` mode combines vertices colors with
-        :py:class:`Shader`.
+        If vvertices colors are defined in vertices, and :py:class:`Paint` paint
+        contains :py:class:`Shader`, :py:class:`BlendMode` mode combines
+        vertices colors with :py:class:`Shader`.
 
         :param skia.Vertices vertices: triangle mesh to draw
         :param skia.BlendMode mode: combines vertices colors with
@@ -2243,7 +2244,8 @@ canvas
 
         If paint contains :py:class:`Shader`, :py:class:`Point` array texCoords
         maps :py:class:`Shader` as texture to corners in top-left, top-right,
-        bottom-right, bottom-left order.
+        bottom-right, bottom-left order. If texCoords is nullptr,
+        :py:class:`Shader` is mapped using positions (derived from cubics).
 
         :param List[skia.Point] cubics: :py:class:`Path` cubic array, sharing
             common points (length 12)
