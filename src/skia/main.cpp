@@ -1,5 +1,6 @@
 #include "common.h"
 
+#define XSTRING(s) STRING(s)
 #define STRING(s) #s
 
 // Declarations.
@@ -69,7 +70,7 @@ PYBIND11_MODULE(skia, m) {
     initSurface(m);
 
 #ifdef VERSION_INFO
-    m.attr("__version__") = STRING(VERSION_INFO);
+    m.attr("__version__") = XSTRING(VERSION_INFO);
 #else
     m.attr("__version__") = "dev";
 #endif
