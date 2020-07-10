@@ -12,7 +12,7 @@ except ImportError:
     pass
 
 NAME = 'skia-python'
-__version__ = '0.0.6'
+__version__ = '85.0'
 
 SKIA_PATH = os.getenv('SKIA_PATH', 'skia')
 SKIA_OUT_PATH = os.getenv(
@@ -28,9 +28,6 @@ if sys.platform == 'win32':
         'Usp10',
         'OpenGL32',
         'Gdi32',
-        # 'd3d12',
-        # 'dxgi',
-        # 'd3dcompiler',
     ]
     EXTRA_OBJECTS = [os.path.join(SKIA_OUT_PATH, 'skia.lib')]
     EXTRA_COMPILE_ARGS = [
@@ -76,7 +73,6 @@ else:
         'fontconfig',
         'freetype',
         'GL',
-        # 'GLESv2',
     ]
     EXTRA_OBJECTS = [os.path.join(SKIA_OUT_PATH, 'libskia.a')]
     EXTRA_COMPILE_ARGS = [
