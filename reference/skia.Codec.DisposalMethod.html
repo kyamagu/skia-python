@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Codec.DisposalMethod &mdash; skia-python 0.0.6 documentation</title>
+  <title>Codec.DisposalMethod &mdash; skia-python 85.0 documentation</title>
   
 
   
@@ -61,7 +61,7 @@
             
             
               <div class="version">
-                0.0.6
+                85.0
               </div>
             
           
@@ -350,7 +350,7 @@
 <h1>Codec.DisposalMethod<a class="headerlink" href="#codec-disposalmethod" title="Permalink to this headline">¶</a></h1>
 <dl class="py class">
 <dt id="skia.Codec.DisposalMethod">
-<em class="property">class </em><code class="sig-prename descclassname">Codec.</code><code class="sig-name descname">DisposalMethod</code><a class="headerlink" href="#skia.Codec.DisposalMethod" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-name descname">DisposalMethod</code><a class="headerlink" href="#skia.Codec.DisposalMethod" title="Permalink to this definition">¶</a></dt>
 <dd><blockquote>
 <div><p>This specifies how the next frame is based on this frame.</p>
 <p>Names are based on the GIF 89a spec.</p>
@@ -359,16 +359,16 @@
 <p>Members:</p>
 <blockquote>
 <div><dl>
-<dt>kRestoreBGColor :</dt><dd><p>Similar to Keep, except the area inside this frame’s rectangle
-should be cleared to the BackGround color (transparent) before
-drawing the next frame.</p>
+<dt>kKeep :</dt><dd><p>The next frame should be drawn on top of this one.</p>
+<p>In a GIF, a value of 0 (not specified) is also treated as Keep.</p>
 </dd>
 <dt>kRestorePrevious :</dt><dd><p>The next frame should be drawn on top of the previous frame - i.e.
 disregarding this one.</p>
 <p>In a GIF, a value of 4 is also treated as RestorePrevious.</p>
 </dd>
-<dt>kKeep :</dt><dd><p>The next frame should be drawn on top of this one.</p>
-<p>In a GIF, a value of 0 (not specified) is also treated as Keep.</p>
+<dt>kRestoreBGColor :</dt><dd><p>Similar to Keep, except the area inside this frame’s rectangle
+should be cleared to the BackGround color (transparent) before
+drawing the next frame.</p>
 </dd>
 </dl>
 </div></blockquote>
@@ -411,7 +411,7 @@ disregarding this one.</p>
 <h2>Methods<a class="headerlink" href="#methods" title="Permalink to this headline">¶</a></h2>
 <dl class="py method">
 <dt id="skia.Codec.DisposalMethod.__init__">
-<code class="sig-prename descclassname">Codec.DisposalMethod.</code><code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Codec.DisposalMethod" title="skia.Codec.DisposalMethod">skia.Codec.DisposalMethod</a></span></em>, <em class="sig-param"><span class="n">arg0</span><span class="p">:</span> <span class="n">int</span></em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#skia.Codec.DisposalMethod.__init__" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">DisposalMethod.</code><code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Codec.DisposalMethod" title="skia.Codec.DisposalMethod">skia.Codec.DisposalMethod</a></span></em>, <em class="sig-param"><span class="n">arg0</span><span class="p">:</span> <span class="n">int</span></em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#skia.Codec.DisposalMethod.__init__" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </div>
@@ -419,22 +419,22 @@ disregarding this one.</p>
 <h2>Attributes<a class="headerlink" href="#attributes" title="Permalink to this headline">¶</a></h2>
 <dl class="py attribute">
 <dt id="skia.Codec.DisposalMethod.kKeep">
-<code class="sig-prename descclassname">Codec.DisposalMethod.</code><code class="sig-name descname">kKeep</code><em class="property"> = DisposalMethod.kKeep</em><a class="headerlink" href="#skia.Codec.DisposalMethod.kKeep" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">DisposalMethod.</code><code class="sig-name descname">kKeep</code><em class="property"> = DisposalMethod.kKeep</em><a class="headerlink" href="#skia.Codec.DisposalMethod.kKeep" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt id="skia.Codec.DisposalMethod.kRestoreBGColor">
-<code class="sig-prename descclassname">Codec.DisposalMethod.</code><code class="sig-name descname">kRestoreBGColor</code><em class="property"> = DisposalMethod.kRestoreBGColor</em><a class="headerlink" href="#skia.Codec.DisposalMethod.kRestoreBGColor" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">DisposalMethod.</code><code class="sig-name descname">kRestoreBGColor</code><em class="property"> = DisposalMethod.kRestoreBGColor</em><a class="headerlink" href="#skia.Codec.DisposalMethod.kRestoreBGColor" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt id="skia.Codec.DisposalMethod.kRestorePrevious">
-<code class="sig-prename descclassname">Codec.DisposalMethod.</code><code class="sig-name descname">kRestorePrevious</code><em class="property"> = DisposalMethod.kRestorePrevious</em><a class="headerlink" href="#skia.Codec.DisposalMethod.kRestorePrevious" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">DisposalMethod.</code><code class="sig-name descname">kRestorePrevious</code><em class="property"> = DisposalMethod.kRestorePrevious</em><a class="headerlink" href="#skia.Codec.DisposalMethod.kRestorePrevious" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt id="skia.Codec.DisposalMethod.name">
-<code class="sig-prename descclassname">Codec.DisposalMethod.</code><code class="sig-name descname">name</code><a class="headerlink" href="#skia.Codec.DisposalMethod.name" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">DisposalMethod.</code><code class="sig-name descname">name</code><a class="headerlink" href="#skia.Codec.DisposalMethod.name" title="Permalink to this definition">¶</a></dt>
 <dd><p>handle) -&gt; str</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
