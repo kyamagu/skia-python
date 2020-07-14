@@ -451,7 +451,7 @@
 <td><p></p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#skia.GrContext.setBackendTextureState" title="skia.GrContext.setBackendTextureState"><code class="xref py py-obj docutils literal notranslate"><span class="pre">setBackendTextureState</span></code></a></p></td>
-<td><p></p></td>
+<td><p>Updates the state of the GrBackendTexture/RenderTarget to have the passed in GrBackendSurfaceMutableState.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#skia.GrContext.setResourceCacheLimit" title="skia.GrContext.setResourceCacheLimit"><code class="xref py py-obj docutils literal notranslate"><span class="pre">setResourceCacheLimit</span></code></a></p></td>
 <td><p>Specify the GPU resource cache limit.</p></td>
@@ -938,13 +938,24 @@ no-op.)</p>
 
 <dl class="py method">
 <dt id="skia.GrContext.setBackendRenderTargetState">
-<code class="sig-prename descclassname">GrContext.</code><code class="sig-name descname">setBackendRenderTargetState</code><span class="sig-paren">(</span><em class="sig-param">self: skia.GrContext</em>, <em class="sig-param">arg0: skia.GrBackendRenderTarget</em>, <em class="sig-param">arg1: skia.GrBackendSurfaceMutableState</em>, <em class="sig-param">arg2: void (void*)</em>, <em class="sig-param">arg3: capsule</em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#skia.GrContext.setBackendRenderTargetState" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">GrContext.</code><code class="sig-name descname">setBackendRenderTargetState</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.GrContext" title="skia.GrContext">skia.GrContext</a></span></em>, <em class="sig-param"><span class="n">target</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.GrBackendRenderTarget.html#skia.GrBackendRenderTarget" title="skia.GrBackendRenderTarget">skia.GrBackendRenderTarget</a></span></em>, <em class="sig-param"><span class="n">mutableState</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.GrBackendSurfaceMutableState.html#skia.GrBackendSurfaceMutableState" title="skia.GrBackendSurfaceMutableState">skia.GrBackendSurfaceMutableState</a></span></em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#skia.GrContext.setBackendRenderTargetState" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
 <dt id="skia.GrContext.setBackendTextureState">
-<code class="sig-prename descclassname">GrContext.</code><code class="sig-name descname">setBackendTextureState</code><span class="sig-paren">(</span><em class="sig-param">self: skia.GrContext</em>, <em class="sig-param">arg0: skia.GrBackendTexture</em>, <em class="sig-param">arg1: skia.GrBackendSurfaceMutableState</em>, <em class="sig-param">arg2: void (void*)</em>, <em class="sig-param">arg3: capsule</em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#skia.GrContext.setBackendTextureState" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<code class="sig-prename descclassname">GrContext.</code><code class="sig-name descname">setBackendTextureState</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.GrContext" title="skia.GrContext">skia.GrContext</a></span></em>, <em class="sig-param"><span class="n">texture</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.GrBackendTexture.html#skia.GrBackendTexture" title="skia.GrBackendTexture">skia.GrBackendTexture</a></span></em>, <em class="sig-param"><span class="n">mutableState</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.GrBackendSurfaceMutableState.html#skia.GrBackendSurfaceMutableState" title="skia.GrBackendSurfaceMutableState">skia.GrBackendSurfaceMutableState</a></span></em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#skia.GrContext.setBackendTextureState" title="Permalink to this definition">¶</a></dt>
+<dd><p>Updates the state of the GrBackendTexture/RenderTarget to have the
+passed in GrBackendSurfaceMutableState.</p>
+<p>All objects that wrap the backend surface (i.e. <a class="reference internal" href="skia.Surface.html#skia.Surface" title="skia.Surface"><code class="xref py py-class docutils literal notranslate"><span class="pre">Surface</span></code></a> and
+<a class="reference internal" href="skia.Image.html#skia.Image" title="skia.Image"><code class="xref py py-class docutils literal notranslate"><span class="pre">Image</span></code></a>) will also be aware of this state change. This call
+does not submit the state change to the gpu, but requires the client to
+call <a class="reference internal" href="#skia.GrContext.submit" title="skia.GrContext.submit"><code class="xref py py-meth docutils literal notranslate"><span class="pre">GrContext.submit()</span></code></a> to send it to the GPU. The work for
+this call is ordered linearly with all other calls that require
+<a class="reference internal" href="#skia.GrContext.submit" title="skia.GrContext.submit"><code class="xref py py-meth docutils literal notranslate"><span class="pre">GrContext.submit()</span></code></a> to be called (e.g
+<a class="reference internal" href="#skia.GrContext.updateBackendTexture" title="skia.GrContext.updateBackendTexture"><code class="xref py py-meth docutils literal notranslate"><span class="pre">updateBackendTexture()</span></code></a> and <a class="reference internal" href="#skia.GrContext.flush" title="skia.GrContext.flush"><code class="xref py py-meth docutils literal notranslate"><span class="pre">flush()</span></code></a>).</p>
+<p>See <a class="reference internal" href="skia.GrBackendSurfaceMutableState.html#skia.GrBackendSurfaceMutableState" title="skia.GrBackendSurfaceMutableState"><code class="xref py py-class docutils literal notranslate"><span class="pre">GrBackendSurfaceMutableState</span></code></a> to see what state can be
+set via this call.</p>
+</dd></dl>
 
 <dl class="py method">
 <dt id="skia.GrContext.setResourceCacheLimit">

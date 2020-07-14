@@ -946,13 +946,16 @@ than 1.0 is undefined.</p>
 
 <dl class="py function">
 <dt id="skia.BlendMode_AsCoeff">
-<code class="sig-name descname">BlendMode_AsCoeff</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">arg0</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.BlendMode.html#skia.BlendMode" title="skia.BlendMode">skia.BlendMode</a></span></em>, <em class="sig-param"><span class="n">arg1</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.BlendModeCoeff.html#skia.BlendModeCoeff" title="skia.BlendModeCoeff">skia.BlendModeCoeff</a></span></em>, <em class="sig-param"><span class="n">arg2</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.BlendModeCoeff.html#skia.BlendModeCoeff" title="skia.BlendModeCoeff">skia.BlendModeCoeff</a></span></em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#skia.BlendMode_AsCoeff" title="Permalink to this definition">¶</a></dt>
-<dd><p>Returns true if ‘mode’ is a coefficient-based blend mode (&lt;= kLastCoeffMode).</p>
+<code class="sig-name descname">BlendMode_AsCoeff</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">mode</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.BlendMode.html#skia.BlendMode" title="skia.BlendMode">skia.BlendMode</a></span></em>, <em class="sig-param"><span class="n">src</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.BlendModeCoeff.html#skia.BlendModeCoeff" title="skia.BlendModeCoeff">skia.BlendModeCoeff</a></span></em>, <em class="sig-param"><span class="n">dst</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.BlendModeCoeff.html#skia.BlendModeCoeff" title="skia.BlendModeCoeff">skia.BlendModeCoeff</a></span></em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#skia.BlendMode_AsCoeff" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns true if ‘mode’ is a coefficient-based blend mode (&lt;=
+kLastCoeffMode).</p>
+<p>If true is returned, the mode’s src and dst coefficient functions are set in
+‘src’ and ‘dst’.</p>
 </dd></dl>
 
 <dl class="py function">
 <dt id="skia.BlendMode_Name">
-<code class="sig-name descname">BlendMode_Name</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">arg0</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.BlendMode.html#skia.BlendMode" title="skia.BlendMode">skia.BlendMode</a></span></em><span class="sig-paren">)</span> &#x2192; str<a class="headerlink" href="#skia.BlendMode_Name" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">BlendMode_Name</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">blendMode</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.BlendMode.html#skia.BlendMode" title="skia.BlendMode">skia.BlendMode</a></span></em><span class="sig-paren">)</span> &#x2192; str<a class="headerlink" href="#skia.BlendMode_Name" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns name of blendMode as null-terminated C string.</p>
 </dd></dl>
 
@@ -1197,17 +1200,17 @@ zero to one. hsv[2] represents hsv value, and varies from zero to one.</p>
 
 <dl class="py function">
 <dt id="skia.PathFillType_ConvertToNonInverse">
-<code class="sig-name descname">PathFillType_ConvertToNonInverse</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">arg0</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.PathFillType.html#skia.PathFillType" title="skia.PathFillType">skia.PathFillType</a></span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="skia.PathFillType.html#skia.PathFillType" title="skia.PathFillType">skia.PathFillType</a><a class="headerlink" href="#skia.PathFillType_ConvertToNonInverse" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">PathFillType_ConvertToNonInverse</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">ft</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.PathFillType.html#skia.PathFillType" title="skia.PathFillType">skia.PathFillType</a></span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="skia.PathFillType.html#skia.PathFillType" title="skia.PathFillType">skia.PathFillType</a><a class="headerlink" href="#skia.PathFillType_ConvertToNonInverse" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py function">
 <dt id="skia.PathFillType_IsEvenOdd">
-<code class="sig-name descname">PathFillType_IsEvenOdd</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">arg0</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.PathFillType.html#skia.PathFillType" title="skia.PathFillType">skia.PathFillType</a></span></em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#skia.PathFillType_IsEvenOdd" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">PathFillType_IsEvenOdd</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">ft</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.PathFillType.html#skia.PathFillType" title="skia.PathFillType">skia.PathFillType</a></span></em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#skia.PathFillType_IsEvenOdd" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py function">
 <dt id="skia.PathFillType_IsInverse">
-<code class="sig-name descname">PathFillType_IsInverse</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">arg0</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.PathFillType.html#skia.PathFillType" title="skia.PathFillType">skia.PathFillType</a></span></em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#skia.PathFillType_IsInverse" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">PathFillType_IsInverse</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">ft</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.PathFillType.html#skia.PathFillType" title="skia.PathFillType">skia.PathFillType</a></span></em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#skia.PathFillType_IsInverse" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py function">

@@ -354,11 +354,17 @@
 <tr class="row-even"><td><p><a class="reference internal" href="#skia.ColorSpace.Equals" title="skia.ColorSpace.Equals"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Equals</span></code></a></p></td>
 <td><p>If both are null, we return true.</p></td>
 </tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.ColorSpace.Make" title="skia.ColorSpace.Make"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Make</span></code></a></p></td>
+<td><p>Create an <a class="reference internal" href="#skia.ColorSpace" title="skia.ColorSpace"><code class="xref py py-class docutils literal notranslate"><span class="pre">ColorSpace</span></code></a> from a parsed (skcms) ICC profile.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.ColorSpace.MakeRGB" title="skia.ColorSpace.MakeRGB"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MakeRGB</span></code></a></p></td>
+<td><p>Create an <a class="reference internal" href="#skia.ColorSpace" title="skia.ColorSpace"><code class="xref py py-class docutils literal notranslate"><span class="pre">ColorSpace</span></code></a> from a transfer function and a row-major 3x3 transformation to XYZ.</p></td>
+</tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#skia.ColorSpace.MakeSRGB" title="skia.ColorSpace.MakeSRGB"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MakeSRGB</span></code></a></p></td>
 <td><p>Create the sRGB color space.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#skia.ColorSpace.MakeSRGBLinear" title="skia.ColorSpace.MakeSRGBLinear"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MakeSRGBLinear</span></code></a></p></td>
-<td><p>Create the sRGB color space.</p></td>
+<td><p>Colorspace with the sRGB primaries, but a linear (1.0) gamma.</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#skia.ColorSpace.__init__" title="skia.ColorSpace.__init__"><code class="xref py py-obj docutils literal notranslate"><span class="pre">__init__</span></code></a></p></td>
 <td><p>Initialize self.</p></td>
@@ -372,47 +378,62 @@
 <tr class="row-even"><td><p><a class="reference internal" href="#skia.ColorSpace.gammaIsLinear" title="skia.ColorSpace.gammaIsLinear"><code class="xref py py-obj docutils literal notranslate"><span class="pre">gammaIsLinear</span></code></a></p></td>
 <td><p>Returns true if the color space gamma is linear.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#skia.ColorSpace.hash" title="skia.ColorSpace.hash"><code class="xref py py-obj docutils literal notranslate"><span class="pre">hash</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.ColorSpace.gamutTransformTo" title="skia.ColorSpace.gamutTransformTo"><code class="xref py py-obj docutils literal notranslate"><span class="pre">gamutTransformTo</span></code></a></p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#skia.ColorSpace.isSRGB" title="skia.ColorSpace.isSRGB"><code class="xref py py-obj docutils literal notranslate"><span class="pre">isSRGB</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.ColorSpace.hash" title="skia.ColorSpace.hash"><code class="xref py py-obj docutils literal notranslate"><span class="pre">hash</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.ColorSpace.invTransferFn" title="skia.ColorSpace.invTransferFn"><code class="xref py py-obj docutils literal notranslate"><span class="pre">invTransferFn</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.ColorSpace.isNumericalTransferFn" title="skia.ColorSpace.isNumericalTransferFn"><code class="xref py py-obj docutils literal notranslate"><span class="pre">isNumericalTransferFn</span></code></a></p></td>
+<td><p>Sets <code class="docutils literal notranslate"><span class="pre">|fn|</span></code> to the transfer function from this color space.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.ColorSpace.isSRGB" title="skia.ColorSpace.isSRGB"><code class="xref py py-obj docutils literal notranslate"><span class="pre">isSRGB</span></code></a></p></td>
 <td><p>Returns true if the color space is sRGB.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#skia.ColorSpace.makeColorSpin" title="skia.ColorSpace.makeColorSpin"><code class="xref py py-obj docutils literal notranslate"><span class="pre">makeColorSpin</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.ColorSpace.makeColorSpin" title="skia.ColorSpace.makeColorSpin"><code class="xref py py-obj docutils literal notranslate"><span class="pre">makeColorSpin</span></code></a></p></td>
 <td><p>Returns a color space with the same transfer function as this one, but with the primary colors rotated.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#skia.ColorSpace.makeLinearGamma" title="skia.ColorSpace.makeLinearGamma"><code class="xref py py-obj docutils literal notranslate"><span class="pre">makeLinearGamma</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.ColorSpace.makeLinearGamma" title="skia.ColorSpace.makeLinearGamma"><code class="xref py py-obj docutils literal notranslate"><span class="pre">makeLinearGamma</span></code></a></p></td>
 <td><p>Returns a color space with the same gamut as this one, but with a linear gamma.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#skia.ColorSpace.makeSRGBGamma" title="skia.ColorSpace.makeSRGBGamma"><code class="xref py py-obj docutils literal notranslate"><span class="pre">makeSRGBGamma</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.ColorSpace.makeSRGBGamma" title="skia.ColorSpace.makeSRGBGamma"><code class="xref py py-obj docutils literal notranslate"><span class="pre">makeSRGBGamma</span></code></a></p></td>
 <td><p>Returns a color space with the same gamut as this one, with with the sRGB transfer function.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#skia.ColorSpace.ref" title="skia.ColorSpace.ref"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ref</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.ColorSpace.ref" title="skia.ColorSpace.ref"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ref</span></code></a></p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#skia.ColorSpace.refCntGreaterThan" title="skia.ColorSpace.refCntGreaterThan"><code class="xref py py-obj docutils literal notranslate"><span class="pre">refCntGreaterThan</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.ColorSpace.refCntGreaterThan" title="skia.ColorSpace.refCntGreaterThan"><code class="xref py py-obj docutils literal notranslate"><span class="pre">refCntGreaterThan</span></code></a></p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#skia.ColorSpace.serialize" title="skia.ColorSpace.serialize"><code class="xref py py-obj docutils literal notranslate"><span class="pre">serialize</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.ColorSpace.serialize" title="skia.ColorSpace.serialize"><code class="xref py py-obj docutils literal notranslate"><span class="pre">serialize</span></code></a></p></td>
 <td><p>Returns nullptr on failure.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#skia.ColorSpace.toXYZD50Hash" title="skia.ColorSpace.toXYZD50Hash"><code class="xref py py-obj docutils literal notranslate"><span class="pre">toXYZD50Hash</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.ColorSpace.toProfile" title="skia.ColorSpace.toProfile"><code class="xref py py-obj docutils literal notranslate"><span class="pre">toProfile</span></code></a></p></td>
+<td><p>Convert this color space to an skcms ICC profile struct.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.ColorSpace.toXYZD50" title="skia.ColorSpace.toXYZD50"><code class="xref py py-obj docutils literal notranslate"><span class="pre">toXYZD50</span></code></a></p></td>
+<td><p>Returns true and sets <code class="docutils literal notranslate"><span class="pre">|toXYZD50|</span></code> if the color gamut can be described as a matrix.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.ColorSpace.toXYZD50Hash" title="skia.ColorSpace.toXYZD50Hash"><code class="xref py py-obj docutils literal notranslate"><span class="pre">toXYZD50Hash</span></code></a></p></td>
 <td><p>Returns a hash of the gamut transformation to XYZ D50.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#skia.ColorSpace.transferFn" title="skia.ColorSpace.transferFn"><code class="xref py py-obj docutils literal notranslate"><span class="pre">transferFn</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.ColorSpace.transferFn" title="skia.ColorSpace.transferFn"><code class="xref py py-obj docutils literal notranslate"><span class="pre">transferFn</span></code></a></p></td>
+<td><p>Overloaded function.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.ColorSpace.transferFnHash" title="skia.ColorSpace.transferFnHash"><code class="xref py py-obj docutils literal notranslate"><span class="pre">transferFnHash</span></code></a></p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#skia.ColorSpace.transferFnHash" title="skia.ColorSpace.transferFnHash"><code class="xref py py-obj docutils literal notranslate"><span class="pre">transferFnHash</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.ColorSpace.unique" title="skia.ColorSpace.unique"><code class="xref py py-obj docutils literal notranslate"><span class="pre">unique</span></code></a></p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#skia.ColorSpace.unique" title="skia.ColorSpace.unique"><code class="xref py py-obj docutils literal notranslate"><span class="pre">unique</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.ColorSpace.unref" title="skia.ColorSpace.unref"><code class="xref py py-obj docutils literal notranslate"><span class="pre">unref</span></code></a></p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#skia.ColorSpace.unref" title="skia.ColorSpace.unref"><code class="xref py py-obj docutils literal notranslate"><span class="pre">unref</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#skia.ColorSpace.writeToMemory" title="skia.ColorSpace.writeToMemory"><code class="xref py py-obj docutils literal notranslate"><span class="pre">writeToMemory</span></code></a></p></td>
-<td><p>If memory is nullptr, returns the size required to serialize.</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.ColorSpace.writeToMemory" title="skia.ColorSpace.writeToMemory"><code class="xref py py-obj docutils literal notranslate"><span class="pre">writeToMemory</span></code></a></p></td>
+<td><p>If <code class="docutils literal notranslate"><span class="pre">|memory|</span></code> is nullptr, returns the size required to serialize.</p></td>
 </tr>
 </tbody>
 </table>
@@ -422,13 +443,28 @@
 <h2>Methods<a class="headerlink" href="#methods" title="Permalink to this headline">¶</a></h2>
 <dl class="py method">
 <dt id="skia.ColorSpace.Deserialize">
-<em class="property">static </em><code class="sig-prename descclassname">ColorSpace.</code><code class="sig-name descname">Deserialize</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">arg0</span><span class="p">:</span> <span class="n">capsule</span></em>, <em class="sig-param"><span class="n">arg1</span><span class="p">:</span> <span class="n">int</span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="#skia.ColorSpace" title="skia.ColorSpace">skia.ColorSpace</a><a class="headerlink" href="#skia.ColorSpace.Deserialize" title="Permalink to this definition">¶</a></dt>
+<em class="property">static </em><code class="sig-prename descclassname">ColorSpace.</code><code class="sig-name descname">Deserialize</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">data</span><span class="p">:</span> <span class="n">capsule</span></em>, <em class="sig-param"><span class="n">length</span><span class="p">:</span> <span class="n">int</span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="#skia.ColorSpace" title="skia.ColorSpace">skia.ColorSpace</a><a class="headerlink" href="#skia.ColorSpace.Deserialize" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
 <dt id="skia.ColorSpace.Equals">
-<em class="property">static </em><code class="sig-prename descclassname">ColorSpace.</code><code class="sig-name descname">Equals</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">arg0</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.ColorSpace" title="skia.ColorSpace">skia.ColorSpace</a></span></em>, <em class="sig-param"><span class="n">arg1</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.ColorSpace" title="skia.ColorSpace">skia.ColorSpace</a></span></em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#skia.ColorSpace.Equals" title="Permalink to this definition">¶</a></dt>
+<em class="property">static </em><code class="sig-prename descclassname">ColorSpace.</code><code class="sig-name descname">Equals</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.ColorSpace" title="skia.ColorSpace">skia.ColorSpace</a></span></em>, <em class="sig-param"><span class="n">other</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.ColorSpace" title="skia.ColorSpace">skia.ColorSpace</a></span></em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#skia.ColorSpace.Equals" title="Permalink to this definition">¶</a></dt>
 <dd><p>If both are null, we return true.</p>
+<p>If one is null and the other is not, we return false. If both are
+non-null, we do a deeper compare.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="skia.ColorSpace.Make">
+<em class="property">static </em><code class="sig-prename descclassname">ColorSpace.</code><code class="sig-name descname">Make</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">profile</span><span class="p">:</span> <span class="n">skia.cms.ICCProfile</span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="#skia.ColorSpace" title="skia.ColorSpace">skia.ColorSpace</a><a class="headerlink" href="#skia.ColorSpace.Make" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create an <a class="reference internal" href="#skia.ColorSpace" title="skia.ColorSpace"><code class="xref py py-class docutils literal notranslate"><span class="pre">ColorSpace</span></code></a> from a parsed (skcms) ICC profile.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="skia.ColorSpace.MakeRGB">
+<em class="property">static </em><code class="sig-prename descclassname">ColorSpace.</code><code class="sig-name descname">MakeRGB</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">transferFn</span><span class="p">:</span> <span class="n">skia.cms.TransferFunction</span></em>, <em class="sig-param"><span class="n">toXYZ</span><span class="p">:</span> <span class="n">skia.cms.Matrix3x3</span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="#skia.ColorSpace" title="skia.ColorSpace">skia.ColorSpace</a><a class="headerlink" href="#skia.ColorSpace.MakeRGB" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create an <a class="reference internal" href="#skia.ColorSpace" title="skia.ColorSpace"><code class="xref py py-class docutils literal notranslate"><span class="pre">ColorSpace</span></code></a> from a transfer function and a
+row-major 3x3 transformation to XYZ.</p>
 </dd></dl>
 
 <dl class="py method">
@@ -440,7 +476,7 @@
 <dl class="py method">
 <dt id="skia.ColorSpace.MakeSRGBLinear">
 <em class="property">static </em><code class="sig-prename descclassname">ColorSpace.</code><code class="sig-name descname">MakeSRGBLinear</code><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="#skia.ColorSpace" title="skia.ColorSpace">skia.ColorSpace</a><a class="headerlink" href="#skia.ColorSpace.MakeSRGBLinear" title="Permalink to this definition">¶</a></dt>
-<dd><p>Create the sRGB color space.</p>
+<dd><p>Colorspace with the sRGB primaries, but a linear (1.0) gamma.</p>
 </dd></dl>
 
 <dl class="py method">
@@ -457,7 +493,8 @@
 <dl class="py method">
 <dt id="skia.ColorSpace.gammaCloseToSRGB">
 <code class="sig-prename descclassname">ColorSpace.</code><code class="sig-name descname">gammaCloseToSRGB</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.ColorSpace" title="skia.ColorSpace">skia.ColorSpace</a></span></em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#skia.ColorSpace.gammaCloseToSRGB" title="Permalink to this definition">¶</a></dt>
-<dd><p>Returns true if the color space gamma is near enough to be approximated as sRGB.</p>
+<dd><p>Returns true if the color space gamma is near enough to be approximated
+as sRGB.</p>
 </dd></dl>
 
 <dl class="py method">
@@ -467,32 +504,71 @@
 </dd></dl>
 
 <dl class="py method">
+<dt id="skia.ColorSpace.gamutTransformTo">
+<code class="sig-prename descclassname">ColorSpace.</code><code class="sig-name descname">gamutTransformTo</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.ColorSpace" title="skia.ColorSpace">skia.ColorSpace</a></span></em>, <em class="sig-param"><span class="n">dst</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.ColorSpace" title="skia.ColorSpace">skia.ColorSpace</a></span></em>, <em class="sig-param"><span class="n">src_to_dst</span><span class="p">:</span> <span class="n">skia.cms.Matrix3x3</span></em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#skia.ColorSpace.gamutTransformTo" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
 <dt id="skia.ColorSpace.hash">
 <code class="sig-prename descclassname">ColorSpace.</code><code class="sig-name descname">hash</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.ColorSpace" title="skia.ColorSpace">skia.ColorSpace</a></span></em><span class="sig-paren">)</span> &#x2192; int<a class="headerlink" href="#skia.ColorSpace.hash" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
+<dt id="skia.ColorSpace.invTransferFn">
+<code class="sig-prename descclassname">ColorSpace.</code><code class="sig-name descname">invTransferFn</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.ColorSpace" title="skia.ColorSpace">skia.ColorSpace</a></span></em>, <em class="sig-param"><span class="n">fn</span><span class="p">:</span> <span class="n">skia.cms.TransferFunction</span></em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#skia.ColorSpace.invTransferFn" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="skia.ColorSpace.isNumericalTransferFn">
+<code class="sig-prename descclassname">ColorSpace.</code><code class="sig-name descname">isNumericalTransferFn</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.ColorSpace" title="skia.ColorSpace">skia.ColorSpace</a></span></em>, <em class="sig-param"><span class="n">fn</span><span class="p">:</span> <span class="n">skia.cms.TransferFunction</span></em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#skia.ColorSpace.isNumericalTransferFn" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets <code class="docutils literal notranslate"><span class="pre">|fn|</span></code> to the transfer function from this color space.</p>
+<p>Returns true if the transfer function can be represented as coefficients
+to the standard ICC 7-parameter equation. Returns false otherwise (eg,
+PQ, HLG).</p>
+</dd></dl>
+
+<dl class="py method">
 <dt id="skia.ColorSpace.isSRGB">
 <code class="sig-prename descclassname">ColorSpace.</code><code class="sig-name descname">isSRGB</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.ColorSpace" title="skia.ColorSpace">skia.ColorSpace</a></span></em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#skia.ColorSpace.isSRGB" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns true if the color space is sRGB.</p>
+<p>Returns false otherwise.</p>
+<p>This allows a little bit of tolerance, given that we might see small
+numerical error in some cases: converting ICC fixed point to float,
+converting white point to D50, rounding decisions on transfer function
+and matrix.</p>
+<p>This does not consider a 2.2f exponential transfer function to be sRGB.
+While these functions are similar (and it is sometimes useful to
+consider them together), this function checks for logical equality.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt id="skia.ColorSpace.makeColorSpin">
 <code class="sig-prename descclassname">ColorSpace.</code><code class="sig-name descname">makeColorSpin</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.ColorSpace" title="skia.ColorSpace">skia.ColorSpace</a></span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="#skia.ColorSpace" title="skia.ColorSpace">skia.ColorSpace</a><a class="headerlink" href="#skia.ColorSpace.makeColorSpin" title="Permalink to this definition">¶</a></dt>
-<dd><p>Returns a color space with the same transfer function as this one, but with the primary colors rotated.</p>
+<dd><p>Returns a color space with the same transfer function as this one, but
+with the primary colors rotated.</p>
+<p>For any XYZ space, this produces a new color space that maps RGB to GBR
+(when applied to a source), and maps RGB to BRG (when applied to a
+destination). For other types of color spaces, returns nullptr.</p>
+<p>This is used for testing, to construct color spaces that have severe and
+testable behavior.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt id="skia.ColorSpace.makeLinearGamma">
 <code class="sig-prename descclassname">ColorSpace.</code><code class="sig-name descname">makeLinearGamma</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.ColorSpace" title="skia.ColorSpace">skia.ColorSpace</a></span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="#skia.ColorSpace" title="skia.ColorSpace">skia.ColorSpace</a><a class="headerlink" href="#skia.ColorSpace.makeLinearGamma" title="Permalink to this definition">¶</a></dt>
-<dd><p>Returns a color space with the same gamut as this one, but with a linear gamma.</p>
+<dd><p>Returns a color space with the same gamut as this one, but with a linear
+gamma.</p>
+<p>For color spaces whose gamut can not be described in terms of XYZ D50,
+returns linear sRGB.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt id="skia.ColorSpace.makeSRGBGamma">
 <code class="sig-prename descclassname">ColorSpace.</code><code class="sig-name descname">makeSRGBGamma</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.ColorSpace" title="skia.ColorSpace">skia.ColorSpace</a></span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="#skia.ColorSpace" title="skia.ColorSpace">skia.ColorSpace</a><a class="headerlink" href="#skia.ColorSpace.makeSRGBGamma" title="Permalink to this definition">¶</a></dt>
-<dd><p>Returns a color space with the same gamut as this one, with with the sRGB transfer function.</p>
+<dd><p>Returns a color space with the same gamut as this one, with with the
+sRGB transfer function.</p>
+<p>For color spaces whose gamut can not be described in terms of XYZ D50,
+returns sRGB.</p>
 </dd></dl>
 
 <dl class="py method">
@@ -502,25 +578,48 @@
 
 <dl class="py method">
 <dt id="skia.ColorSpace.refCntGreaterThan">
-<code class="sig-prename descclassname">ColorSpace.</code><code class="sig-name descname">refCntGreaterThan</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.ColorSpace" title="skia.ColorSpace">skia.ColorSpace</a></span></em>, <em class="sig-param"><span class="n">arg0</span><span class="p">:</span> <span class="n">int</span></em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#skia.ColorSpace.refCntGreaterThan" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">ColorSpace.</code><code class="sig-name descname">refCntGreaterThan</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.ColorSpace" title="skia.ColorSpace">skia.ColorSpace</a></span></em>, <em class="sig-param"><span class="n">count</span><span class="p">:</span> <span class="n">int</span></em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#skia.ColorSpace.refCntGreaterThan" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
 <dt id="skia.ColorSpace.serialize">
 <code class="sig-prename descclassname">ColorSpace.</code><code class="sig-name descname">serialize</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.ColorSpace" title="skia.ColorSpace">skia.ColorSpace</a></span></em><span class="sig-paren">)</span> &#x2192; SkData<a class="headerlink" href="#skia.ColorSpace.serialize" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns nullptr on failure.</p>
+<p>Fails when we fallback to serializing ICC data and the data is too large
+to serialize.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="skia.ColorSpace.toProfile">
+<code class="sig-prename descclassname">ColorSpace.</code><code class="sig-name descname">toProfile</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.ColorSpace" title="skia.ColorSpace">skia.ColorSpace</a></span></em>, <em class="sig-param"><span class="n">profile</span><span class="p">:</span> <span class="n">skia.cms.ICCProfile</span></em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#skia.ColorSpace.toProfile" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convert this color space to an skcms ICC profile struct.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="skia.ColorSpace.toXYZD50">
+<code class="sig-prename descclassname">ColorSpace.</code><code class="sig-name descname">toXYZD50</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.ColorSpace" title="skia.ColorSpace">skia.ColorSpace</a></span></em>, <em class="sig-param"><span class="n">matrix</span><span class="p">:</span> <span class="n">skia.cms.Matrix3x3</span></em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#skia.ColorSpace.toXYZD50" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns true and sets <code class="docutils literal notranslate"><span class="pre">|toXYZD50|</span></code> if the color gamut can be described
+as a matrix.</p>
+<p>Returns false otherwise.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt id="skia.ColorSpace.toXYZD50Hash">
 <code class="sig-prename descclassname">ColorSpace.</code><code class="sig-name descname">toXYZD50Hash</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.ColorSpace" title="skia.ColorSpace">skia.ColorSpace</a></span></em><span class="sig-paren">)</span> &#x2192; int<a class="headerlink" href="#skia.ColorSpace.toXYZD50Hash" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns a hash of the gamut transformation to XYZ D50.</p>
+<p>Allows for fast equality checking of gamuts, at the (very small) risk of
+collision.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt id="skia.ColorSpace.transferFn">
-<code class="sig-prename descclassname">ColorSpace.</code><code class="sig-name descname">transferFn</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.ColorSpace" title="skia.ColorSpace">skia.ColorSpace</a></span></em>, <em class="sig-param"><span class="n">arg0</span><span class="p">:</span> <span class="n">float</span></em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#skia.ColorSpace.transferFn" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<code class="sig-prename descclassname">ColorSpace.</code><code class="sig-name descname">transferFn</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span><span class="n">args</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#skia.ColorSpace.transferFn" title="Permalink to this definition">¶</a></dt>
+<dd><p>Overloaded function.</p>
+<ol class="arabic simple">
+<li><p>transferFn(self: skia.ColorSpace, gabcdef: float) -&gt; None</p></li>
+<li><p>transferFn(self: skia.ColorSpace, fn: skia.cms.TransferFunction) -&gt; None</p></li>
+</ol>
+</dd></dl>
 
 <dl class="py method">
 <dt id="skia.ColorSpace.transferFnHash">
@@ -539,8 +638,9 @@
 
 <dl class="py method">
 <dt id="skia.ColorSpace.writeToMemory">
-<code class="sig-prename descclassname">ColorSpace.</code><code class="sig-name descname">writeToMemory</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.ColorSpace" title="skia.ColorSpace">skia.ColorSpace</a></span></em>, <em class="sig-param"><span class="n">arg0</span><span class="p">:</span> <span class="n">capsule</span></em><span class="sig-paren">)</span> &#x2192; int<a class="headerlink" href="#skia.ColorSpace.writeToMemory" title="Permalink to this definition">¶</a></dt>
-<dd><p>If memory is nullptr, returns the size required to serialize.</p>
+<code class="sig-prename descclassname">ColorSpace.</code><code class="sig-name descname">writeToMemory</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.ColorSpace" title="skia.ColorSpace">skia.ColorSpace</a></span></em>, <em class="sig-param"><span class="n">memory</span><span class="p">:</span> <span class="n">capsule</span></em><span class="sig-paren">)</span> &#x2192; int<a class="headerlink" href="#skia.ColorSpace.writeToMemory" title="Permalink to this definition">¶</a></dt>
+<dd><p>If <code class="docutils literal notranslate"><span class="pre">|memory|</span></code> is nullptr, returns the size required to serialize.</p>
+<p>Otherwise, serializes into <code class="docutils literal notranslate"><span class="pre">|memory|</span></code> and returns the size.</p>
 </dd></dl>
 
 </div>

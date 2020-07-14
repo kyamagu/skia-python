@@ -458,7 +458,7 @@ hopes of fulfilling more of the request.</p>
 <h2>Methods<a class="headerlink" href="#methods" title="Permalink to this headline">¶</a></h2>
 <dl class="py method">
 <dt id="skia.Stream.MakeFromFile">
-<em class="property">static </em><code class="sig-prename descclassname">Stream.</code><code class="sig-name descname">MakeFromFile</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">arg0</span><span class="p">:</span> <span class="n">str</span></em><span class="sig-paren">)</span> &#x2192; SkStreamAsset<a class="headerlink" href="#skia.Stream.MakeFromFile" title="Permalink to this definition">¶</a></dt>
+<em class="property">static </em><code class="sig-prename descclassname">Stream.</code><code class="sig-name descname">MakeFromFile</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">path</span><span class="p">:</span> <span class="n">str</span></em><span class="sig-paren">)</span> &#x2192; SkStreamAsset<a class="headerlink" href="#skia.Stream.MakeFromFile" title="Permalink to this definition">¶</a></dt>
 <dd><p>Attempts to open the specified file as a stream, returns nullptr on
 failure.</p>
 </dd></dl>
@@ -536,7 +536,7 @@ late (after the first unsuccessful read).</p>
 
 <dl class="py method">
 <dt id="skia.Stream.move">
-<code class="sig-prename descclassname">Stream.</code><code class="sig-name descname">move</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Stream" title="skia.Stream">skia.Stream</a></span></em>, <em class="sig-param"><span class="n">arg0</span><span class="p">:</span> <span class="n">int</span></em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#skia.Stream.move" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">Stream.</code><code class="sig-name descname">move</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Stream" title="skia.Stream">skia.Stream</a></span></em>, <em class="sig-param"><span class="n">offset</span><span class="p">:</span> <span class="n">int</span></em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#skia.Stream.move" title="Permalink to this definition">¶</a></dt>
 <dd><p>Seeks to an relative offset in the stream.</p>
 <p>If this cannot be done, returns false. If an attempt is made to move to
 a position outside the stream, the position will be set to the closest

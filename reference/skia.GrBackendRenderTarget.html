@@ -405,8 +405,8 @@
 <dd><p>Overloaded function.</p>
 <ol class="arabic simple">
 <li><p>__init__(self: skia.GrBackendRenderTarget) -&gt; None</p></li>
-<li><p>__init__(self: skia.GrBackendRenderTarget, arg0: int, arg1: int, arg2: int, arg3: int, arg4: GrGLFramebufferInfo) -&gt; None</p></li>
-<li><p>__init__(self: skia.GrBackendRenderTarget, arg0: int, arg1: int, arg2: int, arg3: int, arg4: GrMockRenderTargetInfo) -&gt; None</p></li>
+<li><p>__init__(self: skia.GrBackendRenderTarget, width: int, height: int, sampleCnt: int, stencilBits: int, glInfo: GrGLFramebufferInfo) -&gt; None</p></li>
+<li><p>__init__(self: skia.GrBackendRenderTarget, width: int, height: int, sampleCnt: int, stencilBits: int, mockInfo: GrMockRenderTargetInfo) -&gt; None</p></li>
 </ol>
 </dd></dl>
 
@@ -479,7 +479,7 @@ false if the backend API is not Vulkan.</p>
 
 <dl class="py method">
 <dt id="skia.GrBackendRenderTarget.setVkImageLayout">
-<code class="sig-prename descclassname">GrBackendRenderTarget.</code><code class="sig-name descname">setVkImageLayout</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.GrBackendRenderTarget" title="skia.GrBackendRenderTarget">skia.GrBackendRenderTarget</a></span></em>, <em class="sig-param"><span class="n">arg0</span><span class="p">:</span> <span class="n">VkImageLayout</span></em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#skia.GrBackendRenderTarget.setVkImageLayout" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">GrBackendRenderTarget.</code><code class="sig-name descname">setVkImageLayout</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.GrBackendRenderTarget" title="skia.GrBackendRenderTarget">skia.GrBackendRenderTarget</a></span></em>, <em class="sig-param"><span class="n">layout</span><span class="p">:</span> <span class="n">VkImageLayout</span></em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#skia.GrBackendRenderTarget.setVkImageLayout" title="Permalink to this definition">¶</a></dt>
 <dd><p>Anytime the client changes the VkImageLayout of the VkImage captured by
 this GrBackendRenderTarget, they must call this function to notify Skia
 of the changed layout.</p>
