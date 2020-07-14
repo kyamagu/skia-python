@@ -442,6 +442,20 @@ def test_GrContext_createCompressedBackendTexture(context, args):
     context.deleteBackendTexture(backend_texture)
 
 
+@pytest.mark.skip("Vulkan not supported")
+def test_GrContext_setBackendTextureState(context, backend_texture):
+    state = skia.GrBackendSurfaceMutableState()
+    assert isinstance(
+        context.setBackendTextureState(backend_texture, state), bool)
+
+
+@pytest.mark.skip("Vulkan not supported")
+def test_GrContext_setBackendRenderTargetState(context, backend_render_target):
+    state = skia.GrBackendSurfaceMutableState()
+    assert isinstance(
+        context.setBackendRenderTargetState(backend_render_target, state), bool)
+
+
 # def test_GrContext_deleteBackendTexture(context):
 #     pass
 
