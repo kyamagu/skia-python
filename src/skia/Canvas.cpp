@@ -1000,7 +1000,8 @@ canvas
         :matrix: matrix to premultiply with existing :py:class:`Matrix`
         )docstring",
         py::arg("matrix"))
-    .def("concat", py::overload_cast<const SkM44&>(&SkCanvas::concat))
+    .def("concat", py::overload_cast<const SkM44&>(&SkCanvas::concat),
+        py::arg("m44"))
     .def("setMatrix", &SkCanvas::setMatrix,
         R"docstring(
         Replaces :py:class:`Matrix` with matrix.

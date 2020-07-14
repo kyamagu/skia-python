@@ -68,7 +68,7 @@ iter
                 return run;
             throw py::stop_iteration();
         })
-    .def("next", &SkTextBlob::Iter::next)
+    .def("next", &SkTextBlob::Iter::next, py::arg("run"))
     ;
 
 textblob
@@ -187,7 +187,7 @@ textblob
     .def("ref", &SkTextBlob::ref)
     .def("unref", &SkTextBlob::unref)
     .def("deref", &SkTextBlob::deref)
-    .def("refCntGreaterThan", &SkTextBlob::refCntGreaterThan)
+    .def("refCntGreaterThan", &SkTextBlob::refCntGreaterThan, py::arg("count"))
     .def_static("MakeFromText",
         [] (const std::string& text, const SkFont& font,
             SkTextEncoding encoding) {

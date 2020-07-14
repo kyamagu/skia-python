@@ -496,7 +496,8 @@ py::class_<SkStream, PyStream<>>(m, "Stream",
 
         Reimplemented in :py:class:`MemoryStream`, :py:class:`FILEStream`, and
         :py:class:`StreamSeekable`.
-        )docstring")
+        )docstring",
+        py::arg("offset"))
     .def("hasLength", &SkStream::hasLength,
         R"docstring(
         Returns true if this stream can report it's total length.
@@ -527,7 +528,8 @@ py::class_<SkStream, PyStream<>>(m, "Stream",
         R"docstring(
         Attempts to open the specified file as a stream, returns nullptr on
         failure.
-        )docstring")
+        )docstring",
+        py::arg("path"))
     ;
 
 py::class_<SkStreamRewindable, PyStreamRewindable<>, SkStream>(

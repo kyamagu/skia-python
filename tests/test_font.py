@@ -164,6 +164,10 @@ def test_Typeface_Equal(typeface):
     assert isinstance(skia.Typeface.Equal(typeface, typeface), bool)
 
 
+def test_Typeface_eq(typeface):
+    assert typeface == typeface
+
+
 def test_Typeface_MakeDefault(typeface):
     assert isinstance(skia.Typeface.MakeDefault(), skia.Typeface)
 

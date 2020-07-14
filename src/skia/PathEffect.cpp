@@ -253,7 +253,8 @@ patheffect
         original path, and returns a path with the sum of these.
 
         result = first(path) + second(path)
-        )docstring")
+        )docstring",
+        py::arg("first"), py::arg("second"))
     .def_static("MakeCompose",
         [] (const SkPathEffect& outer, const SkPathEffect& inner) {
             auto outer_ = outer.serialize();
@@ -267,7 +268,8 @@ patheffect
         applies the outer effect to the result of the inner's.
 
         result = outer(inner(path))
-        )docstring")
+        )docstring",
+        py::arg("outer"), py::arg("inner"))
     .def_static("RegisterFlattenables", &SkPathEffect::RegisterFlattenables)
     .def_static("GetFlattenableType", &SkPathEffect::GetFlattenableType)
     .def_static("Deserialize",

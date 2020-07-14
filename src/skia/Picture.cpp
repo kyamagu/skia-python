@@ -284,15 +284,18 @@ bboxhierarchy
         py::overload_cast<const SkRect[], int>(&SkBBoxHierarchy::insert),
         R"docstring(
         Insert N bounding boxes into the hierarchy.
-        )docstring")
+        )docstring",
+        py::arg("rects"), py::arg("N"))
     .def("insert",
         py::overload_cast<const SkRect[], const SkBBoxHierarchy::Metadata[],
-            int>(&SkBBoxHierarchy::insert))
+            int>(&SkBBoxHierarchy::insert),
+        py::arg("rects"), py::arg("metadata"), py::arg("N"))
     .def("search", &SkBBoxHierarchy::search,
         R"docstring(
         Populate results with the indices of bounding boxes intersecting that
         query.
-        )docstring")
+        )docstring",
+        py::arg("query"), py::arg("results"))
     .def("bytesUsed", &SkBBoxHierarchy::bytesUsed,
         R"docstring(
         Return approximate size in memory of this.

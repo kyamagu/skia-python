@@ -116,7 +116,7 @@ py::class_<SkData, sk_sp<SkData>>(m, "Data", py::buffer_protocol(),
     .def("ref", &SkData::ref)
     .def("unref", &SkData::unref)
     .def("deref", &SkData::deref)
-    .def("refCntGreaterThan", &SkData::refCntGreaterThan)
+    .def("refCntGreaterThan", &SkData::refCntGreaterThan, py::arg("count"))
     .def_static("MakeWithCopy",
         [] (py::buffer b) {
             auto info = b.request();

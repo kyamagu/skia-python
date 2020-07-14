@@ -514,7 +514,8 @@ region
 
         :rgn: :py:class:`Region` to intersect
         :return: true if rgn does not intersect
-        )docstring")
+        )docstring",
+        py::arg("region"))
     .def("translate",
         [] (const SkRegion& region, int dx, int dy) {
             SkRegion dst;

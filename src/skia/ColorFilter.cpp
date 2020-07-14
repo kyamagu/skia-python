@@ -222,7 +222,7 @@ py::class_<SkHighContrastFilter>(m, "HighContrastFilter",
     is not valid, e.g. if you try to call it with a contrast outside the range
     of -1.0 to 1.0.
     )docstring")
-    .def_static("Make", &SkHighContrastFilter::Make)
+    .def_static("Make", &SkHighContrastFilter::Make, py::arg("config"))
     ;
 
 py::class_<SkLumaColorFilter>(

@@ -403,7 +403,8 @@ matrix
         Sets vertical skew factor.
 
         :param v: vertical skew factor to store
-        )docstring")
+        )docstring",
+        py::arg("v"))
     .def("setSkewX", &SkMatrix::setSkewX,
         R"docstring(
         Sets horizontal skew factor.
@@ -1427,7 +1428,8 @@ matrix
         :param float dx: x-axis value of vector to map
         :param float dy: y-axis value of vector to map
         :return: mapped vector
-        )docstring")
+        )docstring",
+        py::arg("dx"), py::arg("dy"))
     .def("mapRect",
         py::overload_cast<const SkRect&, SkApplyPerspectiveClip>(
             &SkMatrix::mapRect, py::const_),
@@ -1641,18 +1643,22 @@ matrix
         )docstring",
         py::arg("dx"), py::arg("dy"))
     .def_static("Translate",
-        py::overload_cast<SkVector>(&SkMatrix::Translate))
+        py::overload_cast<SkVector>(&SkMatrix::Translate),
+        py::arg("t"))
     .def_static("Translate",
-        py::overload_cast<SkIVector>(&SkMatrix::Translate))
+        py::overload_cast<SkIVector>(&SkMatrix::Translate),
+        py::arg("t"))
     .def_static("RotateDeg", &SkMatrix::RotateDeg,
         R"docstring(
-        Sets :py:class:`Matrix` to rotate by |deg| about a pivot point at
+        Sets :py:class:`Matrix` to rotate by ``|deg|`` about a pivot point at
         (0, 0).
 
         :param deg: rotation angle in degrees (positive rotates clockwise)
         :return: :py:class:`Matrix` with rotation
-        )docstring")
-    .def_static("RotateDeg", &SkMatrix::RotateRad)
+        )docstring",
+        py::arg("deg"))
+    .def_static("RotateRad", &SkMatrix::RotateRad,
+        py::arg("rad"))
     .def_static("MakeAll", &SkMatrix::MakeAll,
         R"docstring(
         Sets :py:class:`Matrix` to::

@@ -51,7 +51,7 @@ void initFont(py::module &m) {
 // FontStyle
 py::class_<SkFontStyle> fontstyle(m, "FontStyle");
 
-py::enum_<SkFontStyle::Weight>(fontstyle, "Weight")
+py::enum_<SkFontStyle::Weight>(fontstyle, "Weight", py::arithmetic())
     .value("kInvisible_Weight", SkFontStyle::Weight::kInvisible_Weight)
     .value("kThin_Weight", SkFontStyle::Weight::kThin_Weight)
     .value("kExtraLight_Weight", SkFontStyle::Weight::kExtraLight_Weight)
@@ -65,7 +65,7 @@ py::enum_<SkFontStyle::Weight>(fontstyle, "Weight")
     .value("kExtraBlack_Weight", SkFontStyle::Weight::kExtraBlack_Weight)
     .export_values();
 
-py::enum_<SkFontStyle::Width>(fontstyle, "Width")
+py::enum_<SkFontStyle::Width>(fontstyle, "Width", py::arithmetic())
     .value("kUltraCondensed_Width", SkFontStyle::Width::kUltraCondensed_Width)
     .value("kExtraCondensed_Width", SkFontStyle::Width::kExtraCondensed_Width)
     .value("kCondensed_Width", SkFontStyle::Width::kCondensed_Width)
@@ -84,7 +84,8 @@ py::enum_<SkFontStyle::Slant>(fontstyle, "Slant")
     .export_values();
 
 fontstyle
-    .def(py::init<int, int, SkFontStyle::Slant>())
+    .def(py::init<int, int, SkFontStyle::Slant>(),
+        py::arg("weight"), py::arg("width"), py::arg("slant"))
     .def(py::init<>())
     .def("__repr__",
         [] (const SkFontStyle& self) {
@@ -474,7 +475,9 @@ typeface
         R"docstring(
         Returns true if the two typefaces reference the same underlying font,
         handling either being null (treating null as the default font)
-        )docstring")
+        )docstring",
+        py::arg("self"), py::arg("other"))
+    .def("__eq__", &SkTypeface::Equal, py::is_operator())
     .def_static("MakeDefault", &SkTypeface::MakeDefault,
         R"docstring(
         Returns the default normal typeface, which is never nullptr.
@@ -1202,7 +1205,8 @@ font
 
         :param glyphIDs: array of glyph indices
         :return: list of :py:class:`Path`
-        )docstring")
+        )docstring",
+        py::arg("glyphIDs"))
     .def("getMetrics",
         [] (const SkFont& font) {
             SkFontMetrics metrics;

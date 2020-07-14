@@ -83,24 +83,33 @@ py::enum_<SkBlendModeCoeff>(m, "BlendModeCoeff", R"docstring(
     .value("kSC", SkBlendModeCoeff::kSC,
         "src color")
     .value("kISC", SkBlendModeCoeff::kISC,
-        "inverse src color")
+        "inverse src color (i.e. 1 - sc)")
     .value("kDC", SkBlendModeCoeff::kDC,
         "dst color")
     .value("kIDC", SkBlendModeCoeff::kIDC,
-        "inverse dst color")
+        "inverse dst color (i.e. 1 - dc)")
     .value("kSA", SkBlendModeCoeff::kSA,
         "src alpha")
     .value("kISA", SkBlendModeCoeff::kISA,
-        "inverse src alpha")
+        "inverse src alpha (i.e. 1 - sa)")
     .value("kDA", SkBlendModeCoeff::kDA,
         "dst alpha")
     .value("kIDA", SkBlendModeCoeff::kIDA,
-        "inverse dst alpha")
+        "inverse dst alpha (i.e. 1 - da)")
     .value("kCoeffCount", SkBlendModeCoeff::kCoeffCount)
     .export_values();
 m.def("BlendMode_AsCoeff", &SkBlendMode_AsCoeff,
-    "Returns true if 'mode' is a coefficient-based blend mode "
-    "(<= kLastCoeffMode).");
+    R"docstring(
+    Returns true if 'mode' is a coefficient-based blend mode (<=
+    kLastCoeffMode).
+
+    If true is returned, the mode's src and dst coefficient functions are set in
+    'src' and 'dst'.
+    )docstring",
+    py::arg("mode"), py::arg("src"), py::arg("dst"));
 m.def("BlendMode_Name", &SkBlendMode_Name,
-    "Returns name of blendMode as null-terminated C string.");
+    R"docstring(
+    Returns name of blendMode as null-terminated C string.
+    )docstring",
+    py::arg("blendMode"));
 }
