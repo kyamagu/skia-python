@@ -1048,7 +1048,8 @@ py::class_<SkRect>(m, "Rect", R"docstring(
 
         :param newX: stored in fLeft, preserving :py:meth:`width`
         :param newY: stored in fTop, preserving :py:meth:`height`
-        )docstring")
+        )docstring",
+        py::arg("newX"), py::arg("newY"))
     .def("inset", &SkRect::inset,
         R"docstring(
         Insets :py:class:`Rect` by (dx, dy).
@@ -1768,11 +1769,12 @@ rrect
         py::arg("dx"), py::arg("dy"))
     .def("offset", &SkRRect::offset,
         R"docstring(
-        Translates SkRRect by (dx, dy).
+        Translates :py:class:`RRect` by (dx, dy).
 
         :param dx:  offset added to rect().fLeft and rect().fRight
         :parma dy:  offset added to rect().fTop and rect().fBottom
-        )docstring")
+        )docstring",
+        py::arg("dx"), py::arg("dy"))
     .def("makeOffset", &SkRRect::makeOffset,
         R"docstring(
         Returns :py:class:`RRect` translated by (dx, dy).

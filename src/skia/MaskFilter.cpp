@@ -93,7 +93,8 @@ py::class_<SkShaderMaskFilter>(m, "ShaderMaskFilter")
                 shader.getFlattenableType(), data->data(), data->size());
             return SkShaderMaskFilter::Make(sk_sp<SkShader>(
                 reinterpret_cast<SkShader*>(clone.release())));
-        });
+        },
+        py::arg("shader"));
 
 py::class_<SkTableMaskFilter>(m, "TableMaskFilter",
     R"docstring(
@@ -131,13 +132,16 @@ py::class_<SkTableMaskFilter>(m, "TableMaskFilter",
     .def_static("Create",
         [] (std::vector<uint8_t>& table) {
             return sk_sp<SkMaskFilter>(SkTableMaskFilter::Create(&table[0]));
-        })
+        },
+        py::arg("table"))
     .def_static("CreateGamma",
         [] (SkScalar gamma) {
             return sk_sp<SkMaskFilter>(SkTableMaskFilter::CreateGamma(gamma));
-        })
+        },
+        py::arg("gamma"))
     .def_static("CreateClip",
         [] (uint8_t min, uint8_t max) {
             return sk_sp<SkMaskFilter>(SkTableMaskFilter::CreateClip(min, max));
-        });
+        },
+        py::arg("min"), py::arg("max"));
 }

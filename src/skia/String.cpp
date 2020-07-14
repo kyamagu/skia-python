@@ -82,7 +82,7 @@ py::class_<SkString>(m, "String")
     .def("findLastOf", &SkString::findLastOf, py::arg("subchar"))
     // .def("writable_str", &SkString::writable_str)
     .def("reset", &SkString::reset)
-    .def("resize", &SkString::resize)
+    .def("resize", &SkString::resize, py::arg("size"))
     .def("set", py::overload_cast<const SkString&>(&SkString::set),
         py::arg("src"))
     .def("set", py::overload_cast<const char*>(&SkString::set),

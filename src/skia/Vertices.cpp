@@ -78,7 +78,7 @@ vertices
     .def("ref", &SkVertices::ref)
     .def("unref", &SkVertices::unref)
     .def("deref", &SkVertices::deref)
-    .def("refCntGreaterThan", &SkVertices::refCntGreaterThan)
+    .def("refCntGreaterThan", &SkVertices::refCntGreaterThan, py::arg("count"))
     .def_static("MakeCopy", &MakeCopy,
         R"docstring(
         Create a vertices by copying the specified arrays.

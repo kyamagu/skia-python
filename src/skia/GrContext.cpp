@@ -249,7 +249,8 @@ py::class_<GrBackendFormat>(m, "GrBackendFormat")
         py::overload_cast<const GrVkYcbcrConversionInfo&>(
             &GrBackendFormat::MakeVk),
         py::arg("ycbcrInfo"))
-    .def_static("MakeMock", &GrBackendFormat::MakeMock)
+    .def_static("MakeMock", &GrBackendFormat::MakeMock,
+        py::arg("colorType"), py::arg("compression"))
     .def("__eq__", &GrBackendFormat::operator==, py::arg("other"),
         py::is_operator())
     .def("__ne__", &GrBackendFormat::operator!=, py::arg("other"),
@@ -285,17 +286,23 @@ py::class_<GrBackendTexture>(m, "GrBackendTexture")
     .def("height", &GrBackendTexture::height)
     .def("hasMipMaps", &GrBackendTexture::hasMipMaps)
     .def("backend", &GrBackendTexture::backend)
-    .def("getGLTextureInfo", &GrBackendTexture::getGLTextureInfo)
+    .def("getGLTextureInfo", &GrBackendTexture::getGLTextureInfo,
+        py::arg("info"))
     .def("glTextureParametersModified",
         &GrBackendTexture::glTextureParametersModified)
-    .def("getVkImageInfo", &GrBackendTexture::getVkImageInfo)
-    .def("setVkImageLayout", &GrBackendTexture::setVkImageLayout)
+    .def("getVkImageInfo", &GrBackendTexture::getVkImageInfo,
+        py::arg("info"))
+    .def("setVkImageLayout", &GrBackendTexture::setVkImageLayout,
+        py::arg("layout"))
     .def("getBackendFormat", &GrBackendTexture::getBackendFormat)
-    .def("getMockTextureInfo", &GrBackendTexture::getMockTextureInfo)
-    // .def("setMutableState", &GrBackendTexture::setMutableState)
+    .def("getMockTextureInfo", &GrBackendTexture::getMockTextureInfo,
+        py::arg("info"))
+    .def("setMutableState", &GrBackendTexture::setMutableState,
+        py::arg("state"))
     .def("isProtected", &GrBackendTexture::isProtected)
     .def("isValid", &GrBackendTexture::isValid)
-    .def("isSameTexture", &GrBackendTexture::isSameTexture)
+    .def("isSameTexture", &GrBackendTexture::isSameTexture,
+        py::arg("texture"))
     ;
 
 py::class_<GrContextOptions>(m, "GrContextOptions")
@@ -324,12 +331,20 @@ py::class_<GrBackendSurfaceMutableState>(m, "GrBackendSurfaceMutableState",
 
 py::class_<GrBackendRenderTarget>(m, "GrBackendRenderTarget")
     .def(py::init<>())
-    .def(py::init<int, int, int, int, const GrGLFramebufferInfo&>())
+    .def(py::init<int, int, int, int, const GrGLFramebufferInfo&>(),
+        py::arg("width"), py::arg("height"), py::arg("sampleCnt"),
+        py::arg("stencilBits"), py::arg("glInfo"))
 #ifdef SK_VULKAN
-    .def(py::init<int, int, int, int, const GrVkImageInfo&>())
-    .def(py::init<int, int, int, const GrVkImageInfo&>())
+    .def(py::init<int, int, int, int, const GrVkImageInfo&>(),
+        py::arg("width"), py::arg("height"), py::arg("sampleCnt"),
+        py::arg("stencilBits"), py::arg("vkInfo"))
+    .def(py::init<int, int, int, const GrVkImageInfo&>(),
+        py::arg("width"), py::arg("height"), py::arg("sampleCnt"),
+        py::arg("vkInfo"))
 #endif
-    .def(py::init<int, int, int, int, const GrMockRenderTargetInfo&>())
+    .def(py::init<int, int, int, int, const GrMockRenderTargetInfo&>(),
+        py::arg("width"), py::arg("height"), py::arg("sampleCnt"),
+        py::arg("stencilBits"), py::arg("mockInfo"))
     .def("dimensions", &GrBackendRenderTarget::dimensions)
     .def("width", &GrBackendRenderTarget::width)
     .def("height", &GrBackendRenderTarget::height)
@@ -357,7 +372,8 @@ py::class_<GrBackendRenderTarget>(m, "GrBackendRenderTarget")
         Anytime the client changes the VkImageLayout of the VkImage captured by
         this GrBackendRenderTarget, they must call this function to notify Skia
         of the changed layout.
-        )docstring")
+        )docstring",
+        py::arg("layout"))
     .def("getBackendFormat", &GrBackendRenderTarget::getBackendFormat,
         R"docstring(
         Get the GrBackendFormat for this render target (or an invalid format if
@@ -919,9 +935,34 @@ py::class_<GrContext, sk_sp<GrContext>, SkRefCnt>(m, "GrContext")
         py::arg("width"), py::arg("height"), py::arg("type"), py::arg("data"),
         py::arg("mipMapped"), py::arg("isProtected") = GrProtected::kNo)
     .def("setBackendTextureState",
-        &GrContext::setBackendTextureState)
+        [] (GrContext& context, const GrBackendTexture& texture,
+            const GrBackendSurfaceMutableState& mutableState) {
+            return context.setBackendTextureState(
+                texture, mutableState, nullptr, nullptr);
+        },
+        R"docstring(
+        Updates the state of the GrBackendTexture/RenderTarget to have the
+        passed in GrBackendSurfaceMutableState.
+
+        All objects that wrap the backend surface (i.e. :py:class:`Surface` and
+        :py:class:`Image`) will also be aware of this state change. This call
+        does not submit the state change to the gpu, but requires the client to
+        call :py:meth:`GrContext.submit` to send it to the GPU. The work for
+        this call is ordered linearly with all other calls that require
+        :py:meth:`GrContext.submit` to be called (e.g
+        :py:meth:`~updateBackendTexture` and :py:meth:`~flush`).
+
+        See :py:class:`GrBackendSurfaceMutableState` to see what state can be
+        set via this call.
+        )docstring",
+        py::arg("texture"), py::arg("mutableState"))
     .def("setBackendRenderTargetState",
-        &GrContext::setBackendRenderTargetState)
+        [] (GrContext& context, const GrBackendRenderTarget& target,
+            const GrBackendSurfaceMutableState& mutableState) {
+            return context.setBackendRenderTargetState(
+                target, mutableState, nullptr, nullptr);
+        },
+        py::arg("target"), py::arg("mutableState"))
     .def("deleteBackendTexture", &GrContext::deleteBackendTexture,
         py::arg("texture"))
     .def("precompileShader", &GrContext::precompileShader,

@@ -805,7 +805,8 @@ flattenable
             auto info = b.request();
             size_t size = (info.ndim) ? info.shape[0] * info.strides[0] : 0;
             return SkFlattenable::Deserialize(type, info.ptr, size);
-        })
+        },
+        py::arg("type"), py::arg("b"))
     ;
 
 initColorFilter(m);

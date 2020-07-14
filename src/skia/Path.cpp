@@ -96,9 +96,10 @@ py::enum_<SkPathVerb>(m, "PathVerb")
         "iter.next returns 1 point (contour's moveTo pt)")
     .export_values();
 
-m.def("PathFillType_IsEvenOdd", &SkPathFillType_IsEvenOdd);
-m.def("PathFillType_IsInverse", &SkPathFillType_IsInverse);
-m.def("PathFillType_ConvertToNonInverse", &SkPathFillType_ConvertToNonInverse);
+m.def("PathFillType_IsEvenOdd", &SkPathFillType_IsEvenOdd, py::arg("ft"));
+m.def("PathFillType_IsInverse", &SkPathFillType_IsInverse, py::arg("ft"));
+m.def("PathFillType_ConvertToNonInverse", &SkPathFillType_ConvertToNonInverse,
+    py::arg("ft"));
 
 
 py::enum_<SkPathOp>(m, "PathOp", R"docstring(
@@ -429,7 +430,8 @@ path
 
         :return: true if :py:class:`Path` contain same number of
             :py:class:`Point`
-        )docstring")
+        )docstring",
+        py::arg("ending"), py::arg("weight"), py::arg("out"))
     .def("getFillType", &SkPath::getFillType,
         R"docstring(
         Returns :py:class:`PathFillType`, the rule used to fill
@@ -903,7 +905,8 @@ path
         :param float dx: offset from last point to line end on x-axis
         :param float dy: offset from last point to line end on y-axis
         :return: reference to :py:class:`Path`
-        )docstring")
+        )docstring",
+        py::arg("dx"), py::arg("dy"))
     .def("quadTo",
         py::overload_cast<SkScalar, SkScalar, SkScalar, SkScalar>(
             &SkPath::quadTo),
@@ -1333,7 +1336,9 @@ path
         :param float dy: y-axis offset end of arc from last :py:class:`Path`
             :py:class:`Point`
         :return: reference to :py:class:`Path`
-        )docstring")
+        )docstring",
+        py::arg("rx"), py::arg("ry"), py::arg("xAxisRotate"),
+        py::arg("largeArc"), py::arg("sweep"), py::arg("dx"), py::arg("dy"))
     .def("close", &SkPath::close,
         R"docstring(
         Appends :py:attr:`Path.Verb.kClose` to :py:class:`Path`.

@@ -159,7 +159,8 @@ imagefilter
         R"docstring(
         If this filter can be represented by another filter + a localMatrix,
         return that filter, else return null.
-        )docstring")
+        )docstring",
+        py::arg("matrix"))
     .def_static("MakeMatrixFilter",
         [] (const SkMatrix& matrix, SkFilterQuality quality,
             const SkImageFilter* input) {
