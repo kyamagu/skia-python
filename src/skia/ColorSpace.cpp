@@ -7,6 +7,7 @@ py::module skcms = m.def_submodule("cms");
 
 // TODO: Implement trc, toXYZD50, and A2B.
 py::class_<skcms_ICCProfile>(skcms, "ICCProfile")
+    .def(py::init<>())
     .def_readwrite("buffer", &skcms_ICCProfile::buffer)
     .def_readwrite("size", &skcms_ICCProfile::size)
     .def_readwrite("data_color_space", &skcms_ICCProfile::data_color_space)
@@ -52,11 +53,15 @@ py::class_<skcms_Matrix3x3>(skcms, "Matrix3x3",
         }), py::arg("v"));
 
 py::class_<SkColorSpace, sk_sp<SkColorSpace>>(m, "ColorSpace")
-    .def("toProfile", &SkColorSpace::toProfile,
+    .def("toProfile",
+        [] (const SkColorSpace& colorspace) {
+            std::unique_ptr<skcms_ICCProfile> profile(new skcms_ICCProfile());
+            colorspace.toProfile(profile.get());
+            return profile;
+        },
         R"docstring(
         Convert this color space to an skcms ICC profile struct.
-        )docstring",
-        py::arg("profile"))
+        )docstring")
     .def("gammaCloseToSRGB", &SkColorSpace::gammaCloseToSRGB,
         R"docstring(
         Returns true if the color space gamma is near enough to be approximated
