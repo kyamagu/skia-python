@@ -296,15 +296,6 @@ def test_Image_MakeFromEncoded(png_data):
     assert isinstance(skia.Image.MakeFromEncoded(png_data), skia.Image)
 
 
-def test_Image_DecodeToRaster(png_data):
-    assert isinstance(skia.Image.DecodeToRaster(png_data), skia.Image)
-
-
-def test_Image_DecodeToTexture(context, png_data):
-    assert isinstance(
-        skia.Image.DecodeToTexture(context, png_data), skia.Image)
-
-
 @pytest.fixture(scope='session')
 def compressed_data():
     return skia.Data.MakeUninitialized(128 * 128 * 32)

@@ -1124,10 +1124,6 @@ image
         The subset parameter specifies a area within the decoded image to create
         the image from. If subset is null, then the entire image is returned.
 
-        This is similar to DecodeTo[Raster,Texture], but this method will
-        attempt to defer the actual decode, while the DecodeTo... method
-        explicitly decode and allocate the backend when the call is made.
-
         If the encoded format is not supported, or subset is outside of the
         bounds of the decoded image, nullptr is returned.
 
@@ -1137,57 +1133,6 @@ image
         :return: created :py:class:`Image`, or nullptr
         )docstring",
         py::arg("encoded"), py::arg("subset") = nullptr)
-    .def_static("DecodeToRaster",
-        [] (py::buffer data, const SkIRect* subset) {
-            auto buffer = data.request();
-            auto size = (buffer.ndim) ? buffer.shape[0] * buffer.strides[0] : 0;
-            return SkImage::DecodeToRaster(buffer.ptr, size, subset);
-        },
-        R"docstring(
-        Decode the data in encoded/length into a raster image.
-
-        The subset parameter specifies a area within the decoded image to create
-        the image from. If subset is null, then the entire image is returned.
-
-        This is similar to MakeFromEncoded, but this method will always decode
-        immediately, and allocate the memory for the pixels for the lifetime of
-        the returned image.
-
-        If the encoded format is not supported, or subset is outside of the
-        bounds of the decoded image, nullptr is returned.
-
-        :param Union[bytes,bytearray,memoryview] data: the encoded data
-        :param skia.IRect subset:  the bounds of the pixels within the decoded
-            image to return. may be null.
-        :return: created :py:class:`Image`, or nullptr
-        )docstring",
-        py::arg("encoded"), py::arg("subset") = nullptr)
-    .def_static("DecodeToTexture",
-        [] (GrContext* context, py::buffer data, const SkIRect* subset) {
-            auto buffer = data.request();
-            auto size = (buffer.ndim) ? buffer.shape[0] * buffer.strides[0] : 0;
-            return SkImage::DecodeToTexture(context, buffer.ptr, size, subset);
-        },
-        R"docstring(
-        Decode the data in encoded/length into a texture-backed image.
-
-        The subset parameter specifies a area within the decoded image to create
-        the image from. If subset is null, then the entire image is returned.
-
-        This is similar to :py:meth:`MakeFromEncoded`, but this method will
-        always decode immediately, and allocate the texture for the pixels for
-        the lifetime of the returned image.
-
-        If the encoded format is not supported, or subset is outside of the
-        bounds of the decoded image, nullptr is returned.
-
-        :param skia.GrContext context: GPU context
-        :param Union[bytes,bytearray,memoryview] encoded: the encoded data
-        :param skia.IRect subset: the bounds of the pixels within the decoded
-            image to return. may be null.
-        :return: created :py:class:`Image`, or nullptr
-        )docstring",
-        py::arg("context"), py::arg("encoded"), py::arg("subset") = nullptr)
     .def_static("MakeTextureFromCompressed",
         &SkImage::MakeTextureFromCompressed,
         R"docstring(
