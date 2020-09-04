@@ -93,6 +93,7 @@
 <li class="toctree-l2 current"><a class="current reference internal" href="#">Canvas Creation</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#raster">Raster</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#gpu">GPU</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#opengl-window">OpenGL window</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#pdf">PDF</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#picture">Picture</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#svg">SVG</a></li>
@@ -269,6 +270,21 @@ Skia calls are made.</p>
     <span class="n">image</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="s1">&#39;output.png&#39;</span><span class="p">,</span> <span class="n">skia</span><span class="o">.</span><span class="n">kPNG</span><span class="p">)</span>
 </pre></div>
 </div>
+</div>
+<div class="section" id="opengl-window">
+<h2>OpenGL window<a class="headerlink" href="#opengl-window" title="Permalink to this headline">¶</a></h2>
+<p>In the previous example, even though the rendering is executed on the GPU,
+nothing is actually shown on the screen. It is possible to use Skia to draw
+directly to a window on the screen. To do this:</p>
+<ol class="arabic simple">
+<li><p>You have to use GLFW or other similar library to create and manage
+the window.</p></li>
+<li><p><a class="reference internal" href="../reference/skia.GrBackendRenderTarget.html#skia.GrBackendRenderTarget" title="skia.GrBackendRenderTarget"><code class="xref py py-class docutils literal notranslate"><span class="pre">GrBackendRenderTarget</span></code></a> has to be created with a surface attached
+to it.</p></li>
+<li><p>The rendered image has to be flushed to the screen by calling
+<a class="reference internal" href="../reference/skia.Surface.html#skia.Surface.flushAndSubmit" title="skia.Surface.flushAndSubmit"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Surface.flushAndSubmit()</span></code></a>.</p></li>
+</ol>
+<p>Here’s a complete example:</p>
 </div>
 <div class="section" id="pdf">
 <h2>PDF<a class="headerlink" href="#pdf" title="Permalink to this headline">¶</a></h2>
