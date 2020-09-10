@@ -12,8 +12,8 @@ public:
     SkRect cullRect() const override {
         PYBIND11_OVERLOAD_PURE(SkRect, SkPicture, cullRect);
     }
-    int approximateOpCount() const override {
-        PYBIND11_OVERLOAD_PURE(int, SkPicture, approximateOpCount);
+    int approximateOpCount(bool nested=false) const override {
+        PYBIND11_OVERLOAD_PURE(int, SkPicture, approximateOpCount, nested);
     }
     size_t approximateBytesUsed() const override {
         PYBIND11_OVERLOAD_PURE(size_t, SkPicture, approximateBytesUsed);
