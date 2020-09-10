@@ -293,12 +293,6 @@ def test_FontMgr_matchFamilyStyleCharacter(fontmgr):
         (skia.Typeface, type(None)))
 
 
-def test_FontMgr_matchFaceStyle(fontmgr):
-    assert isinstance(
-        fontmgr.matchFaceStyle(skia.Typeface.MakeDefault(), skia.FontStyle()),
-        (skia.Typeface, type(None)))
-
-
 def test_FontMgr_makeFromData(fontmgr):
     assert fontmgr.makeFromData(skia.Data.MakeEmpty(), 0) is None
 

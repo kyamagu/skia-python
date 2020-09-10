@@ -641,12 +641,6 @@ py::class_<SkFontMgr, sk_sp<SkFontMgr>, SkRefCnt>(m, "FontMgr",
         )docstring",
         py::arg("familyName"), py::arg("style"), py::arg("bcp47"),
         py::arg("character"))
-    .def("matchFaceStyle",
-        [] (const SkFontMgr& fontmgr, const SkTypeface* face,
-            const SkFontStyle& style) {
-            return sk_sp<SkTypeface>(fontmgr.matchFaceStyle(face, style));
-        },
-        py::arg("face"), py::arg("style"))
     .def("makeFromData", &SkFontMgr::makeFromData,
         R"docstring(
         Create a typeface for the specified data and TTC index (pass 0 for none)
