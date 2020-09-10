@@ -391,32 +391,6 @@ bitmap
         :return: true if :py:class:`ImageInfo` :py:class:`AlphaType` is
             :py:attr:`~AlphaType.kOpaque_AlphaType`
         )docstring")
-    .def("isVolatile", &SkBitmap::isVolatile,
-        R"docstring(
-        Provides a hint to caller that pixels should not be cached.
-
-        Only true if :py:meth:`setIsVolatile` has been called to mark as
-        volatile.
-
-        Volatile state is not shared by other bitmaps sharing the same
-        :py:class:`PixelRef`.
-
-        :return: true if marked volatile
-        )docstring")
-    .def("setIsVolatile", &SkBitmap::setIsVolatile,
-        R"docstring(
-        Sets if pixels should be read from :py:class:`PixelRef` on every access.
-
-        :py:class:`Bitmap` are not volatile by default; a GPU back end may
-        upload pixel values expecting them to be accessed repeatedly. Marking
-        temporary :py:class:`Bitmap` as volatile provides a hint to
-        :py:class:`BaseDevice` that the :py:class:`Bitmap` pixels should not be
-        cached. This can improve performance by avoiding overhead and reducing
-        resource consumption on :py:class:`BaseDevice`.
-
-        :param bool isVolatile: true if backing pixels are temporary
-        )docstring",
-        py::arg("isVolatile") = true)
     .def("reset", &SkBitmap::reset,
         R"docstring(
         Resets to its initial state; all fields are set to zero, as if
