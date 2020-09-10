@@ -130,7 +130,8 @@ py::class_<SkPicture, PyPicture, sk_sp<SkPicture>, SkRefCnt>(
         than one operation, other calls may be optimized away.
 
         :return: approximate operation count
-        )docstring")
+        )docstring",
+        py::arg("nested") = false)
     .def("approximateBytesUsed", &SkPicture::approximateBytesUsed,
         R"docstring(
         Returns the approximate byte size of :py:class:`Picture`.

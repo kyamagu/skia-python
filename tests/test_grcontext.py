@@ -95,19 +95,19 @@ def test_GrBackendFormat_isValid(backend_format):
 @pytest.fixture(scope='module')
 def backend_texture(context, gl_texture_info):
     return skia.GrBackendTexture(
-        256, 256, skia.GrMipMapped.kNo, gl_texture_info)
+        256, 256, skia.GrMipmapped.kNo, gl_texture_info)
 
 
 def test_GrBackendTexture_init_glInfo(gl_texture_info):
     assert isinstance(
-        skia.GrBackendTexture(128, 128, skia.GrMipMapped.kNo, gl_texture_info),
+        skia.GrBackendTexture(128, 128, skia.GrMipmapped.kNo, gl_texture_info),
         skia.GrBackendTexture)
 
 
 def test_GrBackendTexture_init_mockInfo(mock_texture_info):
     assert isinstance(
         skia.GrBackendTexture(
-            128, 128, skia.GrMipMapped.kNo, mock_texture_info),
+            128, 128, skia.GrMipmapped.kNo, mock_texture_info),
         skia.GrBackendTexture)
 
 
@@ -160,10 +160,6 @@ def test_GrBackendTexture_isSameTexture(backend_texture):
 @pytest.fixture
 def grflushinfo():
     return skia.GrFlushInfo()
-
-
-def test_GrFlushInfo_fFlag(grflushinfo):
-    assert isinstance(grflushinfo.fFlags, skia.GrFlushFlags)
 
 
 def test_GrFlushInfo_fNumSemaphores(grflushinfo):
@@ -373,15 +369,15 @@ def test_GrContext_defaultBackendFormat(context):
 
 
 @pytest.mark.parametrize('args', [
-    (64, 64, skia.GrBackendFormat(), skia.GrMipMapped.kNo,
+    (64, 64, skia.GrBackendFormat(), skia.GrMipmapped.kNo,
         skia.GrRenderable.kNo),
-    (64, 64, skia.ColorType.kRGBA_8888_ColorType, skia.GrMipMapped.kNo,
+    (64, 64, skia.ColorType.kRGBA_8888_ColorType, skia.GrMipmapped.kNo,
         skia.GrRenderable.kNo),
     pytest.param((skia.SurfaceCharacterization(),), marks=pytest.mark.skip),
-    (64, 64, skia.GrBackendFormat(), 0xFFFFFFFF, skia.GrMipMapped.kNo,
+    (64, 64, skia.GrBackendFormat(), 0xFFFFFFFF, skia.GrMipmapped.kNo,
         skia.GrRenderable.kNo),
     (64, 64, skia.ColorType.kRGBA_8888_ColorType, 0xFFFFFFFF,
-        skia.GrMipMapped.kNo, skia.GrRenderable.kNo),
+        skia.GrMipmapped.kNo, skia.GrRenderable.kNo),
     pytest.param(
         (skia.SurfaceCharacterization(), 0xFFFFFFFF),
         marks=pytest.mark.skip),
@@ -409,7 +405,7 @@ def test_GrContext_createBackendTexture_3(context, pixmap):
 def test_GrContext_updateBackendTexture_1(context):
     backend_texture = context.createBackendTexture(
         64, 64, skia.ColorType.kRGBA_8888_ColorType, 0xFFFFFFFF,
-        skia.GrMipMapped.kNo, skia.GrRenderable.kNo)
+        skia.GrMipmapped.kNo, skia.GrRenderable.kNo)
     assert isinstance(
         context.updateBackendTexture(backend_texture, skia.ColorBLACK), bool)
     context.deleteBackendTexture(backend_texture)
@@ -418,7 +414,7 @@ def test_GrContext_updateBackendTexture_1(context):
 def test_GrContext_updateBackendTexture_2(context, pixmap):
     backend_texture = context.createBackendTexture(
         64, 64, skia.ColorType.kRGBA_8888_ColorType, 0xFFFFFFFF,
-        skia.GrMipMapped.kNo, skia.GrRenderable.kNo)
+        skia.GrMipmapped.kNo, skia.GrRenderable.kNo)
     assert isinstance(
         context.updateBackendTexture(backend_texture, [pixmap]), bool)
     context.deleteBackendTexture(backend_texture)
@@ -431,10 +427,10 @@ def test_GrContext_compressedBackendFormat(context):
 
 
 @pytest.mark.parametrize('args', [
-    (64, 64, skia.GrBackendFormat(), 0xFFFFFFFF, skia.GrMipMapped.kNo),
-    (64, 64, skia.Image.kBC1_RGBA8_UNORM, 0xFFFFFFFF, skia.GrMipMapped.kNo),
-    (16, 16, skia.GrBackendFormat(), bytearray(256), skia.GrMipMapped.kNo),
-    (16, 16, skia.Image.kBC1_RGBA8_UNORM, bytearray(256), skia.GrMipMapped.kNo),
+    (64, 64, skia.GrBackendFormat(), 0xFFFFFFFF, skia.GrMipmapped.kNo),
+    (64, 64, skia.Image.kBC1_RGBA8_UNORM, 0xFFFFFFFF, skia.GrMipmapped.kNo),
+    (16, 16, skia.GrBackendFormat(), bytearray(256), skia.GrMipmapped.kNo),
+    (16, 16, skia.Image.kBC1_RGBA8_UNORM, bytearray(256), skia.GrMipmapped.kNo),
 ])
 def test_GrContext_createCompressedBackendTexture(context, args):
     backend_texture = context.createCompressedBackendTexture(*args)
@@ -467,29 +463,31 @@ def test_GrContext_precompileShader(context):
 
 def test_GrContext_ComputeImageSize(image):
     assert isinstance(
-        skia.GrContext.ComputeImageSize(image, skia.GrMipMapped.kYes),
+        skia.GrContext.ComputeImageSize(image, skia.GrMipmapped.kYes),
         int)
 
 
-def test_GrContext_MakeGL(context):
-    assert isinstance(context, skia.GrContext)
+def test_GrDirectContext_MakeGL(context):
+    assert isinstance(context, skia.GrDirectContext)
 
 
-def test_GrContext_MakeVulkan():
+@pytest.mark.skip(reason='Vulkan not supported yet.')
+def test_GrDirectContext_MakeVulkan():
     context = skia.GrVkBackendContext()
     options = skia.GrContextOptions()
     assert isinstance(
-        skia.GrContext.MakeVulkan(context),
-        (type(None), skia.GrContext))
+        skia.GrDirectContext.MakeVulkan(context),
+        (type(None), skia.GrDirectContext))
     assert isinstance(
-        skia.GrContext.MakeVulkan(context, options),
-        (type(None), skia.GrContext))
+        skia.GrDirectContext.MakeVulkan(context, options),
+        (type(None), skia.GrDirectContext))
 
 
-def test_GrContext_MakeMock():
+def test_GrDirectContext_MakeMock():
     assert isinstance(
-        skia.GrContext.MakeMock(skia.GrMockOptions(), skia.GrContextOptions()),
-        skia.GrContext)
+        skia.GrDirectContext.MakeMock(
+            skia.GrMockOptions(), skia.GrContextOptions()),
+        skia.GrDirectContext)
 
 
 @pytest.fixture(scope='module')

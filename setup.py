@@ -33,6 +33,7 @@ if sys.platform == 'win32':
     EXTRA_COMPILE_ARGS = [
         '/std:c++17',  # c++20 fails.
         '/DVERSION_INFO=%s' % __version__,
+        '/DSK_GL',
         '/Zc:inline',
         # Disable a bunch of warnings.
         '/wd5030',  # Warnings about unknown attributes.
@@ -47,7 +48,10 @@ if sys.platform == 'win32':
         '/OPT:REF',
     ]
 elif sys.platform == 'darwin':
-    DEFINE_MACROS = [('VERSION_INFO', __version__)]
+    DEFINE_MACROS = [
+        ('VERSION_INFO', __version__),
+        ('SK_GL', ''),
+    ]
     LIBRARIES = [
         'dl',
     ]
@@ -67,7 +71,10 @@ elif sys.platform == 'darwin':
         '-framework', 'OpenGL',
     ]
 else:
-    DEFINE_MACROS = [('VERSION_INFO', __version__)]
+    DEFINE_MACROS = [
+        ('VERSION_INFO', __version__),
+        ('SK_GL', ''),
+    ]
     LIBRARIES = [
         'dl',
         'fontconfig',
