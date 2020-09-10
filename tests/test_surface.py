@@ -162,6 +162,7 @@ def test_Surface_characterize(surface):
     assert isinstance(surface.characterize(characterization), bool)
 
 
+# TODO: draw(DefferedDisplayList)
 # def test_Surface_draw(surface):
 #     surface.draw()
 

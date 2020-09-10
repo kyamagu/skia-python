@@ -852,7 +852,7 @@ surface
         )docstring",
         py::arg("characterization"))
     .def("draw",
-        py::overload_cast<SkDeferredDisplayList*>(&SkSurface::draw),
+        py::overload_cast<sk_sp<const SkDeferredDisplayList>>(&SkSurface::draw),
         R"docstring(
         Draws deferred display list created using
         :py:class:`DeferredDisplayListRecorder`.
