@@ -275,7 +275,7 @@ py::class_<GrBackendTexture>(m, "GrBackendTexture")
     .def("dimensions", &GrBackendTexture::dimensions)
     .def("width", &GrBackendTexture::width)
     .def("height", &GrBackendTexture::height)
-    .def("hasMipMaps", &GrBackendTexture::hasMipMaps)
+    .def("hasMipmaps", &GrBackendTexture::hasMipmaps)
     .def("backend", &GrBackendTexture::backend)
     .def("getGLTextureInfo", &GrBackendTexture::getGLTextureInfo,
         py::arg("info"))
@@ -935,7 +935,7 @@ py::class_<GrContext, sk_sp<GrContext>, GrRecordingContext>(m, "GrContext")
         If the backend texture is mip mapped, the data for all the mipmap levels
         must be provided. In the mipmapped case all the colortypes of the
         provided pixmaps must be the same. Additionally, all the miplevels must
-        be sized correctly (please see SkMipMap::ComputeLevelSize and
+        be sized correctly (please see SkMipmap::ComputeLevelSize and
         ComputeLevelCount). Note: the pixmap's alphatypes and colorspaces are
         ignored. For the Vulkan backend after a successful update the layout of
         the created VkImage will be: VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL

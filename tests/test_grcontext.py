@@ -123,8 +123,8 @@ def test_GrBackendTexture_height(backend_texture):
     assert isinstance(backend_texture.height(), int)
 
 
-def test_GrBackendTexture_hasMipMaps(backend_texture):
-    assert isinstance(backend_texture.hasMipMaps(), bool)
+def test_GrBackendTexture_hasMipmaps(backend_texture):
+    assert isinstance(backend_texture.hasMipmaps(), bool)
 
 
 def test_GrBackendTexture_getGLTextureInfo(backend_texture, gl_texture_info):
