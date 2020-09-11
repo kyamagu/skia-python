@@ -126,7 +126,7 @@ directly to a window on the screen. To do this:
 
 Here's a complete example:
 
-.. code-block: python
+.. code-block:: python
 
     import contextlib, glfw, skia
     from OpenGL import GL
