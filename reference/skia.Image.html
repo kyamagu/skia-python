@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Image &mdash; skia-python 85.0 documentation</title>
+  <title>Image &mdash; skia-python 86.0 documentation</title>
   
 
   
@@ -61,7 +61,7 @@
             
             
               <div class="version">
-                85.0
+                86.0
               </div>
             
           
@@ -155,18 +155,21 @@
 <li class="toctree-l3"><a class="reference internal" href="skia.GrColorType.html">GrColorType</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.GrContext.html">GrContext</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.GrContextOptions.html">GrContextOptions</a></li>
-<li class="toctree-l3"><a class="reference internal" href="skia.GrFlushFlags.html">GrFlushFlags</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.GrContext_Base.html">GrContext_Base</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.GrDirectContext.html">GrDirectContext</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.GrFlushInfo.html">GrFlushInfo</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.GrGLBackendState.html">GrGLBackendState</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.GrGLFormat.html">GrGLFormat</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.GrGLFramebufferInfo.html">GrGLFramebufferInfo</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.GrGLInterface.html">GrGLInterface</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.GrGLTextureInfo.html">GrGLTextureInfo</a></li>
-<li class="toctree-l3"><a class="reference internal" href="skia.GrMipMapped.html">GrMipMapped</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.GrImageContext.html">GrImageContext</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.GrMipmapped.html">GrMipmapped</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.GrMockOptions.html">GrMockOptions</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.GrMockRenderTargetInfo.html">GrMockRenderTargetInfo</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.GrMockTextureInfo.html">GrMockTextureInfo</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.GrProtected.html">GrProtected</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.GrRecordingContext.html">GrRecordingContext</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.GrRenderable.html">GrRenderable</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.GrSemaphoresSubmitted.html">GrSemaphoresSubmitted</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.GrSurfaceOrigin.html">GrSurfaceOrigin</a></li>
@@ -406,12 +409,6 @@ Supported encoding details vary with platform.</p>
 <col style="width: 90%" />
 </colgroup>
 <tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Image.DecodeToRaster" title="skia.Image.DecodeToRaster"><code class="xref py py-obj docutils literal notranslate"><span class="pre">DecodeToRaster</span></code></a></p></td>
-<td><p>Decode the data in encoded/length into a raster image.</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#skia.Image.DecodeToTexture" title="skia.Image.DecodeToTexture"><code class="xref py py-obj docutils literal notranslate"><span class="pre">DecodeToTexture</span></code></a></p></td>
-<td><p>Decode the data in encoded/length into a texture-backed image.</p></td>
-</tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#skia.Image.MakeBackendTextureFromImage" title="skia.Image.MakeBackendTextureFromImage"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MakeBackendTextureFromImage</span></code></a></p></td>
 <td><p>Creates a <a class="reference internal" href="skia.GrBackendTexture.html#skia.GrBackendTexture" title="skia.GrBackendTexture"><code class="xref py py-class docutils literal notranslate"><span class="pre">GrBackendTexture</span></code></a> from the provided <a class="reference internal" href="#skia.Image" title="skia.Image"><code class="xref py py-class docutils literal notranslate"><span class="pre">Image</span></code></a>.</p></td>
 </tr>
@@ -482,105 +479,114 @@ Supported encoding details vary with platform.</p>
 <td><p>Overloaded function.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#skia.Image.flush" title="skia.Image.flush"><code class="xref py py-obj docutils literal notranslate"><span class="pre">flush</span></code></a></p></td>
-<td><p>Flushes any pending uses of texture-backed images in the GPU backend.</p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Image.fromarray" title="skia.Image.fromarray"><code class="xref py py-obj docutils literal notranslate"><span class="pre">fromarray</span></code></a></p></td>
-<td><p>Creates a new <a class="reference internal" href="#skia.Image" title="skia.Image"><code class="xref py py-class docutils literal notranslate"><span class="pre">Image</span></code></a> from numpy array.</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#skia.Image.frombytes" title="skia.Image.frombytes"><code class="xref py py-obj docutils literal notranslate"><span class="pre">frombytes</span></code></a></p></td>
-<td><p>Creates a new <a class="reference internal" href="#skia.Image" title="skia.Image"><code class="xref py py-class docutils literal notranslate"><span class="pre">Image</span></code></a> from bytes.</p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Image.height" title="skia.Image.height"><code class="xref py py-obj docutils literal notranslate"><span class="pre">height</span></code></a></p></td>
-<td><p>Returns pixel row count.</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#skia.Image.imageInfo" title="skia.Image.imageInfo"><code class="xref py py-obj docutils literal notranslate"><span class="pre">imageInfo</span></code></a></p></td>
-<td><p>Returns a <a class="reference internal" href="skia.ImageInfo.html#skia.ImageInfo" title="skia.ImageInfo"><code class="xref py py-class docutils literal notranslate"><span class="pre">ImageInfo</span></code></a> describing the width, height, color type, alpha type, and color space of the <a class="reference internal" href="#skia.Image" title="skia.Image"><code class="xref py py-class docutils literal notranslate"><span class="pre">Image</span></code></a>.</p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Image.isAlphaOnly" title="skia.Image.isAlphaOnly"><code class="xref py py-obj docutils literal notranslate"><span class="pre">isAlphaOnly</span></code></a></p></td>
-<td><p>Returns true if <a class="reference internal" href="#skia.Image" title="skia.Image"><code class="xref py py-class docutils literal notranslate"><span class="pre">Image</span></code></a> pixels represent transparency only.</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#skia.Image.isLazyGenerated" title="skia.Image.isLazyGenerated"><code class="xref py py-obj docutils literal notranslate"><span class="pre">isLazyGenerated</span></code></a></p></td>
-<td><p>Returns true if <a class="reference internal" href="#skia.Image" title="skia.Image"><code class="xref py py-class docutils literal notranslate"><span class="pre">Image</span></code></a> is backed by an image-generator or other service that creates and caches its pixels or texture on-demand.</p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Image.isOpaque" title="skia.Image.isOpaque"><code class="xref py py-obj docutils literal notranslate"><span class="pre">isOpaque</span></code></a></p></td>
-<td><p>Returns true if pixels ignore their alpha value and are treated as fully opaque.</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#skia.Image.isTextureBacked" title="skia.Image.isTextureBacked"><code class="xref py py-obj docutils literal notranslate"><span class="pre">isTextureBacked</span></code></a></p></td>
-<td><p>Returns true the contents of <a class="reference internal" href="#skia.Image" title="skia.Image"><code class="xref py py-class docutils literal notranslate"><span class="pre">Image</span></code></a> was created on or uploaded to GPU memory, and is available as a GPU texture.</p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Image.isValid" title="skia.Image.isValid"><code class="xref py py-obj docutils literal notranslate"><span class="pre">isValid</span></code></a></p></td>
-<td><p>Returns true if <a class="reference internal" href="#skia.Image" title="skia.Image"><code class="xref py py-class docutils literal notranslate"><span class="pre">Image</span></code></a> can be drawn on either raster surface or GPU surface.</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#skia.Image.makeColorSpace" title="skia.Image.makeColorSpace"><code class="xref py py-obj docutils literal notranslate"><span class="pre">makeColorSpace</span></code></a></p></td>
-<td><p>Creates <a class="reference internal" href="#skia.Image" title="skia.Image"><code class="xref py py-class docutils literal notranslate"><span class="pre">Image</span></code></a> in target <a class="reference internal" href="skia.ColorSpace.html#skia.ColorSpace" title="skia.ColorSpace"><code class="xref py py-class docutils literal notranslate"><span class="pre">ColorSpace</span></code></a>.</p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Image.makeColorTypeAndColorSpace" title="skia.Image.makeColorTypeAndColorSpace"><code class="xref py py-obj docutils literal notranslate"><span class="pre">makeColorTypeAndColorSpace</span></code></a></p></td>
-<td><p>Experimental.</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#skia.Image.makeNonTextureImage" title="skia.Image.makeNonTextureImage"><code class="xref py py-obj docutils literal notranslate"><span class="pre">makeNonTextureImage</span></code></a></p></td>
-<td><p>Returns raster image or lazy image.</p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Image.makeRasterImage" title="skia.Image.makeRasterImage"><code class="xref py py-obj docutils literal notranslate"><span class="pre">makeRasterImage</span></code></a></p></td>
-<td><p>Returns raster image.</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#skia.Image.makeShader" title="skia.Image.makeShader"><code class="xref py py-obj docutils literal notranslate"><span class="pre">makeShader</span></code></a></p></td>
-<td><p>Creates <a class="reference internal" href="skia.Shader.html#skia.Shader" title="skia.Shader"><code class="xref py py-class docutils literal notranslate"><span class="pre">Shader</span></code></a> from <a class="reference internal" href="#skia.Image" title="skia.Image"><code class="xref py py-class docutils literal notranslate"><span class="pre">Image</span></code></a>.</p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Image.makeSubset" title="skia.Image.makeSubset"><code class="xref py py-obj docutils literal notranslate"><span class="pre">makeSubset</span></code></a></p></td>
-<td><p>Returns subset of <a class="reference internal" href="#skia.Image" title="skia.Image"><code class="xref py py-class docutils literal notranslate"><span class="pre">Image</span></code></a>.</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#skia.Image.makeTextureImage" title="skia.Image.makeTextureImage"><code class="xref py py-obj docutils literal notranslate"><span class="pre">makeTextureImage</span></code></a></p></td>
-<td><p>Returns <a class="reference internal" href="#skia.Image" title="skia.Image"><code class="xref py py-class docutils literal notranslate"><span class="pre">Image</span></code></a> backed by GPU texture associated with context.</p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Image.makeWithFilter" title="skia.Image.makeWithFilter"><code class="xref py py-obj docutils literal notranslate"><span class="pre">makeWithFilter</span></code></a></p></td>
-<td><p>Creates filtered <a class="reference internal" href="#skia.Image" title="skia.Image"><code class="xref py py-class docutils literal notranslate"><span class="pre">Image</span></code></a>.</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#skia.Image.open" title="skia.Image.open"><code class="xref py py-obj docutils literal notranslate"><span class="pre">open</span></code></a></p></td>
-<td><p>Creates <a class="reference internal" href="#skia.Image" title="skia.Image"><code class="xref py py-attr docutils literal notranslate"><span class="pre">Image</span></code></a> from file path or file-like object.</p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Image.peekPixels" title="skia.Image.peekPixels"><code class="xref py py-obj docutils literal notranslate"><span class="pre">peekPixels</span></code></a></p></td>
-<td><p>Copies <a class="reference internal" href="#skia.Image" title="skia.Image"><code class="xref py py-class docutils literal notranslate"><span class="pre">Image</span></code></a> pixel address, row bytes, and <a class="reference internal" href="skia.ImageInfo.html#skia.ImageInfo" title="skia.ImageInfo"><code class="xref py py-class docutils literal notranslate"><span class="pre">ImageInfo</span></code></a> to pixmap, if address is available, and returns true.</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#skia.Image.readPixels" title="skia.Image.readPixels"><code class="xref py py-obj docutils literal notranslate"><span class="pre">readPixels</span></code></a></p></td>
 <td><p>Overloaded function.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Image.ref" title="skia.Image.ref"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ref</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Image.flushAndSubmit" title="skia.Image.flushAndSubmit"><code class="xref py py-obj docutils literal notranslate"><span class="pre">flushAndSubmit</span></code></a></p></td>
+<td><p>Version of <a class="reference internal" href="#skia.Image.flush" title="skia.Image.flush"><code class="xref py py-meth docutils literal notranslate"><span class="pre">flush()</span></code></a> that uses a default GrFlushInfo.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.Image.fromarray" title="skia.Image.fromarray"><code class="xref py py-obj docutils literal notranslate"><span class="pre">fromarray</span></code></a></p></td>
+<td><p>Creates a new <a class="reference internal" href="#skia.Image" title="skia.Image"><code class="xref py py-class docutils literal notranslate"><span class="pre">Image</span></code></a> from numpy array.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Image.frombytes" title="skia.Image.frombytes"><code class="xref py py-obj docutils literal notranslate"><span class="pre">frombytes</span></code></a></p></td>
+<td><p>Creates a new <a class="reference internal" href="#skia.Image" title="skia.Image"><code class="xref py py-class docutils literal notranslate"><span class="pre">Image</span></code></a> from bytes.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.Image.getBackendTexture" title="skia.Image.getBackendTexture"><code class="xref py py-obj docutils literal notranslate"><span class="pre">getBackendTexture</span></code></a></p></td>
+<td><p>Retrieves the back-end texture.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Image.hasMipmaps" title="skia.Image.hasMipmaps"><code class="xref py py-obj docutils literal notranslate"><span class="pre">hasMipmaps</span></code></a></p></td>
+<td><p>Returns true if the image has mipmap levels.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.Image.height" title="skia.Image.height"><code class="xref py py-obj docutils literal notranslate"><span class="pre">height</span></code></a></p></td>
+<td><p>Returns pixel row count.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Image.imageInfo" title="skia.Image.imageInfo"><code class="xref py py-obj docutils literal notranslate"><span class="pre">imageInfo</span></code></a></p></td>
+<td><p>Returns a <a class="reference internal" href="skia.ImageInfo.html#skia.ImageInfo" title="skia.ImageInfo"><code class="xref py py-class docutils literal notranslate"><span class="pre">ImageInfo</span></code></a> describing the width, height, color type, alpha type, and color space of the <a class="reference internal" href="#skia.Image" title="skia.Image"><code class="xref py py-class docutils literal notranslate"><span class="pre">Image</span></code></a>.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.Image.isAlphaOnly" title="skia.Image.isAlphaOnly"><code class="xref py py-obj docutils literal notranslate"><span class="pre">isAlphaOnly</span></code></a></p></td>
+<td><p>Returns true if <a class="reference internal" href="#skia.Image" title="skia.Image"><code class="xref py py-class docutils literal notranslate"><span class="pre">Image</span></code></a> pixels represent transparency only.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Image.isLazyGenerated" title="skia.Image.isLazyGenerated"><code class="xref py py-obj docutils literal notranslate"><span class="pre">isLazyGenerated</span></code></a></p></td>
+<td><p>Returns true if <a class="reference internal" href="#skia.Image" title="skia.Image"><code class="xref py py-class docutils literal notranslate"><span class="pre">Image</span></code></a> is backed by an image-generator or other service that creates and caches its pixels or texture on-demand.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.Image.isOpaque" title="skia.Image.isOpaque"><code class="xref py py-obj docutils literal notranslate"><span class="pre">isOpaque</span></code></a></p></td>
+<td><p>Returns true if pixels ignore their alpha value and are treated as fully opaque.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Image.isTextureBacked" title="skia.Image.isTextureBacked"><code class="xref py py-obj docutils literal notranslate"><span class="pre">isTextureBacked</span></code></a></p></td>
+<td><p>Returns true the contents of <a class="reference internal" href="#skia.Image" title="skia.Image"><code class="xref py py-class docutils literal notranslate"><span class="pre">Image</span></code></a> was created on or uploaded to GPU memory, and is available as a GPU texture.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.Image.isValid" title="skia.Image.isValid"><code class="xref py py-obj docutils literal notranslate"><span class="pre">isValid</span></code></a></p></td>
+<td><p>Returns true if <a class="reference internal" href="#skia.Image" title="skia.Image"><code class="xref py py-class docutils literal notranslate"><span class="pre">Image</span></code></a> can be drawn on either raster surface or GPU surface.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Image.makeColorSpace" title="skia.Image.makeColorSpace"><code class="xref py py-obj docutils literal notranslate"><span class="pre">makeColorSpace</span></code></a></p></td>
+<td><p>Creates <a class="reference internal" href="#skia.Image" title="skia.Image"><code class="xref py py-class docutils literal notranslate"><span class="pre">Image</span></code></a> in target <a class="reference internal" href="skia.ColorSpace.html#skia.ColorSpace" title="skia.ColorSpace"><code class="xref py py-class docutils literal notranslate"><span class="pre">ColorSpace</span></code></a>.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.Image.makeColorTypeAndColorSpace" title="skia.Image.makeColorTypeAndColorSpace"><code class="xref py py-obj docutils literal notranslate"><span class="pre">makeColorTypeAndColorSpace</span></code></a></p></td>
+<td><p>Experimental.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Image.makeNonTextureImage" title="skia.Image.makeNonTextureImage"><code class="xref py py-obj docutils literal notranslate"><span class="pre">makeNonTextureImage</span></code></a></p></td>
+<td><p>Returns raster image or lazy image.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.Image.makeRasterImage" title="skia.Image.makeRasterImage"><code class="xref py py-obj docutils literal notranslate"><span class="pre">makeRasterImage</span></code></a></p></td>
+<td><p>Returns raster image.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Image.makeShader" title="skia.Image.makeShader"><code class="xref py py-obj docutils literal notranslate"><span class="pre">makeShader</span></code></a></p></td>
+<td><p>Creates <a class="reference internal" href="skia.Shader.html#skia.Shader" title="skia.Shader"><code class="xref py py-class docutils literal notranslate"><span class="pre">Shader</span></code></a> from <a class="reference internal" href="#skia.Image" title="skia.Image"><code class="xref py py-class docutils literal notranslate"><span class="pre">Image</span></code></a>.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.Image.makeSubset" title="skia.Image.makeSubset"><code class="xref py py-obj docutils literal notranslate"><span class="pre">makeSubset</span></code></a></p></td>
+<td><p>Returns subset of <a class="reference internal" href="#skia.Image" title="skia.Image"><code class="xref py py-class docutils literal notranslate"><span class="pre">Image</span></code></a>.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Image.makeTextureImage" title="skia.Image.makeTextureImage"><code class="xref py py-obj docutils literal notranslate"><span class="pre">makeTextureImage</span></code></a></p></td>
+<td><p>Returns <a class="reference internal" href="#skia.Image" title="skia.Image"><code class="xref py py-class docutils literal notranslate"><span class="pre">Image</span></code></a> backed by GPU texture associated with context.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.Image.makeWithFilter" title="skia.Image.makeWithFilter"><code class="xref py py-obj docutils literal notranslate"><span class="pre">makeWithFilter</span></code></a></p></td>
+<td><p>Creates filtered <a class="reference internal" href="#skia.Image" title="skia.Image"><code class="xref py py-class docutils literal notranslate"><span class="pre">Image</span></code></a>.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Image.open" title="skia.Image.open"><code class="xref py py-obj docutils literal notranslate"><span class="pre">open</span></code></a></p></td>
+<td><p>Creates <a class="reference internal" href="#skia.Image" title="skia.Image"><code class="xref py py-attr docutils literal notranslate"><span class="pre">Image</span></code></a> from file path or file-like object.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.Image.peekPixels" title="skia.Image.peekPixels"><code class="xref py py-obj docutils literal notranslate"><span class="pre">peekPixels</span></code></a></p></td>
+<td><p>Copies <a class="reference internal" href="#skia.Image" title="skia.Image"><code class="xref py py-class docutils literal notranslate"><span class="pre">Image</span></code></a> pixel address, row bytes, and <a class="reference internal" href="skia.ImageInfo.html#skia.ImageInfo" title="skia.ImageInfo"><code class="xref py py-class docutils literal notranslate"><span class="pre">ImageInfo</span></code></a> to pixmap, if address is available, and returns true.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Image.readPixels" title="skia.Image.readPixels"><code class="xref py py-obj docutils literal notranslate"><span class="pre">readPixels</span></code></a></p></td>
+<td><p>Overloaded function.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.Image.ref" title="skia.Image.ref"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ref</span></code></a></p></td>
 <td><p>Increment the reference count.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#skia.Image.refColorSpace" title="skia.Image.refColorSpace"><code class="xref py py-obj docutils literal notranslate"><span class="pre">refColorSpace</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Image.refColorSpace" title="skia.Image.refColorSpace"><code class="xref py py-obj docutils literal notranslate"><span class="pre">refColorSpace</span></code></a></p></td>
 <td><p>Returns a smart pointer to <a class="reference internal" href="skia.ColorSpace.html#skia.ColorSpace" title="skia.ColorSpace"><code class="xref py py-class docutils literal notranslate"><span class="pre">ColorSpace</span></code></a>, the range of colors, associated with <a class="reference internal" href="#skia.Image" title="skia.Image"><code class="xref py py-class docutils literal notranslate"><span class="pre">Image</span></code></a>.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Image.refEncodedData" title="skia.Image.refEncodedData"><code class="xref py py-obj docutils literal notranslate"><span class="pre">refEncodedData</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.Image.refEncodedData" title="skia.Image.refEncodedData"><code class="xref py py-obj docutils literal notranslate"><span class="pre">refEncodedData</span></code></a></p></td>
 <td><p>Returns encoded <a class="reference internal" href="#skia.Image" title="skia.Image"><code class="xref py py-class docutils literal notranslate"><span class="pre">Image</span></code></a> pixels as <a class="reference internal" href="skia.Data.html#skia.Data" title="skia.Data"><code class="xref py py-class docutils literal notranslate"><span class="pre">Data</span></code></a>, if <a class="reference internal" href="#skia.Image" title="skia.Image"><code class="xref py py-class docutils literal notranslate"><span class="pre">Image</span></code></a> was created from supported encoded stream format.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#skia.Image.reinterpretColorSpace" title="skia.Image.reinterpretColorSpace"><code class="xref py py-obj docutils literal notranslate"><span class="pre">reinterpretColorSpace</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Image.reinterpretColorSpace" title="skia.Image.reinterpretColorSpace"><code class="xref py py-obj docutils literal notranslate"><span class="pre">reinterpretColorSpace</span></code></a></p></td>
 <td><p>Creates a new <a class="reference internal" href="#skia.Image" title="skia.Image"><code class="xref py py-class docutils literal notranslate"><span class="pre">Image</span></code></a> identical to this one, but with a different <a class="reference internal" href="skia.ColorSpace.html#skia.ColorSpace" title="skia.ColorSpace"><code class="xref py py-class docutils literal notranslate"><span class="pre">ColorSpace</span></code></a>.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Image.resize" title="skia.Image.resize"><code class="xref py py-obj docutils literal notranslate"><span class="pre">resize</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.Image.resize" title="skia.Image.resize"><code class="xref py py-obj docutils literal notranslate"><span class="pre">resize</span></code></a></p></td>
 <td><p>Creates <a class="reference internal" href="#skia.Image" title="skia.Image"><code class="xref py py-class docutils literal notranslate"><span class="pre">Image</span></code></a> by scaling pixels to fit width and height.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#skia.Image.save" title="skia.Image.save"><code class="xref py py-obj docutils literal notranslate"><span class="pre">save</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Image.save" title="skia.Image.save"><code class="xref py py-obj docutils literal notranslate"><span class="pre">save</span></code></a></p></td>
 <td><p>Saves <a class="reference internal" href="#skia.Image" title="skia.Image"><code class="xref py py-attr docutils literal notranslate"><span class="pre">Image</span></code></a> to file path or file-like object.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Image.scalePixels" title="skia.Image.scalePixels"><code class="xref py py-obj docutils literal notranslate"><span class="pre">scalePixels</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.Image.scalePixels" title="skia.Image.scalePixels"><code class="xref py py-obj docutils literal notranslate"><span class="pre">scalePixels</span></code></a></p></td>
 <td><p>Copies <a class="reference internal" href="#skia.Image" title="skia.Image"><code class="xref py py-class docutils literal notranslate"><span class="pre">Image</span></code></a> to dst, scaling pixels to fit <code class="docutils literal notranslate"><span class="pre">dst.width()</span></code> and <code class="docutils literal notranslate"><span class="pre">dst.height()</span></code>, and converting pixels to match <code class="docutils literal notranslate"><span class="pre">dst.colorType()</span></code> and <code class="docutils literal notranslate"><span class="pre">dst.alphaType()</span></code>.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#skia.Image.toarray" title="skia.Image.toarray"><code class="xref py py-obj docutils literal notranslate"><span class="pre">toarray</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Image.toarray" title="skia.Image.toarray"><code class="xref py py-obj docutils literal notranslate"><span class="pre">toarray</span></code></a></p></td>
 <td><p>Exports a <code class="docutils literal notranslate"><span class="pre">numpy.ndarray</span></code>.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Image.tobytes" title="skia.Image.tobytes"><code class="xref py py-obj docutils literal notranslate"><span class="pre">tobytes</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.Image.tobytes" title="skia.Image.tobytes"><code class="xref py py-obj docutils literal notranslate"><span class="pre">tobytes</span></code></a></p></td>
 <td><p>Creates python <cite>bytes</cite> object from internal pixels.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#skia.Image.unique" title="skia.Image.unique"><code class="xref py py-obj docutils literal notranslate"><span class="pre">unique</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Image.unique" title="skia.Image.unique"><code class="xref py py-obj docutils literal notranslate"><span class="pre">unique</span></code></a></p></td>
 <td><p>May return true if the caller is the only owner.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Image.uniqueID" title="skia.Image.uniqueID"><code class="xref py py-obj docutils literal notranslate"><span class="pre">uniqueID</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.Image.uniqueID" title="skia.Image.uniqueID"><code class="xref py py-obj docutils literal notranslate"><span class="pre">uniqueID</span></code></a></p></td>
 <td><p>Returns value unique to image.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#skia.Image.unref" title="skia.Image.unref"><code class="xref py py-obj docutils literal notranslate"><span class="pre">unref</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Image.unref" title="skia.Image.unref"><code class="xref py py-obj docutils literal notranslate"><span class="pre">unref</span></code></a></p></td>
 <td><p>Decrement the reference count.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Image.width" title="skia.Image.width"><code class="xref py py-obj docutils literal notranslate"><span class="pre">width</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.Image.width" title="skia.Image.width"><code class="xref py py-obj docutils literal notranslate"><span class="pre">width</span></code></a></p></td>
 <td><p>Returns pixel count in each row.</p></td>
 </tr>
 </tbody>
@@ -629,59 +635,8 @@ Supported encoding details vary with platform.</p>
 <div class="section" id="methods">
 <h2>Methods<a class="headerlink" href="#methods" title="Permalink to this headline">¶</a></h2>
 <dl class="py method">
-<dt id="skia.Image.DecodeToRaster">
-<em class="property">static </em><code class="sig-prename descclassname">Image.</code><code class="sig-name descname">DecodeToRaster</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">encoded</span><span class="p">:</span> <span class="n">buffer</span></em>, <em class="sig-param"><span class="n">subset</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.IRect.html#skia.IRect" title="skia.IRect">skia.IRect</a></span> <span class="o">=</span> <span class="default_value">None</span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="#skia.Image" title="skia.Image">skia.Image</a><a class="headerlink" href="#skia.Image.DecodeToRaster" title="Permalink to this definition">¶</a></dt>
-<dd><p>Decode the data in encoded/length into a raster image.</p>
-<p>The subset parameter specifies a area within the decoded image to create
-the image from. If subset is null, then the entire image is returned.</p>
-<p>This is similar to MakeFromEncoded, but this method will always decode
-immediately, and allocate the memory for the pixels for the lifetime of
-the returned image.</p>
-<p>If the encoded format is not supported, or subset is outside of the
-bounds of the decoded image, nullptr is returned.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>data</strong> (<em>Union</em><em>[</em><em>bytes</em><em>,</em><em>bytearray</em><em>,</em><em>memoryview</em><em>]</em>) – the encoded data</p></li>
-<li><p><strong>subset</strong> (<a class="reference internal" href="skia.IRect.html#skia.IRect" title="skia.IRect"><em>skia.IRect</em></a>) – the bounds of the pixels within the decoded
-image to return. may be null.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p>created <a class="reference internal" href="#skia.Image" title="skia.Image"><code class="xref py py-class docutils literal notranslate"><span class="pre">Image</span></code></a>, or nullptr</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt id="skia.Image.DecodeToTexture">
-<em class="property">static </em><code class="sig-prename descclassname">Image.</code><code class="sig-name descname">DecodeToTexture</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">context</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.GrContext.html#skia.GrContext" title="skia.GrContext">skia.GrContext</a></span></em>, <em class="sig-param"><span class="n">encoded</span><span class="p">:</span> <span class="n">buffer</span></em>, <em class="sig-param"><span class="n">subset</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.IRect.html#skia.IRect" title="skia.IRect">skia.IRect</a></span> <span class="o">=</span> <span class="default_value">None</span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="#skia.Image" title="skia.Image">skia.Image</a><a class="headerlink" href="#skia.Image.DecodeToTexture" title="Permalink to this definition">¶</a></dt>
-<dd><p>Decode the data in encoded/length into a texture-backed image.</p>
-<p>The subset parameter specifies a area within the decoded image to create
-the image from. If subset is null, then the entire image is returned.</p>
-<p>This is similar to <a class="reference internal" href="#skia.Image.MakeFromEncoded" title="skia.Image.MakeFromEncoded"><code class="xref py py-meth docutils literal notranslate"><span class="pre">MakeFromEncoded()</span></code></a>, but this method will
-always decode immediately, and allocate the texture for the pixels for
-the lifetime of the returned image.</p>
-<p>If the encoded format is not supported, or subset is outside of the
-bounds of the decoded image, nullptr is returned.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>context</strong> (<a class="reference internal" href="skia.GrContext.html#skia.GrContext" title="skia.GrContext"><em>skia.GrContext</em></a>) – GPU context</p></li>
-<li><p><strong>encoded</strong> (<em>Union</em><em>[</em><em>bytes</em><em>,</em><em>bytearray</em><em>,</em><em>memoryview</em><em>]</em>) – the encoded data</p></li>
-<li><p><strong>subset</strong> (<a class="reference internal" href="skia.IRect.html#skia.IRect" title="skia.IRect"><em>skia.IRect</em></a>) – the bounds of the pixels within the decoded
-image to return. may be null.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p>created <a class="reference internal" href="#skia.Image" title="skia.Image"><code class="xref py py-class docutils literal notranslate"><span class="pre">Image</span></code></a>, or nullptr</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
 <dt id="skia.Image.MakeBackendTextureFromImage">
-<em class="property">static </em><code class="sig-prename descclassname">Image.</code><code class="sig-name descname">MakeBackendTextureFromImage</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">context</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.GrContext.html#skia.GrContext" title="skia.GrContext">skia.GrContext</a></span></em>, <em class="sig-param"><span class="n">image</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Image" title="skia.Image">skia.Image</a></span></em>, <em class="sig-param"><span class="n">backendTexture</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.GrBackendTexture.html#skia.GrBackendTexture" title="skia.GrBackendTexture">skia.GrBackendTexture</a></span></em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#skia.Image.MakeBackendTextureFromImage" title="Permalink to this definition">¶</a></dt>
+<em class="property">static </em><code class="sig-prename descclassname">Image.</code><code class="sig-name descname">MakeBackendTextureFromImage</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">context</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.GrDirectContext.html#skia.GrDirectContext" title="skia.GrDirectContext">skia.GrDirectContext</a></span></em>, <em class="sig-param"><span class="n">image</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Image" title="skia.Image">skia.Image</a></span></em>, <em class="sig-param"><span class="n">backendTexture</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.GrBackendTexture.html#skia.GrBackendTexture" title="skia.GrBackendTexture">skia.GrBackendTexture</a></span></em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#skia.Image.MakeBackendTextureFromImage" title="Permalink to this definition">¶</a></dt>
 <dd><p>Creates a <a class="reference internal" href="skia.GrBackendTexture.html#skia.GrBackendTexture" title="skia.GrBackendTexture"><code class="xref py py-class docutils literal notranslate"><span class="pre">GrBackendTexture</span></code></a> from the provided
 <a class="reference internal" href="#skia.Image" title="skia.Image"><code class="xref py py-class docutils literal notranslate"><span class="pre">Image</span></code></a>.</p>
 <p>Returns true and stores result in backendTexture if texture is created;
@@ -709,7 +664,7 @@ texture</p></li>
 
 <dl class="py method">
 <dt id="skia.Image.MakeCrossContextFromPixmap">
-<em class="property">static </em><code class="sig-prename descclassname">Image.</code><code class="sig-name descname">MakeCrossContextFromPixmap</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">context</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.GrContext.html#skia.GrContext" title="skia.GrContext">skia.GrContext</a></span></em>, <em class="sig-param"><span class="n">pixmap</span><span class="p">:</span> <span class="n">SkPixmap</span></em>, <em class="sig-param"><span class="n">buildMips</span><span class="p">:</span> <span class="n">bool</span></em>, <em class="sig-param"><span class="n">limitToMaxTextureSize</span><span class="p">:</span> <span class="n">bool</span> <span class="o">=</span> <span class="default_value">False</span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="#skia.Image" title="skia.Image">skia.Image</a><a class="headerlink" href="#skia.Image.MakeCrossContextFromPixmap" title="Permalink to this definition">¶</a></dt>
+<em class="property">static </em><code class="sig-prename descclassname">Image.</code><code class="sig-name descname">MakeCrossContextFromPixmap</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">context</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.GrDirectContext.html#skia.GrDirectContext" title="skia.GrDirectContext">skia.GrDirectContext</a></span></em>, <em class="sig-param"><span class="n">pixmap</span><span class="p">:</span> <span class="n">SkPixmap</span></em>, <em class="sig-param"><span class="n">buildMips</span><span class="p">:</span> <span class="n">bool</span></em>, <em class="sig-param"><span class="n">limitToMaxTextureSize</span><span class="p">:</span> <span class="n">bool</span> <span class="o">=</span> <span class="default_value">False</span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="#skia.Image" title="skia.Image">skia.Image</a><a class="headerlink" href="#skia.Image.MakeCrossContextFromPixmap" title="Permalink to this definition">¶</a></dt>
 <dd><p>Creates <a class="reference internal" href="#skia.Image" title="skia.Image"><code class="xref py py-class docutils literal notranslate"><span class="pre">Image</span></code></a> from pixmap.</p>
 <p><a class="reference internal" href="#skia.Image" title="skia.Image"><code class="xref py py-class docutils literal notranslate"><span class="pre">Image</span></code></a> is uploaded to GPU back-end using context.</p>
 <p>Created <a class="reference internal" href="#skia.Image" title="skia.Image"><code class="xref py py-class docutils literal notranslate"><span class="pre">Image</span></code></a> is available to other GPU contexts, and is
@@ -729,7 +684,7 @@ platform and GPU back-end.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>context</strong> (<a class="reference internal" href="skia.GrContext.html#skia.GrContext" title="skia.GrContext"><em>skia.GrContext</em></a>) – GPU context</p></li>
+<li><p><strong>context</strong> (<a class="reference internal" href="skia.GrDirectContext.html#skia.GrDirectContext" title="skia.GrDirectContext"><em>skia.GrDirectContext</em></a>) – GPU context</p></li>
 <li><p><strong>pixmap</strong> (<a class="reference internal" href="skia.Pixmap.html#skia.Pixmap" title="skia.Pixmap"><em>skia.Pixmap</em></a>) – <a class="reference internal" href="skia.ImageInfo.html#skia.ImageInfo" title="skia.ImageInfo"><code class="xref py py-class docutils literal notranslate"><span class="pre">ImageInfo</span></code></a>, pixel address, and row
 bytes</p></li>
 <li><p><strong>buildMips</strong> (<em>bool</em>) – create <a class="reference internal" href="#skia.Image" title="skia.Image"><code class="xref py py-class docutils literal notranslate"><span class="pre">Image</span></code></a> as mip map if true</p></li>
@@ -745,7 +700,7 @@ texture size, if necessary</p></li>
 
 <dl class="py method">
 <dt id="skia.Image.MakeFromAdoptedTexture">
-<em class="property">static </em><code class="sig-prename descclassname">Image.</code><code class="sig-name descname">MakeFromAdoptedTexture</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">context</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.GrContext.html#skia.GrContext" title="skia.GrContext">skia.GrContext</a></span></em>, <em class="sig-param"><span class="n">backendTexture</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.GrBackendTexture.html#skia.GrBackendTexture" title="skia.GrBackendTexture">skia.GrBackendTexture</a></span></em>, <em class="sig-param"><span class="n">origin</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.GrSurfaceOrigin.html#skia.GrSurfaceOrigin" title="skia.GrSurfaceOrigin">skia.GrSurfaceOrigin</a></span></em>, <em class="sig-param"><span class="n">colorType</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.ColorType.html#skia.ColorType" title="skia.ColorType">skia.ColorType</a></span></em>, <em class="sig-param"><span class="n">alphaType</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.AlphaType.html#skia.AlphaType" title="skia.AlphaType">skia.AlphaType</a></span> <span class="o">=</span> <span class="default_value">AlphaType.kPremul_AlphaType</span></em>, <em class="sig-param"><span class="n">colorSpace</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.ColorSpace.html#skia.ColorSpace" title="skia.ColorSpace">skia.ColorSpace</a></span> <span class="o">=</span> <span class="default_value">None</span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="#skia.Image" title="skia.Image">skia.Image</a><a class="headerlink" href="#skia.Image.MakeFromAdoptedTexture" title="Permalink to this definition">¶</a></dt>
+<em class="property">static </em><code class="sig-prename descclassname">Image.</code><code class="sig-name descname">MakeFromAdoptedTexture</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">context</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.GrRecordingContext.html#skia.GrRecordingContext" title="skia.GrRecordingContext">skia.GrRecordingContext</a></span></em>, <em class="sig-param"><span class="n">backendTexture</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.GrBackendTexture.html#skia.GrBackendTexture" title="skia.GrBackendTexture">skia.GrBackendTexture</a></span></em>, <em class="sig-param"><span class="n">origin</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.GrSurfaceOrigin.html#skia.GrSurfaceOrigin" title="skia.GrSurfaceOrigin">skia.GrSurfaceOrigin</a></span></em>, <em class="sig-param"><span class="n">colorType</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.ColorType.html#skia.ColorType" title="skia.ColorType">skia.ColorType</a></span></em>, <em class="sig-param"><span class="n">alphaType</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.AlphaType.html#skia.AlphaType" title="skia.AlphaType">skia.AlphaType</a></span> <span class="o">=</span> <span class="default_value">AlphaType.kPremul_AlphaType</span></em>, <em class="sig-param"><span class="n">colorSpace</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.ColorSpace.html#skia.ColorSpace" title="skia.ColorSpace">skia.ColorSpace</a></span> <span class="o">=</span> <span class="default_value">None</span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="#skia.Image" title="skia.Image">skia.Image</a><a class="headerlink" href="#skia.Image.MakeFromAdoptedTexture" title="Permalink to this definition">¶</a></dt>
 <dd><p>Creates <a class="reference internal" href="#skia.Image" title="skia.Image"><code class="xref py py-class docutils literal notranslate"><span class="pre">Image</span></code></a> from backendTexture associated with context.</p>
 <p>backendTexture and returned <a class="reference internal" href="#skia.Image" title="skia.Image"><code class="xref py py-class docutils literal notranslate"><span class="pre">Image</span></code></a> are managed internally,
 and are released when no longer needed.</p>
@@ -789,14 +744,14 @@ row of pixels; pixel address is not nullptr.</p>
 
 <dl class="py method">
 <dt id="skia.Image.MakeFromCompressedTexture">
-<em class="property">static </em><code class="sig-prename descclassname">Image.</code><code class="sig-name descname">MakeFromCompressedTexture</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">context</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.GrContext.html#skia.GrContext" title="skia.GrContext">skia.GrContext</a></span></em>, <em class="sig-param"><span class="n">texture</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.GrBackendTexture.html#skia.GrBackendTexture" title="skia.GrBackendTexture">skia.GrBackendTexture</a></span></em>, <em class="sig-param"><span class="n">origin</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.GrSurfaceOrigin.html#skia.GrSurfaceOrigin" title="skia.GrSurfaceOrigin">skia.GrSurfaceOrigin</a></span></em>, <em class="sig-param"><span class="n">alphaType</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.AlphaType.html#skia.AlphaType" title="skia.AlphaType">skia.AlphaType</a></span></em>, <em class="sig-param"><span class="n">colorSpace</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.ColorSpace.html#skia.ColorSpace" title="skia.ColorSpace">skia.ColorSpace</a></span> <span class="o">=</span> <span class="default_value">None</span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="#skia.Image" title="skia.Image">skia.Image</a><a class="headerlink" href="#skia.Image.MakeFromCompressedTexture" title="Permalink to this definition">¶</a></dt>
+<em class="property">static </em><code class="sig-prename descclassname">Image.</code><code class="sig-name descname">MakeFromCompressedTexture</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">context</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.GrRecordingContext.html#skia.GrRecordingContext" title="skia.GrRecordingContext">skia.GrRecordingContext</a></span></em>, <em class="sig-param"><span class="n">texture</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.GrBackendTexture.html#skia.GrBackendTexture" title="skia.GrBackendTexture">skia.GrBackendTexture</a></span></em>, <em class="sig-param"><span class="n">origin</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.GrSurfaceOrigin.html#skia.GrSurfaceOrigin" title="skia.GrSurfaceOrigin">skia.GrSurfaceOrigin</a></span></em>, <em class="sig-param"><span class="n">alphaType</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.AlphaType.html#skia.AlphaType" title="skia.AlphaType">skia.AlphaType</a></span></em>, <em class="sig-param"><span class="n">colorSpace</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.ColorSpace.html#skia.ColorSpace" title="skia.ColorSpace">skia.ColorSpace</a></span> <span class="o">=</span> <span class="default_value">None</span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="#skia.Image" title="skia.Image">skia.Image</a><a class="headerlink" href="#skia.Image.MakeFromCompressedTexture" title="Permalink to this definition">¶</a></dt>
 <dd><p>Creates an <a class="reference internal" href="#skia.Image" title="skia.Image"><code class="xref py py-class docutils literal notranslate"><span class="pre">Image</span></code></a> from a GPU backend texture.</p>
 <p>An <a class="reference internal" href="#skia.Image" title="skia.Image"><code class="xref py py-class docutils literal notranslate"><span class="pre">Image</span></code></a> is returned if the format of backendTexture is
 recognized and supported. Recognized formats vary by GPU back-end.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>context</strong> (<a class="reference internal" href="skia.GrContext.html#skia.GrContext" title="skia.GrContext"><em>skia.GrContext</em></a>) – the GPU context</p></li>
+<li><p><strong>context</strong> (<a class="reference internal" href="skia.GrRecordingContext.html#skia.GrRecordingContext" title="skia.GrRecordingContext"><em>skia.GrRecordingContext</em></a>) – the GPU context</p></li>
 <li><p><strong>backendTexture</strong> (<a class="reference internal" href="skia.GrBackendTexture.html#skia.GrBackendTexture" title="skia.GrBackendTexture"><em>skia.GrBackendTexture</em></a>) – a texture already allocated
 by the GPU</p></li>
 <li><p><strong>alphaType</strong> (<a class="reference internal" href="skia.AlphaType.html#skia.AlphaType" title="skia.AlphaType"><em>skia.AlphaType</em></a>) – This characterizes the nature of the
@@ -820,27 +775,17 @@ include a description of the transfer function as well (e.g.,
 
 <dl class="py method">
 <dt id="skia.Image.MakeFromEncoded">
-<em class="property">static </em><code class="sig-prename descclassname">Image.</code><code class="sig-name descname">MakeFromEncoded</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">encoded</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.Data.html#skia.Data" title="skia.Data">skia.Data</a></span></em>, <em class="sig-param"><span class="n">subset</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.IRect.html#skia.IRect" title="skia.IRect">skia.IRect</a></span> <span class="o">=</span> <span class="default_value">None</span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="#skia.Image" title="skia.Image">skia.Image</a><a class="headerlink" href="#skia.Image.MakeFromEncoded" title="Permalink to this definition">¶</a></dt>
+<em class="property">static </em><code class="sig-prename descclassname">Image.</code><code class="sig-name descname">MakeFromEncoded</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">encoded</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.Data.html#skia.Data" title="skia.Data">skia.Data</a></span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="#skia.Image" title="skia.Image">skia.Image</a><a class="headerlink" href="#skia.Image.MakeFromEncoded" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return an image backed by the encoded data, but attempt to defer
 decoding until the image is actually used/drawn.</p>
 <p>This deferral allows the system to cache the result, either on the CPU
 or on the GPU, depending on where the image is drawn. If memory is low,
 the cache may be purged, causing the next draw of the image to have to
 re-decode.</p>
-<p>The subset parameter specifies a area within the decoded image to create
-the image from. If subset is null, then the entire image is returned.</p>
-<p>This is similar to DecodeTo[Raster,Texture], but this method will
-attempt to defer the actual decode, while the DecodeTo… method
-explicitly decode and allocate the backend when the call is made.</p>
-<p>If the encoded format is not supported, or subset is outside of the
-bounds of the decoded image, nullptr is returned.</p>
+<p>If the encoded format is not supported, nullptr is returned.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>encoded</strong> – the encoded data</p></li>
-<li><p><strong>subset</strong> (<a class="reference internal" href="skia.IRect.html#skia.IRect" title="skia.IRect"><em>skia.IRect</em></a>) – the bounds of the pixels within the decoded
-image to return. may be null.</p></li>
-</ul>
+<dd class="field-odd"><p><strong>encoded</strong> – the encoded data</p>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p>created <a class="reference internal" href="#skia.Image" title="skia.Image"><code class="xref py py-class docutils literal notranslate"><span class="pre">Image</span></code></a>, or nullptr</p>
@@ -902,7 +847,7 @@ bytes</p>
 
 <dl class="py method">
 <dt id="skia.Image.MakeFromTexture">
-<em class="property">static </em><code class="sig-prename descclassname">Image.</code><code class="sig-name descname">MakeFromTexture</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">context</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.GrContext.html#skia.GrContext" title="skia.GrContext">skia.GrContext</a></span></em>, <em class="sig-param"><span class="n">texture</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.GrBackendTexture.html#skia.GrBackendTexture" title="skia.GrBackendTexture">skia.GrBackendTexture</a></span></em>, <em class="sig-param"><span class="n">origin</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.GrSurfaceOrigin.html#skia.GrSurfaceOrigin" title="skia.GrSurfaceOrigin">skia.GrSurfaceOrigin</a></span></em>, <em class="sig-param"><span class="n">colorType</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.ColorType.html#skia.ColorType" title="skia.ColorType">skia.ColorType</a></span></em>, <em class="sig-param"><span class="n">alphaType</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.AlphaType.html#skia.AlphaType" title="skia.AlphaType">skia.AlphaType</a></span></em>, <em class="sig-param"><span class="n">colorSpace</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.ColorSpace.html#skia.ColorSpace" title="skia.ColorSpace">skia.ColorSpace</a></span> <span class="o">=</span> <span class="default_value">None</span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="#skia.Image" title="skia.Image">skia.Image</a><a class="headerlink" href="#skia.Image.MakeFromTexture" title="Permalink to this definition">¶</a></dt>
+<em class="property">static </em><code class="sig-prename descclassname">Image.</code><code class="sig-name descname">MakeFromTexture</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">context</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.GrRecordingContext.html#skia.GrRecordingContext" title="skia.GrRecordingContext">skia.GrRecordingContext</a></span></em>, <em class="sig-param"><span class="n">texture</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.GrBackendTexture.html#skia.GrBackendTexture" title="skia.GrBackendTexture">skia.GrBackendTexture</a></span></em>, <em class="sig-param"><span class="n">origin</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.GrSurfaceOrigin.html#skia.GrSurfaceOrigin" title="skia.GrSurfaceOrigin">skia.GrSurfaceOrigin</a></span></em>, <em class="sig-param"><span class="n">colorType</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.ColorType.html#skia.ColorType" title="skia.ColorType">skia.ColorType</a></span></em>, <em class="sig-param"><span class="n">alphaType</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.AlphaType.html#skia.AlphaType" title="skia.AlphaType">skia.AlphaType</a></span></em>, <em class="sig-param"><span class="n">colorSpace</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.ColorSpace.html#skia.ColorSpace" title="skia.ColorSpace">skia.ColorSpace</a></span> <span class="o">=</span> <span class="default_value">None</span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="#skia.Image" title="skia.Image">skia.Image</a><a class="headerlink" href="#skia.Image.MakeFromTexture" title="Permalink to this definition">¶</a></dt>
 <dd><p>Creates <a class="reference internal" href="#skia.Image" title="skia.Image"><code class="xref py py-class docutils literal notranslate"><span class="pre">Image</span></code></a> from GPU texture associated with context.</p>
 <p>Caller is responsible for managing the lifetime of GPU texture.</p>
 <p><a class="reference internal" href="#skia.Image" title="skia.Image"><code class="xref py py-class docutils literal notranslate"><span class="pre">Image</span></code></a> is returned if format of backendTexture is recognized
@@ -910,7 +855,7 @@ and supported. Recognized formats vary by GPU back-end.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>context</strong> (<a class="reference internal" href="skia.GrContext.html#skia.GrContext" title="skia.GrContext"><em>skia.GrContext</em></a>) – GPU context</p></li>
+<li><p><strong>context</strong> (<a class="reference internal" href="skia.GrRecordingContext.html#skia.GrRecordingContext" title="skia.GrRecordingContext"><em>skia.GrRecordingContext</em></a>) – GPU context</p></li>
 <li><p><strong>backendTexture</strong> (<a class="reference internal" href="skia.GrBackendTexture.html#skia.GrBackendTexture" title="skia.GrBackendTexture"><em>skia.GrBackendTexture</em></a>) – texture residing on GPU</p></li>
 <li><p><strong>colorSpace</strong> (<a class="reference internal" href="skia.ColorSpace.html#skia.ColorSpace" title="skia.ColorSpace"><em>skia.ColorSpace</em></a>) – range of colors; may be nullptr</p></li>
 </ul>
@@ -994,7 +939,7 @@ discarded.</p>
 
 <dl class="py method">
 <dt id="skia.Image.MakeTextureFromCompressed">
-<em class="property">static </em><code class="sig-prename descclassname">Image.</code><code class="sig-name descname">MakeTextureFromCompressed</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">context</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.GrContext.html#skia.GrContext" title="skia.GrContext">skia.GrContext</a></span></em>, <em class="sig-param"><span class="n">data</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.Data.html#skia.Data" title="skia.Data">skia.Data</a></span></em>, <em class="sig-param"><span class="n">width</span><span class="p">:</span> <span class="n">int</span></em>, <em class="sig-param"><span class="n">height</span><span class="p">:</span> <span class="n">int</span></em>, <em class="sig-param"><span class="n">type</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.Image.CompressionType.html#skia.Image.CompressionType" title="skia.Image.CompressionType">skia.Image.CompressionType</a></span></em>, <em class="sig-param"><span class="n">mipMapped</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.GrMipMapped.html#skia.GrMipMapped" title="skia.GrMipMapped">skia.GrMipMapped</a></span> <span class="o">=</span> <span class="default_value">GrMipMapped.kNo</span></em>, <em class="sig-param"><span class="n">isProtected</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.GrProtected.html#skia.GrProtected" title="skia.GrProtected">skia.GrProtected</a></span> <span class="o">=</span> <span class="default_value">GrProtected.kNo</span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="#skia.Image" title="skia.Image">skia.Image</a><a class="headerlink" href="#skia.Image.MakeTextureFromCompressed" title="Permalink to this definition">¶</a></dt>
+<em class="property">static </em><code class="sig-prename descclassname">Image.</code><code class="sig-name descname">MakeTextureFromCompressed</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">context</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.GrDirectContext.html#skia.GrDirectContext" title="skia.GrDirectContext">skia.GrDirectContext</a></span></em>, <em class="sig-param"><span class="n">data</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.Data.html#skia.Data" title="skia.Data">skia.Data</a></span></em>, <em class="sig-param"><span class="n">width</span><span class="p">:</span> <span class="n">int</span></em>, <em class="sig-param"><span class="n">height</span><span class="p">:</span> <span class="n">int</span></em>, <em class="sig-param"><span class="n">type</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.Image.CompressionType.html#skia.Image.CompressionType" title="skia.Image.CompressionType">skia.Image.CompressionType</a></span></em>, <em class="sig-param"><span class="n">mipMapped</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.GrMipmapped.html#skia.GrMipmapped" title="skia.GrMipmapped">skia.GrMipmapped</a></span> <span class="o">=</span> <span class="default_value">GrMipmapped.kNo</span></em>, <em class="sig-param"><span class="n">isProtected</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.GrProtected.html#skia.GrProtected" title="skia.GrProtected">skia.GrProtected</a></span> <span class="o">=</span> <span class="default_value">GrProtected.kNo</span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="#skia.Image" title="skia.Image">skia.Image</a><a class="headerlink" href="#skia.Image.MakeTextureFromCompressed" title="Permalink to this definition">¶</a></dt>
 <dd><p>Creates a GPU-backed <a class="reference internal" href="#skia.Image" title="skia.Image"><code class="xref py py-class docutils literal notranslate"><span class="pre">Image</span></code></a> from compressed data.</p>
 <p>This method will return an <a class="reference internal" href="#skia.Image" title="skia.Image"><code class="xref py py-class docutils literal notranslate"><span class="pre">Image</span></code></a> representing the compressed
 data. If the GPU doesn’t support the specified compression method, the
@@ -1004,12 +949,12 @@ data will be decompressed and then wrapped in a GPU-backed image.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>context</strong> (<a class="reference internal" href="skia.GrContext.html#skia.GrContext" title="skia.GrContext"><em>skia.GrContext</em></a>) – GPU context</p></li>
+<li><p><strong>context</strong> (<a class="reference internal" href="skia.GrDirectContext.html#skia.GrDirectContext" title="skia.GrDirectContext"><em>skia.GrDirectContext</em></a>) – GPU context</p></li>
 <li><p><strong>data</strong> (<a class="reference internal" href="skia.Data.html#skia.Data" title="skia.Data"><em>skia.Data</em></a>) – compressed data to store in <a class="reference internal" href="#skia.Image" title="skia.Image"><code class="xref py py-class docutils literal notranslate"><span class="pre">Image</span></code></a></p></li>
 <li><p><strong>width</strong> (<em>int</em>) – width of full <a class="reference internal" href="#skia.Image" title="skia.Image"><code class="xref py py-class docutils literal notranslate"><span class="pre">Image</span></code></a></p></li>
 <li><p><strong>height</strong> (<em>int</em>) – height of full <a class="reference internal" href="#skia.Image" title="skia.Image"><code class="xref py py-class docutils literal notranslate"><span class="pre">Image</span></code></a></p></li>
 <li><p><strong>type</strong> (<em>skia.CompressionType</em>) – type of compression used</p></li>
-<li><p><strong>mipMapped</strong> (<a class="reference internal" href="skia.GrMipMapped.html#skia.GrMipMapped" title="skia.GrMipMapped"><em>skia.GrMipMapped</em></a>) – does ‘data’ contain data for all the
+<li><p><strong>mipMapped</strong> (<a class="reference internal" href="skia.GrMipmapped.html#skia.GrMipmapped" title="skia.GrMipmapped"><em>skia.GrMipmapped</em></a>) – does ‘data’ contain data for all the
 mipmap levels?</p></li>
 <li><p><strong>isProtected</strong> (<a class="reference internal" href="skia.GrProtected.html#skia.GrProtected" title="skia.GrProtected"><em>skia.GrProtected</em></a>) – do the contents of ‘data’ require
 DRM protection (on Vulkan)?</p></li>
@@ -1228,14 +1173,39 @@ encoding fails.</p>
 
 <dl class="py method">
 <dt id="skia.Image.flush">
-<code class="sig-prename descclassname">Image.</code><code class="sig-name descname">flush</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Image" title="skia.Image">skia.Image</a></span></em>, <em class="sig-param"><span class="n">context</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.GrContext.html#skia.GrContext" title="skia.GrContext">skia.GrContext</a></span></em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#skia.Image.flush" title="Permalink to this definition">¶</a></dt>
-<dd><p>Flushes any pending uses of texture-backed images in the GPU backend.</p>
-<p>Uses a default GrFlushInfo.</p>
+<code class="sig-prename descclassname">Image.</code><code class="sig-name descname">flush</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span><span class="n">args</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#skia.Image.flush" title="Permalink to this definition">¶</a></dt>
+<dd><p>Overloaded function.</p>
+<ol class="arabic">
+<li><p>flush(self: skia.Image, arg0: skia.GrDirectContext, arg1: skia.GrFlushInfo) -&gt; skia.GrSemaphoresSubmitted</p>
+<blockquote>
+<div><p>Flushes any pending uses of texture-backed images in the GPU backend. If
+the image is not texture-backed (including promise texture images) or if
+the GrDirectContext does not have the same context ID as the context
+backing the image then this is a no-op.</p>
+<p>If the image was not used in any non-culled draws in the current queue
+of work for the passed GrDirectContext then this is a no-op unless the
+GrFlushInfo contains semaphores or a finish proc. Those are respected
+even when the image has not been used.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>context</strong> (<a class="reference internal" href="skia.GrContext.html#skia.GrContext" title="skia.GrContext"><em>skia.GrContext</em></a>) – GPU context</p>
+<dt class="field-odd">param context</dt>
+<dd class="field-odd"><p>the context on which to flush pending usages of the
+image.</p>
+</dd>
+<dt class="field-even">param info</dt>
+<dd class="field-even"><p>flush options</p>
 </dd>
 </dl>
+</div></blockquote>
+</li>
+<li><p>flush(self: skia.Image, context: skia.GrDirectContext) -&gt; None</p></li>
+</ol>
+</dd></dl>
+
+<dl class="py method">
+<dt id="skia.Image.flushAndSubmit">
+<code class="sig-prename descclassname">Image.</code><code class="sig-name descname">flushAndSubmit</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Image" title="skia.Image">skia.Image</a></span></em>, <em class="sig-param"><span class="n">context</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.GrDirectContext.html#skia.GrDirectContext" title="skia.GrDirectContext">skia.GrDirectContext</a></span></em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#skia.Image.flushAndSubmit" title="Permalink to this definition">¶</a></dt>
+<dd><p>Version of <a class="reference internal" href="#skia.Image.flush" title="skia.Image.flush"><code class="xref py py-meth docutils literal notranslate"><span class="pre">flush()</span></code></a> that uses a default GrFlushInfo.</p>
+<p>Also submits the flushed work to the GPU.</p>
 </dd></dl>
 
 <dl class="py method">
@@ -1275,6 +1245,31 @@ type.</p></li>
 </ul>
 </dd>
 </dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="skia.Image.getBackendTexture">
+<code class="sig-prename descclassname">Image.</code><code class="sig-name descname">getBackendTexture</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Image" title="skia.Image">skia.Image</a></span></em>, <em class="sig-param"><span class="n">flushPendingGrContextIO</span><span class="p">:</span> <span class="n">bool</span></em>, <em class="sig-param"><span class="n">origin</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.GrSurfaceOrigin.html#skia.GrSurfaceOrigin" title="skia.GrSurfaceOrigin">skia.GrSurfaceOrigin</a></span> <span class="o">=</span> <span class="default_value">None</span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="skia.GrBackendTexture.html#skia.GrBackendTexture" title="skia.GrBackendTexture">skia.GrBackendTexture</a><a class="headerlink" href="#skia.Image.getBackendTexture" title="Permalink to this definition">¶</a></dt>
+<dd><p>Retrieves the back-end texture. If <a class="reference internal" href="#skia.Image" title="skia.Image"><code class="xref py py-class docutils literal notranslate"><span class="pre">Image</span></code></a> has no back-end
+texture, an invalid object is returned. Call
+<a class="reference internal" href="skia.GrBackendTexture.html#skia.GrBackendTexture.isValid" title="skia.GrBackendTexture.isValid"><code class="xref py py-meth docutils literal notranslate"><span class="pre">GrBackendTexture.isValid()</span></code></a> to determine if the result is valid.</p>
+<p>If flushPendingGrContextIO is true, completes deferred I/O operations.</p>
+<p>If origin in not nullptr, copies location of content drawn into
+<a class="reference internal" href="#skia.Image" title="skia.Image"><code class="xref py py-class docutils literal notranslate"><span class="pre">Image</span></code></a>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>flushPendingGrContextIO</strong> – flag to flush outstanding requests</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>back-end API texture handle; invalid on failure</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="skia.Image.hasMipmaps">
+<code class="sig-prename descclassname">Image.</code><code class="sig-name descname">hasMipmaps</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Image" title="skia.Image">skia.Image</a></span></em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#skia.Image.hasMipmaps" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns true if the image has mipmap levels.</p>
 </dd></dl>
 
 <dl class="py method">
@@ -1352,18 +1347,18 @@ uploaded to GPU memory, and is available as a GPU texture.</p>
 
 <dl class="py method">
 <dt id="skia.Image.isValid">
-<code class="sig-prename descclassname">Image.</code><code class="sig-name descname">isValid</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Image" title="skia.Image">skia.Image</a></span></em>, <em class="sig-param"><span class="n">context</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.GrContext.html#skia.GrContext" title="skia.GrContext">skia.GrContext</a></span> <span class="o">=</span> <span class="default_value">None</span></em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#skia.Image.isValid" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">Image.</code><code class="sig-name descname">isValid</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Image" title="skia.Image">skia.Image</a></span></em>, <em class="sig-param"><span class="n">context</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.GrRecordingContext.html#skia.GrRecordingContext" title="skia.GrRecordingContext">skia.GrRecordingContext</a></span> <span class="o">=</span> <span class="default_value">None</span></em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#skia.Image.isValid" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns true if <a class="reference internal" href="#skia.Image" title="skia.Image"><code class="xref py py-class docutils literal notranslate"><span class="pre">Image</span></code></a> can be drawn on either raster surface
 or GPU surface.</p>
 <p>If context is nullptr, tests if <a class="reference internal" href="#skia.Image" title="skia.Image"><code class="xref py py-class docutils literal notranslate"><span class="pre">Image</span></code></a> draws on raster
 surface; otherwise, tests if <a class="reference internal" href="#skia.Image" title="skia.Image"><code class="xref py py-class docutils literal notranslate"><span class="pre">Image</span></code></a> draws on GPU surface
 associated with context.</p>
 <p><a class="reference internal" href="#skia.Image" title="skia.Image"><code class="xref py py-class docutils literal notranslate"><span class="pre">Image</span></code></a> backed by GPU texture may become invalid if associated
-GrContext is invalid. lazy image may be invalid and may not draw to
-raster surface or GPU surface or both.</p>
+GrRecordingContext is invalid. lazy image may be invalid and may not draw
+to raster surface or GPU surface or both.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>context</strong> (<a class="reference internal" href="skia.GrContext.html#skia.GrContext" title="skia.GrContext"><em>skia.GrContext</em></a>) – GPU context</p>
+<dd class="field-odd"><p><strong>context</strong> (<a class="reference internal" href="skia.GrRecordingContext.html#skia.GrRecordingContext" title="skia.GrRecordingContext"><em>skia.GrRecordingContext</em></a>) – GPU context</p>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p>true if <a class="reference internal" href="#skia.Image" title="skia.Image"><code class="xref py py-class docutils literal notranslate"><span class="pre">Image</span></code></a> can be drawn</p>
@@ -1373,7 +1368,7 @@ raster surface or GPU surface or both.</p>
 
 <dl class="py method">
 <dt id="skia.Image.makeColorSpace">
-<code class="sig-prename descclassname">Image.</code><code class="sig-name descname">makeColorSpace</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Image" title="skia.Image">skia.Image</a></span></em>, <em class="sig-param"><span class="n">target</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.ColorSpace.html#skia.ColorSpace" title="skia.ColorSpace">skia.ColorSpace</a></span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="#skia.Image" title="skia.Image">skia.Image</a><a class="headerlink" href="#skia.Image.makeColorSpace" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">Image.</code><code class="sig-name descname">makeColorSpace</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Image" title="skia.Image">skia.Image</a></span></em>, <em class="sig-param"><span class="n">target</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.ColorSpace.html#skia.ColorSpace" title="skia.ColorSpace">skia.ColorSpace</a></span></em>, <em class="sig-param"><span class="n">direct</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.GrDirectContext.html#skia.GrDirectContext" title="skia.GrDirectContext">skia.GrDirectContext</a></span> <span class="o">=</span> <span class="default_value">None</span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="#skia.Image" title="skia.Image">skia.Image</a><a class="headerlink" href="#skia.Image.makeColorSpace" title="Permalink to this definition">¶</a></dt>
 <dd><p>Creates <a class="reference internal" href="#skia.Image" title="skia.Image"><code class="xref py py-class docutils literal notranslate"><span class="pre">Image</span></code></a> in target <a class="reference internal" href="skia.ColorSpace.html#skia.ColorSpace" title="skia.ColorSpace"><code class="xref py py-class docutils literal notranslate"><span class="pre">ColorSpace</span></code></a>.</p>
 <p>Returns nullptr if <a class="reference internal" href="#skia.Image" title="skia.Image"><code class="xref py py-class docutils literal notranslate"><span class="pre">Image</span></code></a> could not be created.</p>
 <p>Returns original <a class="reference internal" href="#skia.Image" title="skia.Image"><code class="xref py py-class docutils literal notranslate"><span class="pre">Image</span></code></a> if it is in target
@@ -1394,7 +1389,7 @@ range of returned <a class="reference internal" href="#skia.Image" title="skia.I
 
 <dl class="py method">
 <dt id="skia.Image.makeColorTypeAndColorSpace">
-<code class="sig-prename descclassname">Image.</code><code class="sig-name descname">makeColorTypeAndColorSpace</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Image" title="skia.Image">skia.Image</a></span></em>, <em class="sig-param"><span class="n">targetColorType</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.ColorType.html#skia.ColorType" title="skia.ColorType">skia.ColorType</a></span></em>, <em class="sig-param"><span class="n">targetColorSpace</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.ColorSpace.html#skia.ColorSpace" title="skia.ColorSpace">skia.ColorSpace</a></span> <span class="o">=</span> <span class="default_value">None</span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="#skia.Image" title="skia.Image">skia.Image</a><a class="headerlink" href="#skia.Image.makeColorTypeAndColorSpace" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">Image.</code><code class="sig-name descname">makeColorTypeAndColorSpace</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Image" title="skia.Image">skia.Image</a></span></em>, <em class="sig-param"><span class="n">targetColorType</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.ColorType.html#skia.ColorType" title="skia.ColorType">skia.ColorType</a></span></em>, <em class="sig-param"><span class="n">targetColorSpace</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.ColorSpace.html#skia.ColorSpace" title="skia.ColorSpace">skia.ColorSpace</a></span> <span class="o">=</span> <span class="default_value">None</span></em>, <em class="sig-param"><span class="n">direct</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.GrDirectContext.html#skia.GrDirectContext" title="skia.GrDirectContext">skia.GrDirectContext</a></span> <span class="o">=</span> <span class="default_value">None</span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="#skia.Image" title="skia.Image">skia.Image</a><a class="headerlink" href="#skia.Image.makeColorTypeAndColorSpace" title="Permalink to this definition">¶</a></dt>
 <dd><p>Experimental.</p>
 <p>Creates <a class="reference internal" href="#skia.Image" title="skia.Image"><code class="xref py py-class docutils literal notranslate"><span class="pre">Image</span></code></a> in target <a class="reference internal" href="skia.ColorType.html#skia.ColorType" title="skia.ColorType"><code class="xref py py-class docutils literal notranslate"><span class="pre">ColorType</span></code></a> and
 <a class="reference internal" href="skia.ColorSpace.html#skia.ColorSpace" title="skia.ColorSpace"><code class="xref py py-class docutils literal notranslate"><span class="pre">ColorSpace</span></code></a>. Returns nullptr if <a class="reference internal" href="#skia.Image" title="skia.Image"><code class="xref py py-class docutils literal notranslate"><span class="pre">Image</span></code></a> could not
@@ -1479,7 +1474,7 @@ nullptr</p></li>
 
 <dl class="py method">
 <dt id="skia.Image.makeSubset">
-<code class="sig-prename descclassname">Image.</code><code class="sig-name descname">makeSubset</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Image" title="skia.Image">skia.Image</a></span></em>, <em class="sig-param"><span class="n">subset</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.IRect.html#skia.IRect" title="skia.IRect">skia.IRect</a></span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="#skia.Image" title="skia.Image">skia.Image</a><a class="headerlink" href="#skia.Image.makeSubset" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">Image.</code><code class="sig-name descname">makeSubset</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Image" title="skia.Image">skia.Image</a></span></em>, <em class="sig-param"><span class="n">subset</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.IRect.html#skia.IRect" title="skia.IRect">skia.IRect</a></span></em>, <em class="sig-param"><span class="n">direct</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.GrDirectContext.html#skia.GrDirectContext" title="skia.GrDirectContext">skia.GrDirectContext</a></span> <span class="o">=</span> <span class="default_value">None</span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="#skia.Image" title="skia.Image">skia.Image</a><a class="headerlink" href="#skia.Image.makeSubset" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns subset of <a class="reference internal" href="#skia.Image" title="skia.Image"><code class="xref py py-class docutils literal notranslate"><span class="pre">Image</span></code></a>.</p>
 <p>subset must be fully contained by <a class="reference internal" href="#skia.Image" title="skia.Image"><code class="xref py py-class docutils literal notranslate"><span class="pre">Image</span></code></a>
 <a class="reference internal" href="#skia.Image.dimensions" title="skia.Image.dimensions"><code class="xref py py-meth docutils literal notranslate"><span class="pre">dimensions()</span></code></a>. The implementation may share pixels, or may copy
@@ -1498,11 +1493,11 @@ bounds, or pixels in <a class="reference internal" href="#skia.Image" title="ski
 
 <dl class="py method">
 <dt id="skia.Image.makeTextureImage">
-<code class="sig-prename descclassname">Image.</code><code class="sig-name descname">makeTextureImage</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Image" title="skia.Image">skia.Image</a></span></em>, <em class="sig-param"><span class="n">context</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.GrContext.html#skia.GrContext" title="skia.GrContext">skia.GrContext</a></span></em>, <em class="sig-param"><span class="n">mipMapped</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.GrMipMapped.html#skia.GrMipMapped" title="skia.GrMipMapped">skia.GrMipMapped</a></span> <span class="o">=</span> <span class="default_value">GrMipMapped.kNo</span></em>, <em class="sig-param"><span class="n">budgeted</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.Budgeted.html#skia.Budgeted" title="skia.Budgeted">skia.Budgeted</a></span> <span class="o">=</span> <span class="default_value">Budgeted.kYes</span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="#skia.Image" title="skia.Image">skia.Image</a><a class="headerlink" href="#skia.Image.makeTextureImage" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">Image.</code><code class="sig-name descname">makeTextureImage</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Image" title="skia.Image">skia.Image</a></span></em>, <em class="sig-param"><span class="n">context</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.GrDirectContext.html#skia.GrDirectContext" title="skia.GrDirectContext">skia.GrDirectContext</a></span></em>, <em class="sig-param"><span class="n">mipMapped</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.GrMipmapped.html#skia.GrMipmapped" title="skia.GrMipmapped">skia.GrMipmapped</a></span> <span class="o">=</span> <span class="default_value">GrMipmapped.kNo</span></em>, <em class="sig-param"><span class="n">budgeted</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.Budgeted.html#skia.Budgeted" title="skia.Budgeted">skia.Budgeted</a></span> <span class="o">=</span> <span class="default_value">Budgeted.kYes</span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="#skia.Image" title="skia.Image">skia.Image</a><a class="headerlink" href="#skia.Image.makeTextureImage" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns <a class="reference internal" href="#skia.Image" title="skia.Image"><code class="xref py py-class docutils literal notranslate"><span class="pre">Image</span></code></a> backed by GPU texture associated with context.</p>
 <p>Returned <a class="reference internal" href="#skia.Image" title="skia.Image"><code class="xref py py-class docutils literal notranslate"><span class="pre">Image</span></code></a> is compatible with <a class="reference internal" href="skia.Surface.html#skia.Surface" title="skia.Surface"><code class="xref py py-class docutils literal notranslate"><span class="pre">Surface</span></code></a>
 created with dstColorSpace. The returned <a class="reference internal" href="#skia.Image" title="skia.Image"><code class="xref py py-class docutils literal notranslate"><span class="pre">Image</span></code></a> respects
-mipMapped setting; if mipMapped equals <a class="reference internal" href="skia.GrMipMapped.html#skia.GrMipMapped.kYes" title="skia.GrMipMapped.kYes"><code class="xref py py-attr docutils literal notranslate"><span class="pre">GrMipMapped.kYes</span></code></a>, the
+mipMapped setting; if mipMapped equals <a class="reference internal" href="skia.GrMipmapped.html#skia.GrMipmapped.kYes" title="skia.GrMipmapped.kYes"><code class="xref py py-attr docutils literal notranslate"><span class="pre">GrMipmapped.kYes</span></code></a>, the
 backing texture allocates mip map levels.</p>
 <p>The mipMapped parameter is effectively treated as kNo if MIP maps are
 not supported by the GPU.</p>
@@ -1510,15 +1505,16 @@ not supported by the GPU.</p>
 texture-backed, the context matches, and mipMapped is compatible with
 the backing GPU texture. <a class="reference internal" href="skia.Budgeted.html#skia.Budgeted" title="skia.Budgeted"><code class="xref py py-class docutils literal notranslate"><span class="pre">Budgeted</span></code></a> is ignored in this case.</p>
 <p>Returns nullptr if context is nullptr, or if <a class="reference internal" href="#skia.Image" title="skia.Image"><code class="xref py py-class docutils literal notranslate"><span class="pre">Image</span></code></a> was
-created with another GrContext.</p>
+created with another GrDirectContext.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>context</strong> (<a class="reference internal" href="skia.GrContext.html#skia.GrContext" title="skia.GrContext"><em>GrContext</em></a>) – GPU context</p></li>
-<li><p><strong>mipMapped</strong> (<a class="reference internal" href="skia.GrMipMapped.html#skia.GrMipMapped" title="skia.GrMipMapped"><em>GrMipMapped</em></a>) – whether created <a class="reference internal" href="#skia.Image" title="skia.Image"><code class="xref py py-class docutils literal notranslate"><span class="pre">Image</span></code></a> texture
+<li><p><strong>context</strong> (<a class="reference internal" href="skia.GrDirectContext.html#skia.GrDirectContext" title="skia.GrDirectContext"><em>GrDirectContext</em></a>) – the GrDirectContext in play, if it
+exists</p></li>
+<li><p><strong>mipMapped</strong> (<a class="reference internal" href="skia.GrMipmapped.html#skia.GrMipmapped" title="skia.GrMipmapped"><em>GrMipmapped</em></a>) – whether created <a class="reference internal" href="#skia.Image" title="skia.Image"><code class="xref py py-class docutils literal notranslate"><span class="pre">Image</span></code></a> texture
 must allocate mip map levels</p></li>
 <li><p><strong>budgeted</strong> (<a class="reference internal" href="skia.Budgeted.html#skia.Budgeted" title="skia.Budgeted"><em>skia.Budgeted</em></a>) – whether to count a newly created texture
-for the returned image counts against the GrContext’s budget.</p></li>
+for the returned image counts against the GrDirectContext’s budget.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
@@ -1529,7 +1525,7 @@ for the returned image counts against the GrContext’s budget.</p></li>
 
 <dl class="py method">
 <dt id="skia.Image.makeWithFilter">
-<code class="sig-prename descclassname">Image.</code><code class="sig-name descname">makeWithFilter</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Image" title="skia.Image">skia.Image</a></span></em>, <em class="sig-param"><span class="n">context</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.GrContext.html#skia.GrContext" title="skia.GrContext">skia.GrContext</a></span></em>, <em class="sig-param"><span class="n">filter</span><span class="p">:</span> <span class="n">SkImageFilter</span></em>, <em class="sig-param"><span class="n">subset</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.IRect.html#skia.IRect" title="skia.IRect">skia.IRect</a></span></em>, <em class="sig-param"><span class="n">clipBounds</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.IRect.html#skia.IRect" title="skia.IRect">skia.IRect</a></span></em>, <em class="sig-param"><span class="n">outSubset</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.IRect.html#skia.IRect" title="skia.IRect">skia.IRect</a></span></em>, <em class="sig-param"><span class="n">offset</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.IPoint.html#skia.IPoint" title="skia.IPoint">skia.IPoint</a></span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="#skia.Image" title="skia.Image">skia.Image</a><a class="headerlink" href="#skia.Image.makeWithFilter" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">Image.</code><code class="sig-name descname">makeWithFilter</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Image" title="skia.Image">skia.Image</a></span></em>, <em class="sig-param"><span class="n">context</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.GrRecordingContext.html#skia.GrRecordingContext" title="skia.GrRecordingContext">skia.GrRecordingContext</a></span></em>, <em class="sig-param"><span class="n">filter</span><span class="p">:</span> <span class="n">SkImageFilter</span></em>, <em class="sig-param"><span class="n">subset</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.IRect.html#skia.IRect" title="skia.IRect">skia.IRect</a></span></em>, <em class="sig-param"><span class="n">clipBounds</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.IRect.html#skia.IRect" title="skia.IRect">skia.IRect</a></span></em>, <em class="sig-param"><span class="n">outSubset</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.IRect.html#skia.IRect" title="skia.IRect">skia.IRect</a></span></em>, <em class="sig-param"><span class="n">offset</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.IPoint.html#skia.IPoint" title="skia.IPoint">skia.IPoint</a></span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="#skia.Image" title="skia.Image">skia.Image</a><a class="headerlink" href="#skia.Image.makeWithFilter" title="Permalink to this definition">¶</a></dt>
 <dd><p>Creates filtered <a class="reference internal" href="#skia.Image" title="skia.Image"><code class="xref py py-class docutils literal notranslate"><span class="pre">Image</span></code></a>.</p>
 <p>filter processes original <a class="reference internal" href="#skia.Image" title="skia.Image"><code class="xref py py-class docutils literal notranslate"><span class="pre">Image</span></code></a>, potentially changing color,
 position, and size. subset is the bounds of original <a class="reference internal" href="#skia.Image" title="skia.Image"><code class="xref py py-class docutils literal notranslate"><span class="pre">Image</span></code></a>
@@ -1548,7 +1544,8 @@ subsequent animation frames aligned with respect to each other.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>context</strong> (<a class="reference internal" href="skia.GrContext.html#skia.GrContext" title="skia.GrContext"><em>skia.GrContext</em></a>) – the GrContext in play - if it exists</p></li>
+<li><p><strong>context</strong> (<a class="reference internal" href="skia.GrRecordingContext.html#skia.GrRecordingContext" title="skia.GrRecordingContext"><em>skia.GrRecordingContext</em></a>) – the GrRecordingContext in play -
+if it exists</p></li>
 <li><p><strong>filter</strong> (<a class="reference internal" href="skia.ImageFilter.html#skia.ImageFilter" title="skia.ImageFilter"><em>skia.ImageFilter</em></a>) – how <a class="reference internal" href="#skia.Image" title="skia.Image"><code class="xref py py-class docutils literal notranslate"><span class="pre">Image</span></code></a> is sampled when
 transformed</p></li>
 <li><p><strong>subset</strong> (<a class="reference internal" href="skia.IRect.html#skia.IRect" title="skia.IRect"><em>skia.IRect</em></a>) – bounds of <a class="reference internal" href="#skia.Image" title="skia.Image"><code class="xref py py-class docutils literal notranslate"><span class="pre">Image</span></code></a> processed by
@@ -1569,7 +1566,7 @@ translation</p></li>
 
 <dl class="py method">
 <dt id="skia.Image.open">
-<em class="property">static </em><code class="sig-prename descclassname">Image.</code><code class="sig-name descname">open</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">fp</span><span class="p">:</span> <span class="n">object</span></em>, <em class="sig-param"><span class="n">subset</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.IRect.html#skia.IRect" title="skia.IRect">skia.IRect</a></span> <span class="o">=</span> <span class="default_value">None</span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="#skia.Image" title="skia.Image">skia.Image</a><a class="headerlink" href="#skia.Image.open" title="Permalink to this definition">¶</a></dt>
+<em class="property">static </em><code class="sig-prename descclassname">Image.</code><code class="sig-name descname">open</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">fp</span><span class="p">:</span> <span class="n">object</span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="#skia.Image" title="skia.Image">skia.Image</a><a class="headerlink" href="#skia.Image.open" title="Permalink to this definition">¶</a></dt>
 <dd><p>Creates <a class="reference internal" href="#skia.Image" title="skia.Image"><code class="xref py py-attr docutils literal notranslate"><span class="pre">Image</span></code></a> from file path or file-like object.</p>
 <p>Shortcut for the following:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">fp</span><span class="p">,</span> <span class="s1">&#39;read&#39;</span><span class="p">)</span> <span class="ow">and</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">fp</span><span class="p">,</span> <span class="s1">&#39;seek&#39;</span><span class="p">):</span>
@@ -1577,17 +1574,13 @@ translation</p></li>
     <span class="n">data</span> <span class="o">=</span> <span class="n">skia</span><span class="o">.</span><span class="n">Data</span><span class="o">.</span><span class="n">MakeWithCopy</span><span class="p">(</span><span class="n">fp</span><span class="o">.</span><span class="n">read</span><span class="p">())</span>
 <span class="k">else</span><span class="p">:</span>
     <span class="n">data</span> <span class="o">=</span> <span class="n">skia</span><span class="o">.</span><span class="n">Data</span><span class="o">.</span><span class="n">MakeFromFileName</span><span class="p">(</span><span class="n">fp</span><span class="p">)</span>
-<span class="n">image</span> <span class="o">=</span> <span class="n">skia</span><span class="o">.</span><span class="n">Image</span><span class="o">.</span><span class="n">MakeFromEncoded</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">subset</span><span class="p">)</span>
+<span class="n">image</span> <span class="o">=</span> <span class="n">skia</span><span class="o">.</span><span class="n">Image</span><span class="o">.</span><span class="n">MakeFromEncoded</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
 </pre></div>
 </div>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>fp</strong> – file path or file-like object that has <cite>seek</cite> and <cite>read</cite>
-method. file must be opened in binary mode.</p></li>
-<li><p><strong>subset</strong> (<a class="reference internal" href="skia.IRect.html#skia.IRect" title="skia.IRect"><em>skia.IRect</em></a>) – the bounds of the pixels within the decoded
-image to return. may be null.</p></li>
-</ul>
+<dd class="field-odd"><p><strong>fp</strong> – file path or file-like object that has <cite>seek</cite> and <cite>read</cite>
+method. file must be opened in binary mode.</p>
 </dd>
 </dl>
 </dd></dl>

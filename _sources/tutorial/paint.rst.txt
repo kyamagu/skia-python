@@ -204,7 +204,7 @@ Bitmap Shader
 
 .. code-block:: python
 
-    image = skia.Image.DecodeToRaster(
+    image = skia.Image.MakeFromEncoded(
         skia.Data.MakeFromFileName('../skia/resources/images/color_wheel.png'))
 
     canvas.clear(skia.ColorWHITE)
@@ -397,7 +397,7 @@ Color Matrix Color Filter
 
 .. code-block:: python
 
-    image = skia.Image.DecodeToRaster(
+    image = skia.Image.MakeFromEncoded(
         skia.Data.MakeFromFileName(
             '../skia/resources/images/mandrill_512_q075.jpg'))
 

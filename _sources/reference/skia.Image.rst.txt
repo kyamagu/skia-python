@@ -29,8 +29,6 @@ Image
    .. autosummary::
       :nosignatures:
    
-      ~skia.Image.DecodeToRaster
-      ~skia.Image.DecodeToTexture
       ~skia.Image.MakeBackendTextureFromImage
       ~skia.Image.MakeCrossContextFromPixmap
       ~skia.Image.MakeFromAdoptedTexture
@@ -55,8 +53,11 @@ Image
       ~skia.Image.dimensions
       ~skia.Image.encodeToData
       ~skia.Image.flush
+      ~skia.Image.flushAndSubmit
       ~skia.Image.fromarray
       ~skia.Image.frombytes
+      ~skia.Image.getBackendTexture
+      ~skia.Image.hasMipmaps
       ~skia.Image.height
       ~skia.Image.imageInfo
       ~skia.Image.isAlphaOnly
@@ -118,10 +119,6 @@ Methods
 
 
 
-.. automethod:: skia.Image.DecodeToRaster
-
-.. automethod:: skia.Image.DecodeToTexture
-
 .. automethod:: skia.Image.MakeBackendTextureFromImage
 
 .. automethod:: skia.Image.MakeCrossContextFromPixmap
@@ -170,9 +167,15 @@ Methods
 
 .. automethod:: skia.Image.flush
 
+.. automethod:: skia.Image.flushAndSubmit
+
 .. automethod:: skia.Image.fromarray
 
 .. automethod:: skia.Image.frombytes
+
+.. automethod:: skia.Image.getBackendTexture
+
+.. automethod:: skia.Image.hasMipmaps
 
 .. automethod:: skia.Image.height
 

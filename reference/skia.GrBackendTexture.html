@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>GrBackendTexture &mdash; skia-python 85.0 documentation</title>
+  <title>GrBackendTexture &mdash; skia-python 86.0 documentation</title>
   
 
   
@@ -61,7 +61,7 @@
             
             
               <div class="version">
-                85.0
+                86.0
               </div>
             
           
@@ -158,18 +158,21 @@
 <li class="toctree-l3"><a class="reference internal" href="skia.GrColorType.html">GrColorType</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.GrContext.html">GrContext</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.GrContextOptions.html">GrContextOptions</a></li>
-<li class="toctree-l3"><a class="reference internal" href="skia.GrFlushFlags.html">GrFlushFlags</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.GrContext_Base.html">GrContext_Base</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.GrDirectContext.html">GrDirectContext</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.GrFlushInfo.html">GrFlushInfo</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.GrGLBackendState.html">GrGLBackendState</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.GrGLFormat.html">GrGLFormat</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.GrGLFramebufferInfo.html">GrGLFramebufferInfo</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.GrGLInterface.html">GrGLInterface</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.GrGLTextureInfo.html">GrGLTextureInfo</a></li>
-<li class="toctree-l3"><a class="reference internal" href="skia.GrMipMapped.html">GrMipMapped</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.GrImageContext.html">GrImageContext</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.GrMipmapped.html">GrMipmapped</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.GrMockOptions.html">GrMockOptions</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.GrMockRenderTargetInfo.html">GrMockRenderTargetInfo</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.GrMockTextureInfo.html">GrMockTextureInfo</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.GrProtected.html">GrProtected</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.GrRecordingContext.html">GrRecordingContext</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.GrRenderable.html">GrRenderable</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.GrSemaphoresSubmitted.html">GrSemaphoresSubmitted</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.GrSurfaceOrigin.html">GrSurfaceOrigin</a></li>
@@ -372,7 +375,7 @@
 <tr class="row-even"><td><p><a class="reference internal" href="#skia.GrBackendTexture.glTextureParametersModified" title="skia.GrBackendTexture.glTextureParametersModified"><code class="xref py py-obj docutils literal notranslate"><span class="pre">glTextureParametersModified</span></code></a></p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#skia.GrBackendTexture.hasMipMaps" title="skia.GrBackendTexture.hasMipMaps"><code class="xref py py-obj docutils literal notranslate"><span class="pre">hasMipMaps</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.GrBackendTexture.hasMipmaps" title="skia.GrBackendTexture.hasMipmaps"><code class="xref py py-obj docutils literal notranslate"><span class="pre">hasMipmaps</span></code></a></p></td>
 <td><p></p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#skia.GrBackendTexture.height" title="skia.GrBackendTexture.height"><code class="xref py py-obj docutils literal notranslate"><span class="pre">height</span></code></a></p></td>
@@ -408,8 +411,8 @@
 <dd><p>Overloaded function.</p>
 <ol class="arabic simple">
 <li><p>__init__(self: skia.GrBackendTexture) -&gt; None</p></li>
-<li><p>__init__(self: skia.GrBackendTexture, width: int, height: int, mipMapped: skia.GrMipMapped, glInfo: GrGLTextureInfo) -&gt; None</p></li>
-<li><p>__init__(self: skia.GrBackendTexture, width: int, height: int, mipMapped: skia.GrMipMapped, mockInfo: GrMockTextureInfo) -&gt; None</p></li>
+<li><p>__init__(self: skia.GrBackendTexture, width: int, height: int, mipMapped: skia.GrMipmapped, glInfo: GrGLTextureInfo) -&gt; None</p></li>
+<li><p>__init__(self: skia.GrBackendTexture, width: int, height: int, mipMapped: skia.GrMipmapped, mockInfo: GrMockTextureInfo) -&gt; None</p></li>
 <li><p>__init__(self: skia.GrBackendTexture, that: skia.GrBackendTexture) -&gt; None</p></li>
 </ol>
 </dd></dl>
@@ -450,8 +453,8 @@
 <dd></dd></dl>
 
 <dl class="py method">
-<dt id="skia.GrBackendTexture.hasMipMaps">
-<code class="sig-prename descclassname">GrBackendTexture.</code><code class="sig-name descname">hasMipMaps</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.GrBackendTexture" title="skia.GrBackendTexture">skia.GrBackendTexture</a></span></em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#skia.GrBackendTexture.hasMipMaps" title="Permalink to this definition">¶</a></dt>
+<dt id="skia.GrBackendTexture.hasMipmaps">
+<code class="sig-prename descclassname">GrBackendTexture.</code><code class="sig-name descname">hasMipmaps</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.GrBackendTexture" title="skia.GrBackendTexture">skia.GrBackendTexture</a></span></em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#skia.GrBackendTexture.hasMipmaps" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">

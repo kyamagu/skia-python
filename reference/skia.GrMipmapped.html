@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>GrMipMapped &mdash; skia-python 85.0 documentation</title>
+  <title>GrMipmapped &mdash; skia-python 86.0 documentation</title>
   
 
   
@@ -37,7 +37,7 @@
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="GrMockOptions" href="skia.GrMockOptions.html" />
-    <link rel="prev" title="GrGLTextureInfo" href="skia.GrGLTextureInfo.html" /> 
+    <link rel="prev" title="GrImageContext" href="skia.GrImageContext.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -61,7 +61,7 @@
             
             
               <div class="version">
-                85.0
+                86.0
               </div>
             
           
@@ -155,14 +155,16 @@
 <li class="toctree-l3"><a class="reference internal" href="skia.GrColorType.html">GrColorType</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.GrContext.html">GrContext</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.GrContextOptions.html">GrContextOptions</a></li>
-<li class="toctree-l3"><a class="reference internal" href="skia.GrFlushFlags.html">GrFlushFlags</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.GrContext_Base.html">GrContext_Base</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.GrDirectContext.html">GrDirectContext</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.GrFlushInfo.html">GrFlushInfo</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.GrGLBackendState.html">GrGLBackendState</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.GrGLFormat.html">GrGLFormat</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.GrGLFramebufferInfo.html">GrGLFramebufferInfo</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.GrGLInterface.html">GrGLInterface</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.GrGLTextureInfo.html">GrGLTextureInfo</a></li>
-<li class="toctree-l3 current"><a class="current reference internal" href="#">GrMipMapped</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="skia.GrImageContext.html">GrImageContext</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">GrMipmapped</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#methods">Methods</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#attributes">Attributes</a></li>
 </ul>
@@ -171,6 +173,7 @@
 <li class="toctree-l3"><a class="reference internal" href="skia.GrMockRenderTargetInfo.html">GrMockRenderTargetInfo</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.GrMockTextureInfo.html">GrMockTextureInfo</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.GrProtected.html">GrProtected</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.GrRecordingContext.html">GrRecordingContext</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.GrRenderable.html">GrRenderable</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.GrSemaphoresSubmitted.html">GrSemaphoresSubmitted</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.GrSurfaceOrigin.html">GrSurfaceOrigin</a></li>
@@ -318,13 +321,13 @@
         
           <li><a href="skia.html">skia</a> &raquo;</li>
         
-      <li>GrMipMapped</li>
+      <li>GrMipmapped</li>
     
     
       <li class="wy-breadcrumbs-aside">
         
             
-            <a href="../_sources/reference/skia.GrMipMapped.rst.txt" rel="nofollow"> View page source</a>
+            <a href="../_sources/reference/skia.GrMipmapped.rst.txt" rel="nofollow"> View page source</a>
           
         
       </li>
@@ -338,17 +341,17 @@
            <div itemprop="articleBody">
             
   <div class="section" id="grmipmapped">
-<h1>GrMipMapped<a class="headerlink" href="#grmipmapped" title="Permalink to this headline">¶</a></h1>
+<h1>GrMipmapped<a class="headerlink" href="#grmipmapped" title="Permalink to this headline">¶</a></h1>
 <dl class="py class">
-<dt id="skia.GrMipMapped">
-<em class="property">class </em><code class="sig-name descname">GrMipMapped</code><a class="headerlink" href="#skia.GrMipMapped" title="Permalink to this definition">¶</a></dt>
+<dt id="skia.GrMipmapped">
+<em class="property">class </em><code class="sig-name descname">GrMipmapped</code><a class="headerlink" href="#skia.GrMipmapped" title="Permalink to this definition">¶</a></dt>
 <dd><blockquote>
 <div><p>Used to say whether a texture has mip levels allocated or not.</p>
 </div></blockquote>
 <p>Members:</p>
 <blockquote>
-<div><p>kNo</p>
-<p>kYes</p>
+<div><p>kYes</p>
+<p>kNo</p>
 </div></blockquote>
 <p class="rubric">Methods</p>
 <table class="longtable docutils align-default">
@@ -357,7 +360,7 @@
 <col style="width: 90%" />
 </colgroup>
 <tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="#skia.GrMipMapped.__init__" title="skia.GrMipMapped.__init__"><code class="xref py py-obj docutils literal notranslate"><span class="pre">__init__</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.GrMipmapped.__init__" title="skia.GrMipmapped.__init__"><code class="xref py py-obj docutils literal notranslate"><span class="pre">__init__</span></code></a></p></td>
 <td><p></p></td>
 </tr>
 </tbody>
@@ -369,13 +372,13 @@
 <col style="width: 90%" />
 </colgroup>
 <tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="#skia.GrMipMapped.kNo" title="skia.GrMipMapped.kNo"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kNo</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.GrMipmapped.kNo" title="skia.GrMipmapped.kNo"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kNo</span></code></a></p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#skia.GrMipMapped.kYes" title="skia.GrMipMapped.kYes"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kYes</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.GrMipmapped.kYes" title="skia.GrMipmapped.kYes"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kYes</span></code></a></p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#skia.GrMipMapped.name" title="skia.GrMipMapped.name"><code class="xref py py-obj docutils literal notranslate"><span class="pre">name</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.GrMipmapped.name" title="skia.GrMipmapped.name"><code class="xref py py-obj docutils literal notranslate"><span class="pre">name</span></code></a></p></td>
 <td><p>handle) -&gt; str</p></td>
 </tr>
 </tbody>
@@ -385,26 +388,26 @@
 <div class="section" id="methods">
 <h2>Methods<a class="headerlink" href="#methods" title="Permalink to this headline">¶</a></h2>
 <dl class="py method">
-<dt id="skia.GrMipMapped.__init__">
-<code class="sig-prename descclassname">GrMipMapped.</code><code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.GrMipMapped" title="skia.GrMipMapped">skia.GrMipMapped</a></span></em>, <em class="sig-param"><span class="n">arg0</span><span class="p">:</span> <span class="n">bool</span></em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#skia.GrMipMapped.__init__" title="Permalink to this definition">¶</a></dt>
+<dt id="skia.GrMipmapped.__init__">
+<code class="sig-prename descclassname">GrMipmapped.</code><code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.GrMipmapped" title="skia.GrMipmapped">skia.GrMipmapped</a></span></em>, <em class="sig-param"><span class="n">arg0</span><span class="p">:</span> <span class="n">bool</span></em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#skia.GrMipmapped.__init__" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </div>
 <div class="section" id="attributes">
 <h2>Attributes<a class="headerlink" href="#attributes" title="Permalink to this headline">¶</a></h2>
 <dl class="py attribute">
-<dt id="skia.GrMipMapped.kNo">
-<code class="sig-prename descclassname">GrMipMapped.</code><code class="sig-name descname">kNo</code><em class="property"> = GrMipMapped.kNo</em><a class="headerlink" href="#skia.GrMipMapped.kNo" title="Permalink to this definition">¶</a></dt>
+<dt id="skia.GrMipmapped.kNo">
+<code class="sig-prename descclassname">GrMipmapped.</code><code class="sig-name descname">kNo</code><em class="property"> = GrMipmapped.kNo</em><a class="headerlink" href="#skia.GrMipmapped.kNo" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
-<dt id="skia.GrMipMapped.kYes">
-<code class="sig-prename descclassname">GrMipMapped.</code><code class="sig-name descname">kYes</code><em class="property"> = GrMipMapped.kYes</em><a class="headerlink" href="#skia.GrMipMapped.kYes" title="Permalink to this definition">¶</a></dt>
+<dt id="skia.GrMipmapped.kYes">
+<code class="sig-prename descclassname">GrMipmapped.</code><code class="sig-name descname">kYes</code><em class="property"> = GrMipmapped.kYes</em><a class="headerlink" href="#skia.GrMipmapped.kYes" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
-<dt id="skia.GrMipMapped.name">
-<code class="sig-prename descclassname">GrMipMapped.</code><code class="sig-name descname">name</code><a class="headerlink" href="#skia.GrMipMapped.name" title="Permalink to this definition">¶</a></dt>
+<dt id="skia.GrMipmapped.name">
+<code class="sig-prename descclassname">GrMipmapped.</code><code class="sig-name descname">name</code><a class="headerlink" href="#skia.GrMipmapped.name" title="Permalink to this definition">¶</a></dt>
 <dd><p>handle) -&gt; str</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
@@ -427,7 +430,7 @@
         <a href="skia.GrMockOptions.html" class="btn btn-neutral float-right" title="GrMockOptions" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="skia.GrGLTextureInfo.html" class="btn btn-neutral float-left" title="GrGLTextureInfo" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="skia.GrImageContext.html" class="btn btn-neutral float-left" title="GrImageContext" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   

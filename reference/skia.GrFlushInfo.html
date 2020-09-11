@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>GrFlushInfo &mdash; skia-python 85.0 documentation</title>
+  <title>GrFlushInfo &mdash; skia-python 86.0 documentation</title>
   
 
   
@@ -37,7 +37,7 @@
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="GrGLBackendState" href="skia.GrGLBackendState.html" />
-    <link rel="prev" title="GrFlushFlags" href="skia.GrFlushFlags.html" /> 
+    <link rel="prev" title="GrDirectContext" href="skia.GrDirectContext.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -61,7 +61,7 @@
             
             
               <div class="version">
-                85.0
+                86.0
               </div>
             
           
@@ -155,7 +155,8 @@
 <li class="toctree-l3"><a class="reference internal" href="skia.GrColorType.html">GrColorType</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.GrContext.html">GrContext</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.GrContextOptions.html">GrContextOptions</a></li>
-<li class="toctree-l3"><a class="reference internal" href="skia.GrFlushFlags.html">GrFlushFlags</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.GrContext_Base.html">GrContext_Base</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.GrDirectContext.html">GrDirectContext</a></li>
 <li class="toctree-l3 current"><a class="current reference internal" href="#">GrFlushInfo</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#methods">Methods</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#attributes">Attributes</a></li>
@@ -166,11 +167,13 @@
 <li class="toctree-l3"><a class="reference internal" href="skia.GrGLFramebufferInfo.html">GrGLFramebufferInfo</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.GrGLInterface.html">GrGLInterface</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.GrGLTextureInfo.html">GrGLTextureInfo</a></li>
-<li class="toctree-l3"><a class="reference internal" href="skia.GrMipMapped.html">GrMipMapped</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.GrImageContext.html">GrImageContext</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.GrMipmapped.html">GrMipmapped</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.GrMockOptions.html">GrMockOptions</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.GrMockRenderTargetInfo.html">GrMockRenderTargetInfo</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.GrMockTextureInfo.html">GrMockTextureInfo</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.GrProtected.html">GrProtected</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.GrRecordingContext.html">GrRecordingContext</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.GrRenderable.html">GrRenderable</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.GrSemaphoresSubmitted.html">GrSemaphoresSubmitted</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.GrSurfaceOrigin.html">GrSurfaceOrigin</a></li>
@@ -394,13 +397,10 @@ terms of how the submitted procs are treated.</p>
 <col style="width: 90%" />
 </colgroup>
 <tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="#skia.GrFlushInfo.fFlags" title="skia.GrFlushInfo.fFlags"><code class="xref py py-obj docutils literal notranslate"><span class="pre">fFlags</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.GrFlushInfo.fNumSemaphores" title="skia.GrFlushInfo.fNumSemaphores"><code class="xref py py-obj docutils literal notranslate"><span class="pre">fNumSemaphores</span></code></a></p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#skia.GrFlushInfo.fNumSemaphores" title="skia.GrFlushInfo.fNumSemaphores"><code class="xref py py-obj docutils literal notranslate"><span class="pre">fNumSemaphores</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#skia.GrFlushInfo.semaphores" title="skia.GrFlushInfo.semaphores"><code class="xref py py-obj docutils literal notranslate"><span class="pre">semaphores</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.GrFlushInfo.semaphores" title="skia.GrFlushInfo.semaphores"><code class="xref py py-obj docutils literal notranslate"><span class="pre">semaphores</span></code></a></p></td>
 <td><p></p></td>
 </tr>
 </tbody>
@@ -417,11 +417,6 @@ terms of how the submitted procs are treated.</p>
 </div>
 <div class="section" id="attributes">
 <h2>Attributes<a class="headerlink" href="#attributes" title="Permalink to this headline">¶</a></h2>
-<dl class="py attribute">
-<dt id="skia.GrFlushInfo.fFlags">
-<code class="sig-prename descclassname">GrFlushInfo.</code><code class="sig-name descname">fFlags</code><a class="headerlink" href="#skia.GrFlushInfo.fFlags" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
 <dl class="py attribute">
 <dt id="skia.GrFlushInfo.fNumSemaphores">
 <code class="sig-prename descclassname">GrFlushInfo.</code><code class="sig-name descname">fNumSemaphores</code><a class="headerlink" href="#skia.GrFlushInfo.fNumSemaphores" title="Permalink to this definition">¶</a></dt>
@@ -446,7 +441,7 @@ terms of how the submitted procs are treated.</p>
         <a href="skia.GrGLBackendState.html" class="btn btn-neutral float-right" title="GrGLBackendState" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="skia.GrFlushFlags.html" class="btn btn-neutral float-left" title="GrFlushFlags" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="skia.GrDirectContext.html" class="btn btn-neutral float-left" title="GrDirectContext" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   

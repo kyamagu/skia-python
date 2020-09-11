@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Surface &mdash; skia-python 85.0 documentation</title>
+  <title>Surface &mdash; skia-python 86.0 documentation</title>
   
 
   
@@ -61,7 +61,7 @@
             
             
               <div class="version">
-                85.0
+                86.0
               </div>
             
           
@@ -155,18 +155,21 @@
 <li class="toctree-l3"><a class="reference internal" href="skia.GrColorType.html">GrColorType</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.GrContext.html">GrContext</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.GrContextOptions.html">GrContextOptions</a></li>
-<li class="toctree-l3"><a class="reference internal" href="skia.GrFlushFlags.html">GrFlushFlags</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.GrContext_Base.html">GrContext_Base</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.GrDirectContext.html">GrDirectContext</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.GrFlushInfo.html">GrFlushInfo</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.GrGLBackendState.html">GrGLBackendState</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.GrGLFormat.html">GrGLFormat</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.GrGLFramebufferInfo.html">GrGLFramebufferInfo</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.GrGLInterface.html">GrGLInterface</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.GrGLTextureInfo.html">GrGLTextureInfo</a></li>
-<li class="toctree-l3"><a class="reference internal" href="skia.GrMipMapped.html">GrMipMapped</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.GrImageContext.html">GrImageContext</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.GrMipmapped.html">GrMipmapped</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.GrMockOptions.html">GrMockOptions</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.GrMockRenderTargetInfo.html">GrMockRenderTargetInfo</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.GrMockTextureInfo.html">GrMockTextureInfo</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.GrProtected.html">GrProtected</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.GrRecordingContext.html">GrRecordingContext</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.GrRenderable.html">GrRenderable</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.GrSemaphoresSubmitted.html">GrSemaphoresSubmitted</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.GrSurfaceOrigin.html">GrSurfaceOrigin</a></li>
@@ -449,7 +452,7 @@ are zero, then nullptr will be returned.</p>
 <td><p>Returns <a class="reference internal" href="skia.Canvas.html#skia.Canvas" title="skia.Canvas"><code class="xref py py-class docutils literal notranslate"><span class="pre">Canvas</span></code></a> that draws into <a class="reference internal" href="#skia.Surface" title="skia.Surface"><code class="xref py py-class docutils literal notranslate"><span class="pre">Surface</span></code></a>.</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#skia.Surface.getContext" title="skia.Surface.getContext"><code class="xref py py-obj docutils literal notranslate"><span class="pre">getContext</span></code></a></p></td>
-<td><p>Returns the GPU context of the GPU surface.</p></td>
+<td><p>Deprecated.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#skia.Surface.height" title="skia.Surface.height"><code class="xref py py-obj docutils literal notranslate"><span class="pre">height</span></code></a></p></td>
 <td><p>Returns pixel row count; may be zero or greater.</p></td>
@@ -478,25 +481,28 @@ are zero, then nullptr will be returned.</p>
 <tr class="row-even"><td><p><a class="reference internal" href="#skia.Surface.readPixels" title="skia.Surface.readPixels"><code class="xref py py-obj docutils literal notranslate"><span class="pre">readPixels</span></code></a></p></td>
 <td><p>Overloaded function.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Surface.ref" title="skia.Surface.ref"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ref</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Surface.recordingContext" title="skia.Surface.recordingContext"><code class="xref py py-obj docutils literal notranslate"><span class="pre">recordingContext</span></code></a></p></td>
+<td><p>Returns the recording context being used by the <a class="reference internal" href="#skia.Surface" title="skia.Surface"><code class="xref py py-class docutils literal notranslate"><span class="pre">Surface</span></code></a>.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.Surface.ref" title="skia.Surface.ref"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ref</span></code></a></p></td>
 <td><p>Increment the reference count.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#skia.Surface.replaceBackendTexture" title="skia.Surface.replaceBackendTexture"><code class="xref py py-obj docutils literal notranslate"><span class="pre">replaceBackendTexture</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Surface.replaceBackendTexture" title="skia.Surface.replaceBackendTexture"><code class="xref py py-obj docutils literal notranslate"><span class="pre">replaceBackendTexture</span></code></a></p></td>
 <td><p>If the surface was made via <a class="reference internal" href="#skia.Surface.MakeFromBackendTexture" title="skia.Surface.MakeFromBackendTexture"><code class="xref py py-meth docutils literal notranslate"><span class="pre">MakeFromBackendTexture()</span></code></a> then it’s backing texture may be substituted with a different texture.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Surface.toarray" title="skia.Surface.toarray"><code class="xref py py-obj docutils literal notranslate"><span class="pre">toarray</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.Surface.toarray" title="skia.Surface.toarray"><code class="xref py py-obj docutils literal notranslate"><span class="pre">toarray</span></code></a></p></td>
 <td><p>Exports a <code class="docutils literal notranslate"><span class="pre">numpy.ndarray</span></code>.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#skia.Surface.unique" title="skia.Surface.unique"><code class="xref py py-obj docutils literal notranslate"><span class="pre">unique</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Surface.unique" title="skia.Surface.unique"><code class="xref py py-obj docutils literal notranslate"><span class="pre">unique</span></code></a></p></td>
 <td><p>May return true if the caller is the only owner.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Surface.unref" title="skia.Surface.unref"><code class="xref py py-obj docutils literal notranslate"><span class="pre">unref</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.Surface.unref" title="skia.Surface.unref"><code class="xref py py-obj docutils literal notranslate"><span class="pre">unref</span></code></a></p></td>
 <td><p>Decrement the reference count.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#skia.Surface.width" title="skia.Surface.width"><code class="xref py py-obj docutils literal notranslate"><span class="pre">width</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Surface.width" title="skia.Surface.width"><code class="xref py py-obj docutils literal notranslate"><span class="pre">width</span></code></a></p></td>
 <td><p>Returns pixel count in each row; may be zero or greater.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Surface.writePixels" title="skia.Surface.writePixels"><code class="xref py py-obj docutils literal notranslate"><span class="pre">writePixels</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.Surface.writePixels" title="skia.Surface.writePixels"><code class="xref py py-obj docutils literal notranslate"><span class="pre">writePixels</span></code></a></p></td>
 <td><p>Overloaded function.</p></td>
 </tr>
 </tbody>
@@ -794,7 +800,7 @@ nullptr</p>
 <em class="property">static </em><code class="sig-prename descclassname">Surface.</code><code class="sig-name descname">MakeRenderTarget</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span><span class="n">args</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#skia.Surface.MakeRenderTarget" title="Permalink to this definition">¶</a></dt>
 <dd><p>Overloaded function.</p>
 <ol class="arabic">
-<li><p>MakeRenderTarget(context: skia.GrContext, budgeted: skia.Budgeted, imageInfo: skia.ImageInfo, sampleCount: int = 0, surfaceOrigin: skia.GrSurfaceOrigin = GrSurfaceOrigin.kBottomLeft_GrSurfaceOrigin, surfaceProps: skia.SurfaceProps = None, shouldCreateWithMips: bool = False) -&gt; skia.Surface</p>
+<li><p>MakeRenderTarget(context: skia.GrRecordingContext, budgeted: skia.Budgeted, imageInfo: skia.ImageInfo, sampleCount: int = 0, surfaceOrigin: skia.GrSurfaceOrigin = GrSurfaceOrigin.kBottomLeft_GrSurfaceOrigin, surfaceProps: skia.SurfaceProps = None, shouldCreateWithMips: bool = False) -&gt; skia.Surface</p>
 <blockquote>
 <div><p>Returns <a class="reference internal" href="#skia.Surface" title="skia.Surface"><code class="xref py py-class docutils literal notranslate"><span class="pre">Surface</span></code></a> on GPU indicated by context.</p>
 <p>Allocates memory for pixels, based on the width, height, and
@@ -842,7 +848,7 @@ nullptr</p>
 </dl>
 </div></blockquote>
 </li>
-<li><p>MakeRenderTarget(context: skia.GrContext, budgeted: skia.Budgeted, imageInfo: skia.ImageInfo, sampleCount: int, surfaceProps: skia.SurfaceProps) -&gt; skia.Surface</p>
+<li><p>MakeRenderTarget(context: skia.GrRecordingContext, budgeted: skia.Budgeted, imageInfo: skia.ImageInfo, sampleCount: int, surfaceProps: skia.SurfaceProps) -&gt; skia.Surface</p>
 <blockquote>
 <div><p>Returns <a class="reference internal" href="#skia.Surface" title="skia.Surface"><code class="xref py py-class docutils literal notranslate"><span class="pre">Surface</span></code></a> on GPU indicated by context.</p>
 <p>Allocates memory for pixels, based on the width, height, and
@@ -879,7 +885,7 @@ nullptr</p>
 </dl>
 </div></blockquote>
 </li>
-<li><p>MakeRenderTarget(context: skia.GrContext, budgeted: skia.Budgeted, imageInfo: skia.ImageInfo) -&gt; skia.Surface</p>
+<li><p>MakeRenderTarget(context: skia.GrRecordingContext, budgeted: skia.Budgeted, imageInfo: skia.ImageInfo) -&gt; skia.Surface</p>
 <blockquote>
 <div><p>Returns <a class="reference internal" href="#skia.Surface" title="skia.Surface"><code class="xref py py-class docutils literal notranslate"><span class="pre">Surface</span></code></a> on GPU indicated by context.</p>
 <p>Allocates memory for pixels, based on the width, height, and
@@ -900,7 +906,7 @@ both, may be zero</p>
 </dl>
 </div></blockquote>
 </li>
-<li><p>MakeRenderTarget(context: GrRecordingContext, characterization: skia.SurfaceCharacterization, budgeted: skia.Budgeted) -&gt; skia.Surface</p>
+<li><p>MakeRenderTarget(context: skia.GrRecordingContext, characterization: skia.SurfaceCharacterization, budgeted: skia.Budgeted) -&gt; skia.Surface</p>
 <blockquote>
 <div><p>Returns <a class="reference internal" href="#skia.Surface" title="skia.Surface"><code class="xref py py-class docutils literal notranslate"><span class="pre">Surface</span></code></a> on GPU indicated by context that is
 compatible with the provided characterization.</p>
@@ -1312,12 +1318,7 @@ when <a class="reference internal" href="#skia.Surface" title="skia.Surface"><co
 <dl class="py method">
 <dt id="skia.Surface.getContext">
 <code class="sig-prename descclassname">Surface.</code><code class="sig-name descname">getContext</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Surface" title="skia.Surface">skia.Surface</a></span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="skia.GrContext.html#skia.GrContext" title="skia.GrContext">skia.GrContext</a><a class="headerlink" href="#skia.Surface.getContext" title="Permalink to this definition">¶</a></dt>
-<dd><p>Returns the GPU context of the GPU surface.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p>GPU context, if available; nullptr otherwise</p>
-</dd>
-</dl>
+<dd><p>Deprecated.</p>
 </dd></dl>
 
 <dl class="py method">
@@ -1613,6 +1614,17 @@ destination.</p>
 </div></blockquote>
 </li>
 </ol>
+</dd></dl>
+
+<dl class="py method">
+<dt id="skia.Surface.recordingContext">
+<code class="sig-prename descclassname">Surface.</code><code class="sig-name descname">recordingContext</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Surface" title="skia.Surface">skia.Surface</a></span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="skia.GrRecordingContext.html#skia.GrRecordingContext" title="skia.GrRecordingContext">skia.GrRecordingContext</a><a class="headerlink" href="#skia.Surface.recordingContext" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the recording context being used by the <a class="reference internal" href="#skia.Surface" title="skia.Surface"><code class="xref py py-class docutils literal notranslate"><span class="pre">Surface</span></code></a>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>GPU context, if available; nullptr otherwise</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py method">

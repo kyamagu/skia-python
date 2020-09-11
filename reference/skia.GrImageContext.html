@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>GrFlushFlags &mdash; skia-python 85.0 documentation</title>
+  <title>GrImageContext &mdash; skia-python 86.0 documentation</title>
   
 
   
@@ -36,8 +36,8 @@
     
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="GrFlushInfo" href="skia.GrFlushInfo.html" />
-    <link rel="prev" title="GrContextOptions" href="skia.GrContextOptions.html" /> 
+    <link rel="next" title="GrMipmapped" href="skia.GrMipmapped.html" />
+    <link rel="prev" title="GrGLTextureInfo" href="skia.GrGLTextureInfo.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -61,7 +61,7 @@
             
             
               <div class="version">
-                85.0
+                86.0
               </div>
             
           
@@ -155,22 +155,24 @@
 <li class="toctree-l3"><a class="reference internal" href="skia.GrColorType.html">GrColorType</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.GrContext.html">GrContext</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.GrContextOptions.html">GrContextOptions</a></li>
-<li class="toctree-l3 current"><a class="current reference internal" href="#">GrFlushFlags</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#methods">Methods</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#attributes">Attributes</a></li>
-</ul>
-</li>
+<li class="toctree-l3"><a class="reference internal" href="skia.GrContext_Base.html">GrContext_Base</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.GrDirectContext.html">GrDirectContext</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.GrFlushInfo.html">GrFlushInfo</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.GrGLBackendState.html">GrGLBackendState</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.GrGLFormat.html">GrGLFormat</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.GrGLFramebufferInfo.html">GrGLFramebufferInfo</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.GrGLInterface.html">GrGLInterface</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.GrGLTextureInfo.html">GrGLTextureInfo</a></li>
-<li class="toctree-l3"><a class="reference internal" href="skia.GrMipMapped.html">GrMipMapped</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">GrImageContext</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#methods">Methods</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="skia.GrMipmapped.html">GrMipmapped</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.GrMockOptions.html">GrMockOptions</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.GrMockRenderTargetInfo.html">GrMockRenderTargetInfo</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.GrMockTextureInfo.html">GrMockTextureInfo</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.GrProtected.html">GrProtected</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.GrRecordingContext.html">GrRecordingContext</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.GrRenderable.html">GrRenderable</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.GrSemaphoresSubmitted.html">GrSemaphoresSubmitted</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.GrSurfaceOrigin.html">GrSurfaceOrigin</a></li>
@@ -318,13 +320,13 @@
         
           <li><a href="skia.html">skia</a> &raquo;</li>
         
-      <li>GrFlushFlags</li>
+      <li>GrImageContext</li>
     
     
       <li class="wy-breadcrumbs-aside">
         
             
-            <a href="../_sources/reference/skia.GrFlushFlags.rst.txt" rel="nofollow"> View page source</a>
+            <a href="../_sources/reference/skia.GrImageContext.rst.txt" rel="nofollow"> View page source</a>
           
         
       </li>
@@ -337,47 +339,44 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="grflushflags">
-<h1>GrFlushFlags<a class="headerlink" href="#grflushflags" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="grimagecontext">
+<h1>GrImageContext<a class="headerlink" href="#grimagecontext" title="Permalink to this headline">¶</a></h1>
 <dl class="py class">
-<dt id="skia.GrFlushFlags">
-<em class="property">class </em><code class="sig-name descname">GrFlushFlags</code><a class="headerlink" href="#skia.GrFlushFlags" title="Permalink to this definition">¶</a></dt>
-<dd><blockquote>
-<div><p>Enum used as return value when flush with semaphores so the client knows
-whether the semaphores were submitted to GPU or not.</p>
-</div></blockquote>
-<p>Members:</p>
-<blockquote>
-<div><p>kNone_GrFlushFlags</p>
-<p>kSyncCpu_GrFlushFlag</p>
-</div></blockquote>
-<p class="rubric">Methods</p>
+<dt id="skia.GrImageContext">
+<em class="property">class </em><code class="sig-name descname">GrImageContext</code><a class="headerlink" href="#skia.GrImageContext" title="Permalink to this definition">¶</a></dt>
+<dd><p class="rubric">Methods</p>
 <table class="longtable docutils align-default">
 <colgroup>
 <col style="width: 10%" />
 <col style="width: 90%" />
 </colgroup>
 <tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="#skia.GrFlushFlags.__init__" title="skia.GrFlushFlags.__init__"><code class="xref py py-obj docutils literal notranslate"><span class="pre">__init__</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.GrImageContext.__init__" title="skia.GrImageContext.__init__"><code class="xref py py-obj docutils literal notranslate"><span class="pre">__init__</span></code></a></p></td>
+<td><p>Initialize self.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.GrImageContext.asDirectContext" title="skia.GrImageContext.asDirectContext"><code class="xref py py-obj docutils literal notranslate"><span class="pre">asDirectContext</span></code></a></p></td>
+<td><p>Safely downcast to a <a class="reference internal" href="skia.GrDirectContext.html#skia.GrDirectContext" title="skia.GrDirectContext"><code class="xref py py-class docutils literal notranslate"><span class="pre">GrDirectContext</span></code></a>.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.GrImageContext.backend" title="skia.GrImageContext.backend"><code class="xref py py-obj docutils literal notranslate"><span class="pre">backend</span></code></a></p></td>
+<td><p>The 3D API backing this context.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.GrImageContext.compressedBackendFormat" title="skia.GrImageContext.compressedBackendFormat"><code class="xref py py-obj docutils literal notranslate"><span class="pre">compressedBackendFormat</span></code></a></p></td>
 <td><p></p></td>
 </tr>
-</tbody>
-</table>
-<p class="rubric">Attributes</p>
-<table class="longtable docutils align-default">
-<colgroup>
-<col style="width: 10%" />
-<col style="width: 90%" />
-</colgroup>
-<tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="#skia.GrFlushFlags.kNone_GrFlushFlags" title="skia.GrFlushFlags.kNone_GrFlushFlags"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kNone_GrFlushFlags</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.GrImageContext.defaultBackendFormat" title="skia.GrImageContext.defaultBackendFormat"><code class="xref py py-obj docutils literal notranslate"><span class="pre">defaultBackendFormat</span></code></a></p></td>
+<td><p>Retrieve the default <a class="reference internal" href="skia.GrBackendFormat.html#skia.GrBackendFormat" title="skia.GrBackendFormat"><code class="xref py py-class docutils literal notranslate"><span class="pre">GrBackendFormat</span></code></a> for a given <a class="reference internal" href="skia.ColorType.html#skia.ColorType" title="skia.ColorType"><code class="xref py py-class docutils literal notranslate"><span class="pre">ColorType</span></code></a> and renderability.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.GrImageContext.ref" title="skia.GrImageContext.ref"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ref</span></code></a></p></td>
+<td><p>Increment the reference count.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.GrImageContext.threadSafeProxy" title="skia.GrImageContext.threadSafeProxy"><code class="xref py py-obj docutils literal notranslate"><span class="pre">threadSafeProxy</span></code></a></p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#skia.GrFlushFlags.kSyncCpu_GrFlushFlag" title="skia.GrFlushFlags.kSyncCpu_GrFlushFlag"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kSyncCpu_GrFlushFlag</span></code></a></p></td>
-<td><p></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.GrImageContext.unique" title="skia.GrImageContext.unique"><code class="xref py py-obj docutils literal notranslate"><span class="pre">unique</span></code></a></p></td>
+<td><p>May return true if the caller is the only owner.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#skia.GrFlushFlags.name" title="skia.GrFlushFlags.name"><code class="xref py py-obj docutils literal notranslate"><span class="pre">name</span></code></a></p></td>
-<td><p>handle) -&gt; str</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.GrImageContext.unref" title="skia.GrImageContext.unref"><code class="xref py py-obj docutils literal notranslate"><span class="pre">unref</span></code></a></p></td>
+<td><p>Decrement the reference count.</p></td>
 </tr>
 </tbody>
 </table>
@@ -386,32 +385,65 @@ whether the semaphores were submitted to GPU or not.</p>
 <div class="section" id="methods">
 <h2>Methods<a class="headerlink" href="#methods" title="Permalink to this headline">¶</a></h2>
 <dl class="py method">
-<dt id="skia.GrFlushFlags.__init__">
-<code class="sig-prename descclassname">GrFlushFlags.</code><code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.GrFlushFlags" title="skia.GrFlushFlags">skia.GrFlushFlags</a></span></em>, <em class="sig-param"><span class="n">arg0</span><span class="p">:</span> <span class="n">int</span></em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#skia.GrFlushFlags.__init__" title="Permalink to this definition">¶</a></dt>
+<dt id="skia.GrImageContext.__init__">
+<code class="sig-prename descclassname">GrImageContext.</code><code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span><span class="n">args</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#skia.GrImageContext.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Initialize self.  See help(type(self)) for accurate signature.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="skia.GrImageContext.asDirectContext">
+<code class="sig-prename descclassname">GrImageContext.</code><code class="sig-name descname">asDirectContext</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.GrContext_Base.html#skia.GrContext_Base" title="skia.GrContext_Base">skia.GrContext_Base</a></span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="skia.GrDirectContext.html#skia.GrDirectContext" title="skia.GrDirectContext">GrDirectContext</a><a class="headerlink" href="#skia.GrImageContext.asDirectContext" title="Permalink to this definition">¶</a></dt>
+<dd><p>Safely downcast to a <a class="reference internal" href="skia.GrDirectContext.html#skia.GrDirectContext" title="skia.GrDirectContext"><code class="xref py py-class docutils literal notranslate"><span class="pre">GrDirectContext</span></code></a>.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="skia.GrImageContext.backend">
+<code class="sig-prename descclassname">GrImageContext.</code><code class="sig-name descname">backend</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.GrContext_Base.html#skia.GrContext_Base" title="skia.GrContext_Base">skia.GrContext_Base</a></span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="skia.GrBackendApi.html#skia.GrBackendApi" title="skia.GrBackendApi">skia.GrBackendApi</a><a class="headerlink" href="#skia.GrImageContext.backend" title="Permalink to this definition">¶</a></dt>
+<dd><p>The 3D API backing this context.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="skia.GrImageContext.compressedBackendFormat">
+<code class="sig-prename descclassname">GrImageContext.</code><code class="sig-name descname">compressedBackendFormat</code><span class="sig-paren">(</span><em class="sig-param">self: skia.GrContext_Base</em>, <em class="sig-param">arg0: SkImage::CompressionType</em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="skia.GrBackendFormat.html#skia.GrBackendFormat" title="skia.GrBackendFormat">skia.GrBackendFormat</a><a class="headerlink" href="#skia.GrImageContext.compressedBackendFormat" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
-</div>
-<div class="section" id="attributes">
-<h2>Attributes<a class="headerlink" href="#attributes" title="Permalink to this headline">¶</a></h2>
-<dl class="py attribute">
-<dt id="skia.GrFlushFlags.kNone_GrFlushFlags">
-<code class="sig-prename descclassname">GrFlushFlags.</code><code class="sig-name descname">kNone_GrFlushFlags</code><em class="property"> = GrFlushFlags.kNone_GrFlushFlags</em><a class="headerlink" href="#skia.GrFlushFlags.kNone_GrFlushFlags" title="Permalink to this definition">¶</a></dt>
+<dl class="py method">
+<dt id="skia.GrImageContext.defaultBackendFormat">
+<code class="sig-prename descclassname">GrImageContext.</code><code class="sig-name descname">defaultBackendFormat</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.GrContext_Base.html#skia.GrContext_Base" title="skia.GrContext_Base">skia.GrContext_Base</a></span></em>, <em class="sig-param"><span class="n">arg0</span><span class="p">:</span> <span class="n">SkColorType</span></em>, <em class="sig-param"><span class="n">arg1</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.GrRenderable.html#skia.GrRenderable" title="skia.GrRenderable">skia.GrRenderable</a></span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="skia.GrBackendFormat.html#skia.GrBackendFormat" title="skia.GrBackendFormat">skia.GrBackendFormat</a><a class="headerlink" href="#skia.GrImageContext.defaultBackendFormat" title="Permalink to this definition">¶</a></dt>
+<dd><p>Retrieve the default <a class="reference internal" href="skia.GrBackendFormat.html#skia.GrBackendFormat" title="skia.GrBackendFormat"><code class="xref py py-class docutils literal notranslate"><span class="pre">GrBackendFormat</span></code></a> for a given
+<a class="reference internal" href="skia.ColorType.html#skia.ColorType" title="skia.ColorType"><code class="xref py py-class docutils literal notranslate"><span class="pre">ColorType</span></code></a> and renderability. It is guaranteed that this
+backend format will be the one used by the <a class="reference internal" href="skia.GrContext.html#skia.GrContext" title="skia.GrContext"><code class="xref py py-class docutils literal notranslate"><span class="pre">GrContext</span></code></a>
+<a class="reference internal" href="skia.ColorType.html#skia.ColorType" title="skia.ColorType"><code class="xref py py-class docutils literal notranslate"><span class="pre">ColorType</span></code></a> and SurfaceCharacterization-based
+<code class="xref py py-meth docutils literal notranslate"><span class="pre">createBackendTexture()</span></code> methods.</p>
+<p>The caller should check that the returned format is valid.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="skia.GrImageContext.ref">
+<code class="sig-prename descclassname">GrImageContext.</code><code class="sig-name descname">ref</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.RefCntBase.html#skia.RefCntBase" title="skia.RefCntBase">skia.RefCntBase</a></span></em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#skia.GrImageContext.ref" title="Permalink to this definition">¶</a></dt>
+<dd><p>Increment the reference count.</p>
+<p>Must be balanced by a call to <a class="reference internal" href="#skia.GrImageContext.unref" title="skia.GrImageContext.unref"><code class="xref py py-meth docutils literal notranslate"><span class="pre">unref()</span></code></a>.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="skia.GrImageContext.threadSafeProxy">
+<code class="sig-prename descclassname">GrImageContext.</code><code class="sig-name descname">threadSafeProxy</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.GrContext_Base.html#skia.GrContext_Base" title="skia.GrContext_Base">skia.GrContext_Base</a></span></em><span class="sig-paren">)</span> &#x2192; GrContextThreadSafeProxy<a class="headerlink" href="#skia.GrImageContext.threadSafeProxy" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
-<dl class="py attribute">
-<dt id="skia.GrFlushFlags.kSyncCpu_GrFlushFlag">
-<code class="sig-prename descclassname">GrFlushFlags.</code><code class="sig-name descname">kSyncCpu_GrFlushFlag</code><em class="property"> = GrFlushFlags.kSyncCpu_GrFlushFlag</em><a class="headerlink" href="#skia.GrFlushFlags.kSyncCpu_GrFlushFlag" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dl class="py method">
+<dt id="skia.GrImageContext.unique">
+<code class="sig-prename descclassname">GrImageContext.</code><code class="sig-name descname">unique</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.RefCntBase.html#skia.RefCntBase" title="skia.RefCntBase">skia.RefCntBase</a></span></em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#skia.GrImageContext.unique" title="Permalink to this definition">¶</a></dt>
+<dd><p>May return true if the caller is the only owner.</p>
+<p>Ensures that all previous owner’s actions are complete.</p>
+</dd></dl>
 
-<dl class="py attribute">
-<dt id="skia.GrFlushFlags.name">
-<code class="sig-prename descclassname">GrFlushFlags.</code><code class="sig-name descname">name</code><a class="headerlink" href="#skia.GrFlushFlags.name" title="Permalink to this definition">¶</a></dt>
-<dd><p>handle) -&gt; str</p>
-<dl class="field-list simple">
-<dt class="field-odd">Type</dt>
-<dd class="field-odd"><p>(self</p>
-</dd>
-</dl>
+<dl class="py method">
+<dt id="skia.GrImageContext.unref">
+<code class="sig-prename descclassname">GrImageContext.</code><code class="sig-name descname">unref</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.RefCntBase.html#skia.RefCntBase" title="skia.RefCntBase">skia.RefCntBase</a></span></em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#skia.GrImageContext.unref" title="Permalink to this definition">¶</a></dt>
+<dd><p>Decrement the reference count.</p>
+<p>If the reference count is 1 before the decrement, then delete the
+object. Note that if this is the case, then the object needs to have
+been allocated via new, and not on the stack.</p>
 </dd></dl>
 
 </div>
@@ -425,10 +457,10 @@ whether the semaphores were submitted to GPU or not.</p>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="skia.GrFlushInfo.html" class="btn btn-neutral float-right" title="GrFlushInfo" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="skia.GrMipmapped.html" class="btn btn-neutral float-right" title="GrMipmapped" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="skia.GrContextOptions.html" class="btn btn-neutral float-left" title="GrContextOptions" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="skia.GrGLTextureInfo.html" class="btn btn-neutral float-left" title="GrGLTextureInfo" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   

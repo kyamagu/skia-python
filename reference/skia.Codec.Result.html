@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Codec.Result &mdash; skia-python 85.0 documentation</title>
+  <title>Codec.Result &mdash; skia-python 86.0 documentation</title>
   
 
   
@@ -61,7 +61,7 @@
             
             
               <div class="version">
-                85.0
+                86.0
               </div>
             
           
@@ -166,18 +166,21 @@
 <li class="toctree-l3"><a class="reference internal" href="skia.GrColorType.html">GrColorType</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.GrContext.html">GrContext</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.GrContextOptions.html">GrContextOptions</a></li>
-<li class="toctree-l3"><a class="reference internal" href="skia.GrFlushFlags.html">GrFlushFlags</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.GrContext_Base.html">GrContext_Base</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.GrDirectContext.html">GrDirectContext</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.GrFlushInfo.html">GrFlushInfo</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.GrGLBackendState.html">GrGLBackendState</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.GrGLFormat.html">GrGLFormat</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.GrGLFramebufferInfo.html">GrGLFramebufferInfo</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.GrGLInterface.html">GrGLInterface</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.GrGLTextureInfo.html">GrGLTextureInfo</a></li>
-<li class="toctree-l3"><a class="reference internal" href="skia.GrMipMapped.html">GrMipMapped</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.GrImageContext.html">GrImageContext</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.GrMipmapped.html">GrMipmapped</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.GrMockOptions.html">GrMockOptions</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.GrMockRenderTargetInfo.html">GrMockRenderTargetInfo</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.GrMockTextureInfo.html">GrMockTextureInfo</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.GrProtected.html">GrProtected</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.GrRecordingContext.html">GrRecordingContext</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.GrRenderable.html">GrRenderable</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.GrSemaphoresSubmitted.html">GrSemaphoresSubmitted</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.GrSurfaceOrigin.html">GrSurfaceOrigin</a></li>
@@ -359,27 +362,27 @@
 <div><dl>
 <dt>kUnimplemented :</dt><dd><p>This method is not implemented by this codec.</p>
 </dd>
-<dt>kErrorInInput :</dt><dd><p>Like kIncompleteInput, except the input had an error.</p>
-<p>If returned from an incremental decode, decoding cannot continue, even
-with more data.</p>
-</dd>
 <dt>kIncompleteInput :</dt><dd><p>The input is incomplete. A partial image was generated.</p>
 </dd>
 <dt>kInvalidConversion :</dt><dd><p>The generator cannot convert to match the request, ignoring dimensions.</p>
 </dd>
-<dt>kInvalidParameters :</dt><dd><p>Parameters (besides info) are invalid. e.g. NULL pixels, rowBytes too
-small, etc.</p>
-</dd>
-<dt>kCouldNotRewind :</dt><dd><p>Fulfilling this request requires rewinding the input, which is not
-supported for this input.</p>
+<dt>kInvalidScale :</dt><dd><p>The generator cannot scale to requested size.</p>
 </dd>
 <dt>kInvalidInput :</dt><dd><p>The input did not contain a valid image.</p>
 </dd>
 <dt>kSuccess :</dt><dd><p>General return value for success.</p>
 </dd>
+<dt>kCouldNotRewind :</dt><dd><p>Fulfilling this request requires rewinding the input, which is not
+supported for this input.</p>
+</dd>
+<dt>kErrorInInput :</dt><dd><p>Like kIncompleteInput, except the input had an error.</p>
+<p>If returned from an incremental decode, decoding cannot continue, even
+with more data.</p>
+</dd>
 <dt>kInternalError :</dt><dd><p>An internal error, such as OOM.</p>
 </dd>
-<dt>kInvalidScale :</dt><dd><p>The generator cannot scale to requested size.</p>
+<dt>kInvalidParameters :</dt><dd><p>Parameters (besides info) are invalid. e.g. NULL pixels, rowBytes too
+small, etc.</p>
 </dd>
 </dl>
 </div></blockquote>

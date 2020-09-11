@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Index &mdash; skia-python 85.0 documentation</title>
+  <title>Index &mdash; skia-python 86.0 documentation</title>
   
 
   
@@ -59,7 +59,7 @@
             
             
               <div class="version">
-                85.0
+                86.0
               </div>
             
           
@@ -375,9 +375,11 @@
 </li>
         <li><a href="reference/skia.GrContext.html#skia.GrContext.__init__">(GrContext method)</a>
 </li>
+        <li><a href="reference/skia.GrContext_Base.html#skia.GrContext_Base.__init__">(GrContext_Base method)</a>
+</li>
         <li><a href="reference/skia.GrContextOptions.html#skia.GrContextOptions.__init__">(GrContextOptions method)</a>
 </li>
-        <li><a href="reference/skia.GrFlushFlags.html#skia.GrFlushFlags.__init__">(GrFlushFlags method)</a>
+        <li><a href="reference/skia.GrDirectContext.html#skia.GrDirectContext.__init__">(GrDirectContext method)</a>
 </li>
         <li><a href="reference/skia.GrFlushInfo.html#skia.GrFlushInfo.__init__">(GrFlushInfo method)</a>
 </li>
@@ -391,7 +393,9 @@
 </li>
         <li><a href="reference/skia.GrGLTextureInfo.html#skia.GrGLTextureInfo.__init__">(GrGLTextureInfo method)</a>
 </li>
-        <li><a href="reference/skia.GrMipMapped.html#skia.GrMipMapped.__init__">(GrMipMapped method)</a>
+        <li><a href="reference/skia.GrImageContext.html#skia.GrImageContext.__init__">(GrImageContext method)</a>
+</li>
+        <li><a href="reference/skia.GrMipmapped.html#skia.GrMipmapped.__init__">(GrMipmapped method)</a>
 </li>
         <li><a href="reference/skia.GrMockOptions.html#skia.GrMockOptions.__init__">(GrMockOptions method)</a>
 </li>
@@ -400,6 +404,8 @@
         <li><a href="reference/skia.GrMockTextureInfo.html#skia.GrMockTextureInfo.__init__">(GrMockTextureInfo method)</a>
 </li>
         <li><a href="reference/skia.GrProtected.html#skia.GrProtected.__init__">(GrProtected method)</a>
+</li>
+        <li><a href="reference/skia.GrRecordingContext.html#skia.GrRecordingContext.__init__">(GrRecordingContext method)</a>
 </li>
         <li><a href="reference/skia.GrRenderable.html#skia.GrRenderable.__init__">(GrRenderable method)</a>
 </li>
@@ -679,9 +685,19 @@
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="reference/skia.GrContext.html#skia.GrContext.abandonContext">abandonContext() (GrContext method)</a>
+
+      <ul>
+        <li><a href="reference/skia.GrDirectContext.html#skia.GrDirectContext.abandonContext">(GrDirectContext method)</a>
 </li>
+      </ul></li>
       <li><a href="reference/skia.GrContext.html#skia.GrContext.abandoned">abandoned() (GrContext method)</a>
+
+      <ul>
+        <li><a href="reference/skia.GrDirectContext.html#skia.GrDirectContext.abandoned">(GrDirectContext method)</a>
 </li>
+        <li><a href="reference/skia.GrRecordingContext.html#skia.GrRecordingContext.abandoned">(GrRecordingContext method)</a>
+</li>
+      </ul></li>
       <li><a href="reference/skia.Document.html#skia.Document.abort">abort() (Document method)</a>
 </li>
       <li><a href="reference/skia.Canvas.html#skia.Canvas.accessTopLayerPixels">accessTopLayerPixels() (Canvas method)</a>
@@ -780,10 +796,10 @@
 </li>
       <li><a href="reference/skia.String.html#skia.String.appendU32">appendU32() (String method)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="reference/skia.String.html#skia.String.appendU64">appendU64() (String method)</a>
 </li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="reference/skia.String.html#skia.String.appendUnichar">appendUnichar() (String method)</a>
 </li>
       <li><a href="reference/skia.ApplyPerspectiveClip.html#skia.ApplyPerspectiveClip">ApplyPerspectiveClip (class in skia)</a>
@@ -856,6 +872,18 @@
       </ul></li>
       <li><a href="reference/skia.MemoryStream.html#skia.MemoryStream.asData">asData() (MemoryStream method)</a>
 </li>
+      <li><a href="reference/skia.GrContext.html#skia.GrContext.asDirectContext">asDirectContext() (GrContext method)</a>
+
+      <ul>
+        <li><a href="reference/skia.GrContext_Base.html#skia.GrContext_Base.asDirectContext">(GrContext_Base method)</a>
+</li>
+        <li><a href="reference/skia.GrDirectContext.html#skia.GrDirectContext.asDirectContext">(GrDirectContext method)</a>
+</li>
+        <li><a href="reference/skia.GrImageContext.html#skia.GrImageContext.asDirectContext">(GrImageContext method)</a>
+</li>
+        <li><a href="reference/skia.GrRecordingContext.html#skia.GrRecordingContext.asDirectContext">(GrRecordingContext method)</a>
+</li>
+      </ul></li>
       <li><a href="reference/skia.GrBackendFormat.html#skia.GrBackendFormat.asGLFormat">asGLFormat() (GrBackendFormat method)</a>
 </li>
       <li><a href="reference/skia.Image.html#skia.Image.asLegacyBitmap">asLegacyBitmap() (Image method)</a>
@@ -907,6 +935,16 @@
 </li>
         <li><a href="reference/skia.GrBackendTexture.html#skia.GrBackendTexture.backend">(GrBackendTexture method)</a>
 </li>
+        <li><a href="reference/skia.GrContext.html#skia.GrContext.backend">(GrContext method)</a>
+</li>
+        <li><a href="reference/skia.GrContext_Base.html#skia.GrContext_Base.backend">(GrContext_Base method)</a>
+</li>
+        <li><a href="reference/skia.GrDirectContext.html#skia.GrDirectContext.backend">(GrDirectContext method)</a>
+</li>
+        <li><a href="reference/skia.GrImageContext.html#skia.GrImageContext.backend">(GrImageContext method)</a>
+</li>
+        <li><a href="reference/skia.GrRecordingContext.html#skia.GrRecordingContext.backend">(GrRecordingContext method)</a>
+</li>
       </ul></li>
       <li><a href="reference/skia.Surface.BackendHandleAccess.html#skia.Surface.BackendHandleAccess">BackendHandleAccess (class in skia.Surface)</a>
 </li>
@@ -944,12 +982,12 @@
 </li>
       <li><a href="reference/skia.ImageFilters.html#skia.ImageFilters.Blur">Blur() (ImageFilters static method)</a>
 </li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="reference/skia.BlurImageFilter.html#skia.BlurImageFilter">BlurImageFilter (class in skia)</a>
 </li>
       <li><a href="reference/skia.BlurMaskFilter.html#skia.BlurMaskFilter">BlurMaskFilter (class in skia)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="reference/skia.BlurStyle.html#skia.BlurStyle">BlurStyle (class in skia)</a>
 </li>
       <li><a href="reference/skia.FontStyle.html#skia.FontStyle.Bold">Bold() (FontStyle static method)</a>
@@ -1037,7 +1075,11 @@
       <li><a href="reference/skia.Surface.html#skia.Surface.characterize">characterize() (Surface method)</a>
 </li>
       <li><a href="reference/skia.GrContext.html#skia.GrContext.checkAsyncWorkCompletion">checkAsyncWorkCompletion() (GrContext method)</a>
+
+      <ul>
+        <li><a href="reference/skia.GrDirectContext.html#skia.GrDirectContext.checkAsyncWorkCompletion">(GrDirectContext method)</a>
 </li>
+      </ul></li>
       <li><a href="reference/skia.Canvas.html#skia.Canvas.clear">clear() (Canvas method)</a>
 
       <ul>
@@ -1151,9 +1193,19 @@
       <li><a href="reference/skia.html#skia.ColorTypeIsAlwaysOpaque">ColorTypeIsAlwaysOpaque() (in module skia)</a>
 </li>
       <li><a href="reference/skia.GrContext.html#skia.GrContext.colorTypeSupportedAsImage">colorTypeSupportedAsImage() (GrContext method)</a>
+
+      <ul>
+        <li><a href="reference/skia.GrDirectContext.html#skia.GrDirectContext.colorTypeSupportedAsImage">(GrDirectContext method)</a>
 </li>
+      </ul></li>
       <li><a href="reference/skia.GrContext.html#skia.GrContext.colorTypeSupportedAsSurface">colorTypeSupportedAsSurface() (GrContext method)</a>
+
+      <ul>
+        <li><a href="reference/skia.GrDirectContext.html#skia.GrDirectContext.colorTypeSupportedAsSurface">(GrDirectContext method)</a>
 </li>
+        <li><a href="reference/skia.GrRecordingContext.html#skia.GrRecordingContext.colorTypeSupportedAsSurface">(GrRecordingContext method)</a>
+</li>
+      </ul></li>
       <li><a href="reference/skia.html#skia.ColorTypeValidateAlphaType">ColorTypeValidateAlphaType() (in module skia)</a>
 </li>
       <li><a href="reference/skia.ColorFilters.html#skia.ColorFilters.Compose">Compose() (ColorFilters static method)</a>
@@ -1163,9 +1215,21 @@
 </li>
       </ul></li>
       <li><a href="reference/skia.GrContext.html#skia.GrContext.compressedBackendFormat">compressedBackendFormat() (GrContext method)</a>
+
+      <ul>
+        <li><a href="reference/skia.GrContext_Base.html#skia.GrContext_Base.compressedBackendFormat">(GrContext_Base method)</a>
 </li>
+        <li><a href="reference/skia.GrDirectContext.html#skia.GrDirectContext.compressedBackendFormat">(GrDirectContext method)</a>
+</li>
+        <li><a href="reference/skia.GrImageContext.html#skia.GrImageContext.compressedBackendFormat">(GrImageContext method)</a>
+</li>
+        <li><a href="reference/skia.GrRecordingContext.html#skia.GrRecordingContext.compressedBackendFormat">(GrRecordingContext method)</a>
+</li>
+      </ul></li>
       <li><a href="reference/skia.Image.CompressionType.html#skia.Image.CompressionType">CompressionType (class in skia.Image)</a>
 </li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="reference/skia.GrMockTextureInfo.html#skia.GrMockTextureInfo.compressionType">compressionType() (GrMockTextureInfo method)</a>
 </li>
       <li><a href="reference/skia.Bitmap.html#skia.Bitmap.computeByteSize">computeByteSize() (Bitmap method)</a>
@@ -1176,8 +1240,6 @@
         <li><a href="reference/skia.Pixmap.html#skia.Pixmap.computeByteSize">(Pixmap method)</a>
 </li>
       </ul></li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="reference/skia.CornerPathEffect.html#skia.CornerPathEffect.computeFastBounds">computeFastBounds() (CornerPathEffect method)</a>
 
       <ul>
@@ -1199,7 +1261,11 @@
       <li><a href="reference/skia.Paint.html#skia.Paint.computeFastStrokeBounds">computeFastStrokeBounds() (Paint method)</a>
 </li>
       <li><a href="reference/skia.GrContext.html#skia.GrContext.ComputeImageSize">ComputeImageSize() (GrContext static method)</a>
+
+      <ul>
+        <li><a href="reference/skia.GrDirectContext.html#skia.GrDirectContext.ComputeImageSize">(GrDirectContext static method)</a>
 </li>
+      </ul></li>
       <li><a href="reference/skia.html#skia.ComputeIsOpaque">ComputeIsOpaque() (in module skia)</a>
 </li>
       <li><a href="reference/skia.Pixmap.html#skia.Pixmap.computeIsOpaque">computeIsOpaque() (Pixmap method)</a>
@@ -1295,13 +1361,21 @@
       <li><a href="reference/skia.SurfaceCharacterization.html#skia.SurfaceCharacterization.createBackendFormat">createBackendFormat() (SurfaceCharacterization method)</a>
 </li>
       <li><a href="reference/skia.GrContext.html#skia.GrContext.createBackendTexture">createBackendTexture() (GrContext method)</a>
+
+      <ul>
+        <li><a href="reference/skia.GrDirectContext.html#skia.GrDirectContext.createBackendTexture">(GrDirectContext method)</a>
 </li>
+      </ul></li>
       <li><a href="reference/skia.TableMaskFilter.html#skia.TableMaskFilter.CreateClip">CreateClip() (TableMaskFilter static method)</a>
 </li>
       <li><a href="reference/skia.SurfaceCharacterization.html#skia.SurfaceCharacterization.createColorSpace">createColorSpace() (SurfaceCharacterization method)</a>
 </li>
       <li><a href="reference/skia.GrContext.html#skia.GrContext.createCompressedBackendTexture">createCompressedBackendTexture() (GrContext method)</a>
+
+      <ul>
+        <li><a href="reference/skia.GrDirectContext.html#skia.GrDirectContext.createCompressedBackendTexture">(GrDirectContext method)</a>
 </li>
+      </ul></li>
       <li><a href="reference/skia.FontStyleSet.html#skia.FontStyleSet.CreateEmpty">CreateEmpty() (FontStyleSet static method)</a>
 </li>
       <li><a href="reference/skia.SurfaceCharacterization.html#skia.SurfaceCharacterization.createFBO0">createFBO0() (SurfaceCharacterization method)</a>
@@ -1378,16 +1452,26 @@
         <li><a href="reference/skia.Data.html#skia.Data.data">(Data method)</a>
 </li>
       </ul></li>
-      <li><a href="reference/skia.Image.html#skia.Image.DecodeToRaster">DecodeToRaster() (Image static method)</a>
-</li>
-      <li><a href="reference/skia.Image.html#skia.Image.DecodeToTexture">DecodeToTexture() (Image static method)</a>
-</li>
       <li><a href="reference/skia.Matrix.html#skia.Matrix.decomposeScale">decomposeScale() (Matrix method)</a>
 </li>
       <li><a href="reference/skia.GrContext.html#skia.GrContext.defaultBackendFormat">defaultBackendFormat() (GrContext method)</a>
+
+      <ul>
+        <li><a href="reference/skia.GrContext_Base.html#skia.GrContext_Base.defaultBackendFormat">(GrContext_Base method)</a>
 </li>
+        <li><a href="reference/skia.GrDirectContext.html#skia.GrDirectContext.defaultBackendFormat">(GrDirectContext method)</a>
+</li>
+        <li><a href="reference/skia.GrImageContext.html#skia.GrImageContext.defaultBackendFormat">(GrImageContext method)</a>
+</li>
+        <li><a href="reference/skia.GrRecordingContext.html#skia.GrRecordingContext.defaultBackendFormat">(GrRecordingContext method)</a>
+</li>
+      </ul></li>
       <li><a href="reference/skia.GrContext.html#skia.GrContext.deleteBackendTexture">deleteBackendTexture() (GrContext method)</a>
+
+      <ul>
+        <li><a href="reference/skia.GrDirectContext.html#skia.GrDirectContext.deleteBackendTexture">(GrDirectContext method)</a>
 </li>
+      </ul></li>
       <li><a href="reference/skia.ColorSpace.html#skia.ColorSpace.deref">deref() (ColorSpace method)</a>
 
       <ul>
@@ -1470,10 +1554,10 @@
 </li>
       <li><a href="reference/skia.Point.html#skia.Point.distanceToOrigin">distanceToOrigin() (Point method)</a>
 </li>
-      <li><a href="reference/skia.ImageFilters.html#skia.ImageFilters.DistantLitDiffuse">DistantLitDiffuse() (ImageFilters static method)</a>
-</li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="reference/skia.ImageFilters.html#skia.ImageFilters.DistantLitDiffuse">DistantLitDiffuse() (ImageFilters static method)</a>
+</li>
       <li><a href="reference/skia.ImageFilters.html#skia.ImageFilters.DistantLitSpecular">DistantLitSpecular() (ImageFilters static method)</a>
 </li>
       <li><a href="reference/skia.Paint.html#skia.Paint.doComputeFastBounds">doComputeFastBounds() (Paint method)</a>
@@ -1757,8 +1841,6 @@
       <li><a href="reference/skia.FontMetrics.html#skia.FontMetrics.fFlags">fFlags (FontMetrics attribute)</a>
 
       <ul>
-        <li><a href="reference/skia.GrFlushInfo.html#skia.GrFlushInfo.fFlags">(GrFlushInfo attribute)</a>
-</li>
         <li><a href="reference/skia.CornerPathEffect.PointData.html#skia.CornerPathEffect.PointData.fFlags">(PointData attribute)</a>, <a href="reference/skia.DiscretePathEffect.PointData.html#skia.DiscretePathEffect.PointData.fFlags">[1]</a>, <a href="reference/skia.Line2DPathEffect.PointData.html#skia.Line2DPathEffect.PointData.fFlags">[2]</a>, <a href="reference/skia.Path1DPathEffect.PointData.html#skia.Path1DPathEffect.PointData.fFlags">[3]</a>, <a href="reference/skia.Path2DPathEffect.PointData.html#skia.Path2DPathEffect.PointData.fFlags">[4]</a>, <a href="reference/skia.PathEffect.PointData.html#skia.PathEffect.PointData.fFlags">[5]</a>
 </li>
       </ul></li>
@@ -1871,6 +1953,8 @@
 </li>
         <li><a href="reference/skia.GrContext.html#skia.GrContext.flush">(GrContext method)</a>
 </li>
+        <li><a href="reference/skia.GrDirectContext.html#skia.GrDirectContext.flush">(GrDirectContext method)</a>
+</li>
         <li><a href="reference/skia.Image.html#skia.Image.flush">(Image method)</a>
 </li>
         <li><a href="reference/skia.NullWStream.html#skia.NullWStream.flush">(NullWStream method)</a>
@@ -1880,14 +1964,18 @@
         <li><a href="reference/skia.WStream.html#skia.WStream.flush">(WStream method)</a>
 </li>
       </ul></li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="reference/skia.GrContext.html#skia.GrContext.flushAndSubmit">flushAndSubmit() (GrContext method)</a>
 
       <ul>
+        <li><a href="reference/skia.GrDirectContext.html#skia.GrDirectContext.flushAndSubmit">(GrDirectContext method)</a>
+</li>
+        <li><a href="reference/skia.Image.html#skia.Image.flushAndSubmit">(Image method)</a>
+</li>
         <li><a href="reference/skia.Surface.html#skia.Surface.flushAndSubmit">(Surface method)</a>
 </li>
       </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="reference/skia.FontMetrics.html#skia.FontMetrics.fMaxCharWidth">fMaxCharWidth (FontMetrics attribute)</a>
 </li>
       <li><a href="reference/skia.PDF.StructureElementNode.html#skia.PDF.StructureElementNode.fNodeId">fNodeId (StructureElementNode attribute)</a>
@@ -1959,7 +2047,11 @@
       <li><a href="reference/skia.Canvas.Lattice.html#skia.Canvas.Lattice.fRectTypes">fRectTypes (Lattice attribute)</a>
 </li>
       <li><a href="reference/skia.GrContext.html#skia.GrContext.freeGpuResources">freeGpuResources() (GrContext method)</a>
+
+      <ul>
+        <li><a href="reference/skia.GrDirectContext.html#skia.GrDirectContext.freeGpuResources">(GrDirectContext method)</a>
 </li>
+      </ul></li>
       <li><a href="reference/skia.Codec.FrameInfo.html#skia.Codec.FrameInfo.fRequiredFrame">fRequiredFrame (FrameInfo attribute)</a>
 </li>
       <li><a href="reference/skia.IRect.html#skia.IRect.fRight">fRight (IRect attribute)</a>
@@ -2114,8 +2206,12 @@
       </ul></li>
       <li><a href="reference/skia.Surface.html#skia.Surface.getBackendRenderTarget">getBackendRenderTarget() (Surface method)</a>
 </li>
-      <li><a href="reference/skia.Surface.html#skia.Surface.getBackendTexture">getBackendTexture() (Surface method)</a>
+      <li><a href="reference/skia.Image.html#skia.Image.getBackendTexture">getBackendTexture() (Image method)</a>
+
+      <ul>
+        <li><a href="reference/skia.Surface.html#skia.Surface.getBackendTexture">(Surface method)</a>
 </li>
+      </ul></li>
       <li><a href="reference/skia.Canvas.html#skia.Canvas.getBaseLayerSize">getBaseLayerSize() (Canvas method)</a>
 </li>
       <li><a href="reference/skia.Paint.html#skia.Paint.getBlendMode">getBlendMode() (Paint method)</a>
@@ -2332,12 +2428,12 @@
 </li>
       <li><a href="reference/skia.Font.html#skia.Font.getPaths">getPaths() (Font method)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="reference/skia.Matrix.html#skia.Matrix.getPerspX">getPerspX() (Matrix method)</a>
 </li>
       <li><a href="reference/skia.Matrix.html#skia.Matrix.getPerspY">getPerspY() (Matrix method)</a>
 </li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="reference/skia.Bitmap.html#skia.Bitmap.getPixels">getPixels() (Bitmap method)</a>
 
       <ul>
@@ -2373,11 +2469,23 @@
       <li><a href="reference/skia.Codec.html#skia.Codec.getRepetitionCount">getRepetitionCount() (Codec method)</a>
 </li>
       <li><a href="reference/skia.GrContext.html#skia.GrContext.getResourceCacheLimit">getResourceCacheLimit() (GrContext method)</a>
+
+      <ul>
+        <li><a href="reference/skia.GrDirectContext.html#skia.GrDirectContext.getResourceCacheLimit">(GrDirectContext method)</a>
 </li>
+      </ul></li>
       <li><a href="reference/skia.GrContext.html#skia.GrContext.getResourceCachePurgeableBytes">getResourceCachePurgeableBytes() (GrContext method)</a>
+
+      <ul>
+        <li><a href="reference/skia.GrDirectContext.html#skia.GrDirectContext.getResourceCachePurgeableBytes">(GrDirectContext method)</a>
 </li>
+      </ul></li>
       <li><a href="reference/skia.GrContext.html#skia.GrContext.getResourceCacheUsage">getResourceCacheUsage() (GrContext method)</a>
+
+      <ul>
+        <li><a href="reference/skia.GrDirectContext.html#skia.GrDirectContext.getResourceCacheUsage">(GrDirectContext method)</a>
 </li>
+      </ul></li>
       <li><a href="reference/skia.StrokeRec.html#skia.StrokeRec.getResScale">getResScale() (StrokeRec method)</a>
 </li>
       <li><a href="reference/skia.Canvas.html#skia.Canvas.getSaveCount">getSaveCount() (Canvas method)</a>
@@ -2538,9 +2646,11 @@
 </li>
       <li><a href="reference/skia.GrContext.html#skia.GrContext">GrContext (class in skia)</a>
 </li>
+      <li><a href="reference/skia.GrContext_Base.html#skia.GrContext_Base">GrContext_Base (class in skia)</a>
+</li>
       <li><a href="reference/skia.GrContextOptions.html#skia.GrContextOptions">GrContextOptions (class in skia)</a>
 </li>
-      <li><a href="reference/skia.GrFlushFlags.html#skia.GrFlushFlags">GrFlushFlags (class in skia)</a>
+      <li><a href="reference/skia.GrDirectContext.html#skia.GrDirectContext">GrDirectContext (class in skia)</a>
 </li>
       <li><a href="reference/skia.GrFlushInfo.html#skia.GrFlushInfo">GrFlushInfo (class in skia)</a>
 </li>
@@ -2554,7 +2664,9 @@
 </li>
       <li><a href="reference/skia.GrGLTextureInfo.html#skia.GrGLTextureInfo">GrGLTextureInfo (class in skia)</a>
 </li>
-      <li><a href="reference/skia.GrMipMapped.html#skia.GrMipMapped">GrMipMapped (class in skia)</a>
+      <li><a href="reference/skia.GrImageContext.html#skia.GrImageContext">GrImageContext (class in skia)</a>
+</li>
+      <li><a href="reference/skia.GrMipmapped.html#skia.GrMipmapped">GrMipmapped (class in skia)</a>
 </li>
       <li><a href="reference/skia.GrMockOptions.html#skia.GrMockOptions">GrMockOptions (class in skia)</a>
 </li>
@@ -2563,6 +2675,8 @@
       <li><a href="reference/skia.GrMockTextureInfo.html#skia.GrMockTextureInfo">GrMockTextureInfo (class in skia)</a>
 </li>
       <li><a href="reference/skia.GrProtected.html#skia.GrProtected">GrProtected (class in skia)</a>
+</li>
+      <li><a href="reference/skia.GrRecordingContext.html#skia.GrRecordingContext">GrRecordingContext (class in skia)</a>
 </li>
       <li><a href="reference/skia.GrRenderable.html#skia.GrRenderable">GrRenderable (class in skia)</a>
 </li>
@@ -2612,8 +2726,12 @@
         <li><a href="reference/skia.StreamSeekable.html#skia.StreamSeekable.hasLength">(StreamSeekable method)</a>
 </li>
       </ul></li>
-      <li><a href="reference/skia.GrBackendTexture.html#skia.GrBackendTexture.hasMipMaps">hasMipMaps() (GrBackendTexture method)</a>
+      <li><a href="reference/skia.GrBackendTexture.html#skia.GrBackendTexture.hasMipmaps">hasMipmaps() (GrBackendTexture method)</a>
+
+      <ul>
+        <li><a href="reference/skia.Image.html#skia.Image.hasMipmaps">(Image method)</a>
 </li>
+      </ul></li>
       <li><a href="reference/skia.Matrix.html#skia.Matrix.hasPerspective">hasPerspective() (Matrix method)</a>
 </li>
       <li><a href="reference/skia.FILEStream.html#skia.FILEStream.hasPosition">hasPosition() (FILEStream method)</a>
@@ -2634,10 +2752,10 @@
       </ul></li>
       <li><a href="reference/skia.FontMetrics.html#skia.FontMetrics.hasStrikeoutPosition">hasStrikeoutPosition() (FontMetrics method)</a>
 </li>
-      <li><a href="reference/skia.FontMetrics.html#skia.FontMetrics.hasStrikeoutThickness">hasStrikeoutThickness() (FontMetrics method)</a>
-</li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="reference/skia.FontMetrics.html#skia.FontMetrics.hasStrikeoutThickness">hasStrikeoutThickness() (FontMetrics method)</a>
+</li>
       <li><a href="reference/skia.FontMetrics.html#skia.FontMetrics.hasUnderlinePosition">hasUnderlinePosition() (FontMetrics method)</a>
 </li>
       <li><a href="reference/skia.FontMetrics.html#skia.FontMetrics.hasUnderlineThickness">hasUnderlineThickness() (FontMetrics method)</a>
@@ -3010,12 +3128,8 @@
         <li><a href="reference/skia.SurfaceCharacterization.html#skia.SurfaceCharacterization.isValid">(SurfaceCharacterization method)</a>
 </li>
       </ul></li>
-      <li><a href="reference/skia.Bitmap.html#skia.Bitmap.isVolatile">isVolatile() (Bitmap method)</a>
-
-      <ul>
-        <li><a href="reference/skia.Path.html#skia.Path.isVolatile">(Path method)</a>
+      <li><a href="reference/skia.Path.html#skia.Path.isVolatile">isVolatile() (Path method)</a>
 </li>
-      </ul></li>
       <li><a href="reference/skia.IPoint.html#skia.IPoint.isZero">isZero() (IPoint method)</a>
 
       <ul>
@@ -4445,7 +4559,7 @@
       <ul>
         <li><a href="reference/skia.Budgeted.html#skia.Budgeted.kNo">(Budgeted attribute)</a>
 </li>
-        <li><a href="reference/skia.GrMipMapped.html#skia.GrMipMapped.kNo">(GrMipMapped attribute)</a>
+        <li><a href="reference/skia.GrMipmapped.html#skia.GrMipmapped.kNo">(GrMipmapped attribute)</a>
 </li>
         <li><a href="reference/skia.GrProtected.html#skia.GrProtected.kNo">(GrProtected attribute)</a>
 </li>
@@ -4508,8 +4622,6 @@
         <li><a href="reference/skia.Shader.html#skia.Shader.kNone_GradientType">(Shader attribute)</a>
 </li>
       </ul></li>
-      <li><a href="reference/skia.GrFlushFlags.html#skia.GrFlushFlags.kNone_GrFlushFlags">kNone_GrFlushFlags (GrFlushFlags attribute)</a>
-</li>
       <li><a href="reference/skia.Canvas.html#skia.Canvas.kNone_QuadAAFlags">kNone_QuadAAFlags (Canvas attribute)</a>
 
       <ul>
@@ -5170,8 +5282,6 @@
         <li><a href="reference/skia.Shader.html#skia.Shader.kSweep_GradientType">(Shader attribute)</a>
 </li>
       </ul></li>
-      <li><a href="reference/skia.GrFlushFlags.html#skia.GrFlushFlags.kSyncCpu_GrFlushFlag">kSyncCpu_GrFlushFlag (GrFlushFlags attribute)</a>
-</li>
       <li><a href="reference/skia.PDF.DocumentStructureType.html#skia.PDF.DocumentStructureType.kTable">kTable (DocumentStructureType attribute)</a>
 
       <ul>
@@ -5569,7 +5679,7 @@
       <ul>
         <li><a href="reference/skia.Budgeted.html#skia.Budgeted.kYes">(Budgeted attribute)</a>
 </li>
-        <li><a href="reference/skia.GrMipMapped.html#skia.GrMipMapped.kYes">(GrMipMapped attribute)</a>
+        <li><a href="reference/skia.GrMipmapped.html#skia.GrMipmapped.kYes">(GrMipmapped attribute)</a>
 </li>
         <li><a href="reference/skia.GrProtected.html#skia.GrProtected.kYes">(GrProtected attribute)</a>
 </li>
@@ -5899,7 +6009,7 @@
       <li><a href="reference/skia.GrBackendFormat.html#skia.GrBackendFormat.MakeGL">MakeGL() (GrBackendFormat static method)</a>
 
       <ul>
-        <li><a href="reference/skia.GrContext.html#skia.GrContext.MakeGL">(GrContext static method)</a>
+        <li><a href="reference/skia.GrDirectContext.html#skia.GrDirectContext.MakeGL">(GrDirectContext static method)</a>
 </li>
       </ul></li>
       <li><a href="reference/skia.Surface.html#skia.Surface.makeImageSnapshot">makeImageSnapshot() (Surface method)</a>
@@ -5920,20 +6030,20 @@
 </li>
       <li><a href="reference/skia.ColorSpace.html#skia.ColorSpace.makeLinearGamma">makeLinearGamma() (ColorSpace method)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="reference/skia.IRect.html#skia.IRect.MakeLTRB">MakeLTRB() (IRect static method)</a>
 
       <ul>
         <li><a href="reference/skia.Rect.html#skia.Rect.MakeLTRB">(Rect static method)</a>
 </li>
       </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="reference/skia.ImageFilter.html#skia.ImageFilter.MakeMatrixFilter">MakeMatrixFilter() (ImageFilter static method)</a>
 </li>
       <li><a href="reference/skia.GrBackendFormat.html#skia.GrBackendFormat.MakeMock">MakeMock() (GrBackendFormat static method)</a>
 
       <ul>
-        <li><a href="reference/skia.GrContext.html#skia.GrContext.MakeMock">(GrContext static method)</a>
+        <li><a href="reference/skia.GrDirectContext.html#skia.GrDirectContext.MakeMock">(GrDirectContext static method)</a>
 </li>
       </ul></li>
       <li><a href="reference/skia.ImageInfo.html#skia.ImageInfo.MakeN32">MakeN32() (ImageInfo static method)</a>
@@ -6080,8 +6190,6 @@
 </li>
       <li><a href="reference/skia.GrBackendFormat.html#skia.GrBackendFormat.MakeVk">MakeVk() (GrBackendFormat static method)</a>
 </li>
-      <li><a href="reference/skia.GrContext.html#skia.GrContext.MakeVulkan">MakeVulkan() (GrContext static method)</a>
-</li>
       <li><a href="reference/skia.ImageInfo.html#skia.ImageInfo.makeWH">makeWH() (ImageInfo method)</a>
 </li>
       <li><a href="reference/skia.IRect.html#skia.IRect.MakeWH">MakeWH() (IRect static method)</a>
@@ -6136,8 +6244,6 @@
 </li>
       <li><a href="reference/skia.MaskFilter.html#skia.MaskFilter">MaskFilter (class in skia)</a>
 </li>
-      <li><a href="reference/skia.FontMgr.html#skia.FontMgr.matchFaceStyle">matchFaceStyle() (FontMgr method)</a>
-</li>
       <li><a href="reference/skia.FontMgr.html#skia.FontMgr.matchFamily">matchFamily() (FontMgr method)</a>
 </li>
       <li><a href="reference/skia.FontMgr.html#skia.FontMgr.matchFamilyStyle">matchFamilyStyle() (FontMgr method)</a>
@@ -6157,11 +6263,25 @@
       <li><a href="reference/skia.ImageFilters.html#skia.ImageFilters.MatrixTransform">MatrixTransform() (ImageFilters static method)</a>
 </li>
       <li><a href="reference/skia.GrContext.html#skia.GrContext.maxRenderTargetSize">maxRenderTargetSize() (GrContext method)</a>
+
+      <ul>
+        <li><a href="reference/skia.GrDirectContext.html#skia.GrDirectContext.maxRenderTargetSize">(GrDirectContext method)</a>
 </li>
+      </ul></li>
       <li><a href="reference/skia.GrContext.html#skia.GrContext.maxSurfaceSampleCountForColorType">maxSurfaceSampleCountForColorType() (GrContext method)</a>
+
+      <ul>
+        <li><a href="reference/skia.GrDirectContext.html#skia.GrDirectContext.maxSurfaceSampleCountForColorType">(GrDirectContext method)</a>
 </li>
+        <li><a href="reference/skia.GrRecordingContext.html#skia.GrRecordingContext.maxSurfaceSampleCountForColorType">(GrRecordingContext method)</a>
+</li>
+      </ul></li>
       <li><a href="reference/skia.GrContext.html#skia.GrContext.maxTextureSize">maxTextureSize() (GrContext method)</a>
+
+      <ul>
+        <li><a href="reference/skia.GrDirectContext.html#skia.GrDirectContext.maxTextureSize">(GrDirectContext method)</a>
 </li>
+      </ul></li>
       <li><a href="reference/skia.Font.html#skia.Font.measureText">measureText() (Font method)</a>
 </li>
       <li><a href="reference/skia.MemoryStream.html#skia.MemoryStream">MemoryStream (class in skia)</a>
@@ -6294,13 +6414,11 @@
 </li>
         <li><a href="reference/skia.GrColorType.html#skia.GrColorType.name">(GrColorType attribute)</a>
 </li>
-        <li><a href="reference/skia.GrFlushFlags.html#skia.GrFlushFlags.name">(GrFlushFlags attribute)</a>
-</li>
         <li><a href="reference/skia.GrGLBackendState.html#skia.GrGLBackendState.name">(GrGLBackendState attribute)</a>
 </li>
         <li><a href="reference/skia.GrGLFormat.html#skia.GrGLFormat.name">(GrGLFormat attribute)</a>
 </li>
-        <li><a href="reference/skia.GrMipMapped.html#skia.GrMipMapped.name">(GrMipMapped attribute)</a>
+        <li><a href="reference/skia.GrMipmapped.html#skia.GrMipmapped.name">(GrMipmapped attribute)</a>
 </li>
         <li><a href="reference/skia.GrProtected.html#skia.GrProtected.name">(GrProtected attribute)</a>
 </li>
@@ -6492,7 +6610,11 @@
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="reference/skia.GrContext.html#skia.GrContext.oomed">oomed() (GrContext method)</a>
+
+      <ul>
+        <li><a href="reference/skia.GrDirectContext.html#skia.GrDirectContext.oomed">(GrDirectContext method)</a>
 </li>
+      </ul></li>
       <li><a href="reference/skia.Region.Op.html#skia.Region.Op">Op (class in skia.Region)</a>
 </li>
       <li><a href="reference/skia.Region.html#skia.Region.op">op() (Region method)</a>
@@ -6586,7 +6708,11 @@
 </li>
       </ul></li>
       <li><a href="reference/skia.GrContext.html#skia.GrContext.performDeferredCleanup">performDeferredCleanup() (GrContext method)</a>
+
+      <ul>
+        <li><a href="reference/skia.GrDirectContext.html#skia.GrDirectContext.performDeferredCleanup">(GrDirectContext method)</a>
 </li>
+      </ul></li>
       <li><a href="reference/skia.PerlinNoiseShader.html#skia.PerlinNoiseShader">PerlinNoiseShader (class in skia)</a>
 </li>
       <li><a href="reference/skia.Picture.html#skia.Picture">Picture (class in skia)</a>
@@ -6607,10 +6733,10 @@
 </li>
       <li><a href="reference/skia.Picture.html#skia.Picture.playback">playback() (Picture method)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="reference/skia.Point.html#skia.Point">Point (class in skia)</a>
 </li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="reference/skia.Point3.html#skia.Point3">Point3 (class in skia)</a>
 </li>
       <li><a href="reference/skia.CornerPathEffect.PointData.html#skia.CornerPathEffect.PointData">PointData (class in skia.CornerPathEffect)</a>
@@ -6660,7 +6786,11 @@
       <li><a href="reference/skia.Matrix.html#skia.Matrix.postTranslate">postTranslate() (Matrix method)</a>
 </li>
       <li><a href="reference/skia.GrContext.html#skia.GrContext.precompileShader">precompileShader() (GrContext method)</a>
+
+      <ul>
+        <li><a href="reference/skia.GrDirectContext.html#skia.GrDirectContext.precompileShader">(GrDirectContext method)</a>
 </li>
+      </ul></li>
       <li><a href="reference/skia.Matrix.html#skia.Matrix.preConcat">preConcat() (Matrix method)</a>
 </li>
       <li><a href="reference/skia.html#skia.PreMultiplyARGB">PreMultiplyARGB() (in module skia)</a>
@@ -6696,9 +6826,17 @@
       <li><a href="reference/skia.Surface.html#skia.Surface.props">props() (Surface method)</a>
 </li>
       <li><a href="reference/skia.GrContext.html#skia.GrContext.purgeResourcesNotUsedInMs">purgeResourcesNotUsedInMs() (GrContext method)</a>
+
+      <ul>
+        <li><a href="reference/skia.GrDirectContext.html#skia.GrDirectContext.purgeResourcesNotUsedInMs">(GrDirectContext method)</a>
 </li>
+      </ul></li>
       <li><a href="reference/skia.GrContext.html#skia.GrContext.purgeUnlockedResources">purgeUnlockedResources() (GrContext method)</a>
+
+      <ul>
+        <li><a href="reference/skia.GrDirectContext.html#skia.GrDirectContext.purgeUnlockedResources">(GrDirectContext method)</a>
 </li>
+      </ul></li>
   </ul></td>
 </tr></table>
 
@@ -6921,6 +7059,8 @@
 </li>
       <li><a href="reference/skia.PictureRecorder.RecordFlags.html#skia.PictureRecorder.RecordFlags">RecordFlags (class in skia.PictureRecorder)</a>
 </li>
+      <li><a href="reference/skia.Surface.html#skia.Surface.recordingContext">recordingContext() (Surface method)</a>
+</li>
       <li><a href="reference/skia.Rect.html#skia.Rect">Rect (class in skia)</a>
 </li>
       <li><a href="reference/skia.Region.Cliperator.html#skia.Region.Cliperator.rect">rect() (Cliperator method)</a>
@@ -6968,7 +7108,15 @@
 </li>
         <li><a href="reference/skia.GrContext.html#skia.GrContext.ref">(GrContext method)</a>
 </li>
+        <li><a href="reference/skia.GrContext_Base.html#skia.GrContext_Base.ref">(GrContext_Base method)</a>
+</li>
+        <li><a href="reference/skia.GrDirectContext.html#skia.GrDirectContext.ref">(GrDirectContext method)</a>
+</li>
         <li><a href="reference/skia.GrGLInterface.html#skia.GrGLInterface.ref">(GrGLInterface method)</a>
+</li>
+        <li><a href="reference/skia.GrImageContext.html#skia.GrImageContext.ref">(GrImageContext method)</a>
+</li>
+        <li><a href="reference/skia.GrRecordingContext.html#skia.GrRecordingContext.ref">(GrRecordingContext method)</a>
 </li>
         <li><a href="reference/skia.Image.html#skia.Image.ref">(Image method)</a>
 </li>
@@ -7068,7 +7216,11 @@
       <li><a href="reference/skia.Image.html#skia.Image.reinterpretColorSpace">reinterpretColorSpace() (Image method)</a>
 </li>
       <li><a href="reference/skia.GrContext.html#skia.GrContext.releaseResourcesAndAbandonContext">releaseResourcesAndAbandonContext() (GrContext method)</a>
+
+      <ul>
+        <li><a href="reference/skia.GrDirectContext.html#skia.GrDirectContext.releaseResourcesAndAbandonContext">(GrDirectContext method)</a>
 </li>
+      </ul></li>
       <li><a href="reference/skia.String.html#skia.String.remove">remove() (String method)</a>
 </li>
       <li><a href="reference/skia.Surface.html#skia.Surface.replaceBackendTexture">replaceBackendTexture() (Surface method)</a>
@@ -7096,9 +7248,17 @@
 </li>
       </ul></li>
       <li><a href="reference/skia.GrContext.html#skia.GrContext.resetContext">resetContext() (GrContext method)</a>
+
+      <ul>
+        <li><a href="reference/skia.GrDirectContext.html#skia.GrDirectContext.resetContext">(GrDirectContext method)</a>
 </li>
+      </ul></li>
       <li><a href="reference/skia.GrContext.html#skia.GrContext.resetGLTextureBindings">resetGLTextureBindings() (GrContext method)</a>
+
+      <ul>
+        <li><a href="reference/skia.GrDirectContext.html#skia.GrDirectContext.resetGLTextureBindings">(GrDirectContext method)</a>
 </li>
+      </ul></li>
       <li><a href="reference/skia.Canvas.html#skia.Canvas.resetMatrix">resetMatrix() (Canvas method)</a>
 </li>
       <li><a href="reference/skia.Image.html#skia.Image.resize">resize() (Image method)</a>
@@ -7338,9 +7498,17 @@
       <li><a href="reference/skia.Paint.html#skia.Paint.setARGB">setARGB() (Paint method)</a>
 </li>
       <li><a href="reference/skia.GrContext.html#skia.GrContext.setBackendRenderTargetState">setBackendRenderTargetState() (GrContext method)</a>
+
+      <ul>
+        <li><a href="reference/skia.GrDirectContext.html#skia.GrDirectContext.setBackendRenderTargetState">(GrDirectContext method)</a>
 </li>
+      </ul></li>
       <li><a href="reference/skia.GrContext.html#skia.GrContext.setBackendTextureState">setBackendTextureState() (GrContext method)</a>
+
+      <ul>
+        <li><a href="reference/skia.GrDirectContext.html#skia.GrDirectContext.setBackendTextureState">(GrDirectContext method)</a>
 </li>
+      </ul></li>
       <li><a href="reference/skia.Font.html#skia.Font.setBaselineSnap">setBaselineSnap() (Font method)</a>
 </li>
       <li><a href="reference/skia.Paint.html#skia.Paint.setBlendMode">setBlendMode() (Paint method)</a>
@@ -7413,12 +7581,8 @@
 </li>
       <li><a href="reference/skia.Bitmap.html#skia.Bitmap.setInfo">setInfo() (Bitmap method)</a>
 </li>
-      <li><a href="reference/skia.Bitmap.html#skia.Bitmap.setIsVolatile">setIsVolatile() (Bitmap method)</a>
-
-      <ul>
-        <li><a href="reference/skia.Path.html#skia.Path.setIsVolatile">(Path method)</a>
+      <li><a href="reference/skia.Path.html#skia.Path.setIsVolatile">setIsVolatile() (Path method)</a>
 </li>
-      </ul></li>
       <li><a href="reference/skia.Rect.html#skia.Rect.setIWH">setIWH() (Rect method)</a>
 </li>
       <li><a href="reference/skia.Path.html#skia.Path.setLastPt">setLastPt() (Path method)</a>
@@ -7449,8 +7613,6 @@
 </li>
       <li><a href="reference/skia.RRect.html#skia.RRect.setOval">setOval() (RRect method)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="reference/skia.Path.Iter.html#skia.Path.Iter.setPath">setPath() (Iter method)</a>
 
       <ul>
@@ -7459,6 +7621,8 @@
         <li><a href="reference/skia.Region.html#skia.Region.setPath">(Region method)</a>
 </li>
       </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="reference/skia.Paint.html#skia.Paint.setPathEffect">setPathEffect() (Paint method)</a>
 </li>
       <li><a href="reference/skia.Matrix.html#skia.Matrix.setPerspX">setPerspX() (Matrix method)</a>
@@ -7486,7 +7650,11 @@
       <li><a href="reference/skia.Region.html#skia.Region.setRegion">setRegion() (Region method)</a>
 </li>
       <li><a href="reference/skia.GrContext.html#skia.GrContext.setResourceCacheLimit">setResourceCacheLimit() (GrContext method)</a>
+
+      <ul>
+        <li><a href="reference/skia.GrDirectContext.html#skia.GrDirectContext.setResourceCacheLimit">(GrDirectContext method)</a>
 </li>
+      </ul></li>
       <li><a href="reference/skia.StrokeRec.html#skia.StrokeRec.setResScale">setResScale() (StrokeRec method)</a>
 </li>
       <li><a href="reference/skia.Matrix.html#skia.Matrix.setRotate">setRotate() (Matrix method)</a>
@@ -7665,7 +7833,11 @@
       <li><a href="reference/skia.GrBackendRenderTarget.html#skia.GrBackendRenderTarget.stencilBits">stencilBits() (GrBackendRenderTarget method)</a>
 </li>
       <li><a href="reference/skia.GrContext.html#skia.GrContext.storeVkPipelineCacheData">storeVkPipelineCacheData() (GrContext method)</a>
+
+      <ul>
+        <li><a href="reference/skia.GrDirectContext.html#skia.GrDirectContext.storeVkPipelineCacheData">(GrDirectContext method)</a>
 </li>
+      </ul></li>
       <li><a href="reference/skia.Stream.html#skia.Stream">Stream (class in skia)</a>
 </li>
       <li><a href="reference/skia.StreamAsset.html#skia.StreamAsset">StreamAsset (class in skia)</a>
@@ -7693,9 +7865,17 @@
 </li>
       </ul></li>
       <li><a href="reference/skia.GrContext.html#skia.GrContext.submit">submit() (GrContext method)</a>
+
+      <ul>
+        <li><a href="reference/skia.GrDirectContext.html#skia.GrDirectContext.submit">(GrDirectContext method)</a>
 </li>
+      </ul></li>
       <li><a href="reference/skia.GrContext.html#skia.GrContext.supportsDistanceFieldText">supportsDistanceFieldText() (GrContext method)</a>
+
+      <ul>
+        <li><a href="reference/skia.GrDirectContext.html#skia.GrDirectContext.supportsDistanceFieldText">(GrDirectContext method)</a>
 </li>
+      </ul></li>
       <li><a href="reference/skia.Surface.html#skia.Surface">Surface (class in skia)</a>
 </li>
       <li><a href="reference/skia.SurfaceCharacterization.html#skia.SurfaceCharacterization">SurfaceCharacterization (class in skia)</a>
@@ -7736,6 +7916,18 @@
 </li>
       <li><a href="reference/skia.GrBackendFormat.html#skia.GrBackendFormat.textureType">textureType() (GrBackendFormat method)</a>
 </li>
+      <li><a href="reference/skia.GrContext.html#skia.GrContext.threadSafeProxy">threadSafeProxy() (GrContext method)</a>
+
+      <ul>
+        <li><a href="reference/skia.GrContext_Base.html#skia.GrContext_Base.threadSafeProxy">(GrContext_Base method)</a>
+</li>
+        <li><a href="reference/skia.GrDirectContext.html#skia.GrDirectContext.threadSafeProxy">(GrDirectContext method)</a>
+</li>
+        <li><a href="reference/skia.GrImageContext.html#skia.GrImageContext.threadSafeProxy">(GrImageContext method)</a>
+</li>
+        <li><a href="reference/skia.GrRecordingContext.html#skia.GrRecordingContext.threadSafeProxy">(GrRecordingContext method)</a>
+</li>
+      </ul></li>
       <li><a href="reference/skia.ImageFilters.html#skia.ImageFilters.Tile">Tile() (ImageFilters static method)</a>
 </li>
       <li><a href="reference/skia.TileImageFilter.html#skia.TileImageFilter">TileImageFilter (class in skia)</a>
@@ -7788,12 +7980,12 @@
         <li><a href="reference/skia.RSXform.html#skia.RSXform.toQuad">(RSXform method)</a>
 </li>
       </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="reference/skia.Size.html#skia.Size.toRound">toRound() (Size method)</a>
 </li>
       <li><a href="reference/skia.RSXform.html#skia.RSXform.toTriStrip">toTriStrip() (RSXform method)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="reference/skia.ColorSpace.html#skia.ColorSpace.toXYZD50">toXYZD50() (ColorSpace method)</a>
 </li>
       <li><a href="reference/skia.ColorSpace.html#skia.ColorSpace.toXYZD50Hash">toXYZD50Hash() (ColorSpace method)</a>
@@ -7903,7 +8095,15 @@
 </li>
         <li><a href="reference/skia.GrContext.html#skia.GrContext.unique">(GrContext method)</a>
 </li>
+        <li><a href="reference/skia.GrContext_Base.html#skia.GrContext_Base.unique">(GrContext_Base method)</a>
+</li>
+        <li><a href="reference/skia.GrDirectContext.html#skia.GrDirectContext.unique">(GrDirectContext method)</a>
+</li>
         <li><a href="reference/skia.GrGLInterface.html#skia.GrGLInterface.unique">(GrGLInterface method)</a>
+</li>
+        <li><a href="reference/skia.GrImageContext.html#skia.GrImageContext.unique">(GrImageContext method)</a>
+</li>
+        <li><a href="reference/skia.GrRecordingContext.html#skia.GrRecordingContext.unique">(GrRecordingContext method)</a>
 </li>
         <li><a href="reference/skia.Image.html#skia.Image.unique">(Image method)</a>
 </li>
@@ -7979,7 +8179,15 @@
 </li>
         <li><a href="reference/skia.GrContext.html#skia.GrContext.unref">(GrContext method)</a>
 </li>
+        <li><a href="reference/skia.GrContext_Base.html#skia.GrContext_Base.unref">(GrContext_Base method)</a>
+</li>
+        <li><a href="reference/skia.GrDirectContext.html#skia.GrDirectContext.unref">(GrDirectContext method)</a>
+</li>
         <li><a href="reference/skia.GrGLInterface.html#skia.GrGLInterface.unref">(GrGLInterface method)</a>
+</li>
+        <li><a href="reference/skia.GrImageContext.html#skia.GrImageContext.unref">(GrImageContext method)</a>
+</li>
+        <li><a href="reference/skia.GrRecordingContext.html#skia.GrRecordingContext.unref">(GrRecordingContext method)</a>
 </li>
         <li><a href="reference/skia.Image.html#skia.Image.unref">(Image method)</a>
 </li>
@@ -8013,7 +8221,11 @@
 </li>
       </ul></li>
       <li><a href="reference/skia.GrContext.html#skia.GrContext.updateBackendTexture">updateBackendTexture() (GrContext method)</a>
+
+      <ul>
+        <li><a href="reference/skia.GrDirectContext.html#skia.GrDirectContext.updateBackendTexture">(GrDirectContext method)</a>
 </li>
+      </ul></li>
       <li><a href="reference/skia.Path.html#skia.Path.updateBoundsCache">updateBoundsCache() (Path method)</a>
 </li>
       <li><a href="reference/skia.SurfaceCharacterization.html#skia.SurfaceCharacterization.usesGLFBO0">usesGLFBO0() (SurfaceCharacterization method)</a>
@@ -8055,7 +8267,11 @@
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="reference/skia.GrContext.html#skia.GrContext.wait">wait() (GrContext method)</a>
+
+      <ul>
+        <li><a href="reference/skia.GrDirectContext.html#skia.GrDirectContext.wait">(GrDirectContext method)</a>
 </li>
+      </ul></li>
       <li><a href="reference/skia.FontStyle.Weight.html#skia.FontStyle.Weight">Weight (class in skia.FontStyle)</a>
 </li>
       <li><a href="reference/skia.FontStyle.html#skia.FontStyle.weight">weight() (FontStyle method)</a>

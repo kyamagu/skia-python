@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>FontMgr &mdash; skia-python 85.0 documentation</title>
+  <title>FontMgr &mdash; skia-python 86.0 documentation</title>
   
 
   
@@ -61,7 +61,7 @@
             
             
               <div class="version">
-                85.0
+                86.0
               </div>
             
           
@@ -158,18 +158,21 @@
 <li class="toctree-l3"><a class="reference internal" href="skia.GrColorType.html">GrColorType</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.GrContext.html">GrContext</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.GrContextOptions.html">GrContextOptions</a></li>
-<li class="toctree-l3"><a class="reference internal" href="skia.GrFlushFlags.html">GrFlushFlags</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.GrContext_Base.html">GrContext_Base</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.GrDirectContext.html">GrDirectContext</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.GrFlushInfo.html">GrFlushInfo</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.GrGLBackendState.html">GrGLBackendState</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.GrGLFormat.html">GrGLFormat</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.GrGLFramebufferInfo.html">GrGLFramebufferInfo</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.GrGLInterface.html">GrGLInterface</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.GrGLTextureInfo.html">GrGLTextureInfo</a></li>
-<li class="toctree-l3"><a class="reference internal" href="skia.GrMipMapped.html">GrMipMapped</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.GrImageContext.html">GrImageContext</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.GrMipmapped.html">GrMipmapped</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.GrMockOptions.html">GrMockOptions</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.GrMockRenderTargetInfo.html">GrMockRenderTargetInfo</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.GrMockTextureInfo.html">GrMockTextureInfo</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.GrProtected.html">GrProtected</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.GrRecordingContext.html">GrRecordingContext</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.GrRenderable.html">GrRenderable</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.GrSemaphoresSubmitted.html">GrSemaphoresSubmitted</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.GrSurfaceOrigin.html">GrSurfaceOrigin</a></li>
@@ -382,25 +385,22 @@
 <tr class="row-even"><td><p><a class="reference internal" href="#skia.FontMgr.makeFromFile" title="skia.FontMgr.makeFromFile"><code class="xref py py-obj docutils literal notranslate"><span class="pre">makeFromFile</span></code></a></p></td>
 <td><p>Create a typeface for the specified fileName and TTC index (pass 0 for none) or NULL if the file is not found, or its contents are not recognized.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#skia.FontMgr.matchFaceStyle" title="skia.FontMgr.matchFaceStyle"><code class="xref py py-obj docutils literal notranslate"><span class="pre">matchFaceStyle</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#skia.FontMgr.matchFamily" title="skia.FontMgr.matchFamily"><code class="xref py py-obj docutils literal notranslate"><span class="pre">matchFamily</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.FontMgr.matchFamily" title="skia.FontMgr.matchFamily"><code class="xref py py-obj docutils literal notranslate"><span class="pre">matchFamily</span></code></a></p></td>
 <td><p>Never returns NULL; will return an empty set if the name is not found.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#skia.FontMgr.matchFamilyStyle" title="skia.FontMgr.matchFamilyStyle"><code class="xref py py-obj docutils literal notranslate"><span class="pre">matchFamilyStyle</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.FontMgr.matchFamilyStyle" title="skia.FontMgr.matchFamilyStyle"><code class="xref py py-obj docutils literal notranslate"><span class="pre">matchFamilyStyle</span></code></a></p></td>
 <td><p>Find the closest matching typeface to the specified familyName and style and return a ref to it.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#skia.FontMgr.matchFamilyStyleCharacter" title="skia.FontMgr.matchFamilyStyleCharacter"><code class="xref py py-obj docutils literal notranslate"><span class="pre">matchFamilyStyleCharacter</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.FontMgr.matchFamilyStyleCharacter" title="skia.FontMgr.matchFamilyStyleCharacter"><code class="xref py py-obj docutils literal notranslate"><span class="pre">matchFamilyStyleCharacter</span></code></a></p></td>
 <td><p>Use the system fallback to find a typeface for the given character.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#skia.FontMgr.ref" title="skia.FontMgr.ref"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ref</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.FontMgr.ref" title="skia.FontMgr.ref"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ref</span></code></a></p></td>
 <td><p>Increment the reference count.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#skia.FontMgr.unique" title="skia.FontMgr.unique"><code class="xref py py-obj docutils literal notranslate"><span class="pre">unique</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.FontMgr.unique" title="skia.FontMgr.unique"><code class="xref py py-obj docutils literal notranslate"><span class="pre">unique</span></code></a></p></td>
 <td><p>May return true if the caller is the only owner.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#skia.FontMgr.unref" title="skia.FontMgr.unref"><code class="xref py py-obj docutils literal notranslate"><span class="pre">unref</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.FontMgr.unref" title="skia.FontMgr.unref"><code class="xref py py-obj docutils literal notranslate"><span class="pre">unref</span></code></a></p></td>
 <td><p>Decrement the reference count.</p></td>
 </tr>
 </tbody>
@@ -454,11 +454,6 @@ or NULL if the data is not recognized.</p>
 none) or NULL if the file is not found, or its contents are not
 recognized.</p>
 </dd></dl>
-
-<dl class="py method">
-<dt id="skia.FontMgr.matchFaceStyle">
-<code class="sig-prename descclassname">FontMgr.</code><code class="sig-name descname">matchFaceStyle</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.FontMgr" title="skia.FontMgr">skia.FontMgr</a></span></em>, <em class="sig-param"><span class="n">face</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.Typeface.html#skia.Typeface" title="skia.Typeface">skia.Typeface</a></span></em>, <em class="sig-param"><span class="n">style</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.FontStyle.html#skia.FontStyle" title="skia.FontStyle">skia.FontStyle</a></span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="skia.Typeface.html#skia.Typeface" title="skia.Typeface">skia.Typeface</a><a class="headerlink" href="#skia.FontMgr.matchFaceStyle" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
 
 <dl class="py method">
 <dt id="skia.FontMgr.matchFamily">
