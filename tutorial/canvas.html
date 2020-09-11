@@ -285,6 +285,51 @@ to it.</p></li>
 <a class="reference internal" href="../reference/skia.Surface.html#skia.Surface.flushAndSubmit" title="skia.Surface.flushAndSubmit"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Surface.flushAndSubmit()</span></code></a>.</p></li>
 </ol>
 <p>Here’s a complete example:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">contextlib</span><span class="o">,</span> <span class="nn">glfw</span><span class="o">,</span> <span class="nn">skia</span>
+<span class="kn">from</span> <span class="nn">OpenGL</span> <span class="kn">import</span> <span class="n">GL</span>
+
+<span class="n">WIDTH</span><span class="p">,</span> <span class="n">HEIGHT</span> <span class="o">=</span> <span class="mi">640</span><span class="p">,</span> <span class="mi">480</span>
+
+<span class="nd">@contextlib</span><span class="o">.</span><span class="n">contextmanager</span>
+<span class="k">def</span> <span class="nf">glfw_window</span><span class="p">():</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">glfw</span><span class="o">.</span><span class="n">init</span><span class="p">():</span>
+        <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s1">&#39;glfw.init() failed&#39;</span><span class="p">)</span>
+    <span class="n">glfw</span><span class="o">.</span><span class="n">window_hint</span><span class="p">(</span><span class="n">glfw</span><span class="o">.</span><span class="n">STENCIL_BITS</span><span class="p">,</span> <span class="mi">8</span><span class="p">)</span>
+    <span class="n">window</span> <span class="o">=</span> <span class="n">glfw</span><span class="o">.</span><span class="n">create_window</span><span class="p">(</span><span class="n">WIDTH</span><span class="p">,</span> <span class="n">HEIGHT</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+    <span class="n">glfw</span><span class="o">.</span><span class="n">make_context_current</span><span class="p">(</span><span class="n">window</span><span class="p">)</span>
+    <span class="k">yield</span> <span class="n">window</span>
+    <span class="n">glfw</span><span class="o">.</span><span class="n">terminate</span><span class="p">()</span>
+
+<span class="nd">@contextlib</span><span class="o">.</span><span class="n">contextmanager</span>
+<span class="k">def</span> <span class="nf">skia_surface</span><span class="p">(</span><span class="n">window</span><span class="p">):</span>
+    <span class="n">context</span> <span class="o">=</span> <span class="n">skia</span><span class="o">.</span><span class="n">GrContext</span><span class="o">.</span><span class="n">MakeGL</span><span class="p">()</span>
+    <span class="n">backend_render_target</span> <span class="o">=</span> <span class="n">skia</span><span class="o">.</span><span class="n">GrBackendRenderTarget</span><span class="p">(</span>
+        <span class="n">WIDTH</span><span class="p">,</span>
+        <span class="n">HEIGHT</span><span class="p">,</span>
+        <span class="mi">0</span><span class="p">,</span>  <span class="c1"># sampleCnt</span>
+        <span class="mi">0</span><span class="p">,</span>  <span class="c1"># stencilBits</span>
+        <span class="n">skia</span><span class="o">.</span><span class="n">GrGLFramebufferInfo</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">GL</span><span class="o">.</span><span class="n">GL_RGBA8</span><span class="p">))</span>
+    <span class="n">surface</span> <span class="o">=</span> <span class="n">skia</span><span class="o">.</span><span class="n">Surface</span><span class="o">.</span><span class="n">MakeFromBackendRenderTarget</span><span class="p">(</span>
+        <span class="n">context</span><span class="p">,</span> <span class="n">backend_render_target</span><span class="p">,</span> <span class="n">skia</span><span class="o">.</span><span class="n">kBottomLeft_GrSurfaceOrigin</span><span class="p">,</span>
+        <span class="n">skia</span><span class="o">.</span><span class="n">kRGBA_8888_ColorType</span><span class="p">,</span> <span class="n">skia</span><span class="o">.</span><span class="n">ColorSpace</span><span class="o">.</span><span class="n">MakeSRGB</span><span class="p">())</span>
+    <span class="k">assert</span> <span class="n">surface</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
+    <span class="k">yield</span> <span class="n">surface</span>
+    <span class="n">context</span><span class="o">.</span><span class="n">abandonContext</span><span class="p">()</span>
+
+<span class="k">with</span> <span class="n">glfw_window</span><span class="p">()</span> <span class="k">as</span> <span class="n">window</span><span class="p">:</span>
+    <span class="n">GL</span><span class="o">.</span><span class="n">glClear</span><span class="p">(</span><span class="n">GL</span><span class="o">.</span><span class="n">GL_COLOR_BUFFER_BIT</span><span class="p">)</span>
+
+    <span class="k">with</span> <span class="n">skia_surface</span><span class="p">(</span><span class="n">window</span><span class="p">)</span> <span class="k">as</span> <span class="n">surface</span><span class="p">:</span>
+        <span class="k">with</span> <span class="n">surface</span> <span class="k">as</span> <span class="n">canvas</span><span class="p">:</span>
+            <span class="n">canvas</span><span class="o">.</span><span class="n">drawCircle</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">40</span><span class="p">,</span> <span class="n">skia</span><span class="o">.</span><span class="n">Paint</span><span class="p">(</span><span class="n">Color</span><span class="o">=</span><span class="n">skia</span><span class="o">.</span><span class="n">ColorGREEN</span><span class="p">))</span>
+        <span class="n">surface</span><span class="o">.</span><span class="n">flushAndSubmit</span><span class="p">()</span>
+        <span class="n">glfw</span><span class="o">.</span><span class="n">swap_buffers</span><span class="p">(</span><span class="n">window</span><span class="p">)</span>
+
+        <span class="k">while</span> <span class="p">(</span><span class="n">glfw</span><span class="o">.</span><span class="n">get_key</span><span class="p">(</span><span class="n">window</span><span class="p">,</span> <span class="n">glfw</span><span class="o">.</span><span class="n">KEY_ESCAPE</span><span class="p">)</span> <span class="o">!=</span> <span class="n">glfw</span><span class="o">.</span><span class="n">PRESS</span>
+            <span class="ow">and</span> <span class="ow">not</span> <span class="n">glfw</span><span class="o">.</span><span class="n">window_should_close</span><span class="p">(</span><span class="n">window</span><span class="p">)):</span>
+            <span class="n">glfw</span><span class="o">.</span><span class="n">wait_events</span><span class="p">()</span>
+</pre></div>
+</div>
 </div>
 <div class="section" id="pdf">
 <h2>PDF<a class="headerlink" href="#pdf" title="Permalink to this headline">¶</a></h2>
