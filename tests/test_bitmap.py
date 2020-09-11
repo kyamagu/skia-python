@@ -185,14 +185,6 @@ def test_Bitmap_isOpaque(bitmap):
     assert isinstance(bitmap.isOpaque(), bool)
 
 
-def test_Bitmap_isVolatile(bitmap):
-    assert isinstance(bitmap.isVolatile(), bool)
-
-
-def test_Bitmap_setIsVolatile(bitmap):
-    bitmap.setIsVolatile()
-
-
 def test_Bitmap_reset(bitmap):
     bitmap.reset()
 

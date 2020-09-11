@@ -12,8 +12,8 @@ public:
     SkRect cullRect() const override {
         PYBIND11_OVERLOAD_PURE(SkRect, SkPicture, cullRect);
     }
-    int approximateOpCount() const override {
-        PYBIND11_OVERLOAD_PURE(int, SkPicture, approximateOpCount);
+    int approximateOpCount(bool nested=false) const override {
+        PYBIND11_OVERLOAD_PURE(int, SkPicture, approximateOpCount, nested);
     }
     size_t approximateBytesUsed() const override {
         PYBIND11_OVERLOAD_PURE(size_t, SkPicture, approximateBytesUsed);
@@ -130,7 +130,8 @@ py::class_<SkPicture, PyPicture, sk_sp<SkPicture>, SkRefCnt>(
         than one operation, other calls may be optimized away.
 
         :return: approximate operation count
-        )docstring")
+        )docstring",
+        py::arg("nested") = false)
     .def("approximateBytesUsed", &SkPicture::approximateBytesUsed,
         R"docstring(
         Returns the approximate byte size of :py:class:`Picture`.

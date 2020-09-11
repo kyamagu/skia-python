@@ -53,7 +53,7 @@ def opengl_context(request):
 
 @pytest.fixture(scope='session')
 def context(opengl_context):
-    yield skia.GrContext.MakeGL()
+    yield skia.GrDirectContext.MakeGL()
 
 
 @pytest.fixture(scope='module', params=['raster', 'gpu'])

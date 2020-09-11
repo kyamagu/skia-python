@@ -205,11 +205,20 @@ def test_Image_encodeToData(image, args):
 def test_Image_refEncodedData(image):
     assert isinstance(image.refEncodedData(), skia.Data)
 
+def test_Image_makeSubset(image):
+    assert isinstance(image.makeSubset((10, 10)), skia.Image)
+
+def test_Image_hasMipmaps(image):
+    assert isinstance(image.hasMipmaps(), bool)
+
+@pytest.mark.skip(reason='Not implemented')
+def test_Image_withMipmaps(image):
+    raise NotImplementedError
 
 def test_Image_makeTextureImage(image, context):
     assert isinstance(
         image.makeTextureImage(
-            context, skia.GrMipMapped.kNo, skia.Budgeted.kNo),
+            context, skia.GrMipmapped.kNo, skia.Budgeted.kNo),
         skia.Image)
 
 
@@ -296,15 +305,6 @@ def test_Image_MakeFromEncoded(png_data):
     assert isinstance(skia.Image.MakeFromEncoded(png_data), skia.Image)
 
 
-def test_Image_DecodeToRaster(png_data):
-    assert isinstance(skia.Image.DecodeToRaster(png_data), skia.Image)
-
-
-def test_Image_DecodeToTexture(context, png_data):
-    assert isinstance(
-        skia.Image.DecodeToTexture(context, png_data), skia.Image)
-
-
 @pytest.fixture(scope='session')
 def compressed_data():
     return skia.Data.MakeUninitialized(128 * 128 * 32)
@@ -330,7 +330,7 @@ def test_Image_MakeRasterFromCompressed(compressed_data):
 def texture(context):
     backend_texture = context.createBackendTexture(
         128, 128, skia.ColorType.kRGBA_8888_ColorType,
-        skia.GrMipMapped.kNo, skia.GrRenderable.kNo)
+        skia.GrMipmapped.kNo, skia.GrRenderable.kNo)
     assert backend_texture.isValid()
     return backend_texture
 
@@ -354,7 +354,7 @@ def compressed_texture(context):
     if not backend_format.isValid():
         pytest.skip('Backend format is invalid.')
     backend_texture = context.createCompressedBackendTexture(
-        128, 128, backend_format, skia.Color4f.kRed, skia.GrMipMapped.kYes)
+        128, 128, backend_format, skia.Color4f.kRed, skia.GrMipmapped.kYes)
     if not backend_texture.isValid():
         pytest.skip('Backend texture is invalid.')
     return backend_texture

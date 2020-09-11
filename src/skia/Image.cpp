@@ -53,7 +53,7 @@ std::unique_ptr<SkBitmap> ImageToBitmap(
     return bitmap;
 }
 
-sk_sp<SkImage> ImageOpen(py::object fp, const SkIRect* subset) {
+sk_sp<SkImage> ImageOpen(py::object fp) {
     sk_sp<SkData> data(nullptr);
     if (hasattr(fp, "seek") && hasattr(fp, "read")) {
         fp.attr("seek")(0);
@@ -72,7 +72,7 @@ sk_sp<SkImage> ImageOpen(py::object fp, const SkIRect* subset) {
             throw py::value_error(
                 py::str("File not found: {}").format(path));
     }
-    auto image = SkImage::MakeFromEncoded(data, subset);
+    auto image = SkImage::MakeFromEncoded(data);
     if (!image)
         throw std::runtime_error("Failed to decode an image");
     return image;
@@ -342,14 +342,12 @@ image
                 data = skia.Data.MakeWithCopy(fp.read())
             else:
                 data = skia.Data.MakeFromFileName(fp)
-            image = skia.Image.MakeFromEncoded(data, subset)
+            image = skia.Image.MakeFromEncoded(data)
 
         :param fp: file path or file-like object that has `seek` and `read`
             method. file must be opened in binary mode.
-        :param skia.IRect subset: the bounds of the pixels within the decoded
-            image to return. may be null.
         )docstring",
-        py::arg("fp"), py::arg("subset") = nullptr)
+        py::arg("fp"))
     .def("save", &ImageSave,
         R"docstring(
         Saves :py:attr:`Image` to file path or file-like object.
@@ -466,6 +464,327 @@ image
         })
 
     // C++ wrappers.
+    .def_static("MakeRasterCopy", &SkImage::MakeRasterCopy,
+        R"docstring(
+        Creates :py:class:`Image` from :py:class:`Pixmap` and copy of pixels.
+
+        Since pixels are copied, :py:class:`Pixmap` pixels may be modified or
+        deleted without affecting :py:class:`Image`.
+
+        :py:class:`Image` is returned if :py:class:`Pixmap` is valid. Valid
+        :py:class:`Pixmap` parameters include: dimensions are greater than zero;
+        each dimension fits in 29 bits; :py:class:`ColorType` and
+        :py:class:`AlphaType` are valid, and :py:class:`ColorType` is not
+        :py:attr:`~ColorType.kUnknown_ColorType`; row bytes are large enough to
+        hold one row of pixels; pixel address is not nullptr.
+
+        :param skia.Pixmap pixmap: :py:class:`ImageInfo`, pixel address, and row
+            bytes
+        :return: copy of :py:class:`Pixmap` pixels, or nullptr
+        )docstring",
+        py::arg("pixmap"))
+    .def_static("MakeRasterData",
+        [] (const SkImageInfo& imageInfo, py::buffer b, size_t dstRowBytes) {
+            auto info = b.request();
+            auto rowBytes = ValidateBufferToImageInfo(
+                imageInfo, info, dstRowBytes);
+            auto data = SkData::MakeWithoutCopy(
+                info.ptr, info.strides[0] * info.shape[0]);
+            return SkImage::MakeRasterData(imageInfo, data, rowBytes);
+        },
+        R"docstring(
+        Creates :py:class:`Image` from :py:class:`ImageInfo`, sharing pixels.
+
+        :py:class:`Image` is returned if :py:class:`ImageInfo` is valid. Valid
+        :py:class:`ImageInfo` parameters include: dimensions are greater than
+        zero; each dimension fits in 29 bits; :py:class:`ColorType` and
+        :py:class:`AlphaType` are valid, and :py:class:`ColorType` is not
+        :py:attr:`~ColorType.kUnknown_ColorType`; rowBytes are large enough to
+        hold one row of pixels; pixels is not nullptr, and contains enough data
+        for :py:class:`Image`.
+
+        :param skia.ImageInfo info: contains width, height,
+            :py:class:`AlphaType`, :py:class:`ColorType`, :py:class:`ColorSpace`
+        :param Union[bytes,bytearray,memoryview] pixels: pixel storage
+        :param int rowBytes: size of pixel row or larger
+        :return: :py:class:`Image` sharing pixels, or nullptr
+        )docstring",
+        py::arg("info"), py::arg("pixels").none(false), py::arg("rowBytes"))
+    .def_static("MakeFromRaster",
+        [] (const SkPixmap& pixmap) {
+            return SkImage::MakeFromRaster(pixmap, nullptr, nullptr);
+        },
+        R"docstring(
+        Creates :py:class:`Image` from pixmap, sharing :py:class:`Pixmap`
+        pixels.
+
+        :py:class:`Image` is returned if pixmap is valid. Valid
+        :py:class:`Pixmap` parameters include: dimensions are greater than zero;
+        each dimension fits in 29 bits; :py:class:`ColorType` and
+        :py:class:`AlphaType` are valid, and :py:class:`ColorType` is not
+        :py:attr:`kUnknown_ColorType`; row bytes are large enough to hold one
+        row of pixels; pixel address is not nullptr.
+
+        :param skia.Pixmap pixmap: :py:class:`ImageInfo`, pixel address, and row
+            bytes
+        :return: :py:class:`Image` sharing pixmap
+        )docstring",
+        py::arg("pixmap").none(false))
+    .def_static("MakeFromBitmap", &SkImage::MakeFromBitmap,
+        R"docstring(
+        Creates :py:class:`Image` from bitmap, sharing or copying bitmap pixels.
+
+        If the bitmap is marked immutable, and its pixel memory is shareable, it
+        may be shared instead of copied.
+
+        :py:class:`Image` is returned if bitmap is valid. Valid
+        :py:class:`Bitmap` parameters include: dimensions are greater than zero;
+        each dimension fits in 29 bits; :py:class:`ColorType` and
+        :py:class:`AlphaType` are valid, and :py:class:`ColorType` is not
+        :py:attr:`kUnknown_ColorType`; row bytes are large enough to hold one
+        row of pixels; pixel address is not nullptr.
+
+        :param skia.Bitmap bitmap: :py:class:`ImageInfo`, row bytes, and pixels
+        :return: created :py:class:`Image`, or nullptr
+        )docstring",
+        py::arg("bitmap"))
+    // .def_static("MakeFromGenerator", &SkImage::MakeFromGenerator,
+    //     "Creates SkImage from data returned by imageGenerator.")
+    .def_static("MakeFromEncoded", &SkImage::MakeFromEncoded,
+        R"docstring(
+        Return an image backed by the encoded data, but attempt to defer
+        decoding until the image is actually used/drawn.
+
+        This deferral allows the system to cache the result, either on the CPU
+        or on the GPU, depending on where the image is drawn. If memory is low,
+        the cache may be purged, causing the next draw of the image to have to
+        re-decode.
+
+        If the encoded format is not supported, nullptr is returned.
+
+        :param encoded: the encoded data
+        :return: created :py:class:`Image`, or nullptr
+        )docstring",
+        py::arg("encoded"))
+    .def_static("MakeTextureFromCompressed",
+        &SkImage::MakeTextureFromCompressed,
+        R"docstring(
+        Creates a GPU-backed :py:class:`Image` from compressed data.
+
+        This method will return an :py:class:`Image` representing the compressed
+        data. If the GPU doesn't support the specified compression method, the
+        data will be decompressed and then wrapped in a GPU-backed image.
+
+        Note: one can query the supported compression formats via
+        :py:meth:`GrContext.compressedBackendFormat`.
+
+        :param skia.GrDirectContext context: GPU context
+        :param skia.Data data: compressed data to store in :py:class:`Image`
+        :param int width: width of full :py:class:`Image`
+        :param int height: height of full :py:class:`Image`
+        :param skia.CompressionType type: type of compression used
+        :param skia.GrMipmapped mipMapped: does 'data' contain data for all the
+            mipmap levels?
+        :param skia.GrProtected isProtected: do the contents of 'data' require
+            DRM protection (on Vulkan)?
+        :return: created :py:class:`Image`, or nullptr
+        )docstring",
+        py::arg("context"), py::arg("data"), py::arg("width"),
+        py::arg("height"), py::arg("type"),
+        py::arg("mipMapped") = GrMipmapped::kNo,
+        py::arg("isProtected") = GrProtected::kNo)
+    .def_static("MakeRasterFromCompressed", &SkImage::MakeRasterFromCompressed,
+        R"docstring(
+        Creates a CPU-backed :py:class:`Image` from compressed data.
+
+        This method will decompress the compressed data and create an image
+        wrapping it. Any mipmap levels present in the compressed data are
+        discarded.
+
+        :param skia.Data data: compressed data to store in SkImage
+        :param int width: width of full SkImage
+        :param int height: height of full SkImage
+        :param skia.Image.CompressionType type: type of compression used
+        :return: created :py:class:`Image`, or nullptr
+        )docstring",
+        py::arg("data"), py::arg("width"), py::arg("height"), py::arg("type"))
+    .def_static("MakeFromTexture",
+        [] (GrRecordingContext* context, const GrBackendTexture& texture,
+            GrSurfaceOrigin origin, SkColorType colorType,
+            SkAlphaType alphaType, const SkColorSpace* cs) {
+            return SkImage::MakeFromTexture(
+                context, texture, origin, colorType, alphaType,
+                CloneColorSpace(cs));
+        },
+        R"docstring(
+        Creates :py:class:`Image` from GPU texture associated with context.
+
+        Caller is responsible for managing the lifetime of GPU texture.
+
+        :py:class:`Image` is returned if format of backendTexture is recognized
+        and supported. Recognized formats vary by GPU back-end.
+
+        :param skia.GrRecordingContext context: GPU context
+        :param skia.GrBackendTexture backendTexture: texture residing on GPU
+        :param skia.ColorSpace colorSpace: range of colors; may be nullptr
+        :return: created :py:class:`Image`, or nullptr
+        )docstring",
+        py::arg("context"), py::arg("texture"), py::arg("origin"),
+        py::arg("colorType"), py::arg("alphaType"),
+        py::arg("colorSpace") = nullptr)
+    .def_static("MakeFromCompressedTexture",
+        [] (GrRecordingContext* context, const GrBackendTexture& texture,
+            GrSurfaceOrigin origin, SkAlphaType alphaType,
+            const SkColorSpace* cs) {
+            return SkImage::MakeFromCompressedTexture(
+                context, texture, origin, alphaType, CloneColorSpace(cs),
+                nullptr, nullptr);
+        },
+        R"docstring(
+        Creates an :py:class:`Image` from a GPU backend texture.
+
+        An :py:class:`Image` is returned if the format of backendTexture is
+        recognized and supported. Recognized formats vary by GPU back-end.
+
+        :param skia.GrRecordingContext context: the GPU context
+        :param skia.GrBackendTexture backendTexture: a texture already allocated
+            by the GPU
+        :param skia.AlphaType alphaType: This characterizes the nature of the
+            alpha values in the backend texture. For opaque compressed formats
+            (e.g., ETC1) this should usually be set to
+            :py:attr:`~AlphaType.kOpaque_AlphaType`.
+        :param skia.ColorSpace colorSpace: This describes the color space of
+            this image's contents, as seen after sampling. In general, if the
+            format of the backend texture is SRGB, some linear colorSpace should
+            be supplied (e.g., :py:meth:`ColorSpace.MakeSRGBLinear` ). If the
+            format of the backend texture is linear, then the colorSpace should
+            include a description of the transfer function as well (e.g.,
+            :py:meth:`ColorSpace.MakeSRGB` ).
+        :return: created :py:class:`Image`, or nullptr
+        )docstring",
+        py::arg("context"), py::arg("texture"), py::arg("origin"),
+        py::arg("alphaType"), py::arg("colorSpace") = nullptr)
+    .def_static("MakeCrossContextFromPixmap",
+        &SkImage::MakeCrossContextFromPixmap,
+        R"docstring(
+        Creates :py:class:`Image` from pixmap.
+
+        :py:class:`Image` is uploaded to GPU back-end using context.
+
+        Created :py:class:`Image` is available to other GPU contexts, and is
+        available across thread boundaries. All contexts must be in the same GPU
+        share group, or otherwise share resources.
+
+        When :py:class:`Image` is no longer referenced, context releases texture
+        memory asynchronously.
+
+        :py:class:`GrBackendTexture` created from pixmap is uploaded to match
+        :py:class:`Surface` created with dstColorSpace. :py:class:`ColorSpace`
+        of :py:class:`Image` is determined by pixmap.colorSpace().
+
+        :py:class:`Image` is returned referring to GPU back-end if context is
+        not nullptr, format of data is recognized and supported, and if context
+        supports moving resources between contexts. Otherwise, pixmap pixel data
+        is copied and :py:class:`Image` as returned in raster format if
+        possible; nullptr may be returned. Recognized GPU formats vary by
+        platform and GPU back-end.
+
+        :param skia.GrDirectContext context: GPU context
+        :param skia.Pixmap pixmap: :py:class:`ImageInfo`, pixel address, and row
+            bytes
+        :param bool buildMips: create :py:class:`Image` as mip map if true
+        :param bool limitToMaxTextureSize: downscale image to GPU maximum
+            texture size, if necessary
+        :return: created :py:class:`Image`, or nullptr
+        )docstring",
+        py::arg("context"), py::arg("pixmap"), py::arg("buildMips"),
+        py::arg("limitToMaxTextureSize") = false)
+    .def_static("MakeFromAdoptedTexture",
+        [] (GrRecordingContext* context, const GrBackendTexture& backendTexture,
+            GrSurfaceOrigin origin, SkColorType colorType,
+            SkAlphaType alphaType, const SkColorSpace* colorSpace) {
+            return SkImage::MakeFromAdoptedTexture(
+                context, backendTexture, origin, colorType, alphaType,
+                CloneColorSpace(colorSpace));
+        },
+        R"docstring(
+        Creates :py:class:`Image` from backendTexture associated with context.
+
+        backendTexture and returned :py:class:`Image` are managed internally,
+        and are released when no longer needed.
+
+        :py:class:`Image` is returned if format of backendTexture is recognized
+        and supported. Recognized formats vary by GPU back-end.
+
+        :param skia.GrContext context: GPU context
+        :param skia.GrBackendTexture backendTexture: texture residing on GPU
+        :param skia.ColorSpace colorSpace: range of colors; may be nullptr
+        :return: created :py:class:`Image`, or nullptr
+        )docstring",
+        py::arg("context"), py::arg("backendTexture"), py::arg("origin"),
+        py::arg("colorType"),
+        py::arg("alphaType") = SkAlphaType::kPremul_SkAlphaType,
+        py::arg("colorSpace") = nullptr)
+    /*
+    .def_static("MakeFromYUVATexturesCopy", &SkImage::MakeFromYUVATexturesCopy,
+        "Creates an SkImage by flattening the specified YUVA planes into a "
+        "single, interleaved RGBA image.")
+    .def_static("MakeFromYUVATexturesCopyWithExternalBackend",
+        &SkImage::MakeFromYUVATexturesCopyWithExternalBackend,
+        "Creates an SkImage by flattening the specified YUVA planes into a "
+        "single, interleaved RGBA image.")
+    .def_static("MakeFromYUVATextures", &SkImage::MakeFromYUVATextures,
+        "Creates an SkImage by storing the specified YUVA planes into an image,"
+        " to be rendered via multitexturing.")
+    .def_static("MakeFromYUVAPixmaps", &SkImage::MakeFromYUVAPixmaps,
+        "Creates SkImage from pixmap array representing YUVA data.")
+    .def_static("MakeFromYUVTexturesCopy", &SkImage::MakeFromYUVTexturesCopy,
+        "To be deprecated.")
+    .def_static("MakeFromYUVTexturesCopyWithExternalBackend",
+        &SkImage::MakeFromYUVTexturesCopyWithExternalBackend,
+        "To be deprecated.")
+    .def_static("MakeFromNV12TexturesCopy", &SkImage::MakeFromNV12TexturesCopy,
+        "Creates SkImage from copy of nv12Textures, an array of textures on "
+        "GPU.")
+    .def_static("MakeFromNV12TexturesCopyWithExternalBackend",
+        &SkImage::MakeFromNV12TexturesCopyWithExternalBackend,
+        "Creates SkImage from copy of nv12Textures, an array of textures on "
+        "GPU.")
+    */
+    .def_static("MakeFromPicture",
+        [] (sk_sp<SkPicture>& picture, const SkISize& dimensions,
+            const SkMatrix* matrix, const SkPaint* paint,
+            SkImage::BitDepth bitDepth, const SkColorSpace* colorSpace) {
+            return SkImage::MakeFromPicture(
+                picture, dimensions, matrix, paint, bitDepth,
+                CloneColorSpace(colorSpace));
+        },
+        R"docstring(
+        Creates :py:class:`Image` from picture.
+
+        Returned :py:class:`Image` width and height are set by dimensions.
+        :py:class:`Image` draws picture with matrix and paint, set to bitDepth
+        and colorSpace.
+
+        If matrix is nullptr, draws with identity :py:class:`Matrix`. If paint
+        is nullptr, draws with default :py:class:`Paint`. colorSpace may be
+        nullptr.
+
+        :param skia.Picture picture: stream of drawing commands
+        :param skia.ISize dimensions:  width and height
+        :param skia.Matrix matrix: :py:class:`Matrix` to rotate, scale,
+            translate, and so on; may be nullptr
+        :param skia.Paint paint: :py:class:`Paint` to apply transparency,
+            filtering, and so on; may be nullptr
+        :param skia.Image.BitDepth bitDepth:    8-bit integer or 16-bit float:
+            per component
+        :param skia.ColorSpace colorSpace:  range of colors; may be nullptr
+        :return: created :py:class:`Image`, or nullptr
+        )docstring",
+        py::arg("picture"), py::arg("dimensions"), py::arg("matrix") = nullptr,
+        py::arg("paint") = nullptr,
+        py::arg("bitDepth") = SkImage::BitDepth::kU8,
+        py::arg("colorSpace") = nullptr)
     .def("imageInfo", &SkImage::imageInfo,
         R"docstring(
         Returns a :py:class:`ImageInfo` describing the width, height, color
@@ -595,6 +914,7 @@ image
         )docstring",
         py::arg("tmx") = SkTileMode::kClamp,
         py::arg("tmy") = SkTileMode::kClamp, py::arg("localMatrix") = nullptr)
+    // TODO: Other makeShader overloads.
     .def("peekPixels", &SkImage::peekPixels,
         R"docstring(
         Copies :py:class:`Image` pixel address, row bytes, and
@@ -626,29 +946,56 @@ image
         associated with context.
 
         :py:class:`Image` backed by GPU texture may become invalid if associated
-        GrContext is invalid. lazy image may be invalid and may not draw to
-        raster surface or GPU surface or both.
+        GrRecordingContext is invalid. lazy image may be invalid and may not draw
+        to raster surface or GPU surface or both.
 
-        :param skia.GrContext context: GPU context
+        :param skia.GrRecordingContext context: GPU context
         :return: true if :py:class:`Image` can be drawn
         )docstring",
         py::arg("context") = nullptr)
-    // .def("flush",
-    //     py::overload_cast<GrContext*, const GrFlushInfo&>(&SkImage::flush),
-    //     "Flushes any pending uses of texture-backed images in the GPU "
-    //     "backend.")
     .def("flush",
-        py::overload_cast<GrContext*>(&SkImage::flush),
+        py::overload_cast<GrDirectContext*, const GrFlushInfo&>(&SkImage::flush),
         R"docstring(
-        Flushes any pending uses of texture-backed images in the GPU backend.
+        Flushes any pending uses of texture-backed images in the GPU backend. If
+        the image is not texture-backed (including promise texture images) or if
+        the GrDirectContext does not have the same context ID as the context
+        backing the image then this is a no-op.
 
-        Uses a default GrFlushInfo.
+        If the image was not used in any non-culled draws in the current queue
+        of work for the passed GrDirectContext then this is a no-op unless the
+        GrFlushInfo contains semaphores or a finish proc. Those are respected
+        even when the image has not been used.
 
-        :param skia.GrContext context: GPU context
+        :param context:  the context on which to flush pending usages of the
+            image.
+        :param info:     flush options
+        )docstring"
+        )
+    .def("flush",
+        py::overload_cast<GrDirectContext*>(&SkImage::flush),
+        py::arg("context").none(false))
+    .def("flushAndSubmit", &SkImage::flushAndSubmit,
+        R"docstring(
+        Version of :py:meth:`flush` that uses a default GrFlushInfo.
+
+        Also submits the flushed work to the GPU.
         )docstring",
         py::arg("context").none(false))
-    // .def("getBackendTexture", &SkImage::getBackendTexture,
-    //     "Retrieves the back-end texture.")
+    .def("getBackendTexture", &SkImage::getBackendTexture,
+        R"docstring(
+        Retrieves the back-end texture. If :py:class:`Image` has no back-end
+        texture, an invalid object is returned. Call
+        :py:meth:`GrBackendTexture.isValid` to determine if the result is valid.
+
+        If flushPendingGrContextIO is true, completes deferred I/O operations.
+
+        If origin in not nullptr, copies location of content drawn into
+        :py:class:`Image`.
+
+        :param flushPendingGrContextIO: flag to flush outstanding requests
+        :return: back-end API texture handle; invalid on failure
+        )docstring",
+        py::arg("flushPendingGrContextIO"), py::arg("origin") = nullptr)
     .def("readPixels", &ImageReadPixels,
         R"docstring(
         Copies :py:class:`Rect` of pixels from :py:class:`Image` to array.
@@ -732,6 +1079,9 @@ image
         )docstring",
         py::arg("dst"), py::arg("srcX"), py::arg("srcY"),
         py::arg("cachingHint") = SkImage::CachingHint::kAllow_CachingHint)
+    // .def("asyncRescaleAndReadPixels", &SkImage::asyncRescaleAndReadPixels)
+    // .def("asyncRescaleAndReadPixelsYUV420",
+    //      &SkImage::asyncRescaleAndReadPixelsYUV420)
     .def("scalePixels", &SkImage::scalePixels,
         R"docstring(
         Copies :py:class:`Image` to dst, scaling pixels to fit ``dst.width()``
@@ -848,14 +1198,28 @@ image
         :param skia.IRect subset: bounds of returned :py:class:`Image`
         :return: partial or full :py:class:`Image`, or nullptr
         )docstring",
-        py::arg("subset"))
+        py::arg("subset"), py::arg("direct") = nullptr)
+    .def("hasMipmaps", &SkImage::hasMipmaps,
+        R"docstring(
+        Returns true if the image has mipmap levels.
+        )docstring")
+    // .def("withMipmaps", &SkImage::withMipmaps,
+    //     R"docstring(
+    //     Returns an image with the same "base" pixels as the this image, but with
+    //     mipmap levels as well. If this image already has mipmap levels, they
+    //     will be replaced with new ones.
+
+    //     If data == nullptr, the mipmap levels are computed automatically.
+    //     If data != nullptr, then the caller has provided the data for each
+    //     level.
+    //     )docstring")
     .def("makeTextureImage", &SkImage::makeTextureImage,
         R"docstring(
         Returns :py:class:`Image` backed by GPU texture associated with context.
 
         Returned :py:class:`Image` is compatible with :py:class:`Surface`
         created with dstColorSpace. The returned :py:class:`Image` respects
-        mipMapped setting; if mipMapped equals :py:attr:`GrMipMapped.kYes`, the
+        mipMapped setting; if mipMapped equals :py:attr:`GrMipmapped.kYes`, the
         backing texture allocates mip map levels.
 
         The mipMapped parameter is effectively treated as kNo if MIP maps are
@@ -866,16 +1230,17 @@ image
         the backing GPU texture. :py:class:`Budgeted` is ignored in this case.
 
         Returns nullptr if context is nullptr, or if :py:class:`Image` was
-        created with another GrContext.
+        created with another GrDirectContext.
 
-        :param GrContext context: GPU context
-        :param GrMipMapped mipMapped: whether created :py:class:`Image` texture
+        :param GrDirectContext context: the GrDirectContext in play, if it
+            exists
+        :param GrMipmapped mipMapped: whether created :py:class:`Image` texture
             must allocate mip map levels
         :param skia.Budgeted budgeted: whether to count a newly created texture
-            for the returned image counts against the GrContext's budget.
+            for the returned image counts against the GrDirectContext's budget.
         :return: created :py:class:`Image`, or nullptr
         )docstring",
-        py::arg("context").none(false), py::arg("mipMapped") = GrMipMapped::kNo,
+        py::arg("context").none(false), py::arg("mipMapped") = GrMipmapped::kNo,
         py::arg("budgeted") = SkBudgeted::kYes)
     .def("makeNonTextureImage", &SkImage::makeNonTextureImage,
         R"docstring(
@@ -909,7 +1274,7 @@ image
         )docstring",
         py::arg("cachingHint") = SkImage::kAllow_CachingHint)
     .def("makeWithFilter",
-        py::overload_cast<GrContext*, const SkImageFilter*,
+        py::overload_cast<GrRecordingContext*, const SkImageFilter*,
             const SkIRect&, const SkIRect&, SkIRect*, SkIPoint*>(
                 &SkImage::makeWithFilter, py::const_),
         R"docstring(
@@ -932,7 +1297,8 @@ image
         returned. offset translates the returned :py:class:`Image` to keep
         subsequent animation frames aligned with respect to each other.
 
-        :param skia.GrContext context: the GrContext in play - if it exists
+        :param skia.GrRecordingContext context: the GrRecordingContext in play -
+            if it exists
         :param skia.ImageFilter filter: how :py:class:`Image` is sampled when
             transformed
         :param skia.IRect subset:  bounds of :py:class:`Image` processed by
@@ -948,469 +1314,8 @@ image
         py::arg("context"), py::arg("filter"), py::arg("subset"),
         py::arg("clipBounds"), py::arg("outSubset").none(false),
         py::arg("offset").none(false))
-    .def("asLegacyBitmap", &SkImage::asLegacyBitmap,
-        R"docstring(
-        Deprecated.
-
-        Creates raster :py:class:`Bitmap` with same pixels as :py:class:`Image`.
-        If legacyBitmapMode is :py:attr:`~Image.kRO_LegacyBitmapMode`, returned
-        bitmap is read-only and immutable. Returns true if :py:class:`Bitmap` is
-        stored in bitmap. Returns false and resets bitmap if :py:class:`Bitmap`
-        write did not succeed.
-
-        :param bitmap: storage for legacy :py:class:`Bitmap`
-        :param legacyBitmapMode: bitmap is read-only and immutable
-        :return: true if :py:class:`Bitmap` was created
-        )docstring",
-        py::arg("bitmap").none(false),
-        py::arg("legacyBitmapMode") = SkImage::kRO_LegacyBitmapMode)
-    .def("isLazyGenerated", &SkImage::isLazyGenerated,
-        R"docstring(
-        Returns true if :py:class:`Image` is backed by an image-generator or
-        other service that creates and caches its pixels or texture on-demand.
-
-        :return: true if :py:class:`Image` is created as needed
-        )docstring")
-    .def("makeColorSpace",
-        [] (const SkImage& image, const SkColorSpace* target) {
-            return image.makeColorSpace(CloneColorSpace(target));
-        },
-        R"docstring(
-        Creates :py:class:`Image` in target :py:class:`ColorSpace`.
-
-        Returns nullptr if :py:class:`Image` could not be created.
-
-        Returns original :py:class:`Image` if it is in target
-        :py:class:`ColorSpace`. Otherwise, converts pixels from
-        :py:class:`Image` :py:class:`ColorSpace` to target
-        :py:class:`ColorSpace`. If :py:class:`Image` colorSpace() returns
-        nullptr, :py:class:`Image` :py:class:`ColorSpace` is assumed to be sRGB.
-
-        :param skia.ColorSpace target: :py:class:`ColorSpace` describing color
-            range of returned :py:class:`Image`
-        :return: created :py:class:`Image` in target :py:class:`ColorSpace`
-        )docstring",
-        py::arg("target"))
-    .def("makeColorTypeAndColorSpace",
-        [] (const SkImage& image, SkColorType ct, const SkColorSpace* cs) {
-            return image.makeColorTypeAndColorSpace(ct, CloneColorSpace(cs));
-        },
-        R"docstring(
-        Experimental.
-
-        Creates :py:class:`Image` in target :py:class:`ColorType` and
-        :py:class:`ColorSpace`. Returns nullptr if :py:class:`Image` could not
-        be created.
-
-        Returns original :py:class:`Image` if it is in target
-        :py:class:`ColorType` and :py:class:`ColorSpace`.
-
-        :param skia.ColorType targetColorType: :py:class:`ColorType` of returned
-            :py:class:`Image`
-        :param skia.ColorSpace targetColorSpace: :py:class:`ColorSpace` of
-            returned :py:class:`Image`
-        :return: created :py:class:`Image` in target :py:class:`ColorType` and
-            :py:class:`ColorSpace`
-        )docstring",
-        py::arg("targetColorType"), py::arg("targetColorSpace") = nullptr)
-    .def("reinterpretColorSpace",
-        [] (const SkImage& image, const SkColorSpace* cs) {
-            return image.reinterpretColorSpace(CloneColorSpace(cs));
-        },
-        R"docstring(
-        Creates a new :py:class:`Image` identical to this one, but with a
-        different :py:class:`ColorSpace`.
-
-        This does not convert the underlying pixel data, so the resulting image
-        will draw differently.
-        )docstring",
-        py::arg("newColorSpace") = nullptr)
-    .def_static("MakeRasterCopy", &SkImage::MakeRasterCopy,
-        R"docstring(
-        Creates :py:class:`Image` from :py:class:`Pixmap` and copy of pixels.
-
-        Since pixels are copied, :py:class:`Pixmap` pixels may be modified or
-        deleted without affecting :py:class:`Image`.
-
-        :py:class:`Image` is returned if :py:class:`Pixmap` is valid. Valid
-        :py:class:`Pixmap` parameters include: dimensions are greater than zero;
-        each dimension fits in 29 bits; :py:class:`ColorType` and
-        :py:class:`AlphaType` are valid, and :py:class:`ColorType` is not
-        :py:attr:`~ColorType.kUnknown_ColorType`; row bytes are large enough to
-        hold one row of pixels; pixel address is not nullptr.
-
-        :param skia.Pixmap pixmap: :py:class:`ImageInfo`, pixel address, and row
-            bytes
-        :return: copy of :py:class:`Pixmap` pixels, or nullptr
-        )docstring",
-        py::arg("pixmap"))
-    .def_static("MakeRasterData",
-        [] (const SkImageInfo& imageInfo, py::buffer b, size_t dstRowBytes) {
-            auto info = b.request();
-            auto rowBytes = ValidateBufferToImageInfo(
-                imageInfo, info, dstRowBytes);
-            auto data = SkData::MakeWithoutCopy(
-                info.ptr, info.strides[0] * info.shape[0]);
-            return SkImage::MakeRasterData(imageInfo, data, rowBytes);
-        },
-        R"docstring(
-        Creates :py:class:`Image` from :py:class:`ImageInfo`, sharing pixels.
-
-        :py:class:`Image` is returned if :py:class:`ImageInfo` is valid. Valid
-        :py:class:`ImageInfo` parameters include: dimensions are greater than
-        zero; each dimension fits in 29 bits; :py:class:`ColorType` and
-        :py:class:`AlphaType` are valid, and :py:class:`ColorType` is not
-        :py:attr:`~ColorType.kUnknown_ColorType`; rowBytes are large enough to
-        hold one row of pixels; pixels is not nullptr, and contains enough data
-        for :py:class:`Image`.
-
-        :param skia.ImageInfo info: contains width, height,
-            :py:class:`AlphaType`, :py:class:`ColorType`, :py:class:`ColorSpace`
-        :param Union[bytes,bytearray,memoryview] pixels: pixel storage
-        :param int rowBytes: size of pixel row or larger
-        :return: :py:class:`Image` sharing pixels, or nullptr
-        )docstring",
-        py::arg("info"), py::arg("pixels").none(false), py::arg("rowBytes"))
-    .def_static("MakeFromRaster",
-        [] (const SkPixmap& pixmap) {
-            return SkImage::MakeFromRaster(pixmap, nullptr, nullptr);
-        },
-        R"docstring(
-        Creates :py:class:`Image` from pixmap, sharing :py:class:`Pixmap`
-        pixels.
-
-        :py:class:`Image` is returned if pixmap is valid. Valid
-        :py:class:`Pixmap` parameters include: dimensions are greater than zero;
-        each dimension fits in 29 bits; :py:class:`ColorType` and
-        :py:class:`AlphaType` are valid, and :py:class:`ColorType` is not
-        :py:attr:`kUnknown_ColorType`; row bytes are large enough to hold one
-        row of pixels; pixel address is not nullptr.
-
-        :param skia.Pixmap pixmap: :py:class:`ImageInfo`, pixel address, and row
-            bytes
-        :return: :py:class:`Image` sharing pixmap
-        )docstring",
-        py::arg("pixmap").none(false))
-    .def_static("MakeFromBitmap", &SkImage::MakeFromBitmap,
-        R"docstring(
-        Creates :py:class:`Image` from bitmap, sharing or copying bitmap pixels.
-
-        If the bitmap is marked immutable, and its pixel memory is shareable, it
-        may be shared instead of copied.
-
-        :py:class:`Image` is returned if bitmap is valid. Valid
-        :py:class:`Bitmap` parameters include: dimensions are greater than zero;
-        each dimension fits in 29 bits; :py:class:`ColorType` and
-        :py:class:`AlphaType` are valid, and :py:class:`ColorType` is not
-        :py:attr:`kUnknown_ColorType`; row bytes are large enough to hold one
-        row of pixels; pixel address is not nullptr.
-
-        :param skia.Bitmap bitmap: :py:class:`ImageInfo`, row bytes, and pixels
-        :return: created :py:class:`Image`, or nullptr
-        )docstring",
-        py::arg("bitmap"))
-    // .def_static("MakeFromGenerator", &SkImage::MakeFromGenerator,
-    //     "Creates SkImage from data returned by imageGenerator.")
-    .def_static("MakeFromEncoded", &SkImage::MakeFromEncoded,
-        R"docstring(
-        Return an image backed by the encoded data, but attempt to defer
-        decoding until the image is actually used/drawn.
-
-        This deferral allows the system to cache the result, either on the CPU
-        or on the GPU, depending on where the image is drawn. If memory is low,
-        the cache may be purged, causing the next draw of the image to have to
-        re-decode.
-
-        The subset parameter specifies a area within the decoded image to create
-        the image from. If subset is null, then the entire image is returned.
-
-        This is similar to DecodeTo[Raster,Texture], but this method will
-        attempt to defer the actual decode, while the DecodeTo... method
-        explicitly decode and allocate the backend when the call is made.
-
-        If the encoded format is not supported, or subset is outside of the
-        bounds of the decoded image, nullptr is returned.
-
-        :param encoded: the encoded data
-        :param skia.IRect subset:  the bounds of the pixels within the decoded
-            image to return. may be null.
-        :return: created :py:class:`Image`, or nullptr
-        )docstring",
-        py::arg("encoded"), py::arg("subset") = nullptr)
-    .def_static("DecodeToRaster",
-        [] (py::buffer data, const SkIRect* subset) {
-            auto buffer = data.request();
-            auto size = (buffer.ndim) ? buffer.shape[0] * buffer.strides[0] : 0;
-            return SkImage::DecodeToRaster(buffer.ptr, size, subset);
-        },
-        R"docstring(
-        Decode the data in encoded/length into a raster image.
-
-        The subset parameter specifies a area within the decoded image to create
-        the image from. If subset is null, then the entire image is returned.
-
-        This is similar to MakeFromEncoded, but this method will always decode
-        immediately, and allocate the memory for the pixels for the lifetime of
-        the returned image.
-
-        If the encoded format is not supported, or subset is outside of the
-        bounds of the decoded image, nullptr is returned.
-
-        :param Union[bytes,bytearray,memoryview] data: the encoded data
-        :param skia.IRect subset:  the bounds of the pixels within the decoded
-            image to return. may be null.
-        :return: created :py:class:`Image`, or nullptr
-        )docstring",
-        py::arg("encoded"), py::arg("subset") = nullptr)
-    .def_static("DecodeToTexture",
-        [] (GrContext* context, py::buffer data, const SkIRect* subset) {
-            auto buffer = data.request();
-            auto size = (buffer.ndim) ? buffer.shape[0] * buffer.strides[0] : 0;
-            return SkImage::DecodeToTexture(context, buffer.ptr, size, subset);
-        },
-        R"docstring(
-        Decode the data in encoded/length into a texture-backed image.
-
-        The subset parameter specifies a area within the decoded image to create
-        the image from. If subset is null, then the entire image is returned.
-
-        This is similar to :py:meth:`MakeFromEncoded`, but this method will
-        always decode immediately, and allocate the texture for the pixels for
-        the lifetime of the returned image.
-
-        If the encoded format is not supported, or subset is outside of the
-        bounds of the decoded image, nullptr is returned.
-
-        :param skia.GrContext context: GPU context
-        :param Union[bytes,bytearray,memoryview] encoded: the encoded data
-        :param skia.IRect subset: the bounds of the pixels within the decoded
-            image to return. may be null.
-        :return: created :py:class:`Image`, or nullptr
-        )docstring",
-        py::arg("context"), py::arg("encoded"), py::arg("subset") = nullptr)
-    .def_static("MakeTextureFromCompressed",
-        &SkImage::MakeTextureFromCompressed,
-        R"docstring(
-        Creates a GPU-backed :py:class:`Image` from compressed data.
-
-        This method will return an :py:class:`Image` representing the compressed
-        data. If the GPU doesn't support the specified compression method, the
-        data will be decompressed and then wrapped in a GPU-backed image.
-
-        Note: one can query the supported compression formats via
-        :py:meth:`GrContext.compressedBackendFormat`.
-
-        :param skia.GrContext context: GPU context
-        :param skia.Data data: compressed data to store in :py:class:`Image`
-        :param int width: width of full :py:class:`Image`
-        :param int height: height of full :py:class:`Image`
-        :param skia.CompressionType type: type of compression used
-        :param skia.GrMipMapped mipMapped: does 'data' contain data for all the
-            mipmap levels?
-        :param skia.GrProtected isProtected: do the contents of 'data' require
-            DRM protection (on Vulkan)?
-        :return: created :py:class:`Image`, or nullptr
-        )docstring",
-        py::arg("context"), py::arg("data"), py::arg("width"),
-        py::arg("height"), py::arg("type"),
-        py::arg("mipMapped") = GrMipMapped::kNo,
-        py::arg("isProtected") = GrProtected::kNo)
-    // .def_static("MakeFromCompressed", &SkImage::MakeFromCompressed,
-    //     "To be deprecated.")
-    .def_static("MakeRasterFromCompressed", &SkImage::MakeRasterFromCompressed,
-        R"docstring(
-        Creates a CPU-backed :py:class:`Image` from compressed data.
-
-        This method will decompress the compressed data and create an image
-        wrapping it. Any mipmap levels present in the compressed data are
-        discarded.
-
-        :param skia.Data data: compressed data to store in SkImage
-        :param int width: width of full SkImage
-        :param int height: height of full SkImage
-        :param skia.Image.CompressionType type: type of compression used
-        :return: created :py:class:`Image`, or nullptr
-        )docstring",
-        py::arg("data"), py::arg("width"), py::arg("height"), py::arg("type"))
-    .def_static("MakeFromTexture",
-        [] (GrContext* context, const GrBackendTexture& texture,
-            GrSurfaceOrigin origin, SkColorType colorType,
-            SkAlphaType alphaType, const SkColorSpace* cs) {
-            return SkImage::MakeFromTexture(
-                context, texture, origin, colorType, alphaType,
-                CloneColorSpace(cs));
-        },
-        R"docstring(
-        Creates :py:class:`Image` from GPU texture associated with context.
-
-        Caller is responsible for managing the lifetime of GPU texture.
-
-        :py:class:`Image` is returned if format of backendTexture is recognized
-        and supported. Recognized formats vary by GPU back-end.
-
-        :param skia.GrContext context: GPU context
-        :param skia.GrBackendTexture backendTexture: texture residing on GPU
-        :param skia.ColorSpace colorSpace: range of colors; may be nullptr
-        :return: created :py:class:`Image`, or nullptr
-        )docstring",
-        py::arg("context"), py::arg("texture"), py::arg("origin"),
-        py::arg("colorType"), py::arg("alphaType"),
-        py::arg("colorSpace") = nullptr)
-    .def_static("MakeFromCompressedTexture",
-        [] (GrContext* context, const GrBackendTexture& texture,
-            GrSurfaceOrigin origin, SkAlphaType alphaType,
-            const SkColorSpace* cs) {
-            return SkImage::MakeFromCompressedTexture(
-                context, texture, origin, alphaType, CloneColorSpace(cs),
-                nullptr, nullptr);
-        },
-        R"docstring(
-        Creates an :py:class:`Image` from a GPU backend texture.
-
-        An :py:class:`Image` is returned if the format of backendTexture is
-        recognized and supported. Recognized formats vary by GPU back-end.
-
-        :param skia.GrContext context: the GPU context
-        :param skia.GrBackendTexture backendTexture: a texture already allocated
-            by the GPU
-        :param skia.AlphaType alphaType: This characterizes the nature of the
-            alpha values in the backend texture. For opaque compressed formats
-            (e.g., ETC1) this should usually be set to
-            :py:attr:`~AlphaType.kOpaque_AlphaType`.
-        :param skia.ColorSpace colorSpace: This describes the color space of
-            this image's contents, as seen after sampling. In general, if the
-            format of the backend texture is SRGB, some linear colorSpace should
-            be supplied (e.g., :py:meth:`ColorSpace.MakeSRGBLinear` ). If the
-            format of the backend texture is linear, then the colorSpace should
-            include a description of the transfer function as well (e.g.,
-            :py:meth:`ColorSpace.MakeSRGB` ).
-        :return: created :py:class:`Image`, or nullptr
-        )docstring",
-        py::arg("context"), py::arg("texture"), py::arg("origin"),
-        py::arg("alphaType"), py::arg("colorSpace") = nullptr)
-    .def_static("MakeCrossContextFromPixmap",
-        &SkImage::MakeCrossContextFromPixmap,
-        R"docstring(
-        Creates :py:class:`Image` from pixmap.
-
-        :py:class:`Image` is uploaded to GPU back-end using context.
-
-        Created :py:class:`Image` is available to other GPU contexts, and is
-        available across thread boundaries. All contexts must be in the same GPU
-        share group, or otherwise share resources.
-
-        When :py:class:`Image` is no longer referenced, context releases texture
-        memory asynchronously.
-
-        :py:class:`GrBackendTexture` created from pixmap is uploaded to match
-        :py:class:`Surface` created with dstColorSpace. :py:class:`ColorSpace`
-        of :py:class:`Image` is determined by pixmap.colorSpace().
-
-        :py:class:`Image` is returned referring to GPU back-end if context is
-        not nullptr, format of data is recognized and supported, and if context
-        supports moving resources between contexts. Otherwise, pixmap pixel data
-        is copied and :py:class:`Image` as returned in raster format if
-        possible; nullptr may be returned. Recognized GPU formats vary by
-        platform and GPU back-end.
-
-        :param skia.GrContext context: GPU context
-        :param skia.Pixmap pixmap: :py:class:`ImageInfo`, pixel address, and row
-            bytes
-        :param bool buildMips: create :py:class:`Image` as mip map if true
-        :param bool limitToMaxTextureSize: downscale image to GPU maximum
-            texture size, if necessary
-        :return: created :py:class:`Image`, or nullptr
-        )docstring",
-        py::arg("context"), py::arg("pixmap"), py::arg("buildMips"),
-        py::arg("limitToMaxTextureSize") = false)
-    .def_static("MakeFromAdoptedTexture",
-        [] (GrContext* context, const GrBackendTexture& backendTexture,
-            GrSurfaceOrigin origin, SkColorType colorType,
-            SkAlphaType alphaType, const SkColorSpace* colorSpace) {
-            return SkImage::MakeFromAdoptedTexture(
-                context, backendTexture, origin, colorType, alphaType,
-                CloneColorSpace(colorSpace));
-        },
-        R"docstring(
-        Creates :py:class:`Image` from backendTexture associated with context.
-
-        backendTexture and returned :py:class:`Image` are managed internally,
-        and are released when no longer needed.
-
-        :py:class:`Image` is returned if format of backendTexture is recognized
-        and supported. Recognized formats vary by GPU back-end.
-
-        :param skia.GrContext context: GPU context
-        :param skia.GrBackendTexture backendTexture: texture residing on GPU
-        :param skia.ColorSpace colorSpace: range of colors; may be nullptr
-        :return: created :py:class:`Image`, or nullptr
-        )docstring",
-        py::arg("context"), py::arg("backendTexture"), py::arg("origin"),
-        py::arg("colorType"),
-        py::arg("alphaType") = SkAlphaType::kPremul_SkAlphaType,
-        py::arg("colorSpace") = nullptr)
-    /*
-    .def_static("MakeFromYUVATexturesCopy", &SkImage::MakeFromYUVATexturesCopy,
-        "Creates an SkImage by flattening the specified YUVA planes into a "
-        "single, interleaved RGBA image.")
-    .def_static("MakeFromYUVATexturesCopyWithExternalBackend",
-        &SkImage::MakeFromYUVATexturesCopyWithExternalBackend,
-        "Creates an SkImage by flattening the specified YUVA planes into a "
-        "single, interleaved RGBA image.")
-    .def_static("MakeFromYUVATextures", &SkImage::MakeFromYUVATextures,
-        "Creates an SkImage by storing the specified YUVA planes into an image,"
-        " to be rendered via multitexturing.")
-    .def_static("MakeFromYUVAPixmaps", &SkImage::MakeFromYUVAPixmaps,
-        "Creates SkImage from pixmap array representing YUVA data.")
-    .def_static("MakeFromYUVTexturesCopy", &SkImage::MakeFromYUVTexturesCopy,
-        "To be deprecated.")
-    .def_static("MakeFromYUVTexturesCopyWithExternalBackend",
-        &SkImage::MakeFromYUVTexturesCopyWithExternalBackend,
-        "To be deprecated.")
-    .def_static("MakeFromNV12TexturesCopy", &SkImage::MakeFromNV12TexturesCopy,
-        "Creates SkImage from copy of nv12Textures, an array of textures on "
-        "GPU.")
-    .def_static("MakeFromNV12TexturesCopyWithExternalBackend",
-        &SkImage::MakeFromNV12TexturesCopyWithExternalBackend,
-        "Creates SkImage from copy of nv12Textures, an array of textures on "
-        "GPU.")
-    */
-    .def_static("MakeFromPicture",
-        [] (sk_sp<SkPicture>& picture, const SkISize& dimensions,
-            const SkMatrix* matrix, const SkPaint* paint,
-            SkImage::BitDepth bitDepth, const SkColorSpace* colorSpace) {
-            return SkImage::MakeFromPicture(
-                picture, dimensions, matrix, paint, bitDepth,
-                CloneColorSpace(colorSpace));
-        },
-        R"docstring(
-        Creates :py:class:`Image` from picture.
-
-        Returned :py:class:`Image` width and height are set by dimensions.
-        :py:class:`Image` draws picture with matrix and paint, set to bitDepth
-        and colorSpace.
-
-        If matrix is nullptr, draws with identity :py:class:`Matrix`. If paint
-        is nullptr, draws with default :py:class:`Paint`. colorSpace may be
-        nullptr.
-
-        :param skia.Picture picture: stream of drawing commands
-        :param skia.ISize dimensions:  width and height
-        :param skia.Matrix matrix: :py:class:`Matrix` to rotate, scale,
-            translate, and so on; may be nullptr
-        :param skia.Paint paint: :py:class:`Paint` to apply transparency,
-            filtering, and so on; may be nullptr
-        :param skia.Image.BitDepth bitDepth:    8-bit integer or 16-bit float:
-            per component
-        :param skia.ColorSpace colorSpace:  range of colors; may be nullptr
-        :return: created :py:class:`Image`, or nullptr
-        )docstring",
-        py::arg("picture"), py::arg("dimensions"), py::arg("matrix") = nullptr,
-        py::arg("paint") = nullptr,
-        py::arg("bitDepth") = SkImage::BitDepth::kU8,
-        py::arg("colorSpace") = nullptr)
     .def_static("MakeBackendTextureFromImage",
-        [] (GrContext* context, sk_sp<SkImage>& image,
+        [] (GrDirectContext* context, sk_sp<SkImage>& image,
             GrBackendTexture* backendTexture) {
             return SkImage::MakeBackendTextureFromSkImage(
                 context, image, backendTexture, nullptr);
@@ -1437,5 +1342,86 @@ image
         :return: true if back-end texture was created
         )docstring",
         py::arg("context"), py::arg("image"), py::arg("backendTexture"))
+    .def("asLegacyBitmap", &SkImage::asLegacyBitmap,
+        R"docstring(
+        Deprecated.
+
+        Creates raster :py:class:`Bitmap` with same pixels as :py:class:`Image`.
+        If legacyBitmapMode is :py:attr:`~Image.kRO_LegacyBitmapMode`, returned
+        bitmap is read-only and immutable. Returns true if :py:class:`Bitmap` is
+        stored in bitmap. Returns false and resets bitmap if :py:class:`Bitmap`
+        write did not succeed.
+
+        :param bitmap: storage for legacy :py:class:`Bitmap`
+        :param legacyBitmapMode: bitmap is read-only and immutable
+        :return: true if :py:class:`Bitmap` was created
+        )docstring",
+        py::arg("bitmap").none(false),
+        py::arg("legacyBitmapMode") = SkImage::kRO_LegacyBitmapMode)
+    .def("isLazyGenerated", &SkImage::isLazyGenerated,
+        R"docstring(
+        Returns true if :py:class:`Image` is backed by an image-generator or
+        other service that creates and caches its pixels or texture on-demand.
+
+        :return: true if :py:class:`Image` is created as needed
+        )docstring")
+    .def("makeColorSpace",
+        [] (const SkImage& image, const SkColorSpace* target,
+            GrDirectContext* direct) {
+            return image.makeColorSpace(CloneColorSpace(target), direct);
+        },
+        R"docstring(
+        Creates :py:class:`Image` in target :py:class:`ColorSpace`.
+
+        Returns nullptr if :py:class:`Image` could not be created.
+
+        Returns original :py:class:`Image` if it is in target
+        :py:class:`ColorSpace`. Otherwise, converts pixels from
+        :py:class:`Image` :py:class:`ColorSpace` to target
+        :py:class:`ColorSpace`. If :py:class:`Image` colorSpace() returns
+        nullptr, :py:class:`Image` :py:class:`ColorSpace` is assumed to be sRGB.
+
+        :param skia.ColorSpace target: :py:class:`ColorSpace` describing color
+            range of returned :py:class:`Image`
+        :return: created :py:class:`Image` in target :py:class:`ColorSpace`
+        )docstring",
+        py::arg("target"), py::arg("direct") = nullptr)
+    .def("makeColorTypeAndColorSpace",
+        [] (const SkImage& image, SkColorType ct, const SkColorSpace* cs,
+            GrDirectContext* direct) {
+            return image.makeColorTypeAndColorSpace(
+                ct, CloneColorSpace(cs), direct);
+        },
+        R"docstring(
+        Experimental.
+
+        Creates :py:class:`Image` in target :py:class:`ColorType` and
+        :py:class:`ColorSpace`. Returns nullptr if :py:class:`Image` could not
+        be created.
+
+        Returns original :py:class:`Image` if it is in target
+        :py:class:`ColorType` and :py:class:`ColorSpace`.
+
+        :param skia.ColorType targetColorType: :py:class:`ColorType` of returned
+            :py:class:`Image`
+        :param skia.ColorSpace targetColorSpace: :py:class:`ColorSpace` of
+            returned :py:class:`Image`
+        :return: created :py:class:`Image` in target :py:class:`ColorType` and
+            :py:class:`ColorSpace`
+        )docstring",
+        py::arg("targetColorType"), py::arg("targetColorSpace") = nullptr,
+        py::arg("direct") = nullptr)
+    .def("reinterpretColorSpace",
+        [] (const SkImage& image, const SkColorSpace* cs) {
+            return image.reinterpretColorSpace(CloneColorSpace(cs));
+        },
+        R"docstring(
+        Creates a new :py:class:`Image` identical to this one, but with a
+        different :py:class:`ColorSpace`.
+
+        This does not convert the underlying pixel data, so the resulting image
+        will draw differently.
+        )docstring",
+        py::arg("newColorSpace") = nullptr)
     ;
 }
