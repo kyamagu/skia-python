@@ -61,11 +61,11 @@ into numpy array.
 GPU
 ---
 
-GPU Surfaces must have a :py:class:`GrContext` object which manages the
-GPU context, and related caches for textures and fonts. GrContexts are matched
+GPU Surfaces must have a :py:class:`GrDirectContext` object which manages the
+GPU context, and related caches for textures and fonts. GrDirectContexts are matched
 one to one with OpenGL contexts or Vulkan devices. That is, all
 :py:class:`Surface` that will be rendered to using the same OpenGL context
-or Vulkan device should share a :py:class:`GrContext`. Skia does not
+or Vulkan device should share a :py:class:`GrDirectContext`. Skia does not
 create a OpenGL context or Vulkan device for you. In OpenGL mode it also assumes
 that the correct OpenGL context has been made current to the current thread when
 Skia calls are made.
@@ -98,7 +98,7 @@ The following example uses glfw package to create an OpenGL context. Install
 
     width, height = 200, 200
     with glfw_context():
-        context = skia.GrContext.MakeGL()
+        context = skia.GrDirectContext.MakeGL()
         info = skia.ImageInfo.MakeN32Premul(width, height)
         surface = skia.Surface.MakeRenderTarget(context, skia.Budgeted.kNo, info)
         assert surface is not None
@@ -145,7 +145,7 @@ Here's a complete example:
 
     @contextlib.contextmanager
     def skia_surface(window):
-        context = skia.GrContext.MakeGL()
+        context = skia.GrDirectContext.MakeGL()
         backend_render_target = skia.GrBackendRenderTarget(
             WIDTH,
             HEIGHT,
