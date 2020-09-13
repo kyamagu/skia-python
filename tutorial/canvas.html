@@ -225,11 +225,11 @@ into numpy array.</p>
 </div>
 <div class="section" id="gpu">
 <h2>GPU<a class="headerlink" href="#gpu" title="Permalink to this headline">¶</a></h2>
-<p>GPU Surfaces must have a <a class="reference internal" href="../reference/skia.GrContext.html#skia.GrContext" title="skia.GrContext"><code class="xref py py-class docutils literal notranslate"><span class="pre">GrContext</span></code></a> object which manages the
-GPU context, and related caches for textures and fonts. GrContexts are matched
+<p>GPU Surfaces must have a <a class="reference internal" href="../reference/skia.GrDirectContext.html#skia.GrDirectContext" title="skia.GrDirectContext"><code class="xref py py-class docutils literal notranslate"><span class="pre">GrDirectContext</span></code></a> object which manages the
+GPU context, and related caches for textures and fonts. GrDirectContexts are matched
 one to one with OpenGL contexts or Vulkan devices. That is, all
 <a class="reference internal" href="../reference/skia.Surface.html#skia.Surface" title="skia.Surface"><code class="xref py py-class docutils literal notranslate"><span class="pre">Surface</span></code></a> that will be rendered to using the same OpenGL context
-or Vulkan device should share a <a class="reference internal" href="../reference/skia.GrContext.html#skia.GrContext" title="skia.GrContext"><code class="xref py py-class docutils literal notranslate"><span class="pre">GrContext</span></code></a>. Skia does not
+or Vulkan device should share a <a class="reference internal" href="../reference/skia.GrDirectContext.html#skia.GrDirectContext" title="skia.GrDirectContext"><code class="xref py py-class docutils literal notranslate"><span class="pre">GrDirectContext</span></code></a>. Skia does not
 create a OpenGL context or Vulkan device for you. In OpenGL mode it also assumes
 that the correct OpenGL context has been made current to the current thread when
 Skia calls are made.</p>
@@ -257,7 +257,7 @@ Skia calls are made.</p>
 
 <span class="n">width</span><span class="p">,</span> <span class="n">height</span> <span class="o">=</span> <span class="mi">200</span><span class="p">,</span> <span class="mi">200</span>
 <span class="k">with</span> <span class="n">glfw_context</span><span class="p">():</span>
-    <span class="n">context</span> <span class="o">=</span> <span class="n">skia</span><span class="o">.</span><span class="n">GrContext</span><span class="o">.</span><span class="n">MakeGL</span><span class="p">()</span>
+    <span class="n">context</span> <span class="o">=</span> <span class="n">skia</span><span class="o">.</span><span class="n">GrDirectContext</span><span class="o">.</span><span class="n">MakeGL</span><span class="p">()</span>
     <span class="n">info</span> <span class="o">=</span> <span class="n">skia</span><span class="o">.</span><span class="n">ImageInfo</span><span class="o">.</span><span class="n">MakeN32Premul</span><span class="p">(</span><span class="n">width</span><span class="p">,</span> <span class="n">height</span><span class="p">)</span>
     <span class="n">surface</span> <span class="o">=</span> <span class="n">skia</span><span class="o">.</span><span class="n">Surface</span><span class="o">.</span><span class="n">MakeRenderTarget</span><span class="p">(</span><span class="n">context</span><span class="p">,</span> <span class="n">skia</span><span class="o">.</span><span class="n">Budgeted</span><span class="o">.</span><span class="n">kNo</span><span class="p">,</span> <span class="n">info</span><span class="p">)</span>
     <span class="k">assert</span> <span class="n">surface</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
@@ -302,7 +302,7 @@ to it.</p></li>
 
 <span class="nd">@contextlib</span><span class="o">.</span><span class="n">contextmanager</span>
 <span class="k">def</span> <span class="nf">skia_surface</span><span class="p">(</span><span class="n">window</span><span class="p">):</span>
-    <span class="n">context</span> <span class="o">=</span> <span class="n">skia</span><span class="o">.</span><span class="n">GrContext</span><span class="o">.</span><span class="n">MakeGL</span><span class="p">()</span>
+    <span class="n">context</span> <span class="o">=</span> <span class="n">skia</span><span class="o">.</span><span class="n">GrDirectContext</span><span class="o">.</span><span class="n">MakeGL</span><span class="p">()</span>
     <span class="n">backend_render_target</span> <span class="o">=</span> <span class="n">skia</span><span class="o">.</span><span class="n">GrBackendRenderTarget</span><span class="p">(</span>
         <span class="n">WIDTH</span><span class="p">,</span>
         <span class="n">HEIGHT</span><span class="p">,</span>
