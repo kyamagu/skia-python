@@ -47,7 +47,7 @@ into numpy array.
 
     import skia
     import numpy as np
-    import matplotlib.pyplot as plt
+    import matplotlib.pyplot as plot
 
     width, height = 200, 200
     array = np.zeros((height, width, 4), dtype=np.uint8)
