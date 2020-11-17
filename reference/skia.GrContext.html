@@ -573,7 +573,7 @@ valid.</p>
 <code class="sig-prename descclassname">GrContext.</code><code class="sig-name descname">createBackendTexture</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span><span class="n">args</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#skia.GrContext.createBackendTexture" title="Permalink to this definition">¶</a></dt>
 <dd><p>Overloaded function.</p>
 <ol class="arabic">
-<li><p>createBackendTexture(self: skia.GrContext, width: int, height: int, backendFormat: skia.GrBackendFormat, mipMapped: skia.GrMipmapped, renderable: skia.GrRenderable, isProtected: skia.GrProtected = GrProtected.kNo) -&gt; skia.GrBackendTexture</p>
+<li><p>createBackendTexture(self: skia.GrContext, width: int, height: int, backendFormat: skia.GrBackendFormat, mipMapped: skia.GrMipmapped, renderable: skia.GrRenderable, isProtected: skia.GrProtected = &lt;GrProtected.kNo: 0&gt;) -&gt; skia.GrBackendTexture</p>
 <blockquote>
 <div><p>The explicitly allocated backend texture API allows clients to use Skia
 to create backend objects outside of Skia proper (i.e., Skia’s caching
@@ -593,7 +593,7 @@ the returned backend texture is valid. For the Vulkan backend the layout
 of the created VkImage will be: VK_IMAGE_LAYOUT_UNDEFINED.</p>
 </div></blockquote>
 </li>
-<li><p>createBackendTexture(self: skia.GrContext, width: int, height: int, colorType: SkColorType, mipMapped: skia.GrMipmapped, renderable: skia.GrRenderable, isProtected: skia.GrProtected = GrProtected.kNo) -&gt; skia.GrBackendTexture</p>
+<li><p>createBackendTexture(self: skia.GrContext, width: int, height: int, colorType: SkColorType, mipMapped: skia.GrMipmapped, renderable: skia.GrRenderable, isProtected: skia.GrProtected = &lt;GrProtected.kNo: 0&gt;) -&gt; skia.GrBackendTexture</p>
 <blockquote>
 <div><p>If possible, create an uninitialized backend texture.</p>
 <p>The client should ensure that the returned backend texture is valid. If
@@ -611,7 +611,7 @@ the Vulkan backend the layout of the created VkImage will be:
 VK_IMAGE_LAYOUT_UNDEFINED.</p>
 </div></blockquote>
 </li>
-<li><p>createBackendTexture(self: skia.GrContext, width: int, height: int, backendFormat: skia.GrBackendFormat, color: skia.Color4f, mipMapped: skia.GrMipmapped, renderable: skia.GrRenderable, isProtected: skia.GrProtected = GrProtected.kNo) -&gt; skia.GrBackendTexture</p>
+<li><p>createBackendTexture(self: skia.GrContext, width: int, height: int, backendFormat: skia.GrBackendFormat, color: skia.Color4f, mipMapped: skia.GrMipmapped, renderable: skia.GrRenderable, isProtected: skia.GrProtected = &lt;GrProtected.kNo: 0&gt;) -&gt; skia.GrBackendTexture</p>
 <blockquote>
 <div><p>If possible, create a backend texture initialized to a particular color.</p>
 <p>The client should ensure that the returned backend texture is valid.
@@ -619,7 +619,7 @@ For the Vulkan backend the layout of the created VkImage will be:
 VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL</p>
 </div></blockquote>
 </li>
-<li><p>createBackendTexture(self: skia.GrContext, width: int, height: int, colorType: SkColorType, color: skia.Color4f, mipMapped: skia.GrMipmapped, renderable: skia.GrRenderable, isProtected: skia.GrProtected = GrProtected.kNo) -&gt; skia.GrBackendTexture</p>
+<li><p>createBackendTexture(self: skia.GrContext, width: int, height: int, colorType: SkColorType, color: skia.Color4f, mipMapped: skia.GrMipmapped, renderable: skia.GrRenderable, isProtected: skia.GrProtected = &lt;GrProtected.kNo: 0&gt;) -&gt; skia.GrBackendTexture</p>
 <blockquote>
 <div><p>If possible, create a backend texture initialized to a particular color.</p>
 <p>The client should ensure that the returned backend texture is valid.
@@ -638,8 +638,8 @@ VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL if texturaeble
 VK_IMAGE_LAYOUT_UNDEFINED if not textureable</p>
 </div></blockquote>
 </li>
-<li><p>createBackendTexture(self: skia.GrContext, srcData: List[SkPixmap], renderable: skia.GrRenderable, isProtected: skia.GrProtected = GrProtected.kNo) -&gt; skia.GrBackendTexture</p></li>
-<li><p>createBackendTexture(self: skia.GrContext, pixmap: SkPixmap, renderable: skia.GrRenderable, isProtected: skia.GrProtected = GrProtected.kNo) -&gt; skia.GrBackendTexture</p></li>
+<li><p>createBackendTexture(self: skia.GrContext, srcData: List[SkPixmap], renderable: skia.GrRenderable, isProtected: skia.GrProtected = &lt;GrProtected.kNo: 0&gt;) -&gt; skia.GrBackendTexture</p></li>
+<li><p>createBackendTexture(self: skia.GrContext, pixmap: SkPixmap, renderable: skia.GrRenderable, isProtected: skia.GrProtected = &lt;GrProtected.kNo: 0&gt;) -&gt; skia.GrBackendTexture</p></li>
 </ol>
 </dd></dl>
 
@@ -648,7 +648,7 @@ VK_IMAGE_LAYOUT_UNDEFINED if not textureable</p>
 <code class="sig-prename descclassname">GrContext.</code><code class="sig-name descname">createCompressedBackendTexture</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span><span class="n">args</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#skia.GrContext.createCompressedBackendTexture" title="Permalink to this definition">¶</a></dt>
 <dd><p>Overloaded function.</p>
 <ol class="arabic">
-<li><p>createCompressedBackendTexture(self: skia.GrContext, width: int, height: int, backendFormat: skia.GrBackendFormat, color: skia.Color4f, mipMapped: skia.GrMipmapped, isProtected: skia.GrProtected = GrProtected.kNo) -&gt; skia.GrBackendTexture</p>
+<li><p>createCompressedBackendTexture(self: skia.GrContext, width: int, height: int, backendFormat: skia.GrBackendFormat, color: skia.Color4f, mipMapped: skia.GrMipmapped, isProtected: skia.GrProtected = &lt;GrProtected.kNo: 0&gt;) -&gt; skia.GrBackendTexture</p>
 <blockquote>
 <div><p>If possible, create a compressed backend texture initialized to a
 particular color.</p>
@@ -657,15 +657,15 @@ For the Vulkan backend the layout of the created VkImage will be:
 VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL</p>
 </div></blockquote>
 </li>
-<li><p>createCompressedBackendTexture(self: skia.GrContext, width: int, height: int, type: SkImage::CompressionType, color: skia.Color4f, mipMapped: skia.GrMipmapped, isProtected: skia.GrProtected = GrProtected.kNo) -&gt; skia.GrBackendTexture</p></li>
-<li><p>createCompressedBackendTexture(self: skia.GrContext, width: int, height: int, backendFormat: skia.GrBackendFormat, data: buffer, mipMapped: skia.GrMipmapped, isProtected: skia.GrProtected = GrProtected.kNo) -&gt; skia.GrBackendTexture</p></li>
-<li><p>createCompressedBackendTexture(self: skia.GrContext, width: int, height: int, type: SkImage::CompressionType, data: buffer, mipMapped: skia.GrMipmapped, isProtected: skia.GrProtected = GrProtected.kNo) -&gt; skia.GrBackendTexture</p></li>
+<li><p>createCompressedBackendTexture(self: skia.GrContext, width: int, height: int, type: SkImage::CompressionType, color: skia.Color4f, mipMapped: skia.GrMipmapped, isProtected: skia.GrProtected = &lt;GrProtected.kNo: 0&gt;) -&gt; skia.GrBackendTexture</p></li>
+<li><p>createCompressedBackendTexture(self: skia.GrContext, width: int, height: int, backendFormat: skia.GrBackendFormat, data: buffer, mipMapped: skia.GrMipmapped, isProtected: skia.GrProtected = &lt;GrProtected.kNo: 0&gt;) -&gt; skia.GrBackendTexture</p></li>
+<li><p>createCompressedBackendTexture(self: skia.GrContext, width: int, height: int, type: SkImage::CompressionType, data: buffer, mipMapped: skia.GrMipmapped, isProtected: skia.GrProtected = &lt;GrProtected.kNo: 0&gt;) -&gt; skia.GrBackendTexture</p></li>
 </ol>
 </dd></dl>
 
 <dl class="py method">
 <dt id="skia.GrContext.defaultBackendFormat">
-<code class="sig-prename descclassname">GrContext.</code><code class="sig-name descname">defaultBackendFormat</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.GrContext" title="skia.GrContext">skia.GrContext</a></span></em>, <em class="sig-param"><span class="n">colorType</span><span class="p">:</span> <span class="n">SkColorType</span></em>, <em class="sig-param"><span class="n">renderable</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.GrRenderable.html#skia.GrRenderable" title="skia.GrRenderable">skia.GrRenderable</a></span> <span class="o">=</span> <span class="default_value">GrRenderable.kNo</span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="skia.GrBackendFormat.html#skia.GrBackendFormat" title="skia.GrBackendFormat">skia.GrBackendFormat</a><a class="headerlink" href="#skia.GrContext.defaultBackendFormat" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">GrContext.</code><code class="sig-name descname">defaultBackendFormat</code><span class="sig-paren">(</span><em class="sig-param">self: skia.GrContext</em>, <em class="sig-param">colorType: SkColorType</em>, <em class="sig-param">renderable: skia.GrRenderable = &lt;GrRenderable.kNo: 0&gt;</em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="skia.GrBackendFormat.html#skia.GrBackendFormat" title="skia.GrBackendFormat">skia.GrBackendFormat</a><a class="headerlink" href="#skia.GrContext.defaultBackendFormat" title="Permalink to this definition">¶</a></dt>
 <dd><p>Retrieve the default <a class="reference internal" href="skia.GrBackendFormat.html#skia.GrBackendFormat" title="skia.GrBackendFormat"><code class="xref py py-class docutils literal notranslate"><span class="pre">GrBackendFormat</span></code></a> for a given
 <a class="reference internal" href="skia.ColorType.html#skia.ColorType" title="skia.ColorType"><code class="xref py py-class docutils literal notranslate"><span class="pre">ColorType</span></code></a> and renderability.</p>
 <p>It is guaranteed that this backend format will be the one used by the

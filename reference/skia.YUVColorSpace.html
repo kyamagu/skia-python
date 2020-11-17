@@ -345,12 +345,12 @@
 <dt id="skia.YUVColorSpace">
 <em class="property">class </em><code class="sig-name descname">YUVColorSpace</code><a class="headerlink" href="#skia.YUVColorSpace" title="Permalink to this definition">¶</a></dt>
 <dd><p>Members:</p>
+<p>kJPEG_YUVColorSpace : describes full range</p>
+<p>kRec601_YUVColorSpace : describes SDTV range</p>
+<p>kRec709_YUVColorSpace : describes HDTV range</p>
+<p>kBT2020_YUVColorSpace : describes UHDTV range, non-constant-luminance</p>
 <p>kIdentity_YUVColorSpace : maps Y-&gt;R, U-&gt;G, V-&gt;B</p>
 <p>kLastEnum_YUVColorSpace : last valid value</p>
-<p>kRec601_YUVColorSpace : describes SDTV range</p>
-<p>kJPEG_YUVColorSpace : describes full range</p>
-<p>kBT2020_YUVColorSpace : describes UHDTV range, non-constant-luminance</p>
-<p>kRec709_YUVColorSpace : describes HDTV range</p>
 <p class="rubric">Methods</p>
 <table class="longtable docutils align-default">
 <colgroup>
@@ -389,7 +389,7 @@
 <td><p></p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#skia.YUVColorSpace.name" title="skia.YUVColorSpace.name"><code class="xref py py-obj docutils literal notranslate"><span class="pre">name</span></code></a></p></td>
-<td><p>handle) -&gt; str</p></td>
+<td><p></p></td>
 </tr>
 </tbody>
 </table>
@@ -399,7 +399,7 @@
 <h2>Methods<a class="headerlink" href="#methods" title="Permalink to this headline">¶</a></h2>
 <dl class="py method">
 <dt id="skia.YUVColorSpace.__init__">
-<code class="sig-prename descclassname">YUVColorSpace.</code><code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.YUVColorSpace" title="skia.YUVColorSpace">skia.YUVColorSpace</a></span></em>, <em class="sig-param"><span class="n">arg0</span><span class="p">:</span> <span class="n">int</span></em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#skia.YUVColorSpace.__init__" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">YUVColorSpace.</code><code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.YUVColorSpace" title="skia.YUVColorSpace">skia.YUVColorSpace</a></span></em>, <em class="sig-param"><span class="n">value</span><span class="p">:</span> <span class="n">int</span></em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#skia.YUVColorSpace.__init__" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </div>
@@ -407,44 +407,38 @@
 <h2>Attributes<a class="headerlink" href="#attributes" title="Permalink to this headline">¶</a></h2>
 <dl class="py attribute">
 <dt id="skia.YUVColorSpace.kBT2020_YUVColorSpace">
-<code class="sig-prename descclassname">YUVColorSpace.</code><code class="sig-name descname">kBT2020_YUVColorSpace</code><em class="property"> = YUVColorSpace.kBT2020_YUVColorSpace</em><a class="headerlink" href="#skia.YUVColorSpace.kBT2020_YUVColorSpace" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">YUVColorSpace.</code><code class="sig-name descname">kBT2020_YUVColorSpace</code><em class="property"> = &lt;YUVColorSpace.kBT2020_YUVColorSpace: 5&gt;</em><a class="headerlink" href="#skia.YUVColorSpace.kBT2020_YUVColorSpace" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt id="skia.YUVColorSpace.kIdentity_YUVColorSpace">
-<code class="sig-prename descclassname">YUVColorSpace.</code><code class="sig-name descname">kIdentity_YUVColorSpace</code><em class="property"> = YUVColorSpace.kIdentity_YUVColorSpace</em><a class="headerlink" href="#skia.YUVColorSpace.kIdentity_YUVColorSpace" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">YUVColorSpace.</code><code class="sig-name descname">kIdentity_YUVColorSpace</code><em class="property"> = &lt;YUVColorSpace.kIdentity_YUVColorSpace: 10&gt;</em><a class="headerlink" href="#skia.YUVColorSpace.kIdentity_YUVColorSpace" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt id="skia.YUVColorSpace.kJPEG_YUVColorSpace">
-<code class="sig-prename descclassname">YUVColorSpace.</code><code class="sig-name descname">kJPEG_YUVColorSpace</code><em class="property"> = YUVColorSpace.kJPEG_YUVColorSpace</em><a class="headerlink" href="#skia.YUVColorSpace.kJPEG_YUVColorSpace" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">YUVColorSpace.</code><code class="sig-name descname">kJPEG_YUVColorSpace</code><em class="property"> = &lt;YUVColorSpace.kJPEG_YUVColorSpace: 0&gt;</em><a class="headerlink" href="#skia.YUVColorSpace.kJPEG_YUVColorSpace" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt id="skia.YUVColorSpace.kLastEnum_YUVColorSpace">
-<code class="sig-prename descclassname">YUVColorSpace.</code><code class="sig-name descname">kLastEnum_YUVColorSpace</code><em class="property"> = YUVColorSpace.kIdentity_YUVColorSpace</em><a class="headerlink" href="#skia.YUVColorSpace.kLastEnum_YUVColorSpace" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">YUVColorSpace.</code><code class="sig-name descname">kLastEnum_YUVColorSpace</code><em class="property"> = &lt;YUVColorSpace.kIdentity_YUVColorSpace: 10&gt;</em><a class="headerlink" href="#skia.YUVColorSpace.kLastEnum_YUVColorSpace" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt id="skia.YUVColorSpace.kRec601_YUVColorSpace">
-<code class="sig-prename descclassname">YUVColorSpace.</code><code class="sig-name descname">kRec601_YUVColorSpace</code><em class="property"> = YUVColorSpace.kRec601_YUVColorSpace</em><a class="headerlink" href="#skia.YUVColorSpace.kRec601_YUVColorSpace" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">YUVColorSpace.</code><code class="sig-name descname">kRec601_YUVColorSpace</code><em class="property"> = &lt;YUVColorSpace.kRec601_YUVColorSpace: 1&gt;</em><a class="headerlink" href="#skia.YUVColorSpace.kRec601_YUVColorSpace" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt id="skia.YUVColorSpace.kRec709_YUVColorSpace">
-<code class="sig-prename descclassname">YUVColorSpace.</code><code class="sig-name descname">kRec709_YUVColorSpace</code><em class="property"> = YUVColorSpace.kRec709_YUVColorSpace</em><a class="headerlink" href="#skia.YUVColorSpace.kRec709_YUVColorSpace" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">YUVColorSpace.</code><code class="sig-name descname">kRec709_YUVColorSpace</code><em class="property"> = &lt;YUVColorSpace.kRec709_YUVColorSpace: 3&gt;</em><a class="headerlink" href="#skia.YUVColorSpace.kRec709_YUVColorSpace" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt id="skia.YUVColorSpace.name">
 <code class="sig-prename descclassname">YUVColorSpace.</code><code class="sig-name descname">name</code><a class="headerlink" href="#skia.YUVColorSpace.name" title="Permalink to this definition">¶</a></dt>
-<dd><p>handle) -&gt; str</p>
-<dl class="field-list simple">
-<dt class="field-odd">Type</dt>
-<dd class="field-odd"><p>(self</p>
-</dd>
-</dl>
-</dd></dl>
+<dd></dd></dl>
 
 </div>
 </div>

@@ -754,7 +754,7 @@ next, or zero</p></li>
 with a width and height of zero.</p>
 </div></blockquote>
 </li>
-<li><p>__init__(self: skia.Canvas, array: array, colorType: skia.ColorType = ColorType.kRGBA_8888_ColorType, alphaType: skia.AlphaType = AlphaType.kLastEnum_AlphaType, colorSpace: skia.ColorSpace = None, surfaceProps: SkSurfaceProps = None) -&gt; None</p>
+<li><p>__init__(self: skia.Canvas, array: numpy.ndarray, colorType: skia.ColorType = &lt;ColorType.kRGBA_8888_ColorType: 4&gt;, alphaType: skia.AlphaType = &lt;AlphaType.kUnpremul_AlphaType: 3&gt;, colorSpace: skia.ColorSpace = None, surfaceProps: SkSurfaceProps = None) -&gt; None</p>
 <blockquote>
 <div><p>Creates raster <a class="reference internal" href="#skia.Canvas" title="skia.Canvas"><code class="xref py py-class docutils literal notranslate"><span class="pre">Canvas</span></code></a> backed by numpy array.</p>
 <p>Subsequent <a class="reference internal" href="#skia.Canvas" title="skia.Canvas"><code class="xref py py-class docutils literal notranslate"><span class="pre">Canvas</span></code></a> calls draw into pixels. To access pixels
@@ -1091,7 +1091,7 @@ is transformed by <a class="reference internal" href="skia.Matrix.html#skia.Matr
 
 <dl class="py method">
 <dt id="skia.Canvas.clipRegion">
-<code class="sig-prename descclassname">Canvas.</code><code class="sig-name descname">clipRegion</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Canvas" title="skia.Canvas">skia.Canvas</a></span></em>, <em class="sig-param"><span class="n">deviceRgn</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.Region.html#skia.Region" title="skia.Region">skia.Region</a></span></em>, <em class="sig-param"><span class="n">op</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.ClipOp.html#skia.ClipOp" title="skia.ClipOp">skia.ClipOp</a></span> <span class="o">=</span> <span class="default_value">ClipOp.kIntersect</span></em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#skia.Canvas.clipRegion" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">Canvas.</code><code class="sig-name descname">clipRegion</code><span class="sig-paren">(</span><em class="sig-param">self: skia.Canvas</em>, <em class="sig-param">deviceRgn: skia.Region</em>, <em class="sig-param">op: skia.ClipOp = &lt;ClipOp.kIntersect: 1&gt;</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#skia.Canvas.clipRegion" title="Permalink to this definition">¶</a></dt>
 <dd><p>Replaces clip with the intersection or difference of clip and
 <a class="reference internal" href="skia.Region.html#skia.Region" title="skia.Region"><code class="xref py py-class docutils literal notranslate"><span class="pre">Region</span></code></a> deviceRgn.</p>
 <p>Resulting clip is aliased; pixels are fully contained by the clip.
@@ -1266,7 +1266,7 @@ nullptr</p></li>
 <code class="sig-prename descclassname">Canvas.</code><code class="sig-name descname">drawBitmapRect</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span><span class="n">args</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#skia.Canvas.drawBitmapRect" title="Permalink to this definition">¶</a></dt>
 <dd><p>Overloaded function.</p>
 <ol class="arabic">
-<li><p>drawBitmapRect(self: skia.Canvas, bitmap: skia.Bitmap, src: skia.Rect, dst: skia.Rect, paint: skia.Paint = None, constraint: skia.Canvas.SrcRectConstraint = SrcRectConstraint.kStrict_SrcRectConstraint) -&gt; None</p>
+<li><p>drawBitmapRect(self: skia.Canvas, bitmap: skia.Bitmap, src: skia.Rect, dst: skia.Rect, paint: skia.Paint = None, constraint: skia.Canvas.SrcRectConstraint = &lt;SrcRectConstraint.kStrict_SrcRectConstraint: 0&gt;) -&gt; None</p>
 <blockquote>
 <div><p>Draws <a class="reference internal" href="skia.Rect.html#skia.Rect" title="skia.Rect"><code class="xref py py-class docutils literal notranslate"><span class="pre">Rect</span></code></a> src of <a class="reference internal" href="skia.Bitmap.html#skia.Bitmap" title="skia.Bitmap"><code class="xref py py-class docutils literal notranslate"><span class="pre">Bitmap</span></code></a> bitmap, scaled and
 translated to fill <a class="reference internal" href="skia.Rect.html#skia.Rect" title="skia.Rect"><code class="xref py py-class docutils literal notranslate"><span class="pre">Rect</span></code></a> dst.</p>
@@ -1306,7 +1306,7 @@ nullptr</p>
 </dl>
 </div></blockquote>
 </li>
-<li><p>drawBitmapRect(self: skia.Canvas, bitmap: skia.Bitmap, isrc: skia.IRect, dst: skia.Rect, paint: skia.Paint = None, constraint: skia.Canvas.SrcRectConstraint = SrcRectConstraint.kStrict_SrcRectConstraint) -&gt; None</p>
+<li><p>drawBitmapRect(self: skia.Canvas, bitmap: skia.Bitmap, isrc: skia.IRect, dst: skia.Rect, paint: skia.Paint = None, constraint: skia.Canvas.SrcRectConstraint = &lt;SrcRectConstraint.kStrict_SrcRectConstraint: 0&gt;) -&gt; None</p>
 <blockquote>
 <div><p>Draws <a class="reference internal" href="skia.IRect.html#skia.IRect" title="skia.IRect"><code class="xref py py-class docutils literal notranslate"><span class="pre">IRect</span></code></a> isrc of <a class="reference internal" href="skia.Bitmap.html#skia.Bitmap" title="skia.Bitmap"><code class="xref py py-class docutils literal notranslate"><span class="pre">Bitmap</span></code></a> bitmap, scaled and
 translated to fill <a class="reference internal" href="skia.Rect.html#skia.Rect" title="skia.Rect"><code class="xref py py-class docutils literal notranslate"><span class="pre">Rect</span></code></a> dst.</p>
@@ -1346,7 +1346,7 @@ nullptr</p>
 </dl>
 </div></blockquote>
 </li>
-<li><p>drawBitmapRect(self: skia.Canvas, bitmap: skia.Bitmap, dst: skia.Rect, paint: skia.Paint = None, constraint: skia.Canvas.SrcRectConstraint = SrcRectConstraint.kStrict_SrcRectConstraint) -&gt; None</p>
+<li><p>drawBitmapRect(self: skia.Canvas, bitmap: skia.Bitmap, dst: skia.Rect, paint: skia.Paint = None, constraint: skia.Canvas.SrcRectConstraint = &lt;SrcRectConstraint.kStrict_SrcRectConstraint: 0&gt;) -&gt; None</p>
 <blockquote>
 <div><p>Draws <a class="reference internal" href="skia.Bitmap.html#skia.Bitmap" title="skia.Bitmap"><code class="xref py py-class docutils literal notranslate"><span class="pre">Bitmap</span></code></a> bitmap, scaled and translated to fill
 <a class="reference internal" href="skia.Rect.html#skia.Rect" title="skia.Rect"><code class="xref py py-class docutils literal notranslate"><span class="pre">Rect</span></code></a> dst.</p>
@@ -1445,7 +1445,7 @@ to draw</p>
 <code class="sig-prename descclassname">Canvas.</code><code class="sig-name descname">drawColor</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span><span class="n">args</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#skia.Canvas.drawColor" title="Permalink to this definition">¶</a></dt>
 <dd><p>Overloaded function.</p>
 <ol class="arabic">
-<li><p>drawColor(self: skia.Canvas, color: int, mode: skia.BlendMode = BlendMode.kSrcOver) -&gt; None</p>
+<li><p>drawColor(self: skia.Canvas, color: int, mode: skia.BlendMode = &lt;BlendMode.kSrcOver: 3&gt;) -&gt; None</p>
 <blockquote>
 <div><p>Fills clip with color color.</p>
 <p>mode determines how ARGB is combined with destination.</p>
@@ -1460,7 +1460,7 @@ color and destination</p>
 </dl>
 </div></blockquote>
 </li>
-<li><p>drawColor(self: skia.Canvas, color: skia.Color4f, mode: skia.BlendMode = BlendMode.kSrcOver) -&gt; None</p>
+<li><p>drawColor(self: skia.Canvas, color: skia.Color4f, mode: skia.BlendMode = &lt;BlendMode.kSrcOver: 3&gt;) -&gt; None</p>
 <blockquote>
 <div><p>Fills clip with color color.</p>
 <p>mode determines how ARGB is combined with destination.</p>
@@ -1595,7 +1595,7 @@ sides</p></li>
 <code class="sig-prename descclassname">Canvas.</code><code class="sig-name descname">drawImageRect</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span><span class="n">args</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#skia.Canvas.drawImageRect" title="Permalink to this definition">¶</a></dt>
 <dd><p>Overloaded function.</p>
 <ol class="arabic">
-<li><p>drawImageRect(self: skia.Canvas, image: skia.Image, src: skia.Rect, dst: skia.Rect, paint: skia.Paint = None, constraint: skia.Canvas.SrcRectConstraint = SrcRectConstraint.kStrict_SrcRectConstraint) -&gt; None</p>
+<li><p>drawImageRect(self: skia.Canvas, image: skia.Image, src: skia.Rect, dst: skia.Rect, paint: skia.Paint = None, constraint: skia.Canvas.SrcRectConstraint = &lt;SrcRectConstraint.kStrict_SrcRectConstraint: 0&gt;) -&gt; None</p>
 <blockquote>
 <div><p>Draws <a class="reference internal" href="skia.Rect.html#skia.Rect" title="skia.Rect"><code class="xref py py-class docutils literal notranslate"><span class="pre">Rect</span></code></a> src of <a class="reference internal" href="skia.Image.html#skia.Image" title="skia.Image"><code class="xref py py-class docutils literal notranslate"><span class="pre">Image</span></code></a> image, scaled and
 translated to fill <a class="reference internal" href="skia.Rect.html#skia.Rect" title="skia.Rect"><code class="xref py py-class docutils literal notranslate"><span class="pre">Rect</span></code></a> dst.</p>
@@ -1640,7 +1640,7 @@ nullptr</p>
 </dl>
 </div></blockquote>
 </li>
-<li><p>drawImageRect(self: skia.Canvas, image: skia.Image, isrc: skia.IRect, dst: skia.Rect, paint: skia.Paint = None, constraint: skia.Canvas.SrcRectConstraint = SrcRectConstraint.kStrict_SrcRectConstraint) -&gt; None</p>
+<li><p>drawImageRect(self: skia.Canvas, image: skia.Image, isrc: skia.IRect, dst: skia.Rect, paint: skia.Paint = None, constraint: skia.Canvas.SrcRectConstraint = &lt;SrcRectConstraint.kStrict_SrcRectConstraint: 0&gt;) -&gt; None</p>
 <blockquote>
 <div><p>Draws <a class="reference internal" href="skia.IRect.html#skia.IRect" title="skia.IRect"><code class="xref py py-class docutils literal notranslate"><span class="pre">IRect</span></code></a> isrc of <a class="reference internal" href="skia.Image.html#skia.Image" title="skia.Image"><code class="xref py py-class docutils literal notranslate"><span class="pre">Image</span></code></a> image, scaled and
 translated to fill <a class="reference internal" href="skia.Rect.html#skia.Rect" title="skia.Rect"><code class="xref py py-class docutils literal notranslate"><span class="pre">Rect</span></code></a> dst.</p>
@@ -2177,7 +2177,7 @@ size, typeface, and so on</p></li>
 
 <dl class="py method">
 <dt id="skia.Canvas.drawVertices">
-<code class="sig-prename descclassname">Canvas.</code><code class="sig-name descname">drawVertices</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Canvas" title="skia.Canvas">skia.Canvas</a></span></em>, <em class="sig-param"><span class="n">vertices</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.Vertices.html#skia.Vertices" title="skia.Vertices">skia.Vertices</a></span></em>, <em class="sig-param"><span class="n">paint</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.Paint.html#skia.Paint" title="skia.Paint">skia.Paint</a></span></em>, <em class="sig-param"><span class="n">mode</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.BlendMode.html#skia.BlendMode" title="skia.BlendMode">skia.BlendMode</a></span> <span class="o">=</span> <span class="default_value">BlendMode.kModulate</span></em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#skia.Canvas.drawVertices" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">Canvas.</code><code class="sig-name descname">drawVertices</code><span class="sig-paren">(</span><em class="sig-param">self: skia.Canvas</em>, <em class="sig-param">vertices: skia.Vertices</em>, <em class="sig-param">paint: skia.Paint</em>, <em class="sig-param">mode: skia.BlendMode = &lt;BlendMode.kModulate: 13&gt;</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#skia.Canvas.drawVertices" title="Permalink to this definition">¶</a></dt>
 <dd><p>Draws <a class="reference internal" href="skia.Vertices.html#skia.Vertices" title="skia.Vertices"><code class="xref py py-class docutils literal notranslate"><span class="pre">Vertices</span></code></a> vertices, a triangle mesh, using clip and
 <a class="reference internal" href="skia.Matrix.html#skia.Matrix" title="skia.Matrix"><code class="xref py py-class docutils literal notranslate"><span class="pre">Matrix</span></code></a>. If paint contains an <a class="reference internal" href="skia.Shader.html#skia.Shader" title="skia.Shader"><code class="xref py py-class docutils literal notranslate"><span class="pre">Shader</span></code></a> and vertices
 does not contain texCoords, the shader is mapped using the vertices’
@@ -2945,7 +2945,7 @@ transforming the result with <a class="reference internal" href="skia.Matrix.htm
 
 <dl class="py method">
 <dt id="skia.Canvas.toarray">
-<code class="sig-prename descclassname">Canvas.</code><code class="sig-name descname">toarray</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Canvas" title="skia.Canvas">skia.Canvas</a></span></em>, <em class="sig-param"><span class="n">srcX</span><span class="p">:</span> <span class="n">int</span> <span class="o">=</span> <span class="default_value">0</span></em>, <em class="sig-param"><span class="n">srcY</span><span class="p">:</span> <span class="n">int</span> <span class="o">=</span> <span class="default_value">0</span></em>, <em class="sig-param"><span class="n">colorType</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.ColorType.html#skia.ColorType" title="skia.ColorType">skia.ColorType</a></span> <span class="o">=</span> <span class="default_value">ColorType.kUnknown_ColorType</span></em>, <em class="sig-param"><span class="n">alphaType</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.AlphaType.html#skia.AlphaType" title="skia.AlphaType">skia.AlphaType</a></span> <span class="o">=</span> <span class="default_value">AlphaType.kLastEnum_AlphaType</span></em>, <em class="sig-param"><span class="n">colorSpace</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.ColorSpace.html#skia.ColorSpace" title="skia.ColorSpace">skia.ColorSpace</a></span> <span class="o">=</span> <span class="default_value">None</span></em><span class="sig-paren">)</span> &#x2192; array<a class="headerlink" href="#skia.Canvas.toarray" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">Canvas.</code><code class="sig-name descname">toarray</code><span class="sig-paren">(</span><em class="sig-param">self: skia.Canvas</em>, <em class="sig-param">srcX: int = 0</em>, <em class="sig-param">srcY: int = 0</em>, <em class="sig-param">colorType: skia.ColorType = &lt;ColorType.kUnknown_ColorType: 0&gt;</em>, <em class="sig-param">alphaType: skia.AlphaType = &lt;AlphaType.kUnpremul_AlphaType: 3&gt;</em>, <em class="sig-param">colorSpace: skia.ColorSpace = None</em><span class="sig-paren">)</span> &#x2192; numpy.ndarray<a class="headerlink" href="#skia.Canvas.toarray" title="Permalink to this definition">¶</a></dt>
 <dd><p>Exports a <code class="docutils literal notranslate"><span class="pre">numpy.ndarray</span></code>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -3104,77 +3104,77 @@ negative</p>
 <h2>Attributes<a class="headerlink" href="#attributes" title="Permalink to this headline">¶</a></h2>
 <dl class="py attribute">
 <dt id="skia.Canvas.kAll_QuadAAFlags">
-<code class="sig-prename descclassname">Canvas.</code><code class="sig-name descname">kAll_QuadAAFlags</code><em class="property"> = QuadAAFlags.kAll_QuadAAFlags</em><a class="headerlink" href="#skia.Canvas.kAll_QuadAAFlags" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">Canvas.</code><code class="sig-name descname">kAll_QuadAAFlags</code><em class="property"> = &lt;QuadAAFlags.kAll_QuadAAFlags: 15&gt;</em><a class="headerlink" href="#skia.Canvas.kAll_QuadAAFlags" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt id="skia.Canvas.kBottom_QuadAAFlag">
-<code class="sig-prename descclassname">Canvas.</code><code class="sig-name descname">kBottom_QuadAAFlag</code><em class="property"> = QuadAAFlags.kBottom_QuadAAFlag</em><a class="headerlink" href="#skia.Canvas.kBottom_QuadAAFlag" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">Canvas.</code><code class="sig-name descname">kBottom_QuadAAFlag</code><em class="property"> = &lt;QuadAAFlags.kBottom_QuadAAFlag: 8&gt;</em><a class="headerlink" href="#skia.Canvas.kBottom_QuadAAFlag" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt id="skia.Canvas.kF16ColorType">
-<code class="sig-prename descclassname">Canvas.</code><code class="sig-name descname">kF16ColorType</code><em class="property"> = SaveLayerFlags.kF16ColorType</em><a class="headerlink" href="#skia.Canvas.kF16ColorType" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">Canvas.</code><code class="sig-name descname">kF16ColorType</code><em class="property"> = &lt;SaveLayerFlags.kF16ColorType: 16&gt;</em><a class="headerlink" href="#skia.Canvas.kF16ColorType" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt id="skia.Canvas.kFast_SrcRectConstraint">
-<code class="sig-prename descclassname">Canvas.</code><code class="sig-name descname">kFast_SrcRectConstraint</code><em class="property"> = SrcRectConstraint.kFast_SrcRectConstraint</em><a class="headerlink" href="#skia.Canvas.kFast_SrcRectConstraint" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">Canvas.</code><code class="sig-name descname">kFast_SrcRectConstraint</code><em class="property"> = &lt;SrcRectConstraint.kFast_SrcRectConstraint: 1&gt;</em><a class="headerlink" href="#skia.Canvas.kFast_SrcRectConstraint" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt id="skia.Canvas.kInitWithPrevious_SaveLayerFlag">
-<code class="sig-prename descclassname">Canvas.</code><code class="sig-name descname">kInitWithPrevious_SaveLayerFlag</code><em class="property"> = SaveLayerFlags.kInitWithPrevious_SaveLayerFlag</em><a class="headerlink" href="#skia.Canvas.kInitWithPrevious_SaveLayerFlag" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">Canvas.</code><code class="sig-name descname">kInitWithPrevious_SaveLayerFlag</code><em class="property"> = &lt;SaveLayerFlags.kInitWithPrevious_SaveLayerFlag: 4&gt;</em><a class="headerlink" href="#skia.Canvas.kInitWithPrevious_SaveLayerFlag" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt id="skia.Canvas.kLeft_QuadAAFlag">
-<code class="sig-prename descclassname">Canvas.</code><code class="sig-name descname">kLeft_QuadAAFlag</code><em class="property"> = QuadAAFlags.kLeft_QuadAAFlag</em><a class="headerlink" href="#skia.Canvas.kLeft_QuadAAFlag" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">Canvas.</code><code class="sig-name descname">kLeft_QuadAAFlag</code><em class="property"> = &lt;QuadAAFlags.kLeft_QuadAAFlag: 1&gt;</em><a class="headerlink" href="#skia.Canvas.kLeft_QuadAAFlag" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt id="skia.Canvas.kLines_PointMode">
-<code class="sig-prename descclassname">Canvas.</code><code class="sig-name descname">kLines_PointMode</code><em class="property"> = PointMode.kLines_PointMode</em><a class="headerlink" href="#skia.Canvas.kLines_PointMode" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">Canvas.</code><code class="sig-name descname">kLines_PointMode</code><em class="property"> = &lt;PointMode.kLines_PointMode: 1&gt;</em><a class="headerlink" href="#skia.Canvas.kLines_PointMode" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt id="skia.Canvas.kMaskAgainstCoverage_EXPERIMENTAL_DONT_USE_SaveLayerFlag">
-<code class="sig-prename descclassname">Canvas.</code><code class="sig-name descname">kMaskAgainstCoverage_EXPERIMENTAL_DONT_USE_SaveLayerFlag</code><em class="property"> = SaveLayerFlags.kMaskAgainstCoverage_EXPERIMENTAL_DONT_USE_SaveLayerFlag</em><a class="headerlink" href="#skia.Canvas.kMaskAgainstCoverage_EXPERIMENTAL_DONT_USE_SaveLayerFlag" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">Canvas.</code><code class="sig-name descname">kMaskAgainstCoverage_EXPERIMENTAL_DONT_USE_SaveLayerFlag</code><em class="property"> = &lt;SaveLayerFlags.kMaskAgainstCoverage_EXPERIMENTAL_DONT_USE_SaveLayerFlag: 8&gt;</em><a class="headerlink" href="#skia.Canvas.kMaskAgainstCoverage_EXPERIMENTAL_DONT_USE_SaveLayerFlag" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt id="skia.Canvas.kNone_QuadAAFlags">
-<code class="sig-prename descclassname">Canvas.</code><code class="sig-name descname">kNone_QuadAAFlags</code><em class="property"> = QuadAAFlags.kNone_QuadAAFlags</em><a class="headerlink" href="#skia.Canvas.kNone_QuadAAFlags" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">Canvas.</code><code class="sig-name descname">kNone_QuadAAFlags</code><em class="property"> = &lt;QuadAAFlags.kNone_QuadAAFlags: 0&gt;</em><a class="headerlink" href="#skia.Canvas.kNone_QuadAAFlags" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt id="skia.Canvas.kPoints_PointMode">
-<code class="sig-prename descclassname">Canvas.</code><code class="sig-name descname">kPoints_PointMode</code><em class="property"> = PointMode.kPoints_PointMode</em><a class="headerlink" href="#skia.Canvas.kPoints_PointMode" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">Canvas.</code><code class="sig-name descname">kPoints_PointMode</code><em class="property"> = &lt;PointMode.kPoints_PointMode: 0&gt;</em><a class="headerlink" href="#skia.Canvas.kPoints_PointMode" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt id="skia.Canvas.kPolygon_PointMode">
-<code class="sig-prename descclassname">Canvas.</code><code class="sig-name descname">kPolygon_PointMode</code><em class="property"> = PointMode.kPolygon_PointMode</em><a class="headerlink" href="#skia.Canvas.kPolygon_PointMode" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">Canvas.</code><code class="sig-name descname">kPolygon_PointMode</code><em class="property"> = &lt;PointMode.kPolygon_PointMode: 2&gt;</em><a class="headerlink" href="#skia.Canvas.kPolygon_PointMode" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt id="skia.Canvas.kPreserveLCDText_SaveLayerFlag">
-<code class="sig-prename descclassname">Canvas.</code><code class="sig-name descname">kPreserveLCDText_SaveLayerFlag</code><em class="property"> = SaveLayerFlags.kPreserveLCDText_SaveLayerFlag</em><a class="headerlink" href="#skia.Canvas.kPreserveLCDText_SaveLayerFlag" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">Canvas.</code><code class="sig-name descname">kPreserveLCDText_SaveLayerFlag</code><em class="property"> = &lt;SaveLayerFlags.kPreserveLCDText_SaveLayerFlag: 2&gt;</em><a class="headerlink" href="#skia.Canvas.kPreserveLCDText_SaveLayerFlag" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt id="skia.Canvas.kRight_QuadAAFlag">
-<code class="sig-prename descclassname">Canvas.</code><code class="sig-name descname">kRight_QuadAAFlag</code><em class="property"> = QuadAAFlags.kRight_QuadAAFlag</em><a class="headerlink" href="#skia.Canvas.kRight_QuadAAFlag" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">Canvas.</code><code class="sig-name descname">kRight_QuadAAFlag</code><em class="property"> = &lt;QuadAAFlags.kRight_QuadAAFlag: 4&gt;</em><a class="headerlink" href="#skia.Canvas.kRight_QuadAAFlag" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt id="skia.Canvas.kStrict_SrcRectConstraint">
-<code class="sig-prename descclassname">Canvas.</code><code class="sig-name descname">kStrict_SrcRectConstraint</code><em class="property"> = SrcRectConstraint.kStrict_SrcRectConstraint</em><a class="headerlink" href="#skia.Canvas.kStrict_SrcRectConstraint" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">Canvas.</code><code class="sig-name descname">kStrict_SrcRectConstraint</code><em class="property"> = &lt;SrcRectConstraint.kStrict_SrcRectConstraint: 0&gt;</em><a class="headerlink" href="#skia.Canvas.kStrict_SrcRectConstraint" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt id="skia.Canvas.kTop_QuadAAFlag">
-<code class="sig-prename descclassname">Canvas.</code><code class="sig-name descname">kTop_QuadAAFlag</code><em class="property"> = QuadAAFlags.kTop_QuadAAFlag</em><a class="headerlink" href="#skia.Canvas.kTop_QuadAAFlag" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">Canvas.</code><code class="sig-name descname">kTop_QuadAAFlag</code><em class="property"> = &lt;QuadAAFlags.kTop_QuadAAFlag: 2&gt;</em><a class="headerlink" href="#skia.Canvas.kTop_QuadAAFlag" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </div>

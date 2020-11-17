@@ -588,7 +588,7 @@ text</p>
 
 <dl class="py method">
 <dt id="skia.Font.countText">
-<code class="sig-prename descclassname">Font.</code><code class="sig-name descname">countText</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Font" title="skia.Font">skia.Font</a></span></em>, <em class="sig-param"><span class="n">text</span><span class="p">:</span> <span class="n">str</span></em>, <em class="sig-param"><span class="n">encoding</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.TextEncoding.html#skia.TextEncoding" title="skia.TextEncoding">skia.TextEncoding</a></span> <span class="o">=</span> <span class="default_value">TextEncoding.kUTF8</span></em><span class="sig-paren">)</span> &#x2192; int<a class="headerlink" href="#skia.Font.countText" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">Font.</code><code class="sig-name descname">countText</code><span class="sig-paren">(</span><em class="sig-param">self: skia.Font</em>, <em class="sig-param">text: str</em>, <em class="sig-param">encoding: skia.TextEncoding = &lt;TextEncoding.kUTF8: 0&gt;</em><span class="sig-paren">)</span> &#x2192; int<a class="headerlink" href="#skia.Font.countText" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns number of glyphs represented by text.</p>
 <p>If encoding is <a class="reference internal" href="skia.TextEncoding.html#skia.TextEncoding.kUTF8" title="skia.TextEncoding.kUTF8"><code class="xref py py-attr docutils literal notranslate"><span class="pre">TextEncoding.kUTF8</span></code></a>,
 <a class="reference internal" href="skia.TextEncoding.html#skia.TextEncoding.kUTF16" title="skia.TextEncoding.kUTF16"><code class="xref py py-attr docutils literal notranslate"><span class="pre">TextEncoding.kUTF16</span></code></a>, or <a class="reference internal" href="skia.TextEncoding.html#skia.TextEncoding.kUTF32" title="skia.TextEncoding.kUTF32"><code class="xref py py-attr docutils literal notranslate"><span class="pre">TextEncoding.kUTF32</span></code></a>; then
@@ -925,7 +925,7 @@ specified size.</p>
 
 <dl class="py method">
 <dt id="skia.Font.measureText">
-<code class="sig-prename descclassname">Font.</code><code class="sig-name descname">measureText</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Font" title="skia.Font">skia.Font</a></span></em>, <em class="sig-param"><span class="n">text</span><span class="p">:</span> <span class="n">str</span></em>, <em class="sig-param"><span class="n">encoding</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.TextEncoding.html#skia.TextEncoding" title="skia.TextEncoding">skia.TextEncoding</a></span> <span class="o">=</span> <span class="default_value">TextEncoding.kUTF8</span></em>, <em class="sig-param"><span class="n">bounds</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.Rect.html#skia.Rect" title="skia.Rect">skia.Rect</a></span> <span class="o">=</span> <span class="default_value">None</span></em>, <em class="sig-param"><span class="n">paint</span><span class="p">:</span> <span class="n">SkPaint</span> <span class="o">=</span> <span class="default_value">None</span></em><span class="sig-paren">)</span> &#x2192; float<a class="headerlink" href="#skia.Font.measureText" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">Font.</code><code class="sig-name descname">measureText</code><span class="sig-paren">(</span><em class="sig-param">self: skia.Font</em>, <em class="sig-param">text: str</em>, <em class="sig-param">encoding: skia.TextEncoding = &lt;TextEncoding.kUTF8: 0&gt;</em>, <em class="sig-param">bounds: skia.Rect = None</em>, <em class="sig-param">paint: SkPaint = None</em><span class="sig-paren">)</span> &#x2192; float<a class="headerlink" href="#skia.Font.measureText" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the advance width of text.</p>
 <p>The advance is the normal distance to move before drawing additional
 text. Returns the bounding box of text if bounds is not nullptr. paint
@@ -1109,7 +1109,7 @@ Increments tf <a class="reference internal" href="skia.RefCnt.html#skia.RefCnt" 
 
 <dl class="py method">
 <dt id="skia.Font.textToGlyphs">
-<code class="sig-prename descclassname">Font.</code><code class="sig-name descname">textToGlyphs</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Font" title="skia.Font">skia.Font</a></span></em>, <em class="sig-param"><span class="n">text</span><span class="p">:</span> <span class="n">str</span></em>, <em class="sig-param"><span class="n">encoding</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.TextEncoding.html#skia.TextEncoding" title="skia.TextEncoding">skia.TextEncoding</a></span> <span class="o">=</span> <span class="default_value">TextEncoding.kUTF8</span></em><span class="sig-paren">)</span> &#x2192; List<span class="p">[</span>int<span class="p">]</span><a class="headerlink" href="#skia.Font.textToGlyphs" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">Font.</code><code class="sig-name descname">textToGlyphs</code><span class="sig-paren">(</span><em class="sig-param">self: skia.Font</em>, <em class="sig-param">text: str</em>, <em class="sig-param">encoding: skia.TextEncoding = &lt;TextEncoding.kUTF8: 0&gt;</em><span class="sig-paren">)</span> &#x2192; List<span class="p">[</span>int<span class="p">]</span><a class="headerlink" href="#skia.Font.textToGlyphs" title="Permalink to this definition">¶</a></dt>
 <dd><p>Converts text into glyph indices.</p>
 <p>Returns the number of glyph indices represented by text.
 <a class="reference internal" href="skia.TextEncoding.html#skia.TextEncoding" title="skia.TextEncoding"><code class="xref py py-class docutils literal notranslate"><span class="pre">TextEncoding</span></code></a> specifies how text represents characters or
@@ -1158,17 +1158,17 @@ maps characters not found in the <a class="reference internal" href="skia.Typefa
 <h2>Attributes<a class="headerlink" href="#attributes" title="Permalink to this headline">¶</a></h2>
 <dl class="py attribute">
 <dt id="skia.Font.kAlias">
-<code class="sig-prename descclassname">Font.</code><code class="sig-name descname">kAlias</code><em class="property"> = Edging.kAlias</em><a class="headerlink" href="#skia.Font.kAlias" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">Font.</code><code class="sig-name descname">kAlias</code><em class="property"> = &lt;Edging.kAlias: 0&gt;</em><a class="headerlink" href="#skia.Font.kAlias" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt id="skia.Font.kAntiAlias">
-<code class="sig-prename descclassname">Font.</code><code class="sig-name descname">kAntiAlias</code><em class="property"> = Edging.kAntiAlias</em><a class="headerlink" href="#skia.Font.kAntiAlias" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">Font.</code><code class="sig-name descname">kAntiAlias</code><em class="property"> = &lt;Edging.kAntiAlias: 1&gt;</em><a class="headerlink" href="#skia.Font.kAntiAlias" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt id="skia.Font.kSubpixelAntiAlias">
-<code class="sig-prename descclassname">Font.</code><code class="sig-name descname">kSubpixelAntiAlias</code><em class="property"> = Edging.kSubpixelAntiAlias</em><a class="headerlink" href="#skia.Font.kSubpixelAntiAlias" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">Font.</code><code class="sig-name descname">kSubpixelAntiAlias</code><em class="property"> = &lt;Edging.kSubpixelAntiAlias: 2&gt;</em><a class="headerlink" href="#skia.Font.kSubpixelAntiAlias" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </div>

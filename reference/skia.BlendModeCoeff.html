@@ -354,17 +354,17 @@ the src or dst alpha, or functions of the src or dst color.</p>
 </div></blockquote>
 <p>Members:</p>
 <blockquote>
-<div><p>kOne : 1</p>
-<p>kISA : inverse src alpha (i.e. 1 - sa)</p>
-<p>kSA : src alpha</p>
-<p>kCoeffCount</p>
-<p>kDA : dst alpha</p>
+<div><p>kZero : 0</p>
+<p>kOne : 1</p>
 <p>kSC : src color</p>
-<p>kIDA : inverse dst alpha (i.e. 1 - da)</p>
 <p>kISC : inverse src color (i.e. 1 - sc)</p>
 <p>kDC : dst color</p>
-<p>kZero : 0</p>
 <p>kIDC : inverse dst color (i.e. 1 - dc)</p>
+<p>kSA : src alpha</p>
+<p>kISA : inverse src alpha (i.e. 1 - sa)</p>
+<p>kDA : dst alpha</p>
+<p>kIDA : inverse dst alpha (i.e. 1 - da)</p>
+<p>kCoeffCount</p>
 </div></blockquote>
 <p class="rubric">Methods</p>
 <table class="longtable docutils align-default">
@@ -419,7 +419,7 @@ the src or dst alpha, or functions of the src or dst color.</p>
 <td><p></p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#skia.BlendModeCoeff.name" title="skia.BlendModeCoeff.name"><code class="xref py py-obj docutils literal notranslate"><span class="pre">name</span></code></a></p></td>
-<td><p>handle) -&gt; str</p></td>
+<td><p></p></td>
 </tr>
 </tbody>
 </table>
@@ -429,7 +429,7 @@ the src or dst alpha, or functions of the src or dst color.</p>
 <h2>Methods<a class="headerlink" href="#methods" title="Permalink to this headline">¶</a></h2>
 <dl class="py method">
 <dt id="skia.BlendModeCoeff.__init__">
-<code class="sig-prename descclassname">BlendModeCoeff.</code><code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.BlendModeCoeff" title="skia.BlendModeCoeff">skia.BlendModeCoeff</a></span></em>, <em class="sig-param"><span class="n">arg0</span><span class="p">:</span> <span class="n">int</span></em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#skia.BlendModeCoeff.__init__" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">BlendModeCoeff.</code><code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.BlendModeCoeff" title="skia.BlendModeCoeff">skia.BlendModeCoeff</a></span></em>, <em class="sig-param"><span class="n">value</span><span class="p">:</span> <span class="n">int</span></em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#skia.BlendModeCoeff.__init__" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </div>
@@ -437,69 +437,63 @@ the src or dst alpha, or functions of the src or dst color.</p>
 <h2>Attributes<a class="headerlink" href="#attributes" title="Permalink to this headline">¶</a></h2>
 <dl class="py attribute">
 <dt id="skia.BlendModeCoeff.kCoeffCount">
-<code class="sig-prename descclassname">BlendModeCoeff.</code><code class="sig-name descname">kCoeffCount</code><em class="property"> = BlendModeCoeff.kCoeffCount</em><a class="headerlink" href="#skia.BlendModeCoeff.kCoeffCount" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">BlendModeCoeff.</code><code class="sig-name descname">kCoeffCount</code><em class="property"> = &lt;BlendModeCoeff.kCoeffCount: 10&gt;</em><a class="headerlink" href="#skia.BlendModeCoeff.kCoeffCount" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt id="skia.BlendModeCoeff.kDA">
-<code class="sig-prename descclassname">BlendModeCoeff.</code><code class="sig-name descname">kDA</code><em class="property"> = BlendModeCoeff.kDA</em><a class="headerlink" href="#skia.BlendModeCoeff.kDA" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">BlendModeCoeff.</code><code class="sig-name descname">kDA</code><em class="property"> = &lt;BlendModeCoeff.kDA: 8&gt;</em><a class="headerlink" href="#skia.BlendModeCoeff.kDA" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt id="skia.BlendModeCoeff.kDC">
-<code class="sig-prename descclassname">BlendModeCoeff.</code><code class="sig-name descname">kDC</code><em class="property"> = BlendModeCoeff.kDC</em><a class="headerlink" href="#skia.BlendModeCoeff.kDC" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">BlendModeCoeff.</code><code class="sig-name descname">kDC</code><em class="property"> = &lt;BlendModeCoeff.kDC: 4&gt;</em><a class="headerlink" href="#skia.BlendModeCoeff.kDC" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt id="skia.BlendModeCoeff.kIDA">
-<code class="sig-prename descclassname">BlendModeCoeff.</code><code class="sig-name descname">kIDA</code><em class="property"> = BlendModeCoeff.kIDA</em><a class="headerlink" href="#skia.BlendModeCoeff.kIDA" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">BlendModeCoeff.</code><code class="sig-name descname">kIDA</code><em class="property"> = &lt;BlendModeCoeff.kIDA: 9&gt;</em><a class="headerlink" href="#skia.BlendModeCoeff.kIDA" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt id="skia.BlendModeCoeff.kIDC">
-<code class="sig-prename descclassname">BlendModeCoeff.</code><code class="sig-name descname">kIDC</code><em class="property"> = BlendModeCoeff.kIDC</em><a class="headerlink" href="#skia.BlendModeCoeff.kIDC" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">BlendModeCoeff.</code><code class="sig-name descname">kIDC</code><em class="property"> = &lt;BlendModeCoeff.kIDC: 5&gt;</em><a class="headerlink" href="#skia.BlendModeCoeff.kIDC" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt id="skia.BlendModeCoeff.kISA">
-<code class="sig-prename descclassname">BlendModeCoeff.</code><code class="sig-name descname">kISA</code><em class="property"> = BlendModeCoeff.kISA</em><a class="headerlink" href="#skia.BlendModeCoeff.kISA" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">BlendModeCoeff.</code><code class="sig-name descname">kISA</code><em class="property"> = &lt;BlendModeCoeff.kISA: 7&gt;</em><a class="headerlink" href="#skia.BlendModeCoeff.kISA" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt id="skia.BlendModeCoeff.kISC">
-<code class="sig-prename descclassname">BlendModeCoeff.</code><code class="sig-name descname">kISC</code><em class="property"> = BlendModeCoeff.kISC</em><a class="headerlink" href="#skia.BlendModeCoeff.kISC" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">BlendModeCoeff.</code><code class="sig-name descname">kISC</code><em class="property"> = &lt;BlendModeCoeff.kISC: 3&gt;</em><a class="headerlink" href="#skia.BlendModeCoeff.kISC" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt id="skia.BlendModeCoeff.kOne">
-<code class="sig-prename descclassname">BlendModeCoeff.</code><code class="sig-name descname">kOne</code><em class="property"> = BlendModeCoeff.kOne</em><a class="headerlink" href="#skia.BlendModeCoeff.kOne" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">BlendModeCoeff.</code><code class="sig-name descname">kOne</code><em class="property"> = &lt;BlendModeCoeff.kOne: 1&gt;</em><a class="headerlink" href="#skia.BlendModeCoeff.kOne" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt id="skia.BlendModeCoeff.kSA">
-<code class="sig-prename descclassname">BlendModeCoeff.</code><code class="sig-name descname">kSA</code><em class="property"> = BlendModeCoeff.kSA</em><a class="headerlink" href="#skia.BlendModeCoeff.kSA" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">BlendModeCoeff.</code><code class="sig-name descname">kSA</code><em class="property"> = &lt;BlendModeCoeff.kSA: 6&gt;</em><a class="headerlink" href="#skia.BlendModeCoeff.kSA" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt id="skia.BlendModeCoeff.kSC">
-<code class="sig-prename descclassname">BlendModeCoeff.</code><code class="sig-name descname">kSC</code><em class="property"> = BlendModeCoeff.kSC</em><a class="headerlink" href="#skia.BlendModeCoeff.kSC" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">BlendModeCoeff.</code><code class="sig-name descname">kSC</code><em class="property"> = &lt;BlendModeCoeff.kSC: 2&gt;</em><a class="headerlink" href="#skia.BlendModeCoeff.kSC" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt id="skia.BlendModeCoeff.kZero">
-<code class="sig-prename descclassname">BlendModeCoeff.</code><code class="sig-name descname">kZero</code><em class="property"> = BlendModeCoeff.kZero</em><a class="headerlink" href="#skia.BlendModeCoeff.kZero" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">BlendModeCoeff.</code><code class="sig-name descname">kZero</code><em class="property"> = &lt;BlendModeCoeff.kZero: 0&gt;</em><a class="headerlink" href="#skia.BlendModeCoeff.kZero" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt id="skia.BlendModeCoeff.name">
 <code class="sig-prename descclassname">BlendModeCoeff.</code><code class="sig-name descname">name</code><a class="headerlink" href="#skia.BlendModeCoeff.name" title="Permalink to this definition">¶</a></dt>
-<dd><p>handle) -&gt; str</p>
-<dl class="field-list simple">
-<dt class="field-odd">Type</dt>
-<dd class="field-odd"><p>(self</p>
-</dd>
-</dl>
-</dd></dl>
+<dd></dd></dl>
 
 </div>
 </div>

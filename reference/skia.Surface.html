@@ -800,7 +800,7 @@ nullptr</p>
 <em class="property">static </em><code class="sig-prename descclassname">Surface.</code><code class="sig-name descname">MakeRenderTarget</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span><span class="n">args</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#skia.Surface.MakeRenderTarget" title="Permalink to this definition">¶</a></dt>
 <dd><p>Overloaded function.</p>
 <ol class="arabic">
-<li><p>MakeRenderTarget(context: skia.GrRecordingContext, budgeted: skia.Budgeted, imageInfo: skia.ImageInfo, sampleCount: int = 0, surfaceOrigin: skia.GrSurfaceOrigin = GrSurfaceOrigin.kBottomLeft_GrSurfaceOrigin, surfaceProps: skia.SurfaceProps = None, shouldCreateWithMips: bool = False) -&gt; skia.Surface</p>
+<li><p>MakeRenderTarget(context: skia.GrRecordingContext, budgeted: skia.Budgeted, imageInfo: skia.ImageInfo, sampleCount: int = 0, surfaceOrigin: skia.GrSurfaceOrigin = &lt;GrSurfaceOrigin.kBottomLeft_GrSurfaceOrigin: 1&gt;, surfaceProps: skia.SurfaceProps = None, shouldCreateWithMips: bool = False) -&gt; skia.Surface</p>
 <blockquote>
 <div><p>Returns <a class="reference internal" href="#skia.Surface" title="skia.Surface"><code class="xref py py-class docutils literal notranslate"><span class="pre">Surface</span></code></a> on GPU indicated by context.</p>
 <p>Allocates memory for pixels, based on the width, height, and
@@ -938,7 +938,7 @@ nullptr</p>
 <div><p>See <a class="reference internal" href="#skia.Surface.MakeRasterN32Premul" title="skia.Surface.MakeRasterN32Premul"><code class="xref py py-meth docutils literal notranslate"><span class="pre">MakeRasterN32Premul()</span></code></a></p>
 </div></blockquote>
 </li>
-<li><p>__init__(self: skia.Surface, array: array, colorType: skia.ColorType = ColorType.kRGBA_8888_ColorType, alphaType: skia.AlphaType = AlphaType.kLastEnum_AlphaType, colorSpace: skia.ColorSpace = None, surfaceProps: skia.SurfaceProps = None) -&gt; None</p>
+<li><p>__init__(self: skia.Surface, array: numpy.ndarray, colorType: skia.ColorType = &lt;ColorType.kRGBA_8888_ColorType: 4&gt;, alphaType: skia.AlphaType = &lt;AlphaType.kUnpremul_AlphaType: 3&gt;, colorSpace: skia.ColorSpace = None, surfaceProps: skia.SurfaceProps = None) -&gt; None</p>
 <blockquote>
 <div><p>Create a raster surface on numpy array.</p>
 <p>Input array must have compatible shape with the given color type.</p>
@@ -1636,7 +1636,7 @@ destination.</p>
 
 <dl class="py method">
 <dt id="skia.Surface.replaceBackendTexture">
-<code class="sig-prename descclassname">Surface.</code><code class="sig-name descname">replaceBackendTexture</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Surface" title="skia.Surface">skia.Surface</a></span></em>, <em class="sig-param"><span class="n">backendTexture</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.GrBackendTexture.html#skia.GrBackendTexture" title="skia.GrBackendTexture">skia.GrBackendTexture</a></span></em>, <em class="sig-param"><span class="n">origin</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.GrSurfaceOrigin.html#skia.GrSurfaceOrigin" title="skia.GrSurfaceOrigin">skia.GrSurfaceOrigin</a></span></em>, <em class="sig-param"><span class="n">mode</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.Surface.ContentChangeMode.html#skia.Surface.ContentChangeMode" title="skia.Surface.ContentChangeMode">skia.Surface.ContentChangeMode</a></span> <span class="o">=</span> <span class="default_value">ContentChangeMode.kRetain_ContentChangeMode</span></em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#skia.Surface.replaceBackendTexture" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">Surface.</code><code class="sig-name descname">replaceBackendTexture</code><span class="sig-paren">(</span><em class="sig-param">self: skia.Surface</em>, <em class="sig-param">backendTexture: skia.GrBackendTexture</em>, <em class="sig-param">origin: skia.GrSurfaceOrigin</em>, <em class="sig-param">mode: skia.Surface.ContentChangeMode = &lt;ContentChangeMode.kRetain_ContentChangeMode: 1&gt;</em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#skia.Surface.replaceBackendTexture" title="Permalink to this definition">¶</a></dt>
 <dd><p>If the surface was made via <a class="reference internal" href="#skia.Surface.MakeFromBackendTexture" title="skia.Surface.MakeFromBackendTexture"><code class="xref py py-meth docutils literal notranslate"><span class="pre">MakeFromBackendTexture()</span></code></a> then it’s
 backing texture may be substituted with a different texture.</p>
 <p>The contents of the previous backing texture are copied into the new
@@ -1655,7 +1655,7 @@ replacement texture must match that of the original.</p>
 
 <dl class="py method">
 <dt id="skia.Surface.toarray">
-<code class="sig-prename descclassname">Surface.</code><code class="sig-name descname">toarray</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Surface" title="skia.Surface">skia.Surface</a></span></em>, <em class="sig-param"><span class="n">srcX</span><span class="p">:</span> <span class="n">int</span> <span class="o">=</span> <span class="default_value">0</span></em>, <em class="sig-param"><span class="n">srcY</span><span class="p">:</span> <span class="n">int</span> <span class="o">=</span> <span class="default_value">0</span></em>, <em class="sig-param"><span class="n">colorType</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.ColorType.html#skia.ColorType" title="skia.ColorType">skia.ColorType</a></span> <span class="o">=</span> <span class="default_value">ColorType.kUnknown_ColorType</span></em>, <em class="sig-param"><span class="n">alphaType</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.AlphaType.html#skia.AlphaType" title="skia.AlphaType">skia.AlphaType</a></span> <span class="o">=</span> <span class="default_value">AlphaType.kLastEnum_AlphaType</span></em>, <em class="sig-param"><span class="n">colorSpace</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.ColorSpace.html#skia.ColorSpace" title="skia.ColorSpace">skia.ColorSpace</a></span> <span class="o">=</span> <span class="default_value">None</span></em><span class="sig-paren">)</span> &#x2192; array<a class="headerlink" href="#skia.Surface.toarray" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">Surface.</code><code class="sig-name descname">toarray</code><span class="sig-paren">(</span><em class="sig-param">self: skia.Surface</em>, <em class="sig-param">srcX: int = 0</em>, <em class="sig-param">srcY: int = 0</em>, <em class="sig-param">colorType: skia.ColorType = &lt;ColorType.kUnknown_ColorType: 0&gt;</em>, <em class="sig-param">alphaType: skia.AlphaType = &lt;AlphaType.kUnpremul_AlphaType: 3&gt;</em>, <em class="sig-param">colorSpace: skia.ColorSpace = None</em><span class="sig-paren">)</span> &#x2192; numpy.ndarray<a class="headerlink" href="#skia.Surface.toarray" title="Permalink to this definition">¶</a></dt>
 <dd><p>Exports a <code class="docutils literal notranslate"><span class="pre">numpy.ndarray</span></code>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -1763,47 +1763,47 @@ may be negative</p>
 <h2>Attributes<a class="headerlink" href="#attributes" title="Permalink to this headline">¶</a></h2>
 <dl class="py attribute">
 <dt id="skia.Surface.kDiscardWrite_BackendHandleAccess">
-<code class="sig-prename descclassname">Surface.</code><code class="sig-name descname">kDiscardWrite_BackendHandleAccess</code><em class="property"> = BackendHandleAccess.kDiscardWrite_BackendHandleAccess</em><a class="headerlink" href="#skia.Surface.kDiscardWrite_BackendHandleAccess" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">Surface.</code><code class="sig-name descname">kDiscardWrite_BackendHandleAccess</code><em class="property"> = &lt;BackendHandleAccess.kDiscardWrite_BackendHandleAccess: 2&gt;</em><a class="headerlink" href="#skia.Surface.kDiscardWrite_BackendHandleAccess" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt id="skia.Surface.kDiscard_ContentChangeMode">
-<code class="sig-prename descclassname">Surface.</code><code class="sig-name descname">kDiscard_ContentChangeMode</code><em class="property"> = ContentChangeMode.kDiscard_ContentChangeMode</em><a class="headerlink" href="#skia.Surface.kDiscard_ContentChangeMode" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">Surface.</code><code class="sig-name descname">kDiscard_ContentChangeMode</code><em class="property"> = &lt;ContentChangeMode.kDiscard_ContentChangeMode: 0&gt;</em><a class="headerlink" href="#skia.Surface.kDiscard_ContentChangeMode" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt id="skia.Surface.kFlushRead_BackendHandleAccess">
-<code class="sig-prename descclassname">Surface.</code><code class="sig-name descname">kFlushRead_BackendHandleAccess</code><em class="property"> = BackendHandleAccess.kFlushRead_BackendHandleAccess</em><a class="headerlink" href="#skia.Surface.kFlushRead_BackendHandleAccess" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">Surface.</code><code class="sig-name descname">kFlushRead_BackendHandleAccess</code><em class="property"> = &lt;BackendHandleAccess.kFlushRead_BackendHandleAccess: 0&gt;</em><a class="headerlink" href="#skia.Surface.kFlushRead_BackendHandleAccess" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt id="skia.Surface.kFlushWrite_BackendHandleAccess">
-<code class="sig-prename descclassname">Surface.</code><code class="sig-name descname">kFlushWrite_BackendHandleAccess</code><em class="property"> = BackendHandleAccess.kFlushWrite_BackendHandleAccess</em><a class="headerlink" href="#skia.Surface.kFlushWrite_BackendHandleAccess" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">Surface.</code><code class="sig-name descname">kFlushWrite_BackendHandleAccess</code><em class="property"> = &lt;BackendHandleAccess.kFlushWrite_BackendHandleAccess: 1&gt;</em><a class="headerlink" href="#skia.Surface.kFlushWrite_BackendHandleAccess" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt id="skia.Surface.kLinear">
-<code class="sig-prename descclassname">Surface.</code><code class="sig-name descname">kLinear</code><em class="property"> = RescaleGamma.kLinear</em><a class="headerlink" href="#skia.Surface.kLinear" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">Surface.</code><code class="sig-name descname">kLinear</code><em class="property"> = &lt;RescaleGamma.kLinear: 1&gt;</em><a class="headerlink" href="#skia.Surface.kLinear" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt id="skia.Surface.kNoAccess">
-<code class="sig-prename descclassname">Surface.</code><code class="sig-name descname">kNoAccess</code><em class="property"> = BackendSurfaceAccess.kNoAccess</em><a class="headerlink" href="#skia.Surface.kNoAccess" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">Surface.</code><code class="sig-name descname">kNoAccess</code><em class="property"> = &lt;BackendSurfaceAccess.kNoAccess: 0&gt;</em><a class="headerlink" href="#skia.Surface.kNoAccess" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt id="skia.Surface.kPresent">
-<code class="sig-prename descclassname">Surface.</code><code class="sig-name descname">kPresent</code><em class="property"> = BackendSurfaceAccess.kPresent</em><a class="headerlink" href="#skia.Surface.kPresent" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">Surface.</code><code class="sig-name descname">kPresent</code><em class="property"> = &lt;BackendSurfaceAccess.kPresent: 1&gt;</em><a class="headerlink" href="#skia.Surface.kPresent" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt id="skia.Surface.kRetain_ContentChangeMode">
-<code class="sig-prename descclassname">Surface.</code><code class="sig-name descname">kRetain_ContentChangeMode</code><em class="property"> = ContentChangeMode.kRetain_ContentChangeMode</em><a class="headerlink" href="#skia.Surface.kRetain_ContentChangeMode" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">Surface.</code><code class="sig-name descname">kRetain_ContentChangeMode</code><em class="property"> = &lt;ContentChangeMode.kRetain_ContentChangeMode: 1&gt;</em><a class="headerlink" href="#skia.Surface.kRetain_ContentChangeMode" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt id="skia.Surface.kSrc">
-<code class="sig-prename descclassname">Surface.</code><code class="sig-name descname">kSrc</code><em class="property"> = RescaleGamma.kSrc</em><a class="headerlink" href="#skia.Surface.kSrc" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">Surface.</code><code class="sig-name descname">kSrc</code><em class="property"> = &lt;RescaleGamma.kSrc: 0&gt;</em><a class="headerlink" href="#skia.Surface.kSrc" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </div>

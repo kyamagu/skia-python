@@ -859,7 +859,7 @@ treated modulo 360</p></li>
 
 <dl class="py method">
 <dt id="skia.Path.addCircle">
-<code class="sig-prename descclassname">Path.</code><code class="sig-name descname">addCircle</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Path" title="skia.Path">skia.Path</a></span></em>, <em class="sig-param"><span class="n">x</span><span class="p">:</span> <span class="n">float</span></em>, <em class="sig-param"><span class="n">y</span><span class="p">:</span> <span class="n">float</span></em>, <em class="sig-param"><span class="n">radius</span><span class="p">:</span> <span class="n">float</span></em>, <em class="sig-param"><span class="n">dir</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.PathDirection.html#skia.PathDirection" title="skia.PathDirection">skia.PathDirection</a></span> <span class="o">=</span> <span class="default_value">PathDirection.kCW</span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="#skia.Path" title="skia.Path">skia.Path</a><a class="headerlink" href="#skia.Path.addCircle" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">Path.</code><code class="sig-name descname">addCircle</code><span class="sig-paren">(</span><em class="sig-param">self: skia.Path</em>, <em class="sig-param">x: float</em>, <em class="sig-param">y: float</em>, <em class="sig-param">radius: float</em>, <em class="sig-param">dir: skia.PathDirection = &lt;PathDirection.kCW: 0&gt;</em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="#skia.Path" title="skia.Path">skia.Path</a><a class="headerlink" href="#skia.Path.addCircle" title="Permalink to this definition">¶</a></dt>
 <dd><p>Adds circle centered at (x, y) of size radius to <a class="reference internal" href="#skia.Path" title="skia.Path"><code class="xref py py-class docutils literal notranslate"><span class="pre">Path</span></code></a>,
 appending <a class="reference internal" href="skia.PathVerb.html#skia.PathVerb.kMove" title="skia.PathVerb.kMove"><code class="xref py py-attr docutils literal notranslate"><span class="pre">PathVerb.kMove</span></code></a>, four <a class="reference internal" href="skia.PathVerb.html#skia.PathVerb.kConic" title="skia.PathVerb.kConic"><code class="xref py py-attr docutils literal notranslate"><span class="pre">PathVerb.kConic</span></code></a>,
 and <a class="reference internal" href="skia.PathVerb.html#skia.PathVerb.kClose" title="skia.PathVerb.kClose"><code class="xref py py-attr docutils literal notranslate"><span class="pre">PathVerb.kClose</span></code></a>.</p>
@@ -887,7 +887,7 @@ and <a class="reference internal" href="skia.PathVerb.html#skia.PathVerb.kClose"
 <code class="sig-prename descclassname">Path.</code><code class="sig-name descname">addOval</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span><span class="n">args</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#skia.Path.addOval" title="Permalink to this definition">¶</a></dt>
 <dd><p>Overloaded function.</p>
 <ol class="arabic">
-<li><p>addOval(self: skia.Path, oval: skia.Rect, dir: skia.PathDirection = PathDirection.kCW) -&gt; skia.Path</p>
+<li><p>addOval(self: skia.Path, oval: skia.Rect, dir: skia.PathDirection = &lt;PathDirection.kCW: 0&gt;) -&gt; skia.Path</p>
 <blockquote>
 <div><p>Adds oval to path, appending <a class="reference internal" href="#skia.Path.kMove_Verb" title="skia.Path.kMove_Verb"><code class="xref py py-attr docutils literal notranslate"><span class="pre">kMove_Verb</span></code></a>, four
 <a class="reference internal" href="#skia.Path.kConic_Verb" title="skia.Path.kConic_Verb"><code class="xref py py-attr docutils literal notranslate"><span class="pre">kConic_Verb</span></code></a>, and
@@ -944,7 +944,7 @@ continues clockwise if dir is kCW_Direction, counterclockwise if dir is
 <code class="sig-prename descclassname">Path.</code><code class="sig-name descname">addPath</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span><span class="n">args</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#skia.Path.addPath" title="Permalink to this definition">¶</a></dt>
 <dd><p>Overloaded function.</p>
 <ol class="arabic">
-<li><p>addPath(self: skia.Path, src: skia.Path, dx: float, dy: float, mode: skia.Path.AddPathMode = AddPathMode.kAppend_AddPathMode) -&gt; skia.Path</p>
+<li><p>addPath(self: skia.Path, src: skia.Path, dx: float, dy: float, mode: skia.Path.AddPathMode = &lt;AddPathMode.kAppend_AddPathMode: 0&gt;) -&gt; skia.Path</p>
 <blockquote>
 <div><p>Appends src to <a class="reference internal" href="#skia.Path" title="skia.Path"><code class="xref py py-class docutils literal notranslate"><span class="pre">Path</span></code></a>, offset by (dx, dy).</p>
 <p>If mode is <a class="reference internal" href="#skia.Path.kAppend_AddPathMode" title="skia.Path.kAppend_AddPathMode"><code class="xref py py-attr docutils literal notranslate"><span class="pre">kAppend_AddPathMode</span></code></a>, src verb array,
@@ -970,7 +970,7 @@ add</p>
 <p>refe:return: rence to <a class="reference internal" href="#skia.Path" title="skia.Path"><code class="xref py py-class docutils literal notranslate"><span class="pre">Path</span></code></a></p>
 </div></blockquote>
 </li>
-<li><p>addPath(self: skia.Path, src: skia.Path, mode: skia.Path.AddPathMode = AddPathMode.kAppend_AddPathMode) -&gt; skia.Path</p>
+<li><p>addPath(self: skia.Path, src: skia.Path, mode: skia.Path.AddPathMode = &lt;AddPathMode.kAppend_AddPathMode: 0&gt;) -&gt; skia.Path</p>
 <blockquote>
 <div><p>Appends src to <a class="reference internal" href="#skia.Path" title="skia.Path"><code class="xref py py-class docutils literal notranslate"><span class="pre">Path</span></code></a>.</p>
 <p>If mode is <a class="reference internal" href="#skia.Path.kAppend_AddPathMode" title="skia.Path.kAppend_AddPathMode"><code class="xref py py-attr docutils literal notranslate"><span class="pre">kAppend_AddPathMode</span></code></a>, src verb array,
@@ -992,7 +992,7 @@ add</p>
 </dl>
 </div></blockquote>
 </li>
-<li><p>addPath(self: skia.Path, src: skia.Path, matrix: skia.Matrix, mode: skia.Path.AddPathMode = AddPathMode.kAppend_AddPathMode) -&gt; skia.Path</p>
+<li><p>addPath(self: skia.Path, src: skia.Path, matrix: skia.Matrix, mode: skia.Path.AddPathMode = &lt;AddPathMode.kAppend_AddPathMode: 0&gt;) -&gt; skia.Path</p>
 <blockquote>
 <div><p>Appends src to <a class="reference internal" href="#skia.Path" title="skia.Path"><code class="xref py py-class docutils literal notranslate"><span class="pre">Path</span></code></a>, transformed by matrix.</p>
 <p>Transformed curves may have different verbs, <a class="reference internal" href="skia.Point.html#skia.Point" title="skia.Point"><code class="xref py py-class docutils literal notranslate"><span class="pre">Point</span></code></a>, and
@@ -1049,7 +1049,7 @@ and first <a class="reference internal" href="skia.Point.html#skia.Point" title=
 <code class="sig-prename descclassname">Path.</code><code class="sig-name descname">addRRect</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span><span class="n">args</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#skia.Path.addRRect" title="Permalink to this definition">¶</a></dt>
 <dd><p>Overloaded function.</p>
 <ol class="arabic">
-<li><p>addRRect(self: skia.Path, rrect: skia.RRect, dir: skia.PathDirection = PathDirection.kCW) -&gt; skia.Path</p>
+<li><p>addRRect(self: skia.Path, rrect: skia.RRect, dir: skia.PathDirection = &lt;PathDirection.kCW: 0&gt;) -&gt; skia.Path</p>
 <blockquote>
 <div><p>Adds rrect to <a class="reference internal" href="#skia.Path" title="skia.Path"><code class="xref py py-class docutils literal notranslate"><span class="pre">Path</span></code></a>, creating a new closed contour.</p>
 <p>If dir is <a class="reference internal" href="skia.PathDirection.html#skia.PathDirection.kCW" title="skia.PathDirection.kCW"><code class="xref py py-attr docutils literal notranslate"><span class="pre">kCW</span></code></a>, rrect starts at top-left
@@ -1101,7 +1101,7 @@ counterclockwise. start determines the first point of rrect to add.</p>
 <code class="sig-prename descclassname">Path.</code><code class="sig-name descname">addRect</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span><span class="n">args</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#skia.Path.addRect" title="Permalink to this definition">¶</a></dt>
 <dd><p>Overloaded function.</p>
 <ol class="arabic">
-<li><p>addRect(self: skia.Path, rect: skia.Rect, dir: skia.PathDirection = PathDirection.kCW) -&gt; skia.Path</p>
+<li><p>addRect(self: skia.Path, rect: skia.Rect, dir: skia.PathDirection = &lt;PathDirection.kCW: 0&gt;) -&gt; skia.Path</p>
 <blockquote>
 <div><p>Adds <a class="reference internal" href="skia.Rect.html#skia.Rect" title="skia.Rect"><code class="xref py py-class docutils literal notranslate"><span class="pre">Rect</span></code></a> to <a class="reference internal" href="#skia.Path" title="skia.Path"><code class="xref py py-class docutils literal notranslate"><span class="pre">Path</span></code></a>, appending
 <a class="reference internal" href="#skia.Path.kMove_Verb" title="skia.Path.kMove_Verb"><code class="xref py py-attr docutils literal notranslate"><span class="pre">kMove_Verb</span></code></a>, three
@@ -1148,7 +1148,7 @@ the first corner added.</p>
 </dl>
 </div></blockquote>
 </li>
-<li><p>addRect(self: skia.Path, left: float, top: float, right: float, bottom: float, dir: skia.PathDirection = PathDirection.kCW) -&gt; skia.Path</p>
+<li><p>addRect(self: skia.Path, left: float, top: float, right: float, bottom: float, dir: skia.PathDirection = &lt;PathDirection.kCW: 0&gt;) -&gt; skia.Path</p>
 <blockquote>
 <div><p>Adds <a class="reference internal" href="skia.Rect.html#skia.Rect" title="skia.Rect"><code class="xref py py-class docutils literal notranslate"><span class="pre">Rect</span></code></a> (left, top, right, bottom) to <a class="reference internal" href="#skia.Path" title="skia.Path"><code class="xref py py-class docutils literal notranslate"><span class="pre">Path</span></code></a>,
 appending <a class="reference internal" href="#skia.Path.kMove_Verb" title="skia.Path.kMove_Verb"><code class="xref py py-attr docutils literal notranslate"><span class="pre">kMove_Verb</span></code></a>, three
@@ -1188,7 +1188,7 @@ bottom-right, and top-right if dir is
 <code class="sig-prename descclassname">Path.</code><code class="sig-name descname">addRoundRect</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span><span class="n">args</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#skia.Path.addRoundRect" title="Permalink to this definition">¶</a></dt>
 <dd><p>Overloaded function.</p>
 <ol class="arabic">
-<li><p>addRoundRect(self: skia.Path, rect: skia.Rect, rx: float, ry: float, dir: skia.PathDirection = PathDirection.kCW) -&gt; skia.Path</p>
+<li><p>addRoundRect(self: skia.Path, rect: skia.Rect, rx: float, ry: float, dir: skia.PathDirection = &lt;PathDirection.kCW: 0&gt;) -&gt; skia.Path</p>
 <blockquote>
 <div><p>Appends <a class="reference internal" href="skia.RRect.html#skia.RRect" title="skia.RRect"><code class="xref py py-class docutils literal notranslate"><span class="pre">RRect</span></code></a> to <a class="reference internal" href="#skia.Path" title="skia.Path"><code class="xref py py-class docutils literal notranslate"><span class="pre">Path</span></code></a>, creating a new closed
 contour.</p>
@@ -1223,7 +1223,7 @@ the corners fit. If rx or ry is less than or equal to zero,
 </dl>
 </div></blockquote>
 </li>
-<li><p>addRoundRect(self: skia.Path, rect: skia.Rect, radii: iterable, dir: skia.PathDirection = PathDirection.kCW) -&gt; skia.Path</p>
+<li><p>addRoundRect(self: skia.Path, rect: skia.Rect, radii: Iterable, dir: skia.PathDirection = &lt;PathDirection.kCW: 0&gt;) -&gt; skia.Path</p>
 <blockquote>
 <div><p>Appends <a class="reference internal" href="skia.RRect.html#skia.RRect" title="skia.RRect"><code class="xref py py-class docutils literal notranslate"><span class="pre">RRect</span></code></a> to <a class="reference internal" href="#skia.Path" title="skia.Path"><code class="xref py py-class docutils literal notranslate"><span class="pre">Path</span></code></a>, creating a new closed
 contour.</p>
@@ -2709,7 +2709,7 @@ FillType.</p>
 
 <dl class="py method">
 <dt id="skia.Path.transform">
-<code class="sig-prename descclassname">Path.</code><code class="sig-name descname">transform</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Path" title="skia.Path">skia.Path</a></span></em>, <em class="sig-param"><span class="n">matrix</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.Matrix.html#skia.Matrix" title="skia.Matrix">skia.Matrix</a></span></em>, <em class="sig-param"><span class="n">dst</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Path" title="skia.Path">skia.Path</a></span> <span class="o">=</span> <span class="default_value">None</span></em>, <em class="sig-param"><span class="n">pc</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.ApplyPerspectiveClip.html#skia.ApplyPerspectiveClip" title="skia.ApplyPerspectiveClip">skia.ApplyPerspectiveClip</a></span> <span class="o">=</span> <span class="default_value">ApplyPerspectiveClip.kYes</span></em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#skia.Path.transform" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">Path.</code><code class="sig-name descname">transform</code><span class="sig-paren">(</span><em class="sig-param">self: skia.Path</em>, <em class="sig-param">matrix: skia.Matrix</em>, <em class="sig-param">dst: skia.Path = None</em>, <em class="sig-param">pc: skia.ApplyPerspectiveClip = &lt;ApplyPerspectiveClip.kYes: 1&gt;</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#skia.Path.transform" title="Permalink to this definition">¶</a></dt>
 <dd><p>Transforms verb array, <a class="reference internal" href="skia.Point.html#skia.Point" title="skia.Point"><code class="xref py py-class docutils literal notranslate"><span class="pre">Point</span></code></a> array, and weight by matrix.</p>
 <p>transform may change verbs and increase their number. Transformed
 <a class="reference internal" href="#skia.Path" title="skia.Path"><code class="xref py py-class docutils literal notranslate"><span class="pre">Path</span></code></a> replaces dst; if dst is nullptr, original data is
@@ -2763,77 +2763,77 @@ used for <a class="reference internal" href="#skia.Path" title="skia.Path"><code
 <h2>Attributes<a class="headerlink" href="#attributes" title="Permalink to this headline">¶</a></h2>
 <dl class="py attribute">
 <dt id="skia.Path.kAppend_AddPathMode">
-<code class="sig-prename descclassname">Path.</code><code class="sig-name descname">kAppend_AddPathMode</code><em class="property"> = AddPathMode.kAppend_AddPathMode</em><a class="headerlink" href="#skia.Path.kAppend_AddPathMode" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">Path.</code><code class="sig-name descname">kAppend_AddPathMode</code><em class="property"> = &lt;AddPathMode.kAppend_AddPathMode: 0&gt;</em><a class="headerlink" href="#skia.Path.kAppend_AddPathMode" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt id="skia.Path.kClose_Verb">
-<code class="sig-prename descclassname">Path.</code><code class="sig-name descname">kClose_Verb</code><em class="property"> = Verb.kClose_Verb</em><a class="headerlink" href="#skia.Path.kClose_Verb" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">Path.</code><code class="sig-name descname">kClose_Verb</code><em class="property"> = &lt;Verb.kClose_Verb: 5&gt;</em><a class="headerlink" href="#skia.Path.kClose_Verb" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt id="skia.Path.kConic_SegmentMask">
-<code class="sig-prename descclassname">Path.</code><code class="sig-name descname">kConic_SegmentMask</code><em class="property"> = SegmentMask.kConic_SegmentMask</em><a class="headerlink" href="#skia.Path.kConic_SegmentMask" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">Path.</code><code class="sig-name descname">kConic_SegmentMask</code><em class="property"> = &lt;SegmentMask.kConic_SegmentMask: 4&gt;</em><a class="headerlink" href="#skia.Path.kConic_SegmentMask" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt id="skia.Path.kConic_Verb">
-<code class="sig-prename descclassname">Path.</code><code class="sig-name descname">kConic_Verb</code><em class="property"> = Verb.kConic_Verb</em><a class="headerlink" href="#skia.Path.kConic_Verb" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">Path.</code><code class="sig-name descname">kConic_Verb</code><em class="property"> = &lt;Verb.kConic_Verb: 3&gt;</em><a class="headerlink" href="#skia.Path.kConic_Verb" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt id="skia.Path.kCubic_SegmentMask">
-<code class="sig-prename descclassname">Path.</code><code class="sig-name descname">kCubic_SegmentMask</code><em class="property"> = SegmentMask.kCubic_SegmentMask</em><a class="headerlink" href="#skia.Path.kCubic_SegmentMask" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">Path.</code><code class="sig-name descname">kCubic_SegmentMask</code><em class="property"> = &lt;SegmentMask.kCubic_SegmentMask: 8&gt;</em><a class="headerlink" href="#skia.Path.kCubic_SegmentMask" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt id="skia.Path.kCubic_Verb">
-<code class="sig-prename descclassname">Path.</code><code class="sig-name descname">kCubic_Verb</code><em class="property"> = Verb.kCubic_Verb</em><a class="headerlink" href="#skia.Path.kCubic_Verb" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">Path.</code><code class="sig-name descname">kCubic_Verb</code><em class="property"> = &lt;Verb.kCubic_Verb: 4&gt;</em><a class="headerlink" href="#skia.Path.kCubic_Verb" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt id="skia.Path.kDone_Verb">
-<code class="sig-prename descclassname">Path.</code><code class="sig-name descname">kDone_Verb</code><em class="property"> = Verb.kDone_Verb</em><a class="headerlink" href="#skia.Path.kDone_Verb" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">Path.</code><code class="sig-name descname">kDone_Verb</code><em class="property"> = &lt;Verb.kDone_Verb: 6&gt;</em><a class="headerlink" href="#skia.Path.kDone_Verb" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt id="skia.Path.kExtend_AddPathMode">
-<code class="sig-prename descclassname">Path.</code><code class="sig-name descname">kExtend_AddPathMode</code><em class="property"> = AddPathMode.kExtend_AddPathMode</em><a class="headerlink" href="#skia.Path.kExtend_AddPathMode" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">Path.</code><code class="sig-name descname">kExtend_AddPathMode</code><em class="property"> = &lt;AddPathMode.kExtend_AddPathMode: 1&gt;</em><a class="headerlink" href="#skia.Path.kExtend_AddPathMode" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt id="skia.Path.kLarge_ArcSize">
-<code class="sig-prename descclassname">Path.</code><code class="sig-name descname">kLarge_ArcSize</code><em class="property"> = ArcSize.kLarge_ArcSize</em><a class="headerlink" href="#skia.Path.kLarge_ArcSize" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">Path.</code><code class="sig-name descname">kLarge_ArcSize</code><em class="property"> = &lt;ArcSize.kLarge_ArcSize: 1&gt;</em><a class="headerlink" href="#skia.Path.kLarge_ArcSize" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt id="skia.Path.kLine_SegmentMask">
-<code class="sig-prename descclassname">Path.</code><code class="sig-name descname">kLine_SegmentMask</code><em class="property"> = SegmentMask.kLine_SegmentMask</em><a class="headerlink" href="#skia.Path.kLine_SegmentMask" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">Path.</code><code class="sig-name descname">kLine_SegmentMask</code><em class="property"> = &lt;SegmentMask.kLine_SegmentMask: 1&gt;</em><a class="headerlink" href="#skia.Path.kLine_SegmentMask" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt id="skia.Path.kLine_Verb">
-<code class="sig-prename descclassname">Path.</code><code class="sig-name descname">kLine_Verb</code><em class="property"> = Verb.kLine_Verb</em><a class="headerlink" href="#skia.Path.kLine_Verb" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">Path.</code><code class="sig-name descname">kLine_Verb</code><em class="property"> = &lt;Verb.kLine_Verb: 1&gt;</em><a class="headerlink" href="#skia.Path.kLine_Verb" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt id="skia.Path.kMove_Verb">
-<code class="sig-prename descclassname">Path.</code><code class="sig-name descname">kMove_Verb</code><em class="property"> = Verb.kMove_Verb</em><a class="headerlink" href="#skia.Path.kMove_Verb" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">Path.</code><code class="sig-name descname">kMove_Verb</code><em class="property"> = &lt;Verb.kMove_Verb: 0&gt;</em><a class="headerlink" href="#skia.Path.kMove_Verb" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt id="skia.Path.kQuad_SegmentMask">
-<code class="sig-prename descclassname">Path.</code><code class="sig-name descname">kQuad_SegmentMask</code><em class="property"> = SegmentMask.kQuad_SegmentMask</em><a class="headerlink" href="#skia.Path.kQuad_SegmentMask" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">Path.</code><code class="sig-name descname">kQuad_SegmentMask</code><em class="property"> = &lt;SegmentMask.kQuad_SegmentMask: 2&gt;</em><a class="headerlink" href="#skia.Path.kQuad_SegmentMask" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt id="skia.Path.kQuad_Verb">
-<code class="sig-prename descclassname">Path.</code><code class="sig-name descname">kQuad_Verb</code><em class="property"> = Verb.kQuad_Verb</em><a class="headerlink" href="#skia.Path.kQuad_Verb" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">Path.</code><code class="sig-name descname">kQuad_Verb</code><em class="property"> = &lt;Verb.kQuad_Verb: 2&gt;</em><a class="headerlink" href="#skia.Path.kQuad_Verb" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt id="skia.Path.kSmall_ArcSize">
-<code class="sig-prename descclassname">Path.</code><code class="sig-name descname">kSmall_ArcSize</code><em class="property"> = ArcSize.kSmall_ArcSize</em><a class="headerlink" href="#skia.Path.kSmall_ArcSize" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">Path.</code><code class="sig-name descname">kSmall_ArcSize</code><em class="property"> = &lt;ArcSize.kSmall_ArcSize: 0&gt;</em><a class="headerlink" href="#skia.Path.kSmall_ArcSize" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </div>

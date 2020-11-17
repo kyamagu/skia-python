@@ -956,7 +956,7 @@ ratio, and how to align src within dst. Returns the identity
 </div>
 </div></blockquote>
 </li>
-<li><p>__init__(self: skia.Matrix, array: numpy.ndarray[float32]) -&gt; None</p>
+<li><p>__init__(self: skia.Matrix, array: numpy.ndarray[numpy.float32]) -&gt; None</p>
 <blockquote>
 <div><p>Creates a <a class="reference internal" href="#skia.Matrix" title="skia.Matrix"><code class="xref py py-class docutils literal notranslate"><span class="pre">Matrix</span></code></a> from 3x3 float32 NumPy array.</p>
 </div></blockquote>
@@ -1427,7 +1427,7 @@ perspective elements.</p>
 
 <dl class="py method">
 <dt id="skia.Matrix.mapRect">
-<code class="sig-prename descclassname">Matrix.</code><code class="sig-name descname">mapRect</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Matrix" title="skia.Matrix">skia.Matrix</a></span></em>, <em class="sig-param"><span class="n">src</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.Rect.html#skia.Rect" title="skia.Rect">skia.Rect</a></span></em>, <em class="sig-param"><span class="n">pc</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.ApplyPerspectiveClip.html#skia.ApplyPerspectiveClip" title="skia.ApplyPerspectiveClip">skia.ApplyPerspectiveClip</a></span> <span class="o">=</span> <span class="default_value">ApplyPerspectiveClip.kYes</span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="skia.Rect.html#skia.Rect" title="skia.Rect">skia.Rect</a><a class="headerlink" href="#skia.Matrix.mapRect" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">Matrix.</code><code class="sig-name descname">mapRect</code><span class="sig-paren">(</span><em class="sig-param">self: skia.Matrix</em>, <em class="sig-param">src: skia.Rect</em>, <em class="sig-param">pc: skia.ApplyPerspectiveClip = &lt;ApplyPerspectiveClip.kYes: 1&gt;</em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="skia.Rect.html#skia.Rect" title="skia.Rect">skia.Rect</a><a class="headerlink" href="#skia.Matrix.mapRect" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns bounds of src corners mapped by <a class="reference internal" href="#skia.Matrix" title="skia.Matrix"><code class="xref py py-class docutils literal notranslate"><span class="pre">Matrix</span></code></a>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -2831,27 +2831,27 @@ translation</p>
 
 <dl class="py attribute">
 <dt id="skia.Matrix.kAffine_Mask">
-<code class="sig-prename descclassname">Matrix.</code><code class="sig-name descname">kAffine_Mask</code><em class="property"> = TypeMask.kAffine_Mask</em><a class="headerlink" href="#skia.Matrix.kAffine_Mask" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">Matrix.</code><code class="sig-name descname">kAffine_Mask</code><em class="property"> = &lt;TypeMask.kAffine_Mask: 4&gt;</em><a class="headerlink" href="#skia.Matrix.kAffine_Mask" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt id="skia.Matrix.kCenter_ScaleToFit">
-<code class="sig-prename descclassname">Matrix.</code><code class="sig-name descname">kCenter_ScaleToFit</code><em class="property"> = ScaleToFit.kCenter_ScaleToFit</em><a class="headerlink" href="#skia.Matrix.kCenter_ScaleToFit" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">Matrix.</code><code class="sig-name descname">kCenter_ScaleToFit</code><em class="property"> = &lt;ScaleToFit.kCenter_ScaleToFit: 2&gt;</em><a class="headerlink" href="#skia.Matrix.kCenter_ScaleToFit" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt id="skia.Matrix.kEnd_ScaleToFit">
-<code class="sig-prename descclassname">Matrix.</code><code class="sig-name descname">kEnd_ScaleToFit</code><em class="property"> = ScaleToFit.kEnd_ScaleToFit</em><a class="headerlink" href="#skia.Matrix.kEnd_ScaleToFit" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">Matrix.</code><code class="sig-name descname">kEnd_ScaleToFit</code><em class="property"> = &lt;ScaleToFit.kEnd_ScaleToFit: 3&gt;</em><a class="headerlink" href="#skia.Matrix.kEnd_ScaleToFit" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt id="skia.Matrix.kFill_ScaleToFit">
-<code class="sig-prename descclassname">Matrix.</code><code class="sig-name descname">kFill_ScaleToFit</code><em class="property"> = ScaleToFit.kFill_ScaleToFit</em><a class="headerlink" href="#skia.Matrix.kFill_ScaleToFit" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">Matrix.</code><code class="sig-name descname">kFill_ScaleToFit</code><em class="property"> = &lt;ScaleToFit.kFill_ScaleToFit: 0&gt;</em><a class="headerlink" href="#skia.Matrix.kFill_ScaleToFit" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt id="skia.Matrix.kIdentity_Mask">
-<code class="sig-prename descclassname">Matrix.</code><code class="sig-name descname">kIdentity_Mask</code><em class="property"> = TypeMask.kIdentity_Mask</em><a class="headerlink" href="#skia.Matrix.kIdentity_Mask" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">Matrix.</code><code class="sig-name descname">kIdentity_Mask</code><em class="property"> = &lt;TypeMask.kIdentity_Mask: 0&gt;</em><a class="headerlink" href="#skia.Matrix.kIdentity_Mask" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
@@ -2901,22 +2901,22 @@ translation</p>
 
 <dl class="py attribute">
 <dt id="skia.Matrix.kPerspective_Mask">
-<code class="sig-prename descclassname">Matrix.</code><code class="sig-name descname">kPerspective_Mask</code><em class="property"> = TypeMask.kPerspective_Mask</em><a class="headerlink" href="#skia.Matrix.kPerspective_Mask" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">Matrix.</code><code class="sig-name descname">kPerspective_Mask</code><em class="property"> = &lt;TypeMask.kPerspective_Mask: 8&gt;</em><a class="headerlink" href="#skia.Matrix.kPerspective_Mask" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt id="skia.Matrix.kScale_Mask">
-<code class="sig-prename descclassname">Matrix.</code><code class="sig-name descname">kScale_Mask</code><em class="property"> = TypeMask.kScale_Mask</em><a class="headerlink" href="#skia.Matrix.kScale_Mask" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">Matrix.</code><code class="sig-name descname">kScale_Mask</code><em class="property"> = &lt;TypeMask.kScale_Mask: 2&gt;</em><a class="headerlink" href="#skia.Matrix.kScale_Mask" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt id="skia.Matrix.kStart_ScaleToFit">
-<code class="sig-prename descclassname">Matrix.</code><code class="sig-name descname">kStart_ScaleToFit</code><em class="property"> = ScaleToFit.kStart_ScaleToFit</em><a class="headerlink" href="#skia.Matrix.kStart_ScaleToFit" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">Matrix.</code><code class="sig-name descname">kStart_ScaleToFit</code><em class="property"> = &lt;ScaleToFit.kStart_ScaleToFit: 1&gt;</em><a class="headerlink" href="#skia.Matrix.kStart_ScaleToFit" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt id="skia.Matrix.kTranslate_Mask">
-<code class="sig-prename descclassname">Matrix.</code><code class="sig-name descname">kTranslate_Mask</code><em class="property"> = TypeMask.kTranslate_Mask</em><a class="headerlink" href="#skia.Matrix.kTranslate_Mask" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">Matrix.</code><code class="sig-name descname">kTranslate_Mask</code><em class="property"> = &lt;TypeMask.kTranslate_Mask: 1&gt;</em><a class="headerlink" href="#skia.Matrix.kTranslate_Mask" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </div>

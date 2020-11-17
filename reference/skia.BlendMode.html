@@ -346,38 +346,38 @@
 <dt id="skia.BlendMode">
 <em class="property">class </em><code class="sig-name descname">BlendMode</code><a class="headerlink" href="#skia.BlendMode" title="Permalink to this definition">¶</a></dt>
 <dd><p>Members:</p>
-<p>kSoftLight : lighten or darken, depending on source</p>
-<p>kDstOut : destination trimmed outside source</p>
 <p>kClear : replaces destination with zero: fully transparent</p>
-<p>kSrcIn : source trimmed inside destination</p>
-<p>kDstOver : destination over source</p>
-<p>kHardLight : multiply or screen, depending on source</p>
-<p>kDst : preserves destination</p>
-<p>kXor : each of source and destination trimmed outside the other</p>
-<p>kHue : hue of source with saturation and luminosity of destination</p>
-<p>kScreen : multiply inverse of pixels, inverting result; brightens destination</p>
-<p>kLastMode : last valid value</p>
-<p>kDifference : subtract darker from lighter with higher contrast</p>
-<p>kOverlay : multiply or screen, depending on destination</p>
-<p>kModulate : product of premultiplied colors; darkens destination</p>
-<p>kColorBurn : darken destination to reflect source</p>
 <p>kSrc : replaces destination</p>
-<p>kPlus : sum of colors</p>
-<p>kDstIn : destination trimmed by source</p>
-<p>kDstATop : destination inside source blended with source</p>
-<p>kSaturation : saturation of source with hue and luminosity of destination</p>
-<p>kLastSeparableMode : last blend mode operating separately on components</p>
-<p>kSrcATop : source inside destination blended with destination</p>
-<p>kSrcOut : source trimmed outside destination</p>
-<p>kLastCoeffMode : last porter duff blend mode</p>
+<p>kDst : preserves destination</p>
 <p>kSrcOver : source over destination</p>
-<p>kColorDodge : brighten destination to reflect source</p>
+<p>kDstOver : destination over source</p>
+<p>kSrcIn : source trimmed inside destination</p>
+<p>kDstIn : destination trimmed by source</p>
+<p>kSrcOut : source trimmed outside destination</p>
+<p>kDstOut : destination trimmed outside source</p>
+<p>kSrcATop : source inside destination blended with destination</p>
+<p>kDstATop : destination inside source blended with source</p>
+<p>kXor : each of source and destination trimmed outside the other</p>
+<p>kPlus : sum of colors</p>
+<p>kModulate : product of premultiplied colors; darkens destination</p>
+<p>kScreen : multiply inverse of pixels, inverting result; brightens destination</p>
+<p>kLastCoeffMode : last porter duff blend mode</p>
+<p>kOverlay : multiply or screen, depending on destination</p>
 <p>kDarken : darker of source and destination</p>
-<p>kLuminosity : luminosity of source with hue and saturation of destination</p>
-<p>kMultiply : multiply source with destination, darkening image</p>
 <p>kLighten : lighter of source and destination</p>
-<p>kColor : hue and saturation of source with luminosity of destination</p>
+<p>kColorDodge : brighten destination to reflect source</p>
+<p>kColorBurn : darken destination to reflect source</p>
+<p>kHardLight : multiply or screen, depending on source</p>
+<p>kSoftLight : lighten or darken, depending on source</p>
+<p>kDifference : subtract darker from lighter with higher contrast</p>
 <p>kExclusion : subtract darker from lighter with lower contrast</p>
+<p>kMultiply : multiply source with destination, darkening image</p>
+<p>kLastSeparableMode : last blend mode operating separately on components</p>
+<p>kHue : hue of source with saturation and luminosity of destination</p>
+<p>kSaturation : saturation of source with hue and luminosity of destination</p>
+<p>kColor : hue and saturation of source with luminosity of destination</p>
+<p>kLuminosity : luminosity of source with hue and saturation of destination</p>
+<p>kLastMode : last valid value</p>
 <p class="rubric">Methods</p>
 <table class="longtable docutils align-default">
 <colgroup>
@@ -494,7 +494,7 @@
 <td><p></p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#skia.BlendMode.name" title="skia.BlendMode.name"><code class="xref py py-obj docutils literal notranslate"><span class="pre">name</span></code></a></p></td>
-<td><p>handle) -&gt; str</p></td>
+<td><p></p></td>
 </tr>
 </tbody>
 </table>
@@ -504,7 +504,7 @@
 <h2>Methods<a class="headerlink" href="#methods" title="Permalink to this headline">¶</a></h2>
 <dl class="py method">
 <dt id="skia.BlendMode.__init__">
-<code class="sig-prename descclassname">BlendMode.</code><code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.BlendMode" title="skia.BlendMode">skia.BlendMode</a></span></em>, <em class="sig-param"><span class="n">arg0</span><span class="p">:</span> <span class="n">int</span></em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#skia.BlendMode.__init__" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">BlendMode.</code><code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.BlendMode" title="skia.BlendMode">skia.BlendMode</a></span></em>, <em class="sig-param"><span class="n">value</span><span class="p">:</span> <span class="n">int</span></em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#skia.BlendMode.__init__" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </div>
@@ -512,174 +512,168 @@
 <h2>Attributes<a class="headerlink" href="#attributes" title="Permalink to this headline">¶</a></h2>
 <dl class="py attribute">
 <dt id="skia.BlendMode.kClear">
-<code class="sig-prename descclassname">BlendMode.</code><code class="sig-name descname">kClear</code><em class="property"> = BlendMode.kClear</em><a class="headerlink" href="#skia.BlendMode.kClear" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">BlendMode.</code><code class="sig-name descname">kClear</code><em class="property"> = &lt;BlendMode.kClear: 0&gt;</em><a class="headerlink" href="#skia.BlendMode.kClear" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt id="skia.BlendMode.kColor">
-<code class="sig-prename descclassname">BlendMode.</code><code class="sig-name descname">kColor</code><em class="property"> = BlendMode.kColor</em><a class="headerlink" href="#skia.BlendMode.kColor" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">BlendMode.</code><code class="sig-name descname">kColor</code><em class="property"> = &lt;BlendMode.kColor: 27&gt;</em><a class="headerlink" href="#skia.BlendMode.kColor" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt id="skia.BlendMode.kColorBurn">
-<code class="sig-prename descclassname">BlendMode.</code><code class="sig-name descname">kColorBurn</code><em class="property"> = BlendMode.kColorBurn</em><a class="headerlink" href="#skia.BlendMode.kColorBurn" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">BlendMode.</code><code class="sig-name descname">kColorBurn</code><em class="property"> = &lt;BlendMode.kColorBurn: 19&gt;</em><a class="headerlink" href="#skia.BlendMode.kColorBurn" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt id="skia.BlendMode.kColorDodge">
-<code class="sig-prename descclassname">BlendMode.</code><code class="sig-name descname">kColorDodge</code><em class="property"> = BlendMode.kColorDodge</em><a class="headerlink" href="#skia.BlendMode.kColorDodge" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">BlendMode.</code><code class="sig-name descname">kColorDodge</code><em class="property"> = &lt;BlendMode.kColorDodge: 18&gt;</em><a class="headerlink" href="#skia.BlendMode.kColorDodge" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt id="skia.BlendMode.kDarken">
-<code class="sig-prename descclassname">BlendMode.</code><code class="sig-name descname">kDarken</code><em class="property"> = BlendMode.kDarken</em><a class="headerlink" href="#skia.BlendMode.kDarken" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">BlendMode.</code><code class="sig-name descname">kDarken</code><em class="property"> = &lt;BlendMode.kDarken: 16&gt;</em><a class="headerlink" href="#skia.BlendMode.kDarken" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt id="skia.BlendMode.kDifference">
-<code class="sig-prename descclassname">BlendMode.</code><code class="sig-name descname">kDifference</code><em class="property"> = BlendMode.kDifference</em><a class="headerlink" href="#skia.BlendMode.kDifference" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">BlendMode.</code><code class="sig-name descname">kDifference</code><em class="property"> = &lt;BlendMode.kDifference: 22&gt;</em><a class="headerlink" href="#skia.BlendMode.kDifference" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt id="skia.BlendMode.kDst">
-<code class="sig-prename descclassname">BlendMode.</code><code class="sig-name descname">kDst</code><em class="property"> = BlendMode.kDst</em><a class="headerlink" href="#skia.BlendMode.kDst" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">BlendMode.</code><code class="sig-name descname">kDst</code><em class="property"> = &lt;BlendMode.kDst: 2&gt;</em><a class="headerlink" href="#skia.BlendMode.kDst" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt id="skia.BlendMode.kDstATop">
-<code class="sig-prename descclassname">BlendMode.</code><code class="sig-name descname">kDstATop</code><em class="property"> = BlendMode.kDstATop</em><a class="headerlink" href="#skia.BlendMode.kDstATop" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">BlendMode.</code><code class="sig-name descname">kDstATop</code><em class="property"> = &lt;BlendMode.kDstATop: 10&gt;</em><a class="headerlink" href="#skia.BlendMode.kDstATop" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt id="skia.BlendMode.kDstIn">
-<code class="sig-prename descclassname">BlendMode.</code><code class="sig-name descname">kDstIn</code><em class="property"> = BlendMode.kDstIn</em><a class="headerlink" href="#skia.BlendMode.kDstIn" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">BlendMode.</code><code class="sig-name descname">kDstIn</code><em class="property"> = &lt;BlendMode.kDstIn: 6&gt;</em><a class="headerlink" href="#skia.BlendMode.kDstIn" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt id="skia.BlendMode.kDstOut">
-<code class="sig-prename descclassname">BlendMode.</code><code class="sig-name descname">kDstOut</code><em class="property"> = BlendMode.kDstOut</em><a class="headerlink" href="#skia.BlendMode.kDstOut" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">BlendMode.</code><code class="sig-name descname">kDstOut</code><em class="property"> = &lt;BlendMode.kDstOut: 8&gt;</em><a class="headerlink" href="#skia.BlendMode.kDstOut" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt id="skia.BlendMode.kDstOver">
-<code class="sig-prename descclassname">BlendMode.</code><code class="sig-name descname">kDstOver</code><em class="property"> = BlendMode.kDstOver</em><a class="headerlink" href="#skia.BlendMode.kDstOver" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">BlendMode.</code><code class="sig-name descname">kDstOver</code><em class="property"> = &lt;BlendMode.kDstOver: 4&gt;</em><a class="headerlink" href="#skia.BlendMode.kDstOver" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt id="skia.BlendMode.kExclusion">
-<code class="sig-prename descclassname">BlendMode.</code><code class="sig-name descname">kExclusion</code><em class="property"> = BlendMode.kExclusion</em><a class="headerlink" href="#skia.BlendMode.kExclusion" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">BlendMode.</code><code class="sig-name descname">kExclusion</code><em class="property"> = &lt;BlendMode.kExclusion: 23&gt;</em><a class="headerlink" href="#skia.BlendMode.kExclusion" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt id="skia.BlendMode.kHardLight">
-<code class="sig-prename descclassname">BlendMode.</code><code class="sig-name descname">kHardLight</code><em class="property"> = BlendMode.kHardLight</em><a class="headerlink" href="#skia.BlendMode.kHardLight" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">BlendMode.</code><code class="sig-name descname">kHardLight</code><em class="property"> = &lt;BlendMode.kHardLight: 20&gt;</em><a class="headerlink" href="#skia.BlendMode.kHardLight" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt id="skia.BlendMode.kHue">
-<code class="sig-prename descclassname">BlendMode.</code><code class="sig-name descname">kHue</code><em class="property"> = BlendMode.kHue</em><a class="headerlink" href="#skia.BlendMode.kHue" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">BlendMode.</code><code class="sig-name descname">kHue</code><em class="property"> = &lt;BlendMode.kHue: 25&gt;</em><a class="headerlink" href="#skia.BlendMode.kHue" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt id="skia.BlendMode.kLastCoeffMode">
-<code class="sig-prename descclassname">BlendMode.</code><code class="sig-name descname">kLastCoeffMode</code><em class="property"> = BlendMode.kScreen</em><a class="headerlink" href="#skia.BlendMode.kLastCoeffMode" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">BlendMode.</code><code class="sig-name descname">kLastCoeffMode</code><em class="property"> = &lt;BlendMode.kScreen: 14&gt;</em><a class="headerlink" href="#skia.BlendMode.kLastCoeffMode" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt id="skia.BlendMode.kLastMode">
-<code class="sig-prename descclassname">BlendMode.</code><code class="sig-name descname">kLastMode</code><em class="property"> = BlendMode.kLastMode</em><a class="headerlink" href="#skia.BlendMode.kLastMode" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">BlendMode.</code><code class="sig-name descname">kLastMode</code><em class="property"> = &lt;BlendMode.kLuminosity: 28&gt;</em><a class="headerlink" href="#skia.BlendMode.kLastMode" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt id="skia.BlendMode.kLastSeparableMode">
-<code class="sig-prename descclassname">BlendMode.</code><code class="sig-name descname">kLastSeparableMode</code><em class="property"> = BlendMode.kLastSeparableMode</em><a class="headerlink" href="#skia.BlendMode.kLastSeparableMode" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">BlendMode.</code><code class="sig-name descname">kLastSeparableMode</code><em class="property"> = &lt;BlendMode.kMultiply: 24&gt;</em><a class="headerlink" href="#skia.BlendMode.kLastSeparableMode" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt id="skia.BlendMode.kLighten">
-<code class="sig-prename descclassname">BlendMode.</code><code class="sig-name descname">kLighten</code><em class="property"> = BlendMode.kLighten</em><a class="headerlink" href="#skia.BlendMode.kLighten" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">BlendMode.</code><code class="sig-name descname">kLighten</code><em class="property"> = &lt;BlendMode.kLighten: 17&gt;</em><a class="headerlink" href="#skia.BlendMode.kLighten" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt id="skia.BlendMode.kLuminosity">
-<code class="sig-prename descclassname">BlendMode.</code><code class="sig-name descname">kLuminosity</code><em class="property"> = BlendMode.kLastMode</em><a class="headerlink" href="#skia.BlendMode.kLuminosity" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">BlendMode.</code><code class="sig-name descname">kLuminosity</code><em class="property"> = &lt;BlendMode.kLuminosity: 28&gt;</em><a class="headerlink" href="#skia.BlendMode.kLuminosity" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt id="skia.BlendMode.kModulate">
-<code class="sig-prename descclassname">BlendMode.</code><code class="sig-name descname">kModulate</code><em class="property"> = BlendMode.kModulate</em><a class="headerlink" href="#skia.BlendMode.kModulate" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">BlendMode.</code><code class="sig-name descname">kModulate</code><em class="property"> = &lt;BlendMode.kModulate: 13&gt;</em><a class="headerlink" href="#skia.BlendMode.kModulate" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt id="skia.BlendMode.kMultiply">
-<code class="sig-prename descclassname">BlendMode.</code><code class="sig-name descname">kMultiply</code><em class="property"> = BlendMode.kLastSeparableMode</em><a class="headerlink" href="#skia.BlendMode.kMultiply" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">BlendMode.</code><code class="sig-name descname">kMultiply</code><em class="property"> = &lt;BlendMode.kMultiply: 24&gt;</em><a class="headerlink" href="#skia.BlendMode.kMultiply" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt id="skia.BlendMode.kOverlay">
-<code class="sig-prename descclassname">BlendMode.</code><code class="sig-name descname">kOverlay</code><em class="property"> = BlendMode.kOverlay</em><a class="headerlink" href="#skia.BlendMode.kOverlay" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">BlendMode.</code><code class="sig-name descname">kOverlay</code><em class="property"> = &lt;BlendMode.kOverlay: 15&gt;</em><a class="headerlink" href="#skia.BlendMode.kOverlay" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt id="skia.BlendMode.kPlus">
-<code class="sig-prename descclassname">BlendMode.</code><code class="sig-name descname">kPlus</code><em class="property"> = BlendMode.kPlus</em><a class="headerlink" href="#skia.BlendMode.kPlus" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">BlendMode.</code><code class="sig-name descname">kPlus</code><em class="property"> = &lt;BlendMode.kPlus: 12&gt;</em><a class="headerlink" href="#skia.BlendMode.kPlus" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt id="skia.BlendMode.kSaturation">
-<code class="sig-prename descclassname">BlendMode.</code><code class="sig-name descname">kSaturation</code><em class="property"> = BlendMode.kSaturation</em><a class="headerlink" href="#skia.BlendMode.kSaturation" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">BlendMode.</code><code class="sig-name descname">kSaturation</code><em class="property"> = &lt;BlendMode.kSaturation: 26&gt;</em><a class="headerlink" href="#skia.BlendMode.kSaturation" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt id="skia.BlendMode.kScreen">
-<code class="sig-prename descclassname">BlendMode.</code><code class="sig-name descname">kScreen</code><em class="property"> = BlendMode.kScreen</em><a class="headerlink" href="#skia.BlendMode.kScreen" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">BlendMode.</code><code class="sig-name descname">kScreen</code><em class="property"> = &lt;BlendMode.kScreen: 14&gt;</em><a class="headerlink" href="#skia.BlendMode.kScreen" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt id="skia.BlendMode.kSoftLight">
-<code class="sig-prename descclassname">BlendMode.</code><code class="sig-name descname">kSoftLight</code><em class="property"> = BlendMode.kSoftLight</em><a class="headerlink" href="#skia.BlendMode.kSoftLight" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">BlendMode.</code><code class="sig-name descname">kSoftLight</code><em class="property"> = &lt;BlendMode.kSoftLight: 21&gt;</em><a class="headerlink" href="#skia.BlendMode.kSoftLight" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt id="skia.BlendMode.kSrc">
-<code class="sig-prename descclassname">BlendMode.</code><code class="sig-name descname">kSrc</code><em class="property"> = BlendMode.kSrc</em><a class="headerlink" href="#skia.BlendMode.kSrc" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">BlendMode.</code><code class="sig-name descname">kSrc</code><em class="property"> = &lt;BlendMode.kSrc: 1&gt;</em><a class="headerlink" href="#skia.BlendMode.kSrc" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt id="skia.BlendMode.kSrcATop">
-<code class="sig-prename descclassname">BlendMode.</code><code class="sig-name descname">kSrcATop</code><em class="property"> = BlendMode.kSrcATop</em><a class="headerlink" href="#skia.BlendMode.kSrcATop" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">BlendMode.</code><code class="sig-name descname">kSrcATop</code><em class="property"> = &lt;BlendMode.kSrcATop: 9&gt;</em><a class="headerlink" href="#skia.BlendMode.kSrcATop" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt id="skia.BlendMode.kSrcIn">
-<code class="sig-prename descclassname">BlendMode.</code><code class="sig-name descname">kSrcIn</code><em class="property"> = BlendMode.kSrcIn</em><a class="headerlink" href="#skia.BlendMode.kSrcIn" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">BlendMode.</code><code class="sig-name descname">kSrcIn</code><em class="property"> = &lt;BlendMode.kSrcIn: 5&gt;</em><a class="headerlink" href="#skia.BlendMode.kSrcIn" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt id="skia.BlendMode.kSrcOut">
-<code class="sig-prename descclassname">BlendMode.</code><code class="sig-name descname">kSrcOut</code><em class="property"> = BlendMode.kSrcOut</em><a class="headerlink" href="#skia.BlendMode.kSrcOut" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">BlendMode.</code><code class="sig-name descname">kSrcOut</code><em class="property"> = &lt;BlendMode.kSrcOut: 7&gt;</em><a class="headerlink" href="#skia.BlendMode.kSrcOut" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt id="skia.BlendMode.kSrcOver">
-<code class="sig-prename descclassname">BlendMode.</code><code class="sig-name descname">kSrcOver</code><em class="property"> = BlendMode.kSrcOver</em><a class="headerlink" href="#skia.BlendMode.kSrcOver" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">BlendMode.</code><code class="sig-name descname">kSrcOver</code><em class="property"> = &lt;BlendMode.kSrcOver: 3&gt;</em><a class="headerlink" href="#skia.BlendMode.kSrcOver" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt id="skia.BlendMode.kXor">
-<code class="sig-prename descclassname">BlendMode.</code><code class="sig-name descname">kXor</code><em class="property"> = BlendMode.kXor</em><a class="headerlink" href="#skia.BlendMode.kXor" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">BlendMode.</code><code class="sig-name descname">kXor</code><em class="property"> = &lt;BlendMode.kXor: 11&gt;</em><a class="headerlink" href="#skia.BlendMode.kXor" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt id="skia.BlendMode.name">
 <code class="sig-prename descclassname">BlendMode.</code><code class="sig-name descname">name</code><a class="headerlink" href="#skia.BlendMode.name" title="Permalink to this definition">¶</a></dt>
-<dd><p>handle) -&gt; str</p>
-<dl class="field-list simple">
-<dt class="field-odd">Type</dt>
-<dd class="field-odd"><p>(self</p>
-</dd>
-</dl>
-</dd></dl>
+<dd></dd></dl>
 
 </div>
 </div>

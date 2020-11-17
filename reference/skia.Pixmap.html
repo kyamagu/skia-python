@@ -520,7 +520,7 @@ larger</p>
 </dl>
 </div></blockquote>
 </li>
-<li><p>__init__(self: skia.Pixmap, array: array, colorType: skia.ColorType = ColorType.kRGBA_8888_ColorType, alphaType: skia.AlphaType = AlphaType.kLastEnum_AlphaType, colorSpace: skia.ColorSpace = None) -&gt; None</p>
+<li><p>__init__(self: skia.Pixmap, array: numpy.ndarray, colorType: skia.ColorType = &lt;ColorType.kRGBA_8888_ColorType: 4&gt;, alphaType: skia.AlphaType = &lt;AlphaType.kUnpremul_AlphaType: 3&gt;, colorSpace: skia.ColorSpace = None) -&gt; None</p>
 <blockquote>
 <div><p>Creates <a class="reference internal" href="#skia.Pixmap" title="skia.Pixmap"><code class="xref py py-class docutils literal notranslate"><span class="pre">Pixmap</span></code></a> backed by numpy array.</p>
 <p>The memory lifetime of pixels is managed by the caller. When
@@ -1041,7 +1041,7 @@ larger</p>
 
 <dl class="py method">
 <dt id="skia.Pixmap.scalePixels">
-<code class="sig-prename descclassname">Pixmap.</code><code class="sig-name descname">scalePixels</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Pixmap" title="skia.Pixmap">skia.Pixmap</a></span></em>, <em class="sig-param"><span class="n">dst</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Pixmap" title="skia.Pixmap">skia.Pixmap</a></span></em>, <em class="sig-param"><span class="n">filterQuality</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.FilterQuality.html#skia.FilterQuality" title="skia.FilterQuality">skia.FilterQuality</a></span> <span class="o">=</span> <span class="default_value">FilterQuality.kMedium_FilterQuality</span></em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#skia.Pixmap.scalePixels" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">Pixmap.</code><code class="sig-name descname">scalePixels</code><span class="sig-paren">(</span><em class="sig-param">self: skia.Pixmap</em>, <em class="sig-param">dst: skia.Pixmap</em>, <em class="sig-param">filterQuality: skia.FilterQuality = &lt;FilterQuality.kMedium_FilterQuality: 2&gt;</em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#skia.Pixmap.scalePixels" title="Permalink to this definition">¶</a></dt>
 <dd><p>Copies <a class="reference internal" href="#skia.Pixmap" title="skia.Pixmap"><code class="xref py py-class docutils literal notranslate"><span class="pre">Pixmap</span></code></a> to dst, scaling pixels to fit <code class="docutils literal notranslate"><span class="pre">dst.width()</span></code>
 and <code class="docutils literal notranslate"><span class="pre">dst.height()</span></code>, and converting pixels to match <code class="docutils literal notranslate"><span class="pre">dst.colorType()</span></code>
 and <code class="docutils literal notranslate"><span class="pre">dst.alphaType()</span></code>.</p>

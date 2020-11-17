@@ -362,6 +362,10 @@ output row orderings.</p>
 <p>Members:</p>
 <blockquote>
 <div><dl>
+<dt>kKeep :</dt><dd><p>By far the most common, this indicates that the image can be decoded
+reliably using the scanline decoder, and that rows will be output in
+the logical order.</p>
+</dd>
 <dt>kRestoreBGColor :</dt><dd><p>This indicates that the scanline decoder reliably outputs rows, but
 they will be returned in reverse order.  If the scanline format is
 kBottomUp, the nextScanline() API can be used to determine the actual
@@ -378,10 +382,6 @@ with caution.  As with full image decodes, the decoder will handle
 inverting the requested rows, but rows will still be delivered
 starting from the bottom of the image.</p>
 <p>Upside down bmps are an example.</p>
-</dd>
-<dt>kKeep :</dt><dd><p>By far the most common, this indicates that the image can be decoded
-reliably using the scanline decoder, and that rows will be output in
-the logical order.</p>
 </dd>
 </dl>
 </div></blockquote>
@@ -411,7 +411,7 @@ the logical order.</p>
 <td><p></p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#skia.Codec.ScanlineOrder.name" title="skia.Codec.ScanlineOrder.name"><code class="xref py py-obj docutils literal notranslate"><span class="pre">name</span></code></a></p></td>
-<td><p>handle) -&gt; str</p></td>
+<td><p></p></td>
 </tr>
 </tbody>
 </table>
@@ -421,7 +421,7 @@ the logical order.</p>
 <h2>Methods<a class="headerlink" href="#methods" title="Permalink to this headline">¶</a></h2>
 <dl class="py method">
 <dt id="skia.Codec.ScanlineOrder.__init__">
-<code class="sig-prename descclassname">ScanlineOrder.</code><code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Codec.ScanlineOrder" title="skia.Codec.ScanlineOrder">skia.Codec.ScanlineOrder</a></span></em>, <em class="sig-param"><span class="n">arg0</span><span class="p">:</span> <span class="n">int</span></em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#skia.Codec.ScanlineOrder.__init__" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">ScanlineOrder.</code><code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Codec.ScanlineOrder" title="skia.Codec.ScanlineOrder">skia.Codec.ScanlineOrder</a></span></em>, <em class="sig-param"><span class="n">value</span><span class="p">:</span> <span class="n">int</span></em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#skia.Codec.ScanlineOrder.__init__" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </div>
@@ -429,24 +429,18 @@ the logical order.</p>
 <h2>Attributes<a class="headerlink" href="#attributes" title="Permalink to this headline">¶</a></h2>
 <dl class="py attribute">
 <dt id="skia.Codec.ScanlineOrder.kKeep">
-<code class="sig-prename descclassname">ScanlineOrder.</code><code class="sig-name descname">kKeep</code><em class="property"> = ScanlineOrder.kKeep</em><a class="headerlink" href="#skia.Codec.ScanlineOrder.kKeep" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">ScanlineOrder.</code><code class="sig-name descname">kKeep</code><em class="property"> = &lt;ScanlineOrder.kKeep: 0&gt;</em><a class="headerlink" href="#skia.Codec.ScanlineOrder.kKeep" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt id="skia.Codec.ScanlineOrder.kRestoreBGColor">
-<code class="sig-prename descclassname">ScanlineOrder.</code><code class="sig-name descname">kRestoreBGColor</code><em class="property"> = ScanlineOrder.kRestoreBGColor</em><a class="headerlink" href="#skia.Codec.ScanlineOrder.kRestoreBGColor" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">ScanlineOrder.</code><code class="sig-name descname">kRestoreBGColor</code><em class="property"> = &lt;ScanlineOrder.kRestoreBGColor: 1&gt;</em><a class="headerlink" href="#skia.Codec.ScanlineOrder.kRestoreBGColor" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt id="skia.Codec.ScanlineOrder.name">
 <code class="sig-prename descclassname">ScanlineOrder.</code><code class="sig-name descname">name</code><a class="headerlink" href="#skia.Codec.ScanlineOrder.name" title="Permalink to this definition">¶</a></dt>
-<dd><p>handle) -&gt; str</p>
-<dl class="field-list simple">
-<dt class="field-odd">Type</dt>
-<dd class="field-odd"><p>(self</p>
-</dd>
-</dl>
-</dd></dl>
+<dd></dd></dl>
 
 </div>
 </div>

@@ -348,9 +348,9 @@
 <dd><p>Members:</p>
 <p>kClamp : Replicate the edge color if the shader draws outside of its original bounds.</p>
 <p>kRepeat : Repeat the shader’s image horizontally and vertically.</p>
-<p>kLastTileMode :</p>
-<p>kDecal : Only draw within the original domain, return transparent-black everywhere else.</p>
 <p>kMirror : Repeat the shader’s image horizontally and vertically, alternating mirror images so that adjacent images always seam.</p>
+<p>kDecal : Only draw within the original domain, return transparent-black everywhere else.</p>
+<p>kLastTileMode :</p>
 <p class="rubric">Methods</p>
 <table class="longtable docutils align-default">
 <colgroup>
@@ -386,7 +386,7 @@
 <td><p></p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#skia.TileMode.name" title="skia.TileMode.name"><code class="xref py py-obj docutils literal notranslate"><span class="pre">name</span></code></a></p></td>
-<td><p>handle) -&gt; str</p></td>
+<td><p></p></td>
 </tr>
 </tbody>
 </table>
@@ -396,7 +396,7 @@
 <h2>Methods<a class="headerlink" href="#methods" title="Permalink to this headline">¶</a></h2>
 <dl class="py method">
 <dt id="skia.TileMode.__init__">
-<code class="sig-prename descclassname">TileMode.</code><code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.TileMode" title="skia.TileMode">skia.TileMode</a></span></em>, <em class="sig-param"><span class="n">arg0</span><span class="p">:</span> <span class="n">int</span></em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#skia.TileMode.__init__" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">TileMode.</code><code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.TileMode" title="skia.TileMode">skia.TileMode</a></span></em>, <em class="sig-param"><span class="n">value</span><span class="p">:</span> <span class="n">int</span></em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#skia.TileMode.__init__" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </div>
@@ -404,39 +404,33 @@
 <h2>Attributes<a class="headerlink" href="#attributes" title="Permalink to this headline">¶</a></h2>
 <dl class="py attribute">
 <dt id="skia.TileMode.kClamp">
-<code class="sig-prename descclassname">TileMode.</code><code class="sig-name descname">kClamp</code><em class="property"> = TileMode.kClamp</em><a class="headerlink" href="#skia.TileMode.kClamp" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">TileMode.</code><code class="sig-name descname">kClamp</code><em class="property"> = &lt;TileMode.kClamp: 0&gt;</em><a class="headerlink" href="#skia.TileMode.kClamp" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt id="skia.TileMode.kDecal">
-<code class="sig-prename descclassname">TileMode.</code><code class="sig-name descname">kDecal</code><em class="property"> = TileMode.kLastTileMode</em><a class="headerlink" href="#skia.TileMode.kDecal" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">TileMode.</code><code class="sig-name descname">kDecal</code><em class="property"> = &lt;TileMode.kDecal: 3&gt;</em><a class="headerlink" href="#skia.TileMode.kDecal" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt id="skia.TileMode.kLastTileMode">
-<code class="sig-prename descclassname">TileMode.</code><code class="sig-name descname">kLastTileMode</code><em class="property"> = TileMode.kLastTileMode</em><a class="headerlink" href="#skia.TileMode.kLastTileMode" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">TileMode.</code><code class="sig-name descname">kLastTileMode</code><em class="property"> = &lt;TileMode.kDecal: 3&gt;</em><a class="headerlink" href="#skia.TileMode.kLastTileMode" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt id="skia.TileMode.kMirror">
-<code class="sig-prename descclassname">TileMode.</code><code class="sig-name descname">kMirror</code><em class="property"> = TileMode.kMirror</em><a class="headerlink" href="#skia.TileMode.kMirror" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">TileMode.</code><code class="sig-name descname">kMirror</code><em class="property"> = &lt;TileMode.kMirror: 2&gt;</em><a class="headerlink" href="#skia.TileMode.kMirror" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt id="skia.TileMode.kRepeat">
-<code class="sig-prename descclassname">TileMode.</code><code class="sig-name descname">kRepeat</code><em class="property"> = TileMode.kRepeat</em><a class="headerlink" href="#skia.TileMode.kRepeat" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">TileMode.</code><code class="sig-name descname">kRepeat</code><em class="property"> = &lt;TileMode.kRepeat: 1&gt;</em><a class="headerlink" href="#skia.TileMode.kRepeat" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt id="skia.TileMode.name">
 <code class="sig-prename descclassname">TileMode.</code><code class="sig-name descname">name</code><a class="headerlink" href="#skia.TileMode.name" title="Permalink to this definition">¶</a></dt>
-<dd><p>handle) -&gt; str</p>
-<dl class="field-list simple">
-<dt class="field-odd">Type</dt>
-<dd class="field-odd"><p>(self</p>
-</dd>
-</dl>
-</dd></dl>
+<dd></dd></dl>
 
 </div>
 </div>
