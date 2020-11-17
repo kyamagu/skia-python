@@ -151,7 +151,7 @@ jobs:
         python-version: 2.7
       if: steps.cache.outputs.cache-hit != 'true'
     - name: Set PATH
-      run: echo "$PSScriptRoot\depot_tools" >> $env:GITHUB_PATH
+      run: echo "${Env:PWD}\depot_tools" >> $Env:GITHUB_PATH
       if: steps.cache.outputs.cache-hit != 'true'
     - name: Build Skia
       run: |

@@ -121,7 +121,7 @@ jobs:
       with:
         python-version: 2.7
     - name: Set PATH
-      run: echo "$PSScriptRoot\depot_tools" >> $env:GITHUB_PATH
+      run: echo "${Env:PWD}\depot_tools" >> $Env:GITHUB_PATH
     - name: Build Skia
       run: |
         cd skia
