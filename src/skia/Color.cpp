@@ -82,15 +82,14 @@ py::class_<SkColor4f>(m, "Color4f", R"docstring(
         )docstring")
     .def("vec",
         [] (SkColor4f& color4f) {
-            return py::memoryview(py::buffer_info(
+            return py::memoryview::from_buffer(
                 color4f.vec(),
                 sizeof(float),
-                py::format_descriptor<float>::format(),
-                1,
+                py::format_descriptor<float>::value,
                 { 4 },
                 { sizeof(float) },
                 false
-            ));
+            );
         },
         R"docstring(
         Returns a memoryview to components of :py:class:`Color4f`, for array

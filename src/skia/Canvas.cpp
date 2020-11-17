@@ -454,26 +454,23 @@ canvas
             if (!addr)
                 return py::none();
             ssize_t bytesPerPixel = info.bytesPerPixel();
-            const std::string& format =
+            const char* format =
                 (bytesPerPixel == 1) ?
-                    py::format_descriptor<uint8_t>::format() :
+                    py::format_descriptor<uint8_t>::value :
                 (bytesPerPixel == 2) ?
-                    py::format_descriptor<uint16_t>::format() :
+                    py::format_descriptor<uint16_t>::value :
                 (bytesPerPixel == 4) ?
-                    py::format_descriptor<uint32_t>::format() :
+                    py::format_descriptor<uint32_t>::value :
                 (bytesPerPixel == 8) ?
-                    py::format_descriptor<uint64_t>::format() :
-                py::format_descriptor<uint8_t>::format();
-            return py::memoryview(
-                py::buffer_info(
-                    addr,
-                    bytesPerPixel,
-                    format,
-                    2,
-                    { info.width(), info.height() },
-                    { ssize_t(rowBytes), bytesPerPixel },
-                    true
-                )
+                    py::format_descriptor<uint64_t>::value :
+                py::format_descriptor<uint8_t>::value;
+            return py::memoryview::from_buffer(
+                addr,
+                bytesPerPixel,
+                format,
+                { info.width(), info.height() },
+                { ssize_t(rowBytes), bytesPerPixel },
+                true
             );
         },
         R"docstring(

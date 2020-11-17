@@ -160,6 +160,88 @@ py::buffer_info ImageInfoToBufferInfo(
     }
 }
 
+py::memoryview ImageInfoToMemoryView(
+    const SkImageInfo& imageInfo, void* data, ssize_t rowBytes, bool readonly) {
+    ssize_t width = imageInfo.width();
+    ssize_t height = imageInfo.height();
+    ssize_t bytesPerPixel = imageInfo.bytesPerPixel();
+    if (!rowBytes)
+        rowBytes = imageInfo.minRowBytes();
+    switch (imageInfo.colorType()) {
+        case kAlpha_8_SkColorType:
+        case kGray_8_SkColorType:
+            return py::memoryview::from_buffer(
+                data, bytesPerPixel, "B", { height, width },
+                { rowBytes, bytesPerPixel }, readonly);
+
+        case kRGB_565_SkColorType:
+        case kARGB_4444_SkColorType:
+            return py::memoryview::from_buffer(
+                data, bytesPerPixel, "H", { height, width },
+                { rowBytes, bytesPerPixel }, readonly);
+
+        case kRGBA_8888_SkColorType:
+        case kRGB_888x_SkColorType:
+        case kBGRA_8888_SkColorType:
+            return py::memoryview::from_buffer(
+                data, 1, "B", { height, width, ssize_t(4) },
+                { rowBytes, bytesPerPixel, ssize_t(1) }, readonly);
+
+        case kRGBA_1010102_SkColorType:
+        case kBGRA_1010102_SkColorType:
+        case kRGB_101010x_SkColorType:
+        case kBGR_101010x_SkColorType:
+            return py::memoryview::from_buffer(
+                data, bytesPerPixel, "I", { height, width },
+                { rowBytes, bytesPerPixel }, readonly);
+
+        case kRGBA_F16Norm_SkColorType:
+        case kRGBA_F16_SkColorType:
+            return py::memoryview::from_buffer(
+                data, 2, "e", { height, width, ssize_t(4) },
+                { rowBytes, bytesPerPixel, ssize_t(2) }, readonly);
+
+        case kRGBA_F32_SkColorType:
+            return py::memoryview::from_buffer(
+                data, 4, "f", { height, width, ssize_t(4) },
+                { rowBytes, bytesPerPixel, ssize_t(4) }, readonly);
+
+        case kR8G8_unorm_SkColorType:
+            return py::memoryview::from_buffer(
+                data, 1, "B", { height, width, ssize_t(2) },
+                { rowBytes, bytesPerPixel, ssize_t(1) }, readonly);
+
+        case kA16_float_SkColorType:
+            return py::memoryview::from_buffer(
+                data, 2, "e", { height, width },
+                { rowBytes, bytesPerPixel }, readonly);
+
+        case kR16G16_float_SkColorType:
+            return py::memoryview::from_buffer(
+                data, 2, "e", { height, width, ssize_t(2) },
+                { rowBytes, bytesPerPixel, ssize_t(2) }, readonly);
+
+        case kA16_unorm_SkColorType:
+            return py::memoryview::from_buffer(
+                data, 2, "<H", { height, width },
+                { rowBytes, bytesPerPixel }, readonly);
+
+        case kR16G16_unorm_SkColorType:
+            return py::memoryview::from_buffer(
+                data, 2, "<H", { height, width, ssize_t(2) },
+                { rowBytes, bytesPerPixel, ssize_t(2) }, readonly);
+
+        case kR16G16B16A16_unorm_SkColorType:
+            return py::memoryview::from_buffer(
+                data, 2, "<H", { height, width, ssize_t(4) },
+                { rowBytes, bytesPerPixel, ssize_t(2) }, readonly);
+
+        case kUnknown_SkColorType:
+        default:
+            throw std::runtime_error("Unsupported color type");
+    }
+}
+
 
 py::dict ImageInfoToArrayInterface(
     const SkImageInfo& imageInfo, size_t rowBytes) {
