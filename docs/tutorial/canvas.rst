@@ -47,7 +47,7 @@ into numpy array.
 
     import skia
     import numpy as np
-    import matplotlib.pyplot as plot
+    import matplotlib.pyplot as plt
 
     width, height = 200, 200
     array = np.zeros((height, width, 4), dtype=np.uint8)
@@ -55,8 +55,8 @@ into numpy array.
     with skia.Surface(array) as canvas:
         canvas.drawCircle(100, 100, 40, skia.Paint(Color=skia.ColorGREEN))
 
-    plot.imshow(array)
-    plot.show()
+    plt.imshow(array)
+    plt.show()
 
 GPU
 ---
