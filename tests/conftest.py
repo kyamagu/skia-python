@@ -53,7 +53,10 @@ def opengl_context(request):
 
 @pytest.fixture(scope='session')
 def context(opengl_context):
-    yield skia.GrDirectContext.MakeGL()
+    context = skia.GrDirectContext.MakeGL()
+    if not isinstance(context, skia.GrContext):
+        pytest.skip('Failed to create GrDirectContext')
+    yield context
 
 
 @pytest.fixture(scope='module', params=['raster', 'gpu'])
