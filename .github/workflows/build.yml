@@ -31,7 +31,7 @@ jobs:
         path: skia/out/Release
         key: ${{ matrix.container }}-skia-out-${{ hashFiles('submodule.txt') }}
     - name: Set PATH
-      run: echo "::add-path::$PWD/depot_tools"
+      run: echo "$PWD/depot_tools" >> $GITHUB_PATH
       if: steps.cache.outputs.cache-hit != 'true'
     - name: Build gn
       env:
@@ -91,7 +91,7 @@ jobs:
         python-version: 2.7
       if: steps.cache.outputs.cache-hit != 'true'
     - name: Set PATH
-      run: echo "::add-path::$PWD/depot_tools"
+      run: echo "$PWD/depot_tools" >> $GITHUB_PATH
       if: steps.cache.outputs.cache-hit != 'true'
     - name: Build Skia
       run: |
@@ -151,7 +151,7 @@ jobs:
         python-version: 2.7
       if: steps.cache.outputs.cache-hit != 'true'
     - name: Set PATH
-      run: echo "::add-path::$PWD\depot_tools"
+      run: echo "$PSScriptRoot\depot_tools" >> $env:GITHUB_PATH
       if: steps.cache.outputs.cache-hit != 'true'
     - name: Build Skia
       run: |

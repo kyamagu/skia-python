@@ -27,7 +27,7 @@ jobs:
         yum clean all
         rm -rf /var/cache/yum
     - name: Set PATH
-      run: echo "::add-path::$PWD/depot_tools"
+      run: echo "$PWD/depot_tools" >> $GITHUB_PATH
     - name: Build gn
       env:
         CC: gcc
@@ -79,7 +79,7 @@ jobs:
       with:
         python-version: 2.7
     - name: Set PATH
-      run: echo "::add-path::$PWD/depot_tools"
+      run: echo "$PWD/depot_tools" >> $GITHUB_PATH
     - name: Build Skia
       run: |
         cd skia
@@ -121,7 +121,7 @@ jobs:
       with:
         python-version: 2.7
     - name: Set PATH
-      run: echo "::add-path::$PWD\depot_tools"
+      run: echo "$PSScriptRoot\depot_tools" >> $env:GITHUB_PATH
     - name: Build Skia
       run: |
         cd skia
