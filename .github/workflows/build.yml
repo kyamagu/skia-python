@@ -59,7 +59,7 @@ jobs:
         cd ..
       if: steps.cache.outputs.cache-hit != 'true'
     - name: Set up Python
-      run: echo "::add-path::/opt/python/${{ matrix.python-version }}/bin"
+      run: echo "/opt/python/${{ matrix.python-version }}/bin" >> $GITHUB_PATH
     - name: Build python binding
       run: |
         python -m pip install -U pip
