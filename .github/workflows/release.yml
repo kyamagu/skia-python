@@ -121,7 +121,7 @@ jobs:
       with:
         python-version: 2.7
     - name: Set PATH
-      run: echo "${Env:PWD}\depot_tools" >> $Env:GITHUB_PATH
+      run: echo "$pwd\depot_tools" | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
     - name: Build Skia
       run: |
         cd skia
