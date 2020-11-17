@@ -27,7 +27,7 @@ jobs:
         yum clean all
         rm -rf /var/cache/yum
     - name: Set PATH
-      run: echo "::add-path::$PWD/depot_tools"
+      run: echo "$PWD/depot_tools" >> $GITHUB_PATH
     - name: Build gn
       env:
         CC: gcc
@@ -52,7 +52,7 @@ jobs:
         rm -rf out/Release/obj
         cd ..
     - name: Set up Python
-      run: echo "::add-path::/opt/python/${{ matrix.python-version }}/bin"
+      run: echo "/opt/python/${{ matrix.python-version }}/bin" >> $GITHUB_PATH
     - name: Build python binding
       run: |
         python -m pip install -U pip
@@ -79,7 +79,7 @@ jobs:
       with:
         python-version: 2.7
     - name: Set PATH
-      run: echo "::add-path::$PWD/depot_tools"
+      run: echo "$PWD/depot_tools" >> $GITHUB_PATH
     - name: Build Skia
       run: |
         cd skia
@@ -121,7 +121,7 @@ jobs:
       with:
         python-version: 2.7
     - name: Set PATH
-      run: echo "::add-path::$PWD\depot_tools"
+      run: echo "$pwd\depot_tools" | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
     - name: Build Skia
       run: |
         cd skia

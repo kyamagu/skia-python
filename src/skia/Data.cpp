@@ -1,11 +1,10 @@
 #include "common.h"
 
-py::buffer_info GetBuffer(SkData &d, bool readonly = true) {
-    return py::buffer_info(
+py::memoryview GetMemoryview(SkData &d, bool readonly = true) {
+    return py::memoryview::from_buffer(
         d.writable_data(),
         sizeof(uint8_t),
-        py::format_descriptor<uint8_t>::format(),
-        1,
+        py::format_descriptor<uint8_t>::value,
         { d.size() },
         { sizeof(uint8_t) },
         readonly
@@ -31,7 +30,16 @@ py::class_<SkData, sk_sp<SkData>>(m, "Data", py::buffer_protocol(),
         memoryview(data)
         np.array(data)
     )docstring")
-    .def_buffer([] (SkData& data) { return GetBuffer(data); })
+    .def_buffer([] (SkData& data) {
+        return py::buffer_info(
+            data.writable_data(),
+            sizeof(uint8_t),
+            py::format_descriptor<uint8_t>::value,
+            1,
+            { data.size() },
+            { sizeof(uint8_t) }
+        );
+    })
     .def("__repr__",
         [] (const SkData& data) {
             return py::str("Data(size={})").format(data.size());
@@ -57,7 +65,7 @@ py::class_<SkData, sk_sp<SkData>>(m, "Data", py::buffer_protocol(),
         )docstring")
     .def("isEmpty", &SkData::isEmpty)
     .def("data",
-        [] (SkData& data) { return py::memoryview(GetBuffer(data)); },
+        [] (SkData& data) { return GetMemoryview(data); },
         R"docstring(
         Returns the read-only memoryview to the data.
         )docstring")
@@ -72,7 +80,7 @@ py::class_<SkData, sk_sp<SkData>>(m, "Data", py::buffer_protocol(),
         is cast to ``bytes``.
         )docstring")
     .def("writable_data",
-        [] (SkData& data) { return py::memoryview(GetBuffer(data, false)); },
+        [] (SkData& data) { return GetMemoryview(data, false); },
         R"docstring(
         USE WITH CAUTION.
 

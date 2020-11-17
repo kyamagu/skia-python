@@ -7,24 +7,21 @@ template <typename T, bool readonly = true>
 py::memoryview AddrN(const SkPixmap& pixmap) {
     if (pixmap.info().bytesPerPixel() != sizeof(T))
         throw std::runtime_error("Incompatible byte size.");
-    return py::memoryview(
-        py::buffer_info(
-            reinterpret_cast<T*>(pixmap.writable_addr()),
-            sizeof(T),
-            py::format_descriptor<T>::format(),
-            2,
-            { pixmap.rowBytesAsPixels(), pixmap.height() },
-            { pixmap.rowBytes(), sizeof(T) },
-            readonly
-        )
+    return py::memoryview::from_buffer(
+        reinterpret_cast<T*>(pixmap.writable_addr()),
+        sizeof(T),
+        py::format_descriptor<T>::value,
+        { pixmap.rowBytesAsPixels(), pixmap.height() },
+        { pixmap.rowBytes(), sizeof(T) },
+        readonly
     );
 }
 
 template <bool readonly = true>
 py::memoryview Addr(const SkPixmap& pixmap) {
     CHECK_NOTNULL(pixmap.addr());
-    return py::memoryview(ImageInfoToBufferInfo(
-        pixmap.info(), pixmap.writable_addr(), pixmap.rowBytes(), readonly));
+    return py::memoryview::from_memory(
+        pixmap.writable_addr(), pixmap.computeByteSize(), readonly);
 }
 
 }  // namespace

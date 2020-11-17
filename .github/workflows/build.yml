@@ -31,7 +31,7 @@ jobs:
         path: skia/out/Release
         key: ${{ matrix.container }}-skia-out-${{ hashFiles('submodule.txt') }}
     - name: Set PATH
-      run: echo "::add-path::$PWD/depot_tools"
+      run: echo "$PWD/depot_tools" >> $GITHUB_PATH
       if: steps.cache.outputs.cache-hit != 'true'
     - name: Build gn
       env:
@@ -59,7 +59,7 @@ jobs:
         cd ..
       if: steps.cache.outputs.cache-hit != 'true'
     - name: Set up Python
-      run: echo "::add-path::/opt/python/${{ matrix.python-version }}/bin"
+      run: echo "/opt/python/${{ matrix.python-version }}/bin" >> $GITHUB_PATH
     - name: Build python binding
       run: |
         python -m pip install -U pip
@@ -91,7 +91,7 @@ jobs:
         python-version: 2.7
       if: steps.cache.outputs.cache-hit != 'true'
     - name: Set PATH
-      run: echo "::add-path::$PWD/depot_tools"
+      run: echo "$PWD/depot_tools" >> $GITHUB_PATH
       if: steps.cache.outputs.cache-hit != 'true'
     - name: Build Skia
       run: |
@@ -151,7 +151,9 @@ jobs:
         python-version: 2.7
       if: steps.cache.outputs.cache-hit != 'true'
     - name: Set PATH
-      run: echo "::add-path::$PWD\depot_tools"
+      run: |
+        echo "$pwd\depot_tools"
+        echo "$pwd\depot_tools" | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
       if: steps.cache.outputs.cache-hit != 'true'
     - name: Build Skia
       run: |

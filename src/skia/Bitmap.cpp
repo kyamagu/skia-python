@@ -336,8 +336,8 @@ bitmap
     .def("getPixels",
         [] (const SkBitmap& bitmap) -> py::object {
             CHECK_NOTNULL(bitmap.getPixels());
-            return py::memoryview(ImageInfoToBufferInfo(
-                bitmap.info(), bitmap.getPixels(), bitmap.rowBytes(), false));
+            return ImageInfoToMemoryView(
+                bitmap.info(), bitmap.getPixels(), bitmap.rowBytes(), false);
         },
         R"docstring(
         Returns pixel address, the base address corresponding to the pixel

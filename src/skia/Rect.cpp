@@ -1252,15 +1252,14 @@ py::class_<SkRect>(m, "Rect", R"docstring(
         )docstring")
     .def("asScalars",
         [] (const SkRect& r) {
-            return py::memoryview(py::buffer_info(
+            return py::memoryview::from_buffer(
                 const_cast<SkScalar*>(r.asScalars()),
                 sizeof(SkScalar),
-                py::format_descriptor<SkScalar>::format(),
-                1,
+                py::format_descriptor<SkScalar>::value,
                 { 4 },
                 { sizeof(SkScalar) },
                 true
-            ));
+            );
         },
         R"docstring(
         Returns pointer to first scalar in :py:class:`Rect`, to treat it as an
