@@ -16,6 +16,7 @@ jobs:
           - cp36-cp36m
           - cp37-cp37m
           - cp38-cp38
+          - cp39-cp39
     container: quay.io/pypa/${{ matrix.container }}
     steps:
     - uses: actions/checkout@v2
@@ -69,7 +70,7 @@ jobs:
     runs-on: macos-latest
     strategy:
       matrix:
-        python-version: [3.5, 3.6, 3.7, 3.8]
+        python-version: [3.5, 3.6, 3.7, 3.8, 3.9]
     steps:
     - uses: actions/checkout@v2
       with:
@@ -111,7 +112,7 @@ jobs:
     strategy:
       matrix:
         arch: [ x64 ]
-        python-version: [3.5, 3.6, 3.7, 3.8]
+        python-version: [3.5, 3.6, 3.7, 3.8, 3.9]
     steps:
     - uses: actions/checkout@v2
       with:
