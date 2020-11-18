@@ -203,6 +203,7 @@
 <li class="toctree-l3"><a class="reference internal" href="skia.MergePathEffect.html">MergePathEffect</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.NullWStream.html">NullWStream</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.OffsetImageFilter.html">OffsetImageFilter</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.OpBuilder.html">OpBuilder</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.OverdrawColorFilter.html">OverdrawColorFilter</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.PDF.html">PDF</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.Paint.html">Paint</a></li>
@@ -347,59 +348,65 @@
 <tr class="row-odd"><td><p><a class="reference internal" href="#skia.AlphaTypeIsOpaque" title="skia.AlphaTypeIsOpaque"><code class="xref py py-obj docutils literal notranslate"><span class="pre">AlphaTypeIsOpaque</span></code></a></p></td>
 <td><p>Returns true if <a class="reference internal" href="skia.AlphaType.html#skia.AlphaType" title="skia.AlphaType"><code class="xref py py-class docutils literal notranslate"><span class="pre">AlphaType</span></code></a> equals <a class="reference internal" href="skia.AlphaType.html#skia.AlphaType.kOpaque_AlphaType" title="skia.AlphaType.kOpaque_AlphaType"><code class="xref py py-attr docutils literal notranslate"><span class="pre">kOpaque_AlphaType</span></code></a>.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#skia.BlendMode_AsCoeff" title="skia.BlendMode_AsCoeff"><code class="xref py py-obj docutils literal notranslate"><span class="pre">BlendMode_AsCoeff</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.AsWinding" title="skia.AsWinding"><code class="xref py py-obj docutils literal notranslate"><span class="pre">AsWinding</span></code></a></p></td>
+<td><p>Set the result with fill type winding to area equivalent to path.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.BlendMode_AsCoeff" title="skia.BlendMode_AsCoeff"><code class="xref py py-obj docutils literal notranslate"><span class="pre">BlendMode_AsCoeff</span></code></a></p></td>
 <td><p>Returns true if ‘mode’ is a coefficient-based blend mode (&lt;= kLastCoeffMode).</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#skia.BlendMode_Name" title="skia.BlendMode_Name"><code class="xref py py-obj docutils literal notranslate"><span class="pre">BlendMode_Name</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.BlendMode_Name" title="skia.BlendMode_Name"><code class="xref py py-obj docutils literal notranslate"><span class="pre">BlendMode_Name</span></code></a></p></td>
 <td><p>Returns name of blendMode as null-terminated C string.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#skia.Color" title="skia.Color"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Color</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Color" title="skia.Color"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Color</span></code></a></p></td>
 <td><p>Returns color value from 8-bit component values.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#skia.ColorGetA" title="skia.ColorGetA"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ColorGetA</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.ColorGetA" title="skia.ColorGetA"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ColorGetA</span></code></a></p></td>
 <td><p>Returns alpha byte from color value.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#skia.ColorGetB" title="skia.ColorGetB"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ColorGetB</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.ColorGetB" title="skia.ColorGetB"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ColorGetB</span></code></a></p></td>
 <td><p>Returns blue component of color, from zero to 255.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#skia.ColorGetG" title="skia.ColorGetG"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ColorGetG</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.ColorGetG" title="skia.ColorGetG"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ColorGetG</span></code></a></p></td>
 <td><p>Returns green component of color, from zero to 255.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#skia.ColorGetR" title="skia.ColorGetR"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ColorGetR</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.ColorGetR" title="skia.ColorGetR"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ColorGetR</span></code></a></p></td>
 <td><p>Returns red component of color, from zero to 255.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#skia.ColorSetA" title="skia.ColorSetA"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ColorSetA</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.ColorSetA" title="skia.ColorSetA"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ColorSetA</span></code></a></p></td>
 <td><p>Returns unpremultiplied color with red, blue, and green set from c; and alpha set from a.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#skia.ColorSetARGB" title="skia.ColorSetARGB"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ColorSetARGB</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.ColorSetARGB" title="skia.ColorSetARGB"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ColorSetARGB</span></code></a></p></td>
 <td><p>Returns color value from 8-bit component values.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#skia.ColorSetRGB" title="skia.ColorSetRGB"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ColorSetRGB</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.ColorSetRGB" title="skia.ColorSetRGB"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ColorSetRGB</span></code></a></p></td>
 <td><p>Returns color value from 8-bit component values, with alpha set fully opaque to 255.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#skia.ColorToHSV" title="skia.ColorToHSV"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ColorToHSV</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.ColorToHSV" title="skia.ColorToHSV"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ColorToHSV</span></code></a></p></td>
 <td><p>Converts ARGB to its HSV components.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#skia.ColorTypeBytesPerPixel" title="skia.ColorTypeBytesPerPixel"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ColorTypeBytesPerPixel</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.ColorTypeBytesPerPixel" title="skia.ColorTypeBytesPerPixel"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ColorTypeBytesPerPixel</span></code></a></p></td>
 <td><p>Returns the number of bytes required to store a pixel, including unused padding.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#skia.ColorTypeIsAlwaysOpaque" title="skia.ColorTypeIsAlwaysOpaque"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ColorTypeIsAlwaysOpaque</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.ColorTypeIsAlwaysOpaque" title="skia.ColorTypeIsAlwaysOpaque"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ColorTypeIsAlwaysOpaque</span></code></a></p></td>
 <td><p>Returns true if <a class="reference internal" href="skia.ColorType.html#skia.ColorType" title="skia.ColorType"><code class="xref py py-class docutils literal notranslate"><span class="pre">ColorType</span></code></a> always decodes alpha to 1.0, making the pixel fully opaque.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#skia.ColorTypeValidateAlphaType" title="skia.ColorTypeValidateAlphaType"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ColorTypeValidateAlphaType</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.ColorTypeValidateAlphaType" title="skia.ColorTypeValidateAlphaType"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ColorTypeValidateAlphaType</span></code></a></p></td>
 <td><p>Returns true if canonical can be set to a valid <a class="reference internal" href="skia.AlphaType.html#skia.AlphaType" title="skia.AlphaType"><code class="xref py py-class docutils literal notranslate"><span class="pre">AlphaType</span></code></a> for colorType.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#skia.ComputeIsOpaque" title="skia.ComputeIsOpaque"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ComputeIsOpaque</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.ComputeIsOpaque" title="skia.ComputeIsOpaque"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ComputeIsOpaque</span></code></a></p></td>
 <td><p>Returns true if all pixels are opaque.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#skia.EncodedOriginToMatrix" title="skia.EncodedOriginToMatrix"><code class="xref py py-obj docutils literal notranslate"><span class="pre">EncodedOriginToMatrix</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.EncodedOriginToMatrix" title="skia.EncodedOriginToMatrix"><code class="xref py py-obj docutils literal notranslate"><span class="pre">EncodedOriginToMatrix</span></code></a></p></td>
 <td><p>Given an encoded origin and the width and height of the source data, returns a matrix that transforms the source rectangle [0, 0, w, h] to a correctly oriented destination rectangle, with the upper left corner still at [0, 0].</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#skia.HSVToColor" title="skia.HSVToColor"><code class="xref py py-obj docutils literal notranslate"><span class="pre">HSVToColor</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.HSVToColor" title="skia.HSVToColor"><code class="xref py py-obj docutils literal notranslate"><span class="pre">HSVToColor</span></code></a></p></td>
 <td><p>Converts HSV components to an ARGB color.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#skia.MakeNullCanvas" title="skia.MakeNullCanvas"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MakeNullCanvas</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.MakeNullCanvas" title="skia.MakeNullCanvas"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MakeNullCanvas</span></code></a></p></td>
 <td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Op" title="skia.Op"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Op</span></code></a></p></td>
+<td><p>Set this path to the result of applying the Op to this path and the specified path: this = (this op operand).</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#skia.PathFillType_ConvertToNonInverse" title="skia.PathFillType_ConvertToNonInverse"><code class="xref py py-obj docutils literal notranslate"><span class="pre">PathFillType_ConvertToNonInverse</span></code></a></p></td>
 <td><p></p></td>
@@ -418,6 +425,12 @@
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#skia.RGBToHSV" title="skia.RGBToHSV"><code class="xref py py-obj docutils literal notranslate"><span class="pre">RGBToHSV</span></code></a></p></td>
 <td><p>Converts RGB to its HSV components.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.Simplify" title="skia.Simplify"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Simplify</span></code></a></p></td>
+<td><p>Set this path to a set of non-overlapping contours that describe the same area as the original path.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.TightBounds" title="skia.TightBounds"><code class="xref py py-obj docutils literal notranslate"><span class="pre">TightBounds</span></code></a></p></td>
+<td><p>Set the resulting rectangle to the tight bounds of the path.</p></td>
 </tr>
 </tbody>
 </table>
@@ -761,182 +774,185 @@
 <tr class="row-odd"><td><p><a class="reference internal" href="skia.OffsetImageFilter.html#skia.OffsetImageFilter" title="skia.OffsetImageFilter"><code class="xref py py-obj docutils literal notranslate"><span class="pre">OffsetImageFilter</span></code></a></p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="skia.OverdrawColorFilter.html#skia.OverdrawColorFilter" title="skia.OverdrawColorFilter"><code class="xref py py-obj docutils literal notranslate"><span class="pre">OverdrawColorFilter</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="skia.OpBuilder.html#skia.OpBuilder" title="skia.OpBuilder"><code class="xref py py-obj docutils literal notranslate"><span class="pre">OpBuilder</span></code></a></p></td>
+<td><p>Perform a series of path operations, optimized for unioning many paths together.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="skia.OverdrawColorFilter.html#skia.OverdrawColorFilter" title="skia.OverdrawColorFilter"><code class="xref py py-obj docutils literal notranslate"><span class="pre">OverdrawColorFilter</span></code></a></p></td>
 <td><p>Uses the value in the src alpha channel to set the dst pixel.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="skia.PDF.html#skia.PDF" title="skia.PDF"><code class="xref py py-obj docutils literal notranslate"><span class="pre">PDF</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="skia.PDF.html#skia.PDF" title="skia.PDF"><code class="xref py py-obj docutils literal notranslate"><span class="pre">PDF</span></code></a></p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="skia.Paint.html#skia.Paint" title="skia.Paint"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Paint</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="skia.Paint.html#skia.Paint" title="skia.Paint"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Paint</span></code></a></p></td>
 <td><p><a class="reference internal" href="skia.Paint.html#skia.Paint" title="skia.Paint"><code class="xref py py-class docutils literal notranslate"><span class="pre">Paint</span></code></a> controls options applied when drawing.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="skia.PaintImageFilter.html#skia.PaintImageFilter" title="skia.PaintImageFilter"><code class="xref py py-obj docutils literal notranslate"><span class="pre">PaintImageFilter</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="skia.PaintImageFilter.html#skia.PaintImageFilter" title="skia.PaintImageFilter"><code class="xref py py-obj docutils literal notranslate"><span class="pre">PaintImageFilter</span></code></a></p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="skia.Path.html#skia.Path" title="skia.Path"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Path</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="skia.Path.html#skia.Path" title="skia.Path"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Path</span></code></a></p></td>
 <td><p><a class="reference internal" href="skia.Path.html#skia.Path" title="skia.Path"><code class="xref py py-class docutils literal notranslate"><span class="pre">Path</span></code></a> contain geometry.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="skia.Path1DPathEffect.html#skia.Path1DPathEffect" title="skia.Path1DPathEffect"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Path1DPathEffect</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="skia.Path1DPathEffect.html#skia.Path1DPathEffect" title="skia.Path1DPathEffect"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Path1DPathEffect</span></code></a></p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="skia.Path2DPathEffect.html#skia.Path2DPathEffect" title="skia.Path2DPathEffect"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Path2DPathEffect</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="skia.Path2DPathEffect.html#skia.Path2DPathEffect" title="skia.Path2DPathEffect"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Path2DPathEffect</span></code></a></p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="skia.PathConvexityType.html#skia.PathConvexityType" title="skia.PathConvexityType"><code class="xref py py-obj docutils literal notranslate"><span class="pre">PathConvexityType</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="skia.PathConvexityType.html#skia.PathConvexityType" title="skia.PathConvexityType"><code class="xref py py-obj docutils literal notranslate"><span class="pre">PathConvexityType</span></code></a></p></td>
 <td><p>Members:</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="skia.PathDirection.html#skia.PathDirection" title="skia.PathDirection"><code class="xref py py-obj docutils literal notranslate"><span class="pre">PathDirection</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="skia.PathDirection.html#skia.PathDirection" title="skia.PathDirection"><code class="xref py py-obj docutils literal notranslate"><span class="pre">PathDirection</span></code></a></p></td>
 <td><p>Members:</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="skia.PathEffect.html#skia.PathEffect" title="skia.PathEffect"><code class="xref py py-obj docutils literal notranslate"><span class="pre">PathEffect</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="skia.PathEffect.html#skia.PathEffect" title="skia.PathEffect"><code class="xref py py-obj docutils literal notranslate"><span class="pre">PathEffect</span></code></a></p></td>
 <td><p><a class="reference internal" href="skia.PathEffect.html#skia.PathEffect" title="skia.PathEffect"><code class="xref py py-class docutils literal notranslate"><span class="pre">PathEffect</span></code></a> is the base class for objects in the <a class="reference internal" href="skia.Paint.html#skia.Paint" title="skia.Paint"><code class="xref py py-class docutils literal notranslate"><span class="pre">Paint</span></code></a> that affect the geometry of a drawing primitive before it is transformed by the canvas’ matrix and drawn.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="skia.PathFillType.html#skia.PathFillType" title="skia.PathFillType"><code class="xref py py-obj docutils literal notranslate"><span class="pre">PathFillType</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="skia.PathFillType.html#skia.PathFillType" title="skia.PathFillType"><code class="xref py py-obj docutils literal notranslate"><span class="pre">PathFillType</span></code></a></p></td>
 <td><p>Members:</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="skia.PathOp.html#skia.PathOp" title="skia.PathOp"><code class="xref py py-obj docutils literal notranslate"><span class="pre">PathOp</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="skia.PathOp.html#skia.PathOp" title="skia.PathOp"><code class="xref py py-obj docutils literal notranslate"><span class="pre">PathOp</span></code></a></p></td>
 <td><p>The logical operations that can be performed when combining two paths.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="skia.PathSegmentMask.html#skia.PathSegmentMask" title="skia.PathSegmentMask"><code class="xref py py-obj docutils literal notranslate"><span class="pre">PathSegmentMask</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="skia.PathSegmentMask.html#skia.PathSegmentMask" title="skia.PathSegmentMask"><code class="xref py py-obj docutils literal notranslate"><span class="pre">PathSegmentMask</span></code></a></p></td>
 <td><p>Members:</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="skia.PathVerb.html#skia.PathVerb" title="skia.PathVerb"><code class="xref py py-obj docutils literal notranslate"><span class="pre">PathVerb</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="skia.PathVerb.html#skia.PathVerb" title="skia.PathVerb"><code class="xref py py-obj docutils literal notranslate"><span class="pre">PathVerb</span></code></a></p></td>
 <td><p>Members:</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="skia.PerlinNoiseShader.html#skia.PerlinNoiseShader" title="skia.PerlinNoiseShader"><code class="xref py py-obj docutils literal notranslate"><span class="pre">PerlinNoiseShader</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="skia.PerlinNoiseShader.html#skia.PerlinNoiseShader" title="skia.PerlinNoiseShader"><code class="xref py py-obj docutils literal notranslate"><span class="pre">PerlinNoiseShader</span></code></a></p></td>
 <td><p><a class="reference internal" href="skia.PerlinNoiseShader.html#skia.PerlinNoiseShader" title="skia.PerlinNoiseShader"><code class="xref py py-class docutils literal notranslate"><span class="pre">PerlinNoiseShader</span></code></a> creates an image using the Perlin turbulence function.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="skia.Picture.html#skia.Picture" title="skia.Picture"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Picture</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="skia.Picture.html#skia.Picture" title="skia.Picture"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Picture</span></code></a></p></td>
 <td><p><a class="reference internal" href="skia.Picture.html#skia.Picture" title="skia.Picture"><code class="xref py py-class docutils literal notranslate"><span class="pre">Picture</span></code></a> records drawing commands made to <a class="reference internal" href="skia.Canvas.html#skia.Canvas" title="skia.Canvas"><code class="xref py py-class docutils literal notranslate"><span class="pre">Canvas</span></code></a>.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="skia.PictureRecorder.html#skia.PictureRecorder" title="skia.PictureRecorder"><code class="xref py py-obj docutils literal notranslate"><span class="pre">PictureRecorder</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="skia.PictureRecorder.html#skia.PictureRecorder" title="skia.PictureRecorder"><code class="xref py py-obj docutils literal notranslate"><span class="pre">PictureRecorder</span></code></a></p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="skia.PixelGeometry.html#skia.PixelGeometry" title="skia.PixelGeometry"><code class="xref py py-obj docutils literal notranslate"><span class="pre">PixelGeometry</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="skia.PixelGeometry.html#skia.PixelGeometry" title="skia.PixelGeometry"><code class="xref py py-obj docutils literal notranslate"><span class="pre">PixelGeometry</span></code></a></p></td>
 <td><p>Description of how the LCD strips are arranged for each pixel.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="skia.PixelRef.html#skia.PixelRef" title="skia.PixelRef"><code class="xref py py-obj docutils literal notranslate"><span class="pre">PixelRef</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="skia.PixelRef.html#skia.PixelRef" title="skia.PixelRef"><code class="xref py py-obj docutils literal notranslate"><span class="pre">PixelRef</span></code></a></p></td>
 <td><p>This class is the smart container for pixel memory, and is used with <a class="reference internal" href="skia.Bitmap.html#skia.Bitmap" title="skia.Bitmap"><code class="xref py py-class docutils literal notranslate"><span class="pre">Bitmap</span></code></a>.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="skia.Pixmap.html#skia.Pixmap" title="skia.Pixmap"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Pixmap</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="skia.Pixmap.html#skia.Pixmap" title="skia.Pixmap"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Pixmap</span></code></a></p></td>
 <td><p><a class="reference internal" href="skia.Pixmap.html#skia.Pixmap" title="skia.Pixmap"><code class="xref py py-class docutils literal notranslate"><span class="pre">Pixmap</span></code></a> provides a utility to pair <a class="reference internal" href="skia.ImageInfo.html#skia.ImageInfo" title="skia.ImageInfo"><code class="xref py py-class docutils literal notranslate"><span class="pre">ImageInfo</span></code></a> with pixels and row bytes.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="skia.Point.html#skia.Point" title="skia.Point"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Point</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="skia.Point.html#skia.Point" title="skia.Point"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Point</span></code></a></p></td>
 <td><p><a class="reference internal" href="skia.Point.html#skia.Point" title="skia.Point"><code class="xref py py-class docutils literal notranslate"><span class="pre">Point</span></code></a> holds two 32-bit floating point coordinates.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="skia.Point3.html#skia.Point3" title="skia.Point3"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Point3</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="skia.Point3.html#skia.Point3" title="skia.Point3"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Point3</span></code></a></p></td>
 <td><p><a class="reference internal" href="skia.Point.html#skia.Point" title="skia.Point"><code class="xref py py-class docutils literal notranslate"><span class="pre">Point</span></code></a> holds three 32-bit floating point coordinates.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="skia.RRect.html#skia.RRect" title="skia.RRect"><code class="xref py py-obj docutils literal notranslate"><span class="pre">RRect</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="skia.RRect.html#skia.RRect" title="skia.RRect"><code class="xref py py-obj docutils literal notranslate"><span class="pre">RRect</span></code></a></p></td>
 <td><p><a class="reference internal" href="skia.RRect.html#skia.RRect" title="skia.RRect"><code class="xref py py-class docutils literal notranslate"><span class="pre">RRect</span></code></a> describes a rounded rectangle with a bounds and a pair of radii for each corner.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="skia.RSXform.html#skia.RSXform" title="skia.RSXform"><code class="xref py py-obj docutils literal notranslate"><span class="pre">RSXform</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="skia.RSXform.html#skia.RSXform" title="skia.RSXform"><code class="xref py py-obj docutils literal notranslate"><span class="pre">RSXform</span></code></a></p></td>
 <td><p>A compressed form of a rotation+scale matrix.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="skia.Rect.html#skia.Rect" title="skia.Rect"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Rect</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="skia.Rect.html#skia.Rect" title="skia.Rect"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Rect</span></code></a></p></td>
 <td><p><a class="reference internal" href="skia.Rect.html#skia.Rect" title="skia.Rect"><code class="xref py py-class docutils literal notranslate"><span class="pre">Rect</span></code></a> holds four float coordinates describing the upper and lower bounds of a rectangle.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="skia.RefCnt.html#skia.RefCnt" title="skia.RefCnt"><code class="xref py py-obj docutils literal notranslate"><span class="pre">RefCnt</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="skia.RefCnt.html#skia.RefCnt" title="skia.RefCnt"><code class="xref py py-obj docutils literal notranslate"><span class="pre">RefCnt</span></code></a></p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="skia.RefCntBase.html#skia.RefCntBase" title="skia.RefCntBase"><code class="xref py py-obj docutils literal notranslate"><span class="pre">RefCntBase</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="skia.RefCntBase.html#skia.RefCntBase" title="skia.RefCntBase"><code class="xref py py-obj docutils literal notranslate"><span class="pre">RefCntBase</span></code></a></p></td>
 <td><p><a class="reference internal" href="skia.RefCntBase.html#skia.RefCntBase" title="skia.RefCntBase"><code class="xref py py-class docutils literal notranslate"><span class="pre">RefCntBase</span></code></a> is the base class for objects that may be shared by multiple objects.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="skia.Region.html#skia.Region" title="skia.Region"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Region</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="skia.Region.html#skia.Region" title="skia.Region"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Region</span></code></a></p></td>
 <td><p><a class="reference internal" href="skia.Region.html#skia.Region" title="skia.Region"><code class="xref py py-class docutils literal notranslate"><span class="pre">Region</span></code></a> describes the set of pixels used to clip <a class="reference internal" href="skia.Canvas.html#skia.Canvas" title="skia.Canvas"><code class="xref py py-class docutils literal notranslate"><span class="pre">Canvas</span></code></a>.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="skia.SVGCanvas.html#skia.SVGCanvas" title="skia.SVGCanvas"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SVGCanvas</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="skia.SVGCanvas.html#skia.SVGCanvas" title="skia.SVGCanvas"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SVGCanvas</span></code></a></p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="skia.Shader.html#skia.Shader" title="skia.Shader"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Shader</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="skia.Shader.html#skia.Shader" title="skia.Shader"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Shader</span></code></a></p></td>
 <td><p>Shaders specify the source color(s) for what is being drawn.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="skia.ShaderMaskFilter.html#skia.ShaderMaskFilter" title="skia.ShaderMaskFilter"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ShaderMaskFilter</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="skia.ShaderMaskFilter.html#skia.ShaderMaskFilter" title="skia.ShaderMaskFilter"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ShaderMaskFilter</span></code></a></p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="skia.Shaders.html#skia.Shaders" title="skia.Shaders"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Shaders</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="skia.Shaders.html#skia.Shaders" title="skia.Shaders"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Shaders</span></code></a></p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="skia.Size.html#skia.Size" title="skia.Size"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Size</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="skia.Size.html#skia.Size" title="skia.Size"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Size</span></code></a></p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="skia.Stream.html#skia.Stream" title="skia.Stream"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Stream</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="skia.Stream.html#skia.Stream" title="skia.Stream"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Stream</span></code></a></p></td>
 <td><p><a class="reference internal" href="skia.Stream.html#skia.Stream" title="skia.Stream"><code class="xref py py-class docutils literal notranslate"><span class="pre">Stream</span></code></a> – abstraction for a source of bytes.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="skia.StreamAsset.html#skia.StreamAsset" title="skia.StreamAsset"><code class="xref py py-obj docutils literal notranslate"><span class="pre">StreamAsset</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="skia.StreamAsset.html#skia.StreamAsset" title="skia.StreamAsset"><code class="xref py py-obj docutils literal notranslate"><span class="pre">StreamAsset</span></code></a></p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="skia.StreamMemory.html#skia.StreamMemory" title="skia.StreamMemory"><code class="xref py py-obj docutils literal notranslate"><span class="pre">StreamMemory</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="skia.StreamMemory.html#skia.StreamMemory" title="skia.StreamMemory"><code class="xref py py-obj docutils literal notranslate"><span class="pre">StreamMemory</span></code></a></p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="skia.StreamRewindable.html#skia.StreamRewindable" title="skia.StreamRewindable"><code class="xref py py-obj docutils literal notranslate"><span class="pre">StreamRewindable</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="skia.StreamRewindable.html#skia.StreamRewindable" title="skia.StreamRewindable"><code class="xref py py-obj docutils literal notranslate"><span class="pre">StreamRewindable</span></code></a></p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="skia.StreamSeekable.html#skia.StreamSeekable" title="skia.StreamSeekable"><code class="xref py py-obj docutils literal notranslate"><span class="pre">StreamSeekable</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="skia.StreamSeekable.html#skia.StreamSeekable" title="skia.StreamSeekable"><code class="xref py py-obj docutils literal notranslate"><span class="pre">StreamSeekable</span></code></a></p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="skia.String.html#skia.String" title="skia.String"><code class="xref py py-obj docutils literal notranslate"><span class="pre">String</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="skia.String.html#skia.String" title="skia.String"><code class="xref py py-obj docutils literal notranslate"><span class="pre">String</span></code></a></p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="skia.StrokePathEffect.html#skia.StrokePathEffect" title="skia.StrokePathEffect"><code class="xref py py-obj docutils literal notranslate"><span class="pre">StrokePathEffect</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="skia.StrokePathEffect.html#skia.StrokePathEffect" title="skia.StrokePathEffect"><code class="xref py py-obj docutils literal notranslate"><span class="pre">StrokePathEffect</span></code></a></p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="skia.StrokeRec.html#skia.StrokeRec" title="skia.StrokeRec"><code class="xref py py-obj docutils literal notranslate"><span class="pre">StrokeRec</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="skia.StrokeRec.html#skia.StrokeRec" title="skia.StrokeRec"><code class="xref py py-obj docutils literal notranslate"><span class="pre">StrokeRec</span></code></a></p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="skia.Surface.html#skia.Surface" title="skia.Surface"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Surface</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="skia.Surface.html#skia.Surface" title="skia.Surface"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Surface</span></code></a></p></td>
 <td><p><a class="reference internal" href="skia.Surface.html#skia.Surface" title="skia.Surface"><code class="xref py py-class docutils literal notranslate"><span class="pre">Surface</span></code></a> is responsible for managing the pixels that a canvas draws into.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="skia.SurfaceCharacterization.html#skia.SurfaceCharacterization" title="skia.SurfaceCharacterization"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SurfaceCharacterization</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="skia.SurfaceCharacterization.html#skia.SurfaceCharacterization" title="skia.SurfaceCharacterization"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SurfaceCharacterization</span></code></a></p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="skia.SurfaceProps.html#skia.SurfaceProps" title="skia.SurfaceProps"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SurfaceProps</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="skia.SurfaceProps.html#skia.SurfaceProps" title="skia.SurfaceProps"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SurfaceProps</span></code></a></p></td>
 <td><p>Describes properties and constraints of a given <a class="reference internal" href="skia.Surface.html#skia.Surface" title="skia.Surface"><code class="xref py py-class docutils literal notranslate"><span class="pre">Surface</span></code></a>.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="skia.TableColorFilter.html#skia.TableColorFilter" title="skia.TableColorFilter"><code class="xref py py-obj docutils literal notranslate"><span class="pre">TableColorFilter</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="skia.TableColorFilter.html#skia.TableColorFilter" title="skia.TableColorFilter"><code class="xref py py-obj docutils literal notranslate"><span class="pre">TableColorFilter</span></code></a></p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="skia.TableMaskFilter.html#skia.TableMaskFilter" title="skia.TableMaskFilter"><code class="xref py py-obj docutils literal notranslate"><span class="pre">TableMaskFilter</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="skia.TableMaskFilter.html#skia.TableMaskFilter" title="skia.TableMaskFilter"><code class="xref py py-obj docutils literal notranslate"><span class="pre">TableMaskFilter</span></code></a></p></td>
 <td><p>Applies a table lookup on each of the alpha values in the mask.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="skia.TextBlob.html#skia.TextBlob" title="skia.TextBlob"><code class="xref py py-obj docutils literal notranslate"><span class="pre">TextBlob</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="skia.TextBlob.html#skia.TextBlob" title="skia.TextBlob"><code class="xref py py-obj docutils literal notranslate"><span class="pre">TextBlob</span></code></a></p></td>
 <td><p><a class="reference internal" href="skia.TextBlob.html#skia.TextBlob" title="skia.TextBlob"><code class="xref py py-class docutils literal notranslate"><span class="pre">TextBlob</span></code></a> combines multiple text runs into an immutable container.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="skia.TextBlobBuilder.html#skia.TextBlobBuilder" title="skia.TextBlobBuilder"><code class="xref py py-obj docutils literal notranslate"><span class="pre">TextBlobBuilder</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="skia.TextBlobBuilder.html#skia.TextBlobBuilder" title="skia.TextBlobBuilder"><code class="xref py py-obj docutils literal notranslate"><span class="pre">TextBlobBuilder</span></code></a></p></td>
 <td><p>Helper class for constructing <a class="reference internal" href="skia.TextBlob.html#skia.TextBlob" title="skia.TextBlob"><code class="xref py py-class docutils literal notranslate"><span class="pre">TextBlob</span></code></a>.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="skia.TextEncoding.html#skia.TextEncoding" title="skia.TextEncoding"><code class="xref py py-obj docutils literal notranslate"><span class="pre">TextEncoding</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="skia.TextEncoding.html#skia.TextEncoding" title="skia.TextEncoding"><code class="xref py py-obj docutils literal notranslate"><span class="pre">TextEncoding</span></code></a></p></td>
 <td><p>Members:</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="skia.TileImageFilter.html#skia.TileImageFilter" title="skia.TileImageFilter"><code class="xref py py-obj docutils literal notranslate"><span class="pre">TileImageFilter</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="skia.TileImageFilter.html#skia.TileImageFilter" title="skia.TileImageFilter"><code class="xref py py-obj docutils literal notranslate"><span class="pre">TileImageFilter</span></code></a></p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="skia.TileMode.html#skia.TileMode" title="skia.TileMode"><code class="xref py py-obj docutils literal notranslate"><span class="pre">TileMode</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="skia.TileMode.html#skia.TileMode" title="skia.TileMode"><code class="xref py py-obj docutils literal notranslate"><span class="pre">TileMode</span></code></a></p></td>
 <td><p>Members:</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="skia.TrimPathEffect.html#skia.TrimPathEffect" title="skia.TrimPathEffect"><code class="xref py py-obj docutils literal notranslate"><span class="pre">TrimPathEffect</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="skia.TrimPathEffect.html#skia.TrimPathEffect" title="skia.TrimPathEffect"><code class="xref py py-obj docutils literal notranslate"><span class="pre">TrimPathEffect</span></code></a></p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="skia.Typeface.html#skia.Typeface" title="skia.Typeface"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Typeface</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="skia.Typeface.html#skia.Typeface" title="skia.Typeface"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Typeface</span></code></a></p></td>
 <td><p>The <a class="reference internal" href="skia.Typeface.html#skia.Typeface" title="skia.Typeface"><code class="xref py py-class docutils literal notranslate"><span class="pre">Typeface</span></code></a> class specifies the typeface and intrinsic style of a font.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="skia.Vertices.html#skia.Vertices" title="skia.Vertices"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Vertices</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="skia.Vertices.html#skia.Vertices" title="skia.Vertices"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Vertices</span></code></a></p></td>
 <td><p>An immutable set of vertex data that can be used with <a class="reference internal" href="skia.Canvas.html#skia.Canvas.drawVertices" title="skia.Canvas.drawVertices"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Canvas.drawVertices()</span></code></a>.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="skia.VkFormat.html#skia.VkFormat" title="skia.VkFormat"><code class="xref py py-obj docutils literal notranslate"><span class="pre">VkFormat</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="skia.VkFormat.html#skia.VkFormat" title="skia.VkFormat"><code class="xref py py-obj docutils literal notranslate"><span class="pre">VkFormat</span></code></a></p></td>
 <td><p>Members:</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="skia.VkImageLayout.html#skia.VkImageLayout" title="skia.VkImageLayout"><code class="xref py py-obj docutils literal notranslate"><span class="pre">VkImageLayout</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="skia.VkImageLayout.html#skia.VkImageLayout" title="skia.VkImageLayout"><code class="xref py py-obj docutils literal notranslate"><span class="pre">VkImageLayout</span></code></a></p></td>
 <td><p>Members:</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="skia.WStream.html#skia.WStream" title="skia.WStream"><code class="xref py py-obj docutils literal notranslate"><span class="pre">WStream</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="skia.WStream.html#skia.WStream" title="skia.WStream"><code class="xref py py-obj docutils literal notranslate"><span class="pre">WStream</span></code></a></p></td>
 <td><p><p class="rubric">Subclasses</p>
 </p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="skia.XfermodeImageFilter.html#skia.XfermodeImageFilter" title="skia.XfermodeImageFilter"><code class="xref py py-obj docutils literal notranslate"><span class="pre">XfermodeImageFilter</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="skia.XfermodeImageFilter.html#skia.XfermodeImageFilter" title="skia.XfermodeImageFilter"><code class="xref py py-obj docutils literal notranslate"><span class="pre">XfermodeImageFilter</span></code></a></p></td>
 <td><p>This filter takes a <a class="reference internal" href="skia.BlendMode.html#skia.BlendMode" title="skia.BlendMode"><code class="xref py py-class docutils literal notranslate"><span class="pre">BlendMode</span></code></a>, and uses it to composite the foreground over the background.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="skia.YUVColorSpace.html#skia.YUVColorSpace" title="skia.YUVColorSpace"><code class="xref py py-obj docutils literal notranslate"><span class="pre">YUVColorSpace</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="skia.YUVColorSpace.html#skia.YUVColorSpace" title="skia.YUVColorSpace"><code class="xref py py-obj docutils literal notranslate"><span class="pre">YUVColorSpace</span></code></a></p></td>
 <td><p>Members:</p></td>
 </tr>
 </tbody>
@@ -954,6 +970,25 @@
 <a class="reference internal" href="skia.AlphaType.html#skia.AlphaType.kOpaque_AlphaType" title="skia.AlphaType.kOpaque_AlphaType"><code class="xref py py-attr docutils literal notranslate"><span class="pre">kOpaque_AlphaType</span></code></a>, and <a class="reference internal" href="skia.ColorType.html#skia.ColorType" title="skia.ColorType"><code class="xref py py-class docutils literal notranslate"><span class="pre">ColorType</span></code></a> is
 not opaque, then the result of drawing any pixel with a alpha value less
 than 1.0 is undefined.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt id="skia.AsWinding">
+<code class="sig-name descname">AsWinding</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">path</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.Path.html#skia.Path" title="skia.Path">skia.Path</a></span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="skia.Path.html#skia.Path" title="skia.Path">skia.Path</a><a class="headerlink" href="#skia.AsWinding" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the result with fill type winding to area equivalent to path.</p>
+<p>Returns true if successful. Does not detect if path contains contours which
+contain self-crossings or cross other contours; in these cases, may return
+true even though result does not fill same area as path.</p>
+<p>Returns if operation was able to produce a result; otherwise, throws a
+runtime error. The result may be the input.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>path</strong> – The path typically with fill type set to even odd.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The equivalent path with fill type set to winding.</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py function">
@@ -1211,6 +1246,30 @@ zero to one. hsv[2] represents hsv value, and varies from zero to one.</p>
 <dd></dd></dl>
 
 <dl class="py function">
+<dt id="skia.Op">
+<code class="sig-name descname">Op</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">one</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.Path.html#skia.Path" title="skia.Path">skia.Path</a></span></em>, <em class="sig-param"><span class="n">two</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.Path.html#skia.Path" title="skia.Path">skia.Path</a></span></em>, <em class="sig-param"><span class="n">op</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.PathOp.html#skia.PathOp" title="skia.PathOp">skia.PathOp</a></span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="skia.Path.html#skia.Path" title="skia.Path">skia.Path</a><a class="headerlink" href="#skia.Op" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set this path to the result of applying the Op to this path and the
+specified path: this = (this op operand).</p>
+<p>The resulting path will be constructed from non-overlapping contours. The
+curve order is reduced where possible so that cubics may be turned into
+quadratics, and quadratics maybe turned into lines.</p>
+<p>Returns if operation was able to produce a result; otherwise, throws a
+runtime error.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>one</strong> – The first operand (for difference, the minuend)</p></li>
+<li><p><strong>two</strong> – The second operand (for difference, the subtrahend)</p></li>
+<li><p><strong>op</strong> – The operator to apply.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The product of the operands. The result may be one of the inputs.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
 <dt id="skia.PathFillType_ConvertToNonInverse">
 <code class="sig-name descname">PathFillType_ConvertToNonInverse</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">ft</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.PathFillType.html#skia.PathFillType" title="skia.PathFillType">skia.PathFillType</a></span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="skia.PathFillType.html#skia.PathFillType" title="skia.PathFillType">skia.PathFillType</a><a class="headerlink" href="#skia.PathFillType_ConvertToNonInverse" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
@@ -1277,6 +1336,39 @@ from zero to one.</p>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p>three element array which holds the resulting HSV components</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="skia.Simplify">
+<code class="sig-name descname">Simplify</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">path</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.Path.html#skia.Path" title="skia.Path">skia.Path</a></span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="skia.Path.html#skia.Path" title="skia.Path">skia.Path</a><a class="headerlink" href="#skia.Simplify" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set this path to a set of non-overlapping contours that describe the same
+area as the original path.</p>
+<p>The curve order is reduced where possible so that cubics may be turned into
+quadratics, and quadratics maybe turned into lines.</p>
+<p>Returns if operation was able to produce a result; otherwise, throws a
+runtime error.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>path</strong> – The path to simplify.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The simplified path. The result may be the input.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="skia.TightBounds">
+<code class="sig-name descname">TightBounds</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">path</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.Path.html#skia.Path" title="skia.Path">skia.Path</a></span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="skia.Rect.html#skia.Rect" title="skia.Rect">skia.Rect</a><a class="headerlink" href="#skia.TightBounds" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the resulting rectangle to the tight bounds of the path.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>path</strong> – The path measured.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The tight bounds of the path.</p>
 </dd>
 </dl>
 </dd></dl>
