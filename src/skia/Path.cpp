@@ -2061,7 +2061,7 @@ Perform a series of path operations, optimized for unioning many paths together.
     .def("resolve",
         [] (SkOpBuilder& builder) {
             SkPath result;
-            if (not builder.resolve(&result))
+            if (!builder.resolve(&result))
                 throw std::runtime_error("Failed to resolve.");
             return result;
         },
@@ -2077,7 +2077,7 @@ Perform a series of path operations, optimized for unioning many paths together.
 m.def("Op",
     [](const SkPath& one, const SkPath& two, SkPathOp op) {
         SkPath result;
-        if (not Op(one, two, op, &result))
+        if (!Op(one, two, op, &result))
             throw std::runtime_error("Failed to apply op");
         return result;
     },
@@ -2101,7 +2101,7 @@ m.def("Op",
 m.def("Simplify",
     [](const SkPath& path) {
         SkPath result;
-        if (not Simplify(path, &result))
+        if (!Simplify(path, &result))
             throw std::runtime_error("Failed to simplify");
         return result;
     },
@@ -2123,7 +2123,7 @@ m.def("Simplify",
 m.def("TightBounds",
     [](const SkPath& path) {
         SkRect result;
-        if (not TightBounds(path, &result))
+        if (!TightBounds(path, &result))
             throw std::runtime_error("Failed to get tight bounds");
         return result;
     },
@@ -2137,7 +2137,7 @@ m.def("TightBounds",
 m.def("AsWinding",
     [](const SkPath& path) {
         SkPath result;
-        if (not AsWinding(path, &result))
+        if (!AsWinding(path, &result))
             throw std::runtime_error("Failed to get as winding");
         return result;
     },
