@@ -46,8 +46,19 @@ def test_Path_Iter_next(itr):
     assert isinstance(result[1], list)
 
 
-# def test_Path_Iter_conicWeight(itr):
-#     assert isinstance(itr.conicWeight())
+def test_Path_Iter_conicWeight():
+    path = skia.Path()
+    path.addOval((0, 0, 100, 100))
+
+    iterator = iter(path)
+    verb, points = iterator.next()
+    while verb != skia.Path.kDone_Verb:
+        print(verb)
+        assert isinstance(verb, skia.Path.Verb)
+        assert isinstance(points, list)
+        if verb == skia.Path.kConic_Verb:
+            assert iterator.conicWeight() == 0.7071067690849304
+        verb, points = iterator.next()
 
 
 def test_Path_Iter_isCloseLine(itr):
@@ -500,6 +511,7 @@ def test_Path_iter(path):
     for verb, points in path:
         assert isinstance(verb, skia.Path.Verb)
         assert isinstance(points, list)
+        # Iterator method does not work here.
 
 
 @pytest.fixture

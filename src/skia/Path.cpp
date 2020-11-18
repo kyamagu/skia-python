@@ -29,7 +29,7 @@ void StripPts(const SkPath::Verb verb, std::vector<SkPoint>* pts) {
 template <typename T>
 py::tuple Iter_next(T& it) {
     std::vector<SkPoint> pts(4);
-    SkPath::Verb verb = it.next(&pts[0]);
+    SkPath::Verb verb = it.next(pts.data());
     StripPts(verb, &pts);
     return py::make_tuple(verb, pts);
 }
@@ -37,7 +37,7 @@ py::tuple Iter_next(T& it) {
 template <typename T>
 py::tuple Iter___next__(T& it) {
     std::vector<SkPoint> pts(4);
-    SkPath::Verb verb = it.next(&pts[0]);
+    SkPath::Verb verb = it.next(pts.data());
     StripPts(verb, &pts);
     if (verb == SkPath::kDone_Verb)
         throw py::stop_iteration();
@@ -85,7 +85,7 @@ py::enum_<SkPathSegmentMask>(m, "PathSegmentMask")
         SkPathSegmentMask::kCubic_SkPathSegmentMask)
     .export_values();
 
-py::enum_<SkPathVerb>(m, "PathVerb")
+py::enum_<SkPathVerb>(m, "PathVerb", py::arithmetic())
     .value("kMove", SkPathVerb::kMove, "iter.next returns 1 point")
     .value("kLine", SkPathVerb::kLine, "iter.next returns 2 points")
     .value("kQuad", SkPathVerb::kQuad, "iter.next returns 3 points")
@@ -196,9 +196,13 @@ py::class_<SkPath::Iter>(path, "Iter", R"docstring(
 
     Example::
 
-        for verb, points in skia.Path.Iter(path, forceClose=True):
+        it = iter(path)
+        verb, points = it.next()
+        while verb != skia.Path.kDone_Verb:
             print(verb)
             print(points)
+            print(it.conicWeight())
+            verb, points = it.next()
     )docstring")
     .def(py::init(),
         R"docstring(
@@ -291,7 +295,9 @@ py::class_<SkPath::Iter>(path, "Iter", R"docstring(
 
         :return: true if contour is closed
         )docstring")
-    .def("__iter__", [] (const SkPath::Iter& it) { return it; })
+    .def("__iter__",
+        [] (const SkPath::Iter& it) { return it; },
+        py::keep_alive<0, 1>())
     .def("__next__", &Iter___next__<SkPath::Iter>)
     ;
 
