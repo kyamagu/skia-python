@@ -3,17 +3,6 @@
 
 namespace {
 
-template <typename T>
-const T* GetVectorPtr(py::object obj, size_t size) {
-    if (obj.is_none())
-        return nullptr;
-    auto values = obj.cast<std::vector<T>>();
-    if (values.size() != size)
-        throw py::value_error(
-            "Texs/Colors and positions must have the same size");
-    return &values[0];
-}
-
 sk_sp<SkVertices> MakeCopy(
     SkVertices::VertexMode mode,
     const std::vector<SkPoint>& positions,
@@ -23,15 +12,32 @@ sk_sp<SkVertices> MakeCopy(
     int vertexCount = positions.size();
     if (vertexCount == 0)
         throw py::value_error("Vertex must have at least one element");
-    auto texs_ = GetVectorPtr<SkPoint>(texs, vertexCount);
-    auto colors_ = GetVectorPtr<SkColor>(colors, vertexCount);
+    std::vector<SkPoint> texs_;
+    std::vector<SkColor> colors_;
+    if (!texs.is_none()) {
+        texs_ = texs.cast<std::vector<SkPoint>>();
+        if (texs_.size() != size_t(vertexCount))
+            throw py::value_error("Texs and positions must have the same size");
+    }
+    if (!colors.is_none()) {
+        colors_ = colors.cast<std::vector<SkColor>>();
+        if (colors_.size() != size_t(vertexCount))
+            throw py::value_error(
+                "Colors and positions must have the same size");
+    }
+
     if (indices.is_none())
         return SkVertices::MakeCopy(
-            mode, vertexCount, &positions[0], texs_, colors_);
+            mode, vertexCount, positions.data(),
+            (texs.is_none()) ? nullptr : texs_.data(),
+            (colors.is_none()) ? nullptr : colors_.data());
     auto indices_ = indices.cast<std::vector<uint16_t>>();
     return SkVertices::MakeCopy(
-        mode, vertexCount, &positions[0], texs_, colors_,
-        indices_.size(), &indices_[0]);
+        mode, vertexCount, positions.data(),
+        (texs.is_none()) ? nullptr : texs_.data(),
+        (colors.is_none()) ? nullptr : colors_.data(),
+        indices_.size(),
+        indices_.data());
 }
 
 }  // namespace
