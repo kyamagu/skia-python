@@ -481,8 +481,11 @@ def test_Path_IsCubicDegenerate(path):
 
 
 def test_Path_ConvertConicToQuads(path):
-    assert isinstance(skia.Path.ConvertConicToQuads(
-        skia.Point(0, 0), skia.Point(0, 1), skia.Point(1, 1), 1, 1), list)
+    # See https://fiddle.skia.org/c/@Path_ConvertConicToQuads
+    conic = [skia.Point(20, 170), skia.Point(80, 170), skia.Point(80, 230)]
+    quads = skia.Path.ConvertConicToQuads(conic[0], conic[1], conic[2], .25, 1)
+    assert isinstance(quads, list)
+    assert len(quads) == 5
 
 
 def test_Path_eq(path):

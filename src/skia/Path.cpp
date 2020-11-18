@@ -1983,10 +1983,8 @@ path
             SkScalar w, int pow2) {
             auto size = (1 + 2 * (1 << pow2));
             std::vector<SkPoint> pts(size);
-            auto result = SkPath::ConvertConicToQuads(
-                p0, p1, p2, w, &pts[0], pow2);
-            if (result < size)
-                pts.erase(pts.begin() + result, pts.end());
+            SkPath::ConvertConicToQuads(p0, p1, p2, w, &pts[0], pow2);
+            // TODO: Shall we return the return value?
             return pts;
         },
         R"docstring(
@@ -1997,12 +1995,9 @@ path
         quad count is 2 to the pow2. Every third point in array shares last
         :py:class:`Point` of previous quad and first :py:class:`Point` of next
         quad. Maximum possible return array size is given by:
-        (1 + 2 * (1 << pow2)) * sizeof(:py:class:`Point`).
+        (1 + 2 * (1 << pow2)).
 
-        Returns quad count used the approximation, which may be smaller than the
-        number requested.
-
-        conic weight determines the amount of influence conic control point has
+        Conic weight determines the amount of influence conic control point has
         on the curve. w less than one represents an elliptical section. w
         greater than one represents a hyperbolic section. w equal to one
         represents a parabolic section.
