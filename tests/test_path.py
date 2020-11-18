@@ -497,3 +497,33 @@ def test_Path_iter(path):
     for verb, points in path:
         assert isinstance(verb, skia.Path.Verb)
         assert isinstance(points, list)
+
+
+@pytest.fixture
+def path2():
+    path = skia.Path()
+    path.addCircle(30, 30, 15)
+    return path
+
+
+def test_OpBuilder(path, path2):
+    builder = skia.OpBuilder()
+    builder.add(path, skia.kUnion_PathOp)
+    builder.add(path2, skia.kDifference_PathOp)
+    assert isinstance(builder.resolve(), skia.Path)
+
+
+def test_Op(path, path2):
+    assert isinstance(skia.Op(path, path2, skia.kDifference_PathOp), skia.Path)
+
+
+def test_Simplify(path):
+    assert isinstance(skia.Simplify(path), skia.Path)
+
+
+def test_TightBounds(path):
+    assert isinstance(skia.TightBounds(path), skia.Rect)
+
+
+def test_AsWinding(path):
+    assert isinstance(skia.AsWinding(path), skia.Path)

@@ -2040,4 +2040,119 @@ path
         )docstring",
         py::arg("other"))
     ;
+
+// OpBuilder
+py::class_<SkOpBuilder>(m, "OpBuilder", R"docstring(
+Perform a series of path operations, optimized for unioning many paths together.
+)docstring")
+    .def(py::init<>())
+    .def("add", &SkOpBuilder::add,
+        R"docstring(
+        Add one or more paths and their operand.
+
+        The builder is empty before the first path is added, so the result of a
+        single add is (emptyPath OP path).
+
+        :param path: The second operand.
+        :param op:   The operator to apply to the existing and supplied paths.
+
+        )docstring",
+        py::arg("path"), py::arg("op"))
+    .def("resolve",
+        [] (SkOpBuilder& builder) {
+            SkPath result;
+            if (!builder.resolve(&result))
+                throw std::runtime_error("Failed to resolve.");
+            return result;
+        },
+        R"docstring(
+        Computes the sum of all paths and operands, and resets the builder to
+        its initial state.
+
+        :param result:  The product of the operands.
+        :return: True if the operation succeeded.
+        )docstring")
+    ;
+
+m.def("Op",
+    [](const SkPath& one, const SkPath& two, SkPathOp op) {
+        SkPath result;
+        if (!Op(one, two, op, &result))
+            throw std::runtime_error("Failed to apply op");
+        return result;
+    },
+    R"docstring(
+    Set this path to the result of applying the Op to this path and the
+    specified path: this = (this op operand).
+
+    The resulting path will be constructed from non-overlapping contours. The
+    curve order is reduced where possible so that cubics may be turned into
+    quadratics, and quadratics maybe turned into lines.
+
+    Returns if operation was able to produce a result; otherwise, throws a
+    runtime error.
+
+    :param one: The first operand (for difference, the minuend)
+    :param two: The second operand (for difference, the subtrahend)
+    :param op:  The operator to apply.
+    :return:  The product of the operands. The result may be one of the inputs.
+    )docstring",
+    py::arg("one"), py::arg("two"), py::arg("op"));
+m.def("Simplify",
+    [](const SkPath& path) {
+        SkPath result;
+        if (!Simplify(path, &result))
+            throw std::runtime_error("Failed to simplify");
+        return result;
+    },
+    R"docstring(
+    Set this path to a set of non-overlapping contours that describe the same
+    area as the original path.
+
+    The curve order is reduced where possible so that cubics may be turned into
+    quadratics, and quadratics maybe turned into lines.
+
+    Returns if operation was able to produce a result; otherwise, throws a
+    runtime error.
+
+
+    :param path: The path to simplify.
+    :return: The simplified path. The result may be the input.
+    )docstring",
+    py::arg("path"));
+m.def("TightBounds",
+    [](const SkPath& path) {
+        SkRect result;
+        if (!TightBounds(path, &result))
+            throw std::runtime_error("Failed to get tight bounds");
+        return result;
+    },
+    R"docstring(
+    Set the resulting rectangle to the tight bounds of the path.
+
+    :param path:  The path measured.
+    :return:      The tight bounds of the path.
+    )docstring",
+    py::arg("path"));
+m.def("AsWinding",
+    [](const SkPath& path) {
+        SkPath result;
+        if (!AsWinding(path, &result))
+            throw std::runtime_error("Failed to get as winding");
+        return result;
+    },
+    R"docstring(
+    Set the result with fill type winding to area equivalent to path.
+
+    Returns true if successful. Does not detect if path contains contours which
+    contain self-crossings or cross other contours; in these cases, may return
+    true even though result does not fill same area as path.
+
+    Returns if operation was able to produce a result; otherwise, throws a
+    runtime error. The result may be the input.
+
+    :param path:  The path typically with fill type set to even odd.
+    :return:      The equivalent path with fill type set to winding.
+    )docstring",
+    py::arg("path"));
 }
