@@ -144,6 +144,7 @@
 <li class="toctree-l3"><a class="reference internal" href="skia.FontHinting.html">FontHinting</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.FontMetrics.html">FontMetrics</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.FontMgr.html">FontMgr</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.FontParameters.html">FontParameters</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.FontStyle.html">FontStyle</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.FontStyleSet.html">FontStyleSet</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.GrBackendApi.html">GrBackendApi</a></li>
@@ -702,10 +703,8 @@ thread safe.</p>
 quad count is 2 to the pow2. Every third point in array shares last
 <a class="reference internal" href="skia.Point.html#skia.Point" title="skia.Point"><code class="xref py py-class docutils literal notranslate"><span class="pre">Point</span></code></a> of previous quad and first <a class="reference internal" href="skia.Point.html#skia.Point" title="skia.Point"><code class="xref py py-class docutils literal notranslate"><span class="pre">Point</span></code></a> of next
 quad. Maximum possible return array size is given by:
-(1 + 2 * (1 &lt;&lt; pow2)) * sizeof(<a class="reference internal" href="skia.Point.html#skia.Point" title="skia.Point"><code class="xref py py-class docutils literal notranslate"><span class="pre">Point</span></code></a>).</p>
-<p>Returns quad count used the approximation, which may be smaller than the
-number requested.</p>
-<p>conic weight determines the amount of influence conic control point has
+(1 + 2 * (1 &lt;&lt; pow2)).</p>
+<p>Conic weight determines the amount of influence conic control point has
 on the curve. w less than one represents an elliptical section. w
 greater than one represents a hyperbolic section. w equal to one
 represents a parabolic section.</p>

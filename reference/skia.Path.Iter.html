@@ -144,6 +144,7 @@
 <li class="toctree-l3"><a class="reference internal" href="skia.FontHinting.html">FontHinting</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.FontMetrics.html">FontMetrics</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.FontMgr.html">FontMgr</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.FontParameters.html">FontParameters</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.FontStyle.html">FontStyle</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.FontStyleSet.html">FontStyleSet</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.GrBackendApi.html">GrBackendApi</a></li>
@@ -359,9 +360,13 @@ conic weight.</p>
 <p>Provides options to treat open contours as closed, and to ignore degenerate
 data.</p>
 <p>Example:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">verb</span><span class="p">,</span> <span class="n">points</span> <span class="ow">in</span> <span class="n">skia</span><span class="o">.</span><span class="n">Path</span><span class="o">.</span><span class="n">Iter</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">forceClose</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">it</span> <span class="o">=</span> <span class="nb">iter</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+<span class="n">verb</span><span class="p">,</span> <span class="n">points</span> <span class="o">=</span> <span class="n">it</span><span class="o">.</span><span class="n">next</span><span class="p">()</span>
+<span class="k">while</span> <span class="n">verb</span> <span class="o">!=</span> <span class="n">skia</span><span class="o">.</span><span class="n">Path</span><span class="o">.</span><span class="n">kDone_Verb</span><span class="p">:</span>
     <span class="nb">print</span><span class="p">(</span><span class="n">verb</span><span class="p">)</span>
     <span class="nb">print</span><span class="p">(</span><span class="n">points</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">it</span><span class="o">.</span><span class="n">conicWeight</span><span class="p">())</span>
+    <span class="n">verb</span><span class="p">,</span> <span class="n">points</span> <span class="o">=</span> <span class="n">it</span><span class="o">.</span><span class="n">next</span><span class="p">()</span>
 </pre></div>
 </div>
 <p class="rubric">Methods</p>
