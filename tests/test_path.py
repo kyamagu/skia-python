@@ -50,15 +50,14 @@ def test_Path_Iter_conicWeight():
     path = skia.Path()
     path.addOval((0, 0, 100, 100))
 
-    iterator = iter(path)
-    verb, points = iterator.next()
+    itr = iter(path)
+    verb, points = itr.next()
     while verb != skia.Path.kDone_Verb:
-        print(verb)
         assert isinstance(verb, skia.Path.Verb)
         assert isinstance(points, list)
         if verb == skia.Path.kConic_Verb:
-            assert iterator.conicWeight() == 0.7071067690849304
-        verb, points = iterator.next()
+            assert itr.conicWeight() == 0.7071067690849304
+        verb, points = itr.next()
 
 
 def test_Path_Iter_isCloseLine(itr):
