@@ -120,3 +120,11 @@ def vertices():
         [skia.Point(1, 1), skia.Point(1, 0), skia.Point(0, 0)],
         [skia.ColorRED, skia.ColorRED, skia.ColorRED],
     )
+
+
+@pytest.fixture(scope='session')
+def ttf_path():
+    import os
+    root_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    return os.path.join(
+        root_dir, 'skia', 'resources', 'fonts', 'Distortable.ttf')
