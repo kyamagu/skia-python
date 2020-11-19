@@ -503,7 +503,9 @@ def test_Font_getPath(font, glyphs):
 
 
 def test_Font_getPaths(font, glyphs):
-    assert isinstance(font.getPaths(glyphs), list)
+    paths = font.getPaths(glyphs)
+    assert isinstance(paths, list)
+    assert paths[0] == font.getPath(glyphs[0])
 
 
 def test_Font_getMetrics(font):

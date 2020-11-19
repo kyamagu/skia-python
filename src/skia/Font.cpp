@@ -1182,12 +1182,15 @@ font
             std::vector<SkPath> paths;
             paths.reserve(glyphIDs.size());
             font.getPaths(
-                &glyphIDs[0],
+                glyphIDs.data(),
                 glyphIDs.size(),
                 [] (const SkPath* pathOrNull, const SkMatrix& mx, void* ctx) {
                     auto paths_ = static_cast<std::vector<SkPath>*>(ctx);
-                    if (pathOrNull)
-                        paths_->push_back(*pathOrNull);
+                    if (pathOrNull) {
+                        SkPath path;
+                        pathOrNull->transform(mx, &path);
+                        paths_->push_back(path);
+                    }
                 },
                 static_cast<void*>(&paths));
             if (paths.empty())
