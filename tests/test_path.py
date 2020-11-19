@@ -46,8 +46,18 @@ def test_Path_Iter_next(itr):
     assert isinstance(result[1], list)
 
 
-# def test_Path_Iter_conicWeight(itr):
-#     assert isinstance(itr.conicWeight())
+def test_Path_Iter_conicWeight():
+    path = skia.Path()
+    path.addOval((0, 0, 100, 100))
+
+    itr = iter(path)
+    verb, points = itr.next()
+    while verb != skia.Path.kDone_Verb:
+        assert isinstance(verb, skia.Path.Verb)
+        assert isinstance(points, list)
+        if verb == skia.Path.kConic_Verb:
+            assert itr.conicWeight() == 0.7071067690849304
+        verb, points = itr.next()
 
 
 def test_Path_Iter_isCloseLine(itr):
@@ -481,8 +491,11 @@ def test_Path_IsCubicDegenerate(path):
 
 
 def test_Path_ConvertConicToQuads(path):
-    assert isinstance(skia.Path.ConvertConicToQuads(
-        skia.Point(0, 0), skia.Point(0, 1), skia.Point(1, 1), 1, 1), list)
+    # See https://fiddle.skia.org/c/@Path_ConvertConicToQuads
+    conic = [skia.Point(20, 170), skia.Point(80, 170), skia.Point(80, 230)]
+    quads = skia.Path.ConvertConicToQuads(conic[0], conic[1], conic[2], .25, 1)
+    assert isinstance(quads, list)
+    assert len(quads) == 5
 
 
 def test_Path_eq(path):
@@ -497,6 +510,7 @@ def test_Path_iter(path):
     for verb, points in path:
         assert isinstance(verb, skia.Path.Verb)
         assert isinstance(points, list)
+        # Iterator method does not work here.
 
 
 @pytest.fixture

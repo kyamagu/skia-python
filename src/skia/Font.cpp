@@ -3,10 +3,9 @@
 #include <pybind11/stl_bind.h>
 #include <pybind11/iostream.h>
 
+using Axis = SkFontParameters::Variation::Axis;
 using Coordinate = SkFontArguments::VariationPosition::Coordinate;
-
 PYBIND11_MAKE_OPAQUE(std::vector<Coordinate>);
-
 
 namespace {
 
@@ -102,14 +101,53 @@ fontstyle
     ;
 
 // Typeface
+py::class_<SkFontParameters> fontparameters(m, "FontParameters");
+
+py::class_<SkFontParameters::Variation> variation(
+    fontparameters, "Variation",
+    R"docstring(
+    Parameters in a variation font axis.
+    )docstring");
+
+py::class_<Axis>(variation, "Axis")
+    .def(py::init<>())
+    .def("__repr__",
+        [] (const Axis& self) {
+            return py::str("Axis(tag={:x}, min={}, def={}, max={})").format(
+                self.tag, self.min, self.def, self.max);
+        })
+    .def_readwrite("tag", &Axis::tag,
+        R"docstring(
+        Four character identifier of the font axis (weight, width, slant,
+        italic...).
+        )docstring")
+    .def_readwrite("min", &Axis::min,
+        R"docstring(
+        Minimum value supported by this axis.
+        )docstring")
+    .def_readwrite("def", &Axis::def,
+        R"docstring(
+        Default value set by this axis.
+        )docstring")
+    .def_readwrite("max", &Axis::max,
+        R"docstring(
+        Maximum value supported by this axis. The maximum can equal the minimum.
+        )docstring")
+    .def("isHidden", &Axis::isHidden,
+        R"docstring(
+        Return whether this axis is recommended to be remain hidden in user
+        interfaces.
+        )docstring")
+    .def("setHidden", &Axis::setHidden,
+        R"docstring(
+        Set this axis to be remain hidden in user interfaces.
+        )docstring",
+        py::arg("hidden"))
+    ;
+
 py::class_<SkFontArguments> fontarguments(m, "FontArguments", R"docstring(
     Represents a set of actual arguments for a font.
     )docstring");
-
-// py::class_<SkFontArguments::Axis>(fontarguments, "Axis")
-//     .def_readwrite("fStyleValue", &SkFontArguments::Axis::fStyleValue)
-//     .def_readwrite("fTag", &SkFontArguments::Axis::fTag)
-//     ;
 
 py::class_<SkFontArguments::VariationPosition> variationposition(
     fontarguments, "VariationPosition",
@@ -124,6 +162,11 @@ py::class_<Coordinate>(
             return Coordinate({axis, value});
         }),
         py::arg("axis"), py::arg("value"))
+    .def("__repr__",
+        [] (const Coordinate& self) {
+            return py::str("Coordinate(axis={:x}, value={})").format(
+                self.axis, self.value);
+        })
     .def_readwrite("axis", &Coordinate::axis)
     .def_readwrite("value", &Coordinate::value)
     ;
@@ -158,7 +201,6 @@ fontarguments
         actually be indexed collections of fonts.
         )docstring",
         py::arg("collectionIndex"))
-    // .def("setAxes", &SkFontArguments::setAxes)
     .def("setVariationDesignPosition",
         &SkFontArguments::setVariationDesignPosition,
         R"docstring(
@@ -172,7 +214,6 @@ fontarguments
         )docstring",
         py::arg("position"))
     .def("getCollectionIndex", &SkFontArguments::getCollectionIndex)
-    // .def("getAxes", &SkFontArguments::getAxes)
     .def("getVariationDesignPosition",
         &SkFontArguments::getVariationDesignPosition)
     ;
@@ -251,16 +292,36 @@ typeface
         R"docstring(
         Returns true if the typeface claims to be fixed-pitch.
         )docstring")
-    .def("getVariationDesignPosition",
-        [] (const SkTypeface& typeface, int coordinateCount) {
-            std::vector<SkFontArguments::VariationPosition::Coordinate>
-                coords(coordinateCount);
-            auto count = typeface.getVariationDesignPosition(
-                &coords[0], coords.size());
+    .def("getVariationDesignParameters",
+        [] (const SkTypeface& typeface) {
+            auto count = typeface.getVariationDesignParameters(nullptr, 0);
             if (count == -1)
+                throw std::runtime_error("Failed to get; Likely no parameter");
+            std::vector<Axis> params(count);
+            if (count == 0)
+                return params;
+            auto actualCount = typeface.getVariationDesignParameters(
+                params.data(), params.size());
+            if (actualCount == -1)
                 throw std::runtime_error("Failed to get");
-            else if (count > int(coords.size()))
-                coords.erase(coords.begin() + count, coords.end());
+            return params;
+        },
+        R"docstring(
+        Returns the design variation parameters.
+
+        :return: List of axes.
+        :rtype: List[skia.FontParameters.Variation.Axis]
+        )docstring")
+    .def("getVariationDesignPosition",
+        [] (const SkTypeface& typeface) {
+            auto count = typeface.getVariationDesignPosition(nullptr, 0);
+            if (count == -1)
+                throw std::runtime_error("Failed to get; Likely no position");
+            std::vector<Coordinate> coords(count);
+            auto actualCount = typeface.getVariationDesignPosition(
+                coords.data(), coords.size());
+            if (actualCount == -1)
+                throw std::runtime_error("Failed to get");
             return coords;
         },
         R"docstring(
@@ -269,10 +330,7 @@ typeface
         :param int coordinateCount: the maximum number of entries to get.
         :return: list of coordinates
         :rtype: List[skia.FontArguments.VariationPosition.Coordinate]
-        )docstring",
-        py::arg("coordinateCount") = 10)
-    // .def("getVariationDesignParameters",
-    //     &SkTypeface::getVariationDesignParameters)
+        )docstring")
     .def("uniqueID", &SkTypeface::uniqueID,
         R"docstring(
         Return a 32bit value for this typeface, unique for the underlying font
@@ -1182,12 +1240,15 @@ font
             std::vector<SkPath> paths;
             paths.reserve(glyphIDs.size());
             font.getPaths(
-                &glyphIDs[0],
+                glyphIDs.data(),
                 glyphIDs.size(),
                 [] (const SkPath* pathOrNull, const SkMatrix& mx, void* ctx) {
                     auto paths_ = static_cast<std::vector<SkPath>*>(ctx);
-                    if (pathOrNull)
-                        paths_->push_back(*pathOrNull);
+                    if (pathOrNull) {
+                        SkPath path;
+                        pathOrNull->transform(mx, &path);
+                        paths_->push_back(path);
+                    }
                 },
                 static_cast<void*>(&paths));
             if (paths.empty())
