@@ -1648,7 +1648,8 @@ matrix
     .def_static("Translate",
         py::overload_cast<SkIVector>(&SkMatrix::Translate),
         py::arg("t"))
-    .def_static("RotateDeg", &SkMatrix::RotateDeg,
+    .def_static("RotateDeg",
+        py::overload_cast<SkScalar>(&SkMatrix::RotateDeg),
         R"docstring(
         Sets :py:class:`Matrix` to rotate by ``|deg|`` about a pivot point at
         (0, 0).
@@ -1657,6 +1658,9 @@ matrix
         :return: :py:class:`Matrix` with rotation
         )docstring",
         py::arg("deg"))
+    .def_static("RotateDeg",
+        py::overload_cast<SkScalar, SkPoint>(&SkMatrix::RotateDeg),
+        py::arg("deg"), py::arg("pt"))
     .def_static("RotateRad", &SkMatrix::RotateRad,
         py::arg("rad"))
     .def_static("MakeAll", &SkMatrix::MakeAll,
