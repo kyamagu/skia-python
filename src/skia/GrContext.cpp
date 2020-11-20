@@ -1007,9 +1007,10 @@ py::class_<GrContext, sk_sp<GrContext>, GrRecordingContext>(m, "GrContext")
         py::arg("mipMapped"), py::arg("isProtected") = GrProtected::kNo)
     .def("setBackendTextureState",
         [] (GrContext& context, const GrBackendTexture& texture,
-            const GrBackendSurfaceMutableState& mutableState) {
+            const GrBackendSurfaceMutableState& mutableState,
+            GrBackendSurfaceMutableState* previousState) {
             return context.setBackendTextureState(
-                texture, mutableState, nullptr, nullptr, nullptr);
+                texture, mutableState, previousState, nullptr, nullptr);
         },
         R"docstring(
         Updates the state of the GrBackendTexture/RenderTarget to have the
@@ -1025,15 +1026,27 @@ py::class_<GrContext, sk_sp<GrContext>, GrRecordingContext>(m, "GrContext")
 
         See :py:class:`GrBackendSurfaceMutableState` to see what state can be
         set via this call.
+
+        If the backend API is Vulkan, the caller can set the
+        GrBackendSurfaceMutableState's VkImageLayout to
+        VK_IMAGE_LAYOUT_UNDEFINED or queueFamilyIndex to VK_QUEUE_FAMILY_IGNORED
+        to tell Skia to not change those respective states.
+
+        If previousState is not null and this returns true, then Skia will have
+        filled in previousState to have the values of the state before this
+        call.
         )docstring",
-        py::arg("texture"), py::arg("mutableState"))
+        py::arg("texture"), py::arg("mutableState"),
+        py::arg("previousState") = nullptr)
     .def("setBackendRenderTargetState",
         [] (GrContext& context, const GrBackendRenderTarget& target,
-            const GrBackendSurfaceMutableState& mutableState) {
+            const GrBackendSurfaceMutableState& mutableState,
+            GrBackendSurfaceMutableState* previousState) {
             return context.setBackendRenderTargetState(
-                target, mutableState, nullptr, nullptr, nullptr);
+                target, mutableState, previousState, nullptr, nullptr);
         },
-        py::arg("target"), py::arg("mutableState"))
+        py::arg("target"), py::arg("mutableState"),
+        py::arg("previousState") = nullptr)
     .def("deleteBackendTexture", &GrContext::deleteBackendTexture,
         py::arg("texture"))
     .def("precompileShader", &GrContext::precompileShader,
