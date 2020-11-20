@@ -173,6 +173,22 @@ py::enum_<SkEncodedImageFormat>(m, "EncodedImageFormat", R"docstring(
     .value("kHEIF", SkEncodedImageFormat::kHEIF)
     .export_values();
 
+
+py::class_<SkMipmapBuilder>(m, "MipmapBuilder")
+    .def(py::init<const SkImageInfo&>())
+    .def("countLevels", &SkMipmapBuilder::countLevels)
+    .def("level", &SkMipmapBuilder::level)
+    .def("attachTo",
+        py::overload_cast<const SkImage*>(&SkMipmapBuilder::attachTo),
+        R"docstring(
+        If these levels are compatible with src, return a new Image that
+        combines src's base level with these levels as mip levels.
+
+        If not compatible, this returns nullptr.
+        )docstring")
+    ;
+
+
 py::class_<SkImage, sk_sp<SkImage>, SkRefCnt> image(m, "Image",
     R"docstring(
     :py:class:`Image` describes a two dimensional array of pixels to draw.

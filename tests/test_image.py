@@ -3,6 +3,23 @@ import pytest
 import numpy as np
 
 
+@pytest.fixture
+def mipmap_builder(image):
+    return skia.MipmapBuilder(image.imageInfo())
+
+
+def test_MipmapBuilder_countLevels(mipmap_builder):
+    assert isinstance(mipmap_builder.countLevels(), int)
+
+
+def test_MipmapBuilder_level(mipmap_builder):
+    assert isinstance(mipmap_builder.level(0), skia.Pixmap)
+
+
+def test_MipmapBuilder_attachTo(mipmap_builder, image):
+    assert isinstance(mipmap_builder.attachTo(image), skia.Image)
+
+
 def test_Image_buffer(image):
     assert isinstance(memoryview(image.makeRasterImage()), memoryview)
 
