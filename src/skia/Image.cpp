@@ -741,32 +741,273 @@ image
         py::arg("colorType"),
         py::arg("alphaType") = SkAlphaType::kPremul_SkAlphaType,
         py::arg("colorSpace") = nullptr)
-    /*
-    .def_static("MakeFromYUVATexturesCopy", &SkImage::MakeFromYUVATexturesCopy,
-        "Creates an SkImage by flattening the specified YUVA planes into a "
-        "single, interleaved RGBA image.")
+    .def_static("MakeFromYUVATexturesCopy",
+        [] (GrRecordingContext* context,
+            SkYUVColorSpace yuvColorSpace,
+            const std::vector<GrBackendTexture>& yuvaTextures,
+            const std::vector<SkYUVAIndex>& yuvaIndices,
+            SkISize imageSize,
+            GrSurfaceOrigin imageOrigin,
+            const SkColorSpace* imageColorSpace) {
+            if (yuvaIndices.size() != 4)
+                throw py::value_error("yuvaIndices must have 4 elements.");
+            return SkImage::MakeFromYUVATexturesCopy(
+                context, yuvColorSpace, yuvaTextures.data(), yuvaIndices.data(),
+                imageSize, imageOrigin, CloneColorSpace(imageColorSpace));
+        },
+        R"docstring(
+        Creates an :py:class:`Image` by flattening the specified YUVA planes
+        into a single, interleaved RGBA image.
+
+        :param context:         GPU context
+        :param yuvColorSpace:   How the YUV values are converted to RGB
+        :param yuvaTextures:    array of (up to four) YUVA textures on GPU which
+            contain the, possibly interleaved, YUVA planes
+        :param yuvaIndices:     array indicating which texture in yuvaTextures,
+            and channel in that texture, maps to each component of YUVA.
+        :param imageSize:       size of the resulting image
+        :param imageOrigin:     origin of the resulting image.
+        :param imageColorSpace: range of colors of the resulting image; may be
+            nullptr
+        :return:                created :py:class:`Image`, or nullptr
+        )docstring",
+        py::arg("context"), py::arg("yuvColorSpace"), py::arg("yuvaTextures"),
+        py::arg("yuvaIndices"), py::arg("imageSize"), py::arg("imageOrigin"),
+        py::arg("imageColorSpace") = nullptr)
     .def_static("MakeFromYUVATexturesCopyWithExternalBackend",
-        &SkImage::MakeFromYUVATexturesCopyWithExternalBackend,
-        "Creates an SkImage by flattening the specified YUVA planes into a "
-        "single, interleaved RGBA image.")
-    .def_static("MakeFromYUVATextures", &SkImage::MakeFromYUVATextures,
-        "Creates an SkImage by storing the specified YUVA planes into an image,"
-        " to be rendered via multitexturing.")
-    .def_static("MakeFromYUVAPixmaps", &SkImage::MakeFromYUVAPixmaps,
-        "Creates SkImage from pixmap array representing YUVA data.")
-    .def_static("MakeFromYUVTexturesCopy", &SkImage::MakeFromYUVTexturesCopy,
-        "To be deprecated.")
-    .def_static("MakeFromYUVTexturesCopyWithExternalBackend",
-        &SkImage::MakeFromYUVTexturesCopyWithExternalBackend,
-        "To be deprecated.")
-    .def_static("MakeFromNV12TexturesCopy", &SkImage::MakeFromNV12TexturesCopy,
-        "Creates SkImage from copy of nv12Textures, an array of textures on "
-        "GPU.")
+        [] (GrRecordingContext* context,
+            SkYUVColorSpace yuvColorSpace,
+            const std::vector<GrBackendTexture>& yuvaTextures,
+            const std::vector<SkYUVAIndex>& yuvaIndices,
+            SkISize imageSize,
+            GrSurfaceOrigin imageOrigin,
+            const GrBackendTexture& backendTexture,
+            const SkColorSpace* imageColorSpace) {
+            if (yuvaIndices.size() != 4)
+                throw py::value_error("yuvaIndices must have 4 elements.");
+            return SkImage::MakeFromYUVATexturesCopyWithExternalBackend(
+                context, yuvColorSpace, yuvaTextures.data(), yuvaIndices.data(),
+                imageSize, imageOrigin, backendTexture,
+                CloneColorSpace(imageColorSpace), nullptr, nullptr);
+        },
+        R"docstring(
+        Creates an :py:class:`Image` by flattening the specified YUVA planes
+        into a single, interleaved RGBA image. 'backendTexture' is used to store
+        the result of the flattening.
+
+        :param context:         GPU context
+        :param yuvColorSpace:   How the YUV values are converted to RGB
+        :param yuvaTextures:    array of (up to four) YUVA textures on GPU which
+            contain the, possibly interleaved, YUVA planes
+        :param yuvaIndices:     array indicating which texture in yuvaTextures,
+            and channel in that texture, maps to each component of YUVA.
+        :param imageSize:       size of the resulting image
+        :param imageOrigin:     origin of the resulting image.
+        :param backendTexture:  the resource that stores the final pixels
+        :param imageColorSpace: range of colors of the resulting image; may be
+            nullptr
+        :return:                created :py:class:`Image`, or nullptr
+        )docstring",
+        py::arg("context"), py::arg("yuvColorSpace"), py::arg("yuvaTextures"),
+        py::arg("yuvaIndices"), py::arg("imageSize"), py::arg("imageOrigin"),
+        py::arg("backendTexture"), py::arg("imageColorSpace") = nullptr)
+    .def_static("MakeFromYUVATextures",
+        [] (GrContext* context,
+            SkYUVColorSpace yuvColorSpace,
+            const std::vector<GrBackendTexture>& yuvaTextures,
+            const std::vector<SkYUVAIndex>& yuvaIndices,
+            SkISize imageSize,
+            GrSurfaceOrigin imageOrigin,
+            const SkColorSpace* imageColorSpace) {
+            if (yuvaIndices.size() != 4)
+                throw py::value_error("yuvaIndices must have 4 elements.");
+            return SkImage::MakeFromYUVATextures(
+                context, yuvColorSpace, yuvaTextures.data(), yuvaIndices.data(),
+                imageSize, imageOrigin, CloneColorSpace(imageColorSpace));
+        },
+        R"docstring(
+        Creates an :py:class:`Image` by flattening the specified YUVA planes
+        into an image, to be rendered via multitexturing.
+
+        When all the provided backend textures can be released
+        'textureReleaseProc' will be called with 'releaseContext'. It will be
+        called even if this method fails.
+
+        :param context:         GPU context
+        :param yuvColorSpace:   How the YUV values are converted to RGB
+        :param yuvaTextures:    array of (up to four) YUVA textures on GPU which
+            contain the, possibly interleaved, YUVA planes
+        :param yuvaIndices:     array indicating which texture in yuvaTextures,
+            and channel in that texture, maps to each component of YUVA.
+        :param imageSize:       size of the resulting image
+        :param imageOrigin:     origin of the resulting image.
+        :param imageColorSpace: range of colors of the resulting image; may be
+            nullptr
+        :return:                created :py:class:`Image`, or nullptr
+        )docstring",
+        py::arg("context"), py::arg("yuvColorSpace"), py::arg("yuvaTextures"),
+        py::arg("yuvaIndices"), py::arg("imageSize"), py::arg("imageOrigin"),
+        py::arg("imageColorSpace") = nullptr)
+    .def_static("MakeFromYUVAPixmaps",
+        [] (GrRecordingContext* context,
+            SkYUVColorSpace yuvColorSpace,
+            const std::vector<SkPixmap>& yuvaPixmaps,
+            const std::vector<SkYUVAIndex>& yuvaIndices,
+            SkISize imageSize,
+            GrSurfaceOrigin imageOrigin,
+            bool buildMips,
+            bool limitToMaxTextureSize,
+            const SkColorSpace* imageColorSpace) {
+            if (yuvaIndices.size() != 4)
+                throw py::value_error("yuvaIndices must have 4 elements.");
+            return SkImage::MakeFromYUVAPixmaps(
+                context, yuvColorSpace, yuvaPixmaps.data(), yuvaIndices.data(),
+                imageSize, imageOrigin, buildMips, limitToMaxTextureSize,
+                CloneColorSpace(imageColorSpace));
+        },
+        R"docstring(
+        Creates :py:class:`Image` from pixmap array representing YUVA data.
+        :py:class:`Image` is uploaded to GPU back-end using context.
+
+        Each GrBackendTexture created from yuvaPixmaps array is uploaded to
+        match :py:class:`Surface` using :py:class:`ColorSpace` of
+        :py:class:`Pixmap`. :py:class:`ColorSpace` of :py:class:`Image` is
+        determined by imageColorSpace.
+
+        :py:class:`Image` is returned referring to GPU back-end if context is
+        not nullptr and format of data is recognized and supported. Otherwise,
+        nullptr is returned. Recognized GPU formats vary by platform and GPU
+        back-end.
+
+        :param context:               GPU context
+        :param yuvColorSpace:         How the YUV values are converted to RGB
+        :param yuvaPixmaps:           array of (up to four) :py:class:`Pixmap`
+                                      which contain the, possibly interleaved,
+                                      YUVA planes
+        :param yuvaIndices:           array indicating which pixmap in
+                                      yuvaPixmaps, and channel in that pixmap,
+                                      maps to each component of YUVA.
+        :param imageSize:             size of the resulting image
+        :param imageOrigin:           origin of the resulting image.
+        :param buildMips:             create internal YUVA textures as mip map
+                                      if true
+        :param limitToMaxTextureSize: downscale image to GPU maximum texture
+                                      size, if necessary
+        :param imageColorSpace:       range of colors of the resulting image;
+                                      may be nullptr
+        :return:                      created :py:class:`Image`, or nullptr
+        )docstring",
+        py::arg("context"), py::arg("yuvaPixmaps"), py::arg("yuvaTextures"),
+        py::arg("yuvaIndices"), py::arg("imageSize"), py::arg("imageOrigin"),
+        py::arg("buildMips"), py::arg("limitToMaxTextureSize") = false,
+        py::arg("imageColorSpace") = nullptr)
+    .def_static("MakeFromYUVAPixmaps",
+        [] (GrRecordingContext* context,
+            const SkYUVAPixmaps& pixmaps,
+            GrMipMapped buildMips,
+            bool limitToMaxTextureSize,
+            const SkColorSpace* imageColorSpace) {
+            return SkImage::MakeFromYUVAPixmaps(
+                context, pixmaps, buildMips, limitToMaxTextureSize,
+                CloneColorSpace(imageColorSpace));
+        },
+        R"docstring(
+        Creates :py:class:`Image` from :py:class:`YUVAPixmaps`.
+
+        The image will remain planar with each plane converted to a texture
+        using the passed :py:class:`GrRecordingContext`.
+
+        :py:class:`YUVAPixmaps` has a :py:class:`YUVAInfo` which specifies the
+        transformation from YUV to RGB. The :py:class:`ColorSpace` of the
+        resulting RGB values is specified by imageColorSpace. This will be the
+        :py:class:`ColorSpace` reported by the image and when drawn the RGB
+        values will be converted from this space into the destination space (if
+        the destination is tagged).
+
+        Currently, this is only supported using the GPU backend and will fail if
+        context is nullptr.
+
+        :py:class:`YUVAPixmaps` does not need to remain valid after this
+        returns.
+
+        :param context:               GPU context
+        :param pixmaps:               The planes as pixmaps with supported
+                                      :py:class:`YUVAInfo` that specifies
+                                      conversion to RGB.
+        :param buildMips:             create internal YUVA textures as mip map
+                                      if kYes. This is silently ignored if the
+                                      context does not support mip maps.
+        :param limitToMaxTextureSize: downscale image to GPU maximum texture
+                                      size, if necessary
+        :param imageColorSpace:       range of colors of the resulting image;
+                                      may be nullptr
+        :return:                      created :py:class:`Image`, or nullptr
+        )docstring",
+        py::arg("context"), py::arg("pixmaps"),
+        py::arg("buildMips") = GrMipmapped::kNo,
+        py::arg("limitToMaxTextureSize") = false,
+        py::arg("imageColorSpace") = nullptr)
+    .def_static("MakeFromNV12TexturesCopy",
+        [] (GrContext* context,
+            SkYUVColorSpace yuvColorSpace,
+            const std::vector<GrBackendTexture>& nv12Textures,
+            GrSurfaceOrigin imageOrigin,
+            const SkColorSpace* imageColorSpace) {
+            if (nv12Textures.size() != 2)
+                throw py::value_error("nv12Textures must have 2 elements.");
+            return SkImage::MakeFromNV12TexturesCopy(
+                context, yuvColorSpace, nv12Textures.data(), imageOrigin,
+                CloneColorSpace(imageColorSpace));
+        },
+        R"docstring(
+        Creates :py:class:`Image` from copy of nv12Textures, an array of
+        textures on GPU. nv12Textures[0] contains pixels for YUV component y
+        plane. nv12Textures[1] contains pixels for YUV component u plane,
+        followed by pixels for YUV component v plane.
+        Returned :py:class:`Image` has the dimensions nv12Textures[2].
+        yuvColorSpace describes how YUV colors convert to RGB colors.
+
+        :param context:         GPU context
+        :param yuvColorSpace:   How the YUV values are converted to RGB
+        :param nv12Textures:    array of YUV textures on GPU
+        :param imageColorSpace: range of colors; may be nullptr
+        :return:                created :py:class:`Image`, or nullptr
+        )docstring",
+        py::arg("context"), py::arg("yuvColorSpace"), py::arg("nv12Textures"),
+        py::arg("imageOrigin"), py::arg("imageColorSpace") = nullptr)
     .def_static("MakeFromNV12TexturesCopyWithExternalBackend",
-        &SkImage::MakeFromNV12TexturesCopyWithExternalBackend,
-        "Creates SkImage from copy of nv12Textures, an array of textures on "
-        "GPU.")
-    */
+        [] (GrContext* context,
+            SkYUVColorSpace yuvColorSpace,
+            const std::vector<GrBackendTexture>& nv12Textures,
+            GrSurfaceOrigin imageOrigin,
+            const GrBackendTexture& backendTexture,
+            const SkColorSpace* imageColorSpace) {
+            if (nv12Textures.size() != 2)
+                throw py::value_error("nv12Textures must have 2 elements.");
+            return SkImage::MakeFromNV12TexturesCopyWithExternalBackend(
+                context, yuvColorSpace, nv12Textures.data(), imageOrigin,
+                backendTexture, CloneColorSpace(imageColorSpace), nullptr,
+                nullptr);
+        },
+        R"docstring(
+        Creates :py:class:`Image` from copy of nv12Textures, an array of
+        textures on GPU. nv12Textures[0] contains pixels for YUV component y
+        plane. nv12Textures[1] contains pixels for YUV component u plane,
+        followed by pixels for YUV component v plane.
+        Returned :py:class:`Image` has the dimensions nv12Textures[2] and stores
+        pixels in backendTexture. yuvColorSpace describes how YUV colors convert
+        to RGB colors.
+
+        :param context:         GPU context
+        :param yuvColorSpace:   How the YUV values are converted to RGB
+        :param nv12Textures:    array of YUV textures on GPU
+        :param backendTexture:  the resource that stores the final pixels
+        :param imageColorSpace: range of colors; may be nullptr
+        :return:                created :py:class:`Image`, or nullptr
+        )docstring",
+        py::arg("context"), py::arg("yuvColorSpace"), py::arg("nv12Textures"),
+        py::arg("imageOrigin"), py::arg("backendTexture"),
+        py::arg("imageColorSpace") = nullptr)
     .def_static("MakeFromPicture",
         [] (sk_sp<SkPicture>& picture, const SkISize& dimensions,
             const SkMatrix* matrix, const SkPaint* paint,
@@ -1219,16 +1460,6 @@ image
         R"docstring(
         Returns true if the image has mipmap levels.
         )docstring")
-    // .def("withMipmaps", &SkImage::withMipmaps,
-    //     R"docstring(
-    //     Returns an image with the same "base" pixels as the this image, but with
-    //     mipmap levels as well. If this image already has mipmap levels, they
-    //     will be replaced with new ones.
-
-    //     If data == nullptr, the mipmap levels are computed automatically.
-    //     If data != nullptr, then the caller has provided the data for each
-    //     level.
-    //     )docstring")
     .def("makeTextureImage", &SkImage::makeTextureImage,
         R"docstring(
         Returns :py:class:`Image` backed by GPU texture associated with context.

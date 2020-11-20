@@ -402,6 +402,36 @@ def test_Image_MakeFromAdoptedTexture(context, texture):
         skia.Image)
 
 
+@pytest.mark.xfail(reason='Not implemented')
+def test_Image_MakeFromYUVATexturesCopy(context, texture):
+    raise NotImplementedError
+
+
+@pytest.mark.xfail(reason='Not implemented')
+def test_Image_MakeFromYUVATexturesCopyWithExternalBackend(context, texture):
+    raise NotImplementedError
+
+
+@pytest.mark.xfail(reason='Not implemented')
+def test_Image_MakeFromYUVATextures(context, texture):
+    raise NotImplementedError
+
+
+@pytest.mark.xfail(reason='Not implemented')
+def test_Image_MakeFromYUVAPixmaps(context, texture):
+    raise NotImplementedError
+
+
+@pytest.mark.xfail(reason='Not implemented')
+def test_Image_MakeFromNV12TexturesCopy(context, texture):
+    raise NotImplementedError
+
+
+@pytest.mark.xfail(reason='Not implemented')
+def test_Image_MakeFromNV12TexturesCopyWithExternalBackend(context, texture):
+    raise NotImplementedError
+
+
 def test_Image_MakeFromPicture(picture):
     assert isinstance(
         skia.Image.MakeFromPicture(picture, (100, 100)),
