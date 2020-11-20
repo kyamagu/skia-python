@@ -68,6 +68,10 @@ def test_Matrix_get(matrix):
     assert isinstance(matrix.get(0), float)
 
 
+def test_Matrix_rc(matrix):
+    assert isinstance(matrix.rc(0, 0), float)
+
+
 def test_Matrix_getScaleX(matrix):
     assert isinstance(matrix.getScaleX(), float)
 

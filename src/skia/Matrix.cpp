@@ -284,6 +284,16 @@ matrix
         :return: value corresponding to index
         )docstring",
         py::arg("index"))
+    .def("rc", &SkMatrix::rc,
+        R"docstring(
+        Returns one matrix value from a particular row/column. Asserts if index
+        is out of range and SK_DEBUG is defined.
+
+        :param r:  matrix row to fetch
+        :param c:  matrix column to fetch
+        :return:   value at the given matrix position
+        )docstring",
+        py::arg("r"), py::arg("c"))
     .def("getScaleX", &SkMatrix::getScaleX,
         R"docstring(
         Returns scale factor multiplied by x-axis input, contributing to x-axis
