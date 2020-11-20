@@ -476,22 +476,37 @@ codec
         py::overload_cast<const SkPixmap&, const SkCodec::Options*>(
             &SkCodec::getPixels),
         py::arg("pixmap"), py::arg("options") = nullptr)
-    /*.def("queryYUV8", &SkCodec::queryYUV8,
+    .def("queryYUVAInfo",
+        [] (const SkCodec& codec,
+            const SkYUVAPixmapInfo::SupportedDataTypes& supportedDataTypes)
+        -> py::object {
+            SkYUVAPixmapInfo yuvaPixmapInfo;
+            if (codec.queryYUVAInfo(supportedDataTypes, &yuvaPixmapInfo))
+                return py::cast(yuvaPixmapInfo);
+            return py::none();
+        },
         R"docstring(
-        If decoding to YUV is supported, this returns true.  Otherwise, this
-        returns false and does not modify any of the parameters.
+        If decoding to YUV is supported, this returns true. Otherwise, this
+        returns false;
 
-        :param sizeInfo:  Output parameter indicating the sizes and required
-            allocation widths of the Y, U, V, and A planes. Given current codec
-            limitations the size of the A plane will always be 0 and the Y, U, V
-            channels will always be planar.
-        :param colorSpace: Output parameter.  If non-NULL this is set to kJPEG,
-            otherwise this is ignored.
-        )docstring")
-    .def("getYUV8Planes", &SkCodec::getYUV8Planes,
-        "docstring(
-        )docstring"
-    )*/
+        :param supportedDataTypes: Indicates the data type/planar config
+            combinations that are supported by the caller. If the generator
+            supports decoding to YUV(A), but not as a type in
+            supportedDataTypes, this method returns false.
+        :return: Output that specifies the planar configuration, subsampling,
+            orientation, chroma siting, plane color types, and row bytes.
+        )docstring",
+        py::arg("supportedDataTypes"))
+    .def("getYUVAPlanes", &SkCodec::getYUVAPlanes,
+        R"docstring(
+        Returns kSuccess, or another value explaining the type of failure.
+        This always attempts to perform a full decode. To get the planar
+        configuration without decoding use queryYUVAInfo().
+
+        :param yuvaPixmaps: Contains preallocated pixmaps configured according
+            to a successful call to :py:meth:`~queryYUVAInfo`.
+        )docstring",
+        py::arg("yuvaPixmaps"))
     .def("startIncrementalDecode",
         [] (SkCodec& codec, const SkImageInfo& info, py::buffer data,
             size_t rowBytes, const SkCodec::Options* options) {
