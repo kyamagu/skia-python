@@ -315,9 +315,25 @@ py::class_<GrBackendSurfaceMutableState>(m, "GrBackendSurfaceMutableState",
 
         Vulkan: VkImageLayout and QueueFamilyIndex
     )docstring")
+    .def(py::init<>())
 #ifdef SK_VULKAN
-    .def(py::init<VkImageLayout, uint32_t>())
+    .def(py::init<VkImageLayout, uint32_t>(),
+        py::arg("layout"), py::arg("queueFamilyIndex"))
+    .def("getVkImageLayout",
+        &GrBackendSurfaceMutableState::getVkImageLayout,
+        R"docstring(
+        If this class is not Vulkan backed it will return value of
+        VK_IMAGE_LAYOUT_UNDEFINED. Otherwise it will return the VkImageLayout.
+        )docstring")
+    .def("getQueueFamilyIndex",
+        &GrBackendSurfaceMutableState::getQueueFamilyIndex,
+        R"docstring(
+        If this class is not Vulkan backed it will return value of
+        VK_QUEUE_FAMILY_IGNORED. Otherwise it will return the VkImageLayout.
+        )docstring")
 #endif
+    .def("isValid", &GrBackendSurfaceMutableState::isValid)
+    .def("backend", &GrBackendSurfaceMutableState::backend)
     ;
 
 py::class_<GrBackendRenderTarget>(m, "GrBackendRenderTarget")
@@ -993,7 +1009,7 @@ py::class_<GrContext, sk_sp<GrContext>, GrRecordingContext>(m, "GrContext")
         [] (GrContext& context, const GrBackendTexture& texture,
             const GrBackendSurfaceMutableState& mutableState) {
             return context.setBackendTextureState(
-                texture, mutableState, nullptr, nullptr);
+                texture, mutableState, nullptr, nullptr, nullptr);
         },
         R"docstring(
         Updates the state of the GrBackendTexture/RenderTarget to have the
@@ -1015,7 +1031,7 @@ py::class_<GrContext, sk_sp<GrContext>, GrRecordingContext>(m, "GrContext")
         [] (GrContext& context, const GrBackendRenderTarget& target,
             const GrBackendSurfaceMutableState& mutableState) {
             return context.setBackendRenderTargetState(
-                target, mutableState, nullptr, nullptr);
+                target, mutableState, nullptr, nullptr, nullptr);
         },
         py::arg("target"), py::arg("mutableState"))
     .def("deleteBackendTexture", &GrContext::deleteBackendTexture,

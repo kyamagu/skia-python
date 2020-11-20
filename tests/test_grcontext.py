@@ -247,6 +247,25 @@ def test_GrBackendRenderTarget_isValid(backend_render_target):
     assert isinstance(backend_render_target.isValid(), bool)
 
 
+@pytest.fixture
+def backend_surface_mutable_state():
+    return skia.GrBackendSurfaceMutableState()
+
+
+def test_GrBackendSurfaceMutableState_init(backend_surface_mutable_state):
+    assert isinstance(
+        backend_surface_mutable_state, skia.GrBackendSurfaceMutableState)
+
+
+def test_GrBackendSurfaceMutableState_isValid(backend_surface_mutable_state):
+    assert isinstance(backend_surface_mutable_state.isValid(), bool)
+
+
+def test_GrBackendSurfaceMutableState_isValid(backend_surface_mutable_state):
+    assert isinstance(
+        backend_surface_mutable_state.backend(), skia.GrBackendApi)
+
+
 def test_GrContext_resetContext(context):
     context.resetContext()
 
