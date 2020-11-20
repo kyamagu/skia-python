@@ -427,15 +427,6 @@ canvas
         :rtype: skia.Surface or None
         )docstring",
         py::arg("info"), py::arg("props") = nullptr)
-    .def("getGrContext", &SkCanvas::getGrContext,
-        R"docstring(
-        Returns GPU context of the GPU surface associated with
-        :py:class:`Canvas`.
-
-        :return: GPU context, if available; nullptr otherwise
-        :rtype: skia.GrContext or None
-        )docstring",
-        py::return_value_policy::reference)
     .def("getSurface", &SkCanvas::getSurface,
         R"docstring(
         Sometimes a canvas is owned by a surface.
