@@ -1,4 +1,7 @@
 #include "common.h"
+#include <pybind11/stl.h>
+
+const int SkYUVAInfo::kMaxPlanes;
 
 void initImageInfo(py::module &m) {
 py::enum_<SkAlphaType>(m, "AlphaType")
@@ -718,4 +721,194 @@ m.def("ColorTypeValidateAlphaType", &SkColorTypeValidateAlphaType,
         colorType
     )docstring",
     py::arg("colorType"), py::arg("alphaType"), py::arg("canonical") = nullptr);
+
+
+py::class_<SkYUVAInfo> yuvainfo(m, "YUVAInfo",
+    R"docstring(
+    Specifies the structure of planes for a YUV image with optional alpha. The
+    actual planar data is not part of this structure and depending on usage is
+    in external textures or pixmaps.
+    )docstring");
+
+py::enum_<SkYUVAInfo::PlanarConfig>(yuvainfo, "PlanarConfig",
+    R"docstring(
+    Specifies how YUV (and optionally A) are divided among planes. Planes are
+    separated by underscores in the enum value names. Within each plane the
+    pixmap/texture channels are mapped to the YUVA channels in the order
+    specified, e.g. for kY_UV Y is in channel 0 of plane 0, U is in channel 0
+    of plane 1, and V is in channel 1 of plane 1. Channel ordering within a
+    pixmap/texture given the channels it contains::
+
+        A:               0:A
+        Luminance/Gray:  0:Gray
+        RG               0:R,    1:G
+        RGB              0:R,    1:G, 2:B
+        RGBA             0:R,    1:G, 2:B, 3:A
+
+    UV subsampling is also specified in the enum value names using J:a:b
+    notation (e.g. 4:2:0 is 1/2 horizontal and 1/2 vertical resolution for U
+    and V). A fourth number is added if alpha is present (always 4 as only
+    full resolution alpha is supported).
+
+    Currently this only has three-plane formats but more will be added as
+    usage and testing of this expands.
+    )docstring")
+    .value("kY_U_V_444", SkYUVAInfo::PlanarConfig::kY_U_V_444,
+        "Plane 0: Y, Plane 1: U,  Plane 2: V")
+    .value("kY_U_V_422", SkYUVAInfo::PlanarConfig::kY_U_V_422,
+        "Plane 0: Y, Plane 1: U,  Plane 2: V")
+    .value("kY_U_V_420", SkYUVAInfo::PlanarConfig::kY_U_V_420,
+        "Plane 0: Y, Plane 1: U,  Plane 2: V")
+    .value("kY_V_U_420", SkYUVAInfo::PlanarConfig::kY_V_U_420,
+        "Plane 0: Y, Plane 1: V,  Plane 2: U")
+    .value("kY_U_V_440", SkYUVAInfo::PlanarConfig::kY_U_V_440,
+        "Plane 0: Y, Plane 1: U,  Plane 2: V")
+    .value("kY_U_V_411", SkYUVAInfo::PlanarConfig::kY_U_V_411,
+        "Plane 0: Y, Plane 1: U,  Plane 2: V")
+    .value("kY_U_V_410", SkYUVAInfo::PlanarConfig::kY_U_V_410,
+        "Plane 0: Y, Plane 1: U,  Plane 2: V")
+    .value("kY_U_V_A_4204", SkYUVAInfo::PlanarConfig::kY_U_V_A_4204,
+        "Plane 0: Y, Plane 1: U,  Plane 2: V, Plane 3: A")
+    .value("kY_V_U_A_4204", SkYUVAInfo::PlanarConfig::kY_V_U_A_4204,
+        "Plane 0: Y, Plane 1: V,  Plane 2: U, Plane 3: A")
+    .value("kY_UV_420", SkYUVAInfo::PlanarConfig::kY_UV_420,
+        "Plane 0: Y, Plane 1: UV")
+    .value("kY_VU_420", SkYUVAInfo::PlanarConfig::kY_VU_420,
+        "Plane 0: Y, Plane 1: VU")
+    .value("kY_UV_A_4204", SkYUVAInfo::PlanarConfig::kY_UV_A_4204,
+        "Plane 0: Y, Plane 1: UV, Plane 2: A")
+    .value("kY_VU_A_4204", SkYUVAInfo::PlanarConfig::kY_VU_A_4204,
+        "Plane 0: Y, Plane 1: VU, Plane 2: A")
+    .value("kYUV_444", SkYUVAInfo::PlanarConfig::kYUV_444,
+        "Plane 0: YUV")
+    .value("kUYV_444", SkYUVAInfo::PlanarConfig::kUYV_444,
+        "Plane 0: UYV")
+    .value("kYUVA_4444", SkYUVAInfo::PlanarConfig::kYUVA_4444,
+        "Plane 0: YUVA")
+    .value("kUYVA_4444", SkYUVAInfo::PlanarConfig::kUYVA_4444,
+        "Plane 0: UYVA")
+    .export_values();
+
+py::enum_<SkYUVAInfo::Siting>(yuvainfo, "Siting",
+    R"docstring(
+    Describes how subsampled chroma values are sited relative to luma values.
+
+    Currently only centered siting is supported but will expand to support
+    additional sitings.
+    )docstring")
+    .value("kCentered", SkYUVAInfo::Siting::kCentered,
+        R"docstring(
+        Subsampled chroma value is sited at the center of the block of
+        corresponding luma values.
+        )docstring")
+    .export_values();
+
+yuvainfo
+    .def_readonly_static("kMaxPlanes", &SkYUVAInfo::kMaxPlanes)
+    .def_static("PlaneDimensions",
+        [] (SkISize imageDimensions, SkYUVAInfo::PlanarConfig config,
+            SkEncodedOrigin origin) {
+            std::vector<SkISize> planeDimensions(SkYUVAInfo::kMaxPlanes);
+            auto size = SkYUVAInfo::PlaneDimensions(
+                imageDimensions, config, origin, planeDimensions.data());
+            planeDimensions.erase(
+                planeDimensions.begin() + size, planeDimensions.end());
+            return planeDimensions;
+        },
+        R"docstring(
+        Given image dimensions, a planar configuration, and origin, determine
+        the expected size of each plane. Returns a list of expected
+        planes.
+
+        The input image dimensions are as displayed (after the planes have
+        been transformed to the intended display orientation).
+        )docstring",
+        py::arg("imageDimensions"), py::arg("config"), py::arg("origin"))
+    .def_static("NumPlanes", &SkYUVAInfo::NumPlanes,
+        R"docstring(
+        Number of planes for a given PlanarConfig.
+        )docstring",
+        py::arg("config"))
+    .def_static("NumChannelsInPlane", &SkYUVAInfo::NumChannelsInPlane,
+        R"docstring(
+        Number of Y, U, V, A channels in the ith plane for a given PlanarConfig
+        (or 0 if i is invalid).
+        )docstring",
+        py::arg("config"), py::arg("i"))
+    .def_static("HasAlpha", &SkYUVAInfo::HasAlpha,
+        R"docstring(
+        Does the PlanarConfig have alpha values?
+        )docstring",
+        py::arg("config"))
+    .def(py::init<>())
+    .def(py::init<SkISize, SkYUVAInfo::PlanarConfig, SkYUVColorSpace,
+        SkEncodedOrigin, SkYUVAInfo::Siting, SkYUVAInfo::Siting>(),
+        R"docstring(
+        'dimensions' should specify the size of the full resolution image (after
+        planes have been oriented to how the image is displayed as indicated by
+        'origin').
+        )docstring",
+        py::arg("dimensions"), py::arg("config"), py::arg("yuvColorSpace"),
+        py::arg("origin") = kTopLeft_SkEncodedOrigin,
+        py::arg("sittingX") = SkYUVAInfo::Siting::kCentered,
+        py::arg("sittingY") = SkYUVAInfo::Siting::kCentered)
+    .def("planarConfig", &SkYUVAInfo::planarConfig)
+    .def("dimensions", &SkYUVAInfo::dimensions,
+        R"docstring(
+        Dimensions of the full resolution image (after planes have been oriented
+        to how the image is displayed as indicated by fOrigin).
+        )docstring")
+    .def("width", &SkYUVAInfo::width)
+    .def("height", &SkYUVAInfo::height)
+    .def("yuvColorSpace", &SkYUVAInfo::yuvColorSpace)
+    .def("sitingX", &SkYUVAInfo::sitingX)
+    .def("sitingY", &SkYUVAInfo::sitingY)
+    .def("origin", &SkYUVAInfo::origin)
+    .def("hasAlpha", &SkYUVAInfo::hasAlpha)
+    .def("planeDimensions",
+        [] (const SkYUVAInfo& info) {
+            std::vector<SkISize> planeDimensions(SkYUVAInfo::kMaxPlanes);
+            info.planeDimensions(planeDimensions.data());
+            return planeDimensions;
+        },
+        R"docstring(
+        Returns the number of planes and initializes
+        planeDimensions[0]..planeDimensions[<ret>] to the expected dimensions
+        for each plane. Dimensions are as stored in memory, before
+        transformation to image display space as indicated by origin().
+        )docstring")
+    .def("computeTotalBytes",
+        [] (const SkYUVAInfo& info, const std::vector<size_t>& rowBytes,
+            bool returnPlaneSizes) -> py::object {
+            if (rowBytes.size() < SkYUVAInfo::kMaxPlanes)
+                throw py::value_error(
+                    py::str("rowBytes must have {} elements.").format(
+                        SkYUVAInfo::kMaxPlanes));
+            std::vector<size_t> planeSizes(SkYUVAInfo::kMaxPlanes);
+            auto size = info.computeTotalBytes(
+                rowBytes.data(), planeSizes.data());
+            if (returnPlaneSizes)
+                return py::make_tuple(size, planeSizes);
+            return py::cast(size);
+        },
+        R"docstring(
+        Given a per-plane row bytes, determine size to allocate for all
+        planes. Optionally retrieves the per-plane byte sizes if
+        returnPlaneSizes is True. If total size overflows will return SIZE_MAX
+        and set all planeSizes to SIZE_MAX.
+        )docstring",
+        py::arg("rowBytes"), py::arg("returnPlaneSizes") = false)
+    .def("numPlanes", &SkYUVAInfo::numPlanes)
+    .def("numChannelsInPlane", &SkYUVAInfo::numChannelsInPlane, py::arg("i"))
+    .def("__eq__",
+        [] (const SkYUVAInfo& info, const SkYUVAInfo& that) {
+            return info == that;
+        },
+        py::is_operator())
+    .def("__ne__",
+        [] (const SkYUVAInfo& info, const SkYUVAInfo& that) {
+            return info != that;
+        },
+        py::is_operator())
+    ;
 }

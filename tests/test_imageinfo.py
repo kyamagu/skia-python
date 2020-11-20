@@ -278,3 +278,107 @@ def test_ColorTypeIsAlwaysOpaque():
     assert skia.ColorTypeValidateAlphaType(
         skia.ColorType.kRGBA_8888_ColorType,
         skia.AlphaType.kOpaque_AlphaType)
+
+
+@pytest.fixture
+def yuva_info():
+    return skia.YUVAInfo()
+
+
+def test_YUVAInfo_kMaxPlanes():
+    assert isinstance(skia.YUVAInfo.kMaxPlanes, int)
+
+
+def test_YUVAInfo_PlaneDimensions():
+    assert isinstance(
+        skia.YUVAInfo.PlaneDimensions(
+            (100, 100),
+            skia.YUVAInfo.kY_U_V_444,
+            skia.kTopLeft_EncodedOrigin),
+        list)
+
+
+def test_YUVAInfo_NumPlanes():
+    assert isinstance(skia.YUVAInfo.NumPlanes(skia.YUVAInfo.kY_U_V_444), int)
+
+
+def test_YUVAInfo_NumChannelsInPlane():
+    assert isinstance(
+        skia.YUVAInfo.NumChannelsInPlane(skia.YUVAInfo.kY_U_V_444, 0), int)
+
+
+def test_YUVAInfo_HasAlpha():
+    assert isinstance(skia.YUVAInfo.HasAlpha(skia.YUVAInfo.kY_U_V_444), bool)
+
+
+def test_YUVAInfo_init():
+    assert isinstance(skia.YUVAInfo(), skia.YUVAInfo)
+    assert isinstance(
+        skia.YUVAInfo(
+            (100, 100),
+            skia.YUVAInfo.kY_U_V_444,
+            skia.kJPEG_YUVColorSpace),
+        skia.YUVAInfo)
+
+
+def test_YUVAInfo_planarConfig(yuva_info):
+    assert isinstance(yuva_info.planarConfig(), skia.YUVAInfo.PlanarConfig)
+
+
+def test_YUVAInfo_dimensions(yuva_info):
+    assert isinstance(yuva_info.dimensions(), skia.ISize)
+
+
+def test_YUVAInfo_width(yuva_info):
+    assert isinstance(yuva_info.width(), int)
+
+
+def test_YUVAInfo_height(yuva_info):
+    assert isinstance(yuva_info.height(), int)
+
+
+def test_YUVAInfo_yuvColorSpace(yuva_info):
+    assert isinstance(yuva_info.yuvColorSpace(), skia.YUVColorSpace)
+
+
+def test_YUVAInfo_sitingX(yuva_info):
+    assert isinstance(yuva_info.sitingX(), skia.YUVAInfo.Siting)
+
+
+def test_YUVAInfo_sitingY(yuva_info):
+    assert isinstance(yuva_info.sitingY(), skia.YUVAInfo.Siting)
+
+
+def test_YUVAInfo_origin(yuva_info):
+    assert isinstance(yuva_info.origin(), skia.EncodedOrigin)
+
+
+def test_YUVAInfo_hasAlpha(yuva_info):
+    assert isinstance(yuva_info.hasAlpha(), bool)
+
+
+def test_YUVAInfo_planeDimensions(yuva_info):
+    assert isinstance(yuva_info.planeDimensions(), list)
+
+
+def test_YUVAInfo_computeTotalBytes(yuva_info):
+    row_bytes = [100, 100, 100, 100]
+    assert isinstance(yuva_info.computeTotalBytes(row_bytes), int)
+    _, plane_sizes = yuva_info.computeTotalBytes(row_bytes, True)
+    assert isinstance(plane_sizes, list)
+
+
+def test_YUVAInfo_numPlanes(yuva_info):
+    assert isinstance(yuva_info.numPlanes(), int)
+
+
+def test_YUVAInfo_numChannelsInPlane(yuva_info):
+    assert isinstance(yuva_info.numChannelsInPlane(0), int)
+
+
+def test_YUVAInfo___eq__(yuva_info):
+    assert isinstance(yuva_info == yuva_info, bool)
+
+
+def test_YUVAInfo___ne__(yuva_info):
+    assert isinstance(yuva_info != yuva_info, bool)
