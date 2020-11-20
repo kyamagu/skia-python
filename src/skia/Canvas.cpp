@@ -42,15 +42,6 @@ py::class_<SkAutoCanvasRestore>(m, "AutoCanvasRestore", R"docstring(
 py::enum_<SkClipOp>(m, "ClipOp")
     .value("kDifference", SkClipOp::kDifference)
     .value("kIntersect", SkClipOp::kIntersect)
-    .value("kExtraEnumNeedInternallyPleaseIgnoreWillGoAway2",
-        SkClipOp::kExtraEnumNeedInternallyPleaseIgnoreWillGoAway2)
-    .value("kExtraEnumNeedInternallyPleaseIgnoreWillGoAway3",
-        SkClipOp::kExtraEnumNeedInternallyPleaseIgnoreWillGoAway3)
-    .value("kExtraEnumNeedInternallyPleaseIgnoreWillGoAway4",
-        SkClipOp::kExtraEnumNeedInternallyPleaseIgnoreWillGoAway4)
-    .value("kExtraEnumNeedInternallyPleaseIgnoreWillGoAway5",
-        SkClipOp::kExtraEnumNeedInternallyPleaseIgnoreWillGoAway5)
-    .value("kMax_EnumValue", SkClipOp::kMax_EnumValue)
     .export_values();
 
 py::class_<SkCanvas> canvas(m, "Canvas", R"docstring(
