@@ -61,12 +61,6 @@ py::enum_<SkPathFillType>(m, "PathFillType")
         "Same as EvenOdd, but draws outside of the path, rather than inside.")
     .export_values();
 
-py::enum_<SkPathConvexityType>(m, "PathConvexityType")
-    .value("kUnknown", SkPathConvexityType::kUnknown)
-    .value("kConvex", SkPathConvexityType::kConvex)
-    .value("kConcave", SkPathConvexityType::kConcave)
-    .export_values();
-
 py::enum_<SkPathDirection>(m, "PathDirection")
     .value("kCW", SkPathDirection::kCW,
         "clockwise direction for adding closed contours")
@@ -470,35 +464,6 @@ path
         The inverse of FillType describes the area unmodified by the original
         FillType.
         )docstring")
-    .def("getConvexityType", &SkPath::getConvexityType,
-        R"docstring(
-        Returns the comvexity type, computing if needed.
-
-        Never returns :py:attr:`~PathConvexityType.kUnknown`.
-
-        :return: path's convexity type (convex or concave)
-        )docstring")
-    .def("getConvexityTypeOrUnknown", &SkPath::getConvexityTypeOrUnknown,
-        R"docstring(
-        If the path's convexity is already known, return it, else return
-        :py:attr:`~PathConvexityType.kUnknown`.
-
-        If you always want to know the convexity, even if that means having to
-        compute it, call :py:meth:`getConvexityType`.
-
-        :return: known convexity, or :py:attr:`~PathConvexityType.kUnknown`
-        )docstring")
-    .def("setConvexityType",
-        py::overload_cast<SkPathConvexityType>(&SkPath::setConvexityType),
-        R"docstring(
-        Stores a convexity type for this path.
-
-        This is what will be returned if :py:meth:`getConvexityTypeOrUnknown` is
-        called. If you pass :py:attr:`~PathConvexityType.kUnknown`, then if
-        :py:meth:`getContexityType` is called, the real convexity will be
-        computed.
-        )docstring",
-        py::arg("convexity"))
     .def("isConvex", &SkPath::isConvex,
         R"docstring(
         Returns true if the path is convex.
