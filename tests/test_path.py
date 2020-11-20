@@ -139,18 +139,6 @@ def test_Path_toggleInverseFillType(path):
     path.toggleInverseFillType()
 
 
-def test_Path_getConvexityType(path):
-    assert isinstance(path.getConvexityType(), skia.PathConvexityType)
-
-
-def test_Path_getConvexityTypeOrUnknown(path):
-    assert isinstance(path.getConvexityTypeOrUnknown(), skia.PathConvexityType)
-
-
-def test_Path_setConvexityType(path):
-    path.setConvexityType(skia.PathConvexityType.kUnknown)
-
-
 def test_Path_isConvex(path):
     assert isinstance(path.isConvex(), bool)
 

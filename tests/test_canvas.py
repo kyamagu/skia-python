@@ -57,10 +57,6 @@ def test_Canvas_makeSurface(canvas, args):
         skia.Surface)
 
 
-def test_Canvas_getGrContext(canvas):
-    assert isinstance(canvas.getGrContext(), (skia.GrContext, type(None)))
-
-
 def test_Canvas_getSurface(canvas):
     assert isinstance(canvas.getSurface(), (skia.Surface, type(None)))
 
