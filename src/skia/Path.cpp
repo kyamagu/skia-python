@@ -370,6 +370,70 @@ path
     .def("__iter__",
         [] (const SkPath& path) { return SkPath::Iter(path, false); },
         py::keep_alive<0, 1>())
+    .def_static("Make",
+        [] (const std::vector<SkPoint>& points,
+            const std::vector<uint8_t>& verbs,
+            const std::vector<SkScalar>& conicWeights,
+            SkPathFillType fillType,
+            bool isVolatile) {
+            return SkPath::Make(
+                points.data(), points.size(), verbs.data(), verbs.size(),
+                conicWeights.data(), conicWeights.size(), fillType, isVolatile);
+        },
+        R"docstring(
+        Create a new path with the specified segments.
+
+        The points and weights arrays are read in order, based on the sequence
+        of verbs.
+
+            Move    1 point
+            Line    1 point
+            Quad    2 points
+            Conic   2 points and 1 weight
+            Cubic   3 points
+            Close   0 points
+
+        If an illegal sequence of verbs is encountered, or the specified number
+        of points or weights is not sufficient given the verbs, an empty Path is
+        returned.
+
+        A legal sequence of verbs consists of any number of Contours. A contour
+        always begins with a Move verb, followed by 0 or more segments: Line,
+        Quad, Conic, Cubic, followed by an optional Close.
+        )docstring",
+        py::arg("points"), py::arg("verbs"), py::arg("conicWeights"),
+        py::arg("fillType"), py::arg("isVolatile") = false)
+    .def_static("Rect", &SkPath::Rect,
+        py::arg("rect"), py::arg("pathDirection") = SkPathDirection::kCW,
+        py::arg("startIndex") = 0)
+    .def_static("Oval",
+        py::overload_cast<const SkRect&, SkPathDirection, unsigned>(
+            &SkPath::Oval),
+        py::arg("rect"), py::arg("pathDirection") = SkPathDirection::kCW,
+        py::arg("startIndex") = 0)
+    .def_static("Circle", &SkPath::Circle,
+        py::arg("center_x"), py::arg("center_y"), py::arg("radius"),
+        py::arg("pathDirection") = SkPathDirection::kCW)
+    .def_static("RRect",
+        py::overload_cast<const SkRRect&, SkPathDirection, unsigned>(
+            &SkPath::RRect),
+        py::arg("rrect"), py::arg("pathDirection") = SkPathDirection::kCW,
+        py::arg("startIndex") = 0)
+    .def_static("RRect",
+        py::overload_cast<const SkRect&, SkScalar, SkScalar, SkPathDirection>(
+            &SkPath::RRect),
+        py::arg("bounds"), py::arg("rx"), py::arg("ry"),
+        py::arg("pathDirection") = SkPathDirection::kCW)
+    .def_static("Polygon",
+        [] (const std::vector<SkPoint>& points, bool isClosed,
+            SkPathFillType fillType, bool isVolatile) {
+            return SkPath::Polygon(
+                points.data(), points.size(), isClosed, fillType, isVolatile);
+        },
+        py::arg("points"), py::arg("isClosed"),
+        py::arg("fillType") = SkPathFillType::kWinding,
+        py::arg("isVolatile") = false)
+    .def_static("Line", &SkPath::Line, py::arg("a"), py::arg("b"))
     .def(py::init<>(), R"docstring(
         Constructs an empty :py:class:`Path`.
 

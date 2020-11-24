@@ -105,6 +105,46 @@ def test_Path_RawIter_iter(rawiter):
         assert isinstance(verb, skia.Path.Verb)
 
 
+def test_Path_Make():
+    assert isinstance(
+        skia.Path.Make(
+            [(0, 0), (1, 0), (1, 1)],
+            [skia.Path.kMove_Verb, skia.Path.kLine_Verb, skia.Path.kLine_Verb],
+            [],
+            skia.kEvenOdd,
+        ),
+        skia.Path)
+
+
+def test_Path_Rect():
+    assert isinstance(skia.Path.Rect(skia.Rect(10, 10)), skia.Path)
+
+
+def test_Path_Oval():
+    assert isinstance(skia.Path.Oval(skia.Rect(10, 10)), skia.Path)
+
+
+def test_Path_Circle():
+    assert isinstance(skia.Path.Circle(10, 10, 5), skia.Path)
+
+
+def test_Path_RRect():
+    assert isinstance(
+        skia.Path.RRect(skia.RRect(skia.Rect(10, 10), 1, 1)), skia.Path)
+
+
+def test_Path_RRect2():
+    assert isinstance(skia.Path.RRect(skia.Rect(10, 10), 1, 1), skia.Path)
+
+
+def test_Path_Polygon():
+    assert isinstance(skia.Path.Polygon([(0, 0), (2, 1)], False), skia.Path)
+
+
+def test_Path_Line():
+    assert isinstance(skia.Path.Line((0, 0), (2, 1)), skia.Path)
+
+
 @pytest.mark.parametrize('args', [
     tuple(),
     (skia.Path(),),
