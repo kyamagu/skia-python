@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>PictureRecorder.RecordFlags &mdash; skia-python 86.1 documentation</title>
+  <title>YUVASizeInfo &mdash; skia-python 87.0 documentation</title>
   
 
   
@@ -36,8 +36,8 @@
     
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="PixelGeometry" href="skia.PixelGeometry.html" />
-    <link rel="prev" title="PictureRecorder.FinishFlags" href="skia.PictureRecorder.FinishFlags.html" /> 
+    <link rel="next" title="YUVColorSpace" href="skia.YUVColorSpace.html" />
+    <link rel="prev" title="YUVAPixmaps" href="skia.YUVAPixmaps.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -61,7 +61,7 @@
             
             
               <div class="version">
-                86.1
+                87.0
               </div>
             
           
@@ -202,6 +202,7 @@
 <li class="toctree-l3"><a class="reference internal" href="skia.MatrixPathEffect.html">MatrixPathEffect</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.MemoryStream.html">MemoryStream</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.MergePathEffect.html">MergePathEffect</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.MipmapBuilder.html">MipmapBuilder</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.NullWStream.html">NullWStream</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.OffsetImageFilter.html">OffsetImageFilter</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.OpBuilder.html">OpBuilder</a></li>
@@ -212,7 +213,7 @@
 <li class="toctree-l3"><a class="reference internal" href="skia.Path.html">Path</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.Path1DPathEffect.html">Path1DPathEffect</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.Path2DPathEffect.html">Path2DPathEffect</a></li>
-<li class="toctree-l3"><a class="reference internal" href="skia.PathConvexityType.html">PathConvexityType</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.PathBuilder.html">PathBuilder</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.PathDirection.html">PathDirection</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.PathEffect.html">PathEffect</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.PathFillType.html">PathFillType</a></li>
@@ -221,13 +222,7 @@
 <li class="toctree-l3"><a class="reference internal" href="skia.PathVerb.html">PathVerb</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.PerlinNoiseShader.html">PerlinNoiseShader</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.Picture.html">Picture</a></li>
-<li class="toctree-l3 current"><a class="reference internal" href="skia.PictureRecorder.html">PictureRecorder</a><ul class="current">
-<li class="toctree-l4"><a class="reference internal" href="skia.PictureRecorder.FinishFlags.html">PictureRecorder.FinishFlags</a></li>
-<li class="toctree-l4 current"><a class="current reference internal" href="#">PictureRecorder.RecordFlags</a></li>
-<li class="toctree-l4"><a class="reference internal" href="skia.PictureRecorder.html#methods">Methods</a></li>
-<li class="toctree-l4"><a class="reference internal" href="skia.PictureRecorder.html#attributes">Attributes</a></li>
-</ul>
-</li>
+<li class="toctree-l3"><a class="reference internal" href="skia.PictureRecorder.html">PictureRecorder</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.PixelGeometry.html">PixelGeometry</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.PixelRef.html">PixelRef</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.Pixmap.html">Pixmap</a></li>
@@ -269,6 +264,15 @@
 <li class="toctree-l3"><a class="reference internal" href="skia.VkImageLayout.html">VkImageLayout</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.WStream.html">WStream</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.XfermodeImageFilter.html">XfermodeImageFilter</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.YUVAIndex.html">YUVAIndex</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.YUVAInfo.html">YUVAInfo</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.YUVAPixmapInfo.html">YUVAPixmapInfo</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.YUVAPixmaps.html">YUVAPixmaps</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">YUVASizeInfo</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#methods">Methods</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#attributes">Attributes</a></li>
+</ul>
+</li>
 <li class="toctree-l3"><a class="reference internal" href="skia.YUVColorSpace.html">YUVColorSpace</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.html#functions">Functions</a></li>
 </ul>
@@ -325,15 +329,13 @@
         
           <li><a href="skia.html">skia</a> &raquo;</li>
         
-          <li><a href="skia.PictureRecorder.html">PictureRecorder</a> &raquo;</li>
-        
-      <li>PictureRecorder.RecordFlags</li>
+      <li>YUVASizeInfo</li>
     
     
       <li class="wy-breadcrumbs-aside">
         
             
-            <a href="../_sources/reference/skia.PictureRecorder.RecordFlags.rst.txt" rel="nofollow"> View page source</a>
+            <a href="../_sources/reference/skia.YUVASizeInfo.rst.txt" rel="nofollow"> View page source</a>
           
         
       </li>
@@ -346,21 +348,22 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="picturerecorder-recordflags">
-<h1>PictureRecorder.RecordFlags<a class="headerlink" href="#picturerecorder-recordflags" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="yuvasizeinfo">
+<h1>YUVASizeInfo<a class="headerlink" href="#yuvasizeinfo" title="Permalink to this headline">¶</a></h1>
 <dl class="py class">
-<dt id="skia.PictureRecorder.RecordFlags">
-<em class="property">class </em><code class="sig-name descname">RecordFlags</code><a class="headerlink" href="#skia.PictureRecorder.RecordFlags" title="Permalink to this definition">¶</a></dt>
-<dd><p>Members:</p>
-<p>kPlaybackDrawPicture_RecordFlag</p>
-<p class="rubric">Methods</p>
+<dt id="skia.YUVASizeInfo">
+<em class="property">class </em><code class="sig-name descname">YUVASizeInfo</code><a class="headerlink" href="#skia.YUVASizeInfo" title="Permalink to this definition">¶</a></dt>
+<dd><p class="rubric">Methods</p>
 <table class="longtable docutils align-default">
 <colgroup>
 <col style="width: 10%" />
 <col style="width: 90%" />
 </colgroup>
 <tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="#skia.PictureRecorder.RecordFlags.__init__" title="skia.PictureRecorder.RecordFlags.__init__"><code class="xref py py-obj docutils literal notranslate"><span class="pre">__init__</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.YUVASizeInfo.__init__" title="skia.YUVASizeInfo.__init__"><code class="xref py py-obj docutils literal notranslate"><span class="pre">__init__</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.YUVASizeInfo.computeTotalBytes" title="skia.YUVASizeInfo.computeTotalBytes"><code class="xref py py-obj docutils literal notranslate"><span class="pre">computeTotalBytes</span></code></a></p></td>
 <td><p></p></td>
 </tr>
 </tbody>
@@ -372,11 +375,14 @@
 <col style="width: 90%" />
 </colgroup>
 <tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="#skia.PictureRecorder.RecordFlags.kPlaybackDrawPicture_RecordFlag" title="skia.PictureRecorder.RecordFlags.kPlaybackDrawPicture_RecordFlag"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kPlaybackDrawPicture_RecordFlag</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.YUVASizeInfo.fOrigin" title="skia.YUVASizeInfo.fOrigin"><code class="xref py py-obj docutils literal notranslate"><span class="pre">fOrigin</span></code></a></p></td>
+<td><p>YUVA data often comes from formats like JPEG that support EXIF orientation.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.YUVASizeInfo.fSizes" title="skia.YUVASizeInfo.fSizes"><code class="xref py py-obj docutils literal notranslate"><span class="pre">fSizes</span></code></a></p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#skia.PictureRecorder.RecordFlags.name" title="skia.PictureRecorder.RecordFlags.name"><code class="xref py py-obj docutils literal notranslate"><span class="pre">name</span></code></a></p></td>
-<td><p></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.YUVASizeInfo.fWidthBytes" title="skia.YUVASizeInfo.fWidthBytes"><code class="xref py py-obj docutils literal notranslate"><span class="pre">fWidthBytes</span></code></a></p></td>
+<td><p>While the widths of the Y, U, V and A planes are not restricted, the implementation often requires that the width of the memory allocated for each plane be a multiple of 8.</p></td>
 </tr>
 </tbody>
 </table>
@@ -385,22 +391,44 @@
 <div class="section" id="methods">
 <h2>Methods<a class="headerlink" href="#methods" title="Permalink to this headline">¶</a></h2>
 <dl class="py method">
-<dt id="skia.PictureRecorder.RecordFlags.__init__">
-<code class="sig-prename descclassname">RecordFlags.</code><code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.PictureRecorder.RecordFlags" title="skia.PictureRecorder.RecordFlags">skia.PictureRecorder.RecordFlags</a></span></em>, <em class="sig-param"><span class="n">value</span><span class="p">:</span> <span class="n">int</span></em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#skia.PictureRecorder.RecordFlags.__init__" title="Permalink to this definition">¶</a></dt>
+<dt id="skia.YUVASizeInfo.__init__">
+<code class="sig-prename descclassname">YUVASizeInfo.</code><code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.YUVASizeInfo" title="skia.YUVASizeInfo">skia.YUVASizeInfo</a></span></em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#skia.YUVASizeInfo.__init__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="skia.YUVASizeInfo.computeTotalBytes">
+<code class="sig-prename descclassname">YUVASizeInfo.</code><code class="sig-name descname">computeTotalBytes</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.YUVASizeInfo" title="skia.YUVASizeInfo">skia.YUVASizeInfo</a></span></em><span class="sig-paren">)</span> &#x2192; int<a class="headerlink" href="#skia.YUVASizeInfo.computeTotalBytes" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </div>
 <div class="section" id="attributes">
 <h2>Attributes<a class="headerlink" href="#attributes" title="Permalink to this headline">¶</a></h2>
 <dl class="py attribute">
-<dt id="skia.PictureRecorder.RecordFlags.kPlaybackDrawPicture_RecordFlag">
-<code class="sig-prename descclassname">RecordFlags.</code><code class="sig-name descname">kPlaybackDrawPicture_RecordFlag</code><em class="property"> = &lt;RecordFlags.kPlaybackDrawPicture_RecordFlag: 1&gt;</em><a class="headerlink" href="#skia.PictureRecorder.RecordFlags.kPlaybackDrawPicture_RecordFlag" title="Permalink to this definition">¶</a></dt>
+<dt id="skia.YUVASizeInfo.fOrigin">
+<code class="sig-prename descclassname">YUVASizeInfo.</code><code class="sig-name descname">fOrigin</code><a class="headerlink" href="#skia.YUVASizeInfo.fOrigin" title="Permalink to this definition">¶</a></dt>
+<dd><p>YUVA data often comes from formats like JPEG that support EXIF
+orientation. Code that operates on the raw YUV data often needs to
+know that orientation.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="skia.YUVASizeInfo.fSizes">
+<code class="sig-prename descclassname">YUVASizeInfo.</code><code class="sig-name descname">fSizes</code><a class="headerlink" href="#skia.YUVASizeInfo.fSizes" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
-<dt id="skia.PictureRecorder.RecordFlags.name">
-<code class="sig-prename descclassname">RecordFlags.</code><code class="sig-name descname">name</code><a class="headerlink" href="#skia.PictureRecorder.RecordFlags.name" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dt id="skia.YUVASizeInfo.fWidthBytes">
+<code class="sig-prename descclassname">YUVASizeInfo.</code><code class="sig-name descname">fWidthBytes</code><a class="headerlink" href="#skia.YUVASizeInfo.fWidthBytes" title="Permalink to this definition">¶</a></dt>
+<dd><p>While the widths of the Y, U, V and A planes are not restricted, the
+implementation often requires that the width of the memory allocated
+for each plane be a multiple of 8.</p>
+<p>This struct allows us to inform the client how many “widthBytes”
+that we need.  Note that we use the new idea of “widthBytes”
+because this idea is distinct from “rowBytes” (used elsewhere in
+Skia).  “rowBytes” allow the last row of the allocation to not
+include any extra padding, while, in this case, every single row of
+the allocation must be at least “widthBytes”.</p>
+</dd></dl>
 
 </div>
 </div>
@@ -413,10 +441,10 @@
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="skia.PixelGeometry.html" class="btn btn-neutral float-right" title="PixelGeometry" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="skia.YUVColorSpace.html" class="btn btn-neutral float-right" title="YUVColorSpace" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="skia.PictureRecorder.FinishFlags.html" class="btn btn-neutral float-left" title="PictureRecorder.FinishFlags" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="skia.YUVAPixmaps.html" class="btn btn-neutral float-left" title="YUVAPixmaps" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   

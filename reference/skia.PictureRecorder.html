@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>PictureRecorder &mdash; skia-python 86.1 documentation</title>
+  <title>PictureRecorder &mdash; skia-python 87.0 documentation</title>
   
 
   
@@ -61,7 +61,7 @@
             
             
               <div class="version">
-                86.1
+                87.0
               </div>
             
           
@@ -202,6 +202,7 @@
 <li class="toctree-l3"><a class="reference internal" href="skia.MatrixPathEffect.html">MatrixPathEffect</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.MemoryStream.html">MemoryStream</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.MergePathEffect.html">MergePathEffect</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.MipmapBuilder.html">MipmapBuilder</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.NullWStream.html">NullWStream</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.OffsetImageFilter.html">OffsetImageFilter</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.OpBuilder.html">OpBuilder</a></li>
@@ -212,7 +213,7 @@
 <li class="toctree-l3"><a class="reference internal" href="skia.Path.html">Path</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.Path1DPathEffect.html">Path1DPathEffect</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.Path2DPathEffect.html">Path2DPathEffect</a></li>
-<li class="toctree-l3"><a class="reference internal" href="skia.PathConvexityType.html">PathConvexityType</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.PathBuilder.html">PathBuilder</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.PathDirection.html">PathDirection</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.PathEffect.html">PathEffect</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.PathFillType.html">PathFillType</a></li>
@@ -223,9 +224,7 @@
 <li class="toctree-l3"><a class="reference internal" href="skia.Picture.html">Picture</a></li>
 <li class="toctree-l3 current"><a class="current reference internal" href="#">PictureRecorder</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="skia.PictureRecorder.FinishFlags.html">PictureRecorder.FinishFlags</a></li>
-<li class="toctree-l4"><a class="reference internal" href="skia.PictureRecorder.RecordFlags.html">PictureRecorder.RecordFlags</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#methods">Methods</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#attributes">Attributes</a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="skia.PixelGeometry.html">PixelGeometry</a></li>
@@ -269,6 +268,11 @@
 <li class="toctree-l3"><a class="reference internal" href="skia.VkImageLayout.html">VkImageLayout</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.WStream.html">WStream</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.XfermodeImageFilter.html">XfermodeImageFilter</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.YUVAIndex.html">YUVAIndex</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.YUVAInfo.html">YUVAInfo</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.YUVAPixmapInfo.html">YUVAPixmapInfo</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.YUVAPixmaps.html">YUVAPixmaps</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.YUVASizeInfo.html">YUVASizeInfo</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.YUVColorSpace.html">YUVColorSpace</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.html#functions">Functions</a></li>
 </ul>
@@ -359,9 +363,6 @@
 <tr class="row-odd"><td><p><a class="reference internal" href="skia.PictureRecorder.FinishFlags.html#skia.PictureRecorder.FinishFlags" title="skia.PictureRecorder.FinishFlags"><code class="xref py py-obj docutils literal notranslate"><span class="pre">FinishFlags</span></code></a></p></td>
 <td><p>Members:</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="skia.PictureRecorder.RecordFlags.html#skia.PictureRecorder.RecordFlags" title="skia.PictureRecorder.RecordFlags"><code class="xref py py-obj docutils literal notranslate"><span class="pre">RecordFlags</span></code></a></p></td>
-<td><p>Members:</p></td>
-</tr>
 </tbody>
 </table>
 <p class="rubric">Methods</p>
@@ -391,18 +392,6 @@
 </tr>
 </tbody>
 </table>
-<p class="rubric">Attributes</p>
-<table class="longtable docutils align-default">
-<colgroup>
-<col style="width: 10%" />
-<col style="width: 90%" />
-</colgroup>
-<tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="#skia.PictureRecorder.kPlaybackDrawPicture_RecordFlag" title="skia.PictureRecorder.kPlaybackDrawPicture_RecordFlag"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kPlaybackDrawPicture_RecordFlag</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-</tbody>
-</table>
 </dd></dl>
 
 <div class="section" id="methods">
@@ -417,7 +406,7 @@
 <code class="sig-prename descclassname">PictureRecorder.</code><code class="sig-name descname">beginRecording</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span><span class="n">args</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#skia.PictureRecorder.beginRecording" title="Permalink to this definition">¶</a></dt>
 <dd><p>Overloaded function.</p>
 <ol class="arabic">
-<li><p>beginRecording(self: skia.PictureRecorder, bounds: skia.Rect, recordFlags: int = 0) -&gt; SkCanvas</p>
+<li><p>beginRecording(self: skia.PictureRecorder, bounds: skia.Rect) -&gt; SkCanvas</p>
 <blockquote>
 <div><p>Returns the canvas that records the drawing commands.</p>
 <dl class="field-list simple">
@@ -426,22 +415,19 @@
 drawing the falls outside of this rect is undefined, and may be
 drawn or it may not.</p>
 </dd>
-<dt class="field-even">recordFlags</dt>
-<dd class="field-even"><p>optional flags that control recording.</p>
-</dd>
-<dt class="field-odd">return</dt>
-<dd class="field-odd"><p>the canvas.</p>
+<dt class="field-even">return</dt>
+<dd class="field-even"><p>the canvas.</p>
 </dd>
 </dl>
 </div></blockquote>
 </li>
-<li><p>beginRecording(self: skia.PictureRecorder, width: float, height: float, recordFlags: int = 0) -&gt; SkCanvas</p></li>
+<li><p>beginRecording(self: skia.PictureRecorder, width: float, height: float) -&gt; SkCanvas</p></li>
 </ol>
 </dd></dl>
 
 <dl class="py method">
 <dt id="skia.PictureRecorder.finishRecordingAsDrawable">
-<code class="sig-prename descclassname">PictureRecorder.</code><code class="sig-name descname">finishRecordingAsDrawable</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.PictureRecorder" title="skia.PictureRecorder">skia.PictureRecorder</a></span></em>, <em class="sig-param"><span class="n">endFlags</span><span class="p">:</span> <span class="n">int</span> <span class="o">=</span> <span class="default_value">0</span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="skia.Drawable.html#skia.Drawable" title="skia.Drawable">skia.Drawable</a><a class="headerlink" href="#skia.PictureRecorder.finishRecordingAsDrawable" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">PictureRecorder.</code><code class="sig-name descname">finishRecordingAsDrawable</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.PictureRecorder" title="skia.PictureRecorder">skia.PictureRecorder</a></span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="skia.Drawable.html#skia.Drawable" title="skia.Drawable">skia.Drawable</a><a class="headerlink" href="#skia.PictureRecorder.finishRecordingAsDrawable" title="Permalink to this definition">¶</a></dt>
 <dd><p>Signal that the caller is done recording.</p>
 <p>This invalidates the canvas returned by <a class="reference internal" href="#skia.PictureRecorder.beginRecording" title="skia.PictureRecorder.beginRecording"><code class="xref py py-meth docutils literal notranslate"><span class="pre">beginRecording()</span></code></a> or
 <a class="reference internal" href="#skia.PictureRecorder.getRecordingCanvas" title="skia.PictureRecorder.getRecordingCanvas"><code class="xref py py-meth docutils literal notranslate"><span class="pre">getRecordingCanvas()</span></code></a>. Ownership of the object is passed to the
@@ -456,7 +442,7 @@ drawable.newPictureSnapshot()).</p>
 
 <dl class="py method">
 <dt id="skia.PictureRecorder.finishRecordingAsPicture">
-<code class="sig-prename descclassname">PictureRecorder.</code><code class="sig-name descname">finishRecordingAsPicture</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.PictureRecorder" title="skia.PictureRecorder">skia.PictureRecorder</a></span></em>, <em class="sig-param"><span class="n">endFlags</span><span class="p">:</span> <span class="n">int</span> <span class="o">=</span> <span class="default_value">0</span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="skia.Picture.html#skia.Picture" title="skia.Picture">skia.Picture</a><a class="headerlink" href="#skia.PictureRecorder.finishRecordingAsPicture" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">PictureRecorder.</code><code class="sig-name descname">finishRecordingAsPicture</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.PictureRecorder" title="skia.PictureRecorder">skia.PictureRecorder</a></span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="skia.Picture.html#skia.Picture" title="skia.Picture">skia.Picture</a><a class="headerlink" href="#skia.PictureRecorder.finishRecordingAsPicture" title="Permalink to this definition">¶</a></dt>
 <dd><p>Signal that the caller is done recording.</p>
 <p>This invalidates the canvas returned by <a class="reference internal" href="#skia.PictureRecorder.beginRecording" title="skia.PictureRecorder.beginRecording"><code class="xref py py-meth docutils literal notranslate"><span class="pre">beginRecording()</span></code></a> or
 <a class="reference internal" href="#skia.PictureRecorder.getRecordingCanvas" title="skia.PictureRecorder.getRecordingCanvas"><code class="xref py py-meth docutils literal notranslate"><span class="pre">getRecordingCanvas()</span></code></a>. Ownership of the object is passed to the
@@ -469,7 +455,7 @@ but will not contain a live reference to the drawables themselves.</p>
 
 <dl class="py method">
 <dt id="skia.PictureRecorder.finishRecordingAsPictureWithCull">
-<code class="sig-prename descclassname">PictureRecorder.</code><code class="sig-name descname">finishRecordingAsPictureWithCull</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.PictureRecorder" title="skia.PictureRecorder">skia.PictureRecorder</a></span></em>, <em class="sig-param"><span class="n">cullRect</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.Rect.html#skia.Rect" title="skia.Rect">skia.Rect</a></span></em>, <em class="sig-param"><span class="n">endFlags</span><span class="p">:</span> <span class="n">int</span> <span class="o">=</span> <span class="default_value">0</span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="skia.Picture.html#skia.Picture" title="skia.Picture">skia.Picture</a><a class="headerlink" href="#skia.PictureRecorder.finishRecordingAsPictureWithCull" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">PictureRecorder.</code><code class="sig-name descname">finishRecordingAsPictureWithCull</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.PictureRecorder" title="skia.PictureRecorder">skia.PictureRecorder</a></span></em>, <em class="sig-param"><span class="n">cullRect</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.Rect.html#skia.Rect" title="skia.Rect">skia.Rect</a></span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="skia.Picture.html#skia.Picture" title="skia.Picture">skia.Picture</a><a class="headerlink" href="#skia.PictureRecorder.finishRecordingAsPictureWithCull" title="Permalink to this definition">¶</a></dt>
 <dd><p>Signal that the caller is done recording, and update the cull rect to
 use for bounding box hierarchy (BBH) generation.</p>
 <p>The behavior is the same as calling <a class="reference internal" href="#skia.PictureRecorder.finishRecordingAsPicture" title="skia.PictureRecorder.finishRecordingAsPicture"><code class="xref py py-meth docutils literal notranslate"><span class="pre">finishRecordingAsPicture()</span></code></a>,
@@ -493,14 +479,6 @@ overall bound for BBH generation and subsequent culling operations.</p>
 not active.</p>
 <p>This does not alter the refcnt on the canvas (if present).</p>
 </dd></dl>
-
-</div>
-<div class="section" id="attributes">
-<h2>Attributes<a class="headerlink" href="#attributes" title="Permalink to this headline">¶</a></h2>
-<dl class="py attribute">
-<dt id="skia.PictureRecorder.kPlaybackDrawPicture_RecordFlag">
-<code class="sig-prename descclassname">PictureRecorder.</code><code class="sig-name descname">kPlaybackDrawPicture_RecordFlag</code><em class="property"> = &lt;RecordFlags.kPlaybackDrawPicture_RecordFlag: 1&gt;</em><a class="headerlink" href="#skia.PictureRecorder.kPlaybackDrawPicture_RecordFlag" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
 
 </div>
 </div>

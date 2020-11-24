@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>ColorFilters &mdash; skia-python 86.1 documentation</title>
+  <title>ColorFilters &mdash; skia-python 87.0 documentation</title>
   
 
   
@@ -61,7 +61,7 @@
             
             
               <div class="version">
-                86.1
+                87.0
               </div>
             
           
@@ -205,6 +205,7 @@
 <li class="toctree-l3"><a class="reference internal" href="skia.MatrixPathEffect.html">MatrixPathEffect</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.MemoryStream.html">MemoryStream</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.MergePathEffect.html">MergePathEffect</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.MipmapBuilder.html">MipmapBuilder</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.NullWStream.html">NullWStream</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.OffsetImageFilter.html">OffsetImageFilter</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.OpBuilder.html">OpBuilder</a></li>
@@ -215,7 +216,7 @@
 <li class="toctree-l3"><a class="reference internal" href="skia.Path.html">Path</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.Path1DPathEffect.html">Path1DPathEffect</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.Path2DPathEffect.html">Path2DPathEffect</a></li>
-<li class="toctree-l3"><a class="reference internal" href="skia.PathConvexityType.html">PathConvexityType</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.PathBuilder.html">PathBuilder</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.PathDirection.html">PathDirection</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.PathEffect.html">PathEffect</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.PathFillType.html">PathFillType</a></li>
@@ -266,6 +267,11 @@
 <li class="toctree-l3"><a class="reference internal" href="skia.VkImageLayout.html">VkImageLayout</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.WStream.html">WStream</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.XfermodeImageFilter.html">XfermodeImageFilter</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.YUVAIndex.html">YUVAIndex</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.YUVAInfo.html">YUVAInfo</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.YUVAPixmapInfo.html">YUVAPixmapInfo</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.YUVAPixmaps.html">YUVAPixmaps</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.YUVASizeInfo.html">YUVASizeInfo</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.YUVColorSpace.html">YUVColorSpace</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.html#functions">Functions</a></li>
 </ul>
@@ -360,7 +366,7 @@
 <td><p></p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#skia.ColorFilters.HSLAMatrix" title="skia.ColorFilters.HSLAMatrix"><code class="xref py py-obj docutils literal notranslate"><span class="pre">HSLAMatrix</span></code></a></p></td>
-<td><p></p></td>
+<td><p>Overloaded function.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#skia.ColorFilters.Lerp" title="skia.ColorFilters.Lerp"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Lerp</span></code></a></p></td>
 <td><p></p></td>
@@ -395,8 +401,18 @@
 
 <dl class="py method">
 <dt id="skia.ColorFilters.HSLAMatrix">
-<em class="property">static </em><code class="sig-prename descclassname">ColorFilters.</code><code class="sig-name descname">HSLAMatrix</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">rowMajor</span><span class="p">:</span> <span class="n">List<span class="p">[</span>float<span class="p">]</span></span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="skia.ColorFilter.html#skia.ColorFilter" title="skia.ColorFilter">skia.ColorFilter</a><a class="headerlink" href="#skia.ColorFilters.HSLAMatrix" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<em class="property">static </em><code class="sig-prename descclassname">ColorFilters.</code><code class="sig-name descname">HSLAMatrix</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span><span class="n">args</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#skia.ColorFilters.HSLAMatrix" title="Permalink to this definition">¶</a></dt>
+<dd><p>Overloaded function.</p>
+<ol class="arabic">
+<li><p>HSLAMatrix(rowMajor: List[float]) -&gt; skia.ColorFilter</p></li>
+<li><p>HSLAMatrix(colorMatrix: skia.ColorMatrix) -&gt; skia.ColorFilter</p>
+<blockquote>
+<div><p>A version of Matrix which operates in HSLA space instead of RGBA.
+i.e. <code class="docutils literal notranslate"><span class="pre">HSLA-to-RGBA(Matrix(RGBA-to-HSLA(input)))</span></code>.</p>
+</div></blockquote>
+</li>
+</ol>
+</dd></dl>
 
 <dl class="py method">
 <dt id="skia.ColorFilters.Lerp">

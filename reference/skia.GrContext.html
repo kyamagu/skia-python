@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>GrContext &mdash; skia-python 86.1 documentation</title>
+  <title>GrContext &mdash; skia-python 87.0 documentation</title>
   
 
   
@@ -61,7 +61,7 @@
             
             
               <div class="version">
-                86.1
+                87.0
               </div>
             
           
@@ -205,6 +205,7 @@
 <li class="toctree-l3"><a class="reference internal" href="skia.MatrixPathEffect.html">MatrixPathEffect</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.MemoryStream.html">MemoryStream</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.MergePathEffect.html">MergePathEffect</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.MipmapBuilder.html">MipmapBuilder</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.NullWStream.html">NullWStream</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.OffsetImageFilter.html">OffsetImageFilter</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.OpBuilder.html">OpBuilder</a></li>
@@ -215,7 +216,7 @@
 <li class="toctree-l3"><a class="reference internal" href="skia.Path.html">Path</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.Path1DPathEffect.html">Path1DPathEffect</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.Path2DPathEffect.html">Path2DPathEffect</a></li>
-<li class="toctree-l3"><a class="reference internal" href="skia.PathConvexityType.html">PathConvexityType</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.PathBuilder.html">PathBuilder</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.PathDirection.html">PathDirection</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.PathEffect.html">PathEffect</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.PathFillType.html">PathFillType</a></li>
@@ -266,6 +267,11 @@
 <li class="toctree-l3"><a class="reference internal" href="skia.VkImageLayout.html">VkImageLayout</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.WStream.html">WStream</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.XfermodeImageFilter.html">XfermodeImageFilter</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.YUVAIndex.html">YUVAIndex</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.YUVAInfo.html">YUVAInfo</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.YUVAPixmapInfo.html">YUVAPixmapInfo</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.YUVAPixmaps.html">YUVAPixmaps</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.YUVASizeInfo.html">YUVASizeInfo</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.YUVColorSpace.html">YUVColorSpace</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.html#functions">Functions</a></li>
 </ul>
@@ -577,22 +583,12 @@ valid.</p>
 <ol class="arabic">
 <li><p>createBackendTexture(self: skia.GrContext, width: int, height: int, backendFormat: skia.GrBackendFormat, mipMapped: skia.GrMipmapped, renderable: skia.GrRenderable, isProtected: skia.GrProtected = &lt;GrProtected.kNo: 0&gt;) -&gt; skia.GrBackendTexture</p>
 <blockquote>
-<div><p>The explicitly allocated backend texture API allows clients to use Skia
-to create backend objects outside of Skia proper (i.e., Skia’s caching
-system will not know about them.)</p>
-<p>It is the client’s responsibility to delete all these objects (using
-<a class="reference internal" href="#skia.GrContext.deleteBackendTexture" title="skia.GrContext.deleteBackendTexture"><code class="xref py py-meth docutils literal notranslate"><span class="pre">deleteBackendTexture()</span></code></a>) before deleting the
-<a class="reference internal" href="#skia.GrContext" title="skia.GrContext"><code class="xref py py-class docutils literal notranslate"><span class="pre">GrContext</span></code></a> used to create them. If the backend is Vulkan, the
-textures must be deleted before abandoning the <a class="reference internal" href="#skia.GrContext" title="skia.GrContext"><code class="xref py py-class docutils literal notranslate"><span class="pre">GrContext</span></code></a> as
-well. Additionally, clients should only delete these objects on the
-thread for which that <a class="reference internal" href="#skia.GrContext" title="skia.GrContext"><code class="xref py py-class docutils literal notranslate"><span class="pre">GrContext</span></code></a> is active.</p>
-<p>The client is responsible for ensuring synchronization between different
-uses of the backend object (i.e., wrapping it in a surface, rendering to
-it, deleting the surface, rewrapping it in a image and drawing the image
-will require explicit sychronization on the client’s part). If possible,
-create an uninitialized backend texture. The client should ensure that
-the returned backend texture is valid. For the Vulkan backend the layout
-of the created VkImage will be: VK_IMAGE_LAYOUT_UNDEFINED.</p>
+<div><p>If possible, create an uninitialized backend texture.</p>
+<p>The client should ensure that the returned backend texture is valid.
+For the Vulkan backend the layout of the created VkImage will be:</p>
+<blockquote>
+<div><p>VK_IMAGE_LAYOUT_UNDEFINED.</p>
+</div></blockquote>
 </div></blockquote>
 </li>
 <li><p>createBackendTexture(self: skia.GrContext, width: int, height: int, colorType: SkColorType, mipMapped: skia.GrMipmapped, renderable: skia.GrRenderable, isProtected: skia.GrProtected = &lt;GrProtected.kNo: 0&gt;) -&gt; skia.GrBackendTexture</p>
@@ -604,21 +600,19 @@ provided <a class="reference internal" href="skia.ColorType.html#skia.ColorType"
 created VkImage will be: VK_IMAGE_LAYOUT_UNDEFINED.</p>
 </div></blockquote>
 </li>
-<li><p>createBackendTexture(self: skia.GrContext, characterization: SkSurfaceCharacterization) -&gt; skia.GrBackendTexture</p>
-<blockquote>
-<div><p>If possible, create an uninitialized backend texture that is compatible
-with the provided characterization.</p>
-<p>The client should ensure that the returned backend texture is valid. For
-the Vulkan backend the layout of the created VkImage will be:
-VK_IMAGE_LAYOUT_UNDEFINED.</p>
-</div></blockquote>
-</li>
 <li><p>createBackendTexture(self: skia.GrContext, width: int, height: int, backendFormat: skia.GrBackendFormat, color: skia.Color4f, mipMapped: skia.GrMipmapped, renderable: skia.GrRenderable, isProtected: skia.GrProtected = &lt;GrProtected.kNo: 0&gt;) -&gt; skia.GrBackendTexture</p>
 <blockquote>
 <div><p>If possible, create a backend texture initialized to a particular color.</p>
-<p>The client should ensure that the returned backend texture is valid.
-For the Vulkan backend the layout of the created VkImage will be:
-VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL</p>
+<p>The client should ensure that the returned backend texture is valid. The
+client can pass in a finishedProc to be notified when the data has been
+uploaded by the gpu and the texture can be deleted. The client is
+required to call GrContext::submit to send the upload work to the gpu.
+The finishedProc will always get called even if we failed to create the
+GrBackendTexture.
+For the Vulkan backend the layout of the created VkImage will be:</p>
+<blockquote>
+<div><p>VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL</p>
+</div></blockquote>
 </div></blockquote>
 </li>
 <li><p>createBackendTexture(self: skia.GrContext, width: int, height: int, colorType: SkColorType, color: skia.Color4f, mipMapped: skia.GrMipmapped, renderable: skia.GrRenderable, isProtected: skia.GrProtected = &lt;GrProtected.kNo: 0&gt;) -&gt; skia.GrBackendTexture</p>
@@ -626,21 +620,33 @@ VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL</p>
 <div><p>If possible, create a backend texture initialized to a particular color.</p>
 <p>The client should ensure that the returned backend texture is valid.
 If successful, the created backend texture will be compatible with the
-provided SkColorType. For the Vulkan backend the layout of the created
-VkImage will be: VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL</p>
+provided <a class="reference internal" href="skia.ColorType.html#skia.ColorType" title="skia.ColorType"><code class="xref py py-class docutils literal notranslate"><span class="pre">ColorType</span></code></a>. For the Vulkan backend the layout
+of the created VkImage will be: VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL</p>
 </div></blockquote>
 </li>
-<li><p>createBackendTexture(self: skia.GrContext, characterization: SkSurfaceCharacterization, color: skia.Color4f) -&gt; skia.GrBackendTexture</p>
+<li><p>createBackendTexture(self: skia.GrContext, srcData: List[SkPixmap], renderable: skia.GrRenderable, isProtected: skia.GrProtected = &lt;GrProtected.kNo: 0&gt;) -&gt; skia.GrBackendTexture</p>
 <blockquote>
-<div><p>If possible, create a backend texture initialized to a particular color
-that is compatible with the provided characterization.</p>
-<p>The client should ensure that the returned backend texture is valid.
-For the Vulkan backend the layout of the created VkImage will be:
-VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL if texturaeble
-VK_IMAGE_LAYOUT_UNDEFINED if not textureable</p>
+<div><p>If possible, create a backend texture initialized with the provided
+pixmap data. The client should ensure that the returned backend texture
+is valid. The client can pass in a finishedProc to be notified when the
+data has been uploaded by the gpu and the texture can be deleted. The
+client is required to call GrContext::submit to send the upload work to
+the gpu. The finishedProc will always get called even if we failed to
+create the GrBackendTexture. If successful, the created backend texture
+will be compatible with the provided pixmap(s). Compatible, in this
+case, means that the backend format will be the result of calling
+defaultBackendFormat on the base pixmap’s colortype. The src data can be
+deleted when this call returns.</p>
+<p>If numLevels is 1 a non-mipMapped texture will result. If a mipMapped
+texture is desired the data for all the mipmap levels must be
+provided. In the mipmapped case all the colortypes of the provided
+pixmaps must be the same. Additionally, all the miplevels must be
+sized correctly (please see SkMipmap::ComputeLevelSize and
+ComputeLevelCount). Note: the pixmap’s alphatypes and colorspaces are
+ignored. For the Vulkan backend the layout of the created VkImage will
+be: VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL</p>
 </div></blockquote>
 </li>
-<li><p>createBackendTexture(self: skia.GrContext, srcData: List[SkPixmap], renderable: skia.GrRenderable, isProtected: skia.GrProtected = &lt;GrProtected.kNo: 0&gt;) -&gt; skia.GrBackendTexture</p></li>
 <li><p>createBackendTexture(self: skia.GrContext, pixmap: SkPixmap, renderable: skia.GrRenderable, isProtected: skia.GrProtected = &lt;GrProtected.kNo: 0&gt;) -&gt; skia.GrBackendTexture</p></li>
 </ol>
 </dd></dl>
@@ -926,12 +932,12 @@ no-op.)</p>
 
 <dl class="py method">
 <dt id="skia.GrContext.setBackendRenderTargetState">
-<code class="sig-prename descclassname">GrContext.</code><code class="sig-name descname">setBackendRenderTargetState</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.GrContext" title="skia.GrContext">skia.GrContext</a></span></em>, <em class="sig-param"><span class="n">target</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.GrBackendRenderTarget.html#skia.GrBackendRenderTarget" title="skia.GrBackendRenderTarget">skia.GrBackendRenderTarget</a></span></em>, <em class="sig-param"><span class="n">mutableState</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.GrBackendSurfaceMutableState.html#skia.GrBackendSurfaceMutableState" title="skia.GrBackendSurfaceMutableState">skia.GrBackendSurfaceMutableState</a></span></em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#skia.GrContext.setBackendRenderTargetState" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">GrContext.</code><code class="sig-name descname">setBackendRenderTargetState</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.GrContext" title="skia.GrContext">skia.GrContext</a></span></em>, <em class="sig-param"><span class="n">target</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.GrBackendRenderTarget.html#skia.GrBackendRenderTarget" title="skia.GrBackendRenderTarget">skia.GrBackendRenderTarget</a></span></em>, <em class="sig-param"><span class="n">mutableState</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.GrBackendSurfaceMutableState.html#skia.GrBackendSurfaceMutableState" title="skia.GrBackendSurfaceMutableState">skia.GrBackendSurfaceMutableState</a></span></em>, <em class="sig-param"><span class="n">previousState</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.GrBackendSurfaceMutableState.html#skia.GrBackendSurfaceMutableState" title="skia.GrBackendSurfaceMutableState">skia.GrBackendSurfaceMutableState</a></span> <span class="o">=</span> <span class="default_value">None</span></em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#skia.GrContext.setBackendRenderTargetState" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
 <dt id="skia.GrContext.setBackendTextureState">
-<code class="sig-prename descclassname">GrContext.</code><code class="sig-name descname">setBackendTextureState</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.GrContext" title="skia.GrContext">skia.GrContext</a></span></em>, <em class="sig-param"><span class="n">texture</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.GrBackendTexture.html#skia.GrBackendTexture" title="skia.GrBackendTexture">skia.GrBackendTexture</a></span></em>, <em class="sig-param"><span class="n">mutableState</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.GrBackendSurfaceMutableState.html#skia.GrBackendSurfaceMutableState" title="skia.GrBackendSurfaceMutableState">skia.GrBackendSurfaceMutableState</a></span></em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#skia.GrContext.setBackendTextureState" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">GrContext.</code><code class="sig-name descname">setBackendTextureState</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.GrContext" title="skia.GrContext">skia.GrContext</a></span></em>, <em class="sig-param"><span class="n">texture</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.GrBackendTexture.html#skia.GrBackendTexture" title="skia.GrBackendTexture">skia.GrBackendTexture</a></span></em>, <em class="sig-param"><span class="n">mutableState</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.GrBackendSurfaceMutableState.html#skia.GrBackendSurfaceMutableState" title="skia.GrBackendSurfaceMutableState">skia.GrBackendSurfaceMutableState</a></span></em>, <em class="sig-param"><span class="n">previousState</span><span class="p">:</span> <span class="n"><a class="reference internal" href="skia.GrBackendSurfaceMutableState.html#skia.GrBackendSurfaceMutableState" title="skia.GrBackendSurfaceMutableState">skia.GrBackendSurfaceMutableState</a></span> <span class="o">=</span> <span class="default_value">None</span></em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#skia.GrContext.setBackendTextureState" title="Permalink to this definition">¶</a></dt>
 <dd><p>Updates the state of the GrBackendTexture/RenderTarget to have the
 passed in GrBackendSurfaceMutableState.</p>
 <p>All objects that wrap the backend surface (i.e. <a class="reference internal" href="skia.Surface.html#skia.Surface" title="skia.Surface"><code class="xref py py-class docutils literal notranslate"><span class="pre">Surface</span></code></a> and
@@ -943,6 +949,13 @@ this call is ordered linearly with all other calls that require
 <a class="reference internal" href="#skia.GrContext.updateBackendTexture" title="skia.GrContext.updateBackendTexture"><code class="xref py py-meth docutils literal notranslate"><span class="pre">updateBackendTexture()</span></code></a> and <a class="reference internal" href="#skia.GrContext.flush" title="skia.GrContext.flush"><code class="xref py py-meth docutils literal notranslate"><span class="pre">flush()</span></code></a>).</p>
 <p>See <a class="reference internal" href="skia.GrBackendSurfaceMutableState.html#skia.GrBackendSurfaceMutableState" title="skia.GrBackendSurfaceMutableState"><code class="xref py py-class docutils literal notranslate"><span class="pre">GrBackendSurfaceMutableState</span></code></a> to see what state can be
 set via this call.</p>
+<p>If the backend API is Vulkan, the caller can set the
+GrBackendSurfaceMutableState’s VkImageLayout to
+VK_IMAGE_LAYOUT_UNDEFINED or queueFamilyIndex to VK_QUEUE_FAMILY_IGNORED
+to tell Skia to not change those respective states.</p>
+<p>If previousState is not null and this returns true, then Skia will have
+filled in previousState to have the values of the state before this
+call.</p>
 </dd></dl>
 
 <dl class="py method">

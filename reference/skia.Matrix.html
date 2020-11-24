@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Matrix &mdash; skia-python 86.1 documentation</title>
+  <title>Matrix &mdash; skia-python 87.0 documentation</title>
   
 
   
@@ -61,7 +61,7 @@
             
             
               <div class="version">
-                86.1
+                87.0
               </div>
             
           
@@ -208,6 +208,7 @@
 <li class="toctree-l3"><a class="reference internal" href="skia.MatrixPathEffect.html">MatrixPathEffect</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.MemoryStream.html">MemoryStream</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.MergePathEffect.html">MergePathEffect</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.MipmapBuilder.html">MipmapBuilder</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.NullWStream.html">NullWStream</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.OffsetImageFilter.html">OffsetImageFilter</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.OpBuilder.html">OpBuilder</a></li>
@@ -218,7 +219,7 @@
 <li class="toctree-l3"><a class="reference internal" href="skia.Path.html">Path</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.Path1DPathEffect.html">Path1DPathEffect</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.Path2DPathEffect.html">Path2DPathEffect</a></li>
-<li class="toctree-l3"><a class="reference internal" href="skia.PathConvexityType.html">PathConvexityType</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.PathBuilder.html">PathBuilder</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.PathDirection.html">PathDirection</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.PathEffect.html">PathEffect</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.PathFillType.html">PathFillType</a></li>
@@ -269,6 +270,11 @@
 <li class="toctree-l3"><a class="reference internal" href="skia.VkImageLayout.html">VkImageLayout</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.WStream.html">WStream</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.XfermodeImageFilter.html">XfermodeImageFilter</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.YUVAIndex.html">YUVAIndex</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.YUVAInfo.html">YUVAInfo</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.YUVAPixmapInfo.html">YUVAPixmapInfo</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.YUVAPixmaps.html">YUVAPixmaps</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.YUVASizeInfo.html">YUVASizeInfo</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.YUVColorSpace.html">YUVColorSpace</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.html#functions">Functions</a></li>
 </ul>
@@ -399,7 +405,7 @@ getType() is called first.</p>
 <td><p>Returns <a class="reference internal" href="#skia.Matrix" title="skia.Matrix"><code class="xref py py-class docutils literal notranslate"><span class="pre">Matrix</span></code></a> set to scale and translate src <a class="reference internal" href="skia.Rect.html#skia.Rect" title="skia.Rect"><code class="xref py py-class docutils literal notranslate"><span class="pre">Rect</span></code></a> to dst <a class="reference internal" href="skia.Rect.html#skia.Rect" title="skia.Rect"><code class="xref py py-class docutils literal notranslate"><span class="pre">Rect</span></code></a>.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#skia.Matrix.RotateDeg" title="skia.Matrix.RotateDeg"><code class="xref py py-obj docutils literal notranslate"><span class="pre">RotateDeg</span></code></a></p></td>
-<td><p>Sets <a class="reference internal" href="#skia.Matrix" title="skia.Matrix"><code class="xref py py-class docutils literal notranslate"><span class="pre">Matrix</span></code></a> to rotate by <code class="docutils literal notranslate"><span class="pre">|deg|</span></code> about a pivot point at (0, 0).</p></td>
+<td><p>Overloaded function.</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#skia.Matrix.RotateRad" title="skia.Matrix.RotateRad"><code class="xref py py-obj docutils literal notranslate"><span class="pre">RotateRad</span></code></a></p></td>
 <td><p></p></td>
@@ -557,79 +563,82 @@ getType() is called first.</p>
 <tr class="row-even"><td><p><a class="reference internal" href="#skia.Matrix.preservesRightAngles" title="skia.Matrix.preservesRightAngles"><code class="xref py py-obj docutils literal notranslate"><span class="pre">preservesRightAngles</span></code></a></p></td>
 <td><p>Returns true if <a class="reference internal" href="#skia.Matrix" title="skia.Matrix"><code class="xref py py-class docutils literal notranslate"><span class="pre">Matrix</span></code></a> contains only translation, rotation, reflection, and scale.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Matrix.rectStaysRect" title="skia.Matrix.rectStaysRect"><code class="xref py py-obj docutils literal notranslate"><span class="pre">rectStaysRect</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Matrix.rc" title="skia.Matrix.rc"><code class="xref py py-obj docutils literal notranslate"><span class="pre">rc</span></code></a></p></td>
+<td><p>Returns one matrix value from a particular row/column.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.Matrix.rectStaysRect" title="skia.Matrix.rectStaysRect"><code class="xref py py-obj docutils literal notranslate"><span class="pre">rectStaysRect</span></code></a></p></td>
 <td><p>Returns true SkMatrix maps SkRect to another SkRect.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#skia.Matrix.reset" title="skia.Matrix.reset"><code class="xref py py-obj docutils literal notranslate"><span class="pre">reset</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Matrix.reset" title="skia.Matrix.reset"><code class="xref py py-obj docutils literal notranslate"><span class="pre">reset</span></code></a></p></td>
 <td><p>Sets <a class="reference internal" href="#skia.Matrix" title="skia.Matrix"><code class="xref py py-class docutils literal notranslate"><span class="pre">Matrix</span></code></a> to identity; which has no effect on mapped <a class="reference internal" href="skia.Point.html#skia.Point" title="skia.Point"><code class="xref py py-class docutils literal notranslate"><span class="pre">Point</span></code></a>.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Matrix.set" title="skia.Matrix.set"><code class="xref py py-obj docutils literal notranslate"><span class="pre">set</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.Matrix.set" title="skia.Matrix.set"><code class="xref py py-obj docutils literal notranslate"><span class="pre">set</span></code></a></p></td>
 <td><p>Returns writable <a class="reference internal" href="#skia.Matrix" title="skia.Matrix"><code class="xref py py-class docutils literal notranslate"><span class="pre">Matrix</span></code></a> value.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#skia.Matrix.set9" title="skia.Matrix.set9"><code class="xref py py-obj docutils literal notranslate"><span class="pre">set9</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Matrix.set9" title="skia.Matrix.set9"><code class="xref py py-obj docutils literal notranslate"><span class="pre">set9</span></code></a></p></td>
 <td><p>Sets <a class="reference internal" href="#skia.Matrix" title="skia.Matrix"><code class="xref py py-class docutils literal notranslate"><span class="pre">Matrix</span></code></a> to nine scalar values in values, in member value ascending order: kMScaleX, kMSkewX, kMTransX, kMSkewY, kMScaleY, kMTransY, kMPersp0, kMPersp1, kMPersp2.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Matrix.setAffine" title="skia.Matrix.setAffine"><code class="xref py py-obj docutils literal notranslate"><span class="pre">setAffine</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.Matrix.setAffine" title="skia.Matrix.setAffine"><code class="xref py py-obj docutils literal notranslate"><span class="pre">setAffine</span></code></a></p></td>
 <td><p>Sets <a class="reference internal" href="#skia.Matrix" title="skia.Matrix"><code class="xref py py-class docutils literal notranslate"><span class="pre">Matrix</span></code></a> to affine values, passed in column major order.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#skia.Matrix.setAll" title="skia.Matrix.setAll"><code class="xref py py-obj docutils literal notranslate"><span class="pre">setAll</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Matrix.setAll" title="skia.Matrix.setAll"><code class="xref py py-obj docutils literal notranslate"><span class="pre">setAll</span></code></a></p></td>
 <td><p>Sets all values from parameters.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Matrix.setConcat" title="skia.Matrix.setConcat"><code class="xref py py-obj docutils literal notranslate"><span class="pre">setConcat</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.Matrix.setConcat" title="skia.Matrix.setConcat"><code class="xref py py-obj docutils literal notranslate"><span class="pre">setConcat</span></code></a></p></td>
 <td><p>Sets <a class="reference internal" href="#skia.Matrix" title="skia.Matrix"><code class="xref py py-class docutils literal notranslate"><span class="pre">Matrix</span></code></a> to <a class="reference internal" href="#skia.Matrix" title="skia.Matrix"><code class="xref py py-class docutils literal notranslate"><span class="pre">Matrix</span></code></a> a multiplied by <a class="reference internal" href="#skia.Matrix" title="skia.Matrix"><code class="xref py py-class docutils literal notranslate"><span class="pre">Matrix</span></code></a> b.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#skia.Matrix.setIdentity" title="skia.Matrix.setIdentity"><code class="xref py py-obj docutils literal notranslate"><span class="pre">setIdentity</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Matrix.setIdentity" title="skia.Matrix.setIdentity"><code class="xref py py-obj docutils literal notranslate"><span class="pre">setIdentity</span></code></a></p></td>
 <td><p>Sets <a class="reference internal" href="#skia.Matrix" title="skia.Matrix"><code class="xref py py-class docutils literal notranslate"><span class="pre">Matrix</span></code></a> to identity; which has no effect on mapped <a class="reference internal" href="skia.Point.html#skia.Point" title="skia.Point"><code class="xref py py-class docutils literal notranslate"><span class="pre">Point</span></code></a>.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Matrix.setPerspX" title="skia.Matrix.setPerspX"><code class="xref py py-obj docutils literal notranslate"><span class="pre">setPerspX</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.Matrix.setPerspX" title="skia.Matrix.setPerspX"><code class="xref py py-obj docutils literal notranslate"><span class="pre">setPerspX</span></code></a></p></td>
 <td><p>Sets input x-axis perspective factor, which causes mapXY() to vary input x-axis values inversely proportional to input y-axis values.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#skia.Matrix.setPerspY" title="skia.Matrix.setPerspY"><code class="xref py py-obj docutils literal notranslate"><span class="pre">setPerspY</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Matrix.setPerspY" title="skia.Matrix.setPerspY"><code class="xref py py-obj docutils literal notranslate"><span class="pre">setPerspY</span></code></a></p></td>
 <td><p>Sets input y-axis perspective factor, which causes mapXY() to vary input y-axis values inversely proportional to input x-axis values.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Matrix.setPolyToPoly" title="skia.Matrix.setPolyToPoly"><code class="xref py py-obj docutils literal notranslate"><span class="pre">setPolyToPoly</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.Matrix.setPolyToPoly" title="skia.Matrix.setPolyToPoly"><code class="xref py py-obj docutils literal notranslate"><span class="pre">setPolyToPoly</span></code></a></p></td>
 <td><p>Sets <a class="reference internal" href="#skia.Matrix" title="skia.Matrix"><code class="xref py py-class docutils literal notranslate"><span class="pre">Matrix</span></code></a> to map src to dst.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#skia.Matrix.setRSXform" title="skia.Matrix.setRSXform"><code class="xref py py-obj docutils literal notranslate"><span class="pre">setRSXform</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Matrix.setRSXform" title="skia.Matrix.setRSXform"><code class="xref py py-obj docutils literal notranslate"><span class="pre">setRSXform</span></code></a></p></td>
 <td><p>Sets <a class="reference internal" href="#skia.Matrix" title="skia.Matrix"><code class="xref py py-class docutils literal notranslate"><span class="pre">Matrix</span></code></a> to rotate, scale, and translate using a compressed matrix form.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Matrix.setRectToRect" title="skia.Matrix.setRectToRect"><code class="xref py py-obj docutils literal notranslate"><span class="pre">setRectToRect</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.Matrix.setRectToRect" title="skia.Matrix.setRectToRect"><code class="xref py py-obj docutils literal notranslate"><span class="pre">setRectToRect</span></code></a></p></td>
 <td><p>Sets <a class="reference internal" href="#skia.Matrix" title="skia.Matrix"><code class="xref py py-class docutils literal notranslate"><span class="pre">Matrix</span></code></a> to scale and translate src <a class="reference internal" href="skia.Rect.html#skia.Rect" title="skia.Rect"><code class="xref py py-class docutils literal notranslate"><span class="pre">Rect</span></code></a> to dst <a class="reference internal" href="skia.Rect.html#skia.Rect" title="skia.Rect"><code class="xref py py-class docutils literal notranslate"><span class="pre">Rect</span></code></a>.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#skia.Matrix.setRotate" title="skia.Matrix.setRotate"><code class="xref py py-obj docutils literal notranslate"><span class="pre">setRotate</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Matrix.setRotate" title="skia.Matrix.setRotate"><code class="xref py py-obj docutils literal notranslate"><span class="pre">setRotate</span></code></a></p></td>
 <td><p>Overloaded function.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Matrix.setScale" title="skia.Matrix.setScale"><code class="xref py py-obj docutils literal notranslate"><span class="pre">setScale</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.Matrix.setScale" title="skia.Matrix.setScale"><code class="xref py py-obj docutils literal notranslate"><span class="pre">setScale</span></code></a></p></td>
 <td><p>Overloaded function.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#skia.Matrix.setScaleTranslate" title="skia.Matrix.setScaleTranslate"><code class="xref py py-obj docutils literal notranslate"><span class="pre">setScaleTranslate</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Matrix.setScaleTranslate" title="skia.Matrix.setScaleTranslate"><code class="xref py py-obj docutils literal notranslate"><span class="pre">setScaleTranslate</span></code></a></p></td>
 <td><p>Initializes <a class="reference internal" href="#skia.Matrix" title="skia.Matrix"><code class="xref py py-class docutils literal notranslate"><span class="pre">Matrix</span></code></a> with scale and translate elements.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Matrix.setScaleX" title="skia.Matrix.setScaleX"><code class="xref py py-obj docutils literal notranslate"><span class="pre">setScaleX</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.Matrix.setScaleX" title="skia.Matrix.setScaleX"><code class="xref py py-obj docutils literal notranslate"><span class="pre">setScaleX</span></code></a></p></td>
 <td><p>Sets horizontal scale factor.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#skia.Matrix.setScaleY" title="skia.Matrix.setScaleY"><code class="xref py py-obj docutils literal notranslate"><span class="pre">setScaleY</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Matrix.setScaleY" title="skia.Matrix.setScaleY"><code class="xref py py-obj docutils literal notranslate"><span class="pre">setScaleY</span></code></a></p></td>
 <td><p>Sets vertical scale factor.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Matrix.setSinCos" title="skia.Matrix.setSinCos"><code class="xref py py-obj docutils literal notranslate"><span class="pre">setSinCos</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.Matrix.setSinCos" title="skia.Matrix.setSinCos"><code class="xref py py-obj docutils literal notranslate"><span class="pre">setSinCos</span></code></a></p></td>
 <td><p>Overloaded function.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#skia.Matrix.setSkew" title="skia.Matrix.setSkew"><code class="xref py py-obj docutils literal notranslate"><span class="pre">setSkew</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Matrix.setSkew" title="skia.Matrix.setSkew"><code class="xref py py-obj docutils literal notranslate"><span class="pre">setSkew</span></code></a></p></td>
 <td><p>Overloaded function.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Matrix.setSkewX" title="skia.Matrix.setSkewX"><code class="xref py py-obj docutils literal notranslate"><span class="pre">setSkewX</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.Matrix.setSkewX" title="skia.Matrix.setSkewX"><code class="xref py py-obj docutils literal notranslate"><span class="pre">setSkewX</span></code></a></p></td>
 <td><p>Sets horizontal skew factor.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#skia.Matrix.setSkewY" title="skia.Matrix.setSkewY"><code class="xref py py-obj docutils literal notranslate"><span class="pre">setSkewY</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Matrix.setSkewY" title="skia.Matrix.setSkewY"><code class="xref py py-obj docutils literal notranslate"><span class="pre">setSkewY</span></code></a></p></td>
 <td><p>Sets vertical skew factor.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Matrix.setTranslate" title="skia.Matrix.setTranslate"><code class="xref py py-obj docutils literal notranslate"><span class="pre">setTranslate</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.Matrix.setTranslate" title="skia.Matrix.setTranslate"><code class="xref py py-obj docutils literal notranslate"><span class="pre">setTranslate</span></code></a></p></td>
 <td><p>Overloaded function.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#skia.Matrix.setTranslateX" title="skia.Matrix.setTranslateX"><code class="xref py py-obj docutils literal notranslate"><span class="pre">setTranslateX</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Matrix.setTranslateX" title="skia.Matrix.setTranslateX"><code class="xref py py-obj docutils literal notranslate"><span class="pre">setTranslateX</span></code></a></p></td>
 <td><p>Sets horizontal translation.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Matrix.setTranslateY" title="skia.Matrix.setTranslateY"><code class="xref py py-obj docutils literal notranslate"><span class="pre">setTranslateY</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.Matrix.setTranslateY" title="skia.Matrix.setTranslateY"><code class="xref py py-obj docutils literal notranslate"><span class="pre">setTranslateY</span></code></a></p></td>
 <td><p>Sets vertical translation.</p></td>
 </tr>
 </tbody>
@@ -847,17 +856,25 @@ ratio, and how to align src within dst. Returns the identity
 
 <dl class="py method">
 <dt id="skia.Matrix.RotateDeg">
-<em class="property">static </em><code class="sig-prename descclassname">Matrix.</code><code class="sig-name descname">RotateDeg</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">deg</span><span class="p">:</span> <span class="n">float</span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="#skia.Matrix" title="skia.Matrix">skia.Matrix</a><a class="headerlink" href="#skia.Matrix.RotateDeg" title="Permalink to this definition">¶</a></dt>
-<dd><p>Sets <a class="reference internal" href="#skia.Matrix" title="skia.Matrix"><code class="xref py py-class docutils literal notranslate"><span class="pre">Matrix</span></code></a> to rotate by <code class="docutils literal notranslate"><span class="pre">|deg|</span></code> about a pivot point at
+<em class="property">static </em><code class="sig-prename descclassname">Matrix.</code><code class="sig-name descname">RotateDeg</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span><span class="n">args</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#skia.Matrix.RotateDeg" title="Permalink to this definition">¶</a></dt>
+<dd><p>Overloaded function.</p>
+<ol class="arabic">
+<li><p>RotateDeg(deg: float) -&gt; skia.Matrix</p>
+<blockquote>
+<div><p>Sets <a class="reference internal" href="#skia.Matrix" title="skia.Matrix"><code class="xref py py-class docutils literal notranslate"><span class="pre">Matrix</span></code></a> to rotate by <code class="docutils literal notranslate"><span class="pre">|deg|</span></code> about a pivot point at
 (0, 0).</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>deg</strong> – rotation angle in degrees (positive rotates clockwise)</p>
+<dt class="field-odd">param deg</dt>
+<dd class="field-odd"><p>rotation angle in degrees (positive rotates clockwise)</p>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">return</dt>
 <dd class="field-even"><p><a class="reference internal" href="#skia.Matrix" title="skia.Matrix"><code class="xref py py-class docutils literal notranslate"><span class="pre">Matrix</span></code></a> with rotation</p>
 </dd>
 </dl>
+</div></blockquote>
+</li>
+<li><p>RotateDeg(deg: float, pt: skia.Point) -&gt; skia.Matrix</p></li>
+</ol>
 </dd></dl>
 
 <dl class="py method">
@@ -2220,6 +2237,24 @@ retain equal lengths.</p>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p>true if <a class="reference internal" href="#skia.Matrix" title="skia.Matrix"><code class="xref py py-class docutils literal notranslate"><span class="pre">Matrix</span></code></a> only rotates, scales, translates</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="skia.Matrix.rc">
+<code class="sig-prename descclassname">Matrix.</code><code class="sig-name descname">rc</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Matrix" title="skia.Matrix">skia.Matrix</a></span></em>, <em class="sig-param"><span class="n">r</span><span class="p">:</span> <span class="n">int</span></em>, <em class="sig-param"><span class="n">c</span><span class="p">:</span> <span class="n">int</span></em><span class="sig-paren">)</span> &#x2192; float<a class="headerlink" href="#skia.Matrix.rc" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns one matrix value from a particular row/column. Asserts if index
+is out of range and SK_DEBUG is defined.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>r</strong> – matrix row to fetch</p></li>
+<li><p><strong>c</strong> – matrix column to fetch</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>value at the given matrix position</p>
 </dd>
 </dl>
 </dd></dl>

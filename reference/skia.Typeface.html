@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Typeface &mdash; skia-python 86.1 documentation</title>
+  <title>Typeface &mdash; skia-python 87.0 documentation</title>
   
 
   
@@ -61,7 +61,7 @@
             
             
               <div class="version">
-                86.1
+                87.0
               </div>
             
           
@@ -202,6 +202,7 @@
 <li class="toctree-l3"><a class="reference internal" href="skia.MatrixPathEffect.html">MatrixPathEffect</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.MemoryStream.html">MemoryStream</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.MergePathEffect.html">MergePathEffect</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.MipmapBuilder.html">MipmapBuilder</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.NullWStream.html">NullWStream</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.OffsetImageFilter.html">OffsetImageFilter</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.OpBuilder.html">OpBuilder</a></li>
@@ -212,7 +213,7 @@
 <li class="toctree-l3"><a class="reference internal" href="skia.Path.html">Path</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.Path1DPathEffect.html">Path1DPathEffect</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.Path2DPathEffect.html">Path2DPathEffect</a></li>
-<li class="toctree-l3"><a class="reference internal" href="skia.PathConvexityType.html">PathConvexityType</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.PathBuilder.html">PathBuilder</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.PathDirection.html">PathDirection</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.PathEffect.html">PathEffect</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.PathFillType.html">PathFillType</a></li>
@@ -268,6 +269,11 @@
 <li class="toctree-l3"><a class="reference internal" href="skia.VkImageLayout.html">VkImageLayout</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.WStream.html">WStream</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.XfermodeImageFilter.html">XfermodeImageFilter</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.YUVAIndex.html">YUVAIndex</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.YUVAInfo.html">YUVAInfo</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.YUVAPixmapInfo.html">YUVAPixmapInfo</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.YUVAPixmaps.html">YUVAPixmaps</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.YUVASizeInfo.html">YUVASizeInfo</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.YUVColorSpace.html">YUVColorSpace</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.html#functions">Functions</a></li>
 </ul>
@@ -427,55 +433,58 @@ appears when drawn (and measured).</p>
 <tr class="row-even"><td><p><a class="reference internal" href="#skia.Typeface.getKerningPairAdjustments" title="skia.Typeface.getKerningPairAdjustments"><code class="xref py py-obj docutils literal notranslate"><span class="pre">getKerningPairAdjustments</span></code></a></p></td>
 <td><p>Given a run of glyphs, return the associated horizontal adjustments.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Typeface.getTableData" title="skia.Typeface.getTableData"><code class="xref py py-obj docutils literal notranslate"><span class="pre">getTableData</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Typeface.getPostScriptName" title="skia.Typeface.getPostScriptName"><code class="xref py py-obj docutils literal notranslate"><span class="pre">getPostScriptName</span></code></a></p></td>
+<td><p>Return the PostScript name for this typeface.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.Typeface.getTableData" title="skia.Typeface.getTableData"><code class="xref py py-obj docutils literal notranslate"><span class="pre">getTableData</span></code></a></p></td>
 <td><p>Returns the contents of a table.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#skia.Typeface.getTableSize" title="skia.Typeface.getTableSize"><code class="xref py py-obj docutils literal notranslate"><span class="pre">getTableSize</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Typeface.getTableSize" title="skia.Typeface.getTableSize"><code class="xref py py-obj docutils literal notranslate"><span class="pre">getTableSize</span></code></a></p></td>
 <td><p>Given a table tag, return the size of its contents, or 0 if not present.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Typeface.getTableTags" title="skia.Typeface.getTableTags"><code class="xref py py-obj docutils literal notranslate"><span class="pre">getTableTags</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.Typeface.getTableTags" title="skia.Typeface.getTableTags"><code class="xref py py-obj docutils literal notranslate"><span class="pre">getTableTags</span></code></a></p></td>
 <td><p>Returns the list of table tags in the font.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#skia.Typeface.getUnitsPerEm" title="skia.Typeface.getUnitsPerEm"><code class="xref py py-obj docutils literal notranslate"><span class="pre">getUnitsPerEm</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Typeface.getUnitsPerEm" title="skia.Typeface.getUnitsPerEm"><code class="xref py py-obj docutils literal notranslate"><span class="pre">getUnitsPerEm</span></code></a></p></td>
 <td><p>Return the units-per-em value for this typeface, or zero if there is an error.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Typeface.getVariationDesignParameters" title="skia.Typeface.getVariationDesignParameters"><code class="xref py py-obj docutils literal notranslate"><span class="pre">getVariationDesignParameters</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.Typeface.getVariationDesignParameters" title="skia.Typeface.getVariationDesignParameters"><code class="xref py py-obj docutils literal notranslate"><span class="pre">getVariationDesignParameters</span></code></a></p></td>
 <td><p>Returns the design variation parameters.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#skia.Typeface.getVariationDesignPosition" title="skia.Typeface.getVariationDesignPosition"><code class="xref py py-obj docutils literal notranslate"><span class="pre">getVariationDesignPosition</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Typeface.getVariationDesignPosition" title="skia.Typeface.getVariationDesignPosition"><code class="xref py py-obj docutils literal notranslate"><span class="pre">getVariationDesignPosition</span></code></a></p></td>
 <td><p>Returns the design variation coordinates.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Typeface.isBold" title="skia.Typeface.isBold"><code class="xref py py-obj docutils literal notranslate"><span class="pre">isBold</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.Typeface.isBold" title="skia.Typeface.isBold"><code class="xref py py-obj docutils literal notranslate"><span class="pre">isBold</span></code></a></p></td>
 <td><p>Returns true if style() has the kBold bit set.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#skia.Typeface.isFixedPitch" title="skia.Typeface.isFixedPitch"><code class="xref py py-obj docutils literal notranslate"><span class="pre">isFixedPitch</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Typeface.isFixedPitch" title="skia.Typeface.isFixedPitch"><code class="xref py py-obj docutils literal notranslate"><span class="pre">isFixedPitch</span></code></a></p></td>
 <td><p>Returns true if the typeface claims to be fixed-pitch.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Typeface.isItalic" title="skia.Typeface.isItalic"><code class="xref py py-obj docutils literal notranslate"><span class="pre">isItalic</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.Typeface.isItalic" title="skia.Typeface.isItalic"><code class="xref py py-obj docutils literal notranslate"><span class="pre">isItalic</span></code></a></p></td>
 <td><p>Returns true if style() has the kItalic bit set.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#skia.Typeface.makeClone" title="skia.Typeface.makeClone"><code class="xref py py-obj docutils literal notranslate"><span class="pre">makeClone</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Typeface.makeClone" title="skia.Typeface.makeClone"><code class="xref py py-obj docutils literal notranslate"><span class="pre">makeClone</span></code></a></p></td>
 <td><p>Return a new typeface based on this typeface but parameterized as specified in the <a class="reference internal" href="skia.FontArguments.html#skia.FontArguments" title="skia.FontArguments"><code class="xref py py-class docutils literal notranslate"><span class="pre">FontArguments</span></code></a>.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Typeface.ref" title="skia.Typeface.ref"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ref</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.Typeface.ref" title="skia.Typeface.ref"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ref</span></code></a></p></td>
 <td><p>Increment the reference count.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#skia.Typeface.serialize" title="skia.Typeface.serialize"><code class="xref py py-obj docutils literal notranslate"><span class="pre">serialize</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Typeface.serialize" title="skia.Typeface.serialize"><code class="xref py py-obj docutils literal notranslate"><span class="pre">serialize</span></code></a></p></td>
 <td><p>Returns a unique signature to a stream, sufficient to reconstruct a typeface referencing the same font when Deserialize is called.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Typeface.unicharToGlyph" title="skia.Typeface.unicharToGlyph"><code class="xref py py-obj docutils literal notranslate"><span class="pre">unicharToGlyph</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.Typeface.unicharToGlyph" title="skia.Typeface.unicharToGlyph"><code class="xref py py-obj docutils literal notranslate"><span class="pre">unicharToGlyph</span></code></a></p></td>
 <td><p>Return the glyphID that corresponds to the specified unicode code-point (in UTF32 encoding).</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#skia.Typeface.unicharsToGlyphs" title="skia.Typeface.unicharsToGlyphs"><code class="xref py py-obj docutils literal notranslate"><span class="pre">unicharsToGlyphs</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Typeface.unicharsToGlyphs" title="skia.Typeface.unicharsToGlyphs"><code class="xref py py-obj docutils literal notranslate"><span class="pre">unicharsToGlyphs</span></code></a></p></td>
 <td><p>Given an array of UTF32 character codes, return their corresponding glyph IDs.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Typeface.unique" title="skia.Typeface.unique"><code class="xref py py-obj docutils literal notranslate"><span class="pre">unique</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.Typeface.unique" title="skia.Typeface.unique"><code class="xref py py-obj docutils literal notranslate"><span class="pre">unique</span></code></a></p></td>
 <td><p>May return true if the caller is the only owner.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#skia.Typeface.uniqueID" title="skia.Typeface.uniqueID"><code class="xref py py-obj docutils literal notranslate"><span class="pre">uniqueID</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Typeface.uniqueID" title="skia.Typeface.uniqueID"><code class="xref py py-obj docutils literal notranslate"><span class="pre">uniqueID</span></code></a></p></td>
 <td><p>Return a 32bit value for this typeface, unique for the underlying font data.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Typeface.unref" title="skia.Typeface.unref"><code class="xref py py-obj docutils literal notranslate"><span class="pre">unref</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.Typeface.unref" title="skia.Typeface.unref"><code class="xref py py-obj docutils literal notranslate"><span class="pre">unref</span></code></a></p></td>
 <td><p>Decrement the reference count.</p></td>
 </tr>
 </tbody>
@@ -666,6 +675,14 @@ typeface’s units per em (see getUnitsPerEm).</p>
 <p>Some typefaces are known to never support kerning. If the typeface does
 not support kerning, then this method will return None (no kerning) for
 all possible glyph runs.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="skia.Typeface.getPostScriptName">
+<code class="sig-prename descclassname">Typeface.</code><code class="sig-name descname">getPostScriptName</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Typeface" title="skia.Typeface">skia.Typeface</a></span></em><span class="sig-paren">)</span> &#x2192; str<a class="headerlink" href="#skia.Typeface.getPostScriptName" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the PostScript name for this typeface.
+Value may change based on variation parameters.
+Returns false if no PostScript name is available.</p>
 </dd></dl>
 
 <dl class="py method">

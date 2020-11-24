@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Canvas &mdash; skia-python 86.1 documentation</title>
+  <title>Canvas &mdash; skia-python 87.0 documentation</title>
   
 
   
@@ -61,7 +61,7 @@
             
             
               <div class="version">
-                86.1
+                87.0
               </div>
             
           
@@ -212,6 +212,7 @@
 <li class="toctree-l3"><a class="reference internal" href="skia.MatrixPathEffect.html">MatrixPathEffect</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.MemoryStream.html">MemoryStream</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.MergePathEffect.html">MergePathEffect</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.MipmapBuilder.html">MipmapBuilder</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.NullWStream.html">NullWStream</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.OffsetImageFilter.html">OffsetImageFilter</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.OpBuilder.html">OpBuilder</a></li>
@@ -222,7 +223,7 @@
 <li class="toctree-l3"><a class="reference internal" href="skia.Path.html">Path</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.Path1DPathEffect.html">Path1DPathEffect</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.Path2DPathEffect.html">Path2DPathEffect</a></li>
-<li class="toctree-l3"><a class="reference internal" href="skia.PathConvexityType.html">PathConvexityType</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.PathBuilder.html">PathBuilder</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.PathDirection.html">PathDirection</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.PathEffect.html">PathEffect</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.PathFillType.html">PathFillType</a></li>
@@ -273,6 +274,11 @@
 <li class="toctree-l3"><a class="reference internal" href="skia.VkImageLayout.html">VkImageLayout</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.WStream.html">WStream</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.XfermodeImageFilter.html">XfermodeImageFilter</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.YUVAIndex.html">YUVAIndex</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.YUVAInfo.html">YUVAInfo</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.YUVAPixmapInfo.html">YUVAPixmapInfo</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.YUVAPixmaps.html">YUVAPixmaps</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.YUVASizeInfo.html">YUVASizeInfo</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.YUVColorSpace.html">YUVColorSpace</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.html#functions">Functions</a></li>
 </ul>
@@ -539,85 +545,82 @@ future.</p>
 <tr class="row-odd"><td><p><a class="reference internal" href="#skia.Canvas.getDeviceClipBounds" title="skia.Canvas.getDeviceClipBounds"><code class="xref py py-obj docutils literal notranslate"><span class="pre">getDeviceClipBounds</span></code></a></p></td>
 <td><p>Overloaded function.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#skia.Canvas.getGrContext" title="skia.Canvas.getGrContext"><code class="xref py py-obj docutils literal notranslate"><span class="pre">getGrContext</span></code></a></p></td>
-<td><p>Returns GPU context of the GPU surface associated with <a class="reference internal" href="#skia.Canvas" title="skia.Canvas"><code class="xref py py-class docutils literal notranslate"><span class="pre">Canvas</span></code></a>.</p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Canvas.getLocalClipBounds" title="skia.Canvas.getLocalClipBounds"><code class="xref py py-obj docutils literal notranslate"><span class="pre">getLocalClipBounds</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.Canvas.getLocalClipBounds" title="skia.Canvas.getLocalClipBounds"><code class="xref py py-obj docutils literal notranslate"><span class="pre">getLocalClipBounds</span></code></a></p></td>
 <td><p>Overloaded function.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#skia.Canvas.getLocalToDevice" title="skia.Canvas.getLocalToDevice"><code class="xref py py-obj docutils literal notranslate"><span class="pre">getLocalToDevice</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Canvas.getLocalToDevice" title="skia.Canvas.getLocalToDevice"><code class="xref py py-obj docutils literal notranslate"><span class="pre">getLocalToDevice</span></code></a></p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Canvas.getProps" title="skia.Canvas.getProps"><code class="xref py py-obj docutils literal notranslate"><span class="pre">getProps</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.Canvas.getProps" title="skia.Canvas.getProps"><code class="xref py py-obj docutils literal notranslate"><span class="pre">getProps</span></code></a></p></td>
 <td><p>Copies <a class="reference internal" href="skia.SurfaceProps.html#skia.SurfaceProps" title="skia.SurfaceProps"><code class="xref py py-class docutils literal notranslate"><span class="pre">SurfaceProps</span></code></a>, if <a class="reference internal" href="#skia.Canvas" title="skia.Canvas"><code class="xref py py-class docutils literal notranslate"><span class="pre">Canvas</span></code></a> is associated with raster surface or GPU surface, and returns true.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#skia.Canvas.getSaveCount" title="skia.Canvas.getSaveCount"><code class="xref py py-obj docutils literal notranslate"><span class="pre">getSaveCount</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Canvas.getSaveCount" title="skia.Canvas.getSaveCount"><code class="xref py py-obj docutils literal notranslate"><span class="pre">getSaveCount</span></code></a></p></td>
 <td><p>Returns the number of saved states, each containing: <a class="reference internal" href="skia.Matrix.html#skia.Matrix" title="skia.Matrix"><code class="xref py py-class docutils literal notranslate"><span class="pre">Matrix</span></code></a> and clip.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Canvas.getSurface" title="skia.Canvas.getSurface"><code class="xref py py-obj docutils literal notranslate"><span class="pre">getSurface</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.Canvas.getSurface" title="skia.Canvas.getSurface"><code class="xref py py-obj docutils literal notranslate"><span class="pre">getSurface</span></code></a></p></td>
 <td><p>Sometimes a canvas is owned by a surface.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#skia.Canvas.getTotalMatrix" title="skia.Canvas.getTotalMatrix"><code class="xref py py-obj docutils literal notranslate"><span class="pre">getTotalMatrix</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Canvas.getTotalMatrix" title="skia.Canvas.getTotalMatrix"><code class="xref py py-obj docutils literal notranslate"><span class="pre">getTotalMatrix</span></code></a></p></td>
 <td><p>Legacy version of <a class="reference internal" href="#skia.Canvas.getLocalToDevice" title="skia.Canvas.getLocalToDevice"><code class="xref py py-meth docutils literal notranslate"><span class="pre">getLocalToDevice()</span></code></a>, which strips away any Z information, and just returns a 3x3 version.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Canvas.imageInfo" title="skia.Canvas.imageInfo"><code class="xref py py-obj docutils literal notranslate"><span class="pre">imageInfo</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.Canvas.imageInfo" title="skia.Canvas.imageInfo"><code class="xref py py-obj docutils literal notranslate"><span class="pre">imageInfo</span></code></a></p></td>
 <td><p>Returns <a class="reference internal" href="skia.ImageInfo.html#skia.ImageInfo" title="skia.ImageInfo"><code class="xref py py-class docutils literal notranslate"><span class="pre">ImageInfo</span></code></a> for <a class="reference internal" href="#skia.Canvas" title="skia.Canvas"><code class="xref py py-class docutils literal notranslate"><span class="pre">Canvas</span></code></a>.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#skia.Canvas.isClipEmpty" title="skia.Canvas.isClipEmpty"><code class="xref py py-obj docutils literal notranslate"><span class="pre">isClipEmpty</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Canvas.isClipEmpty" title="skia.Canvas.isClipEmpty"><code class="xref py py-obj docutils literal notranslate"><span class="pre">isClipEmpty</span></code></a></p></td>
 <td><p>Returns true if clip is empty; that is, nothing will draw.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Canvas.isClipRect" title="skia.Canvas.isClipRect"><code class="xref py py-obj docutils literal notranslate"><span class="pre">isClipRect</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.Canvas.isClipRect" title="skia.Canvas.isClipRect"><code class="xref py py-obj docutils literal notranslate"><span class="pre">isClipRect</span></code></a></p></td>
 <td><p>Returns true if clip is <a class="reference internal" href="skia.Rect.html#skia.Rect" title="skia.Rect"><code class="xref py py-class docutils literal notranslate"><span class="pre">Rect</span></code></a> and not empty.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#skia.Canvas.makeSurface" title="skia.Canvas.makeSurface"><code class="xref py py-obj docutils literal notranslate"><span class="pre">makeSurface</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Canvas.makeSurface" title="skia.Canvas.makeSurface"><code class="xref py py-obj docutils literal notranslate"><span class="pre">makeSurface</span></code></a></p></td>
 <td><p>Creates <a class="reference internal" href="skia.Surface.html#skia.Surface" title="skia.Surface"><code class="xref py py-class docutils literal notranslate"><span class="pre">Surface</span></code></a> matching info and props, and associates it with <a class="reference internal" href="#skia.Canvas" title="skia.Canvas"><code class="xref py py-class docutils literal notranslate"><span class="pre">Canvas</span></code></a>.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Canvas.peekPixels" title="skia.Canvas.peekPixels"><code class="xref py py-obj docutils literal notranslate"><span class="pre">peekPixels</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.Canvas.peekPixels" title="skia.Canvas.peekPixels"><code class="xref py py-obj docutils literal notranslate"><span class="pre">peekPixels</span></code></a></p></td>
 <td><p>Returns true if <a class="reference internal" href="#skia.Canvas" title="skia.Canvas"><code class="xref py py-class docutils literal notranslate"><span class="pre">Canvas</span></code></a> has direct access to its pixels.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#skia.Canvas.quickReject" title="skia.Canvas.quickReject"><code class="xref py py-obj docutils literal notranslate"><span class="pre">quickReject</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Canvas.quickReject" title="skia.Canvas.quickReject"><code class="xref py py-obj docutils literal notranslate"><span class="pre">quickReject</span></code></a></p></td>
 <td><p>Overloaded function.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Canvas.readPixels" title="skia.Canvas.readPixels"><code class="xref py py-obj docutils literal notranslate"><span class="pre">readPixels</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.Canvas.readPixels" title="skia.Canvas.readPixels"><code class="xref py py-obj docutils literal notranslate"><span class="pre">readPixels</span></code></a></p></td>
 <td><p>Overloaded function.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#skia.Canvas.resetMatrix" title="skia.Canvas.resetMatrix"><code class="xref py py-obj docutils literal notranslate"><span class="pre">resetMatrix</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Canvas.resetMatrix" title="skia.Canvas.resetMatrix"><code class="xref py py-obj docutils literal notranslate"><span class="pre">resetMatrix</span></code></a></p></td>
 <td><p>Sets SkMatrix to the identity matrix.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Canvas.restore" title="skia.Canvas.restore"><code class="xref py py-obj docutils literal notranslate"><span class="pre">restore</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.Canvas.restore" title="skia.Canvas.restore"><code class="xref py py-obj docutils literal notranslate"><span class="pre">restore</span></code></a></p></td>
 <td><p>Removes changes to <a class="reference internal" href="skia.Matrix.html#skia.Matrix" title="skia.Matrix"><code class="xref py py-class docutils literal notranslate"><span class="pre">Matrix</span></code></a> and clip since <a class="reference internal" href="#skia.Canvas" title="skia.Canvas"><code class="xref py py-class docutils literal notranslate"><span class="pre">Canvas</span></code></a> state was last saved.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#skia.Canvas.restoreToCount" title="skia.Canvas.restoreToCount"><code class="xref py py-obj docutils literal notranslate"><span class="pre">restoreToCount</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Canvas.restoreToCount" title="skia.Canvas.restoreToCount"><code class="xref py py-obj docutils literal notranslate"><span class="pre">restoreToCount</span></code></a></p></td>
 <td><p>Restores state to <a class="reference internal" href="skia.Matrix.html#skia.Matrix" title="skia.Matrix"><code class="xref py py-class docutils literal notranslate"><span class="pre">Matrix</span></code></a> and clip values when <a class="reference internal" href="#skia.Canvas.save" title="skia.Canvas.save"><code class="xref py py-meth docutils literal notranslate"><span class="pre">save()</span></code></a>, <a class="reference internal" href="#skia.Canvas.saveLayer" title="skia.Canvas.saveLayer"><code class="xref py py-meth docutils literal notranslate"><span class="pre">saveLayer()</span></code></a>, <code class="xref py py-meth docutils literal notranslate"><span class="pre">saveLayerPreserveLCDTextRequests()</span></code>, or <a class="reference internal" href="#skia.Canvas.saveLayerAlpha" title="skia.Canvas.saveLayerAlpha"><code class="xref py py-meth docutils literal notranslate"><span class="pre">saveLayerAlpha()</span></code></a> returned saveCount.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Canvas.rotate" title="skia.Canvas.rotate"><code class="xref py py-obj docutils literal notranslate"><span class="pre">rotate</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.Canvas.rotate" title="skia.Canvas.rotate"><code class="xref py py-obj docutils literal notranslate"><span class="pre">rotate</span></code></a></p></td>
 <td><p>Overloaded function.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#skia.Canvas.save" title="skia.Canvas.save"><code class="xref py py-obj docutils literal notranslate"><span class="pre">save</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Canvas.save" title="skia.Canvas.save"><code class="xref py py-obj docutils literal notranslate"><span class="pre">save</span></code></a></p></td>
 <td><p>Saves <a class="reference internal" href="skia.Matrix.html#skia.Matrix" title="skia.Matrix"><code class="xref py py-class docutils literal notranslate"><span class="pre">Matrix</span></code></a> and clip.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Canvas.saveLayer" title="skia.Canvas.saveLayer"><code class="xref py py-obj docutils literal notranslate"><span class="pre">saveLayer</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.Canvas.saveLayer" title="skia.Canvas.saveLayer"><code class="xref py py-obj docutils literal notranslate"><span class="pre">saveLayer</span></code></a></p></td>
 <td><p>Overloaded function.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#skia.Canvas.saveLayerAlpha" title="skia.Canvas.saveLayerAlpha"><code class="xref py py-obj docutils literal notranslate"><span class="pre">saveLayerAlpha</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Canvas.saveLayerAlpha" title="skia.Canvas.saveLayerAlpha"><code class="xref py py-obj docutils literal notranslate"><span class="pre">saveLayerAlpha</span></code></a></p></td>
 <td><p>Saves <a class="reference internal" href="skia.Matrix.html#skia.Matrix" title="skia.Matrix"><code class="xref py py-class docutils literal notranslate"><span class="pre">Matrix</span></code></a> and clip, and allocates a <a class="reference internal" href="skia.Bitmap.html#skia.Bitmap" title="skia.Bitmap"><code class="xref py py-class docutils literal notranslate"><span class="pre">Bitmap</span></code></a> for subsequent drawing.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Canvas.scale" title="skia.Canvas.scale"><code class="xref py py-obj docutils literal notranslate"><span class="pre">scale</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.Canvas.scale" title="skia.Canvas.scale"><code class="xref py py-obj docutils literal notranslate"><span class="pre">scale</span></code></a></p></td>
 <td><p>Scales <a class="reference internal" href="skia.Matrix.html#skia.Matrix" title="skia.Matrix"><code class="xref py py-class docutils literal notranslate"><span class="pre">Matrix</span></code></a> by sx on the x-axis and sy on the y-axis.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#skia.Canvas.setMatrix" title="skia.Canvas.setMatrix"><code class="xref py py-obj docutils literal notranslate"><span class="pre">setMatrix</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Canvas.setMatrix" title="skia.Canvas.setMatrix"><code class="xref py py-obj docutils literal notranslate"><span class="pre">setMatrix</span></code></a></p></td>
 <td><p>Replaces <a class="reference internal" href="skia.Matrix.html#skia.Matrix" title="skia.Matrix"><code class="xref py py-class docutils literal notranslate"><span class="pre">Matrix</span></code></a> with matrix.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Canvas.skew" title="skia.Canvas.skew"><code class="xref py py-obj docutils literal notranslate"><span class="pre">skew</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.Canvas.skew" title="skia.Canvas.skew"><code class="xref py py-obj docutils literal notranslate"><span class="pre">skew</span></code></a></p></td>
 <td><p>Skews <a class="reference internal" href="skia.Matrix.html#skia.Matrix" title="skia.Matrix"><code class="xref py py-class docutils literal notranslate"><span class="pre">Matrix</span></code></a> by sx on the x-axis and sy on the y-axis.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#skia.Canvas.toarray" title="skia.Canvas.toarray"><code class="xref py py-obj docutils literal notranslate"><span class="pre">toarray</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Canvas.toarray" title="skia.Canvas.toarray"><code class="xref py py-obj docutils literal notranslate"><span class="pre">toarray</span></code></a></p></td>
 <td><p>Exports a <code class="docutils literal notranslate"><span class="pre">numpy.ndarray</span></code>.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Canvas.translate" title="skia.Canvas.translate"><code class="xref py py-obj docutils literal notranslate"><span class="pre">translate</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.Canvas.translate" title="skia.Canvas.translate"><code class="xref py py-obj docutils literal notranslate"><span class="pre">translate</span></code></a></p></td>
 <td><p>Translates <a class="reference internal" href="skia.Matrix.html#skia.Matrix" title="skia.Matrix"><code class="xref py py-class docutils literal notranslate"><span class="pre">Matrix</span></code></a> by dx along the x-axis and dy along the y-axis.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#skia.Canvas.writePixels" title="skia.Canvas.writePixels"><code class="xref py py-obj docutils literal notranslate"><span class="pre">writePixels</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Canvas.writePixels" title="skia.Canvas.writePixels"><code class="xref py py-obj docutils literal notranslate"><span class="pre">writePixels</span></code></a></p></td>
 <td><p>Overloaded function.</p></td>
 </tr>
 </tbody>
@@ -2264,21 +2267,6 @@ outset.</p>
 </div></blockquote>
 </li>
 </ol>
-</dd></dl>
-
-<dl class="py method">
-<dt id="skia.Canvas.getGrContext">
-<code class="sig-prename descclassname">Canvas.</code><code class="sig-name descname">getGrContext</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Canvas" title="skia.Canvas">skia.Canvas</a></span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="skia.GrContext.html#skia.GrContext" title="skia.GrContext">skia.GrContext</a><a class="headerlink" href="#skia.Canvas.getGrContext" title="Permalink to this definition">¶</a></dt>
-<dd><p>Returns GPU context of the GPU surface associated with
-<a class="reference internal" href="#skia.Canvas" title="skia.Canvas"><code class="xref py py-class docutils literal notranslate"><span class="pre">Canvas</span></code></a>.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p>GPU context, if available; nullptr otherwise</p>
-</dd>
-<dt class="field-even">Return type</dt>
-<dd class="field-even"><p><a class="reference internal" href="skia.GrContext.html#skia.GrContext" title="skia.GrContext">skia.GrContext</a> or None</p>
-</dd>
-</dl>
 </dd></dl>
 
 <dl class="py method">

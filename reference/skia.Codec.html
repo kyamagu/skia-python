@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Codec &mdash; skia-python 86.1 documentation</title>
+  <title>Codec &mdash; skia-python 87.0 documentation</title>
   
 
   
@@ -61,7 +61,7 @@
             
             
               <div class="version">
-                86.1
+                87.0
               </div>
             
           
@@ -213,6 +213,7 @@
 <li class="toctree-l3"><a class="reference internal" href="skia.MatrixPathEffect.html">MatrixPathEffect</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.MemoryStream.html">MemoryStream</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.MergePathEffect.html">MergePathEffect</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.MipmapBuilder.html">MipmapBuilder</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.NullWStream.html">NullWStream</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.OffsetImageFilter.html">OffsetImageFilter</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.OpBuilder.html">OpBuilder</a></li>
@@ -223,7 +224,7 @@
 <li class="toctree-l3"><a class="reference internal" href="skia.Path.html">Path</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.Path1DPathEffect.html">Path1DPathEffect</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.Path2DPathEffect.html">Path2DPathEffect</a></li>
-<li class="toctree-l3"><a class="reference internal" href="skia.PathConvexityType.html">PathConvexityType</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.PathBuilder.html">PathBuilder</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.PathDirection.html">PathDirection</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.PathEffect.html">PathEffect</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.PathFillType.html">PathFillType</a></li>
@@ -274,6 +275,11 @@
 <li class="toctree-l3"><a class="reference internal" href="skia.VkImageLayout.html">VkImageLayout</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.WStream.html">WStream</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.XfermodeImageFilter.html">XfermodeImageFilter</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.YUVAIndex.html">YUVAIndex</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.YUVAInfo.html">YUVAInfo</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.YUVAPixmapInfo.html">YUVAPixmapInfo</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.YUVAPixmaps.html">YUVAPixmaps</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.YUVASizeInfo.html">YUVASizeInfo</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.YUVColorSpace.html">YUVColorSpace</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.html#functions">Functions</a></li>
 </ul>
@@ -443,14 +449,20 @@
 <tr class="row-odd"><td><p><a class="reference internal" href="#skia.Codec.getValidSubset" title="skia.Codec.getValidSubset"><code class="xref py py-obj docutils literal notranslate"><span class="pre">getValidSubset</span></code></a></p></td>
 <td><p>Return (via <cite>desiredSubset</cite>) a subset which can decoded from this codec, or false if this codec cannot decode subsets or anything similar to <cite>desiredSubset</cite>.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#skia.Codec.incrementalDecode" title="skia.Codec.incrementalDecode"><code class="xref py py-obj docutils literal notranslate"><span class="pre">incrementalDecode</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.Codec.getYUVAPlanes" title="skia.Codec.getYUVAPlanes"><code class="xref py py-obj docutils literal notranslate"><span class="pre">getYUVAPlanes</span></code></a></p></td>
+<td><p>Returns kSuccess, or another value explaining the type of failure.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Codec.incrementalDecode" title="skia.Codec.incrementalDecode"><code class="xref py py-obj docutils literal notranslate"><span class="pre">incrementalDecode</span></code></a></p></td>
 <td><p>Start/continue the incremental decode.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Codec.nextScanline" title="skia.Codec.nextScanline"><code class="xref py py-obj docutils literal notranslate"><span class="pre">nextScanline</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.Codec.nextScanline" title="skia.Codec.nextScanline"><code class="xref py py-obj docutils literal notranslate"><span class="pre">nextScanline</span></code></a></p></td>
 <td><p>Returns the y-coordinate of the next row to be returned by the scanline decoder.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#skia.Codec.outputScanline" title="skia.Codec.outputScanline"><code class="xref py py-obj docutils literal notranslate"><span class="pre">outputScanline</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Codec.outputScanline" title="skia.Codec.outputScanline"><code class="xref py py-obj docutils literal notranslate"><span class="pre">outputScanline</span></code></a></p></td>
 <td><p>Returns the output y-coordinate of the row that corresponds to an input y-coordinate.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.Codec.queryYUVAInfo" title="skia.Codec.queryYUVAInfo"><code class="xref py py-obj docutils literal notranslate"><span class="pre">queryYUVAInfo</span></code></a></p></td>
+<td><p>If decoding to YUV is supported, this returns true.</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#skia.Codec.skipScanlines" title="skia.Codec.skipScanlines"><code class="xref py py-obj docutils literal notranslate"><span class="pre">skipScanlines</span></code></a></p></td>
 <td><p>Skip count scanlines.</p></td>
@@ -748,6 +760,20 @@ returned, potentially modified)</p>
 </dd></dl>
 
 <dl class="py method">
+<dt id="skia.Codec.getYUVAPlanes">
+<code class="sig-prename descclassname">Codec.</code><code class="sig-name descname">getYUVAPlanes</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Codec" title="skia.Codec">skia.Codec</a></span></em>, <em class="sig-param"><span class="n">yuvaPixmaps</span><span class="p">:</span> <span class="n">SkYUVAPixmaps</span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="skia.Codec.Result.html#skia.Codec.Result" title="skia.Codec.Result">skia.Codec.Result</a><a class="headerlink" href="#skia.Codec.getYUVAPlanes" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns kSuccess, or another value explaining the type of failure.
+This always attempts to perform a full decode. To get the planar
+configuration without decoding use queryYUVAInfo().</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>yuvaPixmaps</strong> – Contains preallocated pixmaps configured according
+to a successful call to <a class="reference internal" href="#skia.Codec.queryYUVAInfo" title="skia.Codec.queryYUVAInfo"><code class="xref py py-meth docutils literal notranslate"><span class="pre">queryYUVAInfo()</span></code></a>.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
 <dt id="skia.Codec.incrementalDecode">
 <code class="sig-prename descclassname">Codec.</code><code class="sig-name descname">incrementalDecode</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Codec" title="skia.Codec">skia.Codec</a></span></em>, <em class="sig-param"><span class="n">rowsDecoded</span><span class="p">:</span> <span class="n">int</span> <span class="o">=</span> <span class="default_value">None</span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="skia.Codec.Result.html#skia.Codec.Result" title="skia.Codec.Result">skia.Codec.Result</a><a class="headerlink" href="#skia.Codec.incrementalDecode" title="Permalink to this definition">¶</a></dt>
 <dd><p>Start/continue the incremental decode.</p>
@@ -795,6 +821,25 @@ y-coordinate.  The input y-coordinate represents where the scanline
 is located in the encoded data.</p>
 <p>This will equal inputScanline, except in the case of strangely
 encoded image types (bottom-up bmps, interlaced gifs).</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="skia.Codec.queryYUVAInfo">
+<code class="sig-prename descclassname">Codec.</code><code class="sig-name descname">queryYUVAInfo</code><span class="sig-paren">(</span><em class="sig-param">self: skia.Codec</em>, <em class="sig-param">supportedDataTypes: SkYUVAPixmapInfo::SupportedDataTypes</em><span class="sig-paren">)</span> &#x2192; object<a class="headerlink" href="#skia.Codec.queryYUVAInfo" title="Permalink to this definition">¶</a></dt>
+<dd><p>If decoding to YUV is supported, this returns true. Otherwise, this
+returns false;</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>supportedDataTypes</strong> – Indicates the data type/planar config
+combinations that are supported by the caller. If the generator
+supports decoding to YUV(A), but not as a type in
+supportedDataTypes, this method returns false.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Output that specifies the planar configuration, subsampling,
+orientation, chroma siting, plane color types, and row bytes.</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py method">

@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>RRect &mdash; skia-python 86.1 documentation</title>
+  <title>RRect &mdash; skia-python 87.0 documentation</title>
   
 
   
@@ -61,7 +61,7 @@
             
             
               <div class="version">
-                86.1
+                87.0
               </div>
             
           
@@ -202,6 +202,7 @@
 <li class="toctree-l3"><a class="reference internal" href="skia.MatrixPathEffect.html">MatrixPathEffect</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.MemoryStream.html">MemoryStream</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.MergePathEffect.html">MergePathEffect</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.MipmapBuilder.html">MipmapBuilder</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.NullWStream.html">NullWStream</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.OffsetImageFilter.html">OffsetImageFilter</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.OpBuilder.html">OpBuilder</a></li>
@@ -212,7 +213,7 @@
 <li class="toctree-l3"><a class="reference internal" href="skia.Path.html">Path</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.Path1DPathEffect.html">Path1DPathEffect</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.Path2DPathEffect.html">Path2DPathEffect</a></li>
-<li class="toctree-l3"><a class="reference internal" href="skia.PathConvexityType.html">PathConvexityType</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.PathBuilder.html">PathBuilder</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.PathDirection.html">PathDirection</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.PathEffect.html">PathEffect</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.PathFillType.html">PathFillType</a></li>
@@ -269,6 +270,11 @@
 <li class="toctree-l3"><a class="reference internal" href="skia.VkImageLayout.html">VkImageLayout</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.WStream.html">WStream</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.XfermodeImageFilter.html">XfermodeImageFilter</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.YUVAIndex.html">YUVAIndex</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.YUVAInfo.html">YUVAInfo</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.YUVAPixmapInfo.html">YUVAPixmapInfo</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.YUVAPixmaps.html">YUVAPixmaps</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.YUVASizeInfo.html">YUVASizeInfo</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.YUVColorSpace.html">YUVColorSpace</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.html#functions">Functions</a></li>
 </ul>
@@ -407,88 +413,91 @@ reduced to fit within bounds.</p>
 <tr class="row-even"><td><p><a class="reference internal" href="#skia.RRect.dumpHex" title="skia.RRect.dumpHex"><code class="xref py py-obj docutils literal notranslate"><span class="pre">dumpHex</span></code></a></p></td>
 <td><p>Writes text representation of <a class="reference internal" href="#skia.RRect" title="skia.RRect"><code class="xref py py-class docutils literal notranslate"><span class="pre">RRect</span></code></a> to standard output.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#skia.RRect.getBounds" title="skia.RRect.getBounds"><code class="xref py py-obj docutils literal notranslate"><span class="pre">getBounds</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.RRect.dumpToString" title="skia.RRect.dumpToString"><code class="xref py py-obj docutils literal notranslate"><span class="pre">dumpToString</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.RRect.getBounds" title="skia.RRect.getBounds"><code class="xref py py-obj docutils literal notranslate"><span class="pre">getBounds</span></code></a></p></td>
 <td><p>Returns bounds.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#skia.RRect.getSimpleRadii" title="skia.RRect.getSimpleRadii"><code class="xref py py-obj docutils literal notranslate"><span class="pre">getSimpleRadii</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.RRect.getSimpleRadii" title="skia.RRect.getSimpleRadii"><code class="xref py py-obj docutils literal notranslate"><span class="pre">getSimpleRadii</span></code></a></p></td>
 <td><p>Returns top-left corner radii.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#skia.RRect.getType" title="skia.RRect.getType"><code class="xref py py-obj docutils literal notranslate"><span class="pre">getType</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.RRect.getType" title="skia.RRect.getType"><code class="xref py py-obj docutils literal notranslate"><span class="pre">getType</span></code></a></p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#skia.RRect.height" title="skia.RRect.height"><code class="xref py py-obj docutils literal notranslate"><span class="pre">height</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.RRect.height" title="skia.RRect.height"><code class="xref py py-obj docutils literal notranslate"><span class="pre">height</span></code></a></p></td>
 <td><p>Returns span on the y-axis.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#skia.RRect.inset" title="skia.RRect.inset"><code class="xref py py-obj docutils literal notranslate"><span class="pre">inset</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.RRect.inset" title="skia.RRect.inset"><code class="xref py py-obj docutils literal notranslate"><span class="pre">inset</span></code></a></p></td>
 <td><p>Overloaded function.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#skia.RRect.isComplex" title="skia.RRect.isComplex"><code class="xref py py-obj docutils literal notranslate"><span class="pre">isComplex</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.RRect.isComplex" title="skia.RRect.isComplex"><code class="xref py py-obj docutils literal notranslate"><span class="pre">isComplex</span></code></a></p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#skia.RRect.isEmpty" title="skia.RRect.isEmpty"><code class="xref py py-obj docutils literal notranslate"><span class="pre">isEmpty</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.RRect.isEmpty" title="skia.RRect.isEmpty"><code class="xref py py-obj docutils literal notranslate"><span class="pre">isEmpty</span></code></a></p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#skia.RRect.isNinePatch" title="skia.RRect.isNinePatch"><code class="xref py py-obj docutils literal notranslate"><span class="pre">isNinePatch</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.RRect.isNinePatch" title="skia.RRect.isNinePatch"><code class="xref py py-obj docutils literal notranslate"><span class="pre">isNinePatch</span></code></a></p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#skia.RRect.isOval" title="skia.RRect.isOval"><code class="xref py py-obj docutils literal notranslate"><span class="pre">isOval</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.RRect.isOval" title="skia.RRect.isOval"><code class="xref py py-obj docutils literal notranslate"><span class="pre">isOval</span></code></a></p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#skia.RRect.isRect" title="skia.RRect.isRect"><code class="xref py py-obj docutils literal notranslate"><span class="pre">isRect</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.RRect.isRect" title="skia.RRect.isRect"><code class="xref py py-obj docutils literal notranslate"><span class="pre">isRect</span></code></a></p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#skia.RRect.isSimple" title="skia.RRect.isSimple"><code class="xref py py-obj docutils literal notranslate"><span class="pre">isSimple</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.RRect.isSimple" title="skia.RRect.isSimple"><code class="xref py py-obj docutils literal notranslate"><span class="pre">isSimple</span></code></a></p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#skia.RRect.isValid" title="skia.RRect.isValid"><code class="xref py py-obj docutils literal notranslate"><span class="pre">isValid</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.RRect.isValid" title="skia.RRect.isValid"><code class="xref py py-obj docutils literal notranslate"><span class="pre">isValid</span></code></a></p></td>
 <td><p>Returns true if bounds and radii values are finite and describe a <a class="reference internal" href="#skia.RRect" title="skia.RRect"><code class="xref py py-class docutils literal notranslate"><span class="pre">RRect</span></code></a> <a class="reference internal" href="skia.RRect.Type.html#skia.RRect.Type" title="skia.RRect.Type"><code class="xref py py-class docutils literal notranslate"><span class="pre">RRect.Type</span></code></a> that matches <a class="reference internal" href="#skia.RRect.getType" title="skia.RRect.getType"><code class="xref py py-meth docutils literal notranslate"><span class="pre">getType()</span></code></a>.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#skia.RRect.makeOffset" title="skia.RRect.makeOffset"><code class="xref py py-obj docutils literal notranslate"><span class="pre">makeOffset</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.RRect.makeOffset" title="skia.RRect.makeOffset"><code class="xref py py-obj docutils literal notranslate"><span class="pre">makeOffset</span></code></a></p></td>
 <td><p>Returns <a class="reference internal" href="#skia.RRect" title="skia.RRect"><code class="xref py py-class docutils literal notranslate"><span class="pre">RRect</span></code></a> translated by (dx, dy).</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#skia.RRect.offset" title="skia.RRect.offset"><code class="xref py py-obj docutils literal notranslate"><span class="pre">offset</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.RRect.offset" title="skia.RRect.offset"><code class="xref py py-obj docutils literal notranslate"><span class="pre">offset</span></code></a></p></td>
 <td><p>Translates <a class="reference internal" href="#skia.RRect" title="skia.RRect"><code class="xref py py-class docutils literal notranslate"><span class="pre">RRect</span></code></a> by (dx, dy).</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#skia.RRect.outset" title="skia.RRect.outset"><code class="xref py py-obj docutils literal notranslate"><span class="pre">outset</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.RRect.outset" title="skia.RRect.outset"><code class="xref py py-obj docutils literal notranslate"><span class="pre">outset</span></code></a></p></td>
 <td><p>Overloaded function.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#skia.RRect.radii" title="skia.RRect.radii"><code class="xref py py-obj docutils literal notranslate"><span class="pre">radii</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.RRect.radii" title="skia.RRect.radii"><code class="xref py py-obj docutils literal notranslate"><span class="pre">radii</span></code></a></p></td>
 <td><p>Returns scalar pair for radius of curve on x-axis and y-axis for one corner.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#skia.RRect.readFromMemory" title="skia.RRect.readFromMemory"><code class="xref py py-obj docutils literal notranslate"><span class="pre">readFromMemory</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.RRect.readFromMemory" title="skia.RRect.readFromMemory"><code class="xref py py-obj docutils literal notranslate"><span class="pre">readFromMemory</span></code></a></p></td>
 <td><p>Reads <a class="reference internal" href="#skia.RRect" title="skia.RRect"><code class="xref py py-class docutils literal notranslate"><span class="pre">RRect</span></code></a> from buffer, reading kSizeInMemory bytes.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#skia.RRect.rect" title="skia.RRect.rect"><code class="xref py py-obj docutils literal notranslate"><span class="pre">rect</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.RRect.rect" title="skia.RRect.rect"><code class="xref py py-obj docutils literal notranslate"><span class="pre">rect</span></code></a></p></td>
 <td><p>Returns bounds.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#skia.RRect.setEmpty" title="skia.RRect.setEmpty"><code class="xref py py-obj docutils literal notranslate"><span class="pre">setEmpty</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.RRect.setEmpty" title="skia.RRect.setEmpty"><code class="xref py py-obj docutils literal notranslate"><span class="pre">setEmpty</span></code></a></p></td>
 <td><p>Sets bounds to zero width and height at (0, 0), the origin.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#skia.RRect.setNinePatch" title="skia.RRect.setNinePatch"><code class="xref py py-obj docutils literal notranslate"><span class="pre">setNinePatch</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.RRect.setNinePatch" title="skia.RRect.setNinePatch"><code class="xref py py-obj docutils literal notranslate"><span class="pre">setNinePatch</span></code></a></p></td>
 <td><p>Sets bounds to rect.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#skia.RRect.setOval" title="skia.RRect.setOval"><code class="xref py py-obj docutils literal notranslate"><span class="pre">setOval</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.RRect.setOval" title="skia.RRect.setOval"><code class="xref py py-obj docutils literal notranslate"><span class="pre">setOval</span></code></a></p></td>
 <td><p>Sets bounds to oval, x-axis radii to half oval.width(), and all y-axis radii to half oval.height().</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#skia.RRect.setRect" title="skia.RRect.setRect"><code class="xref py py-obj docutils literal notranslate"><span class="pre">setRect</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.RRect.setRect" title="skia.RRect.setRect"><code class="xref py py-obj docutils literal notranslate"><span class="pre">setRect</span></code></a></p></td>
 <td><p>Sets bounds to sorted rect, and sets corner radii to zero.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#skia.RRect.setRectRadii" title="skia.RRect.setRectRadii"><code class="xref py py-obj docutils literal notranslate"><span class="pre">setRectRadii</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.RRect.setRectRadii" title="skia.RRect.setRectRadii"><code class="xref py py-obj docutils literal notranslate"><span class="pre">setRectRadii</span></code></a></p></td>
 <td><p>Sets bounds to rect.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#skia.RRect.setRectXY" title="skia.RRect.setRectXY"><code class="xref py py-obj docutils literal notranslate"><span class="pre">setRectXY</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.RRect.setRectXY" title="skia.RRect.setRectXY"><code class="xref py py-obj docutils literal notranslate"><span class="pre">setRectXY</span></code></a></p></td>
 <td><p>Sets to rounded rectangle with the same radii for all four corners.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#skia.RRect.transform" title="skia.RRect.transform"><code class="xref py py-obj docutils literal notranslate"><span class="pre">transform</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.RRect.transform" title="skia.RRect.transform"><code class="xref py py-obj docutils literal notranslate"><span class="pre">transform</span></code></a></p></td>
 <td><p>Transforms by <a class="reference internal" href="#skia.RRect" title="skia.RRect"><code class="xref py py-class docutils literal notranslate"><span class="pre">RRect</span></code></a> by matrix, storing result in dst.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#skia.RRect.type" title="skia.RRect.type"><code class="xref py py-obj docutils literal notranslate"><span class="pre">type</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.RRect.type" title="skia.RRect.type"><code class="xref py py-obj docutils literal notranslate"><span class="pre">type</span></code></a></p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#skia.RRect.width" title="skia.RRect.width"><code class="xref py py-obj docutils literal notranslate"><span class="pre">width</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.RRect.width" title="skia.RRect.width"><code class="xref py py-obj docutils literal notranslate"><span class="pre">width</span></code></a></p></td>
 <td><p>Returns span on the x-axis.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#skia.RRect.writeToMemory" title="skia.RRect.writeToMemory"><code class="xref py py-obj docutils literal notranslate"><span class="pre">writeToMemory</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.RRect.writeToMemory" title="skia.RRect.writeToMemory"><code class="xref py py-obj docutils literal notranslate"><span class="pre">writeToMemory</span></code></a></p></td>
 <td><p>Writes <a class="reference internal" href="#skia.RRect" title="skia.RRect"><code class="xref py py-class docutils literal notranslate"><span class="pre">RRect</span></code></a> to buffer.</p></td>
 </tr>
 </tbody>
@@ -699,6 +708,11 @@ point numbers.</p>
 values are written in hexadecimal to preserve their exact bit pattern.
 The output reconstructs the original <a class="reference internal" href="#skia.RRect" title="skia.RRect"><code class="xref py py-class docutils literal notranslate"><span class="pre">RRect</span></code></a>.</p>
 </dd></dl>
+
+<dl class="py method">
+<dt id="skia.RRect.dumpToString">
+<code class="sig-prename descclassname">RRect.</code><code class="sig-name descname">dumpToString</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.RRect" title="skia.RRect">skia.RRect</a></span></em>, <em class="sig-param"><span class="n">asHex</span><span class="p">:</span> <span class="n">bool</span></em><span class="sig-paren">)</span> &#x2192; SkString<a class="headerlink" href="#skia.RRect.dumpToString" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
 
 <dl class="py method">
 <dt id="skia.RRect.getBounds">

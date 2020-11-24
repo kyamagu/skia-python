@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Image &mdash; skia-python 86.1 documentation</title>
+  <title>Image &mdash; skia-python 87.0 documentation</title>
   
 
   
@@ -61,7 +61,7 @@
             
             
               <div class="version">
-                86.1
+                87.0
               </div>
             
           
@@ -210,6 +210,7 @@
 <li class="toctree-l3"><a class="reference internal" href="skia.MatrixPathEffect.html">MatrixPathEffect</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.MemoryStream.html">MemoryStream</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.MergePathEffect.html">MergePathEffect</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.MipmapBuilder.html">MipmapBuilder</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.NullWStream.html">NullWStream</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.OffsetImageFilter.html">OffsetImageFilter</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.OpBuilder.html">OpBuilder</a></li>
@@ -220,7 +221,7 @@
 <li class="toctree-l3"><a class="reference internal" href="skia.Path.html">Path</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.Path1DPathEffect.html">Path1DPathEffect</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.Path2DPathEffect.html">Path2DPathEffect</a></li>
-<li class="toctree-l3"><a class="reference internal" href="skia.PathConvexityType.html">PathConvexityType</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.PathBuilder.html">PathBuilder</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.PathDirection.html">PathDirection</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.PathEffect.html">PathEffect</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.PathFillType.html">PathFillType</a></li>
@@ -271,6 +272,11 @@
 <li class="toctree-l3"><a class="reference internal" href="skia.VkImageLayout.html">VkImageLayout</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.WStream.html">WStream</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.XfermodeImageFilter.html">XfermodeImageFilter</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.YUVAIndex.html">YUVAIndex</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.YUVAInfo.html">YUVAInfo</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.YUVAPixmapInfo.html">YUVAPixmapInfo</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.YUVAPixmaps.html">YUVAPixmaps</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.YUVASizeInfo.html">YUVASizeInfo</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.YUVColorSpace.html">YUVColorSpace</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.html#functions">Functions</a></li>
 </ul>
@@ -429,6 +435,12 @@ Supported encoding details vary with platform.</p>
 <tr class="row-even"><td><p><a class="reference internal" href="#skia.Image.MakeFromEncoded" title="skia.Image.MakeFromEncoded"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MakeFromEncoded</span></code></a></p></td>
 <td><p>Return an image backed by the encoded data, but attempt to defer decoding until the image is actually used/drawn.</p></td>
 </tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Image.MakeFromNV12TexturesCopy" title="skia.Image.MakeFromNV12TexturesCopy"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MakeFromNV12TexturesCopy</span></code></a></p></td>
+<td><p>Creates <a class="reference internal" href="#skia.Image" title="skia.Image"><code class="xref py py-class docutils literal notranslate"><span class="pre">Image</span></code></a> from copy of nv12Textures, an array of textures on GPU.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.Image.MakeFromNV12TexturesCopyWithExternalBackend" title="skia.Image.MakeFromNV12TexturesCopyWithExternalBackend"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MakeFromNV12TexturesCopyWithExternalBackend</span></code></a></p></td>
+<td><p>Creates <a class="reference internal" href="#skia.Image" title="skia.Image"><code class="xref py py-class docutils literal notranslate"><span class="pre">Image</span></code></a> from copy of nv12Textures, an array of textures on GPU.</p></td>
+</tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#skia.Image.MakeFromPicture" title="skia.Image.MakeFromPicture"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MakeFromPicture</span></code></a></p></td>
 <td><p>Creates <a class="reference internal" href="#skia.Image" title="skia.Image"><code class="xref py py-class docutils literal notranslate"><span class="pre">Image</span></code></a> from picture.</p></td>
 </tr>
@@ -437,6 +449,18 @@ Supported encoding details vary with platform.</p>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#skia.Image.MakeFromTexture" title="skia.Image.MakeFromTexture"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MakeFromTexture</span></code></a></p></td>
 <td><p>Creates <a class="reference internal" href="#skia.Image" title="skia.Image"><code class="xref py py-class docutils literal notranslate"><span class="pre">Image</span></code></a> from GPU texture associated with context.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.Image.MakeFromYUVAPixmaps" title="skia.Image.MakeFromYUVAPixmaps"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MakeFromYUVAPixmaps</span></code></a></p></td>
+<td><p>Overloaded function.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Image.MakeFromYUVATextures" title="skia.Image.MakeFromYUVATextures"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MakeFromYUVATextures</span></code></a></p></td>
+<td><p>Creates an <a class="reference internal" href="#skia.Image" title="skia.Image"><code class="xref py py-class docutils literal notranslate"><span class="pre">Image</span></code></a> by flattening the specified YUVA planes into an image, to be rendered via multitexturing.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.Image.MakeFromYUVATexturesCopy" title="skia.Image.MakeFromYUVATexturesCopy"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MakeFromYUVATexturesCopy</span></code></a></p></td>
+<td><p>Creates an <a class="reference internal" href="#skia.Image" title="skia.Image"><code class="xref py py-class docutils literal notranslate"><span class="pre">Image</span></code></a> by flattening the specified YUVA planes into a single, interleaved RGBA image.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Image.MakeFromYUVATexturesCopyWithExternalBackend" title="skia.Image.MakeFromYUVATexturesCopyWithExternalBackend"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MakeFromYUVATexturesCopyWithExternalBackend</span></code></a></p></td>
+<td><p>Creates an <a class="reference internal" href="#skia.Image" title="skia.Image"><code class="xref py py-class docutils literal notranslate"><span class="pre">Image</span></code></a> by flattening the specified YUVA planes into a single, interleaved RGBA image.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#skia.Image.MakeRasterCopy" title="skia.Image.MakeRasterCopy"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MakeRasterCopy</span></code></a></p></td>
 <td><p>Creates <a class="reference internal" href="#skia.Image" title="skia.Image"><code class="xref py py-class docutils literal notranslate"><span class="pre">Image</span></code></a> from <a class="reference internal" href="skia.Pixmap.html#skia.Pixmap" title="skia.Pixmap"><code class="xref py py-class docutils literal notranslate"><span class="pre">Pixmap</span></code></a> and copy of pixels.</p></td>
@@ -590,6 +614,9 @@ Supported encoding details vary with platform.</p>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#skia.Image.width" title="skia.Image.width"><code class="xref py py-obj docutils literal notranslate"><span class="pre">width</span></code></a></p></td>
 <td><p>Returns pixel count in each row.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Image.withDefaultMipmaps" title="skia.Image.withDefaultMipmaps"><code class="xref py py-obj docutils literal notranslate"><span class="pre">withDefaultMipmaps</span></code></a></p></td>
+<td><p>Returns an image with the same “base” pixels as the this image, but with mipmap levels automatically generated and attached.</p></td>
 </tr>
 </tbody>
 </table>
@@ -796,6 +823,56 @@ re-decode.</p>
 </dd></dl>
 
 <dl class="py method">
+<dt id="skia.Image.MakeFromNV12TexturesCopy">
+<em class="property">static </em><code class="sig-prename descclassname">Image.</code><code class="sig-name descname">MakeFromNV12TexturesCopy</code><span class="sig-paren">(</span><em class="sig-param">context: skia.GrContext</em>, <em class="sig-param">yuvColorSpace: skia.YUVColorSpace</em>, <em class="sig-param">nv12Textures: std::__1::vector&lt;GrBackendTexture</em>, <em class="sig-param">std::__1::allocator&lt;GrBackendTexture&gt; &gt;</em>, <em class="sig-param">imageOrigin: skia.GrSurfaceOrigin</em>, <em class="sig-param">imageColorSpace: skia.ColorSpace = None</em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="#skia.Image" title="skia.Image">skia.Image</a><a class="headerlink" href="#skia.Image.MakeFromNV12TexturesCopy" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates <a class="reference internal" href="#skia.Image" title="skia.Image"><code class="xref py py-class docutils literal notranslate"><span class="pre">Image</span></code></a> from copy of nv12Textures, an array of
+textures on GPU. nv12Textures[0] contains pixels for YUV component y
+plane. nv12Textures[1] contains pixels for YUV component u plane,
+followed by pixels for YUV component v plane.
+Returned <a class="reference internal" href="#skia.Image" title="skia.Image"><code class="xref py py-class docutils literal notranslate"><span class="pre">Image</span></code></a> has the dimensions nv12Textures[2].
+yuvColorSpace describes how YUV colors convert to RGB colors.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>context</strong> – GPU context</p></li>
+<li><p><strong>yuvColorSpace</strong> – How the YUV values are converted to RGB</p></li>
+<li><p><strong>nv12Textures</strong> – array of YUV textures on GPU</p></li>
+<li><p><strong>imageColorSpace</strong> – range of colors; may be nullptr</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>created <a class="reference internal" href="#skia.Image" title="skia.Image"><code class="xref py py-class docutils literal notranslate"><span class="pre">Image</span></code></a>, or nullptr</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="skia.Image.MakeFromNV12TexturesCopyWithExternalBackend">
+<em class="property">static </em><code class="sig-prename descclassname">Image.</code><code class="sig-name descname">MakeFromNV12TexturesCopyWithExternalBackend</code><span class="sig-paren">(</span><em class="sig-param">context: skia.GrContext</em>, <em class="sig-param">yuvColorSpace: skia.YUVColorSpace</em>, <em class="sig-param">nv12Textures: std::__1::vector&lt;GrBackendTexture</em>, <em class="sig-param">std::__1::allocator&lt;GrBackendTexture&gt; &gt;</em>, <em class="sig-param">imageOrigin: skia.GrSurfaceOrigin</em>, <em class="sig-param">backendTexture: skia.GrBackendTexture</em>, <em class="sig-param">imageColorSpace: skia.ColorSpace = None</em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="#skia.Image" title="skia.Image">skia.Image</a><a class="headerlink" href="#skia.Image.MakeFromNV12TexturesCopyWithExternalBackend" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates <a class="reference internal" href="#skia.Image" title="skia.Image"><code class="xref py py-class docutils literal notranslate"><span class="pre">Image</span></code></a> from copy of nv12Textures, an array of
+textures on GPU. nv12Textures[0] contains pixels for YUV component y
+plane. nv12Textures[1] contains pixels for YUV component u plane,
+followed by pixels for YUV component v plane.
+Returned <a class="reference internal" href="#skia.Image" title="skia.Image"><code class="xref py py-class docutils literal notranslate"><span class="pre">Image</span></code></a> has the dimensions nv12Textures[2] and stores
+pixels in backendTexture. yuvColorSpace describes how YUV colors convert
+to RGB colors.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>context</strong> – GPU context</p></li>
+<li><p><strong>yuvColorSpace</strong> – How the YUV values are converted to RGB</p></li>
+<li><p><strong>nv12Textures</strong> – array of YUV textures on GPU</p></li>
+<li><p><strong>backendTexture</strong> – the resource that stores the final pixels</p></li>
+<li><p><strong>imageColorSpace</strong> – range of colors; may be nullptr</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>created <a class="reference internal" href="#skia.Image" title="skia.Image"><code class="xref py py-class docutils literal notranslate"><span class="pre">Image</span></code></a>, or nullptr</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
 <dt id="skia.Image.MakeFromPicture">
 <em class="property">static </em><code class="sig-prename descclassname">Image.</code><code class="sig-name descname">MakeFromPicture</code><span class="sig-paren">(</span><em class="sig-param">picture: SkPicture</em>, <em class="sig-param">dimensions: skia.ISize</em>, <em class="sig-param">matrix: skia.Matrix = None</em>, <em class="sig-param">paint: SkPaint = None</em>, <em class="sig-param">bitDepth: skia.Image.BitDepth = &lt;BitDepth.kU8: 0&gt;</em>, <em class="sig-param">colorSpace: skia.ColorSpace = None</em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="#skia.Image" title="skia.Image">skia.Image</a><a class="headerlink" href="#skia.Image.MakeFromPicture" title="Permalink to this definition">¶</a></dt>
 <dd><p>Creates <a class="reference internal" href="#skia.Image" title="skia.Image"><code class="xref py py-class docutils literal notranslate"><span class="pre">Image</span></code></a> from picture.</p>
@@ -860,6 +937,193 @@ and supported. Recognized formats vary by GPU back-end.</p>
 <li><p><strong>context</strong> (<a class="reference internal" href="skia.GrRecordingContext.html#skia.GrRecordingContext" title="skia.GrRecordingContext"><em>skia.GrRecordingContext</em></a>) – GPU context</p></li>
 <li><p><strong>backendTexture</strong> (<a class="reference internal" href="skia.GrBackendTexture.html#skia.GrBackendTexture" title="skia.GrBackendTexture"><em>skia.GrBackendTexture</em></a>) – texture residing on GPU</p></li>
 <li><p><strong>colorSpace</strong> (<a class="reference internal" href="skia.ColorSpace.html#skia.ColorSpace" title="skia.ColorSpace"><em>skia.ColorSpace</em></a>) – range of colors; may be nullptr</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>created <a class="reference internal" href="#skia.Image" title="skia.Image"><code class="xref py py-class docutils literal notranslate"><span class="pre">Image</span></code></a>, or nullptr</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="skia.Image.MakeFromYUVAPixmaps">
+<em class="property">static </em><code class="sig-prename descclassname">Image.</code><code class="sig-name descname">MakeFromYUVAPixmaps</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span><span class="n">args</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#skia.Image.MakeFromYUVAPixmaps" title="Permalink to this definition">¶</a></dt>
+<dd><p>Overloaded function.</p>
+<ol class="arabic">
+<li><p>MakeFromYUVAPixmaps(context: skia.GrRecordingContext, yuvaPixmaps: skia.YUVColorSpace, yuvaTextures: std::__1::vector&lt;SkPixmap, std::__1::allocator&lt;SkPixmap&gt; &gt;, yuvaIndices: std::__1::vector&lt;SkYUVAIndex, std::__1::allocator&lt;SkYUVAIndex&gt; &gt;, imageSize: skia.ISize, imageOrigin: skia.GrSurfaceOrigin, buildMips: bool, limitToMaxTextureSize: bool = False, imageColorSpace: skia.ColorSpace = None) -&gt; skia.Image</p>
+<blockquote>
+<div><p>Creates <a class="reference internal" href="#skia.Image" title="skia.Image"><code class="xref py py-class docutils literal notranslate"><span class="pre">Image</span></code></a> from pixmap array representing YUVA data.
+<a class="reference internal" href="#skia.Image" title="skia.Image"><code class="xref py py-class docutils literal notranslate"><span class="pre">Image</span></code></a> is uploaded to GPU back-end using context.</p>
+<p>Each GrBackendTexture created from yuvaPixmaps array is uploaded to
+match <a class="reference internal" href="skia.Surface.html#skia.Surface" title="skia.Surface"><code class="xref py py-class docutils literal notranslate"><span class="pre">Surface</span></code></a> using <a class="reference internal" href="skia.ColorSpace.html#skia.ColorSpace" title="skia.ColorSpace"><code class="xref py py-class docutils literal notranslate"><span class="pre">ColorSpace</span></code></a> of
+<a class="reference internal" href="skia.Pixmap.html#skia.Pixmap" title="skia.Pixmap"><code class="xref py py-class docutils literal notranslate"><span class="pre">Pixmap</span></code></a>. <a class="reference internal" href="skia.ColorSpace.html#skia.ColorSpace" title="skia.ColorSpace"><code class="xref py py-class docutils literal notranslate"><span class="pre">ColorSpace</span></code></a> of <a class="reference internal" href="#skia.Image" title="skia.Image"><code class="xref py py-class docutils literal notranslate"><span class="pre">Image</span></code></a> is
+determined by imageColorSpace.</p>
+<p><a class="reference internal" href="#skia.Image" title="skia.Image"><code class="xref py py-class docutils literal notranslate"><span class="pre">Image</span></code></a> is returned referring to GPU back-end if context is
+not nullptr and format of data is recognized and supported. Otherwise,
+nullptr is returned. Recognized GPU formats vary by platform and GPU
+back-end.</p>
+<dl class="field-list simple">
+<dt class="field-odd">param context</dt>
+<dd class="field-odd"><p>GPU context</p>
+</dd>
+<dt class="field-even">param yuvColorSpace</dt>
+<dd class="field-even"><p>How the YUV values are converted to RGB</p>
+</dd>
+<dt class="field-odd">param yuvaPixmaps</dt>
+<dd class="field-odd"><p>array of (up to four) <a class="reference internal" href="skia.Pixmap.html#skia.Pixmap" title="skia.Pixmap"><code class="xref py py-class docutils literal notranslate"><span class="pre">Pixmap</span></code></a>
+which contain the, possibly interleaved,
+YUVA planes</p>
+</dd>
+<dt class="field-even">param yuvaIndices</dt>
+<dd class="field-even"><p>array indicating which pixmap in
+yuvaPixmaps, and channel in that pixmap,
+maps to each component of YUVA.</p>
+</dd>
+<dt class="field-odd">param imageSize</dt>
+<dd class="field-odd"><p>size of the resulting image</p>
+</dd>
+<dt class="field-even">param imageOrigin</dt>
+<dd class="field-even"><p>origin of the resulting image.</p>
+</dd>
+<dt class="field-odd">param buildMips</dt>
+<dd class="field-odd"><p>create internal YUVA textures as mip map
+if true</p>
+</dd>
+<dt class="field-even">param limitToMaxTextureSize</dt>
+<dd class="field-even"><p>downscale image to GPU maximum texture
+size, if necessary</p>
+</dd>
+<dt class="field-odd">param imageColorSpace</dt>
+<dd class="field-odd"><p>range of colors of the resulting image;
+may be nullptr</p>
+</dd>
+<dt class="field-even">return</dt>
+<dd class="field-even"><p>created <a class="reference internal" href="#skia.Image" title="skia.Image"><code class="xref py py-class docutils literal notranslate"><span class="pre">Image</span></code></a>, or nullptr</p>
+</dd>
+</dl>
+</div></blockquote>
+</li>
+<li><p>MakeFromYUVAPixmaps(context: skia.GrRecordingContext, pixmaps: SkYUVAPixmaps, buildMips: skia.GrMipmapped = &lt;GrMipmapped.kNo: 0&gt;, limitToMaxTextureSize: bool = False, imageColorSpace: skia.ColorSpace = None) -&gt; skia.Image</p>
+<blockquote>
+<div><p>Creates <a class="reference internal" href="#skia.Image" title="skia.Image"><code class="xref py py-class docutils literal notranslate"><span class="pre">Image</span></code></a> from <a class="reference internal" href="skia.YUVAPixmaps.html#skia.YUVAPixmaps" title="skia.YUVAPixmaps"><code class="xref py py-class docutils literal notranslate"><span class="pre">YUVAPixmaps</span></code></a>.</p>
+<p>The image will remain planar with each plane converted to a texture
+using the passed <a class="reference internal" href="skia.GrRecordingContext.html#skia.GrRecordingContext" title="skia.GrRecordingContext"><code class="xref py py-class docutils literal notranslate"><span class="pre">GrRecordingContext</span></code></a>.</p>
+<p><a class="reference internal" href="skia.YUVAPixmaps.html#skia.YUVAPixmaps" title="skia.YUVAPixmaps"><code class="xref py py-class docutils literal notranslate"><span class="pre">YUVAPixmaps</span></code></a> has a <a class="reference internal" href="skia.YUVAInfo.html#skia.YUVAInfo" title="skia.YUVAInfo"><code class="xref py py-class docutils literal notranslate"><span class="pre">YUVAInfo</span></code></a> which specifies the
+transformation from YUV to RGB. The <a class="reference internal" href="skia.ColorSpace.html#skia.ColorSpace" title="skia.ColorSpace"><code class="xref py py-class docutils literal notranslate"><span class="pre">ColorSpace</span></code></a> of the
+resulting RGB values is specified by imageColorSpace. This will be the
+<a class="reference internal" href="skia.ColorSpace.html#skia.ColorSpace" title="skia.ColorSpace"><code class="xref py py-class docutils literal notranslate"><span class="pre">ColorSpace</span></code></a> reported by the image and when drawn the RGB
+values will be converted from this space into the destination space (if
+the destination is tagged).</p>
+<p>Currently, this is only supported using the GPU backend and will fail if
+context is nullptr.</p>
+<p><a class="reference internal" href="skia.YUVAPixmaps.html#skia.YUVAPixmaps" title="skia.YUVAPixmaps"><code class="xref py py-class docutils literal notranslate"><span class="pre">YUVAPixmaps</span></code></a> does not need to remain valid after this
+returns.</p>
+<dl class="field-list simple">
+<dt class="field-odd">param context</dt>
+<dd class="field-odd"><p>GPU context</p>
+</dd>
+<dt class="field-even">param pixmaps</dt>
+<dd class="field-even"><p>The planes as pixmaps with supported
+<a class="reference internal" href="skia.YUVAInfo.html#skia.YUVAInfo" title="skia.YUVAInfo"><code class="xref py py-class docutils literal notranslate"><span class="pre">YUVAInfo</span></code></a> that specifies
+conversion to RGB.</p>
+</dd>
+<dt class="field-odd">param buildMips</dt>
+<dd class="field-odd"><p>create internal YUVA textures as mip map
+if kYes. This is silently ignored if the
+context does not support mip maps.</p>
+</dd>
+<dt class="field-even">param limitToMaxTextureSize</dt>
+<dd class="field-even"><p>downscale image to GPU maximum texture
+size, if necessary</p>
+</dd>
+<dt class="field-odd">param imageColorSpace</dt>
+<dd class="field-odd"><p>range of colors of the resulting image;
+may be nullptr</p>
+</dd>
+<dt class="field-even">return</dt>
+<dd class="field-even"><p>created <a class="reference internal" href="#skia.Image" title="skia.Image"><code class="xref py py-class docutils literal notranslate"><span class="pre">Image</span></code></a>, or nullptr</p>
+</dd>
+</dl>
+</div></blockquote>
+</li>
+</ol>
+</dd></dl>
+
+<dl class="py method">
+<dt id="skia.Image.MakeFromYUVATextures">
+<em class="property">static </em><code class="sig-prename descclassname">Image.</code><code class="sig-name descname">MakeFromYUVATextures</code><span class="sig-paren">(</span><em class="sig-param">context: skia.GrContext</em>, <em class="sig-param">yuvColorSpace: skia.YUVColorSpace</em>, <em class="sig-param">yuvaTextures: std::__1::vector&lt;GrBackendTexture</em>, <em class="sig-param">std::__1::allocator&lt;GrBackendTexture&gt; &gt;</em>, <em class="sig-param">yuvaIndices: std::__1::vector&lt;SkYUVAIndex</em>, <em class="sig-param">std::__1::allocator&lt;SkYUVAIndex&gt; &gt;</em>, <em class="sig-param">imageSize: skia.ISize</em>, <em class="sig-param">imageOrigin: skia.GrSurfaceOrigin</em>, <em class="sig-param">imageColorSpace: skia.ColorSpace = None</em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="#skia.Image" title="skia.Image">skia.Image</a><a class="headerlink" href="#skia.Image.MakeFromYUVATextures" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates an <a class="reference internal" href="#skia.Image" title="skia.Image"><code class="xref py py-class docutils literal notranslate"><span class="pre">Image</span></code></a> by flattening the specified YUVA planes
+into an image, to be rendered via multitexturing.</p>
+<p>When all the provided backend textures can be released
+‘textureReleaseProc’ will be called with ‘releaseContext’. It will be
+called even if this method fails.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>context</strong> – GPU context</p></li>
+<li><p><strong>yuvColorSpace</strong> – How the YUV values are converted to RGB</p></li>
+<li><p><strong>yuvaTextures</strong> – array of (up to four) YUVA textures on GPU which
+contain the, possibly interleaved, YUVA planes</p></li>
+<li><p><strong>yuvaIndices</strong> – array indicating which texture in yuvaTextures,
+and channel in that texture, maps to each component of YUVA.</p></li>
+<li><p><strong>imageSize</strong> – size of the resulting image</p></li>
+<li><p><strong>imageOrigin</strong> – origin of the resulting image.</p></li>
+<li><p><strong>imageColorSpace</strong> – range of colors of the resulting image; may be
+nullptr</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>created <a class="reference internal" href="#skia.Image" title="skia.Image"><code class="xref py py-class docutils literal notranslate"><span class="pre">Image</span></code></a>, or nullptr</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="skia.Image.MakeFromYUVATexturesCopy">
+<em class="property">static </em><code class="sig-prename descclassname">Image.</code><code class="sig-name descname">MakeFromYUVATexturesCopy</code><span class="sig-paren">(</span><em class="sig-param">context: skia.GrRecordingContext</em>, <em class="sig-param">yuvColorSpace: skia.YUVColorSpace</em>, <em class="sig-param">yuvaTextures: std::__1::vector&lt;GrBackendTexture</em>, <em class="sig-param">std::__1::allocator&lt;GrBackendTexture&gt; &gt;</em>, <em class="sig-param">yuvaIndices: std::__1::vector&lt;SkYUVAIndex</em>, <em class="sig-param">std::__1::allocator&lt;SkYUVAIndex&gt; &gt;</em>, <em class="sig-param">imageSize: skia.ISize</em>, <em class="sig-param">imageOrigin: skia.GrSurfaceOrigin</em>, <em class="sig-param">imageColorSpace: skia.ColorSpace = None</em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="#skia.Image" title="skia.Image">skia.Image</a><a class="headerlink" href="#skia.Image.MakeFromYUVATexturesCopy" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates an <a class="reference internal" href="#skia.Image" title="skia.Image"><code class="xref py py-class docutils literal notranslate"><span class="pre">Image</span></code></a> by flattening the specified YUVA planes
+into a single, interleaved RGBA image.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>context</strong> – GPU context</p></li>
+<li><p><strong>yuvColorSpace</strong> – How the YUV values are converted to RGB</p></li>
+<li><p><strong>yuvaTextures</strong> – array of (up to four) YUVA textures on GPU which
+contain the, possibly interleaved, YUVA planes</p></li>
+<li><p><strong>yuvaIndices</strong> – array indicating which texture in yuvaTextures,
+and channel in that texture, maps to each component of YUVA.</p></li>
+<li><p><strong>imageSize</strong> – size of the resulting image</p></li>
+<li><p><strong>imageOrigin</strong> – origin of the resulting image.</p></li>
+<li><p><strong>imageColorSpace</strong> – range of colors of the resulting image; may be
+nullptr</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>created <a class="reference internal" href="#skia.Image" title="skia.Image"><code class="xref py py-class docutils literal notranslate"><span class="pre">Image</span></code></a>, or nullptr</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="skia.Image.MakeFromYUVATexturesCopyWithExternalBackend">
+<em class="property">static </em><code class="sig-prename descclassname">Image.</code><code class="sig-name descname">MakeFromYUVATexturesCopyWithExternalBackend</code><span class="sig-paren">(</span><em class="sig-param">context: skia.GrRecordingContext</em>, <em class="sig-param">yuvColorSpace: skia.YUVColorSpace</em>, <em class="sig-param">yuvaTextures: std::__1::vector&lt;GrBackendTexture</em>, <em class="sig-param">std::__1::allocator&lt;GrBackendTexture&gt; &gt;</em>, <em class="sig-param">yuvaIndices: std::__1::vector&lt;SkYUVAIndex</em>, <em class="sig-param">std::__1::allocator&lt;SkYUVAIndex&gt; &gt;</em>, <em class="sig-param">imageSize: skia.ISize</em>, <em class="sig-param">imageOrigin: skia.GrSurfaceOrigin</em>, <em class="sig-param">backendTexture: skia.GrBackendTexture</em>, <em class="sig-param">imageColorSpace: skia.ColorSpace = None</em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="#skia.Image" title="skia.Image">skia.Image</a><a class="headerlink" href="#skia.Image.MakeFromYUVATexturesCopyWithExternalBackend" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates an <a class="reference internal" href="#skia.Image" title="skia.Image"><code class="xref py py-class docutils literal notranslate"><span class="pre">Image</span></code></a> by flattening the specified YUVA planes
+into a single, interleaved RGBA image. ‘backendTexture’ is used to store
+the result of the flattening.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>context</strong> – GPU context</p></li>
+<li><p><strong>yuvColorSpace</strong> – How the YUV values are converted to RGB</p></li>
+<li><p><strong>yuvaTextures</strong> – array of (up to four) YUVA textures on GPU which
+contain the, possibly interleaved, YUVA planes</p></li>
+<li><p><strong>yuvaIndices</strong> – array indicating which texture in yuvaTextures,
+and channel in that texture, maps to each component of YUVA.</p></li>
+<li><p><strong>imageSize</strong> – size of the resulting image</p></li>
+<li><p><strong>imageOrigin</strong> – origin of the resulting image.</p></li>
+<li><p><strong>backendTexture</strong> – the resource that stores the final pixels</p></li>
+<li><p><strong>imageColorSpace</strong> – range of colors of the resulting image; may be
+nullptr</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
@@ -1611,93 +1875,130 @@ readable; otherwise, ignored</p>
 <code class="sig-prename descclassname">Image.</code><code class="sig-name descname">readPixels</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span><span class="n">args</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#skia.Image.readPixels" title="Permalink to this definition">¶</a></dt>
 <dd><p>Overloaded function.</p>
 <ol class="arabic">
-<li><p>readPixels(self: skia.Image, dstInfo: skia.ImageInfo, dstPixels: buffer, dstRowBytes: int = 0, srcX: int = 0, srcY: int = 0, cachingHint: skia.Image.CachingHint = &lt;CachingHint.kAllow_CachingHint: 0&gt;) -&gt; bool</p>
+<li><p>readPixels(self: skia.Image, context: skia.GrDirectContext, dstInfo: skia.ImageInfo, dstPixels: buffer, dstRowBytes: int, srcX: int = 0, srcY: int = 0, cachingHint: skia.Image.CachingHint = &lt;CachingHint.kAllow_CachingHint: 0&gt;) -&gt; bool</p>
 <blockquote>
-<div><p>Copies <a class="reference internal" href="skia.Rect.html#skia.Rect" title="skia.Rect"><code class="xref py py-class docutils literal notranslate"><span class="pre">Rect</span></code></a> of pixels from <a class="reference internal" href="#skia.Image" title="skia.Image"><code class="xref py py-class docutils literal notranslate"><span class="pre">Image</span></code></a> to array.</p>
-<p>Copy starts at offset (srcX, srcY), and does not exceed
-<a class="reference internal" href="#skia.Image" title="skia.Image"><code class="xref py py-class docutils literal notranslate"><span class="pre">Image</span></code></a> (<a class="reference internal" href="#skia.Image.width" title="skia.Image.width"><code class="xref py py-meth docutils literal notranslate"><span class="pre">width()</span></code></a>, <a class="reference internal" href="#skia.Image.height" title="skia.Image.height"><code class="xref py py-meth docutils literal notranslate"><span class="pre">height()</span></code></a>).</p>
-<p>Returns true if pixels are copied. Returns false if:</p>
+<div><p>Copies a <a class="reference internal" href="skia.Rect.html#skia.Rect" title="skia.Rect"><code class="xref py py-class docutils literal notranslate"><span class="pre">Rect</span></code></a> of pixels from <a class="reference internal" href="#skia.Image" title="skia.Image"><code class="xref py py-class docutils literal notranslate"><span class="pre">Image</span></code></a> to dst. Copy
+starts at (srcX, srcY), and does not exceed <a class="reference internal" href="#skia.Image" title="skia.Image"><code class="xref py py-class docutils literal notranslate"><span class="pre">Image</span></code></a> (width(),
+height()).</p>
+<p>dstInfo specifies width, height, <a class="reference internal" href="skia.ColorType.html#skia.ColorType" title="skia.ColorType"><code class="xref py py-class docutils literal notranslate"><span class="pre">ColorType</span></code></a>,
+<a class="reference internal" href="skia.AlphaType.html#skia.AlphaType" title="skia.AlphaType"><code class="xref py py-class docutils literal notranslate"><span class="pre">AlphaType</span></code></a>, and <a class="reference internal" href="skia.ColorSpace.html#skia.ColorSpace" title="skia.ColorSpace"><code class="xref py py-class docutils literal notranslate"><span class="pre">ColorSpace</span></code></a> of destination.
+dstRowBytes specifics the gap from one destination row to the next.
+Returns true if pixels are copied. Returns false if:</p>
 <ul class="simple">
-<li><p>array row stride is less than <code class="docutils literal notranslate"><span class="pre">dstInfo.minRowBytes</span></code></p></li>
-</ul>
-<p>srcX and srcY may be negative to copy only top or left of source.
-Returns false if <a class="reference internal" href="#skia.Image.width" title="skia.Image.width"><code class="xref py py-meth docutils literal notranslate"><span class="pre">width()</span></code></a> or <a class="reference internal" href="#skia.Image.height" title="skia.Image.height"><code class="xref py py-meth docutils literal notranslate"><span class="pre">height()</span></code></a> is zero or
-negative. Returns false if abs(srcX) &gt;= Image <a class="reference internal" href="#skia.Image.width" title="skia.Image.width"><code class="xref py py-meth docutils literal notranslate"><span class="pre">width()</span></code></a>, or if
-abs(srcY) &gt;= Image <a class="reference internal" href="#skia.Image.height" title="skia.Image.height"><code class="xref py py-meth docutils literal notranslate"><span class="pre">height()</span></code></a>.</p>
-<p>If cachingHint is <a class="reference internal" href="skia.Image.CachingHint.html#skia.Image.CachingHint.kAllow_CachingHint" title="skia.Image.CachingHint.kAllow_CachingHint"><code class="xref py py-attr docutils literal notranslate"><span class="pre">kAllow_CachingHint</span></code></a>,
-pixels may be retained locally. If cachingHint is
-<a class="reference internal" href="skia.Image.CachingHint.html#skia.Image.CachingHint.kDisallow_CachingHint" title="skia.Image.CachingHint.kDisallow_CachingHint"><code class="xref py py-attr docutils literal notranslate"><span class="pre">kDisallow_CachingHint</span></code></a>, pixels are not
-added to the local cache.</p>
-<dl class="field-list simple">
-<dt class="field-odd">array</dt>
-<dd class="field-odd"><p>destination pixel storage, such as <code class="docutils literal notranslate"><span class="pre">bytearray</span></code> or
-<code class="docutils literal notranslate"><span class="pre">numpy.ndarray</span></code></p>
-</dd>
-<dt class="field-even">srcX</dt>
-<dd class="field-even"><p>column index whose absolute value is less than
-<a class="reference internal" href="#skia.Image.width" title="skia.Image.width"><code class="xref py py-meth docutils literal notranslate"><span class="pre">width()</span></code></a></p>
-</dd>
-<dt class="field-odd">srcY</dt>
-<dd class="field-odd"><p>row index whose absolute value is less than
-<a class="reference internal" href="#skia.Image.height" title="skia.Image.height"><code class="xref py py-meth docutils literal notranslate"><span class="pre">height()</span></code></a></p>
-</dd>
-<dt class="field-even">return</dt>
-<dd class="field-even"><p>true if pixels are copied to array</p>
-</dd>
-</dl>
-</div></blockquote>
-</li>
-<li><p>readPixels(self: skia.Image, dst: SkPixmap, srcX: int, srcY: int, cachingHint: skia.Image.CachingHint = &lt;CachingHint.kAllow_CachingHint: 0&gt;) -&gt; bool</p>
-<blockquote>
-<div><p>Copies <a class="reference internal" href="skia.Rect.html#skia.Rect" title="skia.Rect"><code class="xref py py-class docutils literal notranslate"><span class="pre">Rect</span></code></a> of pixels from <a class="reference internal" href="#skia.Image" title="skia.Image"><code class="xref py py-class docutils literal notranslate"><span class="pre">Image</span></code></a> to dst.</p>
-<p>Copy starts at offset (srcX, srcY), and does not exceed
-<a class="reference internal" href="#skia.Image" title="skia.Image"><code class="xref py py-class docutils literal notranslate"><span class="pre">Image</span></code></a> (<a class="reference internal" href="#skia.Image.width" title="skia.Image.width"><code class="xref py py-meth docutils literal notranslate"><span class="pre">width()</span></code></a>, <a class="reference internal" href="#skia.Image.height" title="skia.Image.height"><code class="xref py py-meth docutils literal notranslate"><span class="pre">height()</span></code></a>).</p>
-<p>dst specifies width, height, <a class="reference internal" href="skia.ColorType.html#skia.ColorType" title="skia.ColorType"><code class="xref py py-class docutils literal notranslate"><span class="pre">ColorType</span></code></a>,
-<a class="reference internal" href="skia.AlphaType.html#skia.AlphaType" title="skia.AlphaType"><code class="xref py py-class docutils literal notranslate"><span class="pre">AlphaType</span></code></a>, and <a class="reference internal" href="skia.ColorSpace.html#skia.ColorSpace" title="skia.ColorSpace"><code class="xref py py-class docutils literal notranslate"><span class="pre">ColorSpace</span></code></a>, pixel storage, and
-row bytes of destination. <code class="docutils literal notranslate"><span class="pre">dst.rowBytes()</span></code> specifics the gap from one
-destination row to the next. Returns true if pixels are copied. Returns
-false if:</p>
-<ul class="simple">
-<li><p>dst pixel storage equals nullptr</p></li>
-<li><p>dstRowBytes is less than <code class="docutils literal notranslate"><span class="pre">ImageInfo.minRowBytes</span></code></p></li>
+<li><p>dstInfo.addr() equals nullptr</p></li>
+<li><p>dstRowBytes is less than <code class="docutils literal notranslate"><span class="pre">dstInfo.minRowBytes()</span></code></p></li>
 <li><p><a class="reference internal" href="skia.PixelRef.html#skia.PixelRef" title="skia.PixelRef"><code class="xref py py-class docutils literal notranslate"><span class="pre">PixelRef</span></code></a> is nullptr</p></li>
 </ul>
 <p>Pixels are copied only if pixel conversion is possible. If
 <a class="reference internal" href="#skia.Image" title="skia.Image"><code class="xref py py-class docutils literal notranslate"><span class="pre">Image</span></code></a> <a class="reference internal" href="skia.ColorType.html#skia.ColorType" title="skia.ColorType"><code class="xref py py-class docutils literal notranslate"><span class="pre">ColorType</span></code></a> is
-<a class="reference internal" href="skia.ColorType.html#skia.ColorType.kGray_8_ColorType" title="skia.ColorType.kGray_8_ColorType"><code class="xref py py-attr docutils literal notranslate"><span class="pre">kGray_8_ColorType</span></code></a>, or
-<a class="reference internal" href="skia.ColorType.html#skia.ColorType.kAlpha_8_ColorType" title="skia.ColorType.kAlpha_8_ColorType"><code class="xref py py-attr docutils literal notranslate"><span class="pre">kAlpha_8_ColorType</span></code></a>; <code class="docutils literal notranslate"><span class="pre">dst.colorType</span></code>
-must match. If <a class="reference internal" href="#skia.Image" title="skia.Image"><code class="xref py py-class docutils literal notranslate"><span class="pre">Image</span></code></a> <a class="reference internal" href="skia.ColorType.html#skia.ColorType" title="skia.ColorType"><code class="xref py py-class docutils literal notranslate"><span class="pre">ColorType</span></code></a> is
-<a class="reference internal" href="skia.ColorType.html#skia.ColorType.kGray_8_ColorType" title="skia.ColorType.kGray_8_ColorType"><code class="xref py py-attr docutils literal notranslate"><span class="pre">kGray_8_ColorType</span></code></a>, <code class="docutils literal notranslate"><span class="pre">dst.colorSpace</span></code> must
-match. If <a class="reference internal" href="#skia.Image" title="skia.Image"><code class="xref py py-class docutils literal notranslate"><span class="pre">Image</span></code></a> <a class="reference internal" href="skia.AlphaType.html#skia.AlphaType" title="skia.AlphaType"><code class="xref py py-class docutils literal notranslate"><span class="pre">AlphaType</span></code></a> is
-<a class="reference internal" href="skia.AlphaType.html#skia.AlphaType.kOpaque_AlphaType" title="skia.AlphaType.kOpaque_AlphaType"><code class="xref py py-attr docutils literal notranslate"><span class="pre">kOpaque_AlphaType</span></code></a>, <code class="docutils literal notranslate"><span class="pre">dst.alphaType</span></code> must
-match. If <a class="reference internal" href="#skia.Image" title="skia.Image"><code class="xref py py-class docutils literal notranslate"><span class="pre">Image</span></code></a> <a class="reference internal" href="skia.ColorSpace.html#skia.ColorSpace" title="skia.ColorSpace"><code class="xref py py-class docutils literal notranslate"><span class="pre">ColorSpace</span></code></a> is nullptr,
-<code class="docutils literal notranslate"><span class="pre">dst.colorSpace</span></code> must match. Returns false if pixel conversion is
-not possible.</p>
+<code class="xref py py-attr docutils literal notranslate"><span class="pre">kGray_8_ColorType</span></code>, or <code class="xref py py-attr docutils literal notranslate"><span class="pre">kAlpha_8_ColorType</span></code>;
+dst.colorType() must match. If <a class="reference internal" href="#skia.Image" title="skia.Image"><code class="xref py py-class docutils literal notranslate"><span class="pre">Image</span></code></a> <a class="reference internal" href="skia.ColorType.html#skia.ColorType" title="skia.ColorType"><code class="xref py py-class docutils literal notranslate"><span class="pre">ColorType</span></code></a>
+is <code class="xref py py-attr docutils literal notranslate"><span class="pre">kGray_8_ColorType</span></code>, dst.colorSpace() must match. If
+<a class="reference internal" href="#skia.Image" title="skia.Image"><code class="xref py py-class docutils literal notranslate"><span class="pre">Image</span></code></a> <a class="reference internal" href="skia.AlphaType.html#skia.AlphaType" title="skia.AlphaType"><code class="xref py py-class docutils literal notranslate"><span class="pre">AlphaType</span></code></a> is
+<code class="xref py py-attr docutils literal notranslate"><span class="pre">kOpaque_AlphaType</span></code>, dst.alphaType() must match. If
+<a class="reference internal" href="#skia.Image" title="skia.Image"><code class="xref py py-class docutils literal notranslate"><span class="pre">Image</span></code></a> <a class="reference internal" href="skia.ColorSpace.html#skia.ColorSpace" title="skia.ColorSpace"><code class="xref py py-class docutils literal notranslate"><span class="pre">ColorSpace</span></code></a> is nullptr, dst.colorSpace()
+must match. Returns false if pixel conversion is not possible.</p>
 <p>srcX and srcY may be negative to copy only top or left of source.
-Returns false if <a class="reference internal" href="#skia.Image.width" title="skia.Image.width"><code class="xref py py-meth docutils literal notranslate"><span class="pre">width()</span></code></a> or <a class="reference internal" href="#skia.Image.height" title="skia.Image.height"><code class="xref py py-meth docutils literal notranslate"><span class="pre">height()</span></code></a> is zero or
-negative. Returns false if abs(srcX) &gt;= Image <a class="reference internal" href="#skia.Image.width" title="skia.Image.width"><code class="xref py py-meth docutils literal notranslate"><span class="pre">width()</span></code></a>, or if
-abs(srcY) &gt;= Image <a class="reference internal" href="#skia.Image.height" title="skia.Image.height"><code class="xref py py-meth docutils literal notranslate"><span class="pre">height()</span></code></a>.</p>
-<p>If cachingHint is <a class="reference internal" href="skia.Image.CachingHint.html#skia.Image.CachingHint.kAllow_CachingHint" title="skia.Image.CachingHint.kAllow_CachingHint"><code class="xref py py-attr docutils literal notranslate"><span class="pre">kAllow_CachingHint</span></code></a>,
-pixels may be retained locally. If cachingHint is
-<a class="reference internal" href="skia.Image.CachingHint.html#skia.Image.CachingHint.kDisallow_CachingHint" title="skia.Image.CachingHint.kDisallow_CachingHint"><code class="xref py py-attr docutils literal notranslate"><span class="pre">kDisallow_CachingHint</span></code></a>, pixels are not
-added to the local cache.</p>
+Returns false if width() or height() is zero or negative. Returns false
+if abs(srcX) &gt;= Image width(), or if abs(srcY) &gt;= Image height().</p>
+<p>If cachingHint is kAllow_CachingHint, pixels may be retained locally.
+If cachingHint is kDisallow_CachingHint, pixels are not added to the
+local cache.</p>
 <dl class="field-list simple">
-<dt class="field-odd">dst</dt>
-<dd class="field-odd"><p>destination <a class="reference internal" href="skia.Pixmap.html#skia.Pixmap" title="skia.Pixmap"><code class="xref py py-class docutils literal notranslate"><span class="pre">Pixmap</span></code></a>: <a class="reference internal" href="skia.ImageInfo.html#skia.ImageInfo" title="skia.ImageInfo"><code class="xref py py-class docutils literal notranslate"><span class="pre">ImageInfo</span></code></a>, pixels,
-row bytes</p>
+<dt class="field-odd">param context</dt>
+<dd class="field-odd"><p>the GrDirectContext in play, if it exists</p>
 </dd>
-<dt class="field-even">srcX</dt>
-<dd class="field-even"><p>column index whose absolute value is less than
-<a class="reference internal" href="#skia.Image.width" title="skia.Image.width"><code class="xref py py-meth docutils literal notranslate"><span class="pre">width()</span></code></a></p>
+<dt class="field-even">param dstInfo</dt>
+<dd class="field-even"><p>destination width, height, pixels,
+<a class="reference internal" href="skia.ColorType.html#skia.ColorType" title="skia.ColorType"><code class="xref py py-class docutils literal notranslate"><span class="pre">ColorType</span></code></a>, <a class="reference internal" href="skia.AlphaType.html#skia.AlphaType" title="skia.AlphaType"><code class="xref py py-class docutils literal notranslate"><span class="pre">AlphaType</span></code></a>,
+<a class="reference internal" href="skia.ColorSpace.html#skia.ColorSpace" title="skia.ColorSpace"><code class="xref py py-class docutils literal notranslate"><span class="pre">ColorSpace</span></code></a></p>
 </dd>
-<dt class="field-odd">srcY</dt>
-<dd class="field-odd"><p>row index whose absolute value is less than
-<a class="reference internal" href="#skia.Image.height" title="skia.Image.height"><code class="xref py py-meth docutils literal notranslate"><span class="pre">height()</span></code></a></p>
+<dt class="field-odd">param dstPixels</dt>
+<dd class="field-odd"><p>destination pixel storage</p>
+</dd>
+<dt class="field-even">param dstRowBytes</dt>
+<dd class="field-even"><p>destination row length</p>
+</dd>
+<dt class="field-odd">param srcX</dt>
+<dd class="field-odd"><p>column index whose absolute value is less than
+width()</p>
+</dd>
+<dt class="field-even">param srcY</dt>
+<dd class="field-even"><p>row index whose absolute value is less than
+height()</p>
+</dd>
+<dt class="field-odd">param cachingHint</dt>
+<dd class="field-odd"><p>whether the pixels should be cached locally</p>
+</dd>
+<dt class="field-even">return</dt>
+<dd class="field-even"><p>true if pixels are copied to dstPixels</p>
+</dd>
+</dl>
+</div></blockquote>
+</li>
+<li><p>readPixels(self: skia.Image, context: skia.GrDirectContext, dst: SkPixmap, srcX: int, srcY: int, cachingHint: skia.Image.CachingHint = &lt;CachingHint.kAllow_CachingHint: 0&gt;) -&gt; bool</p>
+<blockquote>
+<div><p>Copies a <a class="reference internal" href="skia.Rect.html#skia.Rect" title="skia.Rect"><code class="xref py py-class docutils literal notranslate"><span class="pre">Rect</span></code></a> of pixels from <a class="reference internal" href="#skia.Image" title="skia.Image"><code class="xref py py-class docutils literal notranslate"><span class="pre">Image</span></code></a> to dst. Copy
+starts at (srcX, srcY), and does not exceed <a class="reference internal" href="#skia.Image" title="skia.Image"><code class="xref py py-class docutils literal notranslate"><span class="pre">Image</span></code></a> (width(),
+height()).</p>
+<p>dst specifies width, height, <a class="reference internal" href="skia.ColorType.html#skia.ColorType" title="skia.ColorType"><code class="xref py py-class docutils literal notranslate"><span class="pre">ColorType</span></code></a>,
+<a class="reference internal" href="skia.AlphaType.html#skia.AlphaType" title="skia.AlphaType"><code class="xref py py-class docutils literal notranslate"><span class="pre">AlphaType</span></code></a>, <a class="reference internal" href="skia.ColorSpace.html#skia.ColorSpace" title="skia.ColorSpace"><code class="xref py py-class docutils literal notranslate"><span class="pre">ColorSpace</span></code></a>, pixel storage, and row
+bytes of destination. dst.rowBytes() specifics the gap from one
+destination row to the next. Returns true if pixels are copied. Returns
+false if:</p>
+<ul class="simple">
+<li><p>dst pixel storage equals nullptr</p></li>
+<li><p>dst.rowBytes is less than <a class="reference internal" href="skia.ImageInfo.html#skia.ImageInfo.minRowBytes" title="skia.ImageInfo.minRowBytes"><code class="xref py py-meth docutils literal notranslate"><span class="pre">ImageInfo.minRowBytes()</span></code></a></p></li>
+<li><p><a class="reference internal" href="skia.PixelRef.html#skia.PixelRef" title="skia.PixelRef"><code class="xref py py-class docutils literal notranslate"><span class="pre">PixelRef</span></code></a> is nullptr</p></li>
+</ul>
+<p>Pixels are copied only if pixel conversion is possible. If
+<a class="reference internal" href="#skia.Image" title="skia.Image"><code class="xref py py-class docutils literal notranslate"><span class="pre">Image</span></code></a> <a class="reference internal" href="skia.ColorType.html#skia.ColorType" title="skia.ColorType"><code class="xref py py-class docutils literal notranslate"><span class="pre">ColorType</span></code></a> is
+<code class="xref py py-attr docutils literal notranslate"><span class="pre">kGray_8_ColorType</span></code>, or <code class="xref py py-attr docutils literal notranslate"><span class="pre">kAlpha_8_ColorType</span></code>;
+dst.colorType() must match. If <a class="reference internal" href="#skia.Image" title="skia.Image"><code class="xref py py-class docutils literal notranslate"><span class="pre">Image</span></code></a> <a class="reference internal" href="skia.ColorType.html#skia.ColorType" title="skia.ColorType"><code class="xref py py-class docutils literal notranslate"><span class="pre">ColorType</span></code></a>
+is <code class="xref py py-attr docutils literal notranslate"><span class="pre">kGray_8_ColorType</span></code>, dst.colorSpace() must match. If
+<a class="reference internal" href="#skia.Image" title="skia.Image"><code class="xref py py-class docutils literal notranslate"><span class="pre">Image</span></code></a> <a class="reference internal" href="skia.AlphaType.html#skia.AlphaType" title="skia.AlphaType"><code class="xref py py-class docutils literal notranslate"><span class="pre">AlphaType</span></code></a> is
+<code class="xref py py-attr docutils literal notranslate"><span class="pre">kOpaque_AlphaType</span></code>, dst.alphaType() must match. If
+<a class="reference internal" href="#skia.Image" title="skia.Image"><code class="xref py py-class docutils literal notranslate"><span class="pre">Image</span></code></a> <a class="reference internal" href="skia.ColorSpace.html#skia.ColorSpace" title="skia.ColorSpace"><code class="xref py py-class docutils literal notranslate"><span class="pre">ColorSpace</span></code></a> is nullptr, dst.colorSpace()
+must match. Returns false if pixel conversion is not possible.</p>
+<p>srcX and srcY may be negative to copy only top or left of source.
+Returns false if width() or height() is zero or negative. Returns false
+if abs(srcX) &gt;= Image width(), or if abs(srcY) &gt;= Image height().</p>
+<p>If cachingHint is kAllow_CachingHint, pixels may be retained locally.
+If cachingHint is kDisallow_CachingHint, pixels are not added to the
+local cache.</p>
+<dl class="field-list simple">
+<dt class="field-odd">param context</dt>
+<dd class="field-odd"><p>the GrDirectContext in play, if it exists</p>
+</dd>
+<dt class="field-even">param dst</dt>
+<dd class="field-even"><p>destination <a class="reference internal" href="skia.Pixmap.html#skia.Pixmap" title="skia.Pixmap"><code class="xref py py-class docutils literal notranslate"><span class="pre">Pixmap</span></code></a>:
+<a class="reference internal" href="skia.ImageInfo.html#skia.ImageInfo" title="skia.ImageInfo"><code class="xref py py-class docutils literal notranslate"><span class="pre">ImageInfo</span></code></a>, pixels, row bytes</p>
+</dd>
+<dt class="field-odd">param srcX</dt>
+<dd class="field-odd"><p>column index whose absolute value is less than
+width()</p>
+</dd>
+<dt class="field-even">param srcY</dt>
+<dd class="field-even"><p>row index whose absolute value is less than
+height()</p>
+</dd>
+<dt class="field-odd">param cachingHint</dt>
+<dd class="field-odd"><p>whether the pixels should be cached locally</p>
 </dd>
 <dt class="field-even">return</dt>
 <dd class="field-even"><p>true if pixels are copied to dst</p>
 </dd>
 </dl>
+</div></blockquote>
+</li>
+<li><p>readPixels(self: skia.Image, dstInfo: skia.ImageInfo, dstPixels: buffer, dstRowBytes: int, srcX: int = 0, srcY: int = 0, cachingHint: skia.Image.CachingHint = &lt;CachingHint.kAllow_CachingHint: 0&gt;) -&gt; bool</p>
+<blockquote>
+<div><p>Deprecated. Use the variants that accept a GrDirectContext.</p>
+</div></blockquote>
+</li>
+<li><p>readPixels(self: skia.Image, dst: SkPixmap, srcX: int, srcY: int, cachingHint: skia.Image.CachingHint = &lt;CachingHint.kAllow_CachingHint: 0&gt;) -&gt; bool</p>
+<blockquote>
+<div><p>Deprecated. Use the variants that accept a <cite>GrDirectContext</cite>.</p>
 </div></blockquote>
 </li>
 </ol>
@@ -1929,6 +2230,13 @@ been allocated via new, and not on the stack.</p>
 <dd class="field-odd"><p>pixel width in <a class="reference internal" href="#skia.Image" title="skia.Image"><code class="xref py py-class docutils literal notranslate"><span class="pre">Image</span></code></a></p>
 </dd>
 </dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="skia.Image.withDefaultMipmaps">
+<code class="sig-prename descclassname">Image.</code><code class="sig-name descname">withDefaultMipmaps</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.Image" title="skia.Image">skia.Image</a></span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="#skia.Image" title="skia.Image">skia.Image</a><a class="headerlink" href="#skia.Image.withDefaultMipmaps" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns an image with the same “base” pixels as the this image, but with
+mipmap levels automatically generated and attached.</p>
 </dd></dl>
 
 </div>

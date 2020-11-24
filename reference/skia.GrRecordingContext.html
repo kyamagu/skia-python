@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>GrRecordingContext &mdash; skia-python 86.1 documentation</title>
+  <title>GrRecordingContext &mdash; skia-python 87.0 documentation</title>
   
 
   
@@ -61,7 +61,7 @@
             
             
               <div class="version">
-                86.1
+                87.0
               </div>
             
           
@@ -205,6 +205,7 @@
 <li class="toctree-l3"><a class="reference internal" href="skia.MatrixPathEffect.html">MatrixPathEffect</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.MemoryStream.html">MemoryStream</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.MergePathEffect.html">MergePathEffect</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.MipmapBuilder.html">MipmapBuilder</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.NullWStream.html">NullWStream</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.OffsetImageFilter.html">OffsetImageFilter</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.OpBuilder.html">OpBuilder</a></li>
@@ -215,7 +216,7 @@
 <li class="toctree-l3"><a class="reference internal" href="skia.Path.html">Path</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.Path1DPathEffect.html">Path1DPathEffect</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.Path2DPathEffect.html">Path2DPathEffect</a></li>
-<li class="toctree-l3"><a class="reference internal" href="skia.PathConvexityType.html">PathConvexityType</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.PathBuilder.html">PathBuilder</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.PathDirection.html">PathDirection</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.PathEffect.html">PathEffect</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.PathFillType.html">PathFillType</a></li>
@@ -266,6 +267,11 @@
 <li class="toctree-l3"><a class="reference internal" href="skia.VkImageLayout.html">VkImageLayout</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.WStream.html">WStream</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.XfermodeImageFilter.html">XfermodeImageFilter</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.YUVAIndex.html">YUVAIndex</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.YUVAInfo.html">YUVAInfo</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.YUVAPixmapInfo.html">YUVAPixmapInfo</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.YUVAPixmaps.html">YUVAPixmaps</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.YUVASizeInfo.html">YUVASizeInfo</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.YUVColorSpace.html">YUVColorSpace</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.html#functions">Functions</a></li>
 </ul>
@@ -365,28 +371,37 @@
 <tr class="row-even"><td><p><a class="reference internal" href="#skia.GrRecordingContext.backend" title="skia.GrRecordingContext.backend"><code class="xref py py-obj docutils literal notranslate"><span class="pre">backend</span></code></a></p></td>
 <td><p>The 3D API backing this context.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#skia.GrRecordingContext.colorTypeSupportedAsSurface" title="skia.GrRecordingContext.colorTypeSupportedAsSurface"><code class="xref py py-obj docutils literal notranslate"><span class="pre">colorTypeSupportedAsSurface</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.GrRecordingContext.colorTypeSupportedAsImage" title="skia.GrRecordingContext.colorTypeSupportedAsImage"><code class="xref py py-obj docutils literal notranslate"><span class="pre">colorTypeSupportedAsImage</span></code></a></p></td>
+<td><p>Can a <a class="reference internal" href="skia.Image.html#skia.Image" title="skia.Image"><code class="xref py py-class docutils literal notranslate"><span class="pre">Image</span></code></a> be created with the given color type.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.GrRecordingContext.colorTypeSupportedAsSurface" title="skia.GrRecordingContext.colorTypeSupportedAsSurface"><code class="xref py py-obj docutils literal notranslate"><span class="pre">colorTypeSupportedAsSurface</span></code></a></p></td>
 <td><p>Can a <a class="reference internal" href="skia.Surface.html#skia.Surface" title="skia.Surface"><code class="xref py py-class docutils literal notranslate"><span class="pre">Surface</span></code></a> be created with the given color type.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#skia.GrRecordingContext.compressedBackendFormat" title="skia.GrRecordingContext.compressedBackendFormat"><code class="xref py py-obj docutils literal notranslate"><span class="pre">compressedBackendFormat</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.GrRecordingContext.compressedBackendFormat" title="skia.GrRecordingContext.compressedBackendFormat"><code class="xref py py-obj docutils literal notranslate"><span class="pre">compressedBackendFormat</span></code></a></p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#skia.GrRecordingContext.defaultBackendFormat" title="skia.GrRecordingContext.defaultBackendFormat"><code class="xref py py-obj docutils literal notranslate"><span class="pre">defaultBackendFormat</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.GrRecordingContext.defaultBackendFormat" title="skia.GrRecordingContext.defaultBackendFormat"><code class="xref py py-obj docutils literal notranslate"><span class="pre">defaultBackendFormat</span></code></a></p></td>
 <td><p>Retrieve the default <a class="reference internal" href="skia.GrBackendFormat.html#skia.GrBackendFormat" title="skia.GrBackendFormat"><code class="xref py py-class docutils literal notranslate"><span class="pre">GrBackendFormat</span></code></a> for a given <a class="reference internal" href="skia.ColorType.html#skia.ColorType" title="skia.ColorType"><code class="xref py py-class docutils literal notranslate"><span class="pre">ColorType</span></code></a> and renderability.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.GrRecordingContext.maxRenderTargetSize" title="skia.GrRecordingContext.maxRenderTargetSize"><code class="xref py py-obj docutils literal notranslate"><span class="pre">maxRenderTargetSize</span></code></a></p></td>
+<td><p>Gets the maximum supported render target size.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#skia.GrRecordingContext.maxSurfaceSampleCountForColorType" title="skia.GrRecordingContext.maxSurfaceSampleCountForColorType"><code class="xref py py-obj docutils literal notranslate"><span class="pre">maxSurfaceSampleCountForColorType</span></code></a></p></td>
 <td><p>Gets the maximum supported sample count for a color type.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#skia.GrRecordingContext.ref" title="skia.GrRecordingContext.ref"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ref</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.GrRecordingContext.maxTextureSize" title="skia.GrRecordingContext.maxTextureSize"><code class="xref py py-obj docutils literal notranslate"><span class="pre">maxTextureSize</span></code></a></p></td>
+<td><p>Gets the maximum supported texture size.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.GrRecordingContext.ref" title="skia.GrRecordingContext.ref"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ref</span></code></a></p></td>
 <td><p>Increment the reference count.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#skia.GrRecordingContext.threadSafeProxy" title="skia.GrRecordingContext.threadSafeProxy"><code class="xref py py-obj docutils literal notranslate"><span class="pre">threadSafeProxy</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.GrRecordingContext.threadSafeProxy" title="skia.GrRecordingContext.threadSafeProxy"><code class="xref py py-obj docutils literal notranslate"><span class="pre">threadSafeProxy</span></code></a></p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#skia.GrRecordingContext.unique" title="skia.GrRecordingContext.unique"><code class="xref py py-obj docutils literal notranslate"><span class="pre">unique</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.GrRecordingContext.unique" title="skia.GrRecordingContext.unique"><code class="xref py py-obj docutils literal notranslate"><span class="pre">unique</span></code></a></p></td>
 <td><p>May return true if the caller is the only owner.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#skia.GrRecordingContext.unref" title="skia.GrRecordingContext.unref"><code class="xref py py-obj docutils literal notranslate"><span class="pre">unref</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.GrRecordingContext.unref" title="skia.GrRecordingContext.unref"><code class="xref py py-obj docutils literal notranslate"><span class="pre">unref</span></code></a></p></td>
 <td><p>Decrement the reference count.</p></td>
 </tr>
 </tbody>
@@ -425,6 +440,12 @@ the <a class="reference internal" href="skia.GrDirectContext.html#skia.GrDirectC
 </dd></dl>
 
 <dl class="py method">
+<dt id="skia.GrRecordingContext.colorTypeSupportedAsImage">
+<code class="sig-prename descclassname">GrRecordingContext.</code><code class="sig-name descname">colorTypeSupportedAsImage</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.GrRecordingContext" title="skia.GrRecordingContext">skia.GrRecordingContext</a></span></em>, <em class="sig-param"><span class="n">arg0</span><span class="p">:</span> <span class="n">SkColorType</span></em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#skia.GrRecordingContext.colorTypeSupportedAsImage" title="Permalink to this definition">¶</a></dt>
+<dd><p>Can a <a class="reference internal" href="skia.Image.html#skia.Image" title="skia.Image"><code class="xref py py-class docutils literal notranslate"><span class="pre">Image</span></code></a> be created with the given color type.</p>
+</dd></dl>
+
+<dl class="py method">
 <dt id="skia.GrRecordingContext.colorTypeSupportedAsSurface">
 <code class="sig-prename descclassname">GrRecordingContext.</code><code class="sig-name descname">colorTypeSupportedAsSurface</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.GrRecordingContext" title="skia.GrRecordingContext">skia.GrRecordingContext</a></span></em>, <em class="sig-param"><span class="n">colorType</span><span class="p">:</span> <span class="n">SkColorType</span></em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#skia.GrRecordingContext.colorTypeSupportedAsSurface" title="Permalink to this definition">¶</a></dt>
 <dd><p>Can a <a class="reference internal" href="skia.Surface.html#skia.Surface" title="skia.Surface"><code class="xref py py-class docutils literal notranslate"><span class="pre">Surface</span></code></a> be created with the given color type. To check
@@ -449,12 +470,24 @@ following <a class="reference internal" href="skia.ColorType.html#skia.ColorType
 </dd></dl>
 
 <dl class="py method">
+<dt id="skia.GrRecordingContext.maxRenderTargetSize">
+<code class="sig-prename descclassname">GrRecordingContext.</code><code class="sig-name descname">maxRenderTargetSize</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.GrRecordingContext" title="skia.GrRecordingContext">skia.GrRecordingContext</a></span></em><span class="sig-paren">)</span> &#x2192; int<a class="headerlink" href="#skia.GrRecordingContext.maxRenderTargetSize" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets the maximum supported render target size.</p>
+</dd></dl>
+
+<dl class="py method">
 <dt id="skia.GrRecordingContext.maxSurfaceSampleCountForColorType">
 <code class="sig-prename descclassname">GrRecordingContext.</code><code class="sig-name descname">maxSurfaceSampleCountForColorType</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.GrRecordingContext" title="skia.GrRecordingContext">skia.GrRecordingContext</a></span></em>, <em class="sig-param"><span class="n">arg0</span><span class="p">:</span> <span class="n">SkColorType</span></em><span class="sig-paren">)</span> &#x2192; int<a class="headerlink" href="#skia.GrRecordingContext.maxSurfaceSampleCountForColorType" title="Permalink to this definition">¶</a></dt>
 <dd><p>Gets the maximum supported sample count for a color type.</p>
 <p>1 is returned if only non-MSAA rendering is supported for the color
 type. 0 is returned if rendering to this color type is not supported at
 all.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="skia.GrRecordingContext.maxTextureSize">
+<code class="sig-prename descclassname">GrRecordingContext.</code><code class="sig-name descname">maxTextureSize</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#skia.GrRecordingContext" title="skia.GrRecordingContext">skia.GrRecordingContext</a></span></em><span class="sig-paren">)</span> &#x2192; int<a class="headerlink" href="#skia.GrRecordingContext.maxTextureSize" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets the maximum supported texture size.</p>
 </dd></dl>
 
 <dl class="py method">
