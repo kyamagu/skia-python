@@ -1861,6 +1861,7 @@ rrect
         :param asHex:  true if Scalar values are written as hexadecimal
         )docstring",
         py::arg("asHex") = false)
+    .def("dumpToString", &SkRRect::dumpToString, py::arg("asHex"))
     .def("dumpHex",
         [] (const SkRRect& rrect) {
             py::scoped_ostream_redirect stream;

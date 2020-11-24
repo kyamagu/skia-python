@@ -619,6 +619,10 @@ def test_RRect_dump(rrect, args):
     rrect.dump(*args)
 
 
+def test_RRect_dumpToString(rrect):
+    assert isinstance(rrect.dumpToString(True), skia.String)
+
+
 def test_RRect_dumpHex(rrect):
     rrect.dumpHex()
 
