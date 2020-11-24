@@ -41,10 +41,6 @@ def test_Surface_imageInfo(surface):
     assert isinstance(surface.imageInfo(), skia.ImageInfo)
 
 
-def test_Surface_getContext(surface):
-    assert isinstance(surface.getContext(), (type(None), skia.GrContext))
-
-
 def test_Surface_getBackendTexture(surface):
     assert isinstance(
         surface.getBackendTexture(skia.Surface.kFlushRead_BackendHandleAccess),
@@ -214,14 +210,6 @@ def test_Surface_MakeFromBackendTexture(context):
         skia.Surface.MakeFromBackendTexture(
             context, texture, skia.kTopLeft_GrSurfaceOrigin, 0,
             skia.kRGBA_8888_ColorType, skia.ColorSpace.MakeSRGB(), None),
-        (type(None), skia.Surface))
-
-
-def test_Surface_MakeFromBackendTexture_2(context):
-    characterization = skia.SurfaceCharacterization()
-    texture = skia.GrBackendTexture()
-    assert isinstance(
-        skia.Surface.MakeFromBackendTexture(context, characterization, texture),
         (type(None), skia.Surface))
 
 

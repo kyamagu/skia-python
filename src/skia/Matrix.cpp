@@ -284,6 +284,16 @@ matrix
         :return: value corresponding to index
         )docstring",
         py::arg("index"))
+    .def("rc", &SkMatrix::rc,
+        R"docstring(
+        Returns one matrix value from a particular row/column. Asserts if index
+        is out of range and SK_DEBUG is defined.
+
+        :param r:  matrix row to fetch
+        :param c:  matrix column to fetch
+        :return:   value at the given matrix position
+        )docstring",
+        py::arg("r"), py::arg("c"))
     .def("getScaleX", &SkMatrix::getScaleX,
         R"docstring(
         Returns scale factor multiplied by x-axis input, contributing to x-axis
@@ -1648,7 +1658,8 @@ matrix
     .def_static("Translate",
         py::overload_cast<SkIVector>(&SkMatrix::Translate),
         py::arg("t"))
-    .def_static("RotateDeg", &SkMatrix::RotateDeg,
+    .def_static("RotateDeg",
+        py::overload_cast<SkScalar>(&SkMatrix::RotateDeg),
         R"docstring(
         Sets :py:class:`Matrix` to rotate by ``|deg|`` about a pivot point at
         (0, 0).
@@ -1657,6 +1668,9 @@ matrix
         :return: :py:class:`Matrix` with rotation
         )docstring",
         py::arg("deg"))
+    .def_static("RotateDeg",
+        py::overload_cast<SkScalar, SkPoint>(&SkMatrix::RotateDeg),
+        py::arg("deg"), py::arg("pt"))
     .def_static("RotateRad", &SkMatrix::RotateRad,
         py::arg("rad"))
     .def_static("MakeAll", &SkMatrix::MakeAll,

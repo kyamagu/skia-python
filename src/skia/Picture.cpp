@@ -7,16 +7,16 @@ public:
     void playback(
         SkCanvas *canvas, SkPicture::AbortCallback *callback=nullptr
         ) const override {
-        PYBIND11_OVERLOAD_PURE(void, SkPicture, playback, canvas, callback);
+        PYBIND11_OVERRIDE_PURE(void, SkPicture, playback, canvas, callback);
     }
     SkRect cullRect() const override {
-        PYBIND11_OVERLOAD_PURE(SkRect, SkPicture, cullRect);
+        PYBIND11_OVERRIDE_PURE(SkRect, SkPicture, cullRect);
     }
     int approximateOpCount(bool nested=false) const override {
-        PYBIND11_OVERLOAD_PURE(int, SkPicture, approximateOpCount, nested);
+        PYBIND11_OVERRIDE_PURE(int, SkPicture, approximateOpCount, nested);
     }
     size_t approximateBytesUsed() const override {
-        PYBIND11_OVERLOAD_PURE(size_t, SkPicture, approximateBytesUsed);
+        PYBIND11_OVERRIDE_PURE(size_t, SkPicture, approximateBytesUsed);
     }
 };
 
@@ -24,13 +24,13 @@ class PyBBoxHierarchy : public SkBBoxHierarchy {
 public:
     using SkBBoxHierarchy::SkBBoxHierarchy;
     void insert(const SkRect rects[], int N) override {
-        PYBIND11_OVERLOAD_PURE(void, SkBBoxHierarchy, insert, rects, N);
+        PYBIND11_OVERRIDE_PURE(void, SkBBoxHierarchy, insert, rects, N);
     }
     void search(const SkRect& query, std::vector<int> *results) const override {
-        PYBIND11_OVERLOAD_PURE(void, SkBBoxHierarchy, search, query, results);
+        PYBIND11_OVERRIDE_PURE(void, SkBBoxHierarchy, search, query, results);
     }
     size_t bytesUsed() const override {
-        PYBIND11_OVERLOAD_PURE(size_t, SkBBoxHierarchy, bytesUsed);
+        PYBIND11_OVERRIDE_PURE(size_t, SkBBoxHierarchy, bytesUsed);
     }
 };
 
@@ -305,12 +305,6 @@ bboxhierarchy
 
 py::class_<SkPictureRecorder> picturerecorder(m, "PictureRecorder");
 
-py::enum_<SkPictureRecorder::RecordFlags>(
-    picturerecorder, "RecordFlags", py::arithmetic())
-    .value("kPlaybackDrawPicture_RecordFlag",
-        SkPictureRecorder::RecordFlags::kPlaybackDrawPicture_RecordFlag)
-    .export_values();
-
 py::enum_<SkPictureRecorder::FinishFlags>(picturerecorder, "FinishFlags");
 
 picturerecorder
@@ -320,8 +314,8 @@ picturerecorder
     //         &SkPictureRecorder::beginRecording),
     //     "Returns the canvas that records the drawing commands.")
     .def("beginRecording",
-        [] (SkPictureRecorder& recorder, const SkRect& bounds, uint32_t flags) {
-            return recorder.beginRecording(bounds, nullptr, flags);
+        [] (SkPictureRecorder& recorder, const SkRect& bounds) {
+            return recorder.beginRecording(bounds, nullptr);
         },
         R"docstring(
         Returns the canvas that records the drawing commands.
@@ -329,17 +323,15 @@ picturerecorder
         :bounds: the cull rect used when recording this picture. Any
             drawing the falls outside of this rect is undefined, and may be
             drawn or it may not.
-        :recordFlags: optional flags that control recording.
         :return: the canvas.
         )docstring",
-        py::arg("bounds"), py::arg("recordFlags") = 0,
+        py::arg("bounds"),
         py::return_value_policy::reference_internal)
     .def("beginRecording",
-        [] (SkPictureRecorder& recorder, SkScalar width, SkScalar height,
-            uint32_t flags) {
-            return recorder.beginRecording(width, height, nullptr, flags);
+        [] (SkPictureRecorder& recorder, SkScalar width, SkScalar height) {
+            return recorder.beginRecording(width, height, nullptr);
         },
-        py::arg("width"), py::arg("height"), py::arg("recordFlags") = 0,
+        py::arg("width"), py::arg("height"),
         py::return_value_policy::reference_internal)
     .def("getRecordingCanvas", &SkPictureRecorder::getRecordingCanvas,
         R"docstring(
@@ -362,8 +354,7 @@ picturerecorder
         added to the canvas, these will have been "drawn" into a recording
         canvas, so that this resulting picture will reflect their current state,
         but will not contain a live reference to the drawables themselves.
-        )docstring",
-        py::arg("endFlags") = 0)
+        )docstring")
     .def("finishRecordingAsPictureWithCull",
         &SkPictureRecorder::finishRecordingAsPictureWithCull,
         R"docstring(
@@ -378,7 +369,7 @@ picturerecorder
             overall bound for BBH generation and subsequent culling operations.
         :return: the picture containing the recorded content.
         )docstring",
-        py::arg("cullRect"), py::arg("endFlags") = 0)
+        py::arg("cullRect"))
     .def("finishRecordingAsDrawable",
         &SkPictureRecorder::finishRecordingAsDrawable,
         R"docstring(
@@ -394,7 +385,6 @@ picturerecorder
         this drawable will reflect the current state of those nested drawables
         anytime it is drawn or a new picture is snapped from it (by calling
         drawable.newPictureSnapshot()).
-        )docstring",
-        py::arg("endFlags") = 0)
+        )docstring")
     ;
 }

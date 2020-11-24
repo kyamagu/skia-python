@@ -502,6 +502,17 @@ typeface
         It will always be returned encoded as UTF8, but the language of the name
         is whatever the host platform chooses.
         )docstring")
+    .def("getPostScriptName",
+        [] (const SkTypeface& typeface) {
+            SkString name;
+            typeface.getPostScriptName(&name);
+            return py::str(name.c_str(), name.size());
+        },
+        R"docstring(
+        Return the PostScript name for this typeface.
+        Value may change based on variation parameters.
+        Returns false if no PostScript name is available.
+        )docstring")
     // .def("openStream", &SkTypeface::openStream,
     //     "Return a stream for the contents of the font data, or NULL on "
     //     "failure.")

@@ -289,11 +289,6 @@ surface
         Subsequent calls to :py:meth:`generationID` return a different value.
         )docstring",
         py::arg("mode"))
-    .def("getContext", &SkSurface::getContext,
-        R"docstring(
-        Deprecated.
-        )docstring",
-        py::return_value_policy::reference_internal)
     .def("recordingContext", &SkSurface::recordingContext,
         R"docstring(
         Returns the recording context being used by the :py:class:`Surface`.
@@ -982,9 +977,8 @@ surface
                 colorSpace, surfaceProps);
         },
         R"docstring(
-        Wraps a GPU-backed texture into :py:class:`Surface`.
-
-        Caller must ensure the texture is valid for the lifetime of returned
+        Wraps a GPU-backed texture into :py:class:`Surface`. Caller must ensure
+        backendRenderTarget is valid for the lifetime of returned
         :py:class:`Surface`. If sampleCnt greater than zero, creates an
         intermediate MSAA :py:class:`Surface` which is used for drawing
         backendTexture.
@@ -1018,42 +1012,6 @@ surface
         py::arg("context"), py::arg("backendTexture"), py::arg("origin"),
         py::arg("sampleCnt"), py::arg("colorType"), py::arg("colorSpace"),
         py::arg("surfaceProps"))
-    .def_static("MakeFromBackendTexture",
-        [] (GrContext* context,
-            const SkSurfaceCharacterization& characterzation,
-            const GrBackendTexture& backendTexture) {
-            return SkSurface::MakeFromBackendTexture(
-                context, characterzation, backendTexture);
-        },
-        R"docstring(
-        Wraps a backend texture in an :py:class:`Surface` - setting up the
-        surface to match the provided characterization.
-
-        The caller must ensure the texture is valid for the lifetime of returned
-        :py:class:`Surface`.
-
-        If the backend texture and surface characterization are incompatible
-        then null will be returned.
-
-        Usually, the :py:meth:`GrContext.createBackendTexture` variant that
-        takes a surface characterization should be used to create the backend
-        texture. If not, :py:meth:`SurfaceCharacterization.isCompatible` can be
-        used to determine if a given backend texture is compatible with a
-        specific surface characterization.
-
-        Upon success textureReleaseProc is called when it is safe to delete the
-        texture in the backend API (accounting only for use of the texture by
-        this surface). If :py:class:`Surface` creation fails textureReleaseProc
-        is called before this function returns.
-
-        :context: GPU context
-        :characterization:    characterization of the desired surface
-        :backendTexture:  texture residing on GPU
-        :return: :py:class:`Surface` if all parameters are compatible;
-            otherwise, nullptr
-        )docstring",
-        py::arg("context"), py::arg("characterization"),
-        py::arg("backendTexture"))
     .def_static("MakeFromBackendRenderTarget",
         [] (GrContext* context, const GrBackendRenderTarget& target,
             GrSurfaceOrigin origin, SkColorType colorType,

@@ -68,6 +68,10 @@ def test_Matrix_get(matrix):
     assert isinstance(matrix.get(0), float)
 
 
+def test_Matrix_rc(matrix):
+    assert isinstance(matrix.rc(0, 0), float)
+
+
 def test_Matrix_getScaleX(matrix):
     assert isinstance(matrix.getScaleX(), float)
 
@@ -389,8 +393,12 @@ def test_Matrix_Translate(args):
     assert isinstance(skia.Matrix.Translate(*args), skia.Matrix)
 
 
-def test_Matrix_RotateDeg():
-    assert isinstance(skia.Matrix.RotateDeg(0), skia.Matrix)
+@pytest.mark.parametrize('args', [
+    (0,),
+    (0, skia.Point(0, 0)),
+])
+def test_Matrix_RotateDeg(args):
+    assert isinstance(skia.Matrix.RotateDeg(*args), skia.Matrix)
 
 
 def test_Matrix_RotateRad():

@@ -173,3 +173,253 @@ def test_Pixmap_scalePixels(pixmap):
 
 def test_Pixmap_erase(pixmap):
     assert isinstance(pixmap.erase(0xFFFFFFFF), bool)
+
+
+@pytest.fixture
+def supported_data_types():
+    return skia.YUVAPixmapInfo.SupportedDataTypes.All()
+
+
+def test_YUVAPixmapInfo_SupportedDataTypes___init__(context):
+    assert isinstance(
+        skia.YUVAPixmapInfo.SupportedDataTypes(context),
+        skia.YUVAPixmapInfo.SupportedDataTypes)
+
+
+def test_YUVAPixmapInfo_SupportedDataTypes_All():
+    assert isinstance(
+        skia.YUVAPixmapInfo.SupportedDataTypes.All(),
+        skia.YUVAPixmapInfo.SupportedDataTypes)
+
+
+def test_YUVAPixmapInfo_SupportedDataTypes_supported(supported_data_types):
+    assert isinstance(
+        supported_data_types.supported(
+            skia.YUVAInfo.kY_U_V_444, skia.YUVAPixmapInfo.kUnorm8),
+        bool)
+
+
+def test_YUVAPixmapInfo_SupportedDataTypes_enableDataType(supported_data_types):
+    supported_data_types.enableDataType(skia.YUVAPixmapInfo.kUnorm8, 3)
+
+
+@pytest.fixture
+def yuva_pixmap_info():
+    return skia.YUVAPixmapInfo(
+        skia.YUVAInfo(
+            (100, 100),
+            skia.YUVAInfo.kY_U_V_444,
+            skia.kJPEG_YUVColorSpace),
+        skia.YUVAPixmapInfo.kUnorm8)
+
+
+def test_YUVAPixmapInfo_DefaultColorTypeForDataType():
+    assert isinstance(
+        skia.YUVAPixmapInfo.DefaultColorTypeForDataType(
+            skia.YUVAPixmapInfo.kUnorm8, 4),
+        skia.ColorType)
+
+
+def test_YUVAPixmapInfo_NumChannelsAndDataType():
+    assert isinstance(
+        skia.YUVAPixmapInfo.NumChannelsAndDataType(skia.kRGBA_8888_ColorType),
+        tuple)
+
+
+@pytest.mark.parametrize('args', [
+    (),
+    (skia.YUVAInfo(), [
+        skia.kRGBA_8888_ColorType,
+        skia.kRGBA_8888_ColorType,
+        skia.kRGBA_8888_ColorType,
+        skia.kRGBA_8888_ColorType]),
+    (skia.YUVAInfo(), skia.YUVAPixmapInfo.kUnorm8),
+])
+def test_YUVAPixmapInfo___init__(args):
+    assert isinstance(skia.YUVAPixmapInfo(*args), skia.YUVAPixmapInfo)
+
+
+def test_YUVAPixmapInfo___eq__(yuva_pixmap_info):
+    assert isinstance(yuva_pixmap_info == yuva_pixmap_info, bool)
+
+
+def test_YUVAPixmapInfo___ne__(yuva_pixmap_info):
+    assert isinstance(yuva_pixmap_info != yuva_pixmap_info, bool)
+
+
+def test_YUVAPixmapInfo_yuvaInfo(yuva_pixmap_info):
+    assert isinstance(yuva_pixmap_info.yuvaInfo(), skia.YUVAInfo)
+
+
+def test_YUVAPixmapInfo_yuvColorSpace(yuva_pixmap_info):
+    assert isinstance(yuva_pixmap_info.yuvColorSpace(), skia.YUVColorSpace)
+
+
+def test_YUVAPixmapInfo_numPlanes(yuva_pixmap_info):
+    assert isinstance(yuva_pixmap_info.numPlanes(), int)
+
+
+def test_YUVAPixmapInfo_dataType(yuva_pixmap_info):
+    assert isinstance(yuva_pixmap_info.dataType(), skia.YUVAPixmapInfo.DataType)
+
+
+def test_YUVAPixmapInfo_rowBytes(yuva_pixmap_info):
+    assert isinstance(yuva_pixmap_info.rowBytes(0), int)
+
+
+def test_YUVAPixmapInfo_planeInfo(yuva_pixmap_info):
+    assert isinstance(yuva_pixmap_info.planeInfo(0), skia.ImageInfo)
+
+
+def test_YUVAPixmapInfo_computeTotalBytes(yuva_pixmap_info):
+    assert isinstance(yuva_pixmap_info.computeTotalBytes(), int)
+    assert isinstance(yuva_pixmap_info.computeTotalBytes(True), tuple)
+
+
+def test_YUVAPixmapInfo_initPixmapsFromSingleAllocation(yuva_pixmap_info):
+    memory = bytearray(yuva_pixmap_info.computeTotalBytes())
+    assert isinstance(
+        yuva_pixmap_info.initPixmapsFromSingleAllocation(memory),
+        list)
+
+
+def test_YUVAPixmapInfo_isValid(yuva_pixmap_info):
+    assert isinstance(yuva_pixmap_info.isValid(), bool)
+
+
+def test_YUVAPixmapInfo_isSupported(yuva_pixmap_info, supported_data_types):
+    assert isinstance(yuva_pixmap_info.isSupported(supported_data_types), bool)
+
+
+@pytest.fixture
+def yuva_pixmaps(yuva_pixmap_info):
+    return skia.YUVAPixmaps.Allocate(yuva_pixmap_info)
+
+
+def test_YUVAPixmaps_Allocate(yuva_pixmap_info):
+    assert isinstance(
+        skia.YUVAPixmaps.Allocate(yuva_pixmap_info), skia.YUVAPixmaps)
+
+
+def test_YUVAPixmaps_FromData(yuva_pixmap_info):
+    data = skia.Data.MakeUninitialized(yuva_pixmap_info.computeTotalBytes())
+    assert isinstance(
+        skia.YUVAPixmaps.FromData(yuva_pixmap_info, data),
+        skia.YUVAPixmaps)
+
+
+def test_YUVAPixmaps_FromExternalMemory(yuva_pixmap_info):
+    memory = bytearray(yuva_pixmap_info.computeTotalBytes())
+    assert isinstance(
+        skia.YUVAPixmaps.FromExternalMemory(yuva_pixmap_info, memory),
+        skia.YUVAPixmaps)
+
+
+def test_YUVAPixmaps_FromExternalPixmaps():
+    info = skia.YUVAInfo()
+    pixmaps = [
+        skia.Pixmap(),
+        skia.Pixmap(),
+        skia.Pixmap(),
+        skia.Pixmap(),
+    ]
+    assert isinstance(
+        skia.YUVAPixmaps.FromExternalPixmaps(info, pixmaps),
+        skia.YUVAPixmaps)
+
+
+def test_YUVAPixmaps_isValid(yuva_pixmaps):
+    assert isinstance(yuva_pixmaps.isValid(), bool)
+
+
+def test_YUVAPixmaps_yuvaInfo(yuva_pixmaps):
+    assert isinstance(yuva_pixmaps.yuvaInfo(), skia.YUVAInfo)
+
+
+def test_YUVAPixmaps_numPlanes(yuva_pixmaps):
+    assert isinstance(yuva_pixmaps.numPlanes(), int)
+
+
+def test_YUVAPixmaps_planes(yuva_pixmaps):
+    assert isinstance(yuva_pixmaps.planes(), list)
+
+
+def test_YUVAPixmaps_plane(yuva_pixmaps):
+    assert isinstance(yuva_pixmaps.plane(0), skia.Pixmap)
+
+
+def test_YUVAPixmaps_toLegacy(yuva_pixmaps):
+    info, indices = yuva_pixmaps.toLegacy()
+    assert isinstance(info, skia.YUVASizeInfo)
+    assert isinstance(indices, list)
+
+
+@pytest.fixture
+def yuva_index(yuva_pixmaps):
+    _, indices = yuva_pixmaps.toLegacy()
+    if len(indices) == 0:
+        pytest.skip('YUVAIndex unavailable.')
+    return indices[0]
+
+
+def test_SkYUVAIndex___eq__(yuva_index):
+    assert yuva_index == yuva_index
+
+
+def test_SkYUVAIndex___ne__(yuva_index):
+    assert isinstance(yuva_index != yuva_index, bool)
+
+
+def test_SkYUVAIndex_kIndexCount(yuva_index):
+    assert isinstance(yuva_index.kIndexCount, int)
+
+
+def test_SkYUVAIndex_fIndex(yuva_index):
+    assert isinstance(yuva_index.fIndex, int)
+
+
+def test_SkYUVAIndex_fChannel(yuva_index):
+    assert isinstance(yuva_index.fChannel, skia.ColorChannel)
+
+
+def test_SkYUVAIndex_AreValidIndices(yuva_index):
+    assert isinstance(
+        skia.YUVAIndex.AreValidIndices(
+            [yuva_index, yuva_index, yuva_index, yuva_index]),
+        bool)
+    assert isinstance(
+        skia.YUVAIndex.AreValidIndices(
+            [yuva_index, yuva_index, yuva_index, yuva_index],
+            True),
+        tuple)
+
+
+@pytest.fixture
+def yuva_size_info(yuva_pixmaps):
+    info, _ = yuva_pixmaps.toLegacy()
+    return info
+
+
+def test_SkYUVASizeInfo_fSizes(yuva_size_info):
+    value = yuva_size_info.fSizes
+    assert isinstance(value, list)
+    yuva_size_info.fSizes = value
+
+
+def test_SkYUVASizeInfo_fWidthBytes(yuva_size_info):
+    value = yuva_size_info.fWidthBytes
+    assert isinstance(value, list)
+    yuva_size_info.fWidthBytes = value
+
+
+def test_SkYUVASizeInfo_fOrigin(yuva_size_info):
+    assert isinstance(yuva_size_info.fOrigin, skia.EncodedOrigin)
+    yuva_size_info.fOrigin = skia.kDefault_EncodedOrigin
+
+
+def test_SkYUVASizeInfo___eq__(yuva_size_info):
+    assert yuva_size_info == yuva_size_info
+
+
+def test_SkYUVASizeInfo_computeTotalBytes(yuva_size_info):
+    assert isinstance(yuva_size_info.computeTotalBytes(), int)

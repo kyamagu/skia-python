@@ -315,9 +315,25 @@ py::class_<GrBackendSurfaceMutableState>(m, "GrBackendSurfaceMutableState",
 
         Vulkan: VkImageLayout and QueueFamilyIndex
     )docstring")
+    .def(py::init<>())
 #ifdef SK_VULKAN
-    .def(py::init<VkImageLayout, uint32_t>())
+    .def(py::init<VkImageLayout, uint32_t>(),
+        py::arg("layout"), py::arg("queueFamilyIndex"))
+    .def("getVkImageLayout",
+        &GrBackendSurfaceMutableState::getVkImageLayout,
+        R"docstring(
+        If this class is not Vulkan backed it will return value of
+        VK_IMAGE_LAYOUT_UNDEFINED. Otherwise it will return the VkImageLayout.
+        )docstring")
+    .def("getQueueFamilyIndex",
+        &GrBackendSurfaceMutableState::getQueueFamilyIndex,
+        R"docstring(
+        If this class is not Vulkan backed it will return value of
+        VK_QUEUE_FAMILY_IGNORED. Otherwise it will return the VkImageLayout.
+        )docstring")
 #endif
+    .def("isValid", &GrBackendSurfaceMutableState::isValid)
+    .def("backend", &GrBackendSurfaceMutableState::backend)
     ;
 
 py::class_<GrBackendRenderTarget>(m, "GrBackendRenderTarget")
@@ -326,10 +342,9 @@ py::class_<GrBackendRenderTarget>(m, "GrBackendRenderTarget")
         py::arg("width"), py::arg("height"), py::arg("sampleCnt"),
         py::arg("stencilBits"), py::arg("glInfo"))
 #ifdef SK_VULKAN
-    .def(py::init<int, int, int, int, const GrVkImageInfo&>(),
-        py::arg("width"), py::arg("height"), py::arg("sampleCnt"),
-        py::arg("stencilBits"), py::arg("vkInfo"))
     .def(py::init<int, int, int, const GrVkImageInfo&>(),
+        py::arg("width"), py::arg("height"), py::arg("vkInfo"))
+    .def(py::init<int, int, int, int, const GrVkImageInfo&>(),
         py::arg("width"), py::arg("height"), py::arg("sampleCnt"),
         py::arg("vkInfo"))
 #endif
@@ -444,6 +459,19 @@ py::class_<GrRecordingContext, sk_sp<GrRecordingContext>, GrImageContext>(
         :py:meth:`~GrRecordingContext.maxSurfaceSampleCountForColorType`.
         )docstring",
         py::arg("colorType"))
+    .def("maxTextureSize", &GrRecordingContext::maxTextureSize,
+        R"docstring(
+        Gets the maximum supported texture size.
+        )docstring")
+    .def("maxRenderTargetSize", &GrRecordingContext::maxRenderTargetSize,
+        R"docstring(
+        Gets the maximum supported render target size.
+        )docstring")
+    .def("colorTypeSupportedAsImage",
+        &GrRecordingContext::colorTypeSupportedAsImage,
+        R"docstring(
+        Can a :py:class:`Image` be created with the given color type.
+        )docstring")
     .def("maxSurfaceSampleCountForColorType",
         &GrRecordingContext::maxSurfaceSampleCountForColorType,
         R"docstring(
@@ -771,24 +799,11 @@ py::class_<GrContext, sk_sp<GrContext>, GrRecordingContext>(m, "GrContext")
         py::overload_cast<int, int, const GrBackendFormat&, GrMipmapped,
             GrRenderable, GrProtected>(&GrContext::createBackendTexture),
         R"docstring(
-        The explicitly allocated backend texture API allows clients to use Skia
-        to create backend objects outside of Skia proper (i.e., Skia's caching
-        system will not know about them.)
+        If possible, create an uninitialized backend texture.
 
-        It is the client's responsibility to delete all these objects (using
-        :py:meth:`deleteBackendTexture`) before deleting the
-        :py:class:`GrContext` used to create them. If the backend is Vulkan, the
-        textures must be deleted before abandoning the :py:class:`GrContext` as
-        well. Additionally, clients should only delete these objects on the
-        thread for which that :py:class:`GrContext` is active.
-
-        The client is responsible for ensuring synchronization between different
-        uses of the backend object (i.e., wrapping it in a surface, rendering to
-        it, deleting the surface, rewrapping it in a image and drawing the image
-        will require explicit sychronization on the client's part). If possible,
-        create an uninitialized backend texture. The client should ensure that
-        the returned backend texture is valid. For the Vulkan backend the layout
-        of the created VkImage will be: VK_IMAGE_LAYOUT_UNDEFINED.
+        The client should ensure that the returned backend texture is valid.
+        For the Vulkan backend the layout of the created VkImage will be:
+             VK_IMAGE_LAYOUT_UNDEFINED.
         )docstring",
         py::arg("width"), py::arg("height"), py::arg("backendFormat"),
         py::arg("mipMapped"), py::arg("renderable"),
@@ -808,18 +823,6 @@ py::class_<GrContext, sk_sp<GrContext>, GrRecordingContext>(m, "GrContext")
         py::arg("mipMapped"), py::arg("renderable"),
         py::arg("isProtected") = GrProtected::kNo)
     .def("createBackendTexture",
-        py::overload_cast<const SkSurfaceCharacterization &>(
-            &GrContext::createBackendTexture),
-        R"docstring(
-        If possible, create an uninitialized backend texture that is compatible
-        with the provided characterization.
-
-        The client should ensure that the returned backend texture is valid. For
-        the Vulkan backend the layout of the created VkImage will be:
-        VK_IMAGE_LAYOUT_UNDEFINED.
-        )docstring",
-        py::arg("characterization"))
-    .def("createBackendTexture",
         [] (GrContext& context, int width, int height,
             const GrBackendFormat& backendFormat, const SkColor4f& color,
             GrMipmapped mipMapped, GrRenderable renderable,
@@ -831,9 +834,14 @@ py::class_<GrContext, sk_sp<GrContext>, GrRecordingContext>(m, "GrContext")
         R"docstring(
         If possible, create a backend texture initialized to a particular color.
 
-        The client should ensure that the returned backend texture is valid.
+        The client should ensure that the returned backend texture is valid. The
+        client can pass in a finishedProc to be notified when the data has been
+        uploaded by the gpu and the texture can be deleted. The client is
+        required to call GrContext::submit to send the upload work to the gpu.
+        The finishedProc will always get called even if we failed to create the
+        GrBackendTexture.
         For the Vulkan backend the layout of the created VkImage will be:
-        VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL
+            VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL
         )docstring",
         py::arg("width"), py::arg("height"), py::arg("backendFormat"),
         py::arg("color"), py::arg("mipMapped"), py::arg("renderable"),
@@ -852,37 +860,43 @@ py::class_<GrContext, sk_sp<GrContext>, GrRecordingContext>(m, "GrContext")
 
         The client should ensure that the returned backend texture is valid.
         If successful, the created backend texture will be compatible with the
-        provided SkColorType. For the Vulkan backend the layout of the created
-        VkImage will be: VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL
+        provided :py:class:`~skia.ColorType`. For the Vulkan backend the layout
+        of the created VkImage will be: VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL
         )docstring",
         py::arg("width"), py::arg("height"), py::arg("colorType"),
         py::arg("color"), py::arg("mipMapped"), py::arg("renderable"),
         py::arg("isProtected") = GrProtected::kNo)
     .def("createBackendTexture",
-        [] (GrContext& context,
-            const SkSurfaceCharacterization& characterization,
-            const SkColor4f& color) {
-            return context.createBackendTexture(characterization, color);
-        },
-        R"docstring(
-        If possible, create a backend texture initialized to a particular color
-        that is compatible with the provided characterization.
-
-        The client should ensure that the returned backend texture is valid.
-        For the Vulkan backend the layout of the created VkImage will be:
-        VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL if texturaeble
-        VK_IMAGE_LAYOUT_UNDEFINED if not textureable
-        )docstring",
-        py::arg("characterization"), py::arg("color"))
-    .def("createBackendTexture",
         [] (GrContext& context, const std::vector<SkPixmap>& srcData,
             GrRenderable renderable, GrProtected isProtected) {
             return context.createBackendTexture(
-                (srcData.empty()) ? nullptr : &srcData[0],
+                (srcData.empty()) ? nullptr : srcData.data(),
                 srcData.size(),
                 renderable,
                 isProtected);
         },
+        R"docstring(
+        If possible, create a backend texture initialized with the provided
+        pixmap data. The client should ensure that the returned backend texture
+        is valid. The client can pass in a finishedProc to be notified when the
+        data has been uploaded by the gpu and the texture can be deleted. The
+        client is required to call GrContext::submit to send the upload work to
+        the gpu. The finishedProc will always get called even if we failed to
+        create the GrBackendTexture. If successful, the created backend texture
+        will be compatible with the provided pixmap(s). Compatible, in this
+        case, means that the backend format will be the result of calling
+        defaultBackendFormat on the base pixmap's colortype. The src data can be
+        deleted when this call returns.
+
+        If numLevels is 1 a non-mipMapped texture will result. If a mipMapped
+        texture is desired the data for all the mipmap levels must be
+        provided. In the mipmapped case all the colortypes of the provided
+        pixmaps must be the same. Additionally, all the miplevels must be
+        sized correctly (please see SkMipmap::ComputeLevelSize and
+        ComputeLevelCount). Note: the pixmap's alphatypes and colorspaces are
+        ignored. For the Vulkan backend the layout of the created VkImage will
+        be: VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL
+        )docstring",
         py::arg("srcData"),  py::arg("renderable"),
         py::arg("isProtected") = GrProtected::kNo)
     .def("createBackendTexture",
@@ -1005,9 +1019,10 @@ py::class_<GrContext, sk_sp<GrContext>, GrRecordingContext>(m, "GrContext")
         py::arg("mipMapped"), py::arg("isProtected") = GrProtected::kNo)
     .def("setBackendTextureState",
         [] (GrContext& context, const GrBackendTexture& texture,
-            const GrBackendSurfaceMutableState& mutableState) {
+            const GrBackendSurfaceMutableState& mutableState,
+            GrBackendSurfaceMutableState* previousState) {
             return context.setBackendTextureState(
-                texture, mutableState, nullptr, nullptr);
+                texture, mutableState, previousState, nullptr, nullptr);
         },
         R"docstring(
         Updates the state of the GrBackendTexture/RenderTarget to have the
@@ -1023,15 +1038,27 @@ py::class_<GrContext, sk_sp<GrContext>, GrRecordingContext>(m, "GrContext")
 
         See :py:class:`GrBackendSurfaceMutableState` to see what state can be
         set via this call.
+
+        If the backend API is Vulkan, the caller can set the
+        GrBackendSurfaceMutableState's VkImageLayout to
+        VK_IMAGE_LAYOUT_UNDEFINED or queueFamilyIndex to VK_QUEUE_FAMILY_IGNORED
+        to tell Skia to not change those respective states.
+
+        If previousState is not null and this returns true, then Skia will have
+        filled in previousState to have the values of the state before this
+        call.
         )docstring",
-        py::arg("texture"), py::arg("mutableState"))
+        py::arg("texture"), py::arg("mutableState"),
+        py::arg("previousState") = nullptr)
     .def("setBackendRenderTargetState",
         [] (GrContext& context, const GrBackendRenderTarget& target,
-            const GrBackendSurfaceMutableState& mutableState) {
+            const GrBackendSurfaceMutableState& mutableState,
+            GrBackendSurfaceMutableState* previousState) {
             return context.setBackendRenderTargetState(
-                target, mutableState, nullptr, nullptr);
+                target, mutableState, previousState, nullptr, nullptr);
         },
-        py::arg("target"), py::arg("mutableState"))
+        py::arg("target"), py::arg("mutableState"),
+        py::arg("previousState") = nullptr)
     .def("deleteBackendTexture", &GrContext::deleteBackendTexture,
         py::arg("texture"))
     .def("precompileShader", &GrContext::precompileShader,

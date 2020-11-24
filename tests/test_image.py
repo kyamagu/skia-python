@@ -3,6 +3,23 @@ import pytest
 import numpy as np
 
 
+@pytest.fixture
+def mipmap_builder(image):
+    return skia.MipmapBuilder(image.imageInfo())
+
+
+def test_MipmapBuilder_countLevels(mipmap_builder):
+    assert isinstance(mipmap_builder.countLevels(), int)
+
+
+def test_MipmapBuilder_level(mipmap_builder):
+    assert isinstance(mipmap_builder.level(0), skia.Pixmap)
+
+
+def test_MipmapBuilder_attachTo(mipmap_builder, image):
+    assert isinstance(mipmap_builder.attachTo(image), skia.Image)
+
+
 def test_Image_buffer(image):
     assert isinstance(memoryview(image.makeRasterImage()), memoryview)
 
@@ -172,18 +189,25 @@ def test_Image_flush(image, context):
     (
         skia.ImageInfo.MakeN32Premul(320, 240),
         np.zeros((240, 320, 4), np.uint8),
+        320 * 4,
     ),
 ])
-def test_Image_readPixels(image, args):
+def test_Image_readPixels(context, image, args):
     assert isinstance(image.readPixels(*args), bool)
+    assert isinstance(image.readPixels(context, *args), bool)
+    assert isinstance(image.readPixels(None, *args), bool)
 
 
-def test_Image_readPixels2(image):
+@pytest.mark.parametrize('use_context', [True, False])
+def test_Image_readPixels2(context, use_context, image):
     info = image.imageInfo().makeWH(100, 100)
     dstRowBytes = info.minRowBytes()
     dstPixels = bytearray(info.computeByteSize(dstRowBytes))
     dst = skia.Pixmap(info, dstPixels, dstRowBytes)
-    assert isinstance(image.readPixels(dst, 0, 0), bool)
+    if use_context:
+        assert isinstance(image.readPixels(context, dst, 0, 0), bool)
+    else:
+        assert isinstance(image.readPixels(dst, 0, 0), bool)
 
 
 def test_Image_scalePixels(image):
@@ -211,9 +235,8 @@ def test_Image_makeSubset(image):
 def test_Image_hasMipmaps(image):
     assert isinstance(image.hasMipmaps(), bool)
 
-@pytest.mark.skip(reason='Not implemented')
-def test_Image_withMipmaps(image):
-    raise NotImplementedError
+def test_Image_withDefaultMipmaps(context, image):
+    assert isinstance(image.withDefaultMipmaps(), (type(None), skia.Image))
 
 def test_Image_makeTextureImage(image, context):
     assert isinstance(
@@ -383,6 +406,36 @@ def test_Image_MakeFromAdoptedTexture(context, texture):
             context, texture, skia.GrSurfaceOrigin.kTopLeft_GrSurfaceOrigin,
             skia.ColorType.kRGBA_8888_ColorType),
         skia.Image)
+
+
+@pytest.mark.xfail(reason='Not implemented')
+def test_Image_MakeFromYUVATexturesCopy(context, texture):
+    raise NotImplementedError
+
+
+@pytest.mark.xfail(reason='Not implemented')
+def test_Image_MakeFromYUVATexturesCopyWithExternalBackend(context, texture):
+    raise NotImplementedError
+
+
+@pytest.mark.xfail(reason='Not implemented')
+def test_Image_MakeFromYUVATextures(context, texture):
+    raise NotImplementedError
+
+
+@pytest.mark.xfail(reason='Not implemented')
+def test_Image_MakeFromYUVAPixmaps(context, texture):
+    raise NotImplementedError
+
+
+@pytest.mark.xfail(reason='Not implemented')
+def test_Image_MakeFromNV12TexturesCopy(context, texture):
+    raise NotImplementedError
+
+
+@pytest.mark.xfail(reason='Not implemented')
+def test_Image_MakeFromNV12TexturesCopyWithExternalBackend(context, texture):
+    raise NotImplementedError
 
 
 def test_Image_MakeFromPicture(picture):

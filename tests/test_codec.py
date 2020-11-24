@@ -29,7 +29,7 @@ def test_Codec_init(codec):
 
 def test_Codec_ResultToString():
     assert isinstance(
-        skia.Codec.ResultToString(skia.Codec.Result.kSuccess), str)
+        skia.Codec.ResultToString(skia.Codec.kSuccess), str)
 
 
 def test_Codec_MakeFromData(image_path):
@@ -76,6 +76,16 @@ def test_Codec_getPixels(codec, use_pixmap):
     else:
         assert isinstance(
             codec.getPixels(info, data, rowBytes), skia.Codec.Result)
+
+
+def test_Codec_queryYUVAInfo_getYUVAPlanes(codec):
+    yuva_pixmap_info = codec.queryYUVAInfo(
+        skia.YUVAPixmapInfo.SupportedDataTypes.All())
+    assert isinstance(yuva_pixmap_info, (type(None), skia.YUVAPixmapInfo))
+    if yuva_pixmap_info is not None:
+        yuva_pixmaps = skia.YUVAPixmaps.Allocate(yuva_pixmap_info)
+        assert isinstance(
+            codec.getYUVAPlanes(yuva_pixmaps), skia.Codec.Result)
 
 
 def test_Codec_incrementalDecode(codec):

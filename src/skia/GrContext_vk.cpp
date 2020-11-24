@@ -53,8 +53,6 @@ py::class_<GrVkImageInfo>(m, "GrVkImageInfo",
     //     py::arg("currentQueueFamily") = VK_QUEUE_FAMILY_IGNORED,
     //     py::arg("isProtected") = GrProtected::kNo,
     //     py::arg("ycbcrConversionInfo") = nullptr)
-    .def(py::init<const GrVkImageInfo&, VkImageLayout, uint32_t>(),
-        py::arg("info"), py::arg("layout"), py::arg("familyQueueIndex"))
     // .def_readwrite("fImage", &GrVkImageInfo::fImage)
     .def_readwrite("fAlloc", &GrVkImageInfo::fAlloc)
     // .def_readwrite("fImageTiling", &GrVkImageInfo::fImageTiling)

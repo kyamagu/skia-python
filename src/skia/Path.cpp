@@ -61,12 +61,6 @@ py::enum_<SkPathFillType>(m, "PathFillType")
         "Same as EvenOdd, but draws outside of the path, rather than inside.")
     .export_values();
 
-py::enum_<SkPathConvexityType>(m, "PathConvexityType")
-    .value("kUnknown", SkPathConvexityType::kUnknown)
-    .value("kConvex", SkPathConvexityType::kConvex)
-    .value("kConcave", SkPathConvexityType::kConcave)
-    .export_values();
-
 py::enum_<SkPathDirection>(m, "PathDirection")
     .value("kCW", SkPathDirection::kCW,
         "clockwise direction for adding closed contours")
@@ -376,6 +370,70 @@ path
     .def("__iter__",
         [] (const SkPath& path) { return SkPath::Iter(path, false); },
         py::keep_alive<0, 1>())
+    .def_static("Make",
+        [] (const std::vector<SkPoint>& points,
+            const std::vector<uint8_t>& verbs,
+            const std::vector<SkScalar>& conicWeights,
+            SkPathFillType fillType,
+            bool isVolatile) {
+            return SkPath::Make(
+                points.data(), points.size(), verbs.data(), verbs.size(),
+                conicWeights.data(), conicWeights.size(), fillType, isVolatile);
+        },
+        R"docstring(
+        Create a new path with the specified segments.
+
+        The points and weights arrays are read in order, based on the sequence
+        of verbs.
+
+            Move    1 point
+            Line    1 point
+            Quad    2 points
+            Conic   2 points and 1 weight
+            Cubic   3 points
+            Close   0 points
+
+        If an illegal sequence of verbs is encountered, or the specified number
+        of points or weights is not sufficient given the verbs, an empty Path is
+        returned.
+
+        A legal sequence of verbs consists of any number of Contours. A contour
+        always begins with a Move verb, followed by 0 or more segments: Line,
+        Quad, Conic, Cubic, followed by an optional Close.
+        )docstring",
+        py::arg("points"), py::arg("verbs"), py::arg("conicWeights"),
+        py::arg("fillType"), py::arg("isVolatile") = false)
+    .def_static("Rect", &SkPath::Rect,
+        py::arg("rect"), py::arg("pathDirection") = SkPathDirection::kCW,
+        py::arg("startIndex") = 0)
+    .def_static("Oval",
+        py::overload_cast<const SkRect&, SkPathDirection, unsigned>(
+            &SkPath::Oval),
+        py::arg("rect"), py::arg("pathDirection") = SkPathDirection::kCW,
+        py::arg("startIndex") = 0)
+    .def_static("Circle", &SkPath::Circle,
+        py::arg("center_x"), py::arg("center_y"), py::arg("radius"),
+        py::arg("pathDirection") = SkPathDirection::kCW)
+    .def_static("RRect",
+        py::overload_cast<const SkRRect&, SkPathDirection, unsigned>(
+            &SkPath::RRect),
+        py::arg("rrect"), py::arg("pathDirection") = SkPathDirection::kCW,
+        py::arg("startIndex") = 0)
+    .def_static("RRect",
+        py::overload_cast<const SkRect&, SkScalar, SkScalar, SkPathDirection>(
+            &SkPath::RRect),
+        py::arg("bounds"), py::arg("rx"), py::arg("ry"),
+        py::arg("pathDirection") = SkPathDirection::kCW)
+    .def_static("Polygon",
+        [] (const std::vector<SkPoint>& points, bool isClosed,
+            SkPathFillType fillType, bool isVolatile) {
+            return SkPath::Polygon(
+                points.data(), points.size(), isClosed, fillType, isVolatile);
+        },
+        py::arg("points"), py::arg("isClosed"),
+        py::arg("fillType") = SkPathFillType::kWinding,
+        py::arg("isVolatile") = false)
+    .def_static("Line", &SkPath::Line, py::arg("a"), py::arg("b"))
     .def(py::init<>(), R"docstring(
         Constructs an empty :py:class:`Path`.
 
@@ -470,35 +528,6 @@ path
         The inverse of FillType describes the area unmodified by the original
         FillType.
         )docstring")
-    .def("getConvexityType", &SkPath::getConvexityType,
-        R"docstring(
-        Returns the comvexity type, computing if needed.
-
-        Never returns :py:attr:`~PathConvexityType.kUnknown`.
-
-        :return: path's convexity type (convex or concave)
-        )docstring")
-    .def("getConvexityTypeOrUnknown", &SkPath::getConvexityTypeOrUnknown,
-        R"docstring(
-        If the path's convexity is already known, return it, else return
-        :py:attr:`~PathConvexityType.kUnknown`.
-
-        If you always want to know the convexity, even if that means having to
-        compute it, call :py:meth:`getConvexityType`.
-
-        :return: known convexity, or :py:attr:`~PathConvexityType.kUnknown`
-        )docstring")
-    .def("setConvexityType",
-        py::overload_cast<SkPathConvexityType>(&SkPath::setConvexityType),
-        R"docstring(
-        Stores a convexity type for this path.
-
-        This is what will be returned if :py:meth:`getConvexityTypeOrUnknown` is
-        called. If you pass :py:attr:`~PathConvexityType.kUnknown`, then if
-        :py:meth:`getContexityType` is called, the real convexity will be
-        computed.
-        )docstring",
-        py::arg("convexity"))
     .def("isConvex", &SkPath::isConvex,
         R"docstring(
         Returns true if the path is convex.
@@ -2156,4 +2185,272 @@ m.def("AsWinding",
     :return:      The equivalent path with fill type set to winding.
     )docstring",
     py::arg("path"));
+
+
+py::class_<SkPathBuilder> PathBuilder(m, "PathBuilder");
+
+py::enum_<SkPathBuilder::ArcSize>(PathBuilder, "ArcSize")
+    .value("kSmall_ArcSize", SkPathBuilder::kSmall_ArcSize,
+        R"docstring(
+        smaller of arc pair
+        )docstring")
+    .value("kLarge_ArcSize", SkPathBuilder::kLarge_ArcSize,
+        R"docstring(
+        larger of arc pair
+        )docstring")
+    .export_values();
+
+PathBuilder
+    .def(py::init<>())
+    // .def(py::init<SkPathFillType>(), py::arg("fillType"))  // ImportError.
+    .def(py::init<const SkPath&>(), py::arg("path"))
+    .def("fillType", &SkPathBuilder::fillType)
+    .def("computeBounds", &SkPathBuilder::computeBounds)
+    .def("snapshot", &SkPathBuilder::snapshot,
+        R"docstring(
+        the builder is unchanged after returning this path
+        )docstring")
+    .def("detach", &SkPathBuilder::detach,
+        R"docstring(
+        the builder is reset to empty after returning this path
+        )docstring")
+    .def("setFillType", &SkPathBuilder::setFillType, py::arg("fillType"))
+    .def("setIsVolatile", &SkPathBuilder::setIsVolatile, py::arg("isVolatile"))
+    .def("reset", &SkPathBuilder::reset)
+    .def("moveTo", py::overload_cast<SkPoint>(&SkPathBuilder::moveTo),
+        py::arg("pt"))
+    .def("moveTo",
+        py::overload_cast<SkScalar, SkScalar>(&SkPathBuilder::moveTo),
+        py::arg("x"), py::arg("y"))
+    .def("lineTo", py::overload_cast<SkPoint>(&SkPathBuilder::lineTo),
+        py::arg("pt"))
+    .def("lineTo",
+        py::overload_cast<SkScalar, SkScalar>(&SkPathBuilder::lineTo),
+        py::arg("x"), py::arg("y"))
+    .def("quadTo", py::overload_cast<SkPoint, SkPoint>(&SkPathBuilder::quadTo),
+        py::arg("pt1"), py::arg("pt2"))
+    .def("quadTo",
+        py::overload_cast<SkScalar, SkScalar, SkScalar, SkScalar>(
+            &SkPathBuilder::quadTo),
+        py::arg("x1"), py::arg("y1"), py::arg("x2"), py::arg("y2"))
+    .def("quadTo",
+        [] (SkPathBuilder& self, const std::vector<SkPoint>& pts) {
+            if (pts.size() < 2)
+                throw py::value_error("pts must have 2 elements.");
+            return self.quadTo(pts.data());
+        },
+        py::arg("pts"))
+    .def("conicTo",
+        py::overload_cast<SkPoint, SkPoint, SkScalar>(&SkPathBuilder::conicTo),
+        py::arg("pt1"), py::arg("pt2"), py::arg("w"))
+    .def("conicTo",
+        py::overload_cast<SkScalar, SkScalar, SkScalar, SkScalar, SkScalar>(
+            &SkPathBuilder::conicTo),
+        py::arg("x1"), py::arg("y1"), py::arg("x2"), py::arg("y2"),
+        py::arg("w"))
+    .def("conicTo",
+        [] (SkPathBuilder& self, const std::vector<SkPoint>& pts, SkScalar w) {
+            if (pts.size() < 2)
+                throw py::value_error("pts must have 2 elements.");
+            return self.conicTo(pts.data(), w);
+        },
+        py::arg("pts"), py::arg("w"))
+    .def("cubicTo",
+        py::overload_cast<SkPoint, SkPoint, SkPoint>(&SkPathBuilder::cubicTo),
+        py::arg("pt1"), py::arg("pt2"), py::arg("pt3"))
+    .def("cubicTo",
+        py::overload_cast<SkScalar, SkScalar, SkScalar, SkScalar, SkScalar,
+            SkScalar>(&SkPathBuilder::cubicTo),
+        py::arg("x1"), py::arg("y1"), py::arg("x2"), py::arg("y2"),
+        py::arg("x3"), py::arg("y3"))
+    .def("cubicTo",
+        [] (SkPathBuilder& self, const std::vector<SkPoint>& pts) {
+            if (pts.size() < 3)
+                throw py::value_error("pts must have 3 elements.");
+            return self.cubicTo(pts.data());
+        },
+        py::arg("pts"))
+    .def("close", &SkPathBuilder::close)
+    .def("polylineTo",
+        [] (SkPathBuilder& self, const std::vector<SkPoint>& points) {
+            return self.polylineTo(points.data(), points.size());
+        },
+        R"docstring(
+        Append a series of lineTo(...)
+        )docstring",
+        py::arg("points"))
+    .def("rLineTo", py::overload_cast<SkPoint>(&SkPathBuilder::rLineTo),
+        py::arg("pt"))
+    .def("rLineTo",
+        py::overload_cast<SkScalar, SkScalar>(&SkPathBuilder::rLineTo),
+        py::arg("x"), py::arg("y"))
+        .def("rQuadTo", py::overload_cast<SkPoint, SkPoint>(&SkPathBuilder::rQuadTo),
+        py::arg("pt1"), py::arg("pt2"))
+    .def("rQuadTo",
+        py::overload_cast<SkScalar, SkScalar, SkScalar, SkScalar>(
+            &SkPathBuilder::rQuadTo),
+        py::arg("x1"), py::arg("y1"), py::arg("x2"), py::arg("y2"))
+    .def("rConicTo",
+        py::overload_cast<SkPoint, SkPoint, SkScalar>(&SkPathBuilder::rConicTo),
+        py::arg("pt1"), py::arg("pt2"), py::arg("w"))
+    .def("rConicTo",
+        py::overload_cast<SkScalar, SkScalar, SkScalar, SkScalar, SkScalar>(
+            &SkPathBuilder::rConicTo),
+        py::arg("x1"), py::arg("y1"), py::arg("x2"), py::arg("y2"),
+        py::arg("w"))
+    .def("rCubicTo",
+        py::overload_cast<SkPoint, SkPoint, SkPoint>(&SkPathBuilder::rCubicTo),
+        py::arg("pt1"), py::arg("pt2"), py::arg("pt3"))
+    .def("rCubicTo",
+        py::overload_cast<SkScalar, SkScalar, SkScalar, SkScalar, SkScalar,
+            SkScalar>(&SkPathBuilder::rCubicTo),
+        py::arg("x1"), py::arg("y1"), py::arg("x2"), py::arg("y2"),
+        py::arg("x3"), py::arg("y3"))
+    .def("arcTo",
+        py::overload_cast<const SkRect&, SkScalar, SkScalar, bool>(
+            &SkPathBuilder::arcTo),
+        R"docstring(
+        Appends arc to the builder. Arc added is part of ellipse
+        bounded by oval, from startAngle through sweepAngle. Both startAngle and
+        sweepAngle are measured in degrees, where zero degrees is aligned with
+        the positive x-axis, and positive sweeps extends arc clockwise.
+
+        arcTo() adds line connecting the builder's last point to initial arc
+        point if forceMoveTo is false and the builder is not empty. Otherwise,
+        added contour begins with first point of arc. Angles greater than -360
+        and less than 360 are treated modulo 360.
+
+        :param oval:          bounds of ellipse containing arc
+        :param startAngleDeg: starting angle of arc in degrees
+        :param sweepAngleDeg: sweep, in degrees. Positive is clockwise; treated
+                              modulo 360
+        :param forceMoveTo:   true to start a new contour with arc
+        :return:              reference to the builder
+        )docstring",
+        py::arg("oval"), py::arg("startAngleDeg"), py::arg("sweepAngleDeg"),
+        py::arg("forceMoveTo"))
+    .def("arcTo",
+        py::overload_cast<SkPoint, SkPoint, SkScalar>(&SkPathBuilder::arcTo),
+        R"docstring(
+        Appends arc to :py:class:`Path`, after appending line if needed. Arc
+        is implemented by conic weighted to describe part of circle. Arc is
+        contained by tangent from last :py:class:`Path` point to p1, and
+        tangent from p1 to p2. Arc is part of circle sized to radius,
+        positioned so it touches both tangent lines.
+
+        If last :py:class:`Path` SkPoint does not start arc, arcTo() appends
+        connecting line to :py:class:`Path`. The length of vector from p1 to
+        p2 does not affect arc.
+
+        Arc sweep is always less than 180 degrees. If radius is zero, or if
+        tangents are nearly parallel, arcTo() appends line from last
+        :py:class:`Path` SkPoint to p1.
+
+        arcTo() appends at most one line and one conic. arcTo() implements the
+        functionality of PostScript arct and HTML Canvas arcTo.
+
+        :param p1:      SkPoint common to pair of tangents
+        :param p2:      end of second tangent
+        :param radius:  distance from arc to circle center
+        :return:        reference to :py:class:`Path`
+        )docstring",
+        py::arg("p1"), py::arg("p2"), py::arg("radius"))
+    .def("arcTo",
+        py::overload_cast<SkPoint, SkScalar, SkPathBuilder::ArcSize,
+            SkPathDirection, SkPoint>(&SkPathBuilder::arcTo),
+        R"docstring(
+        Appends arc to :py:class:`Path`. Arc is implemented by one or more
+        conic weighted to describe part of oval with radii (r.fX, r.fY)
+        rotated by xAxisRotate degrees. Arc curves from last :py:class:`Path`
+        :py:class:`Point` to (xy.fX, xy.fY), choosing one of four possible
+        routes: clockwise or counterclockwise, and smaller or larger.
+
+        Arc sweep is always less than 360 degrees. arcTo() appends line to xy
+        if either radii are zero, or if last :py:class:`Path` :py:class:`Point`
+        equals (xy.fX, xy.fY). arcTo() scales radii r to fit last
+        :py:class:`Path` :py:class:`Point` and xy if both are greater than zero
+        but too small to describe an arc.
+
+        arcTo() appends up to four conic curves. arcTo() implements the
+        functionality of SVG arc, although SVG sweep-flag value is opposite
+        the integer value of sweep; SVG sweep-flag uses 1 for clockwise, while
+        kCW_Direction cast to int is zero.
+
+        :param r:            radii on axes before x-axis rotation
+        :param xAxisRotate:  x-axis rotation in degrees; positive values are
+                             clockwise
+        :param largeArc:     chooses smaller or larger arc
+        :param sweep:        chooses clockwise or counterclockwise arc
+        :param xy:           end of arc
+        :return:             reference to :py:class:`Path`
+        )docstring",
+        py::arg("r"), py::arg("xAxisRotate"), py::arg("largeArc"),
+        py::arg("sweep"), py::arg("xy"))
+    .def("addArc", &SkPathBuilder::addArc,
+        R"docstring(
+        Appends arc to the builder, as the start of new contour. Arc added is
+        part of ellipse bounded by oval, from startAngle through sweepAngle.
+        Both startAngle and sweepAngle are measured in degrees, where zero
+        degrees is aligned with the positive x-axis, and positive sweeps
+        extends arc clockwise.
+
+        If sweepAngle <= -360, or sweepAngle >= 360; and startAngle modulo 90
+        is nearly zero, append oval instead of arc. Otherwise, sweepAngle
+        values are treated modulo 360, and arc may or may not draw depending
+        on numeric rounding.
+
+        :param oval:          bounds of ellipse containing arc
+        :param startAngleDeg: starting angle of arc in degrees
+        :param sweepAngleDeg: sweep, in degrees. Positive is clockwise; treated
+                              modulo 360
+        :return:              reference to this builder
+        )docstring",
+        py::arg("oval"), py::arg("startAngleDeg"), py::arg("sweepAngleDeg"))
+    .def("addRect",
+        py::overload_cast<const SkRect&, SkPathDirection, unsigned>(
+            &SkPathBuilder::addRect),
+        py::arg("rect"), py::arg("pathDirection"), py::arg("startIndex"))
+    .def("addOval",
+        py::overload_cast<const SkRect&, SkPathDirection, unsigned>(
+            &SkPathBuilder::addOval),
+        py::arg("rect"), py::arg("pathDirection"), py::arg("startIndex"))
+    .def("addRRect",
+        py::overload_cast<const SkRRect&, SkPathDirection, unsigned>(
+            &SkPathBuilder::addRRect),
+        py::arg("rrect"), py::arg("pathDirection"), py::arg("startIndex"))
+    .def("addRect",
+        py::overload_cast<const SkRect&, SkPathDirection>(
+            &SkPathBuilder::addRect),
+        py::arg("rect"), py::arg("pathDirection") = SkPathDirection::kCW)
+    .def("addOval",
+        py::overload_cast<const SkRect&, SkPathDirection>(
+            &SkPathBuilder::addOval),
+        py::arg("rect"), py::arg("pathDirection") = SkPathDirection::kCW)
+    .def("addRRect",
+        py::overload_cast<const SkRRect&, SkPathDirection>(
+            &SkPathBuilder::addRRect),
+        py::arg("rrect"), py::arg("pathDirection") = SkPathDirection::kCW)
+    .def("addCircle", &SkPathBuilder::addCircle,
+        py::arg("center_x"), py::arg("center_y"), py::arg("radius"),
+        py::arg("pathDirection") = SkPathDirection::kCW)
+    .def("addPolygon",
+        [] (SkPathBuilder& self, const std::vector<SkPoint>& points,
+            bool isClosed) {
+            return self.addPolygon(points.data(), points.size(), isClosed);
+        },
+        py::arg("points"), py::arg("isClosed"))
+    .def("incReserve",
+        py::overload_cast<int, int>(&SkPathBuilder::incReserve),
+        R"docstring(
+        Performance hint, to reserve extra storage for subsequent calls to
+        lineTo, quadTo, etc.
+        )docstring",
+        py::arg("extraPtCount"), py::arg("extraVerbCount"))
+    .def("incReserve",
+        py::overload_cast<int>(&SkPathBuilder::incReserve),
+        py::arg("extraPtCount"))
+    .def("offset", &SkPathBuilder::offset,
+        py::arg("dx"), py::arg("dy"))
+    .def("toggleInverseFillType", &SkPathBuilder::toggleInverseFillType)
+    ;
 }
