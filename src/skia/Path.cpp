@@ -2444,7 +2444,7 @@ PathBuilder
         R"docstring(
         Performance hint, to reserve extra storage for subsequent calls to
         lineTo, quadTo, etc.
-        )docstring"
+        )docstring",
         py::arg("extraPtCount"), py::arg("extraVerbCount"))
     .def("incReserve",
         py::overload_cast<int>(&SkPathBuilder::incReserve),
