@@ -56,9 +56,10 @@ py::enum_<SkEncodedOrigin>(m, "EncodedOrigin",
 
 m.def("EncodedOriginToMatrix", &SkEncodedOriginToMatrix,
     R"docstring(
-    Given an encoded origin and the width and height of the source data, returns
-    a matrix that transforms the source rectangle [0, 0, w, h] to a correctly
-    oriented destination rectangle, with the upper left corner still at [0, 0].
+    Given an encoded origin and the width and height of the source data,
+    returns a matrix that transforms the source rectangle with upper left
+    corner at [0, 0] and origin to a correctly oriented destination rectangle
+    of [0, 0, w, h].
     )docstring",
     py::arg("origin"), py::arg("w"), py::arg("h"));
 
