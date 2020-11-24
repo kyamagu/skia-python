@@ -159,7 +159,7 @@ py::class_<SkColorFilters>(m, "ColorFilters")
         R"docstring(
         A version of Matrix which operates in HSLA space instead of RGBA.
         i.e. ``HSLA-to-RGBA(Matrix(RGBA-to-HSLA(input)))``.
-        )docstring"
+        )docstring",
         py::arg("colorMatrix"))
     .def_static("LinearToSRGBGamma", &SkColorFilters::LinearToSRGBGamma)
     .def_static("SRGBToLinearGamma", &SkColorFilters::SRGBToLinearGamma)
