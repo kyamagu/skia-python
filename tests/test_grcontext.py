@@ -279,7 +279,7 @@ def test_GrContext_abandonContext(context):
     context.abandonContext()
 
 
-def test_GrContext_abandoned(context):
+def test_GrRecordingContext_abandoned(context):
     assert isinstance(context.abandoned(), bool)
 
 
@@ -380,11 +380,24 @@ def test_GrContext_storeVkPipelineCacheData(context):
     context.storeVkPipelineCacheData()
 
 
-def test_GrContext_defaultBackendFormat(context):
+def test_GrRecordingContext_defaultBackendFormat(context):
     assert isinstance(
         context.defaultBackendFormat(
             skia.ColorType.kRGBA_8888_ColorType, skia.GrRenderable.kNo),
         skia.GrBackendFormat)
+
+
+def test_GrRecordingContext_maxTextureSize(context):
+    assert isinstance(context.maxTextureSize(), int)
+
+
+def test_GrRecordingContext_maxRenderTargetSize(context):
+    assert isinstance(context.maxRenderTargetSize(), int)
+
+
+def test_GrRecordingContext_colorTypeSupportedAsImage(context):
+    assert isinstance(
+        context.colorTypeSupportedAsImage(skia.kRGBA_8888_ColorType), bool)
 
 
 @pytest.mark.parametrize('args', [

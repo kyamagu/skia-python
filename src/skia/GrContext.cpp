@@ -342,10 +342,9 @@ py::class_<GrBackendRenderTarget>(m, "GrBackendRenderTarget")
         py::arg("width"), py::arg("height"), py::arg("sampleCnt"),
         py::arg("stencilBits"), py::arg("glInfo"))
 #ifdef SK_VULKAN
-    .def(py::init<int, int, int, int, const GrVkImageInfo&>(),
-        py::arg("width"), py::arg("height"), py::arg("sampleCnt"),
-        py::arg("stencilBits"), py::arg("vkInfo"))
     .def(py::init<int, int, int, const GrVkImageInfo&>(),
+        py::arg("width"), py::arg("height"), py::arg("vkInfo"))
+    .def(py::init<int, int, int, int, const GrVkImageInfo&>(),
         py::arg("width"), py::arg("height"), py::arg("sampleCnt"),
         py::arg("vkInfo"))
 #endif
@@ -460,6 +459,19 @@ py::class_<GrRecordingContext, sk_sp<GrRecordingContext>, GrImageContext>(
         :py:meth:`~GrRecordingContext.maxSurfaceSampleCountForColorType`.
         )docstring",
         py::arg("colorType"))
+    .def("maxTextureSize", &GrRecordingContext::maxTextureSize,
+        R"docstring(
+        Gets the maximum supported texture size.
+        )docstring")
+    .def("maxRenderTargetSize", &GrRecordingContext::maxRenderTargetSize,
+        R"docstring(
+        Gets the maximum supported render target size.
+        )docstring")
+    .def("colorTypeSupportedAsImage",
+        &GrRecordingContext::colorTypeSupportedAsImage,
+        R"docstring(
+        Can a :py:class:`Image` be created with the given color type.
+        )docstring")
     .def("maxSurfaceSampleCountForColorType",
         &GrRecordingContext::maxSurfaceSampleCountForColorType,
         R"docstring(
