@@ -4,11 +4,13 @@
 namespace {
 
 bool ImageReadPixels(
-    const SkImage& image, const SkImageInfo& imageInfo, py::buffer dstPixels,
-    size_t dstRowBytes, int srcX, int srcY, SkImage::CachingHint hint) {
+    const SkImage& image, GrDirectContext* context,
+    const SkImageInfo& imageInfo, py::buffer dstPixels, size_t dstRowBytes,
+    int srcX, int srcY, SkImage::CachingHint hint) {
     auto info = dstPixels.request(true);
     auto rowBytes = ValidateBufferToImageInfo(imageInfo, info, dstRowBytes);
-    return image.readPixels(imageInfo, info.ptr, rowBytes, srcX, srcY, hint);
+    return image.readPixels(
+        context, imageInfo, info.ptr, rowBytes, srcX, srcY, hint);
 }
 
 sk_sp<SkImage> ImageFromBuffer(
@@ -1255,84 +1257,120 @@ image
         py::arg("flushPendingGrContextIO"), py::arg("origin") = nullptr)
     .def("readPixels", &ImageReadPixels,
         R"docstring(
-        Copies :py:class:`Rect` of pixels from :py:class:`Image` to array.
+        Copies a :py:class:`Rect` of pixels from :py:class:`Image` to dst. Copy
+        starts at (srcX, srcY), and does not exceed :py:class:`Image` (width(),
+        height()).
 
-        Copy starts at offset (srcX, srcY), and does not exceed
-        :py:class:`Image` (:py:meth:`width`, :py:meth:`height`).
-
+        dstInfo specifies width, height, :py:class:`ColorType`,
+        :py:class:`AlphaType`, and :py:class:`ColorSpace` of destination.
+        dstRowBytes specifics the gap from one destination row to the next.
         Returns true if pixels are copied. Returns false if:
 
-        - array row stride is less than ``dstInfo.minRowBytes``
+        - dstInfo.addr() equals nullptr
+        - dstRowBytes is less than ``dstInfo.minRowBytes()``
+        - :py:class:`PixelRef` is nullptr
+
+        Pixels are copied only if pixel conversion is possible. If
+        :py:class:`Image` :py:class:`ColorType` is
+        :py:attr:`~kGray_8_ColorType`, or :py:attr:`~kAlpha_8_ColorType`;
+        dst.colorType() must match. If :py:class:`Image` :py:class:`ColorType`
+        is :py:attr:`~kGray_8_ColorType`, dst.colorSpace() must match. If
+        :py:class:`Image` :py:class:`AlphaType` is
+        :py:attr:`~kOpaque_AlphaType`, dst.alphaType() must match. If
+        :py:class:`Image` :py:class:`ColorSpace` is nullptr, dst.colorSpace()
+        must match. Returns false if pixel conversion is not possible.
 
         srcX and srcY may be negative to copy only top or left of source.
-        Returns false if :py:meth:`width` or :py:meth:`height` is zero or
-        negative. Returns false if abs(srcX) >= Image :py:meth:`width`, or if
-        abs(srcY) >= Image :py:meth:`height`.
+        Returns false if width() or height() is zero or negative. Returns false
+        if abs(srcX) >= Image width(), or if abs(srcY) >= Image height().
 
-        If cachingHint is :py:attr:`~Image.CachingHint.kAllow_CachingHint`,
-        pixels may be retained locally. If cachingHint is
-        :py:attr:`~Image.CachingHint.kDisallow_CachingHint`, pixels are not
-        added to the local cache.
+        If cachingHint is kAllow_CachingHint, pixels may be retained locally.
+        If cachingHint is kDisallow_CachingHint, pixels are not added to the
+        local cache.
 
-        :array: destination pixel storage, such as ``bytearray`` or
-            ``numpy.ndarray``
-        :srcX: column index whose absolute value is less than
-            :py:meth:`width`
-        :srcY: row index whose absolute value is less than
-            :py:meth:`height`
-        :return: true if pixels are copied to array
+        :param context:      the GrDirectContext in play, if it exists
+        :param dstInfo:      destination width, height, pixels,
+                             :py:class:`ColorType`, :py:class:`AlphaType`,
+                             :py:class:`ColorSpace`
+        :param dstPixels:    destination pixel storage
+        :param dstRowBytes:  destination row length
+        :param srcX:         column index whose absolute value is less than
+                             width()
+        :param srcY:         row index whose absolute value is less than
+                             height()
+        :param cachingHint:  whether the pixels should be cached locally
+        :return:             true if pixels are copied to dstPixels
         )docstring",
-        py::arg("dstInfo"), py::arg("dstPixels"), py::arg("dstRowBytes") = 0,
+        py::arg("context"), py::arg("dstInfo"), py::arg("dstPixels"),
+        py::arg("dstRowBytes"), py::arg("srcX") = 0, py::arg("srcY") = 0,
+        py::arg("cachingHint") = SkImage::CachingHint::kAllow_CachingHint)
+    .def("readPixels",
+        py::overload_cast<GrDirectContext*, const SkPixmap&, int, int,
+            SkImage::CachingHint>(&SkImage::readPixels, py::const_),
+        R"docstring(
+        Copies a :py:class:`Rect` of pixels from :py:class:`Image` to dst. Copy
+        starts at (srcX, srcY), and does not exceed :py:class:`Image` (width(),
+        height()).
+
+        dst specifies width, height, :py:class:`ColorType`,
+        :py:class:`AlphaType`, :py:class:`ColorSpace`, pixel storage, and row
+        bytes of destination. dst.rowBytes() specifics the gap from one
+        destination row to the next. Returns true if pixels are copied. Returns
+        false if:
+
+        - dst pixel storage equals nullptr
+        - dst.rowBytes is less than :py:meth:`ImageInfo.minRowBytes`
+        - :py:class:`PixelRef` is nullptr
+
+        Pixels are copied only if pixel conversion is possible. If
+        :py:class:`Image` :py:class:`ColorType` is
+        :py:attr:`~kGray_8_ColorType`, or :py:attr:`~kAlpha_8_ColorType`;
+        dst.colorType() must match. If :py:class:`Image` :py:class:`ColorType`
+        is :py:attr:`~kGray_8_ColorType`, dst.colorSpace() must match. If
+        :py:class:`Image` :py:class:`AlphaType` is
+        :py:attr:`~kOpaque_AlphaType`, dst.alphaType() must match. If
+        :py:class:`Image` :py:class:`ColorSpace` is nullptr, dst.colorSpace()
+        must match. Returns false if pixel conversion is not possible.
+
+        srcX and srcY may be negative to copy only top or left of source.
+        Returns false if width() or height() is zero or negative. Returns false
+        if abs(srcX) >= Image width(), or if abs(srcY) >= Image height().
+
+        If cachingHint is kAllow_CachingHint, pixels may be retained locally.
+        If cachingHint is kDisallow_CachingHint, pixels are not added to the
+        local cache.
+
+        :param context:      the GrDirectContext in play, if it exists
+        :param dst:          destination :py:class:`Pixmap`:
+                             :py:class:`ImageInfo`, pixels, row bytes
+        :param srcX:         column index whose absolute value is less than
+                             width()
+        :param srcY:         row index whose absolute value is less than
+                             height()
+        :param cachingHint:  whether the pixels should be cached locally
+        :return:             true if pixels are copied to dst
+        )docstring",
+        py::arg("context"), py::arg("dst"), py::arg("srcX"), py::arg("srcY"),
+        py::arg("cachingHint") = SkImage::CachingHint::kAllow_CachingHint)
+    .def("readPixels",
+        [] (const SkImage& image, const SkImageInfo& dstInfo,
+            py::buffer dstPixels, size_t dstRowBytes, int srcX, int srcY,
+            SkImage::CachingHint cachingHint) {
+            return ImageReadPixels(
+                image, nullptr, dstInfo, dstPixels, dstRowBytes, srcX, srcY,
+                cachingHint);
+        },
+        R"docstring(
+        Deprecated. Use the variants that accept a GrDirectContext.
+        )docstring",
+        py::arg("dstInfo"), py::arg("dstPixels"), py::arg("dstRowBytes"),
         py::arg("srcX") = 0, py::arg("srcY") = 0,
         py::arg("cachingHint") = SkImage::kAllow_CachingHint)
     .def("readPixels",
         py::overload_cast<const SkPixmap&, int, int, SkImage::CachingHint>(
             &SkImage::readPixels, py::const_),
         R"docstring(
-        Copies :py:class:`Rect` of pixels from :py:class:`Image` to dst.
-
-        Copy starts at offset (srcX, srcY), and does not exceed
-        :py:class:`Image` (:py:meth:`width`, :py:meth:`height`).
-
-        dst specifies width, height, :py:class:`ColorType`,
-        :py:class:`AlphaType`, and :py:class:`ColorSpace`, pixel storage, and
-        row bytes of destination. ``dst.rowBytes()`` specifics the gap from one
-        destination row to the next. Returns true if pixels are copied. Returns
-        false if:
-
-        - dst pixel storage equals nullptr
-        - dstRowBytes is less than ``ImageInfo.minRowBytes``
-        - :py:class:`PixelRef` is nullptr
-
-        Pixels are copied only if pixel conversion is possible. If
-        :py:class:`Image` :py:class:`ColorType` is
-        :py:attr:`~ColorType.kGray_8_ColorType`, or
-        :py:attr:`~ColorType.kAlpha_8_ColorType`; ``dst.colorType``
-        must match. If :py:class:`Image` :py:class:`ColorType` is
-        :py:attr:`~ColorType.kGray_8_ColorType`, ``dst.colorSpace`` must
-        match. If :py:class:`Image` :py:class:`AlphaType` is
-        :py:attr:`~AlphaType.kOpaque_AlphaType`, ``dst.alphaType`` must
-        match. If :py:class:`Image` :py:class:`ColorSpace` is nullptr,
-        ``dst.colorSpace`` must match. Returns false if pixel conversion is
-        not possible.
-
-        srcX and srcY may be negative to copy only top or left of source.
-        Returns false if :py:meth:`width` or :py:meth:`height` is zero or
-        negative. Returns false if abs(srcX) >= Image :py:meth:`width`, or if
-        abs(srcY) >= Image :py:meth:`height`.
-
-        If cachingHint is :py:attr:`~Image.CachingHint.kAllow_CachingHint`,
-        pixels may be retained locally. If cachingHint is
-        :py:attr:`~Image.CachingHint.kDisallow_CachingHint`, pixels are not
-        added to the local cache.
-
-        :dst: destination :py:class:`Pixmap`: :py:class:`ImageInfo`, pixels,
-            row bytes
-        :srcX: column index whose absolute value is less than
-            :py:meth:`width`
-        :srcY: row index whose absolute value is less than
-            :py:meth:`height`
-        :return: true if pixels are copied to dst
+        Deprecated. Use the variants that accept a `GrDirectContext`.
         )docstring",
         py::arg("dst"), py::arg("srcX"), py::arg("srcY"),
         py::arg("cachingHint") = SkImage::CachingHint::kAllow_CachingHint)

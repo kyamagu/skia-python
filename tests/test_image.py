@@ -189,18 +189,25 @@ def test_Image_flush(image, context):
     (
         skia.ImageInfo.MakeN32Premul(320, 240),
         np.zeros((240, 320, 4), np.uint8),
+        320 * 4,
     ),
 ])
-def test_Image_readPixels(image, args):
+def test_Image_readPixels(context, image, args):
     assert isinstance(image.readPixels(*args), bool)
+    assert isinstance(image.readPixels(context, *args), bool)
+    assert isinstance(image.readPixels(None, *args), bool)
 
 
-def test_Image_readPixels2(image):
+@pytest.mark.parametrize('use_context', [True, False])
+def test_Image_readPixels2(context, use_context, image):
     info = image.imageInfo().makeWH(100, 100)
     dstRowBytes = info.minRowBytes()
     dstPixels = bytearray(info.computeByteSize(dstRowBytes))
     dst = skia.Pixmap(info, dstPixels, dstRowBytes)
-    assert isinstance(image.readPixels(dst, 0, 0), bool)
+    if use_context:
+        assert isinstance(image.readPixels(context, dst, 0, 0), bool)
+    else:
+        assert isinstance(image.readPixels(dst, 0, 0), bool)
 
 
 def test_Image_scalePixels(image):
