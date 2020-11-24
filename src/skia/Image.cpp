@@ -1498,6 +1498,11 @@ image
         R"docstring(
         Returns true if the image has mipmap levels.
         )docstring")
+    .def("withDefaultMipmaps", &SkImage::withDefaultMipmaps,
+        R"docstring(
+        Returns an image with the same "base" pixels as the this image, but with
+        mipmap levels automatically generated and attached.
+        )docstring")
     .def("makeTextureImage", &SkImage::makeTextureImage,
         R"docstring(
         Returns :py:class:`Image` backed by GPU texture associated with context.

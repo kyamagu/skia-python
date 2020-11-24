@@ -235,9 +235,8 @@ def test_Image_makeSubset(image):
 def test_Image_hasMipmaps(image):
     assert isinstance(image.hasMipmaps(), bool)
 
-@pytest.mark.skip(reason='Not implemented')
-def test_Image_withMipmaps(image):
-    raise NotImplementedError
+def test_Image_withDefaultMipmaps(context, image):
+    assert isinstance(image.withDefaultMipmaps(), (type(None), skia.Image))
 
 def test_Image_makeTextureImage(image, context):
     assert isinstance(
