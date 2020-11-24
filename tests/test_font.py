@@ -167,6 +167,10 @@ def test_Typeface_getFamilyName(typeface):
     assert isinstance(typeface.getFamilyName(), str)
 
 
+def test_Typeface_getPostScriptName(typeface):
+    assert isinstance(typeface.getPostScriptName(), str)
+
+
 def test_Typeface_getBounds(typeface):
     assert isinstance(typeface.getBounds(), skia.Rect)
 
