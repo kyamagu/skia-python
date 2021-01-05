@@ -25,6 +25,8 @@ jobs:
       run: git submodule status > submodule.txt
     - name: Install system dependencies
       run: yum --disablerepo=epel install -y fontconfig-devel mesa-libGL-devel xorg-x11-server-Xvfb mesa-dri-drivers
+    - name: Set up Python
+      run: echo "/opt/python/${{ matrix.python-version }}/bin" >> $GITHUB_PATH
     - uses: actions/cache@v1
       id: cache
       with:
@@ -51,14 +53,13 @@ jobs:
     - name: Build Skia
       run: |
         cd skia
+        echo "Syncing deps"
         python tools/git-sync-deps
         cp -f ../gn/out/gn bin/gn  # Replace gn.
         bin/gn gen out/Release --args='is_official_build=true skia_enable_tools=true skia_use_system_libjpeg_turbo=false skia_use_system_libwebp=false skia_use_system_libpng=false skia_use_system_icu=false skia_use_system_harfbuzz=false extra_cflags_cc=["-frtti"] extra_ldflags=["-lrt"]'
         ninja -C out/Release skia skia.h experimental_svg_model
         cd ..
       if: steps.cache.outputs.cache-hit != 'true'
-    - name: Set up Python
-      run: echo "/opt/python/${{ matrix.python-version }}/bin" >> $GITHUB_PATH
     - name: Build python binding
       run: |
         python -m pip install -U pip
