@@ -1,0 +1,17 @@
+diff --git a/tools/git-sync-deps b/tools/git-sync-deps
+index ca1ba47a75..92ff8ef7bc 100755
+--- a/tools/git-sync-deps
++++ b/tools/git-sync-deps
+@@ -235,9 +235,9 @@ def git_sync_deps(deps_file_path, command_line_os_requests, verbose):
+ 
+ 
+ def multithread(function, list_of_arg_lists):
+-  # for args in list_of_arg_lists:
+-  #   function(*args)
+-  # return
++  for args in list_of_arg_lists:
++    function(*args)
++  return
+   threads = []
+   for args in list_of_arg_lists:
+     thread = threading.Thread(None, function, None, args)
