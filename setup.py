@@ -16,7 +16,8 @@ __version__ = '87.0'
 
 SKIA_PATH = os.getenv('SKIA_PATH', 'skia')
 SKIA_OUT_PATH = os.getenv(
-    'SKIA_OUT_PATH', os.path.join(SKIA_PATH, 'out', 'Release'))
+    'SKIA_OUT_PATH', os.path.join(SKIA_PATH, 'out', 'Release')
+)
 
 if sys.platform == 'win32':
     DEFINE_MACROS = []  # doesn't work for cl.exe
@@ -29,7 +30,18 @@ if sys.platform == 'win32':
         'OpenGL32',
         'Gdi32',
     ]
-    EXTRA_OBJECTS = [os.path.join(SKIA_OUT_PATH, 'skia.lib')]
+    EXTRA_OBJECTS = [os.path.join(SKIA_OUT_PATH, 'skia.lib')] + list(
+        glob.glob(
+            os.path.join(
+                SKIA_OUT_PATH,
+                'obj',
+                'experimental',
+                'svg',
+                'model',
+                '*.obj',
+            )
+        )
+    )
     EXTRA_COMPILE_ARGS = [
         '/std:c++17',  # c++20 fails.
         '/DVERSION_INFO=%s' % __version__,
@@ -41,7 +53,7 @@ if sys.platform == 'win32':
         '/wd4267',  # Conversion from 'size_t' to 'int', possible loss of data.
         '/wd4800',  # Forcing value to bool 'true' or 'false'.
         '/wd4180',  # Qualifier applied to function type has no meaning.
-        '/MD',      # Bugfix: https://bugs.python.org/issue38597
+        '/MD',  # Bugfix: https://bugs.python.org/issue38597
     ]
     EXTRA_LINK_ARGS = [
         '/OPT:ICF',
@@ -55,7 +67,18 @@ elif sys.platform == 'darwin':
     LIBRARIES = [
         'dl',
     ]
-    EXTRA_OBJECTS = [os.path.join(SKIA_OUT_PATH, 'libskia.a')]
+    EXTRA_OBJECTS = [os.path.join(SKIA_OUT_PATH, 'libskia.a')] + list(
+        glob.glob(
+            os.path.join(
+                SKIA_OUT_PATH,
+                'obj',
+                'experimental',
+                'svg',
+                'model',
+                '*.o',
+            )
+        )
+    )
     EXTRA_COMPILE_ARGS = [
         '-std=c++14',
         '-stdlib=libc++',
@@ -66,9 +89,12 @@ elif sys.platform == 'darwin':
         '-stdlib=libc++',
         '-mmacosx-version-min=10.9',
         '-dead_strip',
-        '-framework', 'AppKit',
-        '-framework', 'ApplicationServices',
-        '-framework', 'OpenGL',
+        '-framework',
+        'AppKit',
+        '-framework',
+        'ApplicationServices',
+        '-framework',
+        'OpenGL',
     ]
 else:
     DEFINE_MACROS = [
@@ -81,7 +107,18 @@ else:
         'freetype',
         'GL',
     ]
-    EXTRA_OBJECTS = [os.path.join(SKIA_OUT_PATH, 'libskia.a')]
+    EXTRA_OBJECTS = [os.path.join(SKIA_OUT_PATH, 'libskia.a')] + list(
+        glob.glob(
+            os.path.join(
+                SKIA_OUT_PATH,
+                'obj',
+                'experimental',
+                'svg',
+                'model',
+                '*.o',
+            )
+        )
+    )
     EXTRA_COMPILE_ARGS = [
         '-std=c++14',
         '-fvisibility=hidden',
@@ -102,7 +139,6 @@ class get_pybind_include(object):
     The purpose of this class is to postpone importing pybind11
     until it is actually installed, so that the ``get_include()``
     method can be invoked. """
-
     def __init__(self, user=False):
         self.user = user
 
@@ -140,7 +176,6 @@ extension = Extension(
     depends=[os.path.join('src', 'skia', 'common.h')],
     language='c++',
 )
-
 
 setup(
     name=NAME,
