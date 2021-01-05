@@ -26,8 +26,6 @@ jobs:
         yum --disablerepo=epel install -y fontconfig-devel mesa-libGL-devel xorg-x11-server-Xvfb mesa-dri-drivers
         yum clean all
         rm -rf /var/cache/yum
-    - name: Set up Python
-      run: echo "/opt/python/${{ matrix.python-version }}/bin" >> $GITHUB_PATH
     - name: Set PATH
       run: echo "$PWD/depot_tools" >> $GITHUB_PATH
     - name: Build gn
@@ -53,6 +51,8 @@ jobs:
         bin/gn gen out/Release --args='is_official_build=true skia_enable_tools=true skia_use_system_libjpeg_turbo=false skia_use_system_libwebp=false skia_use_system_libpng=false skia_use_system_icu=false skia_use_system_harfbuzz=false extra_cflags_cc=["-frtti"] extra_ldflags=["-lrt"]'
         ninja -C out/Release skia skia.h experimental_svg_model
         cd ..
+    - name: Set up Python
+      run: echo "/opt/python/${{ matrix.python-version }}/bin" >> $GITHUB_PATH
     - name: Build python binding
       run: |
         python -m pip install -U pip
