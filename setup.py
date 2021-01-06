@@ -30,7 +30,7 @@ if sys.platform == 'win32':
         'OpenGL32',
         'Gdi32',
     ]
-    EXTRA_OBJECTS = [os.path.join(SKIA_OUT_PATH, 'skia.lib')] + list(
+    EXTRA_OBJECTS = list(
         glob.glob(
             os.path.join(
                 SKIA_OUT_PATH,
@@ -41,7 +41,7 @@ if sys.platform == 'win32':
                 '*.obj',
             )
         )
-    )
+    ) + [os.path.join(SKIA_OUT_PATH, 'skia.lib')]
     EXTRA_COMPILE_ARGS = [
         '/std:c++17',  # c++20 fails.
         '/DVERSION_INFO=%s' % __version__,
@@ -67,7 +67,7 @@ elif sys.platform == 'darwin':
     LIBRARIES = [
         'dl',
     ]
-    EXTRA_OBJECTS = [os.path.join(SKIA_OUT_PATH, 'libskia.a')] + list(
+    EXTRA_OBJECTS = list(
         glob.glob(
             os.path.join(
                 SKIA_OUT_PATH,
@@ -78,7 +78,7 @@ elif sys.platform == 'darwin':
                 '*.o',
             )
         )
-    )
+    ) + [os.path.join(SKIA_OUT_PATH, 'libskia.a')]
     EXTRA_COMPILE_ARGS = [
         '-std=c++14',
         '-stdlib=libc++',
@@ -107,7 +107,7 @@ else:
         'freetype',
         'GL',
     ]
-    EXTRA_OBJECTS = [os.path.join(SKIA_OUT_PATH, 'libskia.a')] + list(
+    EXTRA_OBJECTS = list(
         glob.glob(
             os.path.join(
                 SKIA_OUT_PATH,
@@ -118,7 +118,7 @@ else:
                 '*.o',
             )
         )
-    )
+    ) + [os.path.join(SKIA_OUT_PATH, 'libskia.a')]
     EXTRA_COMPILE_ARGS = [
         '-std=c++14',
         '-fvisibility=hidden',
