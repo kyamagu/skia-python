@@ -1,5 +1,6 @@
 import contextlib
 import skia
+import os
 import pytest
 import sys
 import logging
@@ -79,11 +80,14 @@ def canvas(surface):
 
 
 @pytest.fixture(scope='session')
-def png_path():
-    import os
+def resource_path():
     root_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-    return os.path.join(
-        root_dir, 'skia', 'resources', 'images', 'color_wheel.png')
+    return os.path.join(root_dir, 'skia', 'resources')
+
+
+@pytest.fixture(scope='session')
+def png_path(resource_path):
+    return os.path.join(resource_path, 'images', 'color_wheel.png')
 
 
 @pytest.fixture(scope='session')
@@ -123,8 +127,5 @@ def vertices():
 
 
 @pytest.fixture(scope='session')
-def ttf_path():
-    import os
-    root_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-    return os.path.join(
-        root_dir, 'skia', 'resources', 'fonts', 'Distortable.ttf')
+def ttf_path(resource_path):
+    return os.path.join(resource_path, 'fonts', 'Distortable.ttf')

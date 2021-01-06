@@ -31,6 +31,7 @@ void initString(py::module &);
 void initSurface(py::module &);
 void initTextBlob(py::module &);
 void initVertices(py::module &);
+void initSVGDOM(py::module &);
 
 // Main entry point.
 PYBIND11_MODULE(skia, m) {
@@ -68,6 +69,7 @@ PYBIND11_MODULE(skia, m) {
 
     initCanvas(m);
     initSurface(m);
+    initSVGDOM(m);
 
 #ifdef VERSION_INFO
     m.attr("__version__") = XSTRING(VERSION_INFO);

@@ -51,11 +51,11 @@ jobs:
     - name: Build Skia
       run: |
         cd skia
+        patch -p1 < ../patch/git-sync-deps.patch
         python tools/git-sync-deps
         cp -f ../gn/out/gn bin/gn  # Replace gn.
         bin/gn gen out/Release --args='is_official_build=true skia_enable_tools=true skia_use_system_libjpeg_turbo=false skia_use_system_libwebp=false skia_use_system_libpng=false skia_use_system_icu=false skia_use_system_harfbuzz=false extra_cflags_cc=["-frtti"] extra_ldflags=["-lrt"]'
-        ninja -C out/Release skia skia.h
-        rm -rf out/Release/obj
+        ninja -C out/Release skia skia.h experimental_svg_model
         cd ..
       if: steps.cache.outputs.cache-hit != 'true'
     - name: Set up Python
@@ -98,8 +98,7 @@ jobs:
         cd skia
         python tools/git-sync-deps
         bin/gn gen out/Release --args='is_official_build=true skia_enable_tools=true skia_use_system_libjpeg_turbo=false skia_use_system_libwebp=false skia_use_system_libpng=false skia_use_system_icu=false skia_use_system_harfbuzz=false extra_cflags_cc=["-frtti", "-mmacosx-version-min=10.9"]'
-        ninja -C out/Release skia skia.h
-        rm -rf out/Release/obj
+        ninja -C out/Release skia skia.h experimental_svg_model
         cd ..
       if: steps.cache.outputs.cache-hit != 'true'
     - name: Set up Python
@@ -160,8 +159,7 @@ jobs:
         cd skia
         python tools\git-sync-deps
         bin\gn gen out\Release --args='is_official_build=true skia_enable_tools=true skia_use_system_libjpeg_turbo=false skia_use_system_libwebp=false skia_use_system_libpng=false skia_use_system_icu=false skia_use_system_harfbuzz=false skia_use_system_expat=false skia_use_system_zlib=false extra_cflags_cc=[\"/GR\", \"/EHsc\", \"/MD\"] target_cpu=\"${{ matrix.arch }}\"'
-        ninja -C out\Release skia skia.h
-        rm out\Release\obj -r -fo
+        ninja -C out\Release skia skia.h experimental_svg_model
         cd ..
       if: steps.cache.outputs.cache-hit != 'true'
     - name: Set up Python
