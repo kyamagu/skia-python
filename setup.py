@@ -185,6 +185,7 @@ setup(
     url='https://github.com/kyamagu/skia-python',
     description='Skia python binding',
     long_description=open('README.md', 'r').read(),
+    long_description_content_type='text/markdown',
     ext_modules=[extension],
     install_requires=['pybind11>=2.6'],
     setup_requires=['pybind11>=2.6'],
