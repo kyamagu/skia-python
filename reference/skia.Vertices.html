@@ -13,6 +13,8 @@
   
   <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
 
   
   
@@ -29,6 +31,7 @@
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
         <script src="../_static/jquery.js"></script>
         <script src="../_static/underscore.js"></script>
         <script src="../_static/doctools.js"></script>
@@ -219,6 +222,7 @@
 <li class="toctree-l3"><a class="reference internal" href="skia.PathDirection.html">PathDirection</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.PathEffect.html">PathEffect</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.PathFillType.html">PathFillType</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.PathMeasure.html">PathMeasure</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.PathOp.html">PathOp</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.PathSegmentMask.html">PathSegmentMask</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.PathVerb.html">PathVerb</a></li>
@@ -357,8 +361,8 @@
   <div class="section" id="vertices">
 <h1>Vertices<a class="headerlink" href="#vertices" title="Permalink to this headline">¶</a></h1>
 <dl class="py class">
-<dt id="skia.Vertices">
-<em class="property"><span class="pre">class</span> </em><code class="sig-name descname"><span class="pre">Vertices</span></code><a class="headerlink" href="#skia.Vertices" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="skia.Vertices">
+<em class="property"><span class="pre">class</span> </em><span class="sig-name descname"><span class="pre">Vertices</span></span><a class="headerlink" href="#skia.Vertices" title="Permalink to this definition">¶</a></dt>
 <dd><p>An immutable set of vertex data that can be used with
 <a class="reference internal" href="skia.Canvas.html#skia.Canvas.drawVertices" title="skia.Canvas.drawVertices"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Canvas.drawVertices()</span></code></a>.</p>
 <p class="rubric">Classes</p>
@@ -438,8 +442,8 @@
 <div class="section" id="methods">
 <h2>Methods<a class="headerlink" href="#methods" title="Permalink to this headline">¶</a></h2>
 <dl class="py method">
-<dt id="skia.Vertices.MakeCopy">
-<em class="property"><span class="pre">static</span> </em><code class="sig-prename descclassname"><span class="pre">Vertices.</span></code><code class="sig-name descname"><span class="pre">MakeCopy</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mode</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="skia.Vertices.VertexMode.html#skia.Vertices.VertexMode" title="skia.Vertices.VertexMode"><span class="pre">skia.Vertices.VertexMode</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">positions</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="skia.Point.html#skia.Point" title="skia.Point"><span class="pre">skia.Point</span></a><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">texs</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">object</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">colors</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">object</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">indices</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">object</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="#skia.Vertices" title="skia.Vertices"><span class="pre">skia.Vertices</span></a><a class="headerlink" href="#skia.Vertices.MakeCopy" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="skia.Vertices.MakeCopy">
+<em class="property"><span class="pre">static</span> </em><span class="sig-prename descclassname"><span class="pre">Vertices.</span></span><span class="sig-name descname"><span class="pre">MakeCopy</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mode</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="skia.Vertices.VertexMode.html#skia.Vertices.VertexMode" title="skia.Vertices.VertexMode"><span class="pre">skia.Vertices.VertexMode</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">positions</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="skia.Point.html#skia.Point" title="skia.Point"><span class="pre">skia.Point</span></a><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">texs</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">object</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">colors</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">object</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">indices</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">object</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="#skia.Vertices" title="skia.Vertices"><span class="pre">skia.Vertices</span></a><a class="headerlink" href="#skia.Vertices.MakeCopy" title="Permalink to this definition">¶</a></dt>
 <dd><p>Create a vertices by copying the specified arrays.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -455,8 +459,8 @@
 </dd></dl>
 
 <dl class="py method">
-<dt id="skia.Vertices.__init__">
-<code class="sig-prename descclassname"><span class="pre">Vertices.</span></code><code class="sig-name descname"><span class="pre">__init__</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#skia.Vertices" title="skia.Vertices"><span class="pre">skia.Vertices</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">mode</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="skia.Vertices.VertexMode.html#skia.Vertices.VertexMode" title="skia.Vertices.VertexMode"><span class="pre">skia.Vertices.VertexMode</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">positions</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="skia.Point.html#skia.Point" title="skia.Point"><span class="pre">skia.Point</span></a><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">texs</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">object</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">colors</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">object</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">indices</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">object</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">None</span><a class="headerlink" href="#skia.Vertices.__init__" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="skia.Vertices.__init__">
+<span class="sig-prename descclassname"><span class="pre">Vertices.</span></span><span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#skia.Vertices" title="skia.Vertices"><span class="pre">skia.Vertices</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">mode</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="skia.Vertices.VertexMode.html#skia.Vertices.VertexMode" title="skia.Vertices.VertexMode"><span class="pre">skia.Vertices.VertexMode</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">positions</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="skia.Point.html#skia.Point" title="skia.Point"><span class="pre">skia.Point</span></a><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">texs</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">object</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">colors</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">object</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">indices</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">object</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">None</span><a class="headerlink" href="#skia.Vertices.__init__" title="Permalink to this definition">¶</a></dt>
 <dd><p>Create a vertices by copying the specified arrays.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -472,66 +476,66 @@
 </dd></dl>
 
 <dl class="py method">
-<dt id="skia.Vertices.approximateSize">
-<code class="sig-prename descclassname"><span class="pre">Vertices.</span></code><code class="sig-name descname"><span class="pre">approximateSize</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#skia.Vertices" title="skia.Vertices"><span class="pre">skia.Vertices</span></a></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">int</span><a class="headerlink" href="#skia.Vertices.approximateSize" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="skia.Vertices.approximateSize">
+<span class="sig-prename descclassname"><span class="pre">Vertices.</span></span><span class="sig-name descname"><span class="pre">approximateSize</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#skia.Vertices" title="skia.Vertices"><span class="pre">skia.Vertices</span></a></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">int</span><a class="headerlink" href="#skia.Vertices.approximateSize" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
-<dt id="skia.Vertices.bounds">
-<code class="sig-prename descclassname"><span class="pre">Vertices.</span></code><code class="sig-name descname"><span class="pre">bounds</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#skia.Vertices" title="skia.Vertices"><span class="pre">skia.Vertices</span></a></span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="skia.Rect.html#skia.Rect" title="skia.Rect"><span class="pre">skia.Rect</span></a><a class="headerlink" href="#skia.Vertices.bounds" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="skia.Vertices.bounds">
+<span class="sig-prename descclassname"><span class="pre">Vertices.</span></span><span class="sig-name descname"><span class="pre">bounds</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#skia.Vertices" title="skia.Vertices"><span class="pre">skia.Vertices</span></a></span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="skia.Rect.html#skia.Rect" title="skia.Rect"><span class="pre">skia.Rect</span></a><a class="headerlink" href="#skia.Vertices.bounds" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
-<dt id="skia.Vertices.deref">
-<code class="sig-prename descclassname"><span class="pre">Vertices.</span></code><code class="sig-name descname"><span class="pre">deref</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#skia.Vertices" title="skia.Vertices"><span class="pre">skia.Vertices</span></a></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">None</span><a class="headerlink" href="#skia.Vertices.deref" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="skia.Vertices.deref">
+<span class="sig-prename descclassname"><span class="pre">Vertices.</span></span><span class="sig-name descname"><span class="pre">deref</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#skia.Vertices" title="skia.Vertices"><span class="pre">skia.Vertices</span></a></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">None</span><a class="headerlink" href="#skia.Vertices.deref" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
-<dt id="skia.Vertices.ref">
-<code class="sig-prename descclassname"><span class="pre">Vertices.</span></code><code class="sig-name descname"><span class="pre">ref</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#skia.Vertices" title="skia.Vertices"><span class="pre">skia.Vertices</span></a></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">None</span><a class="headerlink" href="#skia.Vertices.ref" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="skia.Vertices.ref">
+<span class="sig-prename descclassname"><span class="pre">Vertices.</span></span><span class="sig-name descname"><span class="pre">ref</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#skia.Vertices" title="skia.Vertices"><span class="pre">skia.Vertices</span></a></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">None</span><a class="headerlink" href="#skia.Vertices.ref" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
-<dt id="skia.Vertices.refCntGreaterThan">
-<code class="sig-prename descclassname"><span class="pre">Vertices.</span></code><code class="sig-name descname"><span class="pre">refCntGreaterThan</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#skia.Vertices" title="skia.Vertices"><span class="pre">skia.Vertices</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">count</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">bool</span><a class="headerlink" href="#skia.Vertices.refCntGreaterThan" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="skia.Vertices.refCntGreaterThan">
+<span class="sig-prename descclassname"><span class="pre">Vertices.</span></span><span class="sig-name descname"><span class="pre">refCntGreaterThan</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#skia.Vertices" title="skia.Vertices"><span class="pre">skia.Vertices</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">count</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">bool</span><a class="headerlink" href="#skia.Vertices.refCntGreaterThan" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
-<dt id="skia.Vertices.unique">
-<code class="sig-prename descclassname"><span class="pre">Vertices.</span></code><code class="sig-name descname"><span class="pre">unique</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#skia.Vertices" title="skia.Vertices"><span class="pre">skia.Vertices</span></a></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">bool</span><a class="headerlink" href="#skia.Vertices.unique" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="skia.Vertices.unique">
+<span class="sig-prename descclassname"><span class="pre">Vertices.</span></span><span class="sig-name descname"><span class="pre">unique</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#skia.Vertices" title="skia.Vertices"><span class="pre">skia.Vertices</span></a></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">bool</span><a class="headerlink" href="#skia.Vertices.unique" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
-<dt id="skia.Vertices.uniqueID">
-<code class="sig-prename descclassname"><span class="pre">Vertices.</span></code><code class="sig-name descname"><span class="pre">uniqueID</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#skia.Vertices" title="skia.Vertices"><span class="pre">skia.Vertices</span></a></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">int</span><a class="headerlink" href="#skia.Vertices.uniqueID" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="skia.Vertices.uniqueID">
+<span class="sig-prename descclassname"><span class="pre">Vertices.</span></span><span class="sig-name descname"><span class="pre">uniqueID</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#skia.Vertices" title="skia.Vertices"><span class="pre">skia.Vertices</span></a></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">int</span><a class="headerlink" href="#skia.Vertices.uniqueID" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
-<dt id="skia.Vertices.unref">
-<code class="sig-prename descclassname"><span class="pre">Vertices.</span></code><code class="sig-name descname"><span class="pre">unref</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#skia.Vertices" title="skia.Vertices"><span class="pre">skia.Vertices</span></a></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">None</span><a class="headerlink" href="#skia.Vertices.unref" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="skia.Vertices.unref">
+<span class="sig-prename descclassname"><span class="pre">Vertices.</span></span><span class="sig-name descname"><span class="pre">unref</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#skia.Vertices" title="skia.Vertices"><span class="pre">skia.Vertices</span></a></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">None</span><a class="headerlink" href="#skia.Vertices.unref" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </div>
 <div class="section" id="attributes">
 <h2>Attributes<a class="headerlink" href="#attributes" title="Permalink to this headline">¶</a></h2>
 <dl class="py attribute">
-<dt id="skia.Vertices.kLast_VertexMode">
-<code class="sig-prename descclassname"><span class="pre">Vertices.</span></code><code class="sig-name descname"><span class="pre">kLast_VertexMode</span></code><em class="property"> <span class="pre">=</span> <span class="pre">&lt;VertexMode.kTriangleFan_VertexMode:</span> <span class="pre">2&gt;</span></em><a class="headerlink" href="#skia.Vertices.kLast_VertexMode" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="skia.Vertices.kLast_VertexMode">
+<span class="sig-prename descclassname"><span class="pre">Vertices.</span></span><span class="sig-name descname"><span class="pre">kLast_VertexMode</span></span><em class="property"> <span class="pre">=</span> <span class="pre">&lt;VertexMode.kTriangleFan_VertexMode:</span> <span class="pre">2&gt;</span></em><a class="headerlink" href="#skia.Vertices.kLast_VertexMode" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
-<dt id="skia.Vertices.kTriangleFan_VertexMode">
-<code class="sig-prename descclassname"><span class="pre">Vertices.</span></code><code class="sig-name descname"><span class="pre">kTriangleFan_VertexMode</span></code><em class="property"> <span class="pre">=</span> <span class="pre">&lt;VertexMode.kTriangleFan_VertexMode:</span> <span class="pre">2&gt;</span></em><a class="headerlink" href="#skia.Vertices.kTriangleFan_VertexMode" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="skia.Vertices.kTriangleFan_VertexMode">
+<span class="sig-prename descclassname"><span class="pre">Vertices.</span></span><span class="sig-name descname"><span class="pre">kTriangleFan_VertexMode</span></span><em class="property"> <span class="pre">=</span> <span class="pre">&lt;VertexMode.kTriangleFan_VertexMode:</span> <span class="pre">2&gt;</span></em><a class="headerlink" href="#skia.Vertices.kTriangleFan_VertexMode" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
-<dt id="skia.Vertices.kTriangleStrip_VertexMode">
-<code class="sig-prename descclassname"><span class="pre">Vertices.</span></code><code class="sig-name descname"><span class="pre">kTriangleStrip_VertexMode</span></code><em class="property"> <span class="pre">=</span> <span class="pre">&lt;VertexMode.kTriangleStrip_VertexMode:</span> <span class="pre">1&gt;</span></em><a class="headerlink" href="#skia.Vertices.kTriangleStrip_VertexMode" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="skia.Vertices.kTriangleStrip_VertexMode">
+<span class="sig-prename descclassname"><span class="pre">Vertices.</span></span><span class="sig-name descname"><span class="pre">kTriangleStrip_VertexMode</span></span><em class="property"> <span class="pre">=</span> <span class="pre">&lt;VertexMode.kTriangleStrip_VertexMode:</span> <span class="pre">1&gt;</span></em><a class="headerlink" href="#skia.Vertices.kTriangleStrip_VertexMode" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
-<dt id="skia.Vertices.kTriangles_VertexMode">
-<code class="sig-prename descclassname"><span class="pre">Vertices.</span></code><code class="sig-name descname"><span class="pre">kTriangles_VertexMode</span></code><em class="property"> <span class="pre">=</span> <span class="pre">&lt;VertexMode.kTriangles_VertexMode:</span> <span class="pre">0&gt;</span></em><a class="headerlink" href="#skia.Vertices.kTriangles_VertexMode" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="skia.Vertices.kTriangles_VertexMode">
+<span class="sig-prename descclassname"><span class="pre">Vertices.</span></span><span class="sig-name descname"><span class="pre">kTriangles_VertexMode</span></span><em class="property"> <span class="pre">=</span> <span class="pre">&lt;VertexMode.kTriangles_VertexMode:</span> <span class="pre">0&gt;</span></em><a class="headerlink" href="#skia.Vertices.kTriangles_VertexMode" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </div>

@@ -13,6 +13,8 @@
   
   <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
 
   
   
@@ -29,6 +31,7 @@
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
         <script src="../_static/jquery.js"></script>
         <script src="../_static/underscore.js"></script>
         <script src="../_static/doctools.js"></script>
@@ -222,6 +225,7 @@
 <li class="toctree-l3"><a class="reference internal" href="skia.PathDirection.html">PathDirection</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.PathEffect.html">PathEffect</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.PathFillType.html">PathFillType</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.PathMeasure.html">PathMeasure</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.PathOp.html">PathOp</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.PathSegmentMask.html">PathSegmentMask</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.PathVerb.html">PathVerb</a></li>
@@ -355,8 +359,8 @@
   <div class="section" id="data">
 <h1>Data<a class="headerlink" href="#data" title="Permalink to this headline">¶</a></h1>
 <dl class="py class">
-<dt id="skia.Data">
-<em class="property"><span class="pre">class</span> </em><code class="sig-name descname"><span class="pre">Data</span></code><a class="headerlink" href="#skia.Data" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="skia.Data">
+<em class="property"><span class="pre">class</span> </em><span class="sig-name descname"><span class="pre">Data</span></span><a class="headerlink" href="#skia.Data" title="Permalink to this definition">¶</a></dt>
 <dd><p><a class="reference internal" href="#skia.Data" title="skia.Data"><code class="xref py py-class docutils literal notranslate"><span class="pre">Data</span></code></a> holds an immutable data buffer.</p>
 <p>Not only is the data immutable, but the actual ptr that is returned (by
 <a class="reference internal" href="#skia.Data.data" title="skia.Data.data"><code class="xref py py-meth docutils literal notranslate"><span class="pre">data()</span></code></a> or <a class="reference internal" href="#skia.Data.bytes" title="skia.Data.bytes"><code class="xref py py-meth docutils literal notranslate"><span class="pre">bytes()</span></code></a>) is guaranteed to always be the same for
@@ -439,51 +443,51 @@ the life of this instance.</p>
 <div class="section" id="methods">
 <h2>Methods<a class="headerlink" href="#methods" title="Permalink to this headline">¶</a></h2>
 <dl class="py method">
-<dt id="skia.Data.MakeEmpty">
-<em class="property"><span class="pre">static</span> </em><code class="sig-prename descclassname"><span class="pre">Data.</span></code><code class="sig-name descname"><span class="pre">MakeEmpty</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="#skia.Data" title="skia.Data"><span class="pre">skia.Data</span></a><a class="headerlink" href="#skia.Data.MakeEmpty" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="skia.Data.MakeEmpty">
+<em class="property"><span class="pre">static</span> </em><span class="sig-prename descclassname"><span class="pre">Data.</span></span><span class="sig-name descname"><span class="pre">MakeEmpty</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="#skia.Data" title="skia.Data"><span class="pre">skia.Data</span></a><a class="headerlink" href="#skia.Data.MakeEmpty" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns a new empty dataref (or a reference to a shared empty dataref).</p>
 <p>New or shared, the caller must see that unref() is eventually called.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="skia.Data.MakeFromFileName">
-<em class="property"><span class="pre">static</span> </em><code class="sig-prename descclassname"><span class="pre">Data.</span></code><code class="sig-name descname"><span class="pre">MakeFromFileName</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="#skia.Data" title="skia.Data"><span class="pre">skia.Data</span></a><a class="headerlink" href="#skia.Data.MakeFromFileName" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="skia.Data.MakeFromFileName">
+<em class="property"><span class="pre">static</span> </em><span class="sig-prename descclassname"><span class="pre">Data.</span></span><span class="sig-name descname"><span class="pre">MakeFromFileName</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="#skia.Data" title="skia.Data"><span class="pre">skia.Data</span></a><a class="headerlink" href="#skia.Data.MakeFromFileName" title="Permalink to this definition">¶</a></dt>
 <dd><p>Create a new dataref the file with the specified path.</p>
 <p>If the file cannot be opened, this returns NULL.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="skia.Data.MakeSubset">
-<em class="property"><span class="pre">static</span> </em><code class="sig-prename descclassname"><span class="pre">Data.</span></code><code class="sig-name descname"><span class="pre">MakeSubset</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">src</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#skia.Data" title="skia.Data"><span class="pre">skia.Data</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">offset</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">length</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="#skia.Data" title="skia.Data"><span class="pre">skia.Data</span></a><a class="headerlink" href="#skia.Data.MakeSubset" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="skia.Data.MakeSubset">
+<em class="property"><span class="pre">static</span> </em><span class="sig-prename descclassname"><span class="pre">Data.</span></span><span class="sig-name descname"><span class="pre">MakeSubset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">src</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#skia.Data" title="skia.Data"><span class="pre">skia.Data</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">offset</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">length</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="#skia.Data" title="skia.Data"><span class="pre">skia.Data</span></a><a class="headerlink" href="#skia.Data.MakeSubset" title="Permalink to this definition">¶</a></dt>
 <dd><p>Create a new dataref using a subset of the data in the specified src
 dataref.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="skia.Data.MakeUninitialized">
-<em class="property"><span class="pre">static</span> </em><code class="sig-prename descclassname"><span class="pre">Data.</span></code><code class="sig-name descname"><span class="pre">MakeUninitialized</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">length</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="#skia.Data" title="skia.Data"><span class="pre">skia.Data</span></a><a class="headerlink" href="#skia.Data.MakeUninitialized" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="skia.Data.MakeUninitialized">
+<em class="property"><span class="pre">static</span> </em><span class="sig-prename descclassname"><span class="pre">Data.</span></span><span class="sig-name descname"><span class="pre">MakeUninitialized</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">length</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="#skia.Data" title="skia.Data"><span class="pre">skia.Data</span></a><a class="headerlink" href="#skia.Data.MakeUninitialized" title="Permalink to this definition">¶</a></dt>
 <dd><p>Create a new data with uninitialized contents.</p>
 <p>The caller should call <a class="reference internal" href="#skia.Data.writable_data" title="skia.Data.writable_data"><code class="xref py py-meth docutils literal notranslate"><span class="pre">writable_data()</span></code></a> to write into the
 buffer, but this must be done before another <a class="reference internal" href="#skia.Data.ref" title="skia.Data.ref"><code class="xref py py-meth docutils literal notranslate"><span class="pre">ref()</span></code></a> is made.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="skia.Data.MakeWithCopy">
-<em class="property"><span class="pre">static</span> </em><code class="sig-prename descclassname"><span class="pre">Data.</span></code><code class="sig-name descname"><span class="pre">MakeWithCopy</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">buffer</span></span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="#skia.Data" title="skia.Data"><span class="pre">skia.Data</span></a><a class="headerlink" href="#skia.Data.MakeWithCopy" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="skia.Data.MakeWithCopy">
+<em class="property"><span class="pre">static</span> </em><span class="sig-prename descclassname"><span class="pre">Data.</span></span><span class="sig-name descname"><span class="pre">MakeWithCopy</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">buffer</span></span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="#skia.Data" title="skia.Data"><span class="pre">skia.Data</span></a><a class="headerlink" href="#skia.Data.MakeWithCopy" title="Permalink to this definition">¶</a></dt>
 <dd><p>Create a new dataref by copying the specified data.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="skia.Data.MakeWithoutCopy">
-<em class="property"><span class="pre">static</span> </em><code class="sig-prename descclassname"><span class="pre">Data.</span></code><code class="sig-name descname"><span class="pre">MakeWithoutCopy</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">buffer</span></span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="#skia.Data" title="skia.Data"><span class="pre">skia.Data</span></a><a class="headerlink" href="#skia.Data.MakeWithoutCopy" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="skia.Data.MakeWithoutCopy">
+<em class="property"><span class="pre">static</span> </em><span class="sig-prename descclassname"><span class="pre">Data.</span></span><span class="sig-name descname"><span class="pre">MakeWithoutCopy</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">buffer</span></span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="#skia.Data" title="skia.Data"><span class="pre">skia.Data</span></a><a class="headerlink" href="#skia.Data.MakeWithoutCopy" title="Permalink to this definition">¶</a></dt>
 <dd><p>Call this when the data parameter is already const and will outlive the
 lifetime of the <a class="reference internal" href="#skia.Data" title="skia.Data"><code class="xref py py-class docutils literal notranslate"><span class="pre">Data</span></code></a>.</p>
 <p>Suitable for with const globals.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="skia.Data.__init__">
-<code class="sig-prename descclassname"><span class="pre">Data.</span></code><code class="sig-name descname"><span class="pre">__init__</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#skia.Data" title="skia.Data"><span class="pre">skia.Data</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">buf</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">buffer</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">copy</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">bool</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">None</span><a class="headerlink" href="#skia.Data.__init__" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="skia.Data.__init__">
+<span class="sig-prename descclassname"><span class="pre">Data.</span></span><span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#skia.Data" title="skia.Data"><span class="pre">skia.Data</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">buf</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">buffer</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">copy</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">bool</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">None</span><a class="headerlink" href="#skia.Data.__init__" title="Permalink to this definition">¶</a></dt>
 <dd><p>Create a new <a class="reference internal" href="#skia.Data" title="skia.Data"><code class="xref py py-class docutils literal notranslate"><span class="pre">Data</span></code></a>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -496,15 +500,15 @@ lifetime of the <a class="reference internal" href="#skia.Data" title="skia.Data
 </dd></dl>
 
 <dl class="py method">
-<dt id="skia.Data.bytes">
-<code class="sig-prename descclassname"><span class="pre">Data.</span></code><code class="sig-name descname"><span class="pre">bytes</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#skia.Data" title="skia.Data"><span class="pre">skia.Data</span></a></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">bytes</span><a class="headerlink" href="#skia.Data.bytes" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="skia.Data.bytes">
+<span class="sig-prename descclassname"><span class="pre">Data.</span></span><span class="sig-name descname"><span class="pre">bytes</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#skia.Data" title="skia.Data"><span class="pre">skia.Data</span></a></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">bytes</span><a class="headerlink" href="#skia.Data.bytes" title="Permalink to this definition">¶</a></dt>
 <dd><p>Like data(), returns a read-only ptr into the data, but in this case it
 is cast to <code class="docutils literal notranslate"><span class="pre">bytes</span></code>.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="skia.Data.copyRange">
-<code class="sig-prename descclassname"><span class="pre">Data.</span></code><code class="sig-name descname"><span class="pre">copyRange</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#skia.Data" title="skia.Data"><span class="pre">skia.Data</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">offset</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">length</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">buffer</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">object</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">int</span><a class="headerlink" href="#skia.Data.copyRange" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="skia.Data.copyRange">
+<span class="sig-prename descclassname"><span class="pre">Data.</span></span><span class="sig-name descname"><span class="pre">copyRange</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#skia.Data" title="skia.Data"><span class="pre">skia.Data</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">offset</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">length</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">buffer</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">object</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">int</span><a class="headerlink" href="#skia.Data.copyRange" title="Permalink to this definition">¶</a></dt>
 <dd><p>Helper to copy a range of the data into a caller-provided buffer.</p>
 <p>Returns the actual number of bytes copied, after clamping offset and
 length to the size of the data. If buffer is NULL, it is ignored, and
@@ -512,57 +516,57 @@ only the computed number of bytes is returned.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="skia.Data.data">
-<code class="sig-prename descclassname"><span class="pre">Data.</span></code><code class="sig-name descname"><span class="pre">data</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#skia.Data" title="skia.Data"><span class="pre">skia.Data</span></a></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">memoryview</span><a class="headerlink" href="#skia.Data.data" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="skia.Data.data">
+<span class="sig-prename descclassname"><span class="pre">Data.</span></span><span class="sig-name descname"><span class="pre">data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#skia.Data" title="skia.Data"><span class="pre">skia.Data</span></a></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">memoryview</span><a class="headerlink" href="#skia.Data.data" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the read-only memoryview to the data.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="skia.Data.deref">
-<code class="sig-prename descclassname"><span class="pre">Data.</span></code><code class="sig-name descname"><span class="pre">deref</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#skia.Data" title="skia.Data"><span class="pre">skia.Data</span></a></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">None</span><a class="headerlink" href="#skia.Data.deref" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="skia.Data.deref">
+<span class="sig-prename descclassname"><span class="pre">Data.</span></span><span class="sig-name descname"><span class="pre">deref</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#skia.Data" title="skia.Data"><span class="pre">skia.Data</span></a></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">None</span><a class="headerlink" href="#skia.Data.deref" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
-<dt id="skia.Data.equals">
-<code class="sig-prename descclassname"><span class="pre">Data.</span></code><code class="sig-name descname"><span class="pre">equals</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#skia.Data" title="skia.Data"><span class="pre">skia.Data</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">other</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#skia.Data" title="skia.Data"><span class="pre">skia.Data</span></a></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">bool</span><a class="headerlink" href="#skia.Data.equals" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="skia.Data.equals">
+<span class="sig-prename descclassname"><span class="pre">Data.</span></span><span class="sig-name descname"><span class="pre">equals</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#skia.Data" title="skia.Data"><span class="pre">skia.Data</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">other</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#skia.Data" title="skia.Data"><span class="pre">skia.Data</span></a></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">bool</span><a class="headerlink" href="#skia.Data.equals" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns true if these two objects have the same length and contents,
 effectively returning 0 == memcmp(…)</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="skia.Data.isEmpty">
-<code class="sig-prename descclassname"><span class="pre">Data.</span></code><code class="sig-name descname"><span class="pre">isEmpty</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#skia.Data" title="skia.Data"><span class="pre">skia.Data</span></a></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">bool</span><a class="headerlink" href="#skia.Data.isEmpty" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="skia.Data.isEmpty">
+<span class="sig-prename descclassname"><span class="pre">Data.</span></span><span class="sig-name descname"><span class="pre">isEmpty</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#skia.Data" title="skia.Data"><span class="pre">skia.Data</span></a></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">bool</span><a class="headerlink" href="#skia.Data.isEmpty" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
-<dt id="skia.Data.ref">
-<code class="sig-prename descclassname"><span class="pre">Data.</span></code><code class="sig-name descname"><span class="pre">ref</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#skia.Data" title="skia.Data"><span class="pre">skia.Data</span></a></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">None</span><a class="headerlink" href="#skia.Data.ref" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="skia.Data.ref">
+<span class="sig-prename descclassname"><span class="pre">Data.</span></span><span class="sig-name descname"><span class="pre">ref</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#skia.Data" title="skia.Data"><span class="pre">skia.Data</span></a></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">None</span><a class="headerlink" href="#skia.Data.ref" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
-<dt id="skia.Data.refCntGreaterThan">
-<code class="sig-prename descclassname"><span class="pre">Data.</span></code><code class="sig-name descname"><span class="pre">refCntGreaterThan</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#skia.Data" title="skia.Data"><span class="pre">skia.Data</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">count</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">bool</span><a class="headerlink" href="#skia.Data.refCntGreaterThan" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="skia.Data.refCntGreaterThan">
+<span class="sig-prename descclassname"><span class="pre">Data.</span></span><span class="sig-name descname"><span class="pre">refCntGreaterThan</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#skia.Data" title="skia.Data"><span class="pre">skia.Data</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">count</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">bool</span><a class="headerlink" href="#skia.Data.refCntGreaterThan" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
-<dt id="skia.Data.size">
-<code class="sig-prename descclassname"><span class="pre">Data.</span></code><code class="sig-name descname"><span class="pre">size</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#skia.Data" title="skia.Data"><span class="pre">skia.Data</span></a></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">int</span><a class="headerlink" href="#skia.Data.size" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="skia.Data.size">
+<span class="sig-prename descclassname"><span class="pre">Data.</span></span><span class="sig-name descname"><span class="pre">size</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#skia.Data" title="skia.Data"><span class="pre">skia.Data</span></a></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">int</span><a class="headerlink" href="#skia.Data.size" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the number of bytes stored.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="skia.Data.unique">
-<code class="sig-prename descclassname"><span class="pre">Data.</span></code><code class="sig-name descname"><span class="pre">unique</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#skia.Data" title="skia.Data"><span class="pre">skia.Data</span></a></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">bool</span><a class="headerlink" href="#skia.Data.unique" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="skia.Data.unique">
+<span class="sig-prename descclassname"><span class="pre">Data.</span></span><span class="sig-name descname"><span class="pre">unique</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#skia.Data" title="skia.Data"><span class="pre">skia.Data</span></a></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">bool</span><a class="headerlink" href="#skia.Data.unique" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
-<dt id="skia.Data.unref">
-<code class="sig-prename descclassname"><span class="pre">Data.</span></code><code class="sig-name descname"><span class="pre">unref</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#skia.Data" title="skia.Data"><span class="pre">skia.Data</span></a></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">None</span><a class="headerlink" href="#skia.Data.unref" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="skia.Data.unref">
+<span class="sig-prename descclassname"><span class="pre">Data.</span></span><span class="sig-name descname"><span class="pre">unref</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#skia.Data" title="skia.Data"><span class="pre">skia.Data</span></a></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">None</span><a class="headerlink" href="#skia.Data.unref" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
-<dt id="skia.Data.writable_data">
-<code class="sig-prename descclassname"><span class="pre">Data.</span></code><code class="sig-name descname"><span class="pre">writable_data</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#skia.Data" title="skia.Data"><span class="pre">skia.Data</span></a></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">memoryview</span><a class="headerlink" href="#skia.Data.writable_data" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="skia.Data.writable_data">
+<span class="sig-prename descclassname"><span class="pre">Data.</span></span><span class="sig-name descname"><span class="pre">writable_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#skia.Data" title="skia.Data"><span class="pre">skia.Data</span></a></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">memoryview</span><a class="headerlink" href="#skia.Data.writable_data" title="Permalink to this definition">¶</a></dt>
 <dd><p>USE WITH CAUTION.</p>
 <p>Returns the read-write memoryview to the data.</p>
 <p>This call will assert that the refcnt is 1, as a precaution against

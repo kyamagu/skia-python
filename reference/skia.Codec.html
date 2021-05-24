@@ -13,6 +13,8 @@
   
   <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
 
   
   
@@ -29,6 +31,7 @@
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
         <script src="../_static/jquery.js"></script>
         <script src="../_static/underscore.js"></script>
         <script src="../_static/doctools.js"></script>
@@ -230,6 +233,7 @@
 <li class="toctree-l3"><a class="reference internal" href="skia.PathDirection.html">PathDirection</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.PathEffect.html">PathEffect</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.PathFillType.html">PathFillType</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.PathMeasure.html">PathMeasure</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.PathOp.html">PathOp</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.PathSegmentMask.html">PathSegmentMask</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.PathVerb.html">PathVerb</a></li>
@@ -363,8 +367,8 @@
   <div class="section" id="codec">
 <h1>Codec<a class="headerlink" href="#codec" title="Permalink to this headline">¶</a></h1>
 <dl class="py class">
-<dt id="skia.Codec">
-<em class="property"><span class="pre">class</span> </em><code class="sig-name descname"><span class="pre">Codec</span></code><a class="headerlink" href="#skia.Codec" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="skia.Codec">
+<em class="property"><span class="pre">class</span> </em><span class="sig-name descname"><span class="pre">Codec</span></span><a class="headerlink" href="#skia.Codec" title="Permalink to this definition">¶</a></dt>
 <dd><p><a class="reference internal" href="#skia.Codec" title="skia.Codec"><code class="xref py py-class docutils literal notranslate"><span class="pre">Codec</span></code></a> Abstraction layer directly on top of an image codec.</p>
 <p class="rubric">Classes</p>
 <table class="longtable docutils align-default">
@@ -551,56 +555,56 @@
 <div class="section" id="methods">
 <h2>Methods<a class="headerlink" href="#methods" title="Permalink to this headline">¶</a></h2>
 <dl class="py method">
-<dt id="skia.Codec.MakeFromData">
-<em class="property"><span class="pre">static</span> </em><code class="sig-prename descclassname"><span class="pre">Codec.</span></code><code class="sig-name descname"><span class="pre">MakeFromData</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">buffer</span></span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="#skia.Codec" title="skia.Codec"><span class="pre">skia.Codec</span></a><a class="headerlink" href="#skia.Codec.MakeFromData" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="skia.Codec.MakeFromData">
+<em class="property"><span class="pre">static</span> </em><span class="sig-prename descclassname"><span class="pre">Codec.</span></span><span class="sig-name descname"><span class="pre">MakeFromData</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">buffer</span></span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="#skia.Codec" title="skia.Codec"><span class="pre">skia.Codec</span></a><a class="headerlink" href="#skia.Codec.MakeFromData" title="Permalink to this definition">¶</a></dt>
 <dd><p>If this data represents an encoded image that we know how to decode,
 return an <a class="reference internal" href="#skia.Codec" title="skia.Codec"><code class="xref py py-class docutils literal notranslate"><span class="pre">Codec</span></code></a> that can decode it. Otherwise return NULL.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="skia.Codec.MinBufferedBytesNeeded">
-<em class="property"><span class="pre">static</span> </em><code class="sig-prename descclassname"><span class="pre">Codec.</span></code><code class="sig-name descname"><span class="pre">MinBufferedBytesNeeded</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; <span class="pre">int</span><a class="headerlink" href="#skia.Codec.MinBufferedBytesNeeded" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="skia.Codec.MinBufferedBytesNeeded">
+<em class="property"><span class="pre">static</span> </em><span class="sig-prename descclassname"><span class="pre">Codec.</span></span><span class="sig-name descname"><span class="pre">MinBufferedBytesNeeded</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; <span class="pre">int</span><a class="headerlink" href="#skia.Codec.MinBufferedBytesNeeded" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
-<dt id="skia.Codec.ResultToString">
-<em class="property"><span class="pre">static</span> </em><code class="sig-prename descclassname"><span class="pre">Codec.</span></code><code class="sig-name descname"><span class="pre">ResultToString</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">result</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="skia.Codec.Result.html#skia.Codec.Result" title="skia.Codec.Result"><span class="pre">skia.Codec.Result</span></a></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">str</span><a class="headerlink" href="#skia.Codec.ResultToString" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="skia.Codec.ResultToString">
+<em class="property"><span class="pre">static</span> </em><span class="sig-prename descclassname"><span class="pre">Codec.</span></span><span class="sig-name descname"><span class="pre">ResultToString</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">result</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="skia.Codec.Result.html#skia.Codec.Result" title="skia.Codec.Result"><span class="pre">skia.Codec.Result</span></a></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">str</span><a class="headerlink" href="#skia.Codec.ResultToString" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns a textual representation of <a class="reference internal" href="skia.Codec.Result.html#skia.Codec.Result" title="skia.Codec.Result"><code class="xref py py-class docutils literal notranslate"><span class="pre">Codec.Result</span></code></a></p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="skia.Codec.__init__">
-<code class="sig-prename descclassname"><span class="pre">Codec.</span></code><code class="sig-name descname"><span class="pre">__init__</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#skia.Codec" title="skia.Codec"><span class="pre">skia.Codec</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">buffer</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">None</span><a class="headerlink" href="#skia.Codec.__init__" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="skia.Codec.__init__">
+<span class="sig-prename descclassname"><span class="pre">Codec.</span></span><span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#skia.Codec" title="skia.Codec"><span class="pre">skia.Codec</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">buffer</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">None</span><a class="headerlink" href="#skia.Codec.__init__" title="Permalink to this definition">¶</a></dt>
 <dd><p>If this stream represents an encoded image that we know how to decode,
 return an <a class="reference internal" href="#skia.Codec" title="skia.Codec"><code class="xref py py-class docutils literal notranslate"><span class="pre">Codec</span></code></a> that can decode it. Otherwise return None.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="skia.Codec.bounds">
-<code class="sig-prename descclassname"><span class="pre">Codec.</span></code><code class="sig-name descname"><span class="pre">bounds</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#skia.Codec" title="skia.Codec"><span class="pre">skia.Codec</span></a></span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="skia.IRect.html#skia.IRect" title="skia.IRect"><span class="pre">skia.IRect</span></a><a class="headerlink" href="#skia.Codec.bounds" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="skia.Codec.bounds">
+<span class="sig-prename descclassname"><span class="pre">Codec.</span></span><span class="sig-name descname"><span class="pre">bounds</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#skia.Codec" title="skia.Codec"><span class="pre">skia.Codec</span></a></span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="skia.IRect.html#skia.IRect" title="skia.IRect"><span class="pre">skia.IRect</span></a><a class="headerlink" href="#skia.Codec.bounds" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
-<dt id="skia.Codec.dimensions">
-<code class="sig-prename descclassname"><span class="pre">Codec.</span></code><code class="sig-name descname"><span class="pre">dimensions</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#skia.Codec" title="skia.Codec"><span class="pre">skia.Codec</span></a></span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="skia.ISize.html#skia.ISize" title="skia.ISize"><span class="pre">skia.ISize</span></a><a class="headerlink" href="#skia.Codec.dimensions" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="skia.Codec.dimensions">
+<span class="sig-prename descclassname"><span class="pre">Codec.</span></span><span class="sig-name descname"><span class="pre">dimensions</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#skia.Codec" title="skia.Codec"><span class="pre">skia.Codec</span></a></span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="skia.ISize.html#skia.ISize" title="skia.ISize"><span class="pre">skia.ISize</span></a><a class="headerlink" href="#skia.Codec.dimensions" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
-<dt id="skia.Codec.getEncodedFormat">
-<code class="sig-prename descclassname"><span class="pre">Codec.</span></code><code class="sig-name descname"><span class="pre">getEncodedFormat</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#skia.Codec" title="skia.Codec"><span class="pre">skia.Codec</span></a></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">SkEncodedImageFormat</span><a class="headerlink" href="#skia.Codec.getEncodedFormat" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="skia.Codec.getEncodedFormat">
+<span class="sig-prename descclassname"><span class="pre">Codec.</span></span><span class="sig-name descname"><span class="pre">getEncodedFormat</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#skia.Codec" title="skia.Codec"><span class="pre">skia.Codec</span></a></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">SkEncodedImageFormat</span><a class="headerlink" href="#skia.Codec.getEncodedFormat" title="Permalink to this definition">¶</a></dt>
 <dd><p>Format of the encoded data.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="skia.Codec.getFrameCount">
-<code class="sig-prename descclassname"><span class="pre">Codec.</span></code><code class="sig-name descname"><span class="pre">getFrameCount</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#skia.Codec" title="skia.Codec"><span class="pre">skia.Codec</span></a></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">int</span><a class="headerlink" href="#skia.Codec.getFrameCount" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="skia.Codec.getFrameCount">
+<span class="sig-prename descclassname"><span class="pre">Codec.</span></span><span class="sig-name descname"><span class="pre">getFrameCount</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#skia.Codec" title="skia.Codec"><span class="pre">skia.Codec</span></a></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">int</span><a class="headerlink" href="#skia.Codec.getFrameCount" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return the number of frames in the image.</p>
 <p>May require reading through the stream.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="skia.Codec.getFrameInfo">
-<code class="sig-prename descclassname"><span class="pre">Codec.</span></code><code class="sig-name descname"><span class="pre">getFrameInfo</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#skia.Codec.getFrameInfo" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="skia.Codec.getFrameInfo">
+<span class="sig-prename descclassname"><span class="pre">Codec.</span></span><span class="sig-name descname"><span class="pre">getFrameInfo</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#skia.Codec.getFrameInfo" title="Permalink to this definition">¶</a></dt>
 <dd><p>Overloaded function.</p>
 <ol class="arabic">
 <li><p>getFrameInfo(self: skia.Codec, index: int, info: skia.Codec.FrameInfo) -&gt; bool</p>
@@ -624,8 +628,8 @@ frames (including the count).</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="skia.Codec.getInfo">
-<code class="sig-prename descclassname"><span class="pre">Codec.</span></code><code class="sig-name descname"><span class="pre">getInfo</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#skia.Codec" title="skia.Codec"><span class="pre">skia.Codec</span></a></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">SkImageInfo</span><a class="headerlink" href="#skia.Codec.getInfo" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="skia.Codec.getInfo">
+<span class="sig-prename descclassname"><span class="pre">Codec.</span></span><span class="sig-name descname"><span class="pre">getInfo</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#skia.Codec" title="skia.Codec"><span class="pre">skia.Codec</span></a></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">SkImageInfo</span><a class="headerlink" href="#skia.Codec.getInfo" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return a reasonable <a class="reference internal" href="skia.ImageInfo.html#skia.ImageInfo" title="skia.ImageInfo"><code class="xref py py-class docutils literal notranslate"><span class="pre">ImageInfo</span></code></a> to decode into.</p>
 <p>If the image has an ICC profile that does not map to an
 <a class="reference internal" href="skia.ColorSpace.html#skia.ColorSpace" title="skia.ColorSpace"><code class="xref py py-class docutils literal notranslate"><span class="pre">ColorSpace</span></code></a>, the returned <a class="reference internal" href="skia.ImageInfo.html#skia.ImageInfo" title="skia.ImageInfo"><code class="xref py py-class docutils literal notranslate"><span class="pre">ImageInfo</span></code></a> will use
@@ -633,16 +637,16 @@ SRGB.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="skia.Codec.getOrigin">
-<code class="sig-prename descclassname"><span class="pre">Codec.</span></code><code class="sig-name descname"><span class="pre">getOrigin</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#skia.Codec" title="skia.Codec"><span class="pre">skia.Codec</span></a></span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="skia.EncodedOrigin.html#skia.EncodedOrigin" title="skia.EncodedOrigin"><span class="pre">skia.EncodedOrigin</span></a><a class="headerlink" href="#skia.Codec.getOrigin" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="skia.Codec.getOrigin">
+<span class="sig-prename descclassname"><span class="pre">Codec.</span></span><span class="sig-name descname"><span class="pre">getOrigin</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#skia.Codec" title="skia.Codec"><span class="pre">skia.Codec</span></a></span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="skia.EncodedOrigin.html#skia.EncodedOrigin" title="skia.EncodedOrigin"><span class="pre">skia.EncodedOrigin</span></a><a class="headerlink" href="#skia.Codec.getOrigin" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the image orientation stored in the EXIF data.
 If there is no EXIF data, or if we cannot read the EXIF data, returns
 <code class="xref py py-attr docutils literal notranslate"><span class="pre">kTopLeft</span></code>.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="skia.Codec.getPixels">
-<code class="sig-prename descclassname"><span class="pre">Codec.</span></code><code class="sig-name descname"><span class="pre">getPixels</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#skia.Codec.getPixels" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="skia.Codec.getPixels">
+<span class="sig-prename descclassname"><span class="pre">Codec.</span></span><span class="sig-name descname"><span class="pre">getPixels</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#skia.Codec.getPixels" title="Permalink to this definition">¶</a></dt>
 <dd><p>Overloaded function.</p>
 <ol class="arabic">
 <li><p>getPixels(self: skia.Codec, info: SkImageInfo, data: buffer, rowBytes: int, options: skia.Codec.Options = None) -&gt; skia.Codec.Result</p>
@@ -686,8 +690,8 @@ failure.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="skia.Codec.getRepetitionCount">
-<code class="sig-prename descclassname"><span class="pre">Codec.</span></code><code class="sig-name descname"><span class="pre">getRepetitionCount</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#skia.Codec" title="skia.Codec"><span class="pre">skia.Codec</span></a></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">int</span><a class="headerlink" href="#skia.Codec.getRepetitionCount" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="skia.Codec.getRepetitionCount">
+<span class="sig-prename descclassname"><span class="pre">Codec.</span></span><span class="sig-name descname"><span class="pre">getRepetitionCount</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#skia.Codec" title="skia.Codec"><span class="pre">skia.Codec</span></a></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">int</span><a class="headerlink" href="#skia.Codec.getRepetitionCount" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return the number of times to repeat, if this image is animated. This
 number does not　include the first play through of each frame. For
 example, a repetition count of 4 means　that each frame is played 5
@@ -700,8 +704,8 @@ the animation　should loop forever.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="skia.Codec.getScaledDimensions">
-<code class="sig-prename descclassname"><span class="pre">Codec.</span></code><code class="sig-name descname"><span class="pre">getScaledDimensions</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#skia.Codec" title="skia.Codec"><span class="pre">skia.Codec</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">desiredScale</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="skia.ISize.html#skia.ISize" title="skia.ISize"><span class="pre">skia.ISize</span></a><a class="headerlink" href="#skia.Codec.getScaledDimensions" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="skia.Codec.getScaledDimensions">
+<span class="sig-prename descclassname"><span class="pre">Codec.</span></span><span class="sig-name descname"><span class="pre">getScaledDimensions</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#skia.Codec" title="skia.Codec"><span class="pre">skia.Codec</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">desiredScale</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="skia.ISize.html#skia.ISize" title="skia.ISize"><span class="pre">skia.ISize</span></a><a class="headerlink" href="#skia.Codec.getScaledDimensions" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return a size that approximately supports the desired scale factor.
 The codec may not be able to scale efficiently to the exact scale
 factor requested, so return a size that approximates that scale.
@@ -710,16 +714,16 @@ scale that it can natively support</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="skia.Codec.getScanlineOrder">
-<code class="sig-prename descclassname"><span class="pre">Codec.</span></code><code class="sig-name descname"><span class="pre">getScanlineOrder</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#skia.Codec" title="skia.Codec"><span class="pre">skia.Codec</span></a></span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="skia.Codec.ScanlineOrder.html#skia.Codec.ScanlineOrder" title="skia.Codec.ScanlineOrder"><span class="pre">skia.Codec.ScanlineOrder</span></a><a class="headerlink" href="#skia.Codec.getScanlineOrder" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="skia.Codec.getScanlineOrder">
+<span class="sig-prename descclassname"><span class="pre">Codec.</span></span><span class="sig-name descname"><span class="pre">getScanlineOrder</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#skia.Codec" title="skia.Codec"><span class="pre">skia.Codec</span></a></span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="skia.Codec.ScanlineOrder.html#skia.Codec.ScanlineOrder" title="skia.Codec.ScanlineOrder"><span class="pre">skia.Codec.ScanlineOrder</span></a><a class="headerlink" href="#skia.Codec.getScanlineOrder" title="Permalink to this definition">¶</a></dt>
 <dd><p>An enum representing the order in which scanlines will be returned by
 the scanline decoder.</p>
 <p>This is undefined before <a class="reference internal" href="#skia.Codec.startScanlineDecode" title="skia.Codec.startScanlineDecode"><code class="xref py py-meth docutils literal notranslate"><span class="pre">startScanlineDecode()</span></code></a> is called.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="skia.Codec.getScanlines">
-<code class="sig-prename descclassname"><span class="pre">Codec.</span></code><code class="sig-name descname"><span class="pre">getScanlines</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#skia.Codec" title="skia.Codec"><span class="pre">skia.Codec</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">dst</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">buffer</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">countLines</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rowBytes</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">int</span><a class="headerlink" href="#skia.Codec.getScanlines" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="skia.Codec.getScanlines">
+<span class="sig-prename descclassname"><span class="pre">Codec.</span></span><span class="sig-name descname"><span class="pre">getScanlines</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#skia.Codec" title="skia.Codec"><span class="pre">skia.Codec</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">dst</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">buffer</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">countLines</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rowBytes</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">int</span><a class="headerlink" href="#skia.Codec.getScanlines" title="Permalink to this definition">¶</a></dt>
 <dd><p>Write the next countLines scanlines into dst.</p>
 <p>Not valid to call before calling startScanlineDecode().</p>
 <dl class="field-list simple">
@@ -742,8 +746,8 @@ default value.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="skia.Codec.getValidSubset">
-<code class="sig-prename descclassname"><span class="pre">Codec.</span></code><code class="sig-name descname"><span class="pre">getValidSubset</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#skia.Codec" title="skia.Codec"><span class="pre">skia.Codec</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">desiredSubset</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="skia.IRect.html#skia.IRect" title="skia.IRect"><span class="pre">skia.IRect</span></a></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">bool</span><a class="headerlink" href="#skia.Codec.getValidSubset" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="skia.Codec.getValidSubset">
+<span class="sig-prename descclassname"><span class="pre">Codec.</span></span><span class="sig-name descname"><span class="pre">getValidSubset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#skia.Codec" title="skia.Codec"><span class="pre">skia.Codec</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">desiredSubset</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="skia.IRect.html#skia.IRect" title="skia.IRect"><span class="pre">skia.IRect</span></a></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">bool</span><a class="headerlink" href="#skia.Codec.getValidSubset" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return (via <cite>desiredSubset</cite>) a subset which can decoded from this codec,
 or false if this codec cannot decode subsets or anything similar to
 <cite>desiredSubset</cite>.</p>
@@ -765,8 +769,8 @@ returned, potentially modified)</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="skia.Codec.getYUVAPlanes">
-<code class="sig-prename descclassname"><span class="pre">Codec.</span></code><code class="sig-name descname"><span class="pre">getYUVAPlanes</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#skia.Codec" title="skia.Codec"><span class="pre">skia.Codec</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">yuvaPixmaps</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">SkYUVAPixmaps</span></span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="skia.Codec.Result.html#skia.Codec.Result" title="skia.Codec.Result"><span class="pre">skia.Codec.Result</span></a><a class="headerlink" href="#skia.Codec.getYUVAPlanes" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="skia.Codec.getYUVAPlanes">
+<span class="sig-prename descclassname"><span class="pre">Codec.</span></span><span class="sig-name descname"><span class="pre">getYUVAPlanes</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#skia.Codec" title="skia.Codec"><span class="pre">skia.Codec</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">yuvaPixmaps</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">SkYUVAPixmaps</span></span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="skia.Codec.Result.html#skia.Codec.Result" title="skia.Codec.Result"><span class="pre">skia.Codec.Result</span></a><a class="headerlink" href="#skia.Codec.getYUVAPlanes" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns kSuccess, or another value explaining the type of failure.
 This always attempts to perform a full decode. To get the planar
 configuration without decoding use queryYUVAInfo().</p>
@@ -779,8 +783,8 @@ to a successful call to <a class="reference internal" href="#skia.Codec.queryYUV
 </dd></dl>
 
 <dl class="py method">
-<dt id="skia.Codec.incrementalDecode">
-<code class="sig-prename descclassname"><span class="pre">Codec.</span></code><code class="sig-name descname"><span class="pre">incrementalDecode</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#skia.Codec" title="skia.Codec"><span class="pre">skia.Codec</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">rowsDecoded</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">int</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="skia.Codec.Result.html#skia.Codec.Result" title="skia.Codec.Result"><span class="pre">skia.Codec.Result</span></a><a class="headerlink" href="#skia.Codec.incrementalDecode" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="skia.Codec.incrementalDecode">
+<span class="sig-prename descclassname"><span class="pre">Codec.</span></span><span class="sig-name descname"><span class="pre">incrementalDecode</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#skia.Codec" title="skia.Codec"><span class="pre">skia.Codec</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">rowsDecoded</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">int</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="skia.Codec.Result.html#skia.Codec.Result" title="skia.Codec.Result"><span class="pre">skia.Codec.Result</span></a><a class="headerlink" href="#skia.Codec.incrementalDecode" title="Permalink to this definition">¶</a></dt>
 <dd><p>Start/continue the incremental decode.</p>
 <p>Not valid to call before a call to <a class="reference internal" href="#skia.Codec.startIncrementalDecode" title="skia.Codec.startIncrementalDecode"><code class="xref py py-meth docutils literal notranslate"><span class="pre">startIncrementalDecode()</span></code></a>
 returns kSuccess.</p>
@@ -809,8 +813,8 @@ been completely decoded. kIncompleteInput otherwise.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="skia.Codec.nextScanline">
-<code class="sig-prename descclassname"><span class="pre">Codec.</span></code><code class="sig-name descname"><span class="pre">nextScanline</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#skia.Codec" title="skia.Codec"><span class="pre">skia.Codec</span></a></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">int</span><a class="headerlink" href="#skia.Codec.nextScanline" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="skia.Codec.nextScanline">
+<span class="sig-prename descclassname"><span class="pre">Codec.</span></span><span class="sig-name descname"><span class="pre">nextScanline</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#skia.Codec" title="skia.Codec"><span class="pre">skia.Codec</span></a></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">int</span><a class="headerlink" href="#skia.Codec.nextScanline" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the y-coordinate of the next row to be returned by the scanline
 decoder.</p>
 <p>This will equal fCurrScanline, except in the case of strangely
@@ -819,8 +823,8 @@ encoded image types (bottom-up bmps).</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="skia.Codec.outputScanline">
-<code class="sig-prename descclassname"><span class="pre">Codec.</span></code><code class="sig-name descname"><span class="pre">outputScanline</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#skia.Codec" title="skia.Codec"><span class="pre">skia.Codec</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">inputScanline</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">int</span><a class="headerlink" href="#skia.Codec.outputScanline" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="skia.Codec.outputScanline">
+<span class="sig-prename descclassname"><span class="pre">Codec.</span></span><span class="sig-name descname"><span class="pre">outputScanline</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#skia.Codec" title="skia.Codec"><span class="pre">skia.Codec</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">inputScanline</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">int</span><a class="headerlink" href="#skia.Codec.outputScanline" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the output y-coordinate of the row that corresponds to an input
 y-coordinate.  The input y-coordinate represents where the scanline
 is located in the encoded data.</p>
@@ -829,8 +833,8 @@ encoded image types (bottom-up bmps, interlaced gifs).</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="skia.Codec.queryYUVAInfo">
-<code class="sig-prename descclassname"><span class="pre">Codec.</span></code><code class="sig-name descname"><span class="pre">queryYUVAInfo</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="pre">self:</span> <span class="pre">skia.Codec</span></em>, <em class="sig-param"><span class="pre">supportedDataTypes:</span> <span class="pre">SkYUVAPixmapInfo::SupportedDataTypes</span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">object</span><a class="headerlink" href="#skia.Codec.queryYUVAInfo" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="skia.Codec.queryYUVAInfo">
+<span class="sig-prename descclassname"><span class="pre">Codec.</span></span><span class="sig-name descname"><span class="pre">queryYUVAInfo</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">self:</span> <span class="pre">skia.Codec</span></em>, <em class="sig-param"><span class="pre">supportedDataTypes:</span> <span class="pre">SkYUVAPixmapInfo::SupportedDataTypes</span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">object</span><a class="headerlink" href="#skia.Codec.queryYUVAInfo" title="Permalink to this definition">¶</a></dt>
 <dd><p>If decoding to YUV is supported, this returns true. Otherwise, this
 returns false;</p>
 <dl class="field-list simple">
@@ -848,8 +852,8 @@ orientation, chroma siting, plane color types, and row bytes.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="skia.Codec.skipScanlines">
-<code class="sig-prename descclassname"><span class="pre">Codec.</span></code><code class="sig-name descname"><span class="pre">skipScanlines</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#skia.Codec" title="skia.Codec"><span class="pre">skia.Codec</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">countLines</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">bool</span><a class="headerlink" href="#skia.Codec.skipScanlines" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="skia.Codec.skipScanlines">
+<span class="sig-prename descclassname"><span class="pre">Codec.</span></span><span class="sig-name descname"><span class="pre">skipScanlines</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#skia.Codec" title="skia.Codec"><span class="pre">skia.Codec</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">countLines</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">bool</span><a class="headerlink" href="#skia.Codec.skipScanlines" title="Permalink to this definition">¶</a></dt>
 <dd><p>Skip count scanlines.</p>
 <p>Not valid to call before calling startScanlineDecode().</p>
 <p>The default version just calls onGetScanlines and discards the dst.
@@ -875,8 +879,8 @@ false on failure, possible reasons for failure include:</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="skia.Codec.startIncrementalDecode">
-<code class="sig-prename descclassname"><span class="pre">Codec.</span></code><code class="sig-name descname"><span class="pre">startIncrementalDecode</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#skia.Codec" title="skia.Codec"><span class="pre">skia.Codec</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">dstInfo</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">SkImageInfo</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dst</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">buffer</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rowBytes</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">options</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="skia.Codec.Options.html#skia.Codec.Options" title="skia.Codec.Options"><span class="pre">skia.Codec.Options</span></a></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="skia.Codec.Result.html#skia.Codec.Result" title="skia.Codec.Result"><span class="pre">skia.Codec.Result</span></a><a class="headerlink" href="#skia.Codec.startIncrementalDecode" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="skia.Codec.startIncrementalDecode">
+<span class="sig-prename descclassname"><span class="pre">Codec.</span></span><span class="sig-name descname"><span class="pre">startIncrementalDecode</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#skia.Codec" title="skia.Codec"><span class="pre">skia.Codec</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">dstInfo</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">SkImageInfo</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dst</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">buffer</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rowBytes</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">options</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="skia.Codec.Options.html#skia.Codec.Options" title="skia.Codec.Options"><span class="pre">skia.Codec.Options</span></a></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="skia.Codec.Result.html#skia.Codec.Result" title="skia.Codec.Result"><span class="pre">skia.Codec.Result</span></a><a class="headerlink" href="#skia.Codec.startIncrementalDecode" title="Permalink to this definition">¶</a></dt>
 <dd><p>Prepare for an incremental decode with the specified options.</p>
 <p>This may require a rewind.</p>
 <p>If kIncompleteInput is returned, may be called again after more data has
@@ -899,8 +903,8 @@ initialized and whether to decode a subset.</p></li>
 </dd></dl>
 
 <dl class="py method">
-<dt id="skia.Codec.startScanlineDecode">
-<code class="sig-prename descclassname"><span class="pre">Codec.</span></code><code class="sig-name descname"><span class="pre">startScanlineDecode</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#skia.Codec" title="skia.Codec"><span class="pre">skia.Codec</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">dstInfo</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">SkImageInfo</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">options</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="skia.Codec.Options.html#skia.Codec.Options" title="skia.Codec.Options"><span class="pre">skia.Codec.Options</span></a></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="skia.Codec.Result.html#skia.Codec.Result" title="skia.Codec.Result"><span class="pre">skia.Codec.Result</span></a><a class="headerlink" href="#skia.Codec.startScanlineDecode" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="skia.Codec.startScanlineDecode">
+<span class="sig-prename descclassname"><span class="pre">Codec.</span></span><span class="sig-name descname"><span class="pre">startScanlineDecode</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#skia.Codec" title="skia.Codec"><span class="pre">skia.Codec</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">dstInfo</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">SkImageInfo</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">options</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="skia.Codec.Options.html#skia.Codec.Options" title="skia.Codec.Options"><span class="pre">skia.Codec.Options</span></a></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="skia.Codec.Result.html#skia.Codec.Result" title="skia.Codec.Result"><span class="pre">skia.Codec.Result</span></a><a class="headerlink" href="#skia.Codec.startScanlineDecode" title="Permalink to this definition">¶</a></dt>
 <dd><p>Prepare for a scanline decode with the specified options.</p>
 <p>After this call, this class will be ready to decode the first scanline.</p>
 <p>This must be called in order to call <a class="reference internal" href="#skia.Codec.getScanlines" title="skia.Codec.getScanlines"><code class="xref py py-meth docutils literal notranslate"><span class="pre">getScanlines()</span></code></a> or
@@ -926,98 +930,98 @@ initialized.</p></li>
 <div class="section" id="attributes">
 <h2>Attributes<a class="headerlink" href="#attributes" title="Permalink to this headline">¶</a></h2>
 <dl class="py attribute">
-<dt id="skia.Codec.kCouldNotRewind">
-<code class="sig-prename descclassname"><span class="pre">Codec.</span></code><code class="sig-name descname"><span class="pre">kCouldNotRewind</span></code><em class="property"> <span class="pre">=</span> <span class="pre">&lt;Result.kCouldNotRewind:</span> <span class="pre">7&gt;</span></em><a class="headerlink" href="#skia.Codec.kCouldNotRewind" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="skia.Codec.kCouldNotRewind">
+<span class="sig-prename descclassname"><span class="pre">Codec.</span></span><span class="sig-name descname"><span class="pre">kCouldNotRewind</span></span><em class="property"> <span class="pre">=</span> <span class="pre">&lt;Result.kCouldNotRewind:</span> <span class="pre">7&gt;</span></em><a class="headerlink" href="#skia.Codec.kCouldNotRewind" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
-<dt id="skia.Codec.kErrorInInput">
-<code class="sig-prename descclassname"><span class="pre">Codec.</span></code><code class="sig-name descname"><span class="pre">kErrorInInput</span></code><em class="property"> <span class="pre">=</span> <span class="pre">&lt;Result.kErrorInInput:</span> <span class="pre">2&gt;</span></em><a class="headerlink" href="#skia.Codec.kErrorInInput" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="skia.Codec.kErrorInInput">
+<span class="sig-prename descclassname"><span class="pre">Codec.</span></span><span class="sig-name descname"><span class="pre">kErrorInInput</span></span><em class="property"> <span class="pre">=</span> <span class="pre">&lt;Result.kErrorInInput:</span> <span class="pre">2&gt;</span></em><a class="headerlink" href="#skia.Codec.kErrorInInput" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
-<dt id="skia.Codec.kIncompleteInput">
-<code class="sig-prename descclassname"><span class="pre">Codec.</span></code><code class="sig-name descname"><span class="pre">kIncompleteInput</span></code><em class="property"> <span class="pre">=</span> <span class="pre">&lt;Result.kIncompleteInput:</span> <span class="pre">1&gt;</span></em><a class="headerlink" href="#skia.Codec.kIncompleteInput" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="skia.Codec.kIncompleteInput">
+<span class="sig-prename descclassname"><span class="pre">Codec.</span></span><span class="sig-name descname"><span class="pre">kIncompleteInput</span></span><em class="property"> <span class="pre">=</span> <span class="pre">&lt;Result.kIncompleteInput:</span> <span class="pre">1&gt;</span></em><a class="headerlink" href="#skia.Codec.kIncompleteInput" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
-<dt id="skia.Codec.kInternalError">
-<code class="sig-prename descclassname"><span class="pre">Codec.</span></code><code class="sig-name descname"><span class="pre">kInternalError</span></code><em class="property"> <span class="pre">=</span> <span class="pre">&lt;Result.kInternalError:</span> <span class="pre">8&gt;</span></em><a class="headerlink" href="#skia.Codec.kInternalError" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="skia.Codec.kInternalError">
+<span class="sig-prename descclassname"><span class="pre">Codec.</span></span><span class="sig-name descname"><span class="pre">kInternalError</span></span><em class="property"> <span class="pre">=</span> <span class="pre">&lt;Result.kInternalError:</span> <span class="pre">8&gt;</span></em><a class="headerlink" href="#skia.Codec.kInternalError" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
-<dt id="skia.Codec.kInvalidConversion">
-<code class="sig-prename descclassname"><span class="pre">Codec.</span></code><code class="sig-name descname"><span class="pre">kInvalidConversion</span></code><em class="property"> <span class="pre">=</span> <span class="pre">&lt;Result.kInvalidConversion:</span> <span class="pre">3&gt;</span></em><a class="headerlink" href="#skia.Codec.kInvalidConversion" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="skia.Codec.kInvalidConversion">
+<span class="sig-prename descclassname"><span class="pre">Codec.</span></span><span class="sig-name descname"><span class="pre">kInvalidConversion</span></span><em class="property"> <span class="pre">=</span> <span class="pre">&lt;Result.kInvalidConversion:</span> <span class="pre">3&gt;</span></em><a class="headerlink" href="#skia.Codec.kInvalidConversion" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
-<dt id="skia.Codec.kInvalidInput">
-<code class="sig-prename descclassname"><span class="pre">Codec.</span></code><code class="sig-name descname"><span class="pre">kInvalidInput</span></code><em class="property"> <span class="pre">=</span> <span class="pre">&lt;Result.kInvalidInput:</span> <span class="pre">6&gt;</span></em><a class="headerlink" href="#skia.Codec.kInvalidInput" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="skia.Codec.kInvalidInput">
+<span class="sig-prename descclassname"><span class="pre">Codec.</span></span><span class="sig-name descname"><span class="pre">kInvalidInput</span></span><em class="property"> <span class="pre">=</span> <span class="pre">&lt;Result.kInvalidInput:</span> <span class="pre">6&gt;</span></em><a class="headerlink" href="#skia.Codec.kInvalidInput" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
-<dt id="skia.Codec.kInvalidParameters">
-<code class="sig-prename descclassname"><span class="pre">Codec.</span></code><code class="sig-name descname"><span class="pre">kInvalidParameters</span></code><em class="property"> <span class="pre">=</span> <span class="pre">&lt;Result.kInvalidParameters:</span> <span class="pre">5&gt;</span></em><a class="headerlink" href="#skia.Codec.kInvalidParameters" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="skia.Codec.kInvalidParameters">
+<span class="sig-prename descclassname"><span class="pre">Codec.</span></span><span class="sig-name descname"><span class="pre">kInvalidParameters</span></span><em class="property"> <span class="pre">=</span> <span class="pre">&lt;Result.kInvalidParameters:</span> <span class="pre">5&gt;</span></em><a class="headerlink" href="#skia.Codec.kInvalidParameters" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
-<dt id="skia.Codec.kInvalidScale">
-<code class="sig-prename descclassname"><span class="pre">Codec.</span></code><code class="sig-name descname"><span class="pre">kInvalidScale</span></code><em class="property"> <span class="pre">=</span> <span class="pre">&lt;Result.kInvalidScale:</span> <span class="pre">4&gt;</span></em><a class="headerlink" href="#skia.Codec.kInvalidScale" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="skia.Codec.kInvalidScale">
+<span class="sig-prename descclassname"><span class="pre">Codec.</span></span><span class="sig-name descname"><span class="pre">kInvalidScale</span></span><em class="property"> <span class="pre">=</span> <span class="pre">&lt;Result.kInvalidScale:</span> <span class="pre">4&gt;</span></em><a class="headerlink" href="#skia.Codec.kInvalidScale" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
-<dt id="skia.Codec.kKeep">
-<code class="sig-prename descclassname"><span class="pre">Codec.</span></code><code class="sig-name descname"><span class="pre">kKeep</span></code><em class="property"> <span class="pre">=</span> <span class="pre">&lt;DisposalMethod.kKeep:</span> <span class="pre">1&gt;</span></em><a class="headerlink" href="#skia.Codec.kKeep" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="skia.Codec.kKeep">
+<span class="sig-prename descclassname"><span class="pre">Codec.</span></span><span class="sig-name descname"><span class="pre">kKeep</span></span><em class="property"> <span class="pre">=</span> <span class="pre">&lt;DisposalMethod.kKeep:</span> <span class="pre">1&gt;</span></em><a class="headerlink" href="#skia.Codec.kKeep" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
-<dt id="skia.Codec.kNoFrame">
-<code class="sig-prename descclassname"><span class="pre">Codec.</span></code><code class="sig-name descname"><span class="pre">kNoFrame</span></code><em class="property"> <span class="pre">=</span> <span class="pre">-1</span></em><a class="headerlink" href="#skia.Codec.kNoFrame" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="skia.Codec.kNoFrame">
+<span class="sig-prename descclassname"><span class="pre">Codec.</span></span><span class="sig-name descname"><span class="pre">kNoFrame</span></span><em class="property"> <span class="pre">=</span> <span class="pre">-1</span></em><a class="headerlink" href="#skia.Codec.kNoFrame" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
-<dt id="skia.Codec.kNo_ZeroInitialized">
-<code class="sig-prename descclassname"><span class="pre">Codec.</span></code><code class="sig-name descname"><span class="pre">kNo_ZeroInitialized</span></code><em class="property"> <span class="pre">=</span> <span class="pre">&lt;ZeroInitialized.kNo_ZeroInitialized:</span> <span class="pre">1&gt;</span></em><a class="headerlink" href="#skia.Codec.kNo_ZeroInitialized" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="skia.Codec.kNo_ZeroInitialized">
+<span class="sig-prename descclassname"><span class="pre">Codec.</span></span><span class="sig-name descname"><span class="pre">kNo_ZeroInitialized</span></span><em class="property"> <span class="pre">=</span> <span class="pre">&lt;ZeroInitialized.kNo_ZeroInitialized:</span> <span class="pre">1&gt;</span></em><a class="headerlink" href="#skia.Codec.kNo_ZeroInitialized" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
-<dt id="skia.Codec.kPreferAnimation">
-<code class="sig-prename descclassname"><span class="pre">Codec.</span></code><code class="sig-name descname"><span class="pre">kPreferAnimation</span></code><em class="property"> <span class="pre">=</span> <span class="pre">&lt;SelectionPolicy.kPreferAnimation:</span> <span class="pre">1&gt;</span></em><a class="headerlink" href="#skia.Codec.kPreferAnimation" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="skia.Codec.kPreferAnimation">
+<span class="sig-prename descclassname"><span class="pre">Codec.</span></span><span class="sig-name descname"><span class="pre">kPreferAnimation</span></span><em class="property"> <span class="pre">=</span> <span class="pre">&lt;SelectionPolicy.kPreferAnimation:</span> <span class="pre">1&gt;</span></em><a class="headerlink" href="#skia.Codec.kPreferAnimation" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
-<dt id="skia.Codec.kPreferStillImage">
-<code class="sig-prename descclassname"><span class="pre">Codec.</span></code><code class="sig-name descname"><span class="pre">kPreferStillImage</span></code><em class="property"> <span class="pre">=</span> <span class="pre">&lt;SelectionPolicy.kPreferStillImage:</span> <span class="pre">0&gt;</span></em><a class="headerlink" href="#skia.Codec.kPreferStillImage" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="skia.Codec.kPreferStillImage">
+<span class="sig-prename descclassname"><span class="pre">Codec.</span></span><span class="sig-name descname"><span class="pre">kPreferStillImage</span></span><em class="property"> <span class="pre">=</span> <span class="pre">&lt;SelectionPolicy.kPreferStillImage:</span> <span class="pre">0&gt;</span></em><a class="headerlink" href="#skia.Codec.kPreferStillImage" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
-<dt id="skia.Codec.kRepetitionCountInfinite">
-<code class="sig-prename descclassname"><span class="pre">Codec.</span></code><code class="sig-name descname"><span class="pre">kRepetitionCountInfinite</span></code><em class="property"> <span class="pre">=</span> <span class="pre">-1</span></em><a class="headerlink" href="#skia.Codec.kRepetitionCountInfinite" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="skia.Codec.kRepetitionCountInfinite">
+<span class="sig-prename descclassname"><span class="pre">Codec.</span></span><span class="sig-name descname"><span class="pre">kRepetitionCountInfinite</span></span><em class="property"> <span class="pre">=</span> <span class="pre">-1</span></em><a class="headerlink" href="#skia.Codec.kRepetitionCountInfinite" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
-<dt id="skia.Codec.kRestoreBGColor">
-<code class="sig-prename descclassname"><span class="pre">Codec.</span></code><code class="sig-name descname"><span class="pre">kRestoreBGColor</span></code><em class="property"> <span class="pre">=</span> <span class="pre">&lt;DisposalMethod.kRestoreBGColor:</span> <span class="pre">2&gt;</span></em><a class="headerlink" href="#skia.Codec.kRestoreBGColor" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="skia.Codec.kRestoreBGColor">
+<span class="sig-prename descclassname"><span class="pre">Codec.</span></span><span class="sig-name descname"><span class="pre">kRestoreBGColor</span></span><em class="property"> <span class="pre">=</span> <span class="pre">&lt;DisposalMethod.kRestoreBGColor:</span> <span class="pre">2&gt;</span></em><a class="headerlink" href="#skia.Codec.kRestoreBGColor" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
-<dt id="skia.Codec.kRestorePrevious">
-<code class="sig-prename descclassname"><span class="pre">Codec.</span></code><code class="sig-name descname"><span class="pre">kRestorePrevious</span></code><em class="property"> <span class="pre">=</span> <span class="pre">&lt;DisposalMethod.kRestorePrevious:</span> <span class="pre">3&gt;</span></em><a class="headerlink" href="#skia.Codec.kRestorePrevious" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="skia.Codec.kRestorePrevious">
+<span class="sig-prename descclassname"><span class="pre">Codec.</span></span><span class="sig-name descname"><span class="pre">kRestorePrevious</span></span><em class="property"> <span class="pre">=</span> <span class="pre">&lt;DisposalMethod.kRestorePrevious:</span> <span class="pre">3&gt;</span></em><a class="headerlink" href="#skia.Codec.kRestorePrevious" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
-<dt id="skia.Codec.kSuccess">
-<code class="sig-prename descclassname"><span class="pre">Codec.</span></code><code class="sig-name descname"><span class="pre">kSuccess</span></code><em class="property"> <span class="pre">=</span> <span class="pre">&lt;Result.kSuccess:</span> <span class="pre">0&gt;</span></em><a class="headerlink" href="#skia.Codec.kSuccess" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="skia.Codec.kSuccess">
+<span class="sig-prename descclassname"><span class="pre">Codec.</span></span><span class="sig-name descname"><span class="pre">kSuccess</span></span><em class="property"> <span class="pre">=</span> <span class="pre">&lt;Result.kSuccess:</span> <span class="pre">0&gt;</span></em><a class="headerlink" href="#skia.Codec.kSuccess" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
-<dt id="skia.Codec.kUnimplemented">
-<code class="sig-prename descclassname"><span class="pre">Codec.</span></code><code class="sig-name descname"><span class="pre">kUnimplemented</span></code><em class="property"> <span class="pre">=</span> <span class="pre">&lt;Result.kUnimplemented:</span> <span class="pre">9&gt;</span></em><a class="headerlink" href="#skia.Codec.kUnimplemented" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="skia.Codec.kUnimplemented">
+<span class="sig-prename descclassname"><span class="pre">Codec.</span></span><span class="sig-name descname"><span class="pre">kUnimplemented</span></span><em class="property"> <span class="pre">=</span> <span class="pre">&lt;Result.kUnimplemented:</span> <span class="pre">9&gt;</span></em><a class="headerlink" href="#skia.Codec.kUnimplemented" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
-<dt id="skia.Codec.kYes_ZeroInitialized">
-<code class="sig-prename descclassname"><span class="pre">Codec.</span></code><code class="sig-name descname"><span class="pre">kYes_ZeroInitialized</span></code><em class="property"> <span class="pre">=</span> <span class="pre">&lt;ZeroInitialized.kYes_ZeroInitialized:</span> <span class="pre">0&gt;</span></em><a class="headerlink" href="#skia.Codec.kYes_ZeroInitialized" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="skia.Codec.kYes_ZeroInitialized">
+<span class="sig-prename descclassname"><span class="pre">Codec.</span></span><span class="sig-name descname"><span class="pre">kYes_ZeroInitialized</span></span><em class="property"> <span class="pre">=</span> <span class="pre">&lt;ZeroInitialized.kYes_ZeroInitialized:</span> <span class="pre">0&gt;</span></em><a class="headerlink" href="#skia.Codec.kYes_ZeroInitialized" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </div>
