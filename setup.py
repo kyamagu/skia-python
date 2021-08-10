@@ -187,7 +187,10 @@ setup(
     long_description=open('README.md', 'r').read(),
     long_description_content_type='text/markdown',
     ext_modules=[extension],
-    install_requires=['pybind11>=2.6'],
+    install_requires=[
+        'numpy',
+        'pybind11>=2.6'
+    ],
     setup_requires=['pybind11>=2.6'],
     cmdclass={'build_ext': BuildExt},
     command_options={
