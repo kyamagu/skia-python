@@ -7,7 +7,8 @@ if [[ $(uname -m) == "aarch64" ]]; then
     yum -y install epel-release && \
         yum repolist && \
         yum install -y ninja-build && \
-        ln -s ninja-build /usr/bin/ninja
+        ln -s ninja-build /usr/bin/ninja &&
+        mv depot_tools/ninja depot_tools/ninja.bak
 fi
 
 # Install system dependencies
@@ -15,7 +16,7 @@ yum install -y \
     fontconfig-devel \
     mesa-libGL-devel \
     xorg-x11-server-Xvfb \
-    mesa-dri-drivers \
+    mesa-dri-drivers && \
     yum clean all && \
     rm -rf /var/cache/yum
 
