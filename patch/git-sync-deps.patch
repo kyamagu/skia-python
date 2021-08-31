@@ -1,5 +1,5 @@
 diff --git a/DEPS b/DEPS
-index 3281084ee9..8a8b3ffe32 100644
+index 3281084ee9..79abdbf3e2 100644
 --- a/DEPS
 +++ b/DEPS
 @@ -6,7 +6,7 @@ vars = {
@@ -7,10 +7,19 @@ index 3281084ee9..8a8b3ffe32 100644
  deps = {
    "buildtools"                            : "https://chromium.googlesource.com/chromium/buildtools.git@505de88083136eefd056e5ee4ca0f01fe9b33de8",
 -  "common"                                : "https://skia.googlesource.com/common.git@9737551d7a52c3db3262db5856e6bcd62c462b92",
-+  #"common"                                : "https://skia.googlesource.com/common.git@9737551d7a52c3db3262db5856e6bcd62c462b92",
++  # "common"                                : "https://skia.googlesource.com/common.git@9737551d7a52c3db3262db5856e6bcd62c462b92",
    "third_party/externals/angle2"          : "https://chromium.googlesource.com/angle/angle.git@fa082bb58ba756fe1c7538f8af2332ef70017097",
    "third_party/externals/d3d12allocator"  : "https://skia.googlesource.com/external/github.com/GPUOpen-LibrariesAndSDKs/D3D12MemoryAllocator.git@169895d529dfce00390a20e69c2f516066fe7a3b",
    # Dawn requires jinja2 and markupsafe for the code generator, and glslang and shaderc for SPIRV compilation.
+@@ -24,7 +24,7 @@ deps = {
+   "third_party/externals/icu"             : "https://chromium.googlesource.com/chromium/deps/icu.git@dbd3825b31041d782c5b504c59dcfb5ac7dda08c",
+   "third_party/externals/imgui"           : "https://skia.googlesource.com/external/github.com/ocornut/imgui.git@9418dcb69355558f70de260483424412c5ca2fce",
+   "third_party/externals/libgifcodec"     : "https://skia.googlesource.com/libgifcodec@d06d2a6d42baf6c0c91cacc28df2542a911d05fe",
+-  "third_party/externals/libjpeg-turbo"   : "https://chromium.googlesource.com/chromium/deps/libjpeg_turbo.git@64fc43d52351ed52143208ce6a656c03db56462b",
++  "third_party/externals/libjpeg-turbo"   : "https://chromium.googlesource.com/chromium/deps/libjpeg_turbo.git@d5148db386ceb4a608058320071cbed890bd6ad2",
+   "third_party/externals/libpng"          : "https://skia.googlesource.com/third_party/libpng.git@386707c6d19b974ca2e3db7f5c61873813c6fe44",
+   "third_party/externals/libwebp"         : "https://chromium.googlesource.com/webm/libwebp.git@55a080e50af655d1fbe0a5c22954835cdd59ff92",
+   "third_party/externals/lua"             : "https://skia.googlesource.com/external/github.com/lua/lua.git@e354c6355e7f48e087678ec49e340ca0696725b1",
 diff --git a/tools/git-sync-deps b/tools/git-sync-deps
 index ca1ba47a75..92ff8ef7bc 100755
 --- a/tools/git-sync-deps
