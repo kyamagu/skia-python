@@ -3,9 +3,8 @@
 export PATH=${PWD}/depot_tools:$PATH
 
 # Install system dependencies
-yum --disablerepo=epel install -y \
+yum install -y \
     fontconfig-devel \
-    expat-devel \
     mesa-libGL-devel \
     xorg-x11-server-Xvfb \
     mesa-dri-drivers && \
