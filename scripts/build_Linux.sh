@@ -37,6 +37,7 @@ git clone https://gn.googlesource.com/gn && \
 cd skia && \
     patch -p1 < ../patch/git-sync-deps.patch && \
     python tools/git-sync-deps && \
+    patch -p1 < ../patch/make_data_assembly.patch && \
     cp -f ../gn/out/gn bin/gn && \
     bin/gn gen out/Release --args='
 is_official_build=true
