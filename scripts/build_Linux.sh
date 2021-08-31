@@ -8,6 +8,7 @@ yum install -y \
     mesa-libGL-devel \
     xorg-x11-server-Xvfb \
     mesa-dri-drivers && \
+    ninja-build && \
     yum clean all && \
     rm -rf /var/cache/yum
 
