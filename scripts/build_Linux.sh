@@ -3,8 +3,11 @@
 export PATH=${PWD}/depot_tools:$PATH
 
 if [[ $(uname -m) == "aarch64" ]]; then
+    # Install ninja for aarch64
     yum -y install epel-release && \
-        yum repolist
+        yum repolist && \
+        yum install -y ninja-build && \
+        ln -s ninja-build /usr/bin/ninja
 fi
 
 # Install system dependencies
@@ -13,7 +16,6 @@ yum install -y \
     mesa-libGL-devel \
     xorg-x11-server-Xvfb \
     mesa-dri-drivers \
-    ninja-build && \
     yum clean all && \
     rm -rf /var/cache/yum
 
