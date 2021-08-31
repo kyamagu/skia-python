@@ -2,6 +2,8 @@
 
 export PATH=${PWD}/depot_tools:$PATH
 
+EXTRA_CFLAGS=""
+
 if [[ $(uname -m) == "aarch64" ]]; then
     # Install ninja for aarch64
     yum -y install epel-release && \
@@ -9,6 +11,7 @@ if [[ $(uname -m) == "aarch64" ]]; then
         yum install -y ninja-build && \
         ln -s ninja-build /usr/bin/ninja &&
         mv depot_tools/ninja depot_tools/ninja.bak
+    EXTRA_CFLAGS='extra_cflags=["-flax-vector-conversions"]'
 fi
 
 # Install system dependencies
@@ -39,7 +42,7 @@ cd skia && \
     python tools/git-sync-deps && \
     patch -p1 < ../patch/make_data_assembly.patch && \
     cp -f ../gn/out/gn bin/gn && \
-    bin/gn gen out/Release --args='
+    bin/gn gen out/Release --args="
 is_official_build=true
 skia_enable_tools=true
 skia_use_system_libjpeg_turbo=false
@@ -47,8 +50,9 @@ skia_use_system_libwebp=false
 skia_use_system_libpng=false
 skia_use_system_icu=false
 skia_use_system_harfbuzz=false
-extra_cflags_cc=["-frtti"]
-extra_ldflags=["-lrt"]
-' && \
+extra_cflags_cc=[\"-frtti\"]
+extra_ldflags=[\"-lrt\"]
+${EXTRA_CFLAGS}
+" && \
     ninja -C out/Release skia skia.h experimental_svg_model && \
     cd ..
