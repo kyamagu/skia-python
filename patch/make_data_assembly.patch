@@ -1,6 +1,6 @@
 --- a/third_party/externals/icu/scripts/make_data_assembly.py	2021-08-31 12:41:50.000000000 +0900
-+++ b/third_party/externals/icu/scripts/make_data_assembly.py	2021-08-31 12:45:01.000000000 +0900
-@@ -42,7 +42,7 @@
++++ b/third_party/externals/icu/scripts/make_data_assembly.py	2021-08-31 16:56:02.000000000 +0900
+@@ -42,11 +42,11 @@
    step = -1
 
  input_data = open(input_file, 'rb').read()
@@ -8,6 +8,11 @@
 +n = input_data.find(b"icudt")
  if n == -1:
    sys.exit("Cannot find a version number in %s." % input_file)
+
+-version_number = input_data[n + 5:n + 7]
++version_number = input_data[n + 5:n + 7].decode('ascii')
+
+ output = open(output_file, 'w')
 
 @@ -75,28 +75,28 @@
                 "\t.type icudt%s_dat,%%object\n"
