@@ -1,16 +1,16 @@
 #!/usr/bin/env bash
 
+export PATH=depot_tools:$PATH
+
 # Build skia
 export CC=clang
 export CXX=clang++
 export MACOSX_DEPLOYMENT_TARGET="10.9"
 
-
 function apply_patch {
     patch -p1 < ../patch/find_xcode_sysroot.patch;
     patch -p1 < ../patch/make_data_assembly.patch;
 }
-
 
 cd skia && \
     python tools/git-sync-deps && \

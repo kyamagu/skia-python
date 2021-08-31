@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+export PATH=depot_tools:$PATH
+
 # Install system dependencies
 yum --disablerepo=epel install -y \
     fontconfig-devel \

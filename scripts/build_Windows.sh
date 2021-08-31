@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+export PATH=depot_tools:$PATH
+
 # Build skia
 cd skia && \
     python tools/git-sync-deps && \
