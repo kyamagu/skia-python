@@ -2,6 +2,11 @@
 
 export PATH=${PWD}/depot_tools:$PATH
 
+if [[ $(uname -m) == "aarch64" ]]; then
+    yum -y install epel-release && \
+        yum repolist
+fi
+
 # Install system dependencies
 yum install -y \
     fontconfig-devel \
