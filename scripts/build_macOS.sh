@@ -1,11 +1,14 @@
 #!/usr/bin/env bash
 
+shopt -s expand_aliases
+alias python="python2"
+
 # Build skia
 export CC=clang
 export CXX=clang++
 export MACOSX_DEPLOYMENT_TARGET="10.9"
+
 cd skia && \
-    patch -p1 < ../patch/find_xcode_sysroot.patch && \
     python tools/git-sync-deps && \
     bin/gn gen out/Release --args='
 is_official_build=true
