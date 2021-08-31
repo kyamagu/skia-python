@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-export PATH=depot_tools:$PATH
+export PATH=${PWD}/depot_tools:$PATH
 
 # Build skia
 export CC=clang
