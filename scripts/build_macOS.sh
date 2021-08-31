@@ -5,7 +5,8 @@ export CC=clang
 export CXX=clang++
 export MACOSX_DEPLOYMENT_TARGET="10.9"
 cd skia && \
-    python2 tools/git-sync-deps && \
+    patch -p1 < ../patch/find_xcode_sysroot.patch && \
+    python tools/git-sync-deps && \
     bin/gn gen out/Release --args='
 is_official_build=true
 skia_enable_tools=true

@@ -1,0 +1,10 @@
+diff --git a/gn/find_xcode_sysroot.py b/gn/find_xcode_sysroot.py
+index be5b687e03..db7a47624d 100755
+--- a/gn/find_xcode_sysroot.py
++++ b/gn/find_xcode_sysroot.py
+@@ -12,4 +12,4 @@ import sys
+ 
+ (sdk,) = sys.argv[1:]
+ 
+-print(subprocess.check_output(['xcrun', '--sdk', sdk, '--show-sdk-path']))
++print(subprocess.check_output(['xcrun', '--sdk', sdk, '--show-sdk-path']).decode('utf-8'))
