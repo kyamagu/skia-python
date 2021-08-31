@@ -8,7 +8,7 @@ export MACOSX_DEPLOYMENT_TARGET="10.9"
 
 function apply_patch {
     patch -p1 < ../patch/find_xcode_sysroot.patch;
-    2to3 -w third_party/externals/icu/scripts/make_data_assembly.py;
+    patch -p1 < ../patch/make_data_assembly.patch;
 }
 
 
