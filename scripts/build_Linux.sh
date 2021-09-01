@@ -11,7 +11,6 @@ if [[ $(uname -m) == "aarch64" ]]; then
         yum install -y ninja-build && \
         ln -s ninja-build /usr/bin/ninja &&
         mv depot_tools/ninja depot_tools/ninja.bak
-    EXTRA_CFLAGS='extra_cflags=["-flax-vector-conversions"]'
 fi
 
 # Install system dependencies
@@ -41,6 +40,7 @@ cd skia && \
     patch -p1 < ../patch/git-sync-deps.patch && \
     python tools/git-sync-deps && \
     patch -p1 < ../patch/make_data_assembly.patch && \
+    patch -p1 < ../patch/libjpeg-arm.patch && \
     cp -f ../gn/out/gn bin/gn && \
     bin/gn gen out/Release --args="
 is_official_build=true
@@ -52,7 +52,6 @@ skia_use_system_icu=false
 skia_use_system_harfbuzz=false
 extra_cflags_cc=[\"-frtti\"]
 extra_ldflags=[\"-lrt\"]
-${EXTRA_CFLAGS}
 " && \
     ninja -C out/Release skia skia.h experimental_svg_model && \
     cd ..
