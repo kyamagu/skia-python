@@ -61,6 +61,8 @@ jobs:
     needs: [build_wheels]
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v2
+
       - uses: actions/setup-python@v2
         name: Install Python
         with:
