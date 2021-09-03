@@ -19,8 +19,8 @@ pip install skia-python
 
 Supported platforms:
 
-- Linux x86_64
-- macOS
+- Linux x86_64, aarch64
+- macOS x86_64, arm64
 - Windows x86_64
 
 For Linux platforms, there must be OpenGL and fontconfig installed:

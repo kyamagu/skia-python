@@ -1,0 +1,53 @@
+--- a/third_party/externals/icu/scripts/make_data_assembly.py	2021-08-31 12:41:50.000000000 +0900
++++ b/third_party/externals/icu/scripts/make_data_assembly.py	2021-08-31 16:56:02.000000000 +0900
+@@ -42,11 +42,11 @@
+   step = -1
+
+ input_data = open(input_file, 'rb').read()
+-n = input_data.find("icudt")
++n = input_data.find(b"icudt")
+ if n == -1:
+   sys.exit("Cannot find a version number in %s." % input_file)
+
+-version_number = input_data[n + 5:n + 7]
++version_number = input_data[n + 5:n + 7].decode('ascii')
+
+ output = open(output_file, 'w')
+
+@@ -75,28 +75,28 @@
+                "\t.type icudt%s_dat,%%object\n"
+                "icudt%s_dat:\n" % tuple([version_number] * 4))
+
+-split = [binascii.hexlify(input_data[i:i + 4][::step]).upper().lstrip('0')
++split = [binascii.hexlify(input_data[i:i + 4][::step]).upper().lstrip(b'0')
+         for i in range(0, len(input_data), 4)]
+
+ for i in range(len(split)):
+   if (len(split[i]) == 0):
+-    value = '0'
++    value = b'0'
+   elif (len(split[i]) == 1):
+-    if not any((c in '123456789') for c in split[i]):
+-      value = '0x0' + split[i]
++    if not any((c in b'123456789') for c in split[i]):
++      value = b'0x0' + split[i]
+     else:
+       value = split[i]
+   elif (len(split[i]) % 2 == 1):
+-    value = '0x0' + split[i]
++    value = b'0x0' + split[i]
+   else:
+-    value = '0x' + split[i]
++    value = b'0x' + split[i]
+
+   if (i % 32 == 0):
+     output.write("\n.long ")
+   else:
+     output.write(",")
+-  output.write(value)
++  output.write(value.decode('ascii'))
+
+ output.write("\n")
+ output.close()
+-print "Generated " + output_file
++print("Generated " + output_file)
