@@ -23,8 +23,8 @@ function apply_patch {
 }
 
 cd skia && \
-    echo python tools/git-sync-deps && \
-    echo apply_patch && \
+    python tools/git-sync-deps && \
+    apply_patch && \
     bin/gn gen out/Release --args="
 is_official_build=true
 skia_enable_tools=true
