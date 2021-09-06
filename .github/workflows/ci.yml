@@ -17,8 +17,8 @@ jobs:
         os: [ubuntu-20.04, windows-2019, macos-10.15]
         arch: [auto64]
         include:
-          - os: ubuntu-20.04
-            arch: aarch64
+          # - os: ubuntu-20.04
+          #   arch: aarch64
           - os: macos-10.15
             arch: arm64
 
@@ -27,16 +27,11 @@ jobs:
         with:
           submodules: true
 
-      - uses: actions/setup-python@v2
-        name: Install Python
-        with:
-          python-version: '3.8'
-
       - name: Set up QEMU
         if: runner.os == 'Linux' && matrix.arch != 'auto64'
         uses: docker/setup-qemu-action@v1
         with:
-          platforms: arm64
+          platforms: ${{ matrix.arch }}
 
       - name: Build wheels
         uses: pypa/cibuildwheel@v2.1.1
@@ -50,7 +45,8 @@ jobs:
           CIBW_TEST_REQUIRES: pytest pillow==8.3.1 glfw
           CIBW_TEST_REQUIRES_MACOS: pytest pillow pyopengl pyopengl-accelerate
           CIBW_TEST_COMMAND: python -m pytest {project}/tests
-          CIBW_TEST_COMMAND_LINUX: xvfb-run -s "-screen 0 640x480x24" python -m pytest {project}/tests
+          CIBW_TEST_COMMAND_LINUX: >
+            xvfb-run -s "-screen 0 640x480x24" python -m pytest {project}/tests
           CIBW_TEST_SKIP: "*-macosx_arm64"
 
       - uses: actions/upload-artifact@v2
