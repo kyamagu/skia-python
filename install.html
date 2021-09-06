@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>Install &mdash; skia-python 87.2 documentation</title>
+  <title>Install &mdash; skia-python 87.3 documentation</title>
   
 
   
@@ -66,7 +66,7 @@
             
             
               <div class="version">
-                87.2
+                87.3
               </div>
             
           
@@ -184,8 +184,8 @@
 </div>
 <p>Supported platforms:</p>
 <ul class="simple">
-<li><p>Linux x86_64</p></li>
-<li><p>macOS</p></li>
+<li><p>Linux x86_64, aarch64</p></li>
+<li><p>macOS x86_64, arm64</p></li>
 <li><p>Windows x86_64</p></li>
 </ul>
 <p>For Linux platforms, there must be OpenGL and fontconfig installed:</p>
@@ -207,6 +207,7 @@
 </div>
 <p>The repository bundles <cite>skia</cite> and its build tools (<cite>depot_tools</cite>) as submodules.
 <cite>skia</cite> must be built first to build Python binding.</p>
+<p>The actual CI build procedures are implemented in <cite>scripts/build_${ os }.sh</cite>.</p>
 <p>For building skia, there are a few compile-time requirements:</p>
 <ul class="simple">
 <li><p>Run-time type information (RTTI) must be enabled.</p>
@@ -217,7 +218,6 @@
 </li>
 <li><p><code class="docutils literal notranslate"><span class="pre">/MD</span></code> flag must be set for <code class="docutils literal notranslate"><span class="pre">cl.exe</span></code> (Visual C++)</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">gn</span></code> args should include <code class="docutils literal notranslate"><span class="pre">skia_enable_tools</span> <span class="pre">=</span> <span class="pre">true</span></code> to build <code class="docutils literal notranslate"><span class="pre">skia.h</span></code> header.</p></li>
-<li><p>Static linking is assumed; therefore, <code class="docutils literal notranslate"><span class="pre">is_component_build</span> <span class="pre">=</span> <span class="pre">false</span></code>.</p></li>
 </ul>
 <p>For detailed Skia build instructions, check <a class="reference external" href="https://skia.org/">the official page</a>.</p>
 <ul class="simple">

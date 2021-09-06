@@ -12,8 +12,8 @@ Binary package is available on PyPI:
 
 Supported platforms:
 
-- Linux x86_64
-- macOS
+- Linux x86_64, aarch64
+- macOS x86_64, arm64
 - Windows x86_64
 
 For Linux platforms, there must be OpenGL and fontconfig installed:
@@ -44,6 +44,8 @@ First, clone the repo.
 The repository bundles `skia` and its build tools (`depot_tools`) as submodules.
 `skia` must be built first to build Python binding.
 
+The actual CI build procedures are implemented in `scripts/build_${ os }.sh`.
+
 For building skia, there are a few compile-time requirements:
 
 - Run-time type information (RTTI) must be enabled.
@@ -53,7 +55,6 @@ For building skia, there are a few compile-time requirements:
 
 - ``/MD`` flag must be set for ``cl.exe`` (Visual C++)
 - ``gn`` args should include ``skia_enable_tools = true`` to build ``skia.h`` header.
-- Static linking is assumed; therefore, ``is_component_build = false``.
 
 For detailed Skia build instructions, check `the official page`_.
 
