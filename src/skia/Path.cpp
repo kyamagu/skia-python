@@ -701,7 +701,9 @@ path
         py::arg("index"))
     .def("getPoints",
         [] (const SkPath& path, int max) {
-            std::vector<SkPoint> points((max == 0) ? path.countPoints() : max);
+            if (max == 0)
+                max = path.countVerbs();
+            std::vector<SkPoint> points(max);
             auto length = path.getPoints(&points[0], max);
             if (length < max)
                 points.erase(points.begin() + length, points.end());
