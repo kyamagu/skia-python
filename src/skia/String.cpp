@@ -18,7 +18,7 @@ py::class_<SkString>(m, "String")
     .def(py::init<size_t>(), py::arg("size"))
     .def(py::init(
         [] (py::str str) {
-            ssize_t length = 0;
+            py::ssize_t length = 0;
             auto buffer = PyUnicode_AsUTF8AndSize(str.ptr(), &length);
             if (!buffer)
                 throw py::value_error("Failed to get UTF-8 str.");

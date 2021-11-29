@@ -435,7 +435,7 @@ canvas
             void* addr = canvas.accessTopLayerPixels(&info, &rowBytes, origin);
             if (!addr)
                 return py::none();
-            ssize_t bytesPerPixel = info.bytesPerPixel();
+            py::ssize_t bytesPerPixel = info.bytesPerPixel();
             const char* format =
                 (bytesPerPixel == 1) ?
                     py::format_descriptor<uint8_t>::value :
@@ -451,7 +451,7 @@ canvas
                 bytesPerPixel,
                 format,
                 { info.width(), info.height() },
-                { ssize_t(rowBytes), bytesPerPixel },
+                { py::ssize_t(rowBytes), bytesPerPixel },
                 true
             );
         },
