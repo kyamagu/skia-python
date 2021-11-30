@@ -58,10 +58,10 @@ SkImageInfo NumPyToImageInfo(
     py::array array, SkColorType ct, SkAlphaType at, const SkColorSpace* cs);
 
 py::buffer_info ImageInfoToBufferInfo(
-    const SkImageInfo& imageInfo, void* data, ssize_t rowBytes = 0,
+    const SkImageInfo& imageInfo, void* data, py::ssize_t rowBytes = 0,
     bool readonly = true);
 py::memoryview ImageInfoToMemoryView(
-    const SkImageInfo& imageInfo, void* data, ssize_t rowBytes = 0,
+    const SkImageInfo& imageInfo, void* data, py::ssize_t rowBytes = 0,
     bool readonly = true);
 py::dict ImageInfoToArrayInterface(
     const SkImageInfo& imageInfo, size_t rowBytes = 0);
