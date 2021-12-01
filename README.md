@@ -39,13 +39,13 @@ For unsupported environment, check the [build instruction](https://kyamagu.githu
 
 ## Examples
 
-- [Showcase](https://github.com/kyamagu/skia-python/blob/master/notebooks/Showcase.ipynb)
-- [Canvas Overview](https://github.com/kyamagu/skia-python/blob/master/notebooks/Canvas-Overview.ipynb)
-- [Canvas Creation](https://github.com/kyamagu/skia-python/blob/master/notebooks/Canvas-Creation.ipynb)
-- [Path Overview](https://github.com/kyamagu/skia-python/blob/master/notebooks/Path-Overview.ipynb)
-- [Paint Overview](https://github.com/kyamagu/skia-python/blob/master/notebooks/Paint-Overview.ipynb)
-- [Python Image I/O](https://github.com/kyamagu/skia-python/blob/master/notebooks/Python-Image-IO.ipynb)
-- [Drawing Texts](https://github.com/kyamagu/skia-python/blob/master/notebooks/Drawing-Texts.ipynb)
+- [Showcase](https://github.com/kyamagu/skia-python/blob/main/notebooks/Showcase.ipynb)
+- [Canvas Overview](https://github.com/kyamagu/skia-python/blob/main/notebooks/Canvas-Overview.ipynb)
+- [Canvas Creation](https://github.com/kyamagu/skia-python/blob/main/notebooks/Canvas-Creation.ipynb)
+- [Path Overview](https://github.com/kyamagu/skia-python/blob/main/notebooks/Path-Overview.ipynb)
+- [Paint Overview](https://github.com/kyamagu/skia-python/blob/main/notebooks/Paint-Overview.ipynb)
+- [Python Image I/O](https://github.com/kyamagu/skia-python/blob/main/notebooks/Python-Image-IO.ipynb)
+- [Drawing Texts](https://github.com/kyamagu/skia-python/blob/main/notebooks/Drawing-Texts.ipynb)
 
 ## Documentation
 
