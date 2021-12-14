@@ -284,7 +284,7 @@ typeface
         R"docstring(
         Returns true if style() has the kBold bit set.
         )docstring")
-    .def("isItalic", &SkTypeface::isBold,
+    .def("isItalic", &SkTypeface::isItalic,
         R"docstring(
         Returns true if style() has the kItalic bit set.
         )docstring")
