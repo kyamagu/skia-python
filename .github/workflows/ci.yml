@@ -34,12 +34,11 @@ jobs:
           platforms: ${{ matrix.arch }}
 
       - name: Build wheels
-        uses: pypa/cibuildwheel@v2.1.1
+        uses: pypa/cibuildwheel@v2.3.1
         env:
           CIBW_BUILD: cp*
           CIBW_ARCHS: ${{ matrix.arch }}
           CIBW_ENVIRONMENT_MACOS: TARGET_ARCH=${{ matrix.arch }}
-          CIBW_MANYLINUX_X86_64_IMAGE: manylinux2014
           CIBW_BEFORE_ALL: bash scripts/build_${{ runner.os }}.sh
           CIBW_BEFORE_BUILD: pip install pybind11 numpy
           CIBW_TEST_REQUIRES: pytest pillow glfw

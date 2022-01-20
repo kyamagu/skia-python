@@ -7,8 +7,6 @@ Python binding to [Skia Graphics Library](https://skia.org/).
 
 - Binding based on [pybind11](https://github.com/pybind/pybind11).
 
-Currently, the binding is under active development.
-
 ## Install
 
 Binary package is available on PyPI:
