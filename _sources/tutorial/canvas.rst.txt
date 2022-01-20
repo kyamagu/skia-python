@@ -146,9 +146,10 @@ Here's a complete example:
     @contextlib.contextmanager
     def skia_surface(window):
         context = skia.GrDirectContext.MakeGL()
+        (fb_width, fb_height) = glfw.get_framebuffer_size(window)
         backend_render_target = skia.GrBackendRenderTarget(
-            WIDTH,
-            HEIGHT,
+            fb_width,
+            fb_height,
             0,  # sampleCnt
             0,  # stencilBits
             skia.GrGLFramebufferInfo(0, GL.GL_RGBA8))
