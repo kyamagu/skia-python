@@ -37,6 +37,7 @@ jobs:
         uses: pypa/cibuildwheel@v2.3.1
         env:
           CIBW_BUILD: cp*
+          CIBW_SKIP: "*musllinux*"
           CIBW_ARCHS: ${{ matrix.arch }}
           CIBW_ENVIRONMENT_MACOS: TARGET_ARCH=${{ matrix.arch }}
           CIBW_BEFORE_ALL: bash scripts/build_${{ runner.os }}.sh
