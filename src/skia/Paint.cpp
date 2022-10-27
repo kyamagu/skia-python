@@ -807,6 +807,6 @@ flattenable
 initColorFilter(m);
 initPathEffect(m);
 initShader(m);
-// initMaskFilter(m);
+initMaskFilter(m);
 //TODO initImageFilter(m);
 }
