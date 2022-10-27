@@ -981,7 +981,7 @@ canvas
         py::arg("matrix"))
     .def("concat", py::overload_cast<const SkM44&>(&SkCanvas::concat),
         py::arg("m44"))
-    /*.def("setMatrix", &SkCanvas::setMatrix,
+    .def("setMatrix", py::overload_cast<const SkMatrix&>(&SkCanvas::setMatrix),
         R"docstring(
         Replaces :py:class:`Matrix` with matrix.
 
@@ -1394,7 +1394,6 @@ canvas
         :paint: stroke, blend, color, and so on, used to draw
         )docstring",
         py::arg("p"), py::arg("paint"))
-        */
     .def("drawLine",
         py::overload_cast<SkScalar, SkScalar, SkScalar, SkScalar,
             const SkPaint&>(&SkCanvas::drawLine),
@@ -1447,7 +1446,7 @@ canvas
             to draw
         )docstring",
         py::arg("rect"), py::arg("paint"))
-    /*.def("drawIRect", &SkCanvas::drawIRect,
+    .def("drawIRect", &SkCanvas::drawIRect,
         R"docstring(
         Draws :py:class:`IRect` rect using clip, :py:class:`Matrix`, and
         :py:class:`Paint` paint.
@@ -1615,7 +1614,6 @@ canvas
         :param skia.Paint paint: stroke, blend, color, and so on, used to draw
         )docstring",
         py::arg("rect"), py::arg("rx"), py::arg("ry"), py::arg("paint"))
-        */
     .def("drawPath", &SkCanvas::drawPath,
         R"docstring(
         Draws :py:class:`Path` path using clip, :py:class:`Matrix`, and
@@ -1971,16 +1969,16 @@ canvas
         :param skia.Paint paint: blend, color, stroking, and so on, used to draw
         )docstring",
         py::arg("blob"), py::arg("x"), py::arg("y"), py::arg("paint"))
-    // .def("drawTextBlob",
-    //     py::overload_cast<const sk_sp<SkTextBlob>&, SkScalar, SkScalar,
-    //         const SkPaint&>(&SkCanvas::drawTextBlob),
-    //     "Draws SkTextBlob blob at (x, y), using clip, SkMatrix, and SkPaint "
-    //     "paint.")
-    // .def("drawPicture",
-    //     py::overload_cast<const SkPicture*>(&SkCanvas::drawPicture))
-    // .def("drawPicture",
-    //     py::overload_cast<const sk_sp<SkPicture>&>(&SkCanvas::drawPicture),
-    //     "Draws SkPicture picture, using clip and SkMatrix.")
+     .def("drawTextBlob",
+         py::overload_cast<const sk_sp<SkTextBlob>&, SkScalar, SkScalar,
+             const SkPaint&>(&SkCanvas::drawTextBlob),
+         "Draws SkTextBlob blob at (x, y), using clip, SkMatrix, and SkPaint "
+         "paint.")
+     .def("drawPicture",
+         py::overload_cast<const SkPicture*>(&SkCanvas::drawPicture))
+     .def("drawPicture",
+         py::overload_cast<const sk_sp<SkPicture>&>(&SkCanvas::drawPicture),
+         "Draws SkPicture picture, using clip and SkMatrix.")
     .def("drawPicture",
         py::overload_cast<const SkPicture*, const SkMatrix*, const SkPaint*>(
             &SkCanvas::drawPicture),
@@ -2005,12 +2003,12 @@ canvas
         )docstring",
         py::arg("picture"), py::arg("matrix") = nullptr,
         py::arg("paint") = nullptr)
-    // .def("drawPicture",
-    //     py::overload_cast<const sk_sp<SkPicture>&, const SkMatrix*,
-    //         const SkPaint*>(&SkCanvas::drawPicture),
-    //     "Draws SkPicture picture, using clip and SkMatrix; transforming "
-    //     "picture with SkMatrix matrix, if provided; and use SkPaint paint "
-    //     "alpha, SkColorFilter, SkImageFilter, and SkBlendMode, if provided.")
+     .def("drawPicture",
+         py::overload_cast<const sk_sp<SkPicture>&, const SkMatrix*,
+             const SkPaint*>(&SkCanvas::drawPicture),
+         "Draws SkPicture picture, using clip and SkMatrix; transforming "
+         "picture with SkMatrix matrix, if provided; and use SkPaint paint "
+         "alpha, SkColorFilter, SkImageFilter, and SkBlendMode, if provided.")
     .def("drawVertices",
         // py::overload_cast<const SkVertices*, SkBlendMode, const SkPaint&>(
         //     &SkCanvas::drawVertices),
@@ -2034,20 +2032,14 @@ canvas
         )docstring",
         py::arg("vertices"), py::arg("paint"),
         py::arg("mode") = SkBlendMode::kModulate)
-    // .def("drawVertices",
-    //     py::overload_cast<const SkVertices*, const SkPaint&>(
-    //         &SkCanvas::drawVertices),
-    //     "Variant of 3-parameter drawVertices, using the default of Modulate "
-    //     "for the blend parameter.")
-    // .def("drawVertices",
-    //     py::overload_cast<const sk_sp<SkVertices>&, SkBlendMode,
-    //         const SkPaint&>(&SkCanvas::drawVertices),
-    //     "Draws SkVertices vertices, a triangle mesh, using clip and SkMatrix.")
-    // .def("drawVertices",
-    //     py::overload_cast<const sk_sp<SkVertices>&, const SkPaint&>(
-    //         &SkCanvas::drawVertices),
-    //     "Variant of 3-parameter drawVertices, using the default of Modulate "
-    //     "for the blend parameter.")
+     .def("drawVertices",
+         py::overload_cast<const sk_sp<SkVertices>&, SkBlendMode, const SkPaint&>(&SkCanvas::drawVertices),
+         "Draws SkVertices vertices, a triangle mesh, using clip and SkMatrix.")
+     .def("drawVertices",
+        py::overload_cast<const sk_sp<SkVertices>&, SkBlendMode, const SkPaint&>(
+             &SkCanvas::drawVertices),
+         "Variant of 3-parameter drawVertices, using the default of Modulate "
+         "for the blend parameter.")
     .def("drawPatch",
         // py::overload_cast<const SkPoint[12], const SkColor[4],
         //     const SkPoint[4], SkBlendMode, const SkPaint&>(
@@ -2103,13 +2095,13 @@ canvas
         )docstring",
         py::arg("cubics"), py::arg("colors"), py::arg("texCoords"),
         py::arg("mode"), py::arg("paint"))
-    // .def("drawPatch",
-    //     py::overload_cast<const SkPoint[12], const SkColor[4],
-    //         const SkPoint[4], const SkPaint&>(
-    //             &SkCanvas::drawPatch),
-    //     "Draws SkPath cubic Coons patch: the interpolation of four cubics with "
-    //     "shared corners, associating a color, and optionally a texture "
-    //     "SkPoint, with each corner.")
+     .def("drawPatch",
+         py::overload_cast<const SkPoint[12], const SkColor[4],
+             const SkPoint[4], SkBlendMode, const SkPaint&>(
+                 &SkCanvas::drawPatch),
+         "Draws SkPath cubic Coons patch: the interpolation of four cubics with "
+         "shared corners, associating a color, and optionally a texture "
+         "SkPoint, with each corner.")
     .def(
         "drawAtlas",
         // py::overload_cast<const SkImage*, const SkRSXform[], const SkRect[],
@@ -2247,21 +2239,8 @@ canvas
         )docstring")
     .def("getLocalToDevice",
         py::overload_cast<>(&SkCanvas::getLocalToDevice, py::const_))
-    // .def("getLocalToDevice",
-    //     py::overload_cast<SkScalar[16]>(
-    //         &SkCanvas::getLocalToDevice, py::const_))
-    // .def("experimental_getLocalToWorld",
-    //     py::overload_cast<>(
-    //         &SkCanvas::experimental_getLocalToWorld, py::const_))
-    // .def("experimental_getLocalToCamera",
-    //     py::overload_cast<>(
-    //         &SkCanvas::experimental_getLocalToCamera, py::const_))
-    // .def("experimental_getLocalToCamera",
-    //     py::overload_cast<SkScalar[16]>(
-    //         &SkCanvas::experimental_getLocalToCamera, py::const_))
-    // .def("experimental_getLocalToWorld",
-    //     py::overload_cast<SkScalar[16]>(
-    //         &SkCanvas::experimental_getLocalToWorld, py::const_))
+    .def("getLocalToDevice", &SkCanvas::getLocalToDevice)
+    .def("getLocalToDeviceAs3x3", &SkCanvas::getLocalToDeviceAs3x3)
     // Static methods.
     .def_static("MakeRasterDirect",
         // &SkCanvas::MakeRasterDirect,
