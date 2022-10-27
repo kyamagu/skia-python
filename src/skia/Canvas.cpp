@@ -760,7 +760,7 @@ canvas
         subsequent saves.
 
         :return: depth of saved stack
-        )docstring") /*
+        )docstring")
     .def("saveLayer",
         py::overload_cast<const SkRect*, const SkPaint*>(&SkCanvas::saveLayer),
         R"docstring(
@@ -793,11 +793,11 @@ canvas
         :return: depth of saved stack
         )docstring",
         py::arg("bounds") = nullptr, py::arg("paint") = nullptr)
-    // .def("saveLayer",
-    //     py::overload_cast<const SkRect&, const SkPaint*>(
-    //         &SkCanvas::saveLayer),
-    //     "Saves SkMatrix and clip, and allocates a SkBitmap for subsequent "
-    //     "drawing.")
+    .def("saveLayer",
+        py::overload_cast<const SkRect&, const SkPaint*>(
+        &SkCanvas::saveLayer),
+        "Saves SkMatrix and clip, and allocates a SkBitmap for subsequent "
+        "drawing.")
     .def("saveLayerAlpha", &SkCanvas::saveLayerAlpha,
         R"docstring(
         Saves :py:class:`Matrix` and clip, and allocates a :py:class:`Bitmap`
@@ -854,7 +854,6 @@ canvas
         :return: depth of save state stack before this call was made.
         )docstring",
         py::arg("layerRec"))
-        */
     .def("restore", &SkCanvas::restore,
         R"docstring(
         Removes changes to :py:class:`Matrix` and clip since :py:class:`Canvas`
