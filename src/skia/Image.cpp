@@ -119,7 +119,10 @@ sk_sp<SkImage> ImageConvert(
 }
 
 sk_sp<SkImage> ImageResize(
-    const SkImage& image, int width, int height, SkFilterQuality filterQuality,
+    const SkImage& image, 
+    int width, 
+    int height, 
+    SkFilterQuality filterQuality,
     SkImage::CachingHint cachingHint) {
     auto imageInfo = image.imageInfo().makeWH(width, height);
     auto buffer = SkData::MakeUninitialized(imageInfo.computeMinByteSize());
@@ -141,6 +144,8 @@ py::enum_<SkBudgeted>(m, "Budgeted", R"docstring(
     .value("kNo", SkBudgeted::kNo)
     .value("kYes", SkBudgeted::kYes)
     .export_values();
+
+SkSamplingOptions::
 
 py::enum_<SkFilterQuality>(m, "FilterQuality",
     R"docstring(
@@ -814,7 +819,7 @@ image
         py::arg("yuvaIndices"), py::arg("imageSize"), py::arg("imageOrigin"),
         py::arg("backendTexture"), py::arg("imageColorSpace") = nullptr)
     .def_static("MakeFromYUVATextures",
-        [] (GrContext* context,
+        [] (GrDirectContext* context,
             SkYUVColorSpace yuvColorSpace,
             const std::vector<GrBackendTexture>& yuvaTextures,
             const std::vector<SkYUVAIndex>& yuvaIndices,
@@ -950,7 +955,7 @@ image
         py::arg("limitToMaxTextureSize") = false,
         py::arg("imageColorSpace") = nullptr)
     .def_static("MakeFromNV12TexturesCopy",
-        [] (GrContext* context,
+        [] (GrDirectContext* context,
             SkYUVColorSpace yuvColorSpace,
             const std::vector<GrBackendTexture>& nv12Textures,
             GrSurfaceOrigin imageOrigin,
@@ -978,7 +983,7 @@ image
         py::arg("context"), py::arg("yuvColorSpace"), py::arg("nv12Textures"),
         py::arg("imageOrigin"), py::arg("imageColorSpace") = nullptr)
     .def_static("MakeFromNV12TexturesCopyWithExternalBackend",
-        [] (GrContext* context,
+        [] (GrDirectContext* context,
             SkYUVColorSpace yuvColorSpace,
             const std::vector<GrBackendTexture>& nv12Textures,
             GrSurfaceOrigin imageOrigin,

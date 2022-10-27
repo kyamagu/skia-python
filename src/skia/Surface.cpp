@@ -55,18 +55,9 @@ py::enum_<SkSurfaceProps::Flags>(surfaceprops, "Flags", py::arithmetic())
         SkSurfaceProps::Flags::kUseDeviceIndependentFonts_Flag)
     .export_values();
 
-py::enum_<SkSurfaceProps::InitType>(surfaceprops, "InitType")
-    .value("kLegacyFontHost_InitType",
-        SkSurfaceProps::InitType::kLegacyFontHost_InitType)
-    .export_values();
-
 surfaceprops
     .def(py::init<uint32_t, SkPixelGeometry>(),
         py::arg("flags"), py::arg("geometry"))
-    .def(py::init<SkSurfaceProps::InitType>(),
-        py::arg("initType"))
-    .def(py::init<uint32_t, SkSurfaceProps::InitType>(),
-        py::arg("flags"), py::arg("initType"))
     .def(py::init<const SkSurfaceProps&>(),
         py::arg("props"))
     .def("flags", &SkSurfaceProps::flags)
@@ -183,6 +174,7 @@ py::enum_<SkSurface::BackendSurfaceAccess>(surface, "BackendSurfaceAccess")
         "back-end surface will be used for presenting to screen")
     .export_values();
 
+
 surface
     .def("__repr__",
         [] (const SkSurface& surface) {
@@ -194,8 +186,8 @@ surface
         py::return_value_policy::reference_internal)
     .def("__exit__",
         [] (const SkSurface& surface, py::object exc_type, py::object exc_value,
-            py::object traceback) { })
-    .def("toarray", &ReadToNumpy<SkSurface>,
+            py::object traceback) { }) 
+    /*.def("toarray", &ReadToNumpy<SkSurface>,
         R"docstring(
         Exports a ``numpy.ndarray``.
 
@@ -289,7 +281,7 @@ surface
         Subsequent calls to :py:meth:`generationID` return a different value.
         )docstring",
         py::arg("mode"))
-    .def("recordingContext", &SkSurface::recordingContext,
+    /*.def("recordingContext", &SkSurface::recordingContext,
         R"docstring(
         Returns the recording context being used by the :py:class:`Surface`.
 
@@ -354,7 +346,7 @@ surface
         :return: drawing :py:class:`Canvas` for :py:class:`Surface`
         )docstring",
         py::return_value_policy::reference_internal)
-    .def("makeSurface",
+    /*.def("makeSurface",
         py::overload_cast<const SkImageInfo&>(&SkSurface::makeSurface),
         R"docstring(
         Returns a compatible :py:class:`Surface`, or nullptr.
@@ -379,7 +371,7 @@ surface
         but with the specified width and height.
         )docstring",
         py::arg("width"), py::arg("height"))
-    .def("makeImageSnapshot",
+    /*.def("makeImageSnapshot",
         py::overload_cast<>(&SkSurface::makeImageSnapshot),
         R"docstring(
         Returns :py:class:`Image` capturing :py:class:`Surface` contents.
@@ -560,7 +552,7 @@ surface
         :return: true if pixels were copied
         )docstring",
         py::arg("dst"), py::arg("srcX"), py::arg("srcY"))
-    .def("asyncRescaleAndReadPixels",
+/*    .def("asyncRescaleAndReadPixels",
         [] (SkSurface& surface, const SkImageInfo& info, const SkIRect& srcRect,
             SkSurface::RescaleGamma rescaleGamma,
             SkFilterQuality rescaleQuality, py::function callback) {
@@ -695,15 +687,16 @@ surface
             may be negative
         )docstring",
         py::arg("src"), py::arg("dstX") = 0, py::arg("dstY") = 0)
-    .def("props", &SkSurface::props,
+     .def("props", &SkSurface::props,
         R"docstring(
         Returns :py:class:`SurfaceProps` for surface.
 
         :return: LCD striping orientation and setting for device independent
             fonts
         )docstring")
+        */
     .def("flushAndSubmit",
-        py::overload_cast<>(&SkSurface::flushAndSubmit),
+        py::overload_cast<bool>(&SkSurface::flushAndSubmit),
         R"docstring(
         Call to ensure all reads/writes of the surface have been issued to the
         underlying 3D API.
@@ -716,7 +709,7 @@ surface
         :py:class:`GrContext`. This is equivalent to calling :py:meth:`flush`
         with a default :py:class:`GrFlushInfo` followed by
         :py:meth:`GrContext.submit`.
-        )docstring")
+        )docstring", py::arg("syncCpu"))
     .def("flush",
         py::overload_cast<SkSurface::BackendSurfaceAccess, const GrFlushInfo&>(
             &SkSurface::flush),
@@ -834,7 +827,7 @@ surface
         :param newState: optional state change request after flush
         )docstring",
         py::arg("info"), py::arg("newState") = nullptr)
-    .def("characterize", &SkSurface::characterize,
+        /*.def("characterize", &SkSurface::characterize,
         R"docstring(
         Initializes :py:class:`SurfaceCharacterization` that can be used to
         perform GPU back-end processing in a separate thread.
@@ -968,7 +961,7 @@ surface
         )docstring",
         py::arg("width"), py::arg("height"), py::arg("surfaceProps") = nullptr)
     .def_static("MakeFromBackendTexture",
-        [] (GrContext* context, const GrBackendTexture& backendTexture,
+        [] (GrDirectContext* context, const GrBackendTexture& backendTexture,
             GrSurfaceOrigin origin, int sampleCnt, SkColorType colorType,
             sk_sp<SkColorSpace> colorSpace,
             const SkSurfaceProps* surfaceProps) {
@@ -1013,7 +1006,7 @@ surface
         py::arg("sampleCnt"), py::arg("colorType"), py::arg("colorSpace"),
         py::arg("surfaceProps"))
     .def_static("MakeFromBackendRenderTarget",
-        [] (GrContext* context, const GrBackendRenderTarget& target,
+        [](GrDirectContext* context, const GrBackendRenderTarget& target,
             GrSurfaceOrigin origin, SkColorType colorType,
             sk_sp<SkColorSpace> colorSpace,
             const SkSurfaceProps* surfaceProps) {
@@ -1179,6 +1172,6 @@ surface
         :return: :py:class:`Surface` if width and height are positive;
             otherwise, nullptr
         )docstring",
-        py::arg("width"), py::arg("height"))
+        py::arg("width"), py::arg("height"))*/
     ;
 }

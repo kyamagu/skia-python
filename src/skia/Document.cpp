@@ -133,6 +133,7 @@ py::class_<PyAutoDocumentPage>(m, "_AutoDocumentPage")
 
 py::class_<PyPDF> pdf(m, "PDF");
 
+/* todo: not in use? vanished?
 py::enum_<SkPDF::DocumentStructureType>(pdf, "DocumentStructureType")
     .value("kDocument", SkPDF::DocumentStructureType::kDocument)
     .value("kPart", SkPDF::DocumentStructureType::kPart)
@@ -184,6 +185,7 @@ py::enum_<SkPDF::DocumentStructureType>(pdf, "DocumentStructureType")
     .value("kFormula", SkPDF::DocumentStructureType::kFormula)
     .value("kForm", SkPDF::DocumentStructureType::kForm)
     .export_values();
+    */
 
 py::class_<SkPDF::AttributeList>(pdf, "AttributeList")
     .def(py::init<>())
@@ -191,11 +193,11 @@ py::class_<SkPDF::AttributeList>(pdf, "AttributeList")
         py::arg("owner"), py::arg("name"), py::arg("value"))
     .def("appendFloat", &SkPDF::AttributeList::appendFloat,
         py::arg("owner"), py::arg("name"), py::arg("value"))
-    .def("appendString", &SkPDF::AttributeList::appendString,
+    .def("appendString", &SkPDF::AttributeList::appendName,
         py::arg("owner"), py::arg("name"), py::arg("value"))
     .def("appendFloatArray", &SkPDF::AttributeList::appendFloatArray,
         py::arg("owner"), py::arg("name"), py::arg("value"))
-    .def("appendStringArray", &SkPDF::AttributeList::appendStringArray,
+    .def("appendStringArray", &SkPDF::AttributeList::appendNodeIdArray,
         py::arg("owner"), py::arg("name"), py::arg("value"))
     ;
 

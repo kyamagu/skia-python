@@ -6,7 +6,7 @@ void initColorFilter(py::module &);
 void initPathEffect(py::module &);
 void initShader(py::module &);
 void initMaskFilter(py::module &);
-void initImageFilter(py::module &);
+//TODO void initImageFilter(py::module &);
 
 // Static variables must be declared.
 const int SkPaint::kStyleCount;
@@ -44,12 +44,7 @@ SkPaint MakeFromDict(py::dict dict) {
             auto t = value.cast<py::tuple>();
             if (t.size() != 3)
                 throw py::value_error("ARGB must be 4-element tuple.");
-            paint.setARGB(
-                t[0].cast<uint8_t>(),
-                t[1].cast<uint8_t>(),
-                t[2].cast<uint8_t>(),
-                t[3].cast<uint8_t>()
-                );
+            paint.setARGB(t[0].cast<uint8_t>(), t[1].cast<uint8_t>(), t[2].cast<uint8_t>(), t[3].cast<uint8_t>());
         }
         else if (key == "BlendMode")
             paint.setBlendMode(value.cast<SkBlendMode>());
@@ -61,8 +56,8 @@ SkPaint MakeFromDict(py::dict dict) {
             paint.setColorFilter(value.cast<sk_sp<SkColorFilter>>());
         else if (key == "Dither")
             paint.setDither(value.cast<bool>());
-        else if (key == "FilterQuality")
-            paint.setFilterQuality(value.cast<SkFilterQuality>());
+//!        else if (key == "FilterQuality")
+//!            paint.setFilterQuality(value.cast<SkFilterQuality>());
         else if (key == "ImageFilter")
             paint.setImageFilter(value.cast<sk_sp<SkImageFilter>>());
         else if (key == "MaskFilter")
@@ -71,8 +66,8 @@ SkPaint MakeFromDict(py::dict dict) {
             paint.setPathEffect(value.cast<sk_sp<SkPathEffect>>());
         else if (key == "Shader")
             paint.setShader(value.cast<sk_sp<SkShader>>());
-        // else if (key == "Stroke")
-        //     paint.setStroke(value.cast<bool>());
+        else if (key == "Stroke")
+             paint.setStroke(value.cast<bool>());
         else if (key == "StrokeCap")
             paint.setStrokeCap(value.cast<SkPaint::Cap>());
         else if (key == "StrokeJoin")
@@ -88,7 +83,6 @@ SkPaint MakeFromDict(py::dict dict) {
     }
     return paint;
 }
-
 }  // namespace
 
 
@@ -243,20 +237,20 @@ paint
 
         )docstring",
         py::arg("d").none(false))
-    .def("getHash", &SkPaint::getHash,
-        R"docstring(
-        Returns a hash generated from :py:class:`Paint` values and pointers.
-
-        Identical hashes guarantee that the paints are equivalent, but differing
-        hashes do not guarantee that the paints have differing contents.
-
-        If operator :py:meth:`__eq__` returns true for two paints, their hashes
-        are also equal.
-
-        The hash returned is platform and implementation specific.
-
-        :return: a shallow hash
-        )docstring")
+//!    .def("getHash", &SkPaint::getHash,
+//!        R"docstring(
+//!        Returns a hash generated from :py:class:`Paint` values and pointers.
+//!
+//!        Identical hashes guarantee that the paints are equivalent, but differing
+//!        hashes do not guarantee that the paints have differing contents.
+//!
+//!        If operator :py:meth:`__eq__` returns true for two paints, their hashes
+//!        are also equal.
+//!
+//!        The hash returned is platform and implementation specific.
+//!
+//!        :return: a shallow hash
+//!        )docstring")
     .def("reset", &SkPaint::reset,
         R"docstring(
         Sets all :py:class:`Paint` contents to their initial values.
@@ -293,23 +287,23 @@ paint
         :param bool dither: dither  setting for ditering
         )docstring",
         py::arg("dither"))
-    .def("getFilterQuality", &SkPaint::getFilterQuality,
-        R"docstring(
-        Returns :py:class:`FilterQuality`, the image filtering level.
-
-        A lower setting draws faster; a higher setting looks better when the
-        image is scaled.
-        )docstring")
-    .def("setFilterQuality", &SkPaint::setFilterQuality,
-        R"docstring(
-        Sets :py:class:`FilterQuality`, the image filtering level.
-
-        A lower setting draws faster; a higher setting looks better when the
-        image is scaled. Does not check to see if quality is valid.
-
-        :param skia.FilterQuality quality: filter quality
-        )docstring",
-        py::arg("quality"))
+// !    .def("getFilterQuality", &SkPaint::getFilterQuality,
+// !        R"docstring(
+// !        Returns :py:class:`FilterQuality`, the image filtering level.
+// !
+// !        A lower setting draws faster; a higher setting looks better when the
+// !        image is scaled.
+// !        )docstring")
+// !    .def("setFilterQuality", &SkPaint::setFilterQuality,
+// !        R"docstring(
+// !        Sets :py:class:`FilterQuality`, the image filtering level.
+// !
+// !        A lower setting draws faster; a higher setting looks better when the
+// !        image is scaled. Does not check to see if quality is valid.
+// !
+// !        :param skia.FilterQuality quality: filter quality
+// !        )docstring",
+// !        py::arg("quality"))
     .def("getStyle", &SkPaint::getStyle,
         R"docstring(
         Returns whether the geometry is filled, stroked, or filled and stroked.
@@ -466,7 +460,7 @@ paint
     // .def("getFillPath",
     //     py::overload_cast<const SkPath&, SkPath*>(
     //         &SkPaint::getFillPath, py::const_))
-    .def("getShader", &SkPaint::getShader,
+        /*.def("getShader", &SkPaint::getShader,
         R"docstring(
         Returns optional colors used when filling a path, such as a gradient.
 
@@ -535,7 +529,7 @@ paint
             subsequent draw
         )docstring",
         py::arg("colorFilter"))
-    .def("getBlendMode", &SkPaint::getBlendMode,
+    */.def("getBlendMode", &SkPaint::asBlendMode,
         R"docstring(
         Returns :py:class:`BlendMode`.
 
@@ -775,13 +769,14 @@ py::enum_<SkFlattenable::Type>(flattenable, "Type")
     .value("kImageFilter_Type", SkFlattenable::Type::kSkImageFilter_Type)
     .value("kMaskFilter_Type", SkFlattenable::Type::kSkMaskFilter_Type)
     .value("kPathEffect_Type", SkFlattenable::Type::kSkPathEffect_Type)
-    .value("kPixelRef_Type", SkFlattenable::Type::kSkPixelRef_Type)
-    .value("kUnused_Type4", SkFlattenable::Type::kSkUnused_Type4)
-    .value("kShaderBase_Type", SkFlattenable::Type::kSkShaderBase_Type)
-    .value("kUnused_Type", SkFlattenable::Type::kSkUnused_Type)
-    .value("kUnused_Type2", SkFlattenable::Type::kSkUnused_Type2)
-    .value("kUnused_Type3", SkFlattenable::Type::kSkUnused_Type3)
+//!    .value("kPixelRef_Type", SkFlattenable::Type::kSkPixelRef_Type)
+//!    .value("kUnused_Type4", SkFlattenable::Type::kSkUnused_Type4)
+//!    .value("kShaderBase_Type", SkFlattenable::Type::kSkShaderBase_Type)
+//!    .value("kUnused_Type", SkFlattenable::Type::kSkUnused_Type)
+//!    .value("kUnused_Type2", SkFlattenable::Type::kSkUnused_Type2)
+//!    .value("kUnused_Type3", SkFlattenable::Type::kSkUnused_Type3)
     .export_values();
+
 
 flattenable
     // .def("getFactory", &SkFlattenable::getFactory)
@@ -812,6 +807,6 @@ flattenable
 initColorFilter(m);
 initPathEffect(m);
 initShader(m);
-initMaskFilter(m);
-initImageFilter(m);
+// initMaskFilter(m);
+//TODO initImageFilter(m);
 }

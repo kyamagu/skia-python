@@ -119,10 +119,10 @@ py::enum_<SkCanvas::SaveLayerFlagsSet>(
     .value("kInitWithPrevious_SaveLayerFlag",
         SkCanvas::SaveLayerFlagsSet::kInitWithPrevious_SaveLayerFlag,
         "initializes with previous contents")
-    .value("kMaskAgainstCoverage_EXPERIMENTAL_DONT_USE_SaveLayerFlag",
+        /*.value("kMaskAgainstCoverage_EXPERIMENTAL_DONT_USE_SaveLayerFlag",
         SkCanvas::SaveLayerFlagsSet::
         kMaskAgainstCoverage_EXPERIMENTAL_DONT_USE_SaveLayerFlag,
-        "experimental: do not use")
+        "experimental: do not use")*/
     .value("kF16ColorType",
         SkCanvas::SaveLayerFlagsSet::kF16ColorType)
     .export_values();
@@ -251,7 +251,6 @@ lattice
         array of colors
         )docstring")
     ;
-
 canvas
     .def("__repr__",
         [] (const SkCanvas& canvas) {
@@ -264,7 +263,7 @@ canvas
         Creates an empty :py:class:`Canvas` with no backing device or pixels,
         with a width and height of zero.
         )docstring")
-    .def(py::init(
+/*    .def(py::init(
         [] (py::array array, SkColorType ct, SkAlphaType at,
             const SkColorSpace* cs, const SkSurfaceProps *surfaceProps) {
             auto imageInfo = NumPyToImageInfo(array, ct, at, cs);
@@ -737,7 +736,7 @@ canvas
 
         :return: true if pixels were written to :py:class:`Canvas`
         )docstring",
-        py::arg("bitmap"), py::arg("x") = 0, py::arg("y") = 0)
+        py::arg("bitmap"), py::arg("x") = 0, py::arg("y") = 0)*/
     .def("save", &SkCanvas::save,
         R"docstring(
         Saves :py:class:`Matrix` and clip.
@@ -760,7 +759,7 @@ canvas
         subsequent saves.
 
         :return: depth of saved stack
-        )docstring")
+        )docstring") /*
     .def("saveLayer",
         py::overload_cast<const SkRect*, const SkPaint*>(&SkCanvas::saveLayer),
         R"docstring(
@@ -854,6 +853,7 @@ canvas
         :return: depth of save state stack before this call was made.
         )docstring",
         py::arg("layerRec"))
+        */
     .def("restore", &SkCanvas::restore,
         R"docstring(
         Removes changes to :py:class:`Matrix` and clip since :py:class:`Canvas`
@@ -981,7 +981,7 @@ canvas
         py::arg("matrix"))
     .def("concat", py::overload_cast<const SkM44&>(&SkCanvas::concat),
         py::arg("m44"))
-    .def("setMatrix", &SkCanvas::setMatrix,
+    /*.def("setMatrix", &SkCanvas::setMatrix,
         R"docstring(
         Replaces :py:class:`Matrix` with matrix.
 
@@ -1394,6 +1394,7 @@ canvas
         :paint: stroke, blend, color, and so on, used to draw
         )docstring",
         py::arg("p"), py::arg("paint"))
+        */
     .def("drawLine",
         py::overload_cast<SkScalar, SkScalar, SkScalar, SkScalar,
             const SkPaint&>(&SkCanvas::drawLine),
@@ -1446,7 +1447,7 @@ canvas
             to draw
         )docstring",
         py::arg("rect"), py::arg("paint"))
-    .def("drawIRect", &SkCanvas::drawIRect,
+    /*.def("drawIRect", &SkCanvas::drawIRect,
         R"docstring(
         Draws :py:class:`IRect` rect using clip, :py:class:`Matrix`, and
         :py:class:`Paint` paint.
@@ -1633,7 +1634,7 @@ canvas
         :param skia.Paint paint: stroke, blend, color, and so on, used to draw
         )docstring",
         py::arg("path"), py::arg("paint"))
-    .def("drawImage",
+        /*.def("drawImage",
         py::overload_cast<const SkImage*, SkScalar, SkScalar,
             const SkPaint*>(&SkCanvas::drawImage),
         R"docstring(
@@ -1998,6 +1999,7 @@ canvas
     //     py::overload_cast<const SkRect&, const SkPoint[4],
     //         SkCanvas::QuadAAFlags, SkColor, SkBlendMode>(
     //             &SkCanvas::experimental_DrawEdgeAAQuad))
+    */
     .def("drawSimpleText",
         // &SkCanvas::drawSimpleText,
         [] (SkCanvas& canvas, const std::string& text, SkScalar x, SkScalar y,
@@ -2247,15 +2249,17 @@ canvas
     //     "Draws SkPath cubic Coons patch: the interpolation of four cubics with "
     //     "shared corners, associating a color, and optionally a texture "
     //     "SkPoint, with each corner.")
-    .def("drawAtlas",
+    .def(
+        "drawAtlas",
         // py::overload_cast<const SkImage*, const SkRSXform[], const SkRect[],
         //     const SkColor[], int, SkBlendMode, const SkRect*, const SkPaint*>(
         //         &SkCanvas::drawAtlas),
-        [] (SkCanvas& canvas, const SkImage* atlas,
+        [](SkCanvas& canvas, const SkImage* atlas,
             const std::vector<SkRSXform>& xform,
             const std::vector<SkRect>& tex,
             const std::vector<SkColor>& colors,
             SkBlendMode mode, const SkRect* cullRect, const SkPaint* paint) {
+            SkSamplingOptions options;
             if (xform.size() != tex.size())
                 throw std::runtime_error(
                     "xform and tex must have the same length.");
@@ -2264,7 +2268,7 @@ canvas
                     "colors must have the same length with xform.");
             canvas.drawAtlas(atlas, &xform[0], &tex[0],
                 (colors.empty()) ? nullptr : &colors[0],
-                xform.size(), mode, cullRect, paint);
+                xform.size(), mode, options, cullRect, paint);
         },
         R"docstring(
         Draws a set of sprites from atlas, using clip, :py:class:`Matrix`, and
