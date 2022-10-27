@@ -26,6 +26,7 @@ void initPoint(py::module&);
 void initRect(py::module&);
 void initRefCnt(py::module&);
 void initRegion(py::module&);
+void initSamplingOptions(py::module&);
 void initSize(py::module&);
 void initStream(py::module &);
 void initString(py::module&);
@@ -68,9 +69,9 @@ PYBIND11_MODULE(skia, m)
     initPathMeasure(m);
     initPicture(m);
     //    initPixmap(m);
+    initSamplingOptions(m);
     initTextBlob(m);
     //    initVertices(m);
-    //
     initCanvas(m);
     initSurface(m);
     //    initSVGDOM(m);
