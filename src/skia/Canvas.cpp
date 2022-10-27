@@ -1633,9 +1633,8 @@ canvas
         :param skia.Paint paint: stroke, blend, color, and so on, used to draw
         )docstring",
         py::arg("path"), py::arg("paint"))
-        /*.def("drawImage",
-        py::overload_cast<const SkImage*, SkScalar, SkScalar,
-            const SkPaint*>(&SkCanvas::drawImage),
+    .def("drawImage",
+        py::overload_cast<const SkImage*, SkScalar, SkScalar, SkSamplingOptions const&, const SkPaint*>(&SkCanvas::drawImage),
         R"docstring(
         Draws :py:class:`Image` image, with its top-left corner at (left, top),
         using clip, :py:class:`Matrix`, and optional :py:class:`Paint` paint.
@@ -1651,15 +1650,15 @@ canvas
             nullptr
         )docstring",
         py::arg("image"), py::arg("left"), py::arg("top"),
+        py::arg("sampling"),
         py::arg("paint") = nullptr)
-    // .def("drawImage",
-    //     py::overload_cast<const sk_sp<SkImage>&, SkScalar, SkScalar,
-    //         const SkPaint*>(&SkCanvas::drawImage),
-    //     py::arg("image"), py::arg("left"), py::arg("top"),
-    //     py::arg("paint") = nullptr)
+    .def("drawImage",
+        py::overload_cast<const sk_sp<SkImage>&, SkScalar, SkScalar, SkSamplingOptions const&, const SkPaint*>(&SkCanvas::drawImage),
+        py::arg("image"), py::arg("left"), py::arg("top"),
+        py::arg("sampling"),
+        py::arg("paint") = nullptr)
     .def("drawImageRect",
-        py::overload_cast<const SkImage*, const SkRect&, const SkRect&,
-            const SkPaint*, SkCanvas::SrcRectConstraint>(
+            py::overload_cast<const SkImage*, const SkRect&, const SkRect&, SkSamplingOptions const&, const SkPaint*, SkCanvas::SrcRectConstraint>(
                 &SkCanvas::drawImageRect),
         R"docstring(
         Draws :py:class:`Rect` src of :py:class:`Image` image, scaled and
@@ -1699,11 +1698,12 @@ canvas
         :constraint: filter strictly within src or draw faster
         )docstring",
         py::arg("image"), py::arg("src"), py::arg("dst"),
+        py::arg("sampling"),
         py::arg("paint") = nullptr, py::arg("constraint") =
             SkCanvas::SrcRectConstraint::kStrict_SrcRectConstraint)
     .def("drawImageRect",
-        py::overload_cast<const SkImage*, const SkIRect&, const SkRect&,
-            const SkPaint*, SkCanvas::SrcRectConstraint>(
+        py::overload_cast<const SkImage*, const SkRect &, const SkRect &,
+            const SkSamplingOptions&, const SkPaint*, SkCanvas::SrcRectConstraint>(
             &SkCanvas::drawImageRect),
         R"docstring(
         Draws :py:class:`IRect` isrc of :py:class:`Image` image, scaled and
@@ -1743,10 +1743,11 @@ canvas
         :constraint: filter strictly within isrc or draw faster
         )docstring",
         py::arg("image"), py::arg("isrc"), py::arg("dst"),
+        py::arg("sampling"),
         py::arg("paint") = nullptr, py::arg("constraint") =
             SkCanvas::SrcRectConstraint::kStrict_SrcRectConstraint)
-    .def("drawImageRect",
-        py::overload_cast<const SkImage*, const SkRect&, const SkPaint*>(
+        .def("drawImageRect",
+            py::overload_cast<const SkImage*, const SkRect&, const SkSamplingOptions&, const SkPaint*>(
             &SkCanvas::drawImageRect),
         R"docstring(
         Draws :py:class:`Image` image, scaled and translated to fill
@@ -1776,31 +1777,34 @@ canvas
             nullptr
         :constraint: filter strictly within src or draw faster
         )docstring",
-        py::arg("image"), py::arg("dst"), py::arg("paint") = nullptr)
-    // .def("drawImageRect",
-    //     py::overload_cast<const sk_sp<SkImage>&, const SkRect&, const SkRect&,
-    //         const SkPaint*, SkCanvas::SrcRectConstraint>(
-    //         &SkCanvas::drawImageRect),
-    //     "Draws SkRect src of SkImage image, scaled and translated to fill "
-    //     "SkRect dst.",
-    //     py::arg("image"), py::arg("src"), py::arg("dst"), py::arg("paint"),
-    //     py::arg("constraint") =
-    //         SkCanvas::SrcRectConstraint::kStrict_SrcRectConstraint)
-    // .def("drawImageRect",
-    //     py::overload_cast<const sk_sp<SkImage>&, const SkIRect&,
-    //         const SkRect&, const SkPaint*, SkCanvas::SrcRectConstraint))
-    //     &SkCanvas::drawImageRect,
-    //     "Draws SkIRect isrc of SkImage image, scaled and translated to fill "
-    //     "SkRect dst.",
-    //     py::arg("image"), py::arg("isrc"), py::arg("dst"), py::arg("paint"),
-    //     py::arg("constraint") =
-    //         SkCanvas::SrcRectConstraint::kStrict_SrcRectConstraint)
-    // .def("drawImageRect",
-    //     py::overload_cast<const sk_sp<SkImage>&, const SkRect&,
-    //         const SkPaint*>(&SkCanvas::drawImageRect),
-    //     "Draws SkImage image, scaled and translated to fill SkRect dst, using "
-    //     "clip, SkMatrix, and optional SkPaint paint.")
-    .def("drawImageNine",
+        py::arg("image"), py::arg("dst"), py::arg("sampling"), py::arg("paint") = nullptr)
+     .def("drawImageRect",
+         py::overload_cast<const sk_sp<SkImage>&, const SkRect&, const SkRect&,
+            const SkSamplingOptions &,
+             const SkPaint*, SkCanvas::SrcRectConstraint>(
+             &SkCanvas::drawImageRect),
+         "Draws SkRect src of SkImage image, scaled and translated to fill "
+         "SkRect dst.",
+         py::arg("image"), py::arg("src"), py::arg("dst"), 
+         py::arg("sampling"), py::arg("paint"),
+         py::arg("constraint") =
+             SkCanvas::SrcRectConstraint::kStrict_SrcRectConstraint)
+    /* todo .def("drawImageRect",
+        py::overload_cast<const sk_sp<SkImage> &, const SkRect &, const SkRect &,
+            const SkSamplingOptions &, const SkPaint *,
+            SrcRectConstraint>(&SkCanvas::drawImageRect),
+         "Draws SkIRect isrc of SkImage image, scaled and translated to fill "
+         "SkRect dst.",
+         py::arg("image"), py::arg("isrc"), py::arg("dst"), 
+         py::arg("sampling"), py::arg("paint"),
+         py::arg("constraint") =
+             SkCanvas::SrcRectConstraint::kStrict_SrcRectConstraint)
+             */
+     .def("drawImageRect",
+         py::overload_cast<const sk_sp<SkImage>&, const SkRect&, const SkSamplingOptions&, const SkPaint*>(&SkCanvas::drawImageRect),
+         "Draws SkImage image, scaled and translated to fill SkRect dst, using "
+         "clip, SkMatrix, and optional SkPaint paint.")
+        /*.def("drawImageNine",
         py::overload_cast<const SkImage*, const SkIRect&, const SkRect&,
             const SkPaint*>(&SkCanvas::drawImageNine),
         R"docstring(

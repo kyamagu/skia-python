@@ -53,28 +53,26 @@ PYBIND11_MODULE(skia, m)
     initRegion(m);
     initMatrix(m);
     initData(m);
+    initSamplingOptions(m);
     initStream(m);
     initString(m);
     initCodec(m);
     initBitmap(m);
     initDocument(m);
     initFont(m);
-    //    initGrDirectContext(m);
-
-    //    initImageInfo(m);
-    //    initImage(m);
-
+    initGrDirectContext(m);
+    initImageInfo(m);
+    initImage(m);
     initPaint(m);
     initPath(m);
     initPathMeasure(m);
     initPicture(m);
-    //    initPixmap(m);
-    initSamplingOptions(m);
+    initPixmap(m);
     initTextBlob(m);
-    //    initVertices(m);
+    initVertices(m);
     initCanvas(m);
     initSurface(m);
-    //    initSVGDOM(m);
+    // todo   initSVGDOM(m);
 
 #ifdef VERSION_INFO
     m.attr("__version__") = XSTRING(VERSION_INFO);
