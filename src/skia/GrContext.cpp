@@ -1080,7 +1080,7 @@ py::class_<GrRecordingContext, sk_sp<GrRecordingContext>, GrImageContext>(
         py::arg("key"), py::arg("data"))*/
     ;
 
-py::class_<GrDirectContext, sk_sp<GrDirectContext>, GrDirectContext>(
+py::class_<GrDirectContext, sk_sp<GrDirectContext>, GrRecordingContext>(
     m, "GrDirectContext")
 #ifdef SK_GL
     .def_static("MakeGL",
