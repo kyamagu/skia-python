@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Overview &mdash; skia-python 87.4 documentation</title>
+  <title>Overview &mdash; skia-python 87.5 documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   <!--[if lt IE 9]>
@@ -14,7 +14,9 @@
         <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
         <script src="../_static/jquery.js"></script>
         <script src="../_static/underscore.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../_static/doctools.js"></script>
+        <script src="../_static/sphinx_highlight.js"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -30,7 +32,7 @@
             <a href="../index.html" class="icon icon-home"> skia-python
           </a>
               <div class="version">
-                87.4
+                87.5
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
@@ -73,9 +75,9 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
-          <li><a href="index.html">Tutorial</a> &raquo;</li>
-      <li>Overview</li>
+      <li><a href="../index.html" class="icon icon-home"></a></li>
+          <li class="breadcrumb-item"><a href="index.html">Tutorial</a></li>
+      <li class="breadcrumb-item active">Overview</li>
       <li class="wy-breadcrumbs-aside">
             <a href="../_sources/tutorial/overview.rst.txt" rel="nofollow"> View page source</a>
       </li>
@@ -86,7 +88,7 @@
            <div itemprop="articleBody">
              
   <section id="overview">
-<h1>Overview<a class="headerlink" href="#overview" title="Permalink to this headline"></a></h1>
+<h1>Overview<a class="headerlink" href="#overview" title="Permalink to this heading"></a></h1>
 <p>Skia is organized around the <a class="reference internal" href="../reference/skia.Canvas.html#skia.Canvas" title="skia.Canvas"><code class="xref py py-class docutils literal notranslate"><span class="pre">Canvas</span></code></a> object. It is the host for
 the <cite>draw</cite> calls: <a class="reference internal" href="../reference/skia.Canvas.html#skia.Canvas.drawRect" title="skia.Canvas.drawRect"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Canvas.drawRect()</span></code></a>,
 <a class="reference internal" href="../reference/skia.Canvas.html#skia.Canvas.drawPath" title="skia.Canvas.drawPath"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Canvas.drawPath()</span></code></a>, <a class="reference internal" href="../reference/skia.Canvas.html#skia.Canvas.drawTextBlob" title="skia.Canvas.drawTextBlob"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Canvas.drawTextBlob()</span></code></a>, etc.
@@ -123,7 +125,7 @@ translation, rotation, skewing, perspective), and the canvas’ current clip may
 restrict where on the canvas the rectangle will be drawn, but all other
 stylistic attributes of the drawing are controlled by the paint.</p>
 <section id="canvas-details">
-<h2>Canvas details<a class="headerlink" href="#canvas-details" title="Permalink to this headline"></a></h2>
+<h2>Canvas details<a class="headerlink" href="#canvas-details" title="Permalink to this heading"></a></h2>
 <p><a class="reference internal" href="../reference/skia.Canvas.html#skia.Canvas" title="skia.Canvas"><code class="xref py py-class docutils literal notranslate"><span class="pre">Canvas</span></code></a> is the drawing context for Skia. It knows where to
 direct the drawing (i.e. where the screen of offscreen pixels are), and
 maintains a stack of matrices and clips. Note however, that unlike similar
@@ -167,7 +169,7 @@ save yourself having to allocate a paint:</p>
 </div>
 </section>
 <section id="more-drawings">
-<h2>More drawings<a class="headerlink" href="#more-drawings" title="Permalink to this headline"></a></h2>
+<h2>More drawings<a class="headerlink" href="#more-drawings" title="Permalink to this heading"></a></h2>
 <p>All of the other draw APIs are similar, each one ending with a paint parameter.
 The following example demonstrates drawing of shape primitives,
 <a class="reference internal" href="../reference/skia.Path.html#skia.Path" title="skia.Path"><code class="xref py py-class docutils literal notranslate"><span class="pre">Path</span></code></a>, external <a class="reference internal" href="../reference/skia.Image.html#skia.Image" title="skia.Image"><code class="xref py py-class docutils literal notranslate"><span class="pre">Image</span></code></a>, or
@@ -222,7 +224,7 @@ The following example demonstrates drawing of shape primitives,
 <a class="reference internal image-reference" href="../_images/overview-various-draws.png"><img alt="Various drawings" src="../_images/overview-various-draws.png" style="width: 256px;" /></a>
 </section>
 <section id="python-interoperability">
-<h2>Python interoperability<a class="headerlink" href="#python-interoperability" title="Permalink to this headline"></a></h2>
+<h2>Python interoperability<a class="headerlink" href="#python-interoperability" title="Permalink to this heading"></a></h2>
 <p><cite>skia-python</cite> supports numpy array in several methods. The following directly
 draws into numpy array:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
@@ -252,7 +254,7 @@ draws into numpy array:</p>
 <a class="reference external" href="https://github.com/kyamagu/skia-python/blob/master/notebooks/Python-Image-IO.ipynb">Python Image I/O notebook</a>.</p>
 </section>
 <section id="apis-at-a-glance">
-<h2>APIs at a glance<a class="headerlink" href="#apis-at-a-glance" title="Permalink to this headline"></a></h2>
+<h2>APIs at a glance<a class="headerlink" href="#apis-at-a-glance" title="Permalink to this heading"></a></h2>
 <p>Skia has various APIs from low to high level. Some key class objects are:</p>
 <ul class="simple">
 <li><p><a class="reference internal" href="../reference/skia.AutoCanvasRestore.html#skia.AutoCanvasRestore" title="skia.AutoCanvasRestore"><code class="xref py py-class docutils literal notranslate"><span class="pre">AutoCanvasRestore</span></code></a> - Canvas save stack manager</p></li>

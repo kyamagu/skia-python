@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Install &mdash; skia-python 87.4 documentation</title>
+  <title>Install &mdash; skia-python 87.5 documentation</title>
       <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <!--[if lt IE 9]>
@@ -14,7 +14,9 @@
         <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
         <script src="_static/jquery.js"></script>
         <script src="_static/underscore.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="_static/doctools.js"></script>
+        <script src="_static/sphinx_highlight.js"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
@@ -30,7 +32,7 @@
             <a href="index.html" class="icon icon-home"> skia-python
           </a>
               <div class="version">
-                87.4
+                87.5
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
@@ -71,8 +73,8 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
-      <li>Install</li>
+      <li><a href="index.html" class="icon icon-home"></a></li>
+      <li class="breadcrumb-item active">Install</li>
       <li class="wy-breadcrumbs-aside">
             <a href="_sources/install.rst.txt" rel="nofollow"> View page source</a>
       </li>
@@ -83,9 +85,9 @@
            <div itemprop="articleBody">
              
   <section id="install">
-<h1>Install<a class="headerlink" href="#install" title="Permalink to this headline"></a></h1>
+<h1>Install<a class="headerlink" href="#install" title="Permalink to this heading"></a></h1>
 <section id="pypi-distribution">
-<h2>PyPI distribution<a class="headerlink" href="#pypi-distribution" title="Permalink to this headline"></a></h2>
+<h2>PyPI distribution<a class="headerlink" href="#pypi-distribution" title="Permalink to this heading"></a></h2>
 <p>Binary package is available on PyPI:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip install skia-python
 </pre></div>
@@ -107,7 +109,7 @@
 <p>For unsupported platforms, check the <a class="reference internal" href="#build-instruction">Build instruction</a>.</p>
 </section>
 <section id="build-instruction">
-<h2>Build instruction<a class="headerlink" href="#build-instruction" title="Permalink to this headline"></a></h2>
+<h2>Build instruction<a class="headerlink" href="#build-instruction" title="Permalink to this heading"></a></h2>
 <p>First, clone the repo.</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git clone --recursive https://github.com/kyamagu/skia-python.git
 <span class="nb">cd</span> skia-python
@@ -134,7 +136,7 @@
 <li><p><a class="reference internal" href="#windows">Windows</a></p></li>
 </ul>
 <section id="linux">
-<h3>Linux<a class="headerlink" href="#linux" title="Permalink to this headline"></a></h3>
+<h3>Linux<a class="headerlink" href="#linux" title="Permalink to this heading"></a></h3>
 <p>Prerequisites:</p>
 <ul class="simple">
 <li><p>Python 2.7 (build time only)</p></li>
@@ -171,7 +173,7 @@ python setup.py bdist_wheel
 </div>
 </section>
 <section id="macos">
-<h3>macOS<a class="headerlink" href="#macos" title="Permalink to this headline"></a></h3>
+<h3>macOS<a class="headerlink" href="#macos" title="Permalink to this heading"></a></h3>
 <p>Prerequisites:</p>
 <ul class="simple">
 <li><p>Python 2.7 (build time only)</p></li>
@@ -197,7 +199,7 @@ python setup.py bdist_wheel
 </div>
 </section>
 <section id="windows">
-<h3>Windows<a class="headerlink" href="#windows" title="Permalink to this headline"></a></h3>
+<h3>Windows<a class="headerlink" href="#windows" title="Permalink to this heading"></a></h3>
 <p>Prerequisites:</p>
 <ul class="simple">
 <li><p>Python 2.7 (build time only)</p></li>
@@ -208,7 +210,7 @@ python setup.py bdist_wheel
 
 <span class="nb">cd </span><span class="n">skia</span>
 <span class="n">python2</span> <span class="n">tools</span><span class="p">\</span><span class="n">git-sync-deps</span>
-<span class="n">bin</span><span class="p">\</span><span class="n">gn</span> <span class="n">gen</span> <span class="n">out</span><span class="p">\</span><span class="n">Release</span> <span class="p">-</span><span class="n">-args</span><span class="p">=</span><span class="s1">&#39;is_official_build=true skia_enable_tools=true skia_use_system_libjpeg_turbo=false skia_use_system_libwebp=false skia_use_system_libpng=false skia_use_system_icu=false skia_use_system_harfbuzz=false skia_use_system_expat=false skia_use_system_zlib=false extra_cflags_cc=[\&quot;/GR\&quot;, \&quot;/EHsc\&quot;, \&quot;/MD\&quot;] target_cpu=\&quot;x86_64\&quot;&#39;</span>
+<span class="n">bin</span><span class="p">\</span><span class="n">gn</span> <span class="n">gen</span> <span class="n">out</span><span class="p">\</span><span class="n">Release</span> <span class="p">-</span><span class="n">-args</span><span class="p">=</span><span class="s2">&quot;is_official_build=true skia_enable_tools=true skia_use_system_libjpeg_turbo=false skia_use_system_libwebp=false skia_use_system_libpng=false skia_use_system_icu=false skia_use_system_harfbuzz=false skia_use_system_expat=false skia_use_system_zlib=false extra_cflags_cc=[\&quot;</span><span class="p">/</span><span class="n">GR</span><span class="p">\</span><span class="s2">&quot;, \&quot;</span><span class="p">/</span><span class="n">EHsc</span><span class="p">\</span><span class="s2">&quot;, \&quot;</span><span class="p">/</span><span class="n">MD</span><span class="p">\</span><span class="s2">&quot;] target_cpu=\&quot;</span><span class="n">x86_64</span><span class="p">\</span><span class="s2">&quot;&quot;</span>
 <span class="n">ninja</span> <span class="n">-C</span> <span class="n">out</span><span class="p">\</span><span class="n">Release</span> <span class="n">skia</span> <span class="n">skia</span><span class="p">.</span><span class="nb">h</span>
 <span class="nb">cd </span><span class="p">..</span>
 
@@ -219,7 +221,7 @@ python setup.py bdist_wheel
 </section>
 </section>
 <section id="testing">
-<h2>Testing<a class="headerlink" href="#testing" title="Permalink to this headline"></a></h2>
+<h2>Testing<a class="headerlink" href="#testing" title="Permalink to this heading"></a></h2>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python -m pip install pytest numpy glfw
 python -m pytest tests
 </pre></div>
@@ -232,7 +234,7 @@ tox
 </div>
 </section>
 <section id="documentation">
-<h2>Documentation<a class="headerlink" href="#documentation" title="Permalink to this headline"></a></h2>
+<h2>Documentation<a class="headerlink" href="#documentation" title="Permalink to this heading"></a></h2>
 <p>Once skia-python is installed, sphinx documentation can be built:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python -m pip install sphinx sphinx-rtd-theme
 python setup.py build_sphinx
