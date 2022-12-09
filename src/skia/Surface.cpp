@@ -201,7 +201,7 @@ surface
         py::arg("srcX") = 0, py::arg("srcY") = 0,
         py::arg("colorType") = kUnknown_SkColorType,
         py::arg("alphaType") = kUnpremul_SkAlphaType,
-        py::arg("colorSpace") = nullptr)
+        py::arg("colorSpace") = nullptr)*/
     .def(py::init(&SkSurface::MakeRasterN32Premul),
         R"docstring(
         See :py:meth:`~MakeRasterN32Premul`
@@ -235,6 +235,7 @@ surface
         py::arg("array"), py::arg("colorType") = kN32_SkColorType,
         py::arg("alphaType") = kUnpremul_SkAlphaType,
         py::arg("colorSpace") = nullptr, py::arg("surfaceProps") = nullptr)
+    /*
     .def("isCompatible", &SkSurface::isCompatible,
         R"docstring(
         Is this surface compatible with the provided characterization?
