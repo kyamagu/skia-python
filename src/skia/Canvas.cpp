@@ -1650,7 +1650,7 @@ canvas
             nullptr
         )docstring",
         py::arg("image"), py::arg("left"), py::arg("top"),
-        py::arg("sampling"),
+        py::arg("sampling") = SkSamplingOptions(),
         py::arg("paint") = nullptr)
     .def("drawImage",
         py::overload_cast<const sk_sp<SkImage>&, SkScalar, SkScalar, SkSamplingOptions const&, const SkPaint*>(&SkCanvas::drawImage),
@@ -1698,7 +1698,7 @@ canvas
         :constraint: filter strictly within src or draw faster
         )docstring",
         py::arg("image"), py::arg("src"), py::arg("dst"),
-        py::arg("sampling"),
+        py::arg("sampling") = SkSamplingOptions(),
         py::arg("paint") = nullptr, py::arg("constraint") =
             SkCanvas::SrcRectConstraint::kStrict_SrcRectConstraint)
     .def("drawImageRect",
@@ -1743,7 +1743,7 @@ canvas
         :constraint: filter strictly within isrc or draw faster
         )docstring",
         py::arg("image"), py::arg("isrc"), py::arg("dst"),
-        py::arg("sampling"),
+        py::arg("sampling") = SkSamplingOptions(),
         py::arg("paint") = nullptr, py::arg("constraint") =
             SkCanvas::SrcRectConstraint::kStrict_SrcRectConstraint)
         .def("drawImageRect",
@@ -1777,7 +1777,7 @@ canvas
             nullptr
         :constraint: filter strictly within src or draw faster
         )docstring",
-        py::arg("image"), py::arg("dst"), py::arg("sampling"), py::arg("paint") = nullptr)
+        py::arg("image"), py::arg("dst"), py::arg("sampling") = SkSamplingOptions(), py::arg("paint") = nullptr)
      .def("drawImageRect",
          py::overload_cast<const sk_sp<SkImage>&, const SkRect&, const SkRect&,
             const SkSamplingOptions &,
@@ -1786,7 +1786,7 @@ canvas
          "Draws SkRect src of SkImage image, scaled and translated to fill "
          "SkRect dst.",
          py::arg("image"), py::arg("src"), py::arg("dst"), 
-         py::arg("sampling"), py::arg("paint"),
+         py::arg("sampling") = SkSamplingOptions(), py::arg("paint") = nullptr,
          py::arg("constraint") =
              SkCanvas::SrcRectConstraint::kStrict_SrcRectConstraint)
     /* todo .def("drawImageRect",
