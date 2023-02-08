@@ -371,8 +371,8 @@ surface
         Calls :py:meth:`makeSurface()` with the same ImageInfo as this surface,
         but with the specified width and height.
         )docstring",
-        py::arg("width"), py::arg("height"))
-    /*.def("makeImageSnapshot",
+        py::arg("width"), py::arg("height"))*/
+    .def("makeImageSnapshot",
         py::overload_cast<>(&SkSurface::makeImageSnapshot),
         R"docstring(
         Returns :py:class:`Image` capturing :py:class:`Surface` contents.
@@ -399,7 +399,7 @@ surface
             no-parameter variant.
         )docstring",
         py::arg("bounds"))
-    .def("draw",
+    /*.def("draw",
         py::overload_cast<SkCanvas*, SkScalar, SkScalar, const SkPaint*>(
             &SkSurface::draw),
         R"docstring(
