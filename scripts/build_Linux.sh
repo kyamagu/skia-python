@@ -5,6 +5,9 @@ export PATH=${PWD}/depot_tools:$PATH
 EXTRA_CFLAGS=""
 
 if [[ $(uname -m) == "aarch64" ]]; then
+    # Compensate for emulation that makes `git clone` very slow on huge repos
+    git config --global http.postBuffer 1000000000
+    git config --global core.compression 0
     # Install ninja for aarch64
     yum -y install epel-release && \
         yum repolist && \
