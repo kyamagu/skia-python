@@ -22,6 +22,11 @@ yum install -y \
     yum clean all && \
     rm -rf /var/cache/yum
 
+if [[ $(uname -m) == "aarch64" ]] && [[ $CI_SKIP_BUILD == "true" ]]; then
+    # gn and skia already built in a previous job
+    exit 0
+fi
+
 # Build gn
 export CC=gcc
 export CXX=g++
