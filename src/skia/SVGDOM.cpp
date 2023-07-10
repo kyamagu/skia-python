@@ -1,6 +1,7 @@
 #include "common.h"
 #include <modules/svg/include/SkSVGDOM.h>
 #include <modules/svg/include/SkSVGNode.h>
+#include <modules/svg/include/SkSVGSVG.h>
 
 void initSVGDOM(py::module &m) {
 py::class_<SkSVGDOM, sk_sp<SkSVGDOM>, SkRefCnt> SVGDOM(m, "SVGDOM");
