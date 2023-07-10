@@ -16,7 +16,7 @@ __version__ = '116.0'
 
 SKIA_PATH = os.getenv('SKIA_PATH', 'skia')
 SKIA_OUT_PATH = os.getenv(
-    'SKIA_OUT_PATH', os.path.join(SKIA_PATH, 'out', 'Release')
+    'SKIA_OUT_PATH', os.path.join(SKIA_PATH, 'out', 'Shared')
 )
 
 if sys.platform == 'win32':
@@ -108,17 +108,7 @@ else:
         'GL',
     ]
     EXTRA_OBJECTS = list(
-        glob.glob(
-            os.path.join(
-                SKIA_OUT_PATH,
-                'obj',
-                'experimental',
-                'svg',
-                'model',
-                '*.o',
-            )
-        )
-    ) + [os.path.join(SKIA_OUT_PATH, 'libskia.a')]
+    ) + [os.path.join(SKIA_OUT_PATH, 'libsvg.so'), os.path.join(SKIA_OUT_PATH, 'libskia.so')]
     EXTRA_COMPILE_ARGS = [
         '-std=c++17',
         '-fvisibility=hidden',
