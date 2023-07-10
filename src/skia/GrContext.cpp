@@ -245,7 +245,7 @@ py::class_<GrBackendFormat>(m, "GrBackendFormat")
             &GrBackendFormat::MakeVk),
         py::arg("ycbcrInfo"))
     .def_static("MakeMock", &GrBackendFormat::MakeMock,
-        py::arg("colorType"), py::arg("compression"))
+        py::arg("colorType"), py::arg("compression"), py::arg("isStencilFormat") = false)
     .def("__eq__", &GrBackendFormat::operator==, py::arg("other"),
         py::is_operator())
     .def("__ne__", &GrBackendFormat::operator!=, py::arg("other"),
