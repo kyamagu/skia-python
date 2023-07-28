@@ -120,7 +120,7 @@ else:
         )
     ) + [os.path.join(SKIA_OUT_PATH, 'libskia.a')]
     EXTRA_COMPILE_ARGS = [
-        '-std=c++14',
+        '-std=c++17',
         '-fvisibility=hidden',
         '-Wno-attributes',
         '-fdata-sections',
