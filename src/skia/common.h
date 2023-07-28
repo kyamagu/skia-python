@@ -2,7 +2,40 @@
 #define _COMMON_H_
 
 #include <pybind11/pybind11.h>
-#include <skia.h>
+#include <include/core/SkBitmap.h>
+#include <include/core/SkBlendMode.h>
+#include <include/core/SkCanvas.h>
+#include <include/codec/SkCodec.h>
+#include <include/core/SkColor.h>
+#include <include/core/SkColorFilter.h>
+#include <include/core/SkColorSpace.h>
+#include <include/core/SkData.h>
+#include <include/core/SkDocument.h>
+#include <include/core/SkFont.h>
+#include <include/gpu/GrDirectContext.h>
+#include <include/core/SkImage.h>
+#include <include/core/SkImageFilter.h>
+#include <include/core/SkImageInfo.h>
+#include <include/core/SkMaskFilter.h>
+#include <include/core/SkMatrix.h>
+#include <include/core/SkPaint.h>
+#include <include/core/SkPath.h>
+#include <include/core/SkPathEffect.h>
+#include <include/core/SkPathMeasure.h>
+#include <include/core/SkPicture.h>
+#include <include/core/SkPixmap.h>
+#include <include/core/SkPoint.h>
+#include <include/core/SkRect.h>
+#include <include/core/SkRefCnt.h>
+#include <include/core/SkRegion.h>
+#include <include/core/SkShader.h>
+#include <include/core/SkSize.h>
+#include <include/core/SkStream.h>
+#include <include/core/SkString.h>
+#include <include/core/SkSurface.h>
+#include <modules/svg/include/SkSVGDOM.h>
+#include <include/core/SkTextBlob.h>
+#include <include/core/SkVertices.h>
 #include <sstream>
 
 namespace pybind11 { class array; }  // namespace pybind11
