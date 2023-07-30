@@ -25,7 +25,7 @@ sk_sp<SkImage> ImageFromBuffer(
     auto data = (copy) ?
         SkData::MakeWithCopy(info.ptr, size) :
         SkData::MakeWithoutCopy(info.ptr, size);
-    return SkImage::MakeRasterData(imageInfo, data, rowBytes);
+    return SkImages::RasterFromData(imageInfo, data, rowBytes);
 }
 
 sk_sp<SkImage> ImageFromArray(py::array array, SkColorType ct, SkAlphaType at,
@@ -35,7 +35,7 @@ sk_sp<SkImage> ImageFromArray(py::array array, SkColorType ct, SkAlphaType at,
     auto data = (copy) ?
         SkData::MakeWithCopy(array.data(), size) :
         SkData::MakeWithoutCopy(array.data(), size);
-    return SkImage::MakeRasterData(imageInfo, data, array.strides(0));
+    return SkImages::RasterFromData(imageInfo, data, array.strides(0));
 }
 
 std::unique_ptr<SkBitmap> ImageToBitmap(
@@ -76,7 +76,7 @@ sk_sp<SkImage> ImageOpen(py::object fp) {
             throw py::value_error(
                 py::str("File not found: {}").format(path));
     }
-    auto image = SkImage::MakeFromEncoded(data);
+    auto image = SkImages::DeferredFromEncodedData(data);
     if (!image)
         throw std::runtime_error("Failed to decode an image");
     return image;
@@ -117,7 +117,7 @@ sk_sp<SkImage> ImageConvert(
     if (!image.readPixels(
         imageInfo, buffer->writable_data(), imageInfo.minRowBytes(), 0, 0))
         throw std::runtime_error("Failed to convert pixels.");
-    return SkImage::MakeRasterData(imageInfo, buffer, imageInfo.minRowBytes());
+    return SkImages::RasterFromData(imageInfo, buffer, imageInfo.minRowBytes());
 }
 
 sk_sp<SkImage> ImageResize(
@@ -131,7 +131,7 @@ sk_sp<SkImage> ImageResize(
         imageInfo, buffer->writable_data(), imageInfo.minRowBytes());
     if (!image.scalePixels(pixmap, filterQuality, cachingHint))
         throw std::runtime_error("Failed to resize image.");
-    return SkImage::MakeRasterData(imageInfo, buffer, imageInfo.minRowBytes());
+    return SkImages::RasterFromData(imageInfo, buffer, imageInfo.minRowBytes());
 }
 
 }  // namespace
@@ -484,7 +484,7 @@ image
         })
 
     // C++ wrappers.
-    .def_static("MakeRasterCopy", &SkImage::MakeRasterCopy,
+    .def_static("MakeRasterCopy", &SkImages::RasterFromPixmapCopy,
         R"docstring(
         Creates :py:class:`Image` from :py:class:`Pixmap` and copy of pixels.
 
@@ -510,7 +510,7 @@ image
                 imageInfo, info, dstRowBytes);
             auto data = SkData::MakeWithoutCopy(
                 info.ptr, info.strides[0] * info.shape[0]);
-            return SkImage::MakeRasterData(imageInfo, data, rowBytes);
+            return SkImages::RasterFromData(imageInfo, data, rowBytes);
         },
         R"docstring(
         Creates :py:class:`Image` from :py:class:`ImageInfo`, sharing pixels.
@@ -532,7 +532,7 @@ image
         py::arg("info"), py::arg("pixels").none(false), py::arg("rowBytes"))
     .def_static("MakeFromRaster",
         [] (const SkPixmap& pixmap) {
-            return SkImage::MakeFromRaster(pixmap, nullptr, nullptr);
+            return SkImages::RasterFromPixmap(pixmap, nullptr, nullptr);
         },
         R"docstring(
         Creates :py:class:`Image` from pixmap, sharing :py:class:`Pixmap`
@@ -550,7 +550,7 @@ image
         :return: :py:class:`Image` sharing pixmap
         )docstring",
         py::arg("pixmap").none(false))
-    .def_static("MakeFromBitmap", &SkImage::MakeFromBitmap,
+    .def_static("MakeFromBitmap", &SkImages::RasterFromBitmap,
         R"docstring(
         Creates :py:class:`Image` from bitmap, sharing or copying bitmap pixels.
 
@@ -568,9 +568,9 @@ image
         :return: created :py:class:`Image`, or nullptr
         )docstring",
         py::arg("bitmap"))
-    // .def_static("MakeFromGenerator", &SkImage::MakeFromGenerator,
+    // .def_static("MakeFromGenerator", &SkImages::DeferredFromGenerator,
     //     "Creates SkImage from data returned by imageGenerator.")
-    .def_static("MakeFromEncoded", &SkImage::MakeFromEncoded,
+    .def_static("MakeFromEncoded", &SkImages::DeferredFromEncodedData,
         R"docstring(
         Return an image backed by the encoded data, but attempt to defer
         decoding until the image is actually used/drawn.
@@ -587,7 +587,7 @@ image
         )docstring",
         py::arg("encoded"))
     .def_static("MakeTextureFromCompressed",
-        &SkImage::MakeTextureFromCompressed,
+        &SkImages::TextureFromCompressedTextureData,
         R"docstring(
         Creates a GPU-backed :py:class:`Image` from compressed data.
 
@@ -613,7 +613,7 @@ image
         py::arg("height"), py::arg("type"),
         py::arg("mipMapped") = GrMipmapped::kNo,
         py::arg("isProtected") = GrProtected::kNo)
-    .def_static("MakeRasterFromCompressed", &SkImage::MakeRasterFromCompressed,
+    .def_static("MakeRasterFromCompressed", &SkImages::RasterFromCompressedTextureData,
         R"docstring(
         Creates a CPU-backed :py:class:`Image` from compressed data.
 
@@ -632,7 +632,7 @@ image
         [] (GrRecordingContext* context, const GrBackendTexture& texture,
             GrSurfaceOrigin origin, SkColorType colorType,
             SkAlphaType alphaType, const SkColorSpace* cs) {
-            return SkImage::MakeFromTexture(
+            return SkImages::BorrowTextureFrom(
                 context, texture, origin, colorType, alphaType,
                 CloneColorSpace(cs));
         },
@@ -656,7 +656,7 @@ image
         [] (GrRecordingContext* context, const GrBackendTexture& texture,
             GrSurfaceOrigin origin, SkAlphaType alphaType,
             const SkColorSpace* cs) {
-            return SkImage::MakeFromCompressedTexture(
+            return SkImages::TextureFromCompressedTexture(
                 context, texture, origin, alphaType, CloneColorSpace(cs),
                 nullptr, nullptr);
         },
@@ -685,7 +685,7 @@ image
         py::arg("context"), py::arg("texture"), py::arg("origin"),
         py::arg("alphaType"), py::arg("colorSpace") = nullptr)
     .def_static("MakeCrossContextFromPixmap",
-        &SkImage::MakeCrossContextFromPixmap,
+        &SkImages::CrossContextTextureFromPixmap,
         R"docstring(
         Creates :py:class:`Image` from pixmap.
 
@@ -723,7 +723,7 @@ image
         [] (GrRecordingContext* context, const GrBackendTexture& backendTexture,
             GrSurfaceOrigin origin, SkColorType colorType,
             SkAlphaType alphaType, const SkColorSpace* colorSpace) {
-            return SkImage::MakeFromAdoptedTexture(
+            return SkImages::AdoptTextureFrom(
                 context, backendTexture, origin, colorType, alphaType,
                 CloneColorSpace(colorSpace));
         },
@@ -755,7 +755,7 @@ image
             const SkColorSpace* imageColorSpace) {
             if (yuvaIndices.size() != 4)
                 throw py::value_error("yuvaIndices must have 4 elements.");
-            return SkImage::MakeFromYUVATexturesCopy(
+            return SkImages::TextureFromYUVATexturesCopy(
                 context, yuvColorSpace, yuvaTextures.data(), yuvaIndices.data(),
                 imageSize, imageOrigin, CloneColorSpace(imageColorSpace));
         },
@@ -789,7 +789,7 @@ image
             const SkColorSpace* imageColorSpace) {
             if (yuvaIndices.size() != 4)
                 throw py::value_error("yuvaIndices must have 4 elements.");
-            return SkImage::MakeFromYUVATexturesCopyWithExternalBackend(
+            return SkImages::TextureFromYUVATexturesCopyWithExternalBackend(
                 context, yuvColorSpace, yuvaTextures.data(), yuvaIndices.data(),
                 imageSize, imageOrigin, backendTexture,
                 CloneColorSpace(imageColorSpace), nullptr, nullptr);
@@ -825,7 +825,7 @@ image
             const SkColorSpace* imageColorSpace) {
             if (yuvaIndices.size() != 4)
                 throw py::value_error("yuvaIndices must have 4 elements.");
-            return SkImage::MakeFromYUVATextures(
+            return SkImages::TextureFromYUVATextures(
                 context, yuvColorSpace, yuvaTextures.data(), yuvaIndices.data(),
                 imageSize, imageOrigin, CloneColorSpace(imageColorSpace));
         },
@@ -864,7 +864,7 @@ image
             const SkColorSpace* imageColorSpace) {
             if (yuvaIndices.size() != 4)
                 throw py::value_error("yuvaIndices must have 4 elements.");
-            return SkImage::MakeFromYUVAPixmaps(
+            return SkImages::TextureFromYUVAPixmaps(
                 context, yuvColorSpace, yuvaPixmaps.data(), yuvaIndices.data(),
                 imageSize, imageOrigin, buildMips, limitToMaxTextureSize,
                 CloneColorSpace(imageColorSpace));
@@ -911,7 +911,7 @@ image
             GrMipMapped buildMips,
             bool limitToMaxTextureSize,
             const SkColorSpace* imageColorSpace) {
-            return SkImage::MakeFromYUVAPixmaps(
+            return SkImages::TextureFromYUVAPixmaps(
                 context, pixmaps, buildMips, limitToMaxTextureSize,
                 CloneColorSpace(imageColorSpace));
         },
@@ -1016,7 +1016,7 @@ image
         [] (sk_sp<SkPicture>& picture, const SkISize& dimensions,
             const SkMatrix* matrix, const SkPaint* paint,
             SkImage::BitDepth bitDepth, const SkColorSpace* colorSpace) {
-            return SkImage::MakeFromPicture(
+            return SkImages::DeferredFromPicture(
                 picture, dimensions, matrix, paint, bitDepth,
                 CloneColorSpace(colorSpace));
         },
@@ -1609,7 +1609,7 @@ image
     .def_static("MakeBackendTextureFromImage",
         [] (GrDirectContext* context, sk_sp<SkImage>& image,
             GrBackendTexture* backendTexture) {
-            return SkImage::MakeBackendTextureFromSkImage(
+            return SkImages::GetBackendTextureFromImage(
                 context, image, backendTexture, nullptr);
         },
         R"docstring(
