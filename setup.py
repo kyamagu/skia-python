@@ -100,6 +100,7 @@ else:
     DEFINE_MACROS = [
         ('VERSION_INFO', __version__),
         ('SK_GL', ''),
+        ('SK_GANESH', '1'),
     ]
     LIBRARIES = [
         'dl',
