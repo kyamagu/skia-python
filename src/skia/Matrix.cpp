@@ -1,4 +1,6 @@
 #include "common.h"
+#include <include/core/SkRSXform.h>
+#include <include/core/SkPoint3.h>
 #include <pybind11/numpy.h>
 #include <pybind11/stl.h>
 #include <pybind11/iostream.h>

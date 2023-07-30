@@ -1,4 +1,6 @@
 #include "common.h"
+#include <include/core/SkSerialProcs.h>
+#include <include/core/SkRSXform.h>
 #include <pybind11/stl.h>
 
 template<>

@@ -1,5 +1,8 @@
 #include "common.h"
+#include <include/core/SkRRect.h>
+#include <include/core/SkRSXform.h>
 #include <include/svg/SkSVGCanvas.h>
+#include <include/utils/SkNullCanvas.h>
 #include <pybind11/stl.h>
 #include <pybind11/numpy.h>
 

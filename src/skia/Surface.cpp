@@ -1,4 +1,6 @@
 #include "common.h"
+#include <include/core/SkSurfaceCharacterization.h>
+#include <include/core/SkSurfaceProps.h>
 #include <pybind11/operators.h>
 #include <pybind11/numpy.h>
 

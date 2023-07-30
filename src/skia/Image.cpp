@@ -1,4 +1,6 @@
 #include "common.h"
+#include <include/codec/SkEncodedImageFormat.h>
+#include <include/gpu/GrBackendSurface.h>
 #include <pybind11/numpy.h>
 
 namespace {

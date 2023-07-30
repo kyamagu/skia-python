@@ -1,4 +1,5 @@
 #include "common.h"
+#include <include/core/SkPoint3.h>
 #include <pybind11/operators.h>
 
 void initPoint(py::module &m) {

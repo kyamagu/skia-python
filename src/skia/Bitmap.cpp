@@ -1,4 +1,5 @@
 #include "common.h"
+#include <include/core/SkPixelRef.h>
 #include <algorithm>
 
 

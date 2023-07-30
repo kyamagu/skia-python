@@ -1,4 +1,8 @@
 #include "common.h"
+#include <include/gpu/GrBackendSemaphore.h>
+#include <include/gpu/GrBackendSurface.h>
+#include <include/gpu/GrContextThreadSafeProxy.h>
+#include <include/gpu/mock/GrMockTypes.h>
 #include <include/gpu/vk/GrVkBackendContext.h>
 #include <pybind11/chrono.h>
 #include <pybind11/stl.h>

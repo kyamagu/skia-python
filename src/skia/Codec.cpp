@@ -1,4 +1,5 @@
 #include "common.h"
+#include <include/codec/SkCodecAnimation.h>
 #include <pybind11/stl.h>
 
 const int SkCodec::kNoFrame;

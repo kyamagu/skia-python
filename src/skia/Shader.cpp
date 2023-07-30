@@ -1,4 +1,6 @@
 #include "common.h"
+#include <include/effects/SkRuntimeEffect.h>
+#include <include/effects/SkGradientShader.h>
 #include <pybind11/stl.h>
 
 #define GET_SKSCALAR_PTR(pos) \

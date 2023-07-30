@@ -1,7 +1,14 @@
 #include "common.h"
+#include <include/core/SkStrokeRec.h>
+#include <include/effects/Sk1DPathEffect.h>
+#include <include/effects/Sk2DPathEffect.h>
+#include <include/effects/SkCornerPathEffect.h>
+#include <include/effects/SkDashPathEffect.h>
+#include <include/effects/SkDiscretePathEffect.h>
+#include <include/effects/SkOpPathEffect.h>
+#include <include/effects/SkStrokeAndFillPathEffect.h>
+#include <include/effects/SkTrimPathEffect.h>
 #include <pybind11/stl.h>
-#include "include/effects/SkOpPathEffect.h"
-#include "include/effects/SkTrimPathEffect.h"
 
 
 const int SkStrokeRec::kStyleCount;

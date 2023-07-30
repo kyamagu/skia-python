@@ -1,4 +1,6 @@
 #include "common.h"
+#include <include/effects/SkImageFilters.h>
+#include <include/core/SkPoint3.h>
 #include <pybind11/stl.h>
 
 #define CLONE(input) \

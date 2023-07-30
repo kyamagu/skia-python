@@ -1,4 +1,5 @@
 #include "common.h"
+#include <include/docs/SkPDFDocument.h>
 #include <pybind11/stl.h>
 
 namespace {

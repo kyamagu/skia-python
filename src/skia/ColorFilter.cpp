@@ -1,4 +1,8 @@
 #include "common.h"
+#include <include/effects/SkColorMatrix.h>
+#include <include/effects/SkOverdrawColorFilter.h>
+#include <include/effects/SkColorMatrixFilter.h>
+#include <include/effects/SkLumaColorFilter.h>
 #include <pybind11/stl.h>
 #include <include/effects/SkHighContrastFilter.h>
 

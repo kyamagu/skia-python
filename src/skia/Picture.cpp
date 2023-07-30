@@ -1,4 +1,7 @@
 #include "common.h"
+#include <include/core/SkDrawable.h>
+#include <include/core/SkBBHFactory.h>
+#include <include/core/SkPictureRecorder.h>
 
 namespace {
 

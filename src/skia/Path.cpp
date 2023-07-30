@@ -1,4 +1,7 @@
 #include "common.h"
+#include <include/pathops/SkPathOps.h>
+#include <include/core/SkPathBuilder.h>
+#include <include/core/SkRRect.h>
 #include <pybind11/operators.h>
 #include <pybind11/stl.h>
 #include <pybind11/iostream.h>

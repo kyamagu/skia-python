@@ -1,4 +1,5 @@
 #include "common.h"
+#include <include/gpu/mock/GrMockTypes.h>
 
 void initGrContext_mock(py::module &m) {
 
