@@ -1015,7 +1015,7 @@ image
     .def_static("MakeFromPicture",
         [] (sk_sp<SkPicture>& picture, const SkISize& dimensions,
             const SkMatrix* matrix, const SkPaint* paint,
-            SkImage::BitDepth bitDepth, const SkColorSpace* colorSpace) {
+            SkImages::BitDepth bitDepth, const SkColorSpace* colorSpace) {
             return SkImages::DeferredFromPicture(
                 picture, dimensions, matrix, paint, bitDepth,
                 CloneColorSpace(colorSpace));
@@ -1044,7 +1044,7 @@ image
         )docstring",
         py::arg("picture"), py::arg("dimensions"), py::arg("matrix") = nullptr,
         py::arg("paint") = nullptr,
-        py::arg("bitDepth") = SkImage::BitDepth::kU8,
+        py::arg("bitDepth") = SkImages::BitDepth::kU8,
         py::arg("colorSpace") = nullptr)
     .def("imageInfo", &SkImage::imageInfo,
         R"docstring(
