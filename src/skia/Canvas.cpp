@@ -984,9 +984,19 @@ canvas
         py::arg("matrix"))
     .def("concat", py::overload_cast<const SkM44&>(&SkCanvas::concat),
         py::arg("m44"))
-    .def("setMatrix", &SkCanvas::setMatrix,
+    .def("setMatrix", py::overload_cast<const SkM44&>(&SkCanvas::setMatrix),
         R"docstring(
         Replaces :py:class:`Matrix` with matrix.
+
+        Unlike :py:meth:`concat`, any prior matrix state is overwritten.
+
+        :param skia.Matrix matrix: matrix to copy, replacing existing
+            :py:class:`Matrix`
+        )docstring",
+        py::arg("matrix"))
+    .def("setMatrix", py::overload_cast<const SkMatrix&>(&SkCanvas::setMatrix),
+        R"docstring(
+        DEPRECATED -- use SkM44 version
 
         Unlike :py:meth:`concat`, any prior matrix state is overwritten.
 
