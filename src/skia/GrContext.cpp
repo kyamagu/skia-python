@@ -1069,6 +1069,99 @@ py::class_<GrDirectContext, sk_sp<GrDirectContext>, GrRecordingContext>(m, "GrCo
         py::arg("key"), py::arg("data"))
     ;
 
+py::class_<GrDirectContext, sk_sp<GrDirectContext>, GrContext>(
+    m, "GrDirectContext")
+#ifdef SK_GL
+    .def_static("MakeGL",
+        py::overload_cast<sk_sp<const GrGLInterface>, const GrContextOptions&>(
+            &GrDirectContext::MakeGL),
+        R"docstring(
+        Creates a :py:class:`GrDirectContext` for a backend context. If no
+        GrGLInterface is provided then the result of GrGLMakeNativeInterface()
+        is used if it succeeds.
+        )docstring",
+        py::arg("interface"), py::arg("options"))
+    .def_static("MakeGL",
+        py::overload_cast<sk_sp<const GrGLInterface>>(&GrDirectContext::MakeGL),
+        py::arg("interface"))
+    .def_static("MakeGL",
+        py::overload_cast<const GrContextOptions&>(&GrDirectContext::MakeGL),
+        py::arg("options"))
+    .def_static("MakeGL", py::overload_cast<>(&GrDirectContext::MakeGL))
+#endif
+
+#ifdef SK_VULKAN
+    .def_static("MakeVulkan",
+        py::overload_cast<const GrVkBackendContext&, const GrContextOptions&>(
+            &GrDirectContext::MakeVulkan),
+        R"docstring(
+        The Vulkan context (VkQueue, VkDevice, VkInstance) must be kept alive
+        until the returned GrDirectContext is destroyed. This also means that
+        any objects created with this GrDirectContext (e.g. Surfaces, Images,
+        etc.) must also be released as they may hold refs on the
+        GrDirectContext. Once all these objects and the GrDirectContext are
+        released, then it is safe to delete the vulkan objects.
+        )docstring",
+        py::arg("backendContext"), py::arg("options"))
+    .def_static("MakeVulkan",
+        py::overload_cast<const GrVkBackendContext&>(
+            &GrDirectContext::MakeVulkan),
+        py::arg("backendContext"))
+#endif
+
+    .def_static("MakeMock",
+        py::overload_cast<const GrMockOptions*, const GrContextOptions&>(
+            &GrDirectContext::MakeMock),
+        py::arg("mockOptions"), py::arg("options"))
+    .def_static("MakeMock",
+        py::overload_cast<const GrMockOptions*>(&GrDirectContext::MakeMock),
+        py::arg("mockOptions"))
+    .def("abandonContext", &GrDirectContext::abandonContext,
+        R"docstring(
+        Abandons all GPU resources and assumes the underlying backend 3D API
+        context is no longer usable.
+
+        Call this if you have lost the associated GPU context, and thus internal
+        texture, buffer, etc. references/IDs are now invalid. Calling this
+        ensures that the destructors of the :py:class:`GrContext` and any of its
+        created resource objects will not make backend 3D API calls. Content
+        rendered but not previously flushed may be lost. After this function is
+        called all subsequent calls on the GrContext will fail or be no-ops.
+
+        The typical use case for this function is that the underlying 3D context
+        was lost and further API calls may crash.
+
+        For Vulkan, even if the device becomes lost, the VkQueue, VkDevice, or
+        VkInstance used to create the GrContext must be alive before calling
+        abandonContext.
+        )docstring")
+    .def("releaseResourcesAndAbandonContext",
+        &GrDirectContext::releaseResourcesAndAbandonContext,
+        R"docstring(
+        This is similar to :py:meth:`abandonContext` however the underlying 3D
+        context is not yet lost and the :py:class:`GrContext` will cleanup all
+        allocated resources before returning.
+
+        After returning it will assume that the underlying context may no longer
+        be valid.
+
+        The typical use case for this function is that the client is going to
+        destroy the 3D context but can't guarantee that :py:class:`GrContext`
+        will be destroyed first (perhaps because it may be ref'ed elsewhere by
+        either the client or Skia objects).
+
+        For Vulkan, even if the device becomes lost, the VkQueue, VkDevice, or
+        VkInstance used to create the GrContext must be alive before calling
+        :py:meth:`releaseResourcesAndAbandonContext`.
+        )docstring")
+    .def("freeGpuResources", &GrDirectContext::freeGpuResources,
+        R"docstring(
+        Frees GPU created by the context.
+
+        Can be called to reduce GPU memory pressure.
+        )docstring")
+    ;
+
 initGrContext_gl(m);
 initGrContext_vk(m);
 initGrContext_mock(m);
