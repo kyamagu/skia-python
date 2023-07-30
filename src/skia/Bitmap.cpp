@@ -764,7 +764,7 @@ bitmap
         :param int b: amount of blue, from no blue (0) to full blue (255)
         )docstring",
         py::arg("a"), py::arg("r"), py::arg("g"), py::arg("b"))
-    .def("erase", &SkBitmap::erase,
+    .def("erase", py::overload_cast<SkColor4f, const SkIRect&>(&SkBitmap::erase, py::const_),
         R"docstring(
         Replaces pixel values inside area with c.
 
@@ -775,6 +775,14 @@ bitmap
         :py:attr:`~ColorType.kRGB_565_ColorType`, then alpha is ignored; RGB is
         treated as opaque. If colorType() is
         :py:attr:`~ColorType.kAlpha_8_ColorType`, then RGB is ignored.
+
+        :param int c: unpremultiplied color
+        :param skia.IRect area: rectangle to fill
+        )docstring",
+        py::arg("c"), py::arg("area"))
+    .def("erase", py::overload_cast<SkColor, const SkIRect&>(&SkBitmap::erase, py::const_),
+        R"docstring(
+        Deprecated.
 
         :param int c: unpremultiplied color
         :param skia.IRect area: rectangle to fill
