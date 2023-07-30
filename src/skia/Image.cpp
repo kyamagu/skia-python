@@ -1,6 +1,10 @@
 #include "common.h"
 #include <include/codec/SkEncodedImageFormat.h>
 #include <include/gpu/GrBackendSurface.h>
+#include <include/encode/SkJpegEncoder.h>
+#include <include/encode/SkPngEncoder.h>
+#include <include/encode/SkWebpEncoder.h>
+
 #include <pybind11/numpy.h>
 
 namespace {
@@ -84,7 +88,41 @@ sk_sp<SkImage> ImageOpen(py::object fp) {
 
 void ImageSave(const SkImage& image, py::object fp,
                SkEncodedImageFormat format, int quality) {
-    auto data = image.encodeToData(format, quality);
+    sk_sp<SkData> data = image.refEncodedData();
+    switch (format) {
+    case SkEncodedImageFormat::kWEBP:
+        {
+            SkWebpEncoder::Options options;
+            if (quality < 100) {
+                options.fCompression = SkWebpEncoder::Compression::kLossy;
+                options.fQuality = quality;
+            } else {
+                options.fCompression = SkWebpEncoder::Compression::kLossless;
+                // in lossless mode, this is effort. 70 is the default effort in SkImageEncoder,
+                // which follows Blink and WebPConfigInit.
+                options.fQuality = 70;
+            }
+            data = SkWebpEncoder::Encode(nullptr, &image, options);
+        }
+        break;
+
+    case SkEncodedImageFormat::kJPEG:
+        {
+            SkJpegEncoder::Options options;
+            options.fQuality = quality;
+            data = SkJpegEncoder::Encode(nullptr, &image, options);
+        }
+        break;
+
+    case SkEncodedImageFormat::kPNG:
+    default:
+        {
+             SkPngEncoder::Options options; // Not used
+             data = SkPngEncoder::Encode(nullptr, &image, {});
+        }
+        break;
+    }
+    auto decoded = SkImages::DeferredFromEncodedData(data);
     if (!data)
         throw std::runtime_error("Failed to encode an image.");
     if (hasattr(fp, "write"))
@@ -476,7 +514,7 @@ image
         })
     .def("_repr_png_",
         [] (const SkImage& image) {
-            auto data = image.encodeToData();
+            auto data = SkPngEncoder::Encode(nullptr, &image, {});
             if (!data)
                 throw std::runtime_error("Failed to encode an image.");
             return py::bytes(
