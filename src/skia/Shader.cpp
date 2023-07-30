@@ -160,7 +160,7 @@ shader
         py::arg("data"))
     ;
 
-py::class_<SkShaders>(m, "Shaders")
+py::class_<std::unique_ptr<int>>(m, "Shaders")
     .def_static("Empty", &SkShaders::Empty)
     .def_static("Color", py::overload_cast<SkColor>(&SkShaders::Color),
         py::arg("color"))
@@ -176,6 +176,13 @@ py::class_<SkShaders>(m, "Shaders")
                 mode, CloneFlattenable(dst), CloneFlattenable(src));
         },
         py::arg("mode"), py::arg("dst"), py::arg("src"))
+    .def_static("Blend",
+        [] (sk_sp<SkBlender> blender, sk_sp<SkShader> dst,
+            sk_sp<SkShader> src) {
+            return SkShaders::Blend(
+                blender, dst, src);
+        },
+        py::arg("blender"), py::arg("dst"), py::arg("src"))
     .def_static("Lerp",
         [] (SkScalar t, const SkShader& dst,
             const SkShader& src) {
