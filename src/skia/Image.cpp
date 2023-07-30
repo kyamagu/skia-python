@@ -814,7 +814,7 @@ image
         py::arg("yuvaIndices"), py::arg("imageSize"), py::arg("imageOrigin"),
         py::arg("backendTexture"), py::arg("imageColorSpace") = nullptr)
     .def_static("MakeFromYUVATextures",
-        [] (GrContext* context,
+        [] (GrDirectContext* context,
             SkYUVColorSpace yuvColorSpace,
             const std::vector<GrBackendTexture>& yuvaTextures,
             const std::vector<SkYUVAIndex>& yuvaIndices,
@@ -950,7 +950,7 @@ image
         py::arg("limitToMaxTextureSize") = false,
         py::arg("imageColorSpace") = nullptr)
     .def_static("MakeFromNV12TexturesCopy",
-        [] (GrContext* context,
+        [] (GrDirectContext* context,
             SkYUVColorSpace yuvColorSpace,
             const std::vector<GrBackendTexture>& nv12Textures,
             GrSurfaceOrigin imageOrigin,
@@ -978,7 +978,7 @@ image
         py::arg("context"), py::arg("yuvColorSpace"), py::arg("nv12Textures"),
         py::arg("imageOrigin"), py::arg("imageColorSpace") = nullptr)
     .def_static("MakeFromNV12TexturesCopyWithExternalBackend",
-        [] (GrContext* context,
+        [] (GrDirectContext* context,
             SkYUVColorSpace yuvColorSpace,
             const std::vector<GrBackendTexture>& nv12Textures,
             GrSurfaceOrigin imageOrigin,

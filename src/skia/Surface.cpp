@@ -968,7 +968,7 @@ surface
         )docstring",
         py::arg("width"), py::arg("height"), py::arg("surfaceProps") = nullptr)
     .def_static("MakeFromBackendTexture",
-        [] (GrContext* context, const GrBackendTexture& backendTexture,
+        [] (GrDirectContext* context, const GrBackendTexture& backendTexture,
             GrSurfaceOrigin origin, int sampleCnt, SkColorType colorType,
             sk_sp<SkColorSpace> colorSpace,
             const SkSurfaceProps* surfaceProps) {
@@ -1013,7 +1013,7 @@ surface
         py::arg("sampleCnt"), py::arg("colorType"), py::arg("colorSpace"),
         py::arg("surfaceProps"))
     .def_static("MakeFromBackendRenderTarget",
-        [] (GrContext* context, const GrBackendRenderTarget& target,
+        [] (GrDirectContext* context, const GrBackendRenderTarget& target,
             GrSurfaceOrigin origin, SkColorType colorType,
             sk_sp<SkColorSpace> colorSpace,
             const SkSurfaceProps* surfaceProps) {
