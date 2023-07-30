@@ -214,7 +214,7 @@ py::enum_<SkPathEffect::DashType>(patheffect, "DashType",
     .export_values();
 
 patheffect
-    .def("filterPath", &SkPathEffect::filterPath,
+    .def("filterPath", py::overload_cast<SkPath*, const SkPath&, SkStrokeRec*, const SkRect*>(&SkPathEffect::filterPath, py::const_),
         R"docstring(
         Given a src path (input) and a stroke-rec (input and output), apply this
         effect to the src path, returning the new path in dst, and return true.
