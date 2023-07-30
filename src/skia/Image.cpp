@@ -623,7 +623,7 @@ image
         :param encoded: the encoded data
         :return: created :py:class:`Image`, or nullptr
         )docstring",
-        py::arg("encoded"))
+        py::arg("encoded"), py::arg("alphaType") = std::nullopt)
     .def_static("MakeTextureFromCompressed",
         &SkImages::TextureFromCompressedTextureData,
         R"docstring(
