@@ -3,6 +3,7 @@
 #include <include/gpu/GrBackendSurface.h>
 #include <include/gpu/GrContextThreadSafeProxy.h>
 #include <include/gpu/mock/GrMockTypes.h>
+#include <include/gpu/gl/GrGLInterface.h>
 #include <include/gpu/vk/GrVkBackendContext.h>
 #include <pybind11/chrono.h>
 #include <pybind11/stl.h>
@@ -1067,10 +1068,6 @@ py::class_<GrDirectContext, sk_sp<GrDirectContext>, GrRecordingContext>(m, "GrCo
         py::arg("texture"))
     .def("precompileShader", &GrDirectContext::precompileShader,
         py::arg("key"), py::arg("data"))
-    ;
-
-py::class_<GrDirectContext, sk_sp<GrDirectContext>, GrContext>(
-    m, "GrDirectContext")
 #ifdef SK_GL
     .def_static("MakeGL",
         py::overload_cast<sk_sp<const GrGLInterface>, const GrContextOptions&>(
