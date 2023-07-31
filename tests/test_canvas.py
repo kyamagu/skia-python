@@ -21,10 +21,7 @@ def test_Canvas_repr(canvas):
     (np.zeros((16, 16, 4), dtype=np.uint8),),
     (100, 100),
     (100, 100, None),
-    (100, 100, skia.SurfaceProps(skia.SurfaceProps.kLegacyFontHost_InitType)),
     (skia.Bitmap(),),
-    (skia.Bitmap(),
-        skia.SurfaceProps(skia.SurfaceProps.kLegacyFontHost_InitType)),
 ])
 def test_Canvas_init(args):
     check_canvas(skia.Canvas(*args))
@@ -32,11 +29,6 @@ def test_Canvas_init(args):
 
 def test_Canvas_imageInfo(canvas):
     assert isinstance(canvas.imageInfo(), skia.ImageInfo)
-
-
-def test_Canvas_getProps(canvas):
-    props = skia.SurfaceProps(skia.SurfaceProps.kLegacyFontHost_InitType)
-    assert isinstance(canvas.getProps(props), bool)
 
 
 def test_Canvas_flush(canvas):
@@ -50,7 +42,6 @@ def test_Canvas_getBaseLayerSize(canvas):
 @pytest.mark.parametrize('args', [
     tuple(),
     (None,),
-    (skia.SurfaceProps(skia.SurfaceProps.kLegacyFontHost_InitType),),
 ])
 def test_Canvas_makeSurface(canvas, args):
     assert isinstance(canvas.makeSurface(canvas.imageInfo(), *args),
@@ -481,8 +472,6 @@ def test_Canvas_getLocalToDevice(canvas):
 @pytest.mark.parametrize('args', [
     (skia.ImageInfo.MakeN32Premul(4, 4), bytearray(64)),
     (skia.ImageInfo.MakeN32Premul(4, 4), bytearray(64), 16),
-    (skia.ImageInfo.MakeN32Premul(4, 4), bytearray(64), 16,
-        skia.SurfaceProps(skia.SurfaceProps.kLegacyFontHost_InitType)),
 ])
 def test_Canvas_MakeRasterDirect(args):
     check_canvas(skia.Canvas.MakeRasterDirect(*args))

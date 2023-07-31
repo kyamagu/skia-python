@@ -57,10 +57,7 @@ py::enum_<SkSurfaceProps::Flags>(surfaceprops, "Flags", py::arithmetic())
         SkSurfaceProps::Flags::kUseDeviceIndependentFonts_Flag)
     .export_values();
 
-py::enum_<SkSurfaceProps::InitType>(surfaceprops, "InitType")
-    .value("kLegacyFontHost_InitType",
-        SkSurfaceProps::InitType::kLegacyFontHost_InitType)
-    .export_values();
+/* SkSurfaceProps::kLegacyFontHost_InitType was removed in m88 */
 
 surfaceprops
     .def(py::init<uint32_t, SkPixelGeometry>(),
