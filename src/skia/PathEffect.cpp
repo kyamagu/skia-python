@@ -288,7 +288,7 @@ patheffect
         py::arg("data"))
     ;
 
-py::class_<SkDiscretePathEffect, SkPathEffect, sk_sp<SkDiscretePathEffect>>(
+py::class_<SkDiscretePathEffect>(
     m, "DiscretePathEffect")
     .def_static("Make", &SkDiscretePathEffect::Make,
         R"docstring(
@@ -334,7 +334,7 @@ py::class_<SkDashPathEffect>(m, "DashPathEffect")
         py::arg("intervals"), py::arg("phase"))
     ;
 
-py::class_<SkCornerPathEffect, SkPathEffect, sk_sp<SkCornerPathEffect>>(
+py::class_<SkCornerPathEffect>(
     m, "CornerPathEffect",
     R"docstring(
     :py:class:`CornerPathEffect` is a subclass of :py:class:`PathEffect` that
@@ -349,7 +349,7 @@ py::class_<SkCornerPathEffect, SkPathEffect, sk_sp<SkCornerPathEffect>>(
         py::arg("radius"))
     ;
 
-py::class_<SkPath1DPathEffect, SkPathEffect, sk_sp<SkPath1DPathEffect>>
+py::class_<SkPath1DPathEffect>
     path1dpatheffect(m, "Path1DPathEffect");
 
 py::enum_<SkPath1DPathEffect::Style>(path1dpatheffect, "Style")
