@@ -16,7 +16,7 @@ import pytest
             'Color4f': skia.Color4f.FromColor(0xFF00FF00),
             'ColorFilter': skia.LumaColorFilter.Make(),
             'Dither': False,
-            'FilterQuality': skia.kMedium_FilterQuality,
+#            'FilterQuality': skia.kMedium_FilterQuality,
             'ImageFilter': skia.ImageFilters.Blur(1.0, 1.0),
             'MaskFilter': skia.MaskFilter.MakeBlur(skia.kNormal_BlurStyle, 1.),
             'PathEffect': skia.DashPathEffect.Make([2., 1.], 0),
