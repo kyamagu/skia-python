@@ -177,10 +177,10 @@ py::enum_<SkSurface::RescaleGamma>(surface, "RescaleGamma", R"docstring(
     .value("kLinear", SkSurface::RescaleGamma::kLinear)
     .export_values();
 
-py::enum_<SkSurface::BackendSurfaceAccess>(surface, "BackendSurfaceAccess")
-    .value("kNoAccess", SkSurface::BackendSurfaceAccess::kNoAccess,
+py::enum_<SkSurfaces::BackendSurfaceAccess>(surface, "BackendSurfaceAccess")
+    .value("kNoAccess", SkSurfaces::BackendSurfaceAccess::kNoAccess,
         "back-end object will not be used by client")
-    .value("kPresent", SkSurface::BackendSurfaceAccess::kPresent,
+    .value("kPresent", SkSurfaces::BackendSurfaceAccess::kPresent,
         "back-end surface will be used for presenting to screen")
     .export_values();
 
