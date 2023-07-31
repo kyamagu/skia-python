@@ -1054,7 +1054,7 @@ surface
         py::arg("colorType"), py::arg("colorSpace"),
         py::arg("surfaceProps") = nullptr)
     .def_static("MakeRenderTarget",
-        py::overload_cast<GrRecordingContext*, SkBudgeted, const SkImageInfo&, int,
+        py::overload_cast<GrRecordingContext*, skgpu::Budgeted, const SkImageInfo&, int,
         GrSurfaceOrigin, const SkSurfaceProps*, bool>(
             &SkSurfaces::RenderTarget),
         R"docstring(
@@ -1099,7 +1099,7 @@ surface
         py::arg("surfaceProps") = nullptr,
         py::arg("shouldCreateWithMips") = false)
     .def_static("MakeRenderTarget",
-        py::overload_cast<GrRecordingContext*, SkBudgeted, const SkImageInfo&, int,
+        py::overload_cast<GrRecordingContext*, skgpu::Budgeted, const SkImageInfo&, int,
             const SkSurfaceProps*>(&SkSurfaces::RenderTarget),
         R"docstring(
         Returns :py:class:`Surface` on GPU indicated by context.
@@ -1131,7 +1131,7 @@ surface
         py::arg("context"), py::arg("budgeted"), py::arg("imageInfo"),
         py::arg("sampleCount"), py::arg("surfaceProps"))
     .def_static("MakeRenderTarget",
-        py::overload_cast<GrRecordingContext*, SkBudgeted, const SkImageInfo&>(
+        py::overload_cast<GrRecordingContext*, skgpu::Budgeted, const SkImageInfo&>(
             &SkSurfaces::RenderTarget),
         R"docstring(
         Returns :py:class:`Surface` on GPU indicated by context.
@@ -1152,7 +1152,7 @@ surface
         py::arg("context"), py::arg("budgeted"), py::arg("imageInfo"))
     .def_static("MakeRenderTarget",
         py::overload_cast<GrRecordingContext*,
-        const SkSurfaceCharacterization&, SkBudgeted>(
+        const SkSurfaceCharacterization&, skgpu::Budgeted>(
             &SkSurfaces::RenderTarget),
         R"docstring(
         Returns :py:class:`Surface` on GPU indicated by context that is
