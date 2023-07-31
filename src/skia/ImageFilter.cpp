@@ -17,7 +17,9 @@ py::object IsColorFilterNode(const SkImageFilter& filter) {
 
 }  // namespace
 
+/*
 const int SkDropShadowImageFilter::kShadowModeCount;
+*/
 
 void initImageFilter(py::module &m) {
 py::class_<SkImageFilter, sk_sp<SkImageFilter>, SkFlattenable> imagefilter(
@@ -63,6 +65,7 @@ py::class_<SkImageFilter, sk_sp<SkImageFilter>, SkFlattenable> imagefilter(
         ~skia.XfermodeImageFilter
     )docstring");
 
+/*
 py::class_<SkImageFilter::CropRect> croprect(imagefilter, "CropRect");
 
 py::enum_<SkImageFilter::CropRect::CropEdge>(croprect, "CropEdge")
@@ -102,6 +105,7 @@ croprect
         )docstring",
         py::arg("imageBounds"), py::arg("matrix"), py::arg("embiggen"))
     ;
+*/
 
 py::enum_<SkImageFilter::MapDirection>(imagefilter, "MapDirection")
     .value("kForward_MapDirection", SkImageFilter::kForward_MapDirection)
@@ -163,6 +167,7 @@ imagefilter
         return that filter, else return null.
         )docstring",
         py::arg("matrix"))
+/*
     .def_static("MakeMatrixFilter",
         [] (const SkMatrix& matrix, SkFilterQuality quality,
             const SkImageFilter* input) {
@@ -175,6 +180,7 @@ imagefilter
         DEPRECATED: Use :py:meth:`ImageFilters::MatrixTransform`
         )docstring",
         py::arg("matrix"), py::arg("quality"), py::arg("input") = nullptr)
+*/
     .def_static("Deserialize",
         [] (py::buffer b) {
             auto info = b.request();
@@ -184,6 +190,7 @@ imagefilter
         py::arg("data"))
     ;
 
+/*
 py::class_<SkAlphaThresholdFilter>(m, "AlphaThresholdFilter")
     .def_static("Make",
         [] (const SkRegion& region, SkScalar innerMin, SkScalar outerMax,
@@ -262,6 +269,7 @@ py::class_<SkColorFilterImageFilter>(m, "ColorFilterImageFilter")
         py::arg("cf"), py::arg("input") = nullptr,
         py::arg("cropRect") = nullptr)
     ;
+*/
 
 // py::class_<SkComposeImageFilter>(m, "ComposeImageFilter")
 //     .def_static("Make",
@@ -272,6 +280,7 @@ py::class_<SkColorFilterImageFilter>(m, "ColorFilterImageFilter")
 //         py::arg("outer"), py::arg("inner"))
 //     ;
 
+/*
 py::class_<SkDisplacementMapEffect> displacementmapeffect(
     m, "DisplacementMapEffect");
 
@@ -375,8 +384,10 @@ py::class_<SkErodeImageFilter>(m, "ErodeImageFilter")
         py::arg("radiusX"), py::arg("radiusY"), py::arg("input") = nullptr,
         py::arg("cropRect") = nullptr)
     ;
+*/
 
 py::class_<SkImageFilters>(m, "ImageFilters")
+/*
     .def_static("AlphaThreshold",
         [] (const SkRegion& region, SkScalar innerMin, SkScalar outerMax,
             const SkImageFilter* input, const SkIRect* cropRect) {
@@ -406,6 +417,7 @@ py::class_<SkImageFilters>(m, "ImageFilters")
         )docstring",
         py::arg("region"), py::arg("innerMin"), py::arg("outerMax"),
         py::arg("input") = nullptr, py::arg("cropRect") = nullptr)
+*/
     .def_static("Arithmetic",
         [] (SkScalar k1, SkScalar k2, SkScalar k3, SkScalar k4,
             bool enforcePMColor, const SkImageFilter& background,
@@ -589,6 +601,7 @@ py::class_<SkImageFilters>(m, "ImageFilters")
         py::arg("dx"), py::arg("dy"), py::arg("sigmaX"), py::arg("sigmaY"),
         py::arg("color"), py::arg("input") = nullptr,
         py::arg("cropRect") = nullptr)
+/*
     .def_static("Image",
         [] (const SkImage& image, const SkRect& srcRect, const SkRect& dstRect,
             SkFilterQuality filterQuality) {
@@ -723,6 +736,7 @@ py::class_<SkImageFilters>(m, "ImageFilters")
             filters and the output.
         )docstring",
         py::arg("filters"), py::arg("cropRect") = nullptr)
+*/
     // .def_static("Merge")
     .def_static("Offset",
         [] (SkScalar dx, SkScalar dy, const SkImageFilter* input,
@@ -742,6 +756,7 @@ py::class_<SkImageFilters>(m, "ImageFilters")
         )docstring",
         py::arg("dx"), py::arg("dy"), py::arg("input") = nullptr,
         py::arg("cropRect") = nullptr)
+/*
     .def_static("Paint", &SkImageFilters::Paint,
         R"docstring(
         Create a filter that fills the output with the given paint.
@@ -752,6 +767,7 @@ py::class_<SkImageFilters>(m, "ImageFilters")
             bitmap itself is not used.
         )docstring",
         py::arg("paint"), py::arg("cropRect") = nullptr)
+*/
     .def_static("Picture",
         [] (const SkPicture& pic, const SkRect* targetRect) {
             auto pic_ = SkPicture::MakeFromData(pic.serialize().get());
@@ -785,6 +801,7 @@ py::class_<SkImageFilters>(m, "ImageFilters")
             source bitmap is used instead.
         )docstring",
         py::arg("src"), py::arg("dst"), py::arg("input") = nullptr)
+/*
     .def_static("Xfermode",
         [] (SkBlendMode mode, const SkImageFilter* background,
             const SkImageFilter* foreground, const SkIRect* cropRect) {
@@ -803,6 +820,7 @@ py::class_<SkImageFilters>(m, "ImageFilters")
         )docstring",
         py::arg("mode"), py::arg("background") = nullptr,
         py::arg("foreground") = nullptr, py::arg("cropRect") = nullptr)
+*/
     .def_static("Dilate",
         [] (SkScalar radiusX, SkScalar radiusY, const SkImageFilter* input,
             const SkIRect* cropRect) {
@@ -1032,6 +1050,7 @@ py::class_<SkImageFilters>(m, "ImageFilters")
     ;
 
 
+/*
 py::class_<SkLightingImageFilter>(m, "LightingImageFilter")
     .def_static("MakeDistantLitDiffuse",
         [] (const SkPoint3& direction, SkColor lightColor,
@@ -1118,6 +1137,7 @@ py::class_<SkMagnifierImageFilter>(m, "MagnifierImageFilter")
         py::arg("srcRect"), py::arg("inset"), py::arg("input") = nullptr,
         py::arg("cropRect") = nullptr)
     ;
+*/
 
 // py::class_<SkMatrixConvolutionImageFilter>(m, "MatrixConvolutionImageFilter")
 //     .def_static("Make",
@@ -1131,6 +1151,7 @@ py::class_<SkMagnifierImageFilter>(m, "MagnifierImageFilter")
 //     .def_static("Make", &SkMergeImageFilter::Make)
 //     ;
 
+/*
 py::class_<SkOffsetImageFilter>(m, "OffsetImageFilter")
     .def_static("Make",
         [] (SkScalar dx, SkScalar dy, const SkImageFilter* input,
@@ -1146,11 +1167,13 @@ py::class_<SkPaintImageFilter>(m, "PaintImageFilter")
     .def_static("Make", &SkPaintImageFilter::Make,
         py::arg("paint"), py::arg("cropRect") = nullptr)
     ;
+*/
 
 // py::class_<SkPictureImageFilter>(m, "PictureImageFilter")
 //     .def_static("Make", &SkPictureImageFilter::Make)
 //     ;
 
+/*
 py::class_<SkTileImageFilter>(m, "TileImageFilter")
     .def_static("Make",
         [] (const SkRect& src, const SkRect& dst, const SkImageFilter* input) {
@@ -1185,4 +1208,5 @@ py::class_<SkXfermodeImageFilter>(m, "XfermodeImageFilter",
         py::arg("mode"), py::arg("background") = nullptr,
         py::arg("foreground") = nullptr, py::arg("cropRect") = nullptr)
     ;
+*/
 }

@@ -122,10 +122,12 @@ py::enum_<SkCanvas::SaveLayerFlagsSet>(
     .value("kInitWithPrevious_SaveLayerFlag",
         SkCanvas::SaveLayerFlagsSet::kInitWithPrevious_SaveLayerFlag,
         "initializes with previous contents")
+/*
     .value("kMaskAgainstCoverage_EXPERIMENTAL_DONT_USE_SaveLayerFlag",
         SkCanvas::SaveLayerFlagsSet::
         kMaskAgainstCoverage_EXPERIMENTAL_DONT_USE_SaveLayerFlag,
         "experimental: do not use")
+*/
     .value("kF16ColorType",
         SkCanvas::SaveLayerFlagsSet::kF16ColorType)
     .export_values();
@@ -1646,6 +1648,7 @@ canvas
         :param skia.Paint paint: stroke, blend, color, and so on, used to draw
         )docstring",
         py::arg("path"), py::arg("paint"))
+/*
     .def("drawImage",
         py::overload_cast<const SkImage*, SkScalar, SkScalar,
             const SkPaint*>(&SkCanvas::drawImage),
@@ -1665,11 +1668,13 @@ canvas
         )docstring",
         py::arg("image"), py::arg("left"), py::arg("top"),
         py::arg("paint") = nullptr)
+*/
     // .def("drawImage",
     //     py::overload_cast<const sk_sp<SkImage>&, SkScalar, SkScalar,
     //         const SkPaint*>(&SkCanvas::drawImage),
     //     py::arg("image"), py::arg("left"), py::arg("top"),
     //     py::arg("paint") = nullptr)
+/*
     .def("drawImageRect",
         py::overload_cast<const SkImage*, const SkRect&, const SkRect&,
             const SkPaint*, SkCanvas::SrcRectConstraint>(
@@ -1790,6 +1795,7 @@ canvas
         :constraint: filter strictly within src or draw faster
         )docstring",
         py::arg("image"), py::arg("dst"), py::arg("paint") = nullptr)
+*/
     // .def("drawImageRect",
     //     py::overload_cast<const sk_sp<SkImage>&, const SkRect&, const SkRect&,
     //         const SkPaint*, SkCanvas::SrcRectConstraint>(
@@ -1813,6 +1819,7 @@ canvas
     //         const SkPaint*>(&SkCanvas::drawImageRect),
     //     "Draws SkImage image, scaled and translated to fill SkRect dst, using "
     //     "clip, SkMatrix, and optional SkPaint paint.")
+/*
     .def("drawImageNine",
         py::overload_cast<const SkImage*, const SkIRect&, const SkRect&,
             const SkPaint*>(&SkCanvas::drawImageNine),
@@ -1856,9 +1863,11 @@ canvas
         )docstring",
         py::arg("image"), py::arg("center"), py::arg("dst"),
         py::arg("paint") = nullptr)
+*/
     // .def("drawImageNine",
     //     py::overload_cast<const sk_sp<SkImage>&, const SkIRect&,
     //         const SkRect&, const SkPaint*>(&SkCanvas::drawImageNine))
+/*
     .def("drawBitmap", &SkCanvas::drawBitmap,
         R"docstring(
         Draws :py:class:`Bitmap` bitmap, with its top-left corner at (left,
@@ -1999,6 +2008,7 @@ canvas
         py::arg("bitmap"), py::arg("dst"), py::arg("paint") = nullptr,
         py::arg("constraint") =
             SkCanvas::SrcRectConstraint::kStrict_SrcRectConstraint)
+*/
     // .def("drawImageLattice", &SkCanvas::drawImageLattice,
     //     "Draws SkImage image stretched proportionally to fit into SkRect dst.")
     // .def("experimental_DrawEdgeAAQuad",
@@ -2260,6 +2270,7 @@ canvas
     //     "Draws SkPath cubic Coons patch: the interpolation of four cubics with "
     //     "shared corners, associating a color, and optionally a texture "
     //     "SkPoint, with each corner.")
+/*
     .def("drawAtlas",
         // py::overload_cast<const SkImage*, const SkRSXform[], const SkRect[],
         //     const SkColor[], int, SkBlendMode, const SkRect*, const SkPaint*>(
@@ -2315,6 +2326,7 @@ canvas
         py::arg("atlas"), py::arg("xform"), py::arg("tex"), py::arg("colors"),
         py::arg("mode"), py::arg("cullRect") = nullptr,
         py::arg("paint") = nullptr)
+*/
     // .def("drawAtlas",
     //     py::overload_cast<const sk_sp<SkImage>&, const SkRSXform[],
     //         const SkRect[], const SkColor[], int, SkBlendMode, const SkRect*,

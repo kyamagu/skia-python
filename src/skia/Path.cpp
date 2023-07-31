@@ -851,6 +851,7 @@ path
             allocate
         )docstring",
         py::arg("extraPtCount"))
+/* TODO: This was removed in m88
     .def("shrinkToFit", &SkPath::shrinkToFit,
         R"docstring(
         Shrinks :py:class:`Path` verb array and :py:class:`Point` array storage
@@ -859,6 +860,7 @@ path
         May reduce the heap overhead for :py:class:`Path` known to be fully
         constructed.
         )docstring")
+*/
     .def("moveTo",
         py::overload_cast<SkScalar, SkScalar>(&SkPath::moveTo),
         R"docstring(
@@ -1844,6 +1846,7 @@ path
         :return: true if :py:class:`Point` is in :py:class:`Path`
         )docstring",
         py::arg("x"), py::arg("y"))
+/*
     .def("dump",
         py::overload_cast<SkWStream*, bool, bool>(&SkPath::dump, py::const_),
         R"docstring(
@@ -1860,6 +1863,7 @@ path
         :dumpAsHex: true if :py:class:`Scalar` values are written as hexadecimal
         )docstring",
         py::arg("stream"), py::arg("forceClose"), py::arg("dumpAsHex"))
+*/
     .def("dump",
         [] (const SkPath& path) {
             py::scoped_ostream_redirect stream;

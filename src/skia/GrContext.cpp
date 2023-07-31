@@ -96,8 +96,10 @@ py::enum_<GrGLBackendState>(m, "GrGLBackendState", R"docstring(
         GrGLBackendState::kFixedFunction_GrGLBackendState)
     .value("kMisc_GrGLBackendState",
         GrGLBackendState::kMisc_GrGLBackendState)
+/*
     .value("kPathRendering_GrGLBackendState",
         GrGLBackendState::kPathRendering_GrGLBackendState)
+*/
     .value("kALL_GrGLBackendState",
         GrGLBackendState::kALL_GrGLBackendState)
     .export_values();
@@ -215,21 +217,25 @@ py::class_<GrBackendSemaphore>(m, "GrBackendSemaphore")
             semaphore.initGL(reinterpret_cast<GrGLsync>(glsync));
         },
         py::arg("glsync"))
+/*
     .def("initVulkan",
         [] (GrBackendSemaphore& semaphore, void* vksemaphore) {
             semaphore.initVulkan(reinterpret_cast<VkSemaphore>(vksemaphore));
         },
         py::arg("semaphore"))
+*/
     // .def("initMetal", &GrBackendSemaphore::initMetal)
     .def("isInitialized", &GrBackendSemaphore::isInitialized)
     .def("glSync",
         [] (GrBackendSemaphore& semaphore) {
             return reinterpret_cast<void*>(semaphore.glSync());
         })
+/*
     .def("vkSemaphore",
         [] (GrBackendSemaphore& semaphore) {
             return reinterpret_cast<void*>(semaphore.vkSemaphore());
         })
+*/
     // .def("mtlSemaphore", &GrBackendSemaphore::mtlSemaphore)
     // .def("mtlValue", &GrBackendSemaphore::mtlValue)
     ;
@@ -237,6 +243,7 @@ py::class_<GrBackendSemaphore>(m, "GrBackendSemaphore")
 py::class_<GrBackendFormat>(m, "GrBackendFormat")
     .def(py::init<>())
     .def(py::init<const GrBackendFormat&>())
+/*
     .def_static("MakeGL", &GrBackendFormat::MakeGL,
         py::arg("format"), py::arg("target"))
     .def_static("MakeVk", py::overload_cast<VkFormat>(&GrBackendFormat::MakeVk),
@@ -247,21 +254,28 @@ py::class_<GrBackendFormat>(m, "GrBackendFormat")
         py::arg("ycbcrInfo"))
     .def_static("MakeMock", &GrBackendFormat::MakeMock,
         py::arg("colorType"), py::arg("compression"), py::arg("isStencilFormat") = false)
+*/
     .def("__eq__", &GrBackendFormat::operator==, py::arg("other"),
         py::is_operator())
+/*
     .def("__ne__", &GrBackendFormat::operator!=, py::arg("other"),
         py::is_operator())
     .def("backend", &GrBackendFormat::backend)
     .def("textureType", &GrBackendFormat::textureType)
+*/
     .def("channelMask", &GrBackendFormat::channelMask)
     .def("asGLFormat", &GrBackendFormat::asGLFormat)
+/*
     .def("asVkFormat", &GrBackendFormat::asVkFormat, py::arg("format"))
     .def("getVkYcbcrConversionInfo",
         &GrBackendFormat::getVkYcbcrConversionInfo)
+*/
     .def("asMockColorType", &GrBackendFormat::asMockColorType)
     .def("asMockCompressionType", &GrBackendFormat::asMockCompressionType)
     .def("makeTexture2D", &GrBackendFormat::makeTexture2D)
+/*
     .def("isValid", &GrBackendFormat::isValid)
+*/
     ;
 
 py::class_<GrBackendTexture>(m, "GrBackendTexture")
@@ -277,26 +291,34 @@ py::class_<GrBackendTexture>(m, "GrBackendTexture")
         py::arg("width"), py::arg("height"), py::arg("mipMapped"),
         py::arg("mockInfo"))
     .def(py::init<const GrBackendTexture&>(), py::arg("that"))
+/*
     .def("dimensions", &GrBackendTexture::dimensions)
     .def("width", &GrBackendTexture::width)
     .def("height", &GrBackendTexture::height)
     .def("hasMipmaps", &GrBackendTexture::hasMipmaps)
     .def("backend", &GrBackendTexture::backend)
+*/
     .def("getGLTextureInfo", &GrBackendTexture::getGLTextureInfo,
         py::arg("info"))
     .def("glTextureParametersModified",
         &GrBackendTexture::glTextureParametersModified)
+/*
     .def("getVkImageInfo", &GrBackendTexture::getVkImageInfo,
         py::arg("info"))
     .def("setVkImageLayout", &GrBackendTexture::setVkImageLayout,
         py::arg("layout"))
+*/
     .def("getBackendFormat", &GrBackendTexture::getBackendFormat)
     .def("getMockTextureInfo", &GrBackendTexture::getMockTextureInfo,
         py::arg("info"))
+/*
     .def("setMutableState", &GrBackendTexture::setMutableState,
         py::arg("state"))
+*/
     .def("isProtected", &GrBackendTexture::isProtected)
+/*
     .def("isValid", &GrBackendTexture::isValid)
+*/
     .def("isSameTexture", &GrBackendTexture::isSameTexture,
         py::arg("texture"))
     ;
@@ -306,6 +328,7 @@ py::class_<GrContextOptions>(m, "GrContextOptions")
     // TODO: Implement me!
     ;
 
+/*
 py::class_<GrBackendSurfaceMutableState>(m, "GrBackendSurfaceMutableState",
     R"docstring(
     Since Skia and clients can both modify gpu textures and their connected
@@ -340,6 +363,7 @@ py::class_<GrBackendSurfaceMutableState>(m, "GrBackendSurfaceMutableState",
     .def("isValid", &GrBackendSurfaceMutableState::isValid)
     .def("backend", &GrBackendSurfaceMutableState::backend)
     ;
+*/
 
 py::class_<GrBackendRenderTarget>(m, "GrBackendRenderTarget")
     .def(py::init<>())
@@ -356,6 +380,7 @@ py::class_<GrBackendRenderTarget>(m, "GrBackendRenderTarget")
     .def(py::init<int, int, int, int, const GrMockRenderTargetInfo&>(),
         py::arg("width"), py::arg("height"), py::arg("sampleCnt"),
         py::arg("stencilBits"), py::arg("mockInfo"))
+/*
     .def("dimensions", &GrBackendRenderTarget::dimensions)
     .def("width", &GrBackendRenderTarget::width)
     .def("height", &GrBackendRenderTarget::height)
@@ -363,6 +388,7 @@ py::class_<GrBackendRenderTarget>(m, "GrBackendRenderTarget")
     .def("stencilBits", &GrBackendRenderTarget::stencilBits)
     .def("backend", &GrBackendRenderTarget::backend)
     .def("isFramebufferOnly", &GrBackendRenderTarget::isFramebufferOnly)
+*/
     .def("getGLFramebufferInfo", &GrBackendRenderTarget::getGLFramebufferInfo,
         R"docstring(
         If the backend API is GL, copies a snapshot of the GrGLFramebufferInfo
@@ -370,6 +396,7 @@ py::class_<GrBackendRenderTarget>(m, "GrBackendRenderTarget")
         false if the backend API is not GL.
         )docstring",
         py::arg("info"))
+/*
     .def("getVkImageInfo", &GrBackendRenderTarget::getVkImageInfo,
         R"docstring(
         If the backend API is Vulkan, copies a snapshot of the GrVkImageInfo
@@ -385,6 +412,7 @@ py::class_<GrBackendRenderTarget>(m, "GrBackendRenderTarget")
         of the changed layout.
         )docstring",
         py::arg("layout"))
+*/
     .def("getBackendFormat", &GrBackendRenderTarget::getBackendFormat,
         R"docstring(
         Get the GrBackendFormat for this render target (or an invalid format if
@@ -398,9 +426,13 @@ py::class_<GrBackendRenderTarget>(m, "GrBackendRenderTarget")
         false if the backend API is not Mock.
         )docstring",
         py::arg("info"))
+/*
     // .def("setMutableState", &GrBackendRenderTarget::setMutableState)
+*/
     .def("isProtected", &GrBackendRenderTarget::isProtected)
+/*
     .def("isValid", &GrBackendRenderTarget::isValid)
+*/
     ;
 
 py::class_<GrContext_Base, sk_sp<GrContext_Base>, SkRefCnt>(m, "GrContext_Base")
@@ -412,6 +444,7 @@ py::class_<GrContext_Base, sk_sp<GrContext_Base>, SkRefCnt>(m, "GrContext_Base")
         R"docstring(
         The 3D API backing this context.
         )docstring")
+/*
     .def("defaultBackendFormat", &GrContext_Base::defaultBackendFormat,
         R"docstring(
         Retrieve the default :py:class:`GrBackendFormat` for a given
@@ -423,6 +456,7 @@ py::class_<GrContext_Base, sk_sp<GrContext_Base>, SkRefCnt>(m, "GrContext_Base")
         The caller should check that the returned format is valid.
         )docstring")
     .def("compressedBackendFormat", &GrContext_Base::compressedBackendFormat)
+*/
     .def("threadSafeProxy", &GrContext_Base::threadSafeProxy)
     // .def("priv", py::overload_cast<>(&GrContext_Base::priv))
     // .def("priv", py::overload_cast<>(&GrContext_Base::priv, py::const_))
@@ -434,6 +468,7 @@ py::class_<GrImageContext, sk_sp<GrImageContext>, GrContext_Base>(
 
 py::class_<GrRecordingContext, sk_sp<GrRecordingContext>, GrImageContext>(
     m, "GrRecordingContext")
+/*
     .def("defaultBackendFormat", &GrRecordingContext::defaultBackendFormat,
         R"docstring(
         Retrieve the default :py:class:`GrBackendFormat` for a given
@@ -446,6 +481,7 @@ py::class_<GrRecordingContext, sk_sp<GrRecordingContext>, GrImageContext>(
         The caller should check that the returned format is valid.
         )docstring",
         py::arg("colorType"), py::arg("renderable") = GrRenderable::kNo)
+*/
     .def("abandoned", &GrRecordingContext::abandoned,
         R"docstring(
         Reports whether the :py:class:`GrDirectContext` associated with this
@@ -622,6 +658,7 @@ py::class_<GrDirectContext, sk_sp<GrDirectContext>, GrRecordingContext>(m, "GrCo
 
         Can be called to reduce GPU memory pressure.
         )docstring")
+/*
     .def("performDeferredCleanup", &GrDirectContext::performDeferredCleanup,
         R"docstring(
         Purge GPU resources that haven't been used in the past 'msNotUsed'
@@ -629,6 +666,7 @@ py::class_<GrDirectContext, sk_sp<GrDirectContext>, GrRecordingContext>(m, "GrCo
         the context is under budget.
         )docstring",
         py::arg("msNotUsed"))
+*/
     .def("purgeResourcesNotUsedInMs", &GrDirectContext::purgeResourcesNotUsedInMs,
         py::arg("msNotUsed"))
     .def("purgeUnlockedResources",
@@ -712,12 +750,14 @@ py::class_<GrDirectContext, sk_sp<GrDirectContext>, GrRecordingContext>(m, "GrCo
         client will still own the semaphores.
         )docstring",
         py::arg("semaphores"), py::arg("deleteSemaphoresAfterWait") = true)
+/*
     .def("flushAndSubmit", &GrDirectContext::flushAndSubmit,
         R"docstring(
         Call to ensure all drawing to the context has been flushed and submitted
         to the underlying 3D API. This is equivalent to calling :py:meth:`flush`
         with a default :py:class:`GrFlushInfo` followed by :py:meth:`submit`.
         )docstring")
+*/
     .def("flush", py::overload_cast<const GrFlushInfo&>(&GrDirectContext::flush),
         R"docstring(
         Call to ensure all drawing to the context has been flushed to underlying
@@ -786,6 +826,7 @@ py::class_<GrDirectContext, sk_sp<GrDirectContext>, GrRecordingContext>(m, "GrCo
     //     "traceMemoryDump.")
     .def("supportsDistanceFieldText", &GrDirectContext::supportsDistanceFieldText)
     .def("storeVkPipelineCacheData", &GrDirectContext::storeVkPipelineCacheData)
+/*
     .def_static("ComputeImageSize", &GrDirectContext::ComputeImageSize,
         py::arg("image"), py::arg("mipMapped"), py::arg("useNextPow2") = false)
     .def("defaultBackendFormat", &GrDirectContext::defaultBackendFormat,
@@ -1066,6 +1107,7 @@ py::class_<GrDirectContext, sk_sp<GrDirectContext>, GrRecordingContext>(m, "GrCo
         py::arg("previousState") = nullptr)
     .def("deleteBackendTexture", &GrDirectContext::deleteBackendTexture,
         py::arg("texture"))
+*/
     .def("precompileShader", &GrDirectContext::precompileShader,
         py::arg("key"), py::arg("data"))
 #ifdef SK_GL

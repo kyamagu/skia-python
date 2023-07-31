@@ -143,6 +143,7 @@ py::class_<SkPicture, PyPicture, sk_sp<SkPicture>, SkRefCnt>(
 
         :return: approximate size
         )docstring")
+/*
     .def("makeShader",
         py::overload_cast<SkTileMode, SkTileMode, const SkMatrix*,
             const SkRect*>(&SkPicture::makeShader, py::const_),
@@ -164,6 +165,7 @@ py::class_<SkPicture, PyPicture, sk_sp<SkPicture>, SkRefCnt>(
         )docstring",
         py::arg("tmx"), py::arg("tmy"), py::arg("localMatrix") = nullptr,
         py::arg("tile") = nullptr)
+*/
     .def_static("MakeFromStream",
         [] (SkStream* stream) {
             return SkPicture::MakeFromStream(stream);
@@ -241,10 +243,12 @@ py::class_<SkDrawable, sk_sp<SkDrawable>, SkFlattenable>(m, "Drawable",
         py::overload_cast<SkCanvas*, SkScalar, SkScalar>(&SkDrawable::draw),
         py::arg("canvas").none(false), py::arg("x"), py::arg("y"))
     // .def("snapGpuDrawHandler", &SkDrawable::snapGpuDrawHandler)
+/*
     .def("newPictureSnapshot",
         [] (SkDrawable& drawable) {
             return sk_sp<SkPicture>(drawable.newPictureSnapshot());
         })
+*/
     .def("getGenerationID", &SkDrawable::getGenerationID,
         R"docstring(
         Return a unique value for this instance.

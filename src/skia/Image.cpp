@@ -158,6 +158,7 @@ sk_sp<SkImage> ImageConvert(
     return SkImages::RasterFromData(imageInfo, buffer, imageInfo.minRowBytes());
 }
 
+/*
 sk_sp<SkImage> ImageResize(
     const SkImage& image, int width, int height, SkFilterQuality filterQuality,
     SkImage::CachingHint cachingHint) {
@@ -171,10 +172,12 @@ sk_sp<SkImage> ImageResize(
         throw std::runtime_error("Failed to resize image.");
     return SkImages::RasterFromData(imageInfo, buffer, imageInfo.minRowBytes());
 }
+*/
 
 }  // namespace
 
 void initImage(py::module &m) {
+/*
 py::enum_<SkBudgeted>(m, "Budgeted", R"docstring(
     Indicates whether an allocation should count against a cache budget.
     )docstring")
@@ -197,6 +200,7 @@ py::enum_<SkFilterQuality>(m, "FilterQuality",
         "slowest but highest quality, typically bicubic or better")
     .value("kLast_FilterQuality", SkFilterQuality::kLast_SkFilterQuality)
     .export_values();
+*/
 
 py::enum_<SkEncodedImageFormat>(m, "EncodedImageFormat", R"docstring(
     Enum describing format of encoded data.
@@ -216,6 +220,7 @@ py::enum_<SkEncodedImageFormat>(m, "EncodedImageFormat", R"docstring(
     .export_values();
 
 
+/*
 py::class_<SkMipmapBuilder>(m, "MipmapBuilder")
     .def(py::init<const SkImageInfo&>())
     .def("countLevels", &SkMipmapBuilder::countLevels)
@@ -229,6 +234,7 @@ py::class_<SkMipmapBuilder>(m, "MipmapBuilder")
         If not compatible, this returns nullptr.
         )docstring")
     ;
+*/
 
 
 py::class_<SkImage, sk_sp<SkImage>, SkRefCnt> image(m, "Image",
@@ -273,6 +279,7 @@ py::class_<SkImage, sk_sp<SkImage>, SkRefCnt> image(m, "Image",
     )docstring",
     py::buffer_protocol());
 
+/*
 py::enum_<SkImage::CompressionType>(image, "CompressionType")
     .value("kNone", SkImage::CompressionType::kNone)
     .value("kETC2_RGB8_UNORM", SkImage::CompressionType::kETC2_RGB8_UNORM)
@@ -285,6 +292,7 @@ py::enum_<SkImage::BitDepth>(image, "BitDepth")
     .value("kU8", SkImage::BitDepth::kU8)
     .value("kF16", SkImage::BitDepth::kF16)
     .export_values();
+*/
 
 py::enum_<SkImage::CachingHint>(image, "CachingHint")
     .value("kAllow_CachingHint", SkImage::CachingHint::kAllow_CachingHint)
@@ -478,6 +486,7 @@ image
         py::arg("colorType") = kUnknown_SkColorType,
         py::arg("alphaType") = kUnknown_SkAlphaType,
         py::arg("colorSpace") = nullptr)
+/*
     .def("resize", &ImageResize,
         R"docstring(
         Creates :py:class:`Image` by scaling pixels to fit width and height.
@@ -506,6 +515,7 @@ image
         py::arg("width"), py::arg("height"),
         py::arg("filterQuality") = SkFilterQuality::kMedium_SkFilterQuality,
         py::arg("cachingHint") = SkImage::kAllow_CachingHint)
+*/
     .def("__repr__",
         [] (const SkImage& image) {
             return py::str("Image({}, {}, {}, {})").format(
@@ -624,6 +634,7 @@ image
         :return: created :py:class:`Image`, or nullptr
         )docstring",
         py::arg("encoded"), py::arg("alphaType") = std::nullopt)
+/*
     .def_static("MakeTextureFromCompressed",
         &SkImages::TextureFromCompressedTextureData,
         R"docstring(
@@ -651,6 +662,7 @@ image
         py::arg("height"), py::arg("type"),
         py::arg("mipMapped") = GrMipmapped::kNo,
         py::arg("isProtected") = GrProtected::kNo)
+*/
     .def_static("MakeRasterFromCompressed", &SkImages::RasterFromCompressedTextureData,
         R"docstring(
         Creates a CPU-backed :py:class:`Image` from compressed data.
@@ -666,6 +678,7 @@ image
         :return: created :py:class:`Image`, or nullptr
         )docstring",
         py::arg("data"), py::arg("width"), py::arg("height"), py::arg("type"))
+/*
     .def_static("MakeFromTexture",
         [] (GrRecordingContext* context, const GrBackendTexture& texture,
             GrSurfaceOrigin origin, SkColorType colorType,
@@ -1050,6 +1063,7 @@ image
         py::arg("context"), py::arg("yuvColorSpace"), py::arg("nv12Textures"),
         py::arg("imageOrigin"), py::arg("backendTexture"),
         py::arg("imageColorSpace") = nullptr)
+*/
     .def_static("MakeFromPicture",
         [] (sk_sp<SkPicture>& picture, const SkISize& dimensions,
             const SkMatrix* matrix, const SkPaint* paint,
@@ -1194,6 +1208,7 @@ image
         :return: true if :py:class:`AlphaType` is
             :py:attr:`~AlphaType.kOpaque_AlphaType`
         )docstring")
+/*
     .def("makeShader",
         py::overload_cast<SkTileMode, SkTileMode, const SkMatrix*>(
             &SkImage::makeShader, py::const_),
@@ -1213,6 +1228,7 @@ image
         )docstring",
         py::arg("tmx") = SkTileMode::kClamp,
         py::arg("tmy") = SkTileMode::kClamp, py::arg("localMatrix") = nullptr)
+*/
     // TODO: Other makeShader overloads.
     .def("peekPixels", &SkImage::peekPixels,
         R"docstring(
@@ -1252,6 +1268,7 @@ image
         :return: true if :py:class:`Image` can be drawn
         )docstring",
         py::arg("context") = nullptr)
+/*
     .def("flush",
         py::overload_cast<GrDirectContext*, const GrFlushInfo&>(&SkImage::flush),
         R"docstring(
@@ -1295,6 +1312,7 @@ image
         :return: back-end API texture handle; invalid on failure
         )docstring",
         py::arg("flushPendingGrContextIO"), py::arg("origin") = nullptr)
+*/
     .def("readPixels", &ImageReadPixels,
         R"docstring(
         Copies a :py:class:`Rect` of pixels from :py:class:`Image` to dst. Copy
@@ -1417,6 +1435,7 @@ image
     // .def("asyncRescaleAndReadPixels", &SkImage::asyncRescaleAndReadPixels)
     // .def("asyncRescaleAndReadPixelsYUV420",
     //      &SkImage::asyncRescaleAndReadPixelsYUV420)
+/*
     .def("scalePixels", &SkImage::scalePixels,
         R"docstring(
         Copies :py:class:`Image` to dst, scaling pixels to fit ``dst.width()``
@@ -1507,6 +1526,7 @@ image
 
         :return: encoded :py:class:`Image`, or nullptr
         )docstring")
+*/
     .def("refEncodedData", &SkImage::refEncodedData,
         R"docstring(
         Returns encoded :py:class:`Image` pixels as :py:class:`Data`, if
@@ -1519,6 +1539,7 @@ image
 
         :return: encoded :py:class:`Image`, or nullptr
         )docstring")
+/*
     .def("makeSubset", &SkImage::makeSubset,
         R"docstring(
         Returns subset of :py:class:`Image`.
@@ -1534,6 +1555,7 @@ image
         :return: partial or full :py:class:`Image`, or nullptr
         )docstring",
         py::arg("subset"), py::arg("direct") = nullptr)
+*/
     .def("hasMipmaps", &SkImage::hasMipmaps,
         R"docstring(
         Returns true if the image has mipmap levels.
@@ -1543,6 +1565,7 @@ image
         Returns an image with the same "base" pixels as the this image, but with
         mipmap levels automatically generated and attached.
         )docstring")
+/*
     .def("makeTextureImage", &SkImage::makeTextureImage,
         R"docstring(
         Returns :py:class:`Image` backed by GPU texture associated with context.
@@ -1572,6 +1595,7 @@ image
         )docstring",
         py::arg("context").none(false), py::arg("mipMapped") = GrMipmapped::kNo,
         py::arg("budgeted") = SkBudgeted::kYes)
+*/
     .def("makeNonTextureImage", &SkImage::makeNonTextureImage,
         R"docstring(
         Returns raster image or lazy image.
@@ -1584,6 +1608,7 @@ image
 
         :return: raster image, lazy image, or nullptr
         )docstring")
+/*
     .def("makeRasterImage", &SkImage::makeRasterImage,
         R"docstring(
         Returns raster image.
@@ -1603,6 +1628,7 @@ image
         :return: raster image, or nullptr
         )docstring",
         py::arg("cachingHint") = SkImage::kAllow_CachingHint)
+*/
     .def("makeWithFilter",
         py::overload_cast<GrRecordingContext*, const SkImageFilter*,
             const SkIRect&, const SkIRect&, SkIRect*, SkIPoint*>(
@@ -1644,6 +1670,7 @@ image
         py::arg("context"), py::arg("filter"), py::arg("subset"),
         py::arg("clipBounds"), py::arg("outSubset").none(false),
         py::arg("offset").none(false))
+/*
     .def_static("MakeBackendTextureFromImage",
         [] (GrDirectContext* context, sk_sp<SkImage>& image,
             GrBackendTexture* backendTexture) {
@@ -1672,6 +1699,7 @@ image
         :return: true if back-end texture was created
         )docstring",
         py::arg("context"), py::arg("image"), py::arg("backendTexture"))
+*/
     .def("asLegacyBitmap", &SkImage::asLegacyBitmap,
         R"docstring(
         Deprecated.

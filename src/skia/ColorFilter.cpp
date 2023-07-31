@@ -10,6 +10,7 @@ const int SkOverdrawColorFilter::kNumColors;
 
 namespace {
 
+/*
 py::object ColorFilterAsAColorMode(SkColorFilter& colorFilter) {
     SkColor color;
     SkBlendMode mode;
@@ -28,6 +29,7 @@ void CopyTableIfValid(py::object obj, std::vector<uint8_t>* table) {
         table->assign(v.begin(), v.end());
     }
 }
+*/
 
 }  // namespace
 
@@ -57,11 +59,14 @@ py::class_<SkColorFilter, sk_sp<SkColorFilter>, SkFlattenable> colorfilter(
         ~skia.TableColorFilter
     )docstring");
 
+/*
 py::enum_<SkColorFilter::Flags>(colorfilter, "Flags", py::arithmetic())
     .value("kAlphaUnchanged_Flag", SkColorFilter::kAlphaUnchanged_Flag)
     .export_values();
+*/
 
 colorfilter
+/*
     .def("asColorMode", &ColorFilterAsAColorMode)
     .def("asAColorMode", &ColorFilterAsAColorMode,
         R"docstring(
@@ -72,6 +77,7 @@ colorfilter
 
         :rtype: Tuple[int,skia.BlendMode] or None
         )docstring")
+*/
     .def("asAColorMatrix",
         [] (SkColorFilter& colorFilter) -> py::object {
             std::vector<float> matrix(20);
@@ -90,12 +96,14 @@ colorfilter
         )docstring")
     // .def("appendStages", &SkColorFilter::appendStages)
     // .def("program", &SkColorFilter::program)
+/*
     .def("getFlags", &SkColorFilter::getFlags,
         R"docstring(
         Returns the flags for this filter.
 
         Override in subclasses to return custom flags.
         )docstring")
+*/
     .def("filterColor", &SkColorFilter::filterColor, py::arg("color"))
     .def("filterColor4f", &SkColorFilter::filterColor4f,
         R"docstring(
@@ -116,6 +124,7 @@ colorfilter
         result = this(inner(...))
         )docstring",
         py::arg("inner"))
+/*
     .def_static("Deserialize",
         [] (py::buffer b) {
             auto info = b.request();
@@ -126,6 +135,7 @@ colorfilter
                 reinterpret_cast<SkColorFilter*>(flattenable.release()));
         },
         py::arg("data"))
+*/
     ;
 
 py::class_<SkColorMatrix>(m, "ColorMatrix")
@@ -134,6 +144,7 @@ py::class_<SkColorMatrix>(m, "ColorMatrix")
     ;
 
 py::class_<SkColorFilters>(m, "ColorFilters")
+/*
     .def_static("Compose",
         [] (const SkColorFilter& outer, const SkColorFilter& inner) {
             return SkColorFilters::Compose(
@@ -141,6 +152,7 @@ py::class_<SkColorFilters>(m, "ColorFilters")
                 CloneFlattenable<SkColorFilter>(inner));
         },
         py::arg("outer"), py::arg("inner"))
+*/
     .def_static("Blend", py::overload_cast<const SkColor4f&, sk_sp<SkColorSpace>,
         SkBlendMode>(&SkColorFilters::Blend),
         py::arg("c"), py::arg("colorspace"), py::arg("mode"))
@@ -276,6 +288,7 @@ py::class_<SkOverdrawColorFilter>(
     .def_readonly_static("kNumColors", &SkOverdrawColorFilter::kNumColors)
     ;
 
+/*
 py::class_<SkTableColorFilter>(
     m, "TableColorFilter")
     .def_static("Make",
@@ -319,5 +332,6 @@ py::class_<SkTableColorFilter>(
         py::arg("tableA"), py::arg("tableR"), py::arg("tableG"),
         py::arg("tableB"))
     ;
+*/
 
 }
