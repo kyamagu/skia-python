@@ -8,6 +8,7 @@
 #include <include/core/SkTextureCompressionType.h>
 
 #include <pybind11/numpy.h>
+#include <pybind11/stl.h> // std::nullopt needs this.
 
 namespace {
 
