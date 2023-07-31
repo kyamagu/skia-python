@@ -211,7 +211,10 @@ surface
         py::arg("colorType") = kUnknown_SkColorType,
         py::arg("alphaType") = kUnpremul_SkAlphaType,
         py::arg("colorSpace") = nullptr)
-    .def(py::init(&SkSurfaces::Raster),
+    .def(py::init(
+        [] (int width, int height, const SkSurfaceProps* surfaceProps) {
+            return SkSurfaces::Raster(SkImageInfo::MakeN32Premul(width, height), surfaceProps);
+        }),
         R"docstring(
         See :py:meth:`~MakeRasterN32Premul`
         )docstring",
@@ -941,7 +944,10 @@ surface
         )docstring",
         py::arg("imageInfo"), py::arg("rowBytes") = 0,
         py::arg("surfaceProps") = nullptr)
-    .def_static("MakeRasterN32Premul", &SkSurfaces::Raster,
+    .def_static("MakeRasterN32Premul",
+        [] (int width, int height, const SkSurfaceProps* surfaceProps) {
+            return SkSurfaces::Raster(SkImageInfo::MakeN32Premul(width, height), surfaceProps);
+        },
         R"docstring(
         Allocates raster :py:class:`Surface`.
 
