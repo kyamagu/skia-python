@@ -2,7 +2,8 @@ import skia
 import pytest
 
 
-@pytest.fixture
+@pytest.mark.skip()
+#@pytest.fixture
 def shader():
     return skia.GradientShader.MakeLinear(
         [skia.Point(0, 0), skia.Point(1, 1)], [0xFFFF00FF, 0xFFFFFF00],

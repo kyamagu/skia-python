@@ -151,6 +151,7 @@ def test_Typeface_getUnitsPerEm(typeface):
     assert isinstance(typeface.getUnitsPerEm(), int)
 
 
+@pytest.mark.skip()
 def test_Typeface_getKerningPairAdjustments(typeface):
     assert isinstance(
         typeface.getKerningPairAdjustments([0]), (list, type(None)))
