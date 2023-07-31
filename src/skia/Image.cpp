@@ -284,9 +284,9 @@ py::enum_<SkTextureCompressionType>(image, "CompressionType")
     .value("kLast", SkTextureCompressionType::kLast)
     .export_values();
 
-py::enum_<SkImage::BitDepth>(image, "BitDepth")
-    .value("kU8", SkImage::BitDepth::kU8)
-    .value("kF16", SkImage::BitDepth::kF16)
+py::enum_<SkImages::BitDepth>(image, "BitDepth")
+    .value("kU8", SkImages::BitDepth::kU8)
+    .value("kF16", SkImages::BitDepth::kF16)
     .export_values();
 
 py::enum_<SkImage::CachingHint>(image, "CachingHint")
