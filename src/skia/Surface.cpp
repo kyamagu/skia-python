@@ -1,6 +1,8 @@
 #include "common.h"
 #include <include/core/SkSurfaceCharacterization.h>
 #include <include/core/SkSurfaceProps.h>
+#include <include/gpu/GpuTypes.h>
+#include <include/gpu/ganesh/SkSurfaceGanesh.h>
 #include <pybind11/operators.h>
 #include <pybind11/numpy.h>
 
