@@ -851,6 +851,7 @@ path
             allocate
         )docstring",
         py::arg("extraPtCount"))
+// TODO: This was removed in m88
     .def("shrinkToFit", &SkPath::shrinkToFit,
         R"docstring(
         Shrinks :py:class:`Path` verb array and :py:class:`Point` array storage
