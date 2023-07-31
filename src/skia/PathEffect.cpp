@@ -231,7 +231,7 @@ patheffect
         If this method returns true, the caller will apply (as needed) the
         resulting stroke-rec to dst and then draw.
         )docstring",
-        py::arg("dst"), py::arg("dst"), py::arg("stroke_rec"), py::arg("cullR"))
+        py::arg("dst"), py::arg("src"), py::arg("stroke_rec"), py::arg("cullR"))
     .def("computeFastBounds", &SkPathEffect::computeFastBounds,
         R"docstring(
         Compute a conservative bounds for its effect, given the src bounds.
