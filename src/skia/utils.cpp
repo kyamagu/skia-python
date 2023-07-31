@@ -13,8 +13,7 @@ sk_sp<SkShader> CloneFlattenable(const SkShader& shader) {
 template <>
 sk_sp<SkColorFilter> CloneFlattenable(const SkColorFilter& colorFilter) {
     auto data = colorFilter.serialize();
-    auto flat = SkColorFilter::Deserialize(
-        colorFilter.getFlattenableType(), data->data(), data->size());
+    auto flat = colorFilter.Deserialize(data->data(), data->size());
     return sk_sp<SkColorFilter>(
         reinterpret_cast<SkColorFilter*>(flat.release()));
 }
