@@ -2,6 +2,7 @@
 #include <include/codec/SkEncodedImageFormat.h>
 #include <include/core/SkSamplingOptions.h>
 #include <include/gpu/GrBackendSurface.h>
+#include <include/gpu/GpuTypes.h>
 #include <include/encode/SkJpegEncoder.h>
 #include <include/encode/SkPngEncoder.h>
 #include <include/encode/SkWebpEncoder.h>
@@ -178,11 +179,11 @@ sk_sp<SkImage> ImageResize(
 }  // namespace
 
 void initImage(py::module &m) {
-py::enum_<SkBudgeted>(m, "Budgeted", R"docstring(
+py::enum_<skgpu::Budgeted>(m, "Budgeted", R"docstring(
     Indicates whether an allocation should count against a cache budget.
     )docstring")
-    .value("kNo", SkBudgeted::kNo)
-    .value("kYes", SkBudgeted::kYes)
+    .value("kNo", skgpu::Budgeted::kNo)
+    .value("kYes", skgpu::Budgeted::kYes)
     .export_values();
 
 py::enum_<SkFilterQuality>(m, "FilterQuality",
