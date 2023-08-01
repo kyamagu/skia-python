@@ -1,5 +1,6 @@
 #include "common.h"
 #include <include/codec/SkEncodedImageFormat.h>
+#include <include/core/SkSamplingOptions.h>
 #include <include/gpu/GrBackendSurface.h>
 #include <include/encode/SkJpegEncoder.h>
 #include <include/encode/SkPngEncoder.h>
