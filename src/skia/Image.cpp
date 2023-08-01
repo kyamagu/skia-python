@@ -1465,7 +1465,7 @@ image
         :return: true if pixels are scaled to fit dst
         )docstring",
         py::arg("dst"),
-        py::arg("filterQuality") = SkFilterQuality::kMedium_SkFilterQuality,
+        py::arg("samplingOptions") = SkSamplingOptions(),
         py::arg("cachingHint") = SkImage::kAllow_CachingHint)
     .def("encodeToData",
         py::overload_cast<SkEncodedImageFormat, int>(
