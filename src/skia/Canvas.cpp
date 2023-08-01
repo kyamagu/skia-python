@@ -1863,7 +1863,11 @@ canvas
     // .def("drawImageNine",
     //     py::overload_cast<const sk_sp<SkImage>&, const SkIRect&,
     //         const SkRect&, const SkPaint*>(&SkCanvas::drawImageNine))
-    .def("drawBitmap", &SkCanvas::drawBitmap,
+    .def("drawBitmap",
+         [] (SkCanvas &self, const SkBitmap& bitmap, SkScalar left, SkScalar top,
+             const SkPaint* paint) {
+                 return self.drawImage(bitmap.asImage(), left, top, SkSamplingOptions(), paint);
+         },
         R"docstring(
         Draws :py:class:`Bitmap` bitmap, with its top-left corner at (left,
         top), using clip, :py:class:`Matrix`, and optional :py:class:`Paint`
@@ -1891,9 +1895,11 @@ canvas
         py::arg("bitmap"), py::arg("left"), py::arg("top"),
         py::arg("paint") = nullptr)
     .def("drawBitmapRect",
-        py::overload_cast<const SkBitmap&, const SkRect&, const SkRect&,
-            const SkPaint*, SkCanvas::SrcRectConstraint>(
-                &SkCanvas::drawBitmapRect),
+        [] (SkCanvas &self, const SkBitmap& bitmap, const SkRect& src, const SkRect& dst,
+            const SkPaint* paint,
+            SkCanvas::SrcRectConstraint constraint) {
+                return self.drawImageRect(bitmap.asImage(), src, dst, SkSamplingOptions(), paint, constraint);
+         },
         R"docstring(
         Draws :py:class:`Rect` src of :py:class:`Bitmap` bitmap, scaled and
         translated to fill :py:class:`Rect` dst.
@@ -1929,9 +1935,11 @@ canvas
         py::arg("paint") = nullptr, py::arg("constraint") =
             SkCanvas::SrcRectConstraint::kStrict_SrcRectConstraint)
     .def("drawBitmapRect",
-        py::overload_cast<const SkBitmap&, const SkIRect&, const SkRect&,
-            const SkPaint*, SkCanvas::SrcRectConstraint>(
-                &SkCanvas::drawBitmapRect),
+        [] (SkCanvas &self, const SkBitmap& bitmap, const SkRect& src, const SkRect& dst,
+            const SkPaint* paint,
+            SkCanvas::SrcRectConstraint constraint) {
+                return self.drawImageRect(bitmap.asImage(), src, dst, SkSamplingOptions(), paint, constraint);
+        },
         R"docstring(
         Draws :py:class:`IRect` isrc of :py:class:`Bitmap` bitmap, scaled and
         translated to fill :py:class:`Rect` dst.
@@ -1967,8 +1975,10 @@ canvas
         py::arg("paint") = nullptr, py::arg("constraint") =
             SkCanvas::SrcRectConstraint::kStrict_SrcRectConstraint)
     .def("drawBitmapRect",
-        py::overload_cast<const SkBitmap&, const SkRect&, const SkPaint*,
-            SkCanvas::SrcRectConstraint>(&SkCanvas::drawBitmapRect),
+        [] (SkCanvas &self, const SkBitmap& bitmap, const SkRect& dst, const SkPaint* paint,
+            SkCanvas::SrcRectConstraint constraint) {
+                return self.drawImageRect(bitmap.asImage(), dst, SkSamplingOptions(), paint); // ignore constraint
+        },
         R"docstring(
         Draws :py:class:`Bitmap` bitmap, scaled and translated to fill
         :py:class:`Rect` dst.
