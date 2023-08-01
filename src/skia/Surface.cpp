@@ -156,15 +156,15 @@ py::enum_<SkSurface::ContentChangeMode>(surface, "ContentChangeMode")
         "preserves surface on change")
     .export_values();
 
-py::enum_<SkSurface::BackendHandleAccess>(surface, "BackendHandleAccess")
+py::enum_<SkSurfaces::BackendHandleAccess>(surface, "BackendHandleAccess")
     .value("kFlushRead_BackendHandleAccess",
-        SkSurface::BackendHandleAccess::kFlushRead_BackendHandleAccess,
+        SkSurfaces::BackendHandleAccess::kFlushRead,
         "back-end object is readable")
     .value("kFlushWrite_BackendHandleAccess",
-        SkSurface::BackendHandleAccess::kFlushWrite_BackendHandleAccess,
+        SkSurfaces::BackendHandleAccess::kFlushWrite,
         "back-end object is writable")
     .value("kDiscardWrite_BackendHandleAccess",
-        SkSurface::BackendHandleAccess::kDiscardWrite_BackendHandleAccess,
+        SkSurfaces::BackendHandleAccess::kDiscardWrite,
         "back-end object must be overwritten")
     .export_values();
 
@@ -297,7 +297,7 @@ surface
         :return: GPU context, if available; nullptr otherwise
         )docstring",
         py::return_value_policy::reference_internal)
-    .def("getBackendTexture", &SkSurface::getBackendTexture,
+    .def("getBackendTexture", &SkSurfaces::GetBackendTexture,
         R"docstring(
         Retrieves the back-end texture.
 
@@ -311,7 +311,7 @@ surface
         :return: GPU texture reference; invalid on failure
         )docstring",
         py::arg("backendHandleAccess"))
-    .def("getBackendRenderTarget", &SkSurface::getBackendRenderTarget,
+    .def("getBackendRenderTarget", &SkSurfaces::GetBackendRenderTarget,
         R"docstring(
         Retrieves the back-end render target.
 
