@@ -1498,7 +1498,13 @@ image
         )docstring",
         py::arg("encodedImageFormat"), py::arg("quality"))
     .def("encodeToData",
-        py::overload_cast<>(&SkImage::encodeToData, py::const_),
+        [] (SkImage& image) {
+            sk_sp<SkData> data = image.refEncodedData();
+            if (!data) {
+                data = SkPngEncoder::Encode(nullptr, &image, {});
+            }
+            return data;
+        },
         R"docstring(
         Encodes :py:class:`Image` pixels, returning result as :py:class:`Data`.
 
