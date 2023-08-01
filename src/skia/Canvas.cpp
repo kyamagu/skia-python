@@ -1665,7 +1665,7 @@ canvas
             nullptr
         )docstring",
         py::arg("image"), py::arg("left"), py::arg("top"),
-        py::arg("sampling") = SkSamplingOptions(),
+        py::arg("options") = SkSamplingOptions(),
         py::arg("paint") = nullptr)
     // .def("drawImage",
     //     py::overload_cast<const sk_sp<SkImage>&, SkScalar, SkScalar,
@@ -1714,7 +1714,7 @@ canvas
         :constraint: filter strictly within src or draw faster
         )docstring",
         py::arg("image"), py::arg("src"), py::arg("dst"),
-        py::arg("sampling") = SkSamplingOptions(),
+        py::arg("options") = SkSamplingOptions(),
         py::arg("paint") = nullptr, py::arg("constraint") =
             SkCanvas::SrcRectConstraint::kStrict_SrcRectConstraint)
     .def("drawImageRect",
@@ -1759,7 +1759,7 @@ canvas
         :constraint: filter strictly within isrc or draw faster
         )docstring",
         py::arg("image"), py::arg("isrc"), py::arg("dst"),
-        py::arg("sampling") = SkSamplingOptions(),
+        py::arg("options") = SkSamplingOptions(),
         py::arg("paint") = nullptr, py::arg("constraint") =
             SkCanvas::SrcRectConstraint::kStrict_SrcRectConstraint)
     .def("drawImageRect",
@@ -2272,7 +2272,7 @@ canvas
             const std::vector<SkRSXform>& xform,
             const std::vector<SkRect>& tex,
             const std::vector<SkColor>& colors,
-            SkBlendMode mode, const SkRect* cullRect, const SkPaint* paint) {
+            SkBlendMode mode, SkSamplingOptions& options, const SkRect* cullRect, const SkPaint* paint) {
             if (xform.size() != tex.size())
                 throw std::runtime_error(
                     "xform and tex must have the same length.");
@@ -2281,7 +2281,7 @@ canvas
                     "colors must have the same length with xform.");
             canvas.drawAtlas(atlas, &xform[0], &tex[0],
                 (colors.empty()) ? nullptr : &colors[0],
-                xform.size(), mode, cullRect, paint);
+                xform.size(), mode, options, cullRect, paint);
         },
         R"docstring(
         Draws a set of sprites from atlas, using clip, :py:class:`Matrix`, and
@@ -2317,7 +2317,7 @@ canvas
             `None`
         )docstring",
         py::arg("atlas"), py::arg("xform"), py::arg("tex"), py::arg("colors"),
-        py::arg("mode"), py::arg("cullRect") = nullptr,
+        py::arg("mode"), py::arg("options") = SkSamplingOptions(), py::arg("cullRect") = nullptr,
         py::arg("paint") = nullptr)
     // .def("drawAtlas",
     //     py::overload_cast<const sk_sp<SkImage>&, const SkRSXform[],
