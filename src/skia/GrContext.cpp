@@ -1161,6 +1161,8 @@ py::class_<GrDirectContext, sk_sp<GrDirectContext>, GrRecordingContext>(m, "GrCo
         )docstring")
     ;
 
+m.attr("GrDirectContext") = m.attr("GrContext");
+
 initGrContext_gl(m);
 initGrContext_vk(m);
 initGrContext_mock(m);
