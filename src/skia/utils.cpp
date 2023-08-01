@@ -1,4 +1,5 @@
 #include "common.h"
+#include <include/encode/SkPngEncoder.h>
 #include <pybind11/numpy.h>
 
 
@@ -26,8 +27,8 @@ sk_sp<SkColorSpace> CloneColorSpace(const SkColorSpace* cs) {
 sk_sp<SkImage> CloneImage(const SkImage& image) {
     SkPixmap pixmap;
     if (image.peekPixels(&pixmap))
-        return SkImage::MakeRasterCopy(pixmap);
-    return SkImage::MakeFromEncoded(image.encodeToData());
+        return SkImages::RasterFromPixmapCopy(pixmap);
+    return SkImages::DeferredFromEncodedData(SkPngEncoder::Encode(nullptr, &image, {}));
 }
 
 size_t ValidateBufferToImageInfo(
