@@ -319,7 +319,7 @@ def test_Canvas_drawPath(canvas):
 
 @pytest.mark.parametrize('args', [
     (0, 0),
-    (0, 0, skia.Paint()),
+    (0, 0, skia.SamplingOptions(), skia.Paint()),
 ])
 def test_Canvas_drawImage(canvas, image, args):
     canvas.drawImage(image, *args)
@@ -327,15 +327,15 @@ def test_Canvas_drawImage(canvas, image, args):
 
 @pytest.mark.parametrize('args', [
     (skia.Rect(100, 100), skia.Rect(100, 100)),
-    (skia.Rect(100, 100), skia.Rect(100, 100), skia.Paint()),
-    (skia.Rect(100, 100), skia.Rect(100, 100), skia.Paint(),
+    (skia.Rect(100, 100), skia.Rect(100, 100), skia.SamplingOptions(), skia.Paint()),
+    (skia.Rect(100, 100), skia.Rect(100, 100), skia.SamplingOptions(), skia.Paint(),
         skia.Canvas.kStrict_SrcRectConstraint),
     (skia.IRect(100, 100), skia.Rect(100, 100)),
-    (skia.IRect(100, 100), skia.Rect(100, 100), skia.Paint()),
-    (skia.IRect(100, 100), skia.Rect(100, 100), skia.Paint(),
+    (skia.IRect(100, 100), skia.Rect(100, 100), skia.SamplingOptions(), skia.Paint()),
+    (skia.IRect(100, 100), skia.Rect(100, 100), skia.SamplingOptions(), skia.Paint(),
         skia.Canvas.kStrict_SrcRectConstraint),
     (skia.Rect(100, 100),),
-    (skia.Rect(100, 100), skia.Paint()),
+    (skia.Rect(100, 100), skia.SamplingOptions(), skia.Paint()),
 ])
 def test_Canvas_drawImageRect(canvas, image, args):
     canvas.drawImageRect(image, *args)
