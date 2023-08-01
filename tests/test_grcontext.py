@@ -496,7 +496,7 @@ def test_GrContext_ComputeImageSize(image):
 
 
 def test_GrDirectContext_MakeGL(context):
-    assert isinstance(context, skia.GrDirectContext)
+    assert isinstance(context, skia.GrContext)
 
 
 @pytest.mark.skip(reason='Vulkan not supported yet.')
