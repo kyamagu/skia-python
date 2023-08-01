@@ -5,6 +5,7 @@
 #include <include/encode/SkJpegEncoder.h>
 #include <include/encode/SkPngEncoder.h>
 #include <include/encode/SkWebpEncoder.h>
+#include <include/core/SkTextureCompressionType.h>
 
 #include <pybind11/numpy.h>
 
@@ -274,12 +275,12 @@ py::class_<SkImage, sk_sp<SkImage>, SkRefCnt> image(m, "Image",
     )docstring",
     py::buffer_protocol());
 
-py::enum_<SkImage::CompressionType>(image, "CompressionType")
-    .value("kNone", SkImage::CompressionType::kNone)
-    .value("kETC2_RGB8_UNORM", SkImage::CompressionType::kETC2_RGB8_UNORM)
-    .value("kBC1_RGB8_UNORM", SkImage::CompressionType::kBC1_RGB8_UNORM)
-    .value("kBC1_RGBA8_UNORM", SkImage::CompressionType::kBC1_RGBA8_UNORM)
-    .value("kLast", SkImage::CompressionType::kLast)
+py::enum_<SkTextureCompressionType>(image, "CompressionType")
+    .value("kNone", SkTextureCompressionType::kNone)
+    .value("kETC2_RGB8_UNORM", SkTextureCompressionType::kETC2_RGB8_UNORM)
+    .value("kBC1_RGB8_UNORM", SkTextureCompressionType::kBC1_RGB8_UNORM)
+    .value("kBC1_RGBA8_UNORM", SkTextureCompressionType::kBC1_RGBA8_UNORM)
+    .value("kLast", SkTextureCompressionType::kLast)
     .export_values();
 
 py::enum_<SkImage::BitDepth>(image, "BitDepth")
