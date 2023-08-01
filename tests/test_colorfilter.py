@@ -35,6 +35,7 @@ def test_ColorFilter_filterColor4f(colorfilter):
         skia.Color4f)
 
 
+@pytest.mark.skip(reason='TableColorFilter class removed in m116')
 def test_ColorFilter_makeComposed(colorfilter):
     assert isinstance(colorfilter.makeComposed(
         skia.TableColorFilter.Make(range(256))), skia.ColorFilter)
@@ -103,6 +104,7 @@ def test_OverdrawColorFilter_MakeWithColors():
         skia.ColorFilter)
 
 
+@pytest.mark.skip(reason='TableColorFilter class removed in m116')
 def test_TableColorFilter_Make():
     assert isinstance(skia.TableColorFilter.Make(range(256)), skia.ColorFilter)
 
@@ -111,5 +113,6 @@ def test_TableColorFilter_Make():
     (range(256), range(256), range(256), range(256)),
     (range(256), None, None, None),
 ])
+@pytest.mark.skip(reason='TableColorFilter class removed in m116')
 def test_TableColorFilter_MakeARGB(args):
     assert isinstance(skia.TableColorFilter.MakeARGB(*args), skia.ColorFilter)
