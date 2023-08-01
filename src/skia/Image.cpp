@@ -1468,8 +1468,44 @@ image
         py::arg("samplingOptions") = SkSamplingOptions(),
         py::arg("cachingHint") = SkImage::kAllow_CachingHint)
     .def("encodeToData",
-        py::overload_cast<SkEncodedImageFormat, int>(
-            &SkImage::encodeToData, py::const_),
+        [] (SkImage& image, SkEncodedImageFormat format, int quality) {
+            sk_sp<SkData> data = image.refEncodedData();
+            switch (format) {
+            case SkEncodedImageFormat::kWEBP:
+                {
+                SkWebpEncoder::Options options;
+                if (quality < 100) {
+                    options.fCompression = SkWebpEncoder::Compression::kLossy;
+                    options.fQuality = quality;
+                } else {
+                    options.fCompression = SkWebpEncoder::Compression::kLossless;
+                    // in lossless mode, this is effort. 70 is the default effort in SkImageEncoder,
+                    // which follows Blink and WebPConfigInit.
+                    options.fQuality = 70;
+                }
+                data = SkWebpEncoder::Encode(nullptr, &image, options);
+                }
+                break;
+
+            case SkEncodedImageFormat::kJPEG:
+                {
+                SkJpegEncoder::Options options;
+                options.fQuality = quality;
+                data = SkJpegEncoder::Encode(nullptr, &image, options);
+                }
+                break;
+
+            case SkEncodedImageFormat::kPNG:
+            default:
+                {
+                SkPngEncoder::Options options; // Not used
+                data = SkPngEncoder::Encode(nullptr, &image, {});
+                }
+                break;
+            }
+            auto decoded = SkImages::DeferredFromEncodedData(data);
+            return data;
+        },
         R"docstring(
         Encodes :py:class:`Image` pixels, returning result as :py:class:`Data`.
 
