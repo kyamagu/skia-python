@@ -282,6 +282,7 @@ def test_Path_incReserve(path):
     path.incReserve(0)
 
 
+@pytest.mark.skip(reason='Method made private in m88')
 def test_Path_shrinkToFit(path):
     path.shrinkToFit()
 
