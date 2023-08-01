@@ -192,11 +192,11 @@ py::class_<SkPDF::AttributeList>(pdf, "AttributeList")
         py::arg("owner"), py::arg("name"), py::arg("value"))
     .def("appendFloat", &SkPDF::AttributeList::appendFloat,
         py::arg("owner"), py::arg("name"), py::arg("value"))
-    .def("appendString", &SkPDF::AttributeList::appendString,
+    .def("appendString", &SkPDF::AttributeList::appendName,
         py::arg("owner"), py::arg("name"), py::arg("value"))
     .def("appendFloatArray", &SkPDF::AttributeList::appendFloatArray,
         py::arg("owner"), py::arg("name"), py::arg("value"))
-    .def("appendStringArray", &SkPDF::AttributeList::appendStringArray,
+    .def("appendStringArray", &SkPDF::AttributeList::appendNodeIdArray,
         py::arg("owner"), py::arg("name"), py::arg("value"))
     ;
 
