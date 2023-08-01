@@ -567,9 +567,9 @@ surface
     .def("asyncRescaleAndReadPixels",
         [] (SkSurface& surface, const SkImageInfo& info, const SkIRect& srcRect,
             SkSurface::RescaleGamma rescaleGamma,
-            SkFilterQuality rescaleQuality, py::function callback) {
+            py::function callback) {
             surface.asyncRescaleAndReadPixels(
-                info, srcRect, rescaleGamma, rescaleQuality,
+                info, srcRect, rescaleGamma, SkSurface::RescaleMode(),
                 &PyReadPixelsCallback, callback.release().ptr());
         },
         R"docstring(
@@ -609,7 +609,7 @@ surface
             takes one argument of :py:class:`Surface.AsyncReadResult`
         )docstring",
         py::arg("info"), py::arg("srcRect"), py::arg("rescaleGamma"),
-        py::arg("rescaleQuality"), py::arg("callback"))
+        py::arg("callback"))
     .def("asyncRescaleAndReadPixelsYUV420",
         [] (SkSurface& surface, SkYUVColorSpace yuvColorSpace,
             const SkColorSpace* dstColorSpace, const SkIRect& srcRect,
