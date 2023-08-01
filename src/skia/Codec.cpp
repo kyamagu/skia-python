@@ -321,13 +321,14 @@ codec
         Returns a textual representation of :py:class:`Codec.Result`
         )docstring",
         py::arg("result"))
-    /* .def_static("MakeFromStream",
-        [] (std::unique_ptr<SkStream>,
+    /*.def_static(
+            "MakeFromStream",
+        [] (std::unique_ptr<SkStream> stream,
             SkCodec::SelectionPolicy selectionPolicy) {
 
             SkCodec::Result result;
             auto codec = SkCodec::MakeFromStream(
-                stream, result, nullptr, selectionPolicy);
+                std::move(stream), &result, nullptr, selectionPolicy);
             if (result != SkCodec::kSuccess)
                 throw std::runtime_error(SkCodec::ResultToString(result));
             return codec;
@@ -371,7 +372,7 @@ codec
         with it.
         )docstring",
         py::arg("stream"),
-        py::arg("selectionPolicy") = SelectionPolicy::kPreferStillImage) */
+        py::arg("selectionPolicy") = SkCodec::SelectionPolicy::kPreferStillImage)*/
     .def_static("MakeFromData", &MakeFromData,
         R"docstring(
         If this data represents an encoded image that we know how to decode,

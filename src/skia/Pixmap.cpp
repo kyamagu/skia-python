@@ -30,8 +30,8 @@ py::memoryview Addr(const SkPixmap& pixmap) {
 const int SkYUVAPixmapInfo::kMaxPlanes;
 const int SkYUVAPixmapInfo::kDataTypeCnt;
 const int SkYUVAPixmaps::kMaxPlanes;
-const int SkYUVAIndex::kIndexCount;
-const int SkYUVASizeInfo::kMaxCount;
+// const int SkYUVAIndex::kIndexCount;
+// const int SkYUVASizeInfo::kMaxCount;
 
 void initPixmap(py::module &m) {
 py::class_<SkPixmap>(m, "Pixmap",
@@ -575,6 +575,7 @@ py::class_<SkPixmap>(m, "Pixmap",
         :return: true if pixels are copied to dst
         )docstring",
         py::arg("dst"), py::arg("srcX") = 0, py::arg("srcY") = 0)
+            /*todo
     .def("scalePixels", &SkPixmap::scalePixels,
         R"docstring(
         Copies :py:class:`Pixmap` to dst, scaling pixels to fit ``dst.width()``
@@ -617,6 +618,7 @@ py::class_<SkPixmap>(m, "Pixmap",
         )docstring",
         py::arg("dst"),
         py::arg("filterQuality") = SkFilterQuality::kMedium_SkFilterQuality)
+    */
     .def("erase",
         py::overload_cast<const SkColor4f&, const SkIRect*>(
             &SkPixmap::erase, py::const_),
@@ -921,18 +923,19 @@ py::class_<SkYUVAPixmaps>(m, "YUVAPixmaps",
         invalid.
         )docstring",
         py::arg("i"))
+        /*todo
     .def("toLegacy",
         [] (const SkYUVAPixmaps& self) {
             SkYUVASizeInfo info;
             std::vector<SkYUVAIndex> indices(SkYUVAPixmaps::kMaxPlanes);
-            self.toLegacy(&info, indices.data());
+            self.toYUVALocations(&info, indices.data());
             return py::make_tuple(info, indices);
         },
         R"docstring(
         Conversion to legacy SkYUVA data structures.
-        )docstring")
+        )docstring")*/
     ;
-
+/*todo: SkYUVALocation ?
 py::class_<SkYUVAIndex> yuvaindex(m, "YUVAIndex");
 
 py::enum_<SkYUVAIndex::Index>(yuvaindex, "Index")
@@ -1035,5 +1038,5 @@ py::class_<SkYUVASizeInfo>(m, "YUVASizeInfo")
     .def("computeTotalBytes", &SkYUVASizeInfo::computeTotalBytes)
     // .def("computePlanes", &SkYUVASizeInfo)
     ;
-
+    */
 }

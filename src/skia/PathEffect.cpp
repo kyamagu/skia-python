@@ -152,8 +152,8 @@ py::class_<SkPathEffect::DashInfo>(patheffect, "DashInfo")
         Offset into the dashed interval pattern.
         )docstring")
     ;
-
-py::class_<SkPathEffect::PointData> pointdata(patheffect, "PointData",
+/*
+    py::class_<SkPathEffect::PointData> pointdata(patheffect, "PointData",
     R"docstring(
     :py:class:`PointData` aggregates all the information needed to draw the
     point primitives returned by an asPoints call.
@@ -168,7 +168,6 @@ py::enum_<SkPathEffect::PointData::PointFlags>(
     .value("kUseClip_PointFlag",
         SkPathEffect::PointData::PointFlags::kUseClip_PointFlag)
     .export_values();
-
 pointdata
     .def(py::init<>())
     .def_readonly("fFlags", &SkPathEffect::PointData::fFlags)
@@ -184,6 +183,7 @@ pointdata
     .def_readonly("fFirst", &SkPathEffect::PointData::fFirst)
     .def_readonly("fLast", &SkPathEffect::PointData::fLast)
     ;
+    */
 
 py::enum_<SkPathEffect::DashType>(patheffect, "DashType",
     R"docstring(
@@ -207,7 +207,7 @@ py::enum_<SkPathEffect::DashType>(patheffect, "DashType",
     .export_values();
 
 patheffect
-    .def("filterPath", &SkPathEffect::filterPath,
+    /*.def("filterPath", &SkPathEffect::filterPath,
         R"docstring(
         Given a src path (input) and a stroke-rec (input and output), apply this
         effect to the src path, returning the new path in dst, and return true.
@@ -238,7 +238,7 @@ patheffect
         optionally return the points in 'results'.
         )docstring",
         py::arg("results"), py::arg("src"), py::arg("stroke_rec"),
-        py::arg("matrix"), py::arg("cullR"))
+        py::arg("matrix"), py::arg("cullR"))*/
     .def("asADash", &SkPathEffect::asADash, py::arg("info"))
     .def_static("MakeSum",
         [] (const SkPathEffect& first, const SkPathEffect& second) {
@@ -270,7 +270,7 @@ patheffect
         result = outer(inner(path))
         )docstring",
         py::arg("outer"), py::arg("inner"))
-    .def_static("RegisterFlattenables", &SkPathEffect::RegisterFlattenables)
+//    .def_static("RegisterFlattenables", &SkPathEffect::RegisterFlattenables)
     .def_static("GetFlattenableType", &SkPathEffect::GetFlattenableType)
     .def_static("Deserialize",
         [] (py::buffer b) {
@@ -281,7 +281,7 @@ patheffect
         py::arg("data"))
     ;
 
-py::class_<SkDiscretePathEffect, SkPathEffect, sk_sp<SkDiscretePathEffect>>(
+py::class_<SkDiscretePathEffect>(
     m, "DiscretePathEffect")
     .def_static("Make", &SkDiscretePathEffect::Make,
         R"docstring(
@@ -327,7 +327,7 @@ py::class_<SkDashPathEffect>(m, "DashPathEffect")
         py::arg("intervals"), py::arg("phase"))
     ;
 
-py::class_<SkCornerPathEffect, SkPathEffect, sk_sp<SkCornerPathEffect>>(
+py::class_<SkCornerPathEffect>(
     m, "CornerPathEffect",
     R"docstring(
     :py:class:`CornerPathEffect` is a subclass of :py:class:`PathEffect` that
@@ -342,7 +342,7 @@ py::class_<SkCornerPathEffect, SkPathEffect, sk_sp<SkCornerPathEffect>>(
         py::arg("radius"))
     ;
 
-py::class_<SkPath1DPathEffect, SkPathEffect, sk_sp<SkPath1DPathEffect>>
+py::class_<SkPath1DPathEffect>
     path1dpatheffect(m, "Path1DPathEffect");
 
 py::enum_<SkPath1DPathEffect::Style>(path1dpatheffect, "Style")
@@ -368,13 +368,13 @@ path1dpatheffect
         py::arg("path"), py::arg("advance"), py::arg("phase"), py::arg("style"))
     ;
 
-py::class_<SkLine2DPathEffect, SkPathEffect, sk_sp<SkLine2DPathEffect>>(
+py::class_<SkLine2DPathEffect>(
     m, "Line2DPathEffect")
     .def_static("Make", &SkLine2DPathEffect::Make,
         py::arg("width"), py::arg("matrix"))
     ;
 
-py::class_<SkPath2DPathEffect, SkPathEffect, sk_sp<SkPath2DPathEffect>>(
+py::class_<SkPath2DPathEffect>(
     m, "Path2DPathEffect")
     .def_static("Make", &SkPath2DPathEffect::Make,
         R"docstring(

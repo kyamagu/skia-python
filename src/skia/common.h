@@ -1,6 +1,7 @@
 #ifndef _COMMON_H_
 #define _COMMON_H_
 
+#define NOMINMAX
 #include <pybind11/pybind11.h>
 #include <skia.h>
 #include <sstream>

@@ -731,7 +731,7 @@ bitmap
 
         Subsequent calls to :py:meth:`getGenerationID` return a different value.
         )docstring")
-    .def("eraseColor", &SkBitmap::eraseColor,
+        /*.def("eraseColor", &SkBitmap::eraseColor,
         R"docstring(
         Replaces pixel values with c, interpreted as being in the sRGB
         :py:class:`ColorSpace`.
@@ -744,7 +744,7 @@ bitmap
 
         :param int c: unpremultiplied color
         )docstring",
-        py::arg("c"))
+        py::arg("c"))*/
     .def("eraseARGB", &SkBitmap::eraseARGB,
         R"docstring(
         Replaces pixel values with unpremultiplied color built from a, r, g, and
@@ -763,7 +763,7 @@ bitmap
         :param int b: amount of blue, from no blue (0) to full blue (255)
         )docstring",
         py::arg("a"), py::arg("r"), py::arg("g"), py::arg("b"))
-    .def("erase", &SkBitmap::erase,
+    /*.def("erase", &SkBitmap::erase,
         R"docstring(
         Replaces pixel values inside area with c.
 
@@ -778,7 +778,7 @@ bitmap
         :param int c: unpremultiplied color
         :param skia.IRect area: rectangle to fill
         )docstring",
-        py::arg("c"), py::arg("area"))
+        py::arg("c"), py::arg("area"))*/
     .def("getColor", &SkBitmap::getColor,
         R"docstring(
         Returns pixel at (x, y) as unpremultiplied color.
@@ -1013,11 +1013,11 @@ bitmap
         :return: true if :py:class:`Bitmap` has direct access to pixels
         )docstring",
         py::arg("pixmap"))
-    .def("makeShader",
+    /*.def("makeShader",
         py::overload_cast<SkTileMode, SkTileMode, const SkMatrix*>(
             &SkBitmap::makeShader, py::const_),
         py::arg("tmx") = SkTileMode::kClamp,
-        py::arg("tmy") = SkTileMode::kClamp, py::arg("localMatrix") = nullptr)
+        py::arg("tmy") = SkTileMode::kClamp, py::arg("localMatrix") = nullptr)*/
     ;
 
 

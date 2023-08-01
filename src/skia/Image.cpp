@@ -1,6 +1,8 @@
 #include "common.h"
 #include <pybind11/numpy.h>
 
+#include <include/core/SkImage.h>
+
 namespace {
 
 bool ImageReadPixels(
@@ -119,7 +121,10 @@ sk_sp<SkImage> ImageConvert(
 }
 
 sk_sp<SkImage> ImageResize(
-    const SkImage& image, int width, int height, SkFilterQuality filterQuality,
+    const SkImage& image, 
+    int width, 
+    int height, 
+    SkSamplingOptions samplingOptions,
     SkImage::CachingHint cachingHint) {
     auto imageInfo = image.imageInfo().makeWH(width, height);
     auto buffer = SkData::MakeUninitialized(imageInfo.computeMinByteSize());
@@ -127,7 +132,7 @@ sk_sp<SkImage> ImageResize(
         throw std::bad_alloc();
     auto pixmap = SkPixmap(
         imageInfo, buffer->writable_data(), imageInfo.minRowBytes());
-    if (!image.scalePixels(pixmap, filterQuality, cachingHint))
+    if (!image.scalePixels(pixmap, samplingOptions, cachingHint))
         throw std::runtime_error("Failed to resize image.");
     return SkImage::MakeRasterData(imageInfo, buffer, imageInfo.minRowBytes());
 }
@@ -142,7 +147,7 @@ py::enum_<SkBudgeted>(m, "Budgeted", R"docstring(
     .value("kYes", SkBudgeted::kYes)
     .export_values();
 
-py::enum_<SkFilterQuality>(m, "FilterQuality",
+/* py::enum_<SkFilterQuality>(m, "FilterQuality",
     R"docstring(
     Controls how much filtering to be done when scaling/transforming complex
     colors e.g. image.
@@ -157,6 +162,7 @@ py::enum_<SkFilterQuality>(m, "FilterQuality",
         "slowest but highest quality, typically bicubic or better")
     .value("kLast_FilterQuality", SkFilterQuality::kLast_SkFilterQuality)
     .export_values();
+*/
 
 py::enum_<SkEncodedImageFormat>(m, "EncodedImageFormat", R"docstring(
     Enum describing format of encoded data.
@@ -175,8 +181,8 @@ py::enum_<SkEncodedImageFormat>(m, "EncodedImageFormat", R"docstring(
     .value("kHEIF", SkEncodedImageFormat::kHEIF)
     .export_values();
 
-
-py::class_<SkMipmapBuilder>(m, "MipmapBuilder")
+/*
+        py::class_<SkMipmapBuilder>(m, "MipmapBuilder")
     .def(py::init<const SkImageInfo&>())
     .def("countLevels", &SkMipmapBuilder::countLevels)
     .def("level", &SkMipmapBuilder::level)
@@ -189,6 +195,7 @@ py::class_<SkMipmapBuilder>(m, "MipmapBuilder")
         If not compatible, this returns nullptr.
         )docstring")
     ;
+    */
 
 
 py::class_<SkImage, sk_sp<SkImage>, SkRefCnt> image(m, "Image",
@@ -459,12 +466,12 @@ image
 
         :param int width: target width
         :param int height: target height
-        :param skia.FilterQuality filterQuality: Filter quality
+        :param skia.SamplingOptions sampling: sampling options
         :param skia.Image.CachingHint cachingHint: Caching hint
         :return: :py:class:`Image`
         )docstring",
         py::arg("width"), py::arg("height"),
-        py::arg("filterQuality") = SkFilterQuality::kMedium_SkFilterQuality,
+        py::arg("sampling") = SkSamplingOptions(),
         py::arg("cachingHint") = SkImage::kAllow_CachingHint)
     .def("__repr__",
         [] (const SkImage& image) {
@@ -568,7 +575,7 @@ image
         py::arg("bitmap"))
     // .def_static("MakeFromGenerator", &SkImage::MakeFromGenerator,
     //     "Creates SkImage from data returned by imageGenerator.")
-    .def_static("MakeFromEncoded", &SkImage::MakeFromEncoded,
+    /*todo .def_static("MakeFromEncoded", &SkImage::MakeFromEncoded,
         R"docstring(
         Return an image backed by the encoded data, but attempt to defer
         decoding until the image is actually used/drawn.
@@ -583,7 +590,9 @@ image
         :param encoded: the encoded data
         :return: created :py:class:`Image`, or nullptr
         )docstring",
-        py::arg("encoded"))
+        py::arg("encoded"), 
+        py::arg("alphaType")=std::nullopt)
+    */
     .def_static("MakeTextureFromCompressed",
         &SkImage::MakeTextureFromCompressed,
         R"docstring(
@@ -626,7 +635,8 @@ image
         :return: created :py:class:`Image`, or nullptr
         )docstring",
         py::arg("data"), py::arg("width"), py::arg("height"), py::arg("type"))
-    .def_static("MakeFromTexture",
+    .def_static(
+            "MakeFromTexture",
         [] (GrRecordingContext* context, const GrBackendTexture& texture,
             GrSurfaceOrigin origin, SkColorType colorType,
             SkAlphaType alphaType, const SkColorSpace* cs) {
@@ -650,7 +660,8 @@ image
         py::arg("context"), py::arg("texture"), py::arg("origin"),
         py::arg("colorType"), py::arg("alphaType"),
         py::arg("colorSpace") = nullptr)
-    .def_static("MakeFromCompressedTexture",
+    .def_static(
+            "MakeFromCompressedTexture",
         [] (GrRecordingContext* context, const GrBackendTexture& texture,
             GrSurfaceOrigin origin, SkAlphaType alphaType,
             const SkColorSpace* cs) {
@@ -715,11 +726,16 @@ image
             texture size, if necessary
         :return: created :py:class:`Image`, or nullptr
         )docstring",
-        py::arg("context"), py::arg("pixmap"), py::arg("buildMips"),
+        py::arg("context"), 
+        py::arg("pixmap"), 
+        py::arg("buildMips"),
         py::arg("limitToMaxTextureSize") = false)
-    .def_static("MakeFromAdoptedTexture",
-        [] (GrRecordingContext* context, const GrBackendTexture& backendTexture,
-            GrSurfaceOrigin origin, SkColorType colorType,
+    .def_static(
+            "MakeFromAdoptedTexture",
+        [] (GrRecordingContext* context, 
+            const GrBackendTexture& backendTexture,
+            GrSurfaceOrigin origin, 
+            SkColorType colorType,
             SkAlphaType alphaType, const SkColorSpace* colorSpace) {
             return SkImage::MakeFromAdoptedTexture(
                 context, backendTexture, origin, colorType, alphaType,
@@ -739,82 +755,15 @@ image
         :param skia.ColorSpace colorSpace: range of colors; may be nullptr
         :return: created :py:class:`Image`, or nullptr
         )docstring",
-        py::arg("context"), py::arg("backendTexture"), py::arg("origin"),
+        py::arg("context"), 
+        py::arg("backendTexture"), 
+        py::arg("origin"),
         py::arg("colorType"),
         py::arg("alphaType") = SkAlphaType::kPremul_SkAlphaType,
         py::arg("colorSpace") = nullptr)
-    .def_static("MakeFromYUVATexturesCopy",
-        [] (GrRecordingContext* context,
-            SkYUVColorSpace yuvColorSpace,
-            const std::vector<GrBackendTexture>& yuvaTextures,
-            const std::vector<SkYUVAIndex>& yuvaIndices,
-            SkISize imageSize,
-            GrSurfaceOrigin imageOrigin,
-            const SkColorSpace* imageColorSpace) {
-            if (yuvaIndices.size() != 4)
-                throw py::value_error("yuvaIndices must have 4 elements.");
-            return SkImage::MakeFromYUVATexturesCopy(
-                context, yuvColorSpace, yuvaTextures.data(), yuvaIndices.data(),
-                imageSize, imageOrigin, CloneColorSpace(imageColorSpace));
-        },
-        R"docstring(
-        Creates an :py:class:`Image` by flattening the specified YUVA planes
-        into a single, interleaved RGBA image.
+    /*todo .def_static("MakeFromYUVATextures",
+        [] (GrDirectContext* context,
 
-        :param context:         GPU context
-        :param yuvColorSpace:   How the YUV values are converted to RGB
-        :param yuvaTextures:    array of (up to four) YUVA textures on GPU which
-            contain the, possibly interleaved, YUVA planes
-        :param yuvaIndices:     array indicating which texture in yuvaTextures,
-            and channel in that texture, maps to each component of YUVA.
-        :param imageSize:       size of the resulting image
-        :param imageOrigin:     origin of the resulting image.
-        :param imageColorSpace: range of colors of the resulting image; may be
-            nullptr
-        :return:                created :py:class:`Image`, or nullptr
-        )docstring",
-        py::arg("context"), py::arg("yuvColorSpace"), py::arg("yuvaTextures"),
-        py::arg("yuvaIndices"), py::arg("imageSize"), py::arg("imageOrigin"),
-        py::arg("imageColorSpace") = nullptr)
-    .def_static("MakeFromYUVATexturesCopyWithExternalBackend",
-        [] (GrRecordingContext* context,
-            SkYUVColorSpace yuvColorSpace,
-            const std::vector<GrBackendTexture>& yuvaTextures,
-            const std::vector<SkYUVAIndex>& yuvaIndices,
-            SkISize imageSize,
-            GrSurfaceOrigin imageOrigin,
-            const GrBackendTexture& backendTexture,
-            const SkColorSpace* imageColorSpace) {
-            if (yuvaIndices.size() != 4)
-                throw py::value_error("yuvaIndices must have 4 elements.");
-            return SkImage::MakeFromYUVATexturesCopyWithExternalBackend(
-                context, yuvColorSpace, yuvaTextures.data(), yuvaIndices.data(),
-                imageSize, imageOrigin, backendTexture,
-                CloneColorSpace(imageColorSpace), nullptr, nullptr);
-        },
-        R"docstring(
-        Creates an :py:class:`Image` by flattening the specified YUVA planes
-        into a single, interleaved RGBA image. 'backendTexture' is used to store
-        the result of the flattening.
-
-        :param context:         GPU context
-        :param yuvColorSpace:   How the YUV values are converted to RGB
-        :param yuvaTextures:    array of (up to four) YUVA textures on GPU which
-            contain the, possibly interleaved, YUVA planes
-        :param yuvaIndices:     array indicating which texture in yuvaTextures,
-            and channel in that texture, maps to each component of YUVA.
-        :param imageSize:       size of the resulting image
-        :param imageOrigin:     origin of the resulting image.
-        :param backendTexture:  the resource that stores the final pixels
-        :param imageColorSpace: range of colors of the resulting image; may be
-            nullptr
-        :return:                created :py:class:`Image`, or nullptr
-        )docstring",
-        py::arg("context"), py::arg("yuvColorSpace"), py::arg("yuvaTextures"),
-        py::arg("yuvaIndices"), py::arg("imageSize"), py::arg("imageOrigin"),
-        py::arg("backendTexture"), py::arg("imageColorSpace") = nullptr)
-    .def_static("MakeFromYUVATextures",
-        [] (GrContext* context,
             SkYUVColorSpace yuvColorSpace,
             const std::vector<GrBackendTexture>& yuvaTextures,
             const std::vector<SkYUVAIndex>& yuvaIndices,
@@ -850,23 +799,9 @@ image
         py::arg("context"), py::arg("yuvColorSpace"), py::arg("yuvaTextures"),
         py::arg("yuvaIndices"), py::arg("imageSize"), py::arg("imageOrigin"),
         py::arg("imageColorSpace") = nullptr)
-    .def_static("MakeFromYUVAPixmaps",
-        [] (GrRecordingContext* context,
-            SkYUVColorSpace yuvColorSpace,
-            const std::vector<SkPixmap>& yuvaPixmaps,
-            const std::vector<SkYUVAIndex>& yuvaIndices,
-            SkISize imageSize,
-            GrSurfaceOrigin imageOrigin,
-            bool buildMips,
-            bool limitToMaxTextureSize,
-            const SkColorSpace* imageColorSpace) {
-            if (yuvaIndices.size() != 4)
-                throw py::value_error("yuvaIndices must have 4 elements.");
-            return SkImage::MakeFromYUVAPixmaps(
-                context, yuvColorSpace, yuvaPixmaps.data(), yuvaIndices.data(),
-                imageSize, imageOrigin, buildMips, limitToMaxTextureSize,
-                CloneColorSpace(imageColorSpace));
-        },
+    */
+    .def_static("MakeFromYUVAPixmaps",SkImage::MakeFromYUVAPixmaps
+        ,
         R"docstring(
         Creates :py:class:`Image` from pixmap array representing YUVA data.
         :py:class:`Image` is uploaded to GPU back-end using context.
@@ -882,13 +817,7 @@ image
         back-end.
 
         :param context:               GPU context
-        :param yuvColorSpace:         How the YUV values are converted to RGB
         :param yuvaPixmaps:           array of (up to four) :py:class:`Pixmap`
-                                      which contain the, possibly interleaved,
-                                      YUVA planes
-        :param yuvaIndices:           array indicating which pixmap in
-                                      yuvaPixmaps, and channel in that pixmap,
-                                      maps to each component of YUVA.
         :param imageSize:             size of the resulting image
         :param imageOrigin:           origin of the resulting image.
         :param buildMips:             create internal YUVA textures as mip map
@@ -899,9 +828,9 @@ image
                                       may be nullptr
         :return:                      created :py:class:`Image`, or nullptr
         )docstring",
-        py::arg("context"), py::arg("yuvaPixmaps"), py::arg("yuvaTextures"),
-        py::arg("yuvaIndices"), py::arg("imageSize"), py::arg("imageOrigin"),
-        py::arg("buildMips"), py::arg("limitToMaxTextureSize") = false,
+        py::arg("context"), py::arg("pixmaps"), 
+        py::arg("buildMips") = GrMipmapped::kNo,
+        py::arg("limitToMaxTextureSize") = false,
         py::arg("imageColorSpace") = nullptr)
     .def_static("MakeFromYUVAPixmaps",
         [] (GrRecordingContext* context,
@@ -949,8 +878,9 @@ image
         py::arg("buildMips") = GrMipmapped::kNo,
         py::arg("limitToMaxTextureSize") = false,
         py::arg("imageColorSpace") = nullptr)
-    .def_static("MakeFromNV12TexturesCopy",
-        [] (GrContext* context,
+    /*todo.def_static(
+            "MakeFromNV12TexturesCopy",
+        [] (GrDirectContext* context,
             SkYUVColorSpace yuvColorSpace,
             const std::vector<GrBackendTexture>& nv12Textures,
             GrSurfaceOrigin imageOrigin,
@@ -977,8 +907,8 @@ image
         )docstring",
         py::arg("context"), py::arg("yuvColorSpace"), py::arg("nv12Textures"),
         py::arg("imageOrigin"), py::arg("imageColorSpace") = nullptr)
-    .def_static("MakeFromNV12TexturesCopyWithExternalBackend",
-        [] (GrContext* context,
+        .def_static("MakeFromNV12TexturesCopyWithExternalBackend",
+        [] (GrDirectContext* context,
             SkYUVColorSpace yuvColorSpace,
             const std::vector<GrBackendTexture>& nv12Textures,
             GrSurfaceOrigin imageOrigin,
@@ -1010,6 +940,7 @@ image
         py::arg("context"), py::arg("yuvColorSpace"), py::arg("nv12Textures"),
         py::arg("imageOrigin"), py::arg("backendTexture"),
         py::arg("imageColorSpace") = nullptr)
+        */
     .def_static("MakeFromPicture",
         [] (sk_sp<SkPicture>& picture, const SkISize& dimensions,
             const SkMatrix* matrix, const SkPaint* paint,
@@ -1155,7 +1086,7 @@ image
             :py:attr:`~AlphaType.kOpaque_AlphaType`
         )docstring")
     .def("makeShader",
-        py::overload_cast<SkTileMode, SkTileMode, const SkMatrix*>(
+        py::overload_cast<SkTileMode, SkTileMode, const SkSamplingOptions&, const SkMatrix*>(
             &SkImage::makeShader, py::const_),
         R"docstring(
         Creates :py:class:`Shader` from :py:class:`Image`.
@@ -1172,7 +1103,9 @@ image
         :return: :py:class:`Shader` containing :py:class:`Image`
         )docstring",
         py::arg("tmx") = SkTileMode::kClamp,
-        py::arg("tmy") = SkTileMode::kClamp, py::arg("localMatrix") = nullptr)
+        py::arg("tmy") = SkTileMode::kClamp, 
+        py::arg("sampling") = SkSamplingOptions(),
+        py::arg("localMatrix") = nullptr)
     // TODO: Other makeShader overloads.
     .def("peekPixels", &SkImage::peekPixels,
         R"docstring(
@@ -1212,7 +1145,7 @@ image
         :return: true if :py:class:`Image` can be drawn
         )docstring",
         py::arg("context") = nullptr)
-    .def("flush",
+        /*.def("flush",
         py::overload_cast<GrDirectContext*, const GrFlushInfo&>(&SkImage::flush),
         R"docstring(
         Flushes any pending uses of texture-backed images in the GPU backend. If
@@ -1232,7 +1165,8 @@ image
         )
     .def("flush",
         py::overload_cast<GrDirectContext*>(&SkImage::flush),
-        py::arg("context").none(false))
+        py::arg("context"))
+        */
     .def("flushAndSubmit", &SkImage::flushAndSubmit,
         R"docstring(
         Version of :py:meth:`flush` that uses a default GrFlushInfo.
@@ -1421,7 +1355,7 @@ image
         :return: true if pixels are scaled to fit dst
         )docstring",
         py::arg("dst"),
-        py::arg("filterQuality") = SkFilterQuality::kMedium_SkFilterQuality,
+        py::arg("samplingOptions") = SkSamplingOptions(),
         py::arg("cachingHint") = SkImage::kAllow_CachingHint)
     .def("encodeToData",
         py::overload_cast<SkEncodedImageFormat, int>(

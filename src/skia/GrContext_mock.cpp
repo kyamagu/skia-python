@@ -1,6 +1,6 @@
 #include "common.h"
 
-void initGrContext_mock(py::module &m) {
+void initGrDirectContext_mock(py::module &m) {
 
 py::class_<GrMockTextureInfo>(m, "GrMockTextureInfo")
     .def(py::init<>())

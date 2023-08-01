@@ -119,10 +119,10 @@ py::enum_<SkCanvas::SaveLayerFlagsSet>(
     .value("kInitWithPrevious_SaveLayerFlag",
         SkCanvas::SaveLayerFlagsSet::kInitWithPrevious_SaveLayerFlag,
         "initializes with previous contents")
-    .value("kMaskAgainstCoverage_EXPERIMENTAL_DONT_USE_SaveLayerFlag",
+        /*.value("kMaskAgainstCoverage_EXPERIMENTAL_DONT_USE_SaveLayerFlag",
         SkCanvas::SaveLayerFlagsSet::
         kMaskAgainstCoverage_EXPERIMENTAL_DONT_USE_SaveLayerFlag,
-        "experimental: do not use")
+        "experimental: do not use")*/
     .value("kF16ColorType",
         SkCanvas::SaveLayerFlagsSet::kF16ColorType)
     .export_values();
@@ -251,7 +251,6 @@ lattice
         array of colors
         )docstring")
     ;
-
 canvas
     .def("__repr__",
         [] (const SkCanvas& canvas) {
@@ -264,7 +263,7 @@ canvas
         Creates an empty :py:class:`Canvas` with no backing device or pixels,
         with a width and height of zero.
         )docstring")
-    .def(py::init(
+/*    .def(py::init(
         [] (py::array array, SkColorType ct, SkAlphaType at,
             const SkColorSpace* cs, const SkSurfaceProps *surfaceProps) {
             auto imageInfo = NumPyToImageInfo(array, ct, at, cs);
@@ -491,6 +490,7 @@ canvas
         :return: true if :py:class:`Canvas` has direct access to pixels
         )docstring",
         py::arg("pixmap"))
+        */
     .def("readPixels", &ReadPixels<SkCanvas>,
         R"docstring(
         Copies :py:class:`Rect` of pixels from :py:class:`Canvas` into
@@ -793,11 +793,11 @@ canvas
         :return: depth of saved stack
         )docstring",
         py::arg("bounds") = nullptr, py::arg("paint") = nullptr)
-    // .def("saveLayer",
-    //     py::overload_cast<const SkRect&, const SkPaint*>(
-    //         &SkCanvas::saveLayer),
-    //     "Saves SkMatrix and clip, and allocates a SkBitmap for subsequent "
-    //     "drawing.")
+    .def("saveLayer",
+        py::overload_cast<const SkRect&, const SkPaint*>(
+        &SkCanvas::saveLayer),
+        "Saves SkMatrix and clip, and allocates a SkBitmap for subsequent "
+        "drawing.")
     .def("saveLayerAlpha", &SkCanvas::saveLayerAlpha,
         R"docstring(
         Saves :py:class:`Matrix` and clip, and allocates a :py:class:`Bitmap`
@@ -981,7 +981,7 @@ canvas
         py::arg("matrix"))
     .def("concat", py::overload_cast<const SkM44&>(&SkCanvas::concat),
         py::arg("m44"))
-    .def("setMatrix", &SkCanvas::setMatrix,
+    .def("setMatrix", py::overload_cast<const SkMatrix&>(&SkCanvas::setMatrix),
         R"docstring(
         Replaces :py:class:`Matrix` with matrix.
 
@@ -1634,8 +1634,7 @@ canvas
         )docstring",
         py::arg("path"), py::arg("paint"))
     .def("drawImage",
-        py::overload_cast<const SkImage*, SkScalar, SkScalar,
-            const SkPaint*>(&SkCanvas::drawImage),
+        py::overload_cast<const SkImage*, SkScalar, SkScalar, SkSamplingOptions const&, const SkPaint*>(&SkCanvas::drawImage),
         R"docstring(
         Draws :py:class:`Image` image, with its top-left corner at (left, top),
         using clip, :py:class:`Matrix`, and optional :py:class:`Paint` paint.
@@ -1651,15 +1650,15 @@ canvas
             nullptr
         )docstring",
         py::arg("image"), py::arg("left"), py::arg("top"),
+        py::arg("sampling") = SkSamplingOptions(),
         py::arg("paint") = nullptr)
-    // .def("drawImage",
-    //     py::overload_cast<const sk_sp<SkImage>&, SkScalar, SkScalar,
-    //         const SkPaint*>(&SkCanvas::drawImage),
-    //     py::arg("image"), py::arg("left"), py::arg("top"),
-    //     py::arg("paint") = nullptr)
+    .def("drawImage",
+        py::overload_cast<const sk_sp<SkImage>&, SkScalar, SkScalar, SkSamplingOptions const&, const SkPaint*>(&SkCanvas::drawImage),
+        py::arg("image"), py::arg("left"), py::arg("top"),
+        py::arg("sampling"),
+        py::arg("paint") = nullptr)
     .def("drawImageRect",
-        py::overload_cast<const SkImage*, const SkRect&, const SkRect&,
-            const SkPaint*, SkCanvas::SrcRectConstraint>(
+            py::overload_cast<const SkImage*, const SkRect&, const SkRect&, SkSamplingOptions const&, const SkPaint*, SkCanvas::SrcRectConstraint>(
                 &SkCanvas::drawImageRect),
         R"docstring(
         Draws :py:class:`Rect` src of :py:class:`Image` image, scaled and
@@ -1699,11 +1698,12 @@ canvas
         :constraint: filter strictly within src or draw faster
         )docstring",
         py::arg("image"), py::arg("src"), py::arg("dst"),
+        py::arg("sampling") = SkSamplingOptions(),
         py::arg("paint") = nullptr, py::arg("constraint") =
             SkCanvas::SrcRectConstraint::kStrict_SrcRectConstraint)
     .def("drawImageRect",
-        py::overload_cast<const SkImage*, const SkIRect&, const SkRect&,
-            const SkPaint*, SkCanvas::SrcRectConstraint>(
+        py::overload_cast<const SkImage*, const SkRect &, const SkRect &,
+            const SkSamplingOptions&, const SkPaint*, SkCanvas::SrcRectConstraint>(
             &SkCanvas::drawImageRect),
         R"docstring(
         Draws :py:class:`IRect` isrc of :py:class:`Image` image, scaled and
@@ -1743,10 +1743,11 @@ canvas
         :constraint: filter strictly within isrc or draw faster
         )docstring",
         py::arg("image"), py::arg("isrc"), py::arg("dst"),
+        py::arg("sampling") = SkSamplingOptions(),
         py::arg("paint") = nullptr, py::arg("constraint") =
             SkCanvas::SrcRectConstraint::kStrict_SrcRectConstraint)
-    .def("drawImageRect",
-        py::overload_cast<const SkImage*, const SkRect&, const SkPaint*>(
+        .def("drawImageRect",
+            py::overload_cast<const SkImage*, const SkRect&, const SkSamplingOptions&, const SkPaint*>(
             &SkCanvas::drawImageRect),
         R"docstring(
         Draws :py:class:`Image` image, scaled and translated to fill
@@ -1776,31 +1777,34 @@ canvas
             nullptr
         :constraint: filter strictly within src or draw faster
         )docstring",
-        py::arg("image"), py::arg("dst"), py::arg("paint") = nullptr)
-    // .def("drawImageRect",
-    //     py::overload_cast<const sk_sp<SkImage>&, const SkRect&, const SkRect&,
-    //         const SkPaint*, SkCanvas::SrcRectConstraint>(
-    //         &SkCanvas::drawImageRect),
-    //     "Draws SkRect src of SkImage image, scaled and translated to fill "
-    //     "SkRect dst.",
-    //     py::arg("image"), py::arg("src"), py::arg("dst"), py::arg("paint"),
-    //     py::arg("constraint") =
-    //         SkCanvas::SrcRectConstraint::kStrict_SrcRectConstraint)
-    // .def("drawImageRect",
-    //     py::overload_cast<const sk_sp<SkImage>&, const SkIRect&,
-    //         const SkRect&, const SkPaint*, SkCanvas::SrcRectConstraint))
-    //     &SkCanvas::drawImageRect,
-    //     "Draws SkIRect isrc of SkImage image, scaled and translated to fill "
-    //     "SkRect dst.",
-    //     py::arg("image"), py::arg("isrc"), py::arg("dst"), py::arg("paint"),
-    //     py::arg("constraint") =
-    //         SkCanvas::SrcRectConstraint::kStrict_SrcRectConstraint)
-    // .def("drawImageRect",
-    //     py::overload_cast<const sk_sp<SkImage>&, const SkRect&,
-    //         const SkPaint*>(&SkCanvas::drawImageRect),
-    //     "Draws SkImage image, scaled and translated to fill SkRect dst, using "
-    //     "clip, SkMatrix, and optional SkPaint paint.")
-    .def("drawImageNine",
+        py::arg("image"), py::arg("dst"), py::arg("sampling") = SkSamplingOptions(), py::arg("paint") = nullptr)
+     .def("drawImageRect",
+         py::overload_cast<const sk_sp<SkImage>&, const SkRect&, const SkRect&,
+            const SkSamplingOptions &,
+             const SkPaint*, SkCanvas::SrcRectConstraint>(
+             &SkCanvas::drawImageRect),
+         "Draws SkRect src of SkImage image, scaled and translated to fill "
+         "SkRect dst.",
+         py::arg("image"), py::arg("src"), py::arg("dst"), 
+         py::arg("sampling") = SkSamplingOptions(), py::arg("paint") = nullptr,
+         py::arg("constraint") =
+             SkCanvas::SrcRectConstraint::kStrict_SrcRectConstraint)
+    /* todo .def("drawImageRect",
+        py::overload_cast<const sk_sp<SkImage> &, const SkRect &, const SkRect &,
+            const SkSamplingOptions &, const SkPaint *,
+            SrcRectConstraint>(&SkCanvas::drawImageRect),
+         "Draws SkIRect isrc of SkImage image, scaled and translated to fill "
+         "SkRect dst.",
+         py::arg("image"), py::arg("isrc"), py::arg("dst"), 
+         py::arg("sampling"), py::arg("paint"),
+         py::arg("constraint") =
+             SkCanvas::SrcRectConstraint::kStrict_SrcRectConstraint)
+             */
+     .def("drawImageRect",
+         py::overload_cast<const sk_sp<SkImage>&, const SkRect&, const SkSamplingOptions&, const SkPaint*>(&SkCanvas::drawImageRect),
+         "Draws SkImage image, scaled and translated to fill SkRect dst, using "
+         "clip, SkMatrix, and optional SkPaint paint.")
+        /*.def("drawImageNine",
         py::overload_cast<const SkImage*, const SkIRect&, const SkRect&,
             const SkPaint*>(&SkCanvas::drawImageNine),
         R"docstring(
@@ -1846,146 +1850,7 @@ canvas
     // .def("drawImageNine",
     //     py::overload_cast<const sk_sp<SkImage>&, const SkIRect&,
     //         const SkRect&, const SkPaint*>(&SkCanvas::drawImageNine))
-    .def("drawBitmap", &SkCanvas::drawBitmap,
-        R"docstring(
-        Draws :py:class:`Bitmap` bitmap, with its top-left corner at (left,
-        top), using clip, :py:class:`Matrix`, and optional :py:class:`Paint`
-        paint.
-
-        If :py:class:`Paint` paint is not nullptr, apply
-        :py:class:`ColorFilter`, alpha, :py:class:`ImageFilter`,
-        :py:class:`BlendMode`, and :py:class:`DrawLooper`. If bitmap is
-        :py:attr:`ColorType.kAlpha_8_ColorType`, apply :py:class:`Shader`. If
-        paint contains :py:class:`MaskFilter`, generate mask from bitmap bounds.
-
-        If generated mask extends beyond bitmap bounds, replicate bitmap edge
-        colors, just as :py:class:`Shader` made from
-        :py:meth:`Shader.MakeBitmapShader` with :py:attr:`TileMode.kClamp` set
-        replicates the bitmap edge color when it samples outside of its bounds.
-
-        :param skia.Bitmap bitmap:  :py:class:`Bitmap` containing pixels,
-            dimensions, and format
-        :param left: left side of bitmap
-        :param top: top side of bitmap
-        :param paint: :py:class:`Paint` containing :py:class:`BlendMode`,
-            :py:class:`ColorFilter`, :py:class:`ImageFilter`, and so on; or
-            nullptr
-        )docstring",
-        py::arg("bitmap"), py::arg("left"), py::arg("top"),
-        py::arg("paint") = nullptr)
-    .def("drawBitmapRect",
-        py::overload_cast<const SkBitmap&, const SkRect&, const SkRect&,
-            const SkPaint*, SkCanvas::SrcRectConstraint>(
-                &SkCanvas::drawBitmapRect),
-        R"docstring(
-        Draws :py:class:`Rect` src of :py:class:`Bitmap` bitmap, scaled and
-        translated to fill :py:class:`Rect` dst.
-
-        Additionally transform draw using clip, :py:class:`Matrix`, and optional
-        :py:class:`Paint` paint.
-
-        If :py:class:`Paint` paint is supplied, apply :py:class:`ColorFilter`,
-        alpha, :py:class:`ImageFilter`, :py:class:`BlendMode`,
-        and :py:class:`DrawLooper`. If bitmap is
-        :py:attr:`ColorType.kAlpha_8_ColorType`, apply :py:class:`Shader`. If
-        paint contains :py:class:`MaskFilter`, generate mask from bitmap bounds.
-
-        If generated mask extends beyond bitmap bounds, replicate bitmap edge
-        colors, just as :py:class:`Shader` made from
-        :py:meth:`Shader.MakeBitmapShader` with :py:attr:`TileMode.kClamp` set
-        replicates the bitmap edge color when it samples outside of its bounds.
-
-        constraint set to :py:attr:`kStrict_SrcRectConstraint` limits
-        :py:class:`Paint` :py:class:`FilterQuality` to sample within src; set to
-        :py:attr:`kFast_SrcRectConstraint` allows sampling outside to improve
-        performance.
-
-        :bitmap: :py:class:`Bitmap` containing pixels, dimensions, and format
-        :src: source :py:class:`Rect` of image to draw from
-        :dst: destination :py:class:`Rect` of image to draw to
-        :paint: :py:class:`Paint` containing :py:class:`BlendMode`,
-            :py:class:`ColorFilter`, :py:class:`ImageFilter`, and so on; or
-            nullptr
-        :constraint: filter strictly within src or draw faster
-        )docstring",
-        py::arg("bitmap"), py::arg("src"), py::arg("dst"),
-        py::arg("paint") = nullptr, py::arg("constraint") =
-            SkCanvas::SrcRectConstraint::kStrict_SrcRectConstraint)
-    .def("drawBitmapRect",
-        py::overload_cast<const SkBitmap&, const SkIRect&, const SkRect&,
-            const SkPaint*, SkCanvas::SrcRectConstraint>(
-                &SkCanvas::drawBitmapRect),
-        R"docstring(
-        Draws :py:class:`IRect` isrc of :py:class:`Bitmap` bitmap, scaled and
-        translated to fill :py:class:`Rect` dst.
-
-        Additionally transform draw using clip, :py:class:`Matrix`, and optional
-        :py:class:`Paint` paint.
-
-        If :py:class:`Paint` paint is supplied, apply :py:class:`ColorFilter`,
-        alpha, :py:class:`ImageFilter`, :py:class:`BlendMode`,
-        and :py:class:`DrawLooper`. If bitmap is
-        :py:attr:`ColorType.kAlpha_8_ColorType`, apply :py:class:`Shader`. If
-        paint contains :py:class:`MaskFilter`, generate mask from bitmap bounds.
-
-        If generated mask extends beyond bitmap bounds, replicate bitmap edge
-        colors, just as :py:class:`Shader` made from
-        :py:meth:`Shader.MakeBitmapShader` with :py:attr:`TileMode.kClamp` set
-        replicates the bitmap edge color when it samples outside of its bounds.
-
-        constraint set to :py:attr:`kStrict_SrcRectConstraint` limits
-        :py:class:`Paint` :py:class:`FilterQuality` to sample within isrc; set
-        to :py:attr:`kFast_SrcRectConstraint` allows sampling outside to improve
-        performance.
-
-        :bitmap: :py:class:`Bitmap` containing pixels, dimensions, and format
-        :isrc: source :py:class:`IRect` of image to draw from
-        :dst: destination :py:class:`Rect` of image to draw to
-        :paint: :py:class:`Paint` containing :py:class:`BlendMode`,
-            :py:class:`ColorFilter`, :py:class:`ImageFilter`, and so on; or
-            nullptr
-        :constraint: filter strictly within isrc or draw faster
-        )docstring",
-        py::arg("bitmap"), py::arg("isrc"), py::arg("dst"),
-        py::arg("paint") = nullptr, py::arg("constraint") =
-            SkCanvas::SrcRectConstraint::kStrict_SrcRectConstraint)
-    .def("drawBitmapRect",
-        py::overload_cast<const SkBitmap&, const SkRect&, const SkPaint*,
-            SkCanvas::SrcRectConstraint>(&SkCanvas::drawBitmapRect),
-        R"docstring(
-        Draws :py:class:`Bitmap` bitmap, scaled and translated to fill
-        :py:class:`Rect` dst.
-
-        bitmap bounds is on integer pixel boundaries; dst may include fractional
-        boundaries. Additionally transform draw using clip, :py:class:`Matrix`,
-        and optional :py:class:`Paint` paint.
-
-        If :py:class:`Paint` paint is supplied, apply :py:class:`ColorFilter`,
-        alpha, :py:class:`ImageFilter`, :py:class:`BlendMode`,
-        and :py:class:`DrawLooper`. If bitmap is
-        :py:attr:`ColorType.kAlpha_8_ColorType`, apply :py:class:`Shader`. If
-        paint contains :py:class:`MaskFilter`, generate mask from bitmap bounds.
-
-        If generated mask extends beyond bitmap bounds, replicate bitmap edge
-        colors, just as :py:class:`Shader` made from
-        :py:meth:`Shader.MakeBitmapShader` with :py:attr:`TileMode.kClamp` set
-        replicates the bitmap edge color when it samples outside of its bounds.
-
-        constraint set to :py:attr:`kStrict_SrcRectConstraint` limits
-        :py:class:`Paint` :py:class:`FilterQuality` to sample within isrc; set
-        to :py:attr:`kFast_SrcRectConstraint` allows sampling outside to improve
-        performance.
-
-        :bitmap: :py:class:`Bitmap` containing pixels, dimensions, and format
-        :dst: destination :py:class:`Rect` of image to draw to
-        :paint: :py:class:`Paint` containing :py:class:`BlendMode`,
-            :py:class:`ColorFilter`, :py:class:`ImageFilter`, and so on; or
-            nullptr
-        :constraint: filter strictly within bitmap or draw faster
-        )docstring",
-        py::arg("bitmap"), py::arg("dst"), py::arg("paint") = nullptr,
-        py::arg("constraint") =
-            SkCanvas::SrcRectConstraint::kStrict_SrcRectConstraint)
+    */
     // .def("drawImageLattice", &SkCanvas::drawImageLattice,
     //     "Draws SkImage image stretched proportionally to fit into SkRect dst.")
     // .def("experimental_DrawEdgeAAQuad",
@@ -2108,16 +1973,16 @@ canvas
         :param skia.Paint paint: blend, color, stroking, and so on, used to draw
         )docstring",
         py::arg("blob"), py::arg("x"), py::arg("y"), py::arg("paint"))
-    // .def("drawTextBlob",
-    //     py::overload_cast<const sk_sp<SkTextBlob>&, SkScalar, SkScalar,
-    //         const SkPaint&>(&SkCanvas::drawTextBlob),
-    //     "Draws SkTextBlob blob at (x, y), using clip, SkMatrix, and SkPaint "
-    //     "paint.")
-    // .def("drawPicture",
-    //     py::overload_cast<const SkPicture*>(&SkCanvas::drawPicture))
-    // .def("drawPicture",
-    //     py::overload_cast<const sk_sp<SkPicture>&>(&SkCanvas::drawPicture),
-    //     "Draws SkPicture picture, using clip and SkMatrix.")
+     .def("drawTextBlob",
+         py::overload_cast<const sk_sp<SkTextBlob>&, SkScalar, SkScalar,
+             const SkPaint&>(&SkCanvas::drawTextBlob),
+         "Draws SkTextBlob blob at (x, y), using clip, SkMatrix, and SkPaint "
+         "paint.")
+     .def("drawPicture",
+         py::overload_cast<const SkPicture*>(&SkCanvas::drawPicture))
+     .def("drawPicture",
+         py::overload_cast<const sk_sp<SkPicture>&>(&SkCanvas::drawPicture),
+         "Draws SkPicture picture, using clip and SkMatrix.")
     .def("drawPicture",
         py::overload_cast<const SkPicture*, const SkMatrix*, const SkPaint*>(
             &SkCanvas::drawPicture),
@@ -2142,12 +2007,12 @@ canvas
         )docstring",
         py::arg("picture"), py::arg("matrix") = nullptr,
         py::arg("paint") = nullptr)
-    // .def("drawPicture",
-    //     py::overload_cast<const sk_sp<SkPicture>&, const SkMatrix*,
-    //         const SkPaint*>(&SkCanvas::drawPicture),
-    //     "Draws SkPicture picture, using clip and SkMatrix; transforming "
-    //     "picture with SkMatrix matrix, if provided; and use SkPaint paint "
-    //     "alpha, SkColorFilter, SkImageFilter, and SkBlendMode, if provided.")
+     .def("drawPicture",
+         py::overload_cast<const sk_sp<SkPicture>&, const SkMatrix*,
+             const SkPaint*>(&SkCanvas::drawPicture),
+         "Draws SkPicture picture, using clip and SkMatrix; transforming "
+         "picture with SkMatrix matrix, if provided; and use SkPaint paint "
+         "alpha, SkColorFilter, SkImageFilter, and SkBlendMode, if provided.")
     .def("drawVertices",
         // py::overload_cast<const SkVertices*, SkBlendMode, const SkPaint&>(
         //     &SkCanvas::drawVertices),
@@ -2171,20 +2036,14 @@ canvas
         )docstring",
         py::arg("vertices"), py::arg("paint"),
         py::arg("mode") = SkBlendMode::kModulate)
-    // .def("drawVertices",
-    //     py::overload_cast<const SkVertices*, const SkPaint&>(
-    //         &SkCanvas::drawVertices),
-    //     "Variant of 3-parameter drawVertices, using the default of Modulate "
-    //     "for the blend parameter.")
-    // .def("drawVertices",
-    //     py::overload_cast<const sk_sp<SkVertices>&, SkBlendMode,
-    //         const SkPaint&>(&SkCanvas::drawVertices),
-    //     "Draws SkVertices vertices, a triangle mesh, using clip and SkMatrix.")
-    // .def("drawVertices",
-    //     py::overload_cast<const sk_sp<SkVertices>&, const SkPaint&>(
-    //         &SkCanvas::drawVertices),
-    //     "Variant of 3-parameter drawVertices, using the default of Modulate "
-    //     "for the blend parameter.")
+     .def("drawVertices",
+         py::overload_cast<const sk_sp<SkVertices>&, SkBlendMode, const SkPaint&>(&SkCanvas::drawVertices),
+         "Draws SkVertices vertices, a triangle mesh, using clip and SkMatrix.")
+     .def("drawVertices",
+        py::overload_cast<const sk_sp<SkVertices>&, SkBlendMode, const SkPaint&>(
+             &SkCanvas::drawVertices),
+         "Variant of 3-parameter drawVertices, using the default of Modulate "
+         "for the blend parameter.")
     .def("drawPatch",
         // py::overload_cast<const SkPoint[12], const SkColor[4],
         //     const SkPoint[4], SkBlendMode, const SkPaint&>(
@@ -2240,22 +2099,24 @@ canvas
         )docstring",
         py::arg("cubics"), py::arg("colors"), py::arg("texCoords"),
         py::arg("mode"), py::arg("paint"))
-    // .def("drawPatch",
-    //     py::overload_cast<const SkPoint[12], const SkColor[4],
-    //         const SkPoint[4], const SkPaint&>(
-    //             &SkCanvas::drawPatch),
-    //     "Draws SkPath cubic Coons patch: the interpolation of four cubics with "
-    //     "shared corners, associating a color, and optionally a texture "
-    //     "SkPoint, with each corner.")
-    .def("drawAtlas",
+     .def("drawPatch",
+         py::overload_cast<const SkPoint[12], const SkColor[4],
+             const SkPoint[4], SkBlendMode, const SkPaint&>(
+                 &SkCanvas::drawPatch),
+         "Draws SkPath cubic Coons patch: the interpolation of four cubics with "
+         "shared corners, associating a color, and optionally a texture "
+         "SkPoint, with each corner.")
+    .def(
+        "drawAtlas",
         // py::overload_cast<const SkImage*, const SkRSXform[], const SkRect[],
         //     const SkColor[], int, SkBlendMode, const SkRect*, const SkPaint*>(
         //         &SkCanvas::drawAtlas),
-        [] (SkCanvas& canvas, const SkImage* atlas,
+        [](SkCanvas& canvas, const SkImage* atlas,
             const std::vector<SkRSXform>& xform,
             const std::vector<SkRect>& tex,
             const std::vector<SkColor>& colors,
             SkBlendMode mode, const SkRect* cullRect, const SkPaint* paint) {
+            SkSamplingOptions options;
             if (xform.size() != tex.size())
                 throw std::runtime_error(
                     "xform and tex must have the same length.");
@@ -2264,7 +2125,7 @@ canvas
                     "colors must have the same length with xform.");
             canvas.drawAtlas(atlas, &xform[0], &tex[0],
                 (colors.empty()) ? nullptr : &colors[0],
-                xform.size(), mode, cullRect, paint);
+                xform.size(), mode, options, cullRect, paint);
         },
         R"docstring(
         Draws a set of sprites from atlas, using clip, :py:class:`Matrix`, and
@@ -2382,21 +2243,8 @@ canvas
         )docstring")
     .def("getLocalToDevice",
         py::overload_cast<>(&SkCanvas::getLocalToDevice, py::const_))
-    // .def("getLocalToDevice",
-    //     py::overload_cast<SkScalar[16]>(
-    //         &SkCanvas::getLocalToDevice, py::const_))
-    // .def("experimental_getLocalToWorld",
-    //     py::overload_cast<>(
-    //         &SkCanvas::experimental_getLocalToWorld, py::const_))
-    // .def("experimental_getLocalToCamera",
-    //     py::overload_cast<>(
-    //         &SkCanvas::experimental_getLocalToCamera, py::const_))
-    // .def("experimental_getLocalToCamera",
-    //     py::overload_cast<SkScalar[16]>(
-    //         &SkCanvas::experimental_getLocalToCamera, py::const_))
-    // .def("experimental_getLocalToWorld",
-    //     py::overload_cast<SkScalar[16]>(
-    //         &SkCanvas::experimental_getLocalToWorld, py::const_))
+    .def("getLocalToDevice", &SkCanvas::getLocalToDevice)
+    .def("getLocalToDeviceAs3x3", &SkCanvas::getLocalToDeviceAs3x3)
     // Static methods.
     .def_static("MakeRasterDirect",
         // &SkCanvas::MakeRasterDirect,

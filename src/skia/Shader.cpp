@@ -150,7 +150,7 @@ shader
         [] (py::buffer b) {
             auto info = b.request();
             auto shader = SkShader::Deserialize(
-                SkFlattenable::Type::kSkShaderBase_Type, info.ptr,
+                SkFlattenable::Type::kSkShader_Type, info.ptr,
                 info.shape[0] * info.strides[0]);
             return sk_sp<SkShader>(
                 reinterpret_cast<SkShader*>(shader.release()));
@@ -158,7 +158,7 @@ shader
         py::arg("data"))
     ;
 
-py::class_<SkShaders>(m, "Shaders")
+        py::class_<SkShaders>(m, "Shaders")
     .def_static("Empty", &SkShaders::Empty)
     .def_static("Color", py::overload_cast<SkColor>(&SkShaders::Color),
         py::arg("color"))
@@ -174,13 +174,6 @@ py::class_<SkShaders>(m, "Shaders")
                 mode, CloneFlattenable(dst), CloneFlattenable(src));
         },
         py::arg("mode"), py::arg("dst"), py::arg("src"))
-    .def_static("Lerp",
-        [] (SkScalar t, const SkShader& dst,
-            const SkShader& src) {
-            return SkShaders::Lerp(
-                t, CloneFlattenable(dst), CloneFlattenable(src));
-        },
-        py::arg("t"), py::arg("dst"), py::arg("src"))
     ;
 
 py::class_<SkGradientShader> gradientshader(m, "GradientShader");
@@ -341,14 +334,5 @@ py::class_<SkPerlinNoiseShader>(m, "PerlinNoiseShader",
     .def_static("MakeTurbulence", &SkPerlinNoiseShader::MakeTurbulence,
         py::arg("baseFrequencyX"), py::arg("baseFrequencyY"),
         py::arg("numOctaves"), py::arg("seed"), py::arg("tileSize") = nullptr)
-    .def_static("MakeImprovedNoise", &SkPerlinNoiseShader::MakeImprovedNoise,
-        R"docstring(
-        Creates an Improved Perlin Noise shader.
-
-        The z value is roughly equivalent to the seed of the other two types,
-        but minor variations to z will only slightly change the noise.
-        )docstring",
-        py::arg("baseFrequencyX"), py::arg("baseFrequencyY"),
-        py::arg("numOctaves"), py::arg("z"))
     ;
 }
