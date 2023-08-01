@@ -13,7 +13,7 @@ namespace {
 py::object ColorFilterAsAColorMode(SkColorFilter& colorFilter) {
     SkColor color;
     SkBlendMode mode;
-    auto result = colorFilter.asColorMode(&color, &mode);
+    auto result = colorFilter.asAColorMode(&color, &mode);
     if (result)
         return py::make_tuple(color, mode);
     else
