@@ -1846,7 +1846,7 @@ path
         )docstring",
         py::arg("x"), py::arg("y"))
     .def("dump",
-        py::overload_cast<SkWStream*, bool, bool>(&SkPath::dump, py::const_),
+        py::overload_cast<SkWStream*, bool>(&SkPath::dump, py::const_),
         R"docstring(
         Writes text representation of :py:class:`Path` to stream.
 
@@ -1857,10 +1857,9 @@ path
 
         :stream: writable :py:class:`WStream` receiving :py:class:`Path` text
             representation; may be nullptr
-        :forceClose: true if missing kClose_Verb is output
         :dumpAsHex: true if :py:class:`Scalar` values are written as hexadecimal
         )docstring",
-        py::arg("stream"), py::arg("forceClose"), py::arg("dumpAsHex"))
+        py::arg("stream"), py::arg("dumpAsHex"))
     .def("dump",
         [] (const SkPath& path) {
             py::scoped_ostream_redirect stream;
