@@ -439,7 +439,7 @@ def test_Canvas_drawPatch(canvas, args):
         [skia.RSXform(1, 0, 0, 0),],
         [skia.Rect(100, 100),],
         [skia.ColorWHITE],
-        skia.BlendMode.kModulate,
+        skia.BlendMode.kModulate, skia.SamplingOptions(),
         skia.Rect(100, 100),
         skia.Paint(),
     ),
