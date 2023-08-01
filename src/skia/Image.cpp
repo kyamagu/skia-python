@@ -163,7 +163,7 @@ sk_sp<SkImage> ImageConvert(
 }
 
 sk_sp<SkImage> ImageResize(
-    const SkImage& image, int width, int height, SkFilterQuality filterQuality,
+    const SkImage& image, int width, int height, SkSamplingOptions& samplingOptions,
     SkImage::CachingHint cachingHint) {
     auto imageInfo = image.imageInfo().makeWH(width, height);
     auto buffer = SkData::MakeUninitialized(imageInfo.computeMinByteSize());
@@ -171,7 +171,7 @@ sk_sp<SkImage> ImageResize(
         throw std::bad_alloc();
     auto pixmap = SkPixmap(
         imageInfo, buffer->writable_data(), imageInfo.minRowBytes());
-    if (!image.scalePixels(pixmap, filterQuality, cachingHint))
+    if (!image.scalePixels(pixmap, samplingOptions, cachingHint))
         throw std::runtime_error("Failed to resize image.");
     return SkImages::RasterFromData(imageInfo, buffer, imageInfo.minRowBytes());
 }
@@ -503,12 +503,12 @@ image
 
         :param int width: target width
         :param int height: target height
-        :param skia.FilterQuality filterQuality: Filter quality
+        :param skia.SamplingOptions options: sampling options
         :param skia.Image.CachingHint cachingHint: Caching hint
         :return: :py:class:`Image`
         )docstring",
         py::arg("width"), py::arg("height"),
-        py::arg("filterQuality") = SkFilterQuality::kMedium_SkFilterQuality,
+        py::arg("options") = SkSamplingOptions(),
         py::arg("cachingHint") = SkImage::kAllow_CachingHint)
     .def("__repr__",
         [] (const SkImage& image) {
