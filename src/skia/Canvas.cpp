@@ -1793,7 +1793,7 @@ canvas
             nullptr
         :constraint: filter strictly within src or draw faster
         )docstring",
-        py::arg("image"), py::arg("dst"), py::arg("sampling") = SkSamplingOptions(), py::arg("paint") = nullptr)
+        py::arg("image"), py::arg("dst"), py::arg("options") = SkSamplingOptions(), py::arg("paint") = nullptr)
     // .def("drawImageRect",
     //     py::overload_cast<const sk_sp<SkImage>&, const SkRect&, const SkRect&,
     //         const SkPaint*, SkCanvas::SrcRectConstraint>(
