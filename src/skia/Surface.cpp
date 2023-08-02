@@ -3,6 +3,7 @@
 #include <include/core/SkSurfaceProps.h>
 #include <include/gpu/GpuTypes.h>
 #include <include/gpu/ganesh/SkSurfaceGanesh.h>
+#include <include/gpu/GrBackendSurfaceMutableState.h>
 #include <pybind11/operators.h>
 #include <pybind11/numpy.h>
 
@@ -707,7 +708,7 @@ surface
             fonts
         )docstring")
     .def("flushAndSubmit",
-        py::overload_cast<>(&SkSurface::flushAndSubmit),
+        py::overload_cast<bool>(&SkSurface::flushAndSubmit),
         R"docstring(
         Call to ensure all reads/writes of the surface have been issued to the
         underlying 3D API.
@@ -720,7 +721,8 @@ surface
         :py:class:`GrContext`. This is equivalent to calling :py:meth:`flush`
         with a default :py:class:`GrFlushInfo` followed by
         :py:meth:`GrContext.submit`.
-        )docstring")
+        )docstring",
+        py::arg("syncCpu") = false)
     .def("flush",
         py::overload_cast<SkSurface::BackendSurfaceAccess, const GrFlushInfo&>(
             &SkSurface::flush),
