@@ -7,6 +7,7 @@
 #include <include/encode/SkPngEncoder.h>
 #include <include/encode/SkWebpEncoder.h>
 #include <include/core/SkTextureCompressionType.h>
+#include <src/core/SkMipmapBuilder.h>
 
 #include <pybind11/numpy.h>
 #include <pybind11/stl.h> // std::nullopt needs this.
@@ -225,7 +226,7 @@ py::class_<SkMipmapBuilder>(m, "MipmapBuilder")
     .def("countLevels", &SkMipmapBuilder::countLevels)
     .def("level", &SkMipmapBuilder::level)
     .def("attachTo",
-        py::overload_cast<const SkImage*>(&SkMipmapBuilder::attachTo),
+        py::overload_cast<sk_sp<const SkImage>>(&SkMipmapBuilder::attachTo),
         R"docstring(
         If these levels are compatible with src, return a new Image that
         combines src's base level with these levels as mip levels.
