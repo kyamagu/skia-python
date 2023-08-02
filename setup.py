@@ -37,6 +37,7 @@ if sys.platform == 'win32':
         '/std:c++17',  # c++20 fails.
         '/DVERSION_INFO=%s' % __version__,
         '/DSK_GL',
+        '/DSK_GANESH=1',
         '/Zc:inline',
         # Disable a bunch of warnings.
         '/wd5030',  # Warnings about unknown attributes.
@@ -54,6 +55,7 @@ elif sys.platform == 'darwin':
     DEFINE_MACROS = [
         ('VERSION_INFO', __version__),
         ('SK_GL', ''),
+        ('SK_GANESH', '1'),
     ]
     LIBRARIES = [
         'dl',
