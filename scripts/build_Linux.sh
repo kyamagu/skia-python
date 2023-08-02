@@ -46,6 +46,7 @@ cd skia && \
     python tools/git-sync-deps && \
     patch -p1 < ../patch/make_data_assembly.patch && \
     patch -p1 < ../patch/libjpeg-arm.patch && \
+    patch -p1 < ../patch/skia-m116-minimize-download.patch && \
     cp -f ../gn/out/gn bin/gn && \
     bin/gn gen out/Release --args="
 is_official_build=true
