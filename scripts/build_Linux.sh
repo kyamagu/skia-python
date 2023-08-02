@@ -44,7 +44,6 @@ git clone https://gn.googlesource.com/gn && \
 cd skia && \
     patch -p1 < ../patch/git-sync-deps.patch && \
     python tools/git-sync-deps && \
-    patch -p1 < ../patch/make_data_assembly.patch && \
     patch -p1 < ../patch/libjpeg-arm.patch && \
     patch -p1 < ../patch/skia-m116-minimize-download.patch && \
     cp -f ../gn/out/gn bin/gn && \
