@@ -1631,7 +1631,7 @@ image
 
         :return: raster image, lazy image, or nullptr
         )docstring")
-    .def("makeRasterImage", &SkImage::makeRasterImage,
+   .def("makeRasterImage", py::overload_cast<CachingHint>(&SkImage::makeRasterImage),
         R"docstring(
         Returns raster image.
 
