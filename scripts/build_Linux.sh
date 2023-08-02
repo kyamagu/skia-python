@@ -14,13 +14,15 @@ if [[ $(uname -m) == "aarch64" ]]; then
 fi
 
 # Install system dependencies
-yum install -y \
-    fontconfig-devel \
-    mesa-libGL-devel \
-    xorg-x11-server-Xvfb \
-    mesa-dri-drivers && \
-    yum clean all && \
-    rm -rf /var/cache/yum
+if [[ $EUID -eq 0 ]]; then
+    yum install -y \
+        fontconfig-devel \
+        mesa-libGL-devel \
+        xorg-x11-server-Xvfb \
+        mesa-dri-drivers && \
+        yum clean all && \
+        rm -rf /var/cache/yum
+fi
 
 if [[ $(uname -m) == "aarch64" ]] && [[ $CI_SKIP_BUILD == "true" ]]; then
     # gn and skia already built in a previous job
