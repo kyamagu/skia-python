@@ -22,7 +22,7 @@ function apply_patch {
 }
 
 cd skia && \
-    python tools/git-sync-deps && \
+    python3 tools/git-sync-deps && \
     apply_patch && \
     bin/gn gen out/Release --args="
 is_official_build=true
