@@ -38,7 +38,7 @@ export CFLAGS="-Wno-deprecated-copy"
 export LDFLAGS="-lrt"
 git clone https://gn.googlesource.com/gn && \
     cd gn && \
-    git checkout 981f46c64d1456d2083b1a2fa1367e753e0cdc1b && \
+    git checkout fe330c0ae1ec29db30b6f830e50771a335e071fb && \
     python build/gen.py && \
     ninja -C out gn && \
     cd ..
