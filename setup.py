@@ -31,17 +31,8 @@ if sys.platform == 'win32':
         'Gdi32',
     ]
     EXTRA_OBJECTS = list(
-        glob.glob(
-            os.path.join(
-                SKIA_OUT_PATH,
-                'obj',
-                'experimental',
-                'svg',
-                'model',
-                '*.obj',
-            )
-        )
-    ) + [os.path.join(SKIA_OUT_PATH, 'skia.lib')]
+    ) + [os.path.join(SKIA_OUT_PATH, 'svg.lib'), os.path.join(SKIA_OUT_PATH, 'skia.lib'),
+         os.path.join(SKIA_OUT_PATH, 'skshaper.lib'), os.path.join(SKIA_OUT_PATH, 'skunicode.lib')]
     EXTRA_COMPILE_ARGS = [
         '/std:c++17',  # c++20 fails.
         '/DVERSION_INFO=%s' % __version__,
@@ -68,17 +59,8 @@ elif sys.platform == 'darwin':
         'dl',
     ]
     EXTRA_OBJECTS = list(
-        glob.glob(
-            os.path.join(
-                SKIA_OUT_PATH,
-                'obj',
-                'experimental',
-                'svg',
-                'model',
-                '*.o',
-            )
-        )
-    ) + [os.path.join(SKIA_OUT_PATH, 'libskia.a')]
+    ) + [os.path.join(SKIA_OUT_PATH, 'libsvg.a'), os.path.join(SKIA_OUT_PATH, 'libskia.a'),
+         os.path.join(SKIA_OUT_PATH, 'libskshaper.a'), os.path.join(SKIA_OUT_PATH, 'libskunicode.a')]
     EXTRA_COMPILE_ARGS = [
         '-std=c++14',
         '-stdlib=libc++',
@@ -110,7 +92,8 @@ else:
         'expat',
     ]
     EXTRA_OBJECTS = list(
-    ) + [os.path.join(SKIA_OUT_PATH, 'libsvg.a'), os.path.join(SKIA_OUT_PATH, 'libskia.a'), os.path.join(SKIA_OUT_PATH, 'libskshaper.a'), os.path.join(SKIA_OUT_PATH, 'libskunicode.a')]
+    ) + [os.path.join(SKIA_OUT_PATH, 'libsvg.a'), os.path.join(SKIA_OUT_PATH, 'libskia.a'),
+         os.path.join(SKIA_OUT_PATH, 'libskshaper.a'), os.path.join(SKIA_OUT_PATH, 'libskunicode.a')]
     EXTRA_COMPILE_ARGS = [
         '-std=c++17',
         '-fvisibility=hidden',
