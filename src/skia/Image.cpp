@@ -1,11 +1,15 @@
 #include "common.h"
 #include <include/codec/SkEncodedImageFormat.h>
+#include <include/core/SkSamplingOptions.h>
 #include <include/gpu/GrBackendSurface.h>
+#include <include/gpu/GpuTypes.h>
 #include <include/encode/SkJpegEncoder.h>
 #include <include/encode/SkPngEncoder.h>
 #include <include/encode/SkWebpEncoder.h>
+#include <include/core/SkTextureCompressionType.h>
 
 #include <pybind11/numpy.h>
+#include <pybind11/stl.h> // std::nullopt needs this.
 
 namespace {
 
@@ -158,9 +162,8 @@ sk_sp<SkImage> ImageConvert(
     return SkImages::RasterFromData(imageInfo, buffer, imageInfo.minRowBytes());
 }
 
-/*
 sk_sp<SkImage> ImageResize(
-    const SkImage& image, int width, int height, SkFilterQuality filterQuality,
+    const SkImage& image, int width, int height, SkSamplingOptions& samplingOptions,
     SkImage::CachingHint cachingHint) {
     auto imageInfo = image.imageInfo().makeWH(width, height);
     auto buffer = SkData::MakeUninitialized(imageInfo.computeMinByteSize());
@@ -168,7 +171,7 @@ sk_sp<SkImage> ImageResize(
         throw std::bad_alloc();
     auto pixmap = SkPixmap(
         imageInfo, buffer->writable_data(), imageInfo.minRowBytes());
-    if (!image.scalePixels(pixmap, filterQuality, cachingHint))
+    if (!image.scalePixels(pixmap, samplingOptions, cachingHint))
         throw std::runtime_error("Failed to resize image.");
     return SkImages::RasterFromData(imageInfo, buffer, imageInfo.minRowBytes());
 }
@@ -177,12 +180,11 @@ sk_sp<SkImage> ImageResize(
 }  // namespace
 
 void initImage(py::module &m) {
-/*
-py::enum_<SkBudgeted>(m, "Budgeted", R"docstring(
+py::enum_<skgpu::Budgeted>(m, "Budgeted", R"docstring(
     Indicates whether an allocation should count against a cache budget.
     )docstring")
-    .value("kNo", SkBudgeted::kNo)
-    .value("kYes", SkBudgeted::kYes)
+    .value("kNo", skgpu::Budgeted::kNo)
+    .value("kYes", skgpu::Budgeted::kYes)
     .export_values();
 
 py::enum_<SkFilterQuality>(m, "FilterQuality",
@@ -279,20 +281,18 @@ py::class_<SkImage, sk_sp<SkImage>, SkRefCnt> image(m, "Image",
     )docstring",
     py::buffer_protocol());
 
-/*
-py::enum_<SkImage::CompressionType>(image, "CompressionType")
-    .value("kNone", SkImage::CompressionType::kNone)
-    .value("kETC2_RGB8_UNORM", SkImage::CompressionType::kETC2_RGB8_UNORM)
-    .value("kBC1_RGB8_UNORM", SkImage::CompressionType::kBC1_RGB8_UNORM)
-    .value("kBC1_RGBA8_UNORM", SkImage::CompressionType::kBC1_RGBA8_UNORM)
-    .value("kLast", SkImage::CompressionType::kLast)
+py::enum_<SkTextureCompressionType>(image, "CompressionType")
+    .value("kNone", SkTextureCompressionType::kNone)
+    .value("kETC2_RGB8_UNORM", SkTextureCompressionType::kETC2_RGB8_UNORM)
+    .value("kBC1_RGB8_UNORM", SkTextureCompressionType::kBC1_RGB8_UNORM)
+    .value("kBC1_RGBA8_UNORM", SkTextureCompressionType::kBC1_RGBA8_UNORM)
+    .value("kLast", SkTextureCompressionType::kLast)
     .export_values();
 
-py::enum_<SkImage::BitDepth>(image, "BitDepth")
-    .value("kU8", SkImage::BitDepth::kU8)
-    .value("kF16", SkImage::BitDepth::kF16)
+py::enum_<SkImages::BitDepth>(image, "BitDepth")
+    .value("kU8", SkImages::BitDepth::kU8)
+    .value("kF16", SkImages::BitDepth::kF16)
     .export_values();
-*/
 
 py::enum_<SkImage::CachingHint>(image, "CachingHint")
     .value("kAllow_CachingHint", SkImage::CachingHint::kAllow_CachingHint)
@@ -508,14 +508,13 @@ image
 
         :param int width: target width
         :param int height: target height
-        :param skia.FilterQuality filterQuality: Filter quality
+        :param skia.SamplingOptions options: sampling options
         :param skia.Image.CachingHint cachingHint: Caching hint
         :return: :py:class:`Image`
         )docstring",
         py::arg("width"), py::arg("height"),
-        py::arg("filterQuality") = SkFilterQuality::kMedium_SkFilterQuality,
+        py::arg("options") = SkSamplingOptions(),
         py::arg("cachingHint") = SkImage::kAllow_CachingHint)
-*/
     .def("__repr__",
         [] (const SkImage& image) {
             return py::str("Image({}, {}, {}, {})").format(
@@ -1480,11 +1479,47 @@ image
         :return: true if pixels are scaled to fit dst
         )docstring",
         py::arg("dst"),
-        py::arg("filterQuality") = SkFilterQuality::kMedium_SkFilterQuality,
+        py::arg("samplingOptions") = SkSamplingOptions(),
         py::arg("cachingHint") = SkImage::kAllow_CachingHint)
     .def("encodeToData",
-        py::overload_cast<SkEncodedImageFormat, int>(
-            &SkImage::encodeToData, py::const_),
+        [] (SkImage& image, SkEncodedImageFormat format, int quality) {
+            sk_sp<SkData> data = image.refEncodedData();
+            switch (format) {
+            case SkEncodedImageFormat::kWEBP:
+                {
+                SkWebpEncoder::Options options;
+                if (quality < 100) {
+                    options.fCompression = SkWebpEncoder::Compression::kLossy;
+                    options.fQuality = quality;
+                } else {
+                    options.fCompression = SkWebpEncoder::Compression::kLossless;
+                    // in lossless mode, this is effort. 70 is the default effort in SkImageEncoder,
+                    // which follows Blink and WebPConfigInit.
+                    options.fQuality = 70;
+                }
+                data = SkWebpEncoder::Encode(nullptr, &image, options);
+                }
+                break;
+
+            case SkEncodedImageFormat::kJPEG:
+                {
+                SkJpegEncoder::Options options;
+                options.fQuality = quality;
+                data = SkJpegEncoder::Encode(nullptr, &image, options);
+                }
+                break;
+
+            case SkEncodedImageFormat::kPNG:
+            default:
+                {
+                SkPngEncoder::Options options; // Not used
+                data = SkPngEncoder::Encode(nullptr, &image, {});
+                }
+                break;
+            }
+            auto decoded = SkImages::DeferredFromEncodedData(data);
+            return data;
+        },
         R"docstring(
         Encodes :py:class:`Image` pixels, returning result as :py:class:`Data`.
 
@@ -1513,7 +1548,13 @@ image
         )docstring",
         py::arg("encodedImageFormat"), py::arg("quality"))
     .def("encodeToData",
-        py::overload_cast<>(&SkImage::encodeToData, py::const_),
+        [] (SkImage& image) {
+            sk_sp<SkData> data = image.refEncodedData();
+            if (!data) {
+                data = SkPngEncoder::Encode(nullptr, &image, {});
+            }
+            return data;
+        },
         R"docstring(
         Encodes :py:class:`Image` pixels, returning result as :py:class:`Data`.
 

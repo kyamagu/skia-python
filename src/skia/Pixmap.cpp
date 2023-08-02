@@ -613,12 +613,11 @@ py::class_<SkPixmap>(m, "Pixmap",
 
         :param skia.Pixmap dst: destination :py:class:`Pixmap`:
             :py:class:`ImageInfo`, pixels, row bytes
-        :param skia.FilterQuality filterQuality: Filter quality
+        :param skia.SamplingOptions options: sampling options
         :return: true if pixels are scaled to fit dst
         )docstring",
         py::arg("dst"),
-        py::arg("filterQuality") = SkFilterQuality::kMedium_SkFilterQuality)
-*/
+        py::arg("samplingOptions") = SkSamplingOptions())
     .def("erase",
         py::overload_cast<const SkColor4f&, const SkIRect*>(
             &SkPixmap::erase, py::const_),

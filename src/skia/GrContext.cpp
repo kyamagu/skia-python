@@ -1,10 +1,12 @@
 #include "common.h"
+#include <include/core/SkTextureCompressionType.h>
 #include <include/gpu/GrBackendSemaphore.h>
 #include <include/gpu/GrBackendSurface.h>
 #include <include/gpu/GrContextThreadSafeProxy.h>
 #include <include/gpu/mock/GrMockTypes.h>
 #include <include/gpu/gl/GrGLInterface.h>
 #include <include/gpu/vk/GrVkBackendContext.h>
+#include <include/gpu/GrBackendSurfaceMutableState.h>
 #include <pybind11/chrono.h>
 #include <pybind11/stl.h>
 
@@ -1012,7 +1014,7 @@ py::class_<GrDirectContext, sk_sp<GrDirectContext>, GrRecordingContext>(m, "GrCo
         py::arg("isProtected") = GrProtected::kNo)
     .def("createCompressedBackendTexture",
         [] (GrDirectContext& context, int width, int height,
-            SkImage::CompressionType type, const SkColor4f& color,
+            SkTextureCompressionType type, const SkColor4f& color,
             GrMipmapped mipMapped, GrProtected isProtected) {
             return context.createCompressedBackendTexture(
                 width, height, type, color, mipMapped, isProtected);
@@ -1034,7 +1036,7 @@ py::class_<GrDirectContext, sk_sp<GrDirectContext>, GrRecordingContext>(m, "GrCo
         py::arg("isProtected") = GrProtected::kNo)
     .def("createCompressedBackendTexture",
         [] (GrDirectContext& context, int width, int height,
-            SkImage::CompressionType type, py::buffer b,
+            SkTextureCompressionType type, py::buffer b,
             GrMipmapped mipMapped, GrProtected isProtected) {
             auto info = b.request();
             size_t size = (info.ndim) ? info.strides[0] * info.shape[0] : 0;
@@ -1180,6 +1182,8 @@ py::class_<GrDirectContext, sk_sp<GrDirectContext>, GrRecordingContext>(m, "GrCo
         Can be called to reduce GPU memory pressure.
         )docstring")
     ;
+
+m.attr("GrDirectContext") = m.attr("GrContext");
 
 initGrContext_gl(m);
 initGrContext_vk(m);
