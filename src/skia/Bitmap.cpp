@@ -63,7 +63,7 @@ py::class_<SkBitmap> bitmap(m, "Bitmap", py::buffer_protocol(),
     :py:class:`Bitmap` supports buffer protocol. It is possible to mount
     :py:class:`Bitmap` as array::
 
-        array = np.array(pixmap, copy=False)
+        array = np.array(bitmap, copy=False)
 
     Or mount array as :py:class:`Bitmap` with :py:class:`ImageInfo`::
 
