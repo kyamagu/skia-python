@@ -28,17 +28,14 @@ git clone https://gn.googlesource.com/gn && \
     cd gn && \
     git checkout 981f46c64d1456d2083b1a2fa1367e753e0cdc1b && \
     python build/gen.py && \
-    ninja -C out gn && \
     cd ..
 
 # Build skia
 cd skia && \
-    patch -p1 < ../patch/git-sync-deps.patch && \
+    patch -p1 < ../patch/skia-m116-minimize-download.patch && \
     python tools/git-sync-deps && \
     patch -p1 < ../patch/make_data_assembly.patch && \
     patch -p1 < ../patch/libjpeg-arm.patch && \
-    patch -p1 < ../patch/skia-m116-minimize-download.patch && \
-    cp -f ../gn/out/gn bin/gn && \
     bin/gn gen out/Release --args="
 is_official_build=true
 skia_enable_svg=true
