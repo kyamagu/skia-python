@@ -16,6 +16,7 @@ fi
 # Install system dependencies
 if [[ $EUID -eq 0 ]]; then
     yum install -y \
+        python3 \
         fontconfig-devel \
         mesa-libGL-devel \
         xorg-x11-server-Xvfb \
@@ -45,7 +46,7 @@ git clone https://gn.googlesource.com/gn && \
 # Build skia
 cd skia && \
     patch -p1 < ../patch/skia-m116-minimize-download.patch && \
-    python tools/git-sync-deps && \
+    python3 tools/git-sync-deps && \
     cp -f ../gn/out/gn bin/gn && \
     bin/gn gen out/Release --args="
 is_official_build=true
