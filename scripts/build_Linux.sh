@@ -56,6 +56,7 @@ skia_use_system_libwebp=false
 skia_use_system_libpng=false
 skia_use_system_icu=false
 skia_use_system_harfbuzz=false
+skia_use_system_freetype2=false
 extra_cflags_cc=[\"-frtti\"]
 extra_ldflags=[\"-lrt\"]
 " && \
