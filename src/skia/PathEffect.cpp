@@ -160,7 +160,6 @@ py::class_<SkPathEffect::DashInfo>(patheffect, "DashInfo")
         )docstring")
     ;
 
-/*
 py::class_<SkPathEffect::PointData> pointdata(patheffect, "PointData",
     R"docstring(
     :py:class:`PointData` aggregates all the information needed to draw the
@@ -192,7 +191,6 @@ pointdata
     .def_readonly("fFirst", &SkPathEffect::PointData::fFirst)
     .def_readonly("fLast", &SkPathEffect::PointData::fLast)
     ;
-*/
 
 py::enum_<SkPathEffect::DashType>(patheffect, "DashType",
     R"docstring(
@@ -234,7 +232,6 @@ patheffect
         resulting stroke-rec to dst and then draw.
         )docstring",
         py::arg("dst"), py::arg("src"), py::arg("stroke_rec"), py::arg("cullR"))
-/*
     .def("computeFastBounds", &SkPathEffect::computeFastBounds,
         R"docstring(
         Compute a conservative bounds for its effect, given the src bounds.
@@ -249,7 +246,6 @@ patheffect
         )docstring",
         py::arg("results"), py::arg("src"), py::arg("stroke_rec"),
         py::arg("matrix"), py::arg("cullR"))
-*/
     .def("asADash", &SkPathEffect::asADash, py::arg("info"))
     .def_static("MakeSum",
         [] (const SkPathEffect& first, const SkPathEffect& second) {
@@ -281,7 +277,6 @@ patheffect
         result = outer(inner(path))
         )docstring",
         py::arg("outer"), py::arg("inner"))
-/*
     .def_static("RegisterFlattenables", &SkPathEffect::RegisterFlattenables)
     .def_static("GetFlattenableType", &SkPathEffect::GetFlattenableType)
     .def_static("Deserialize",
@@ -291,7 +286,6 @@ patheffect
             return SkPathEffect::Deserialize(info.ptr, size);
         },
         py::arg("data"))
-*/
     ;
 
 py::class_<SkDiscretePathEffect>(

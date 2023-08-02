@@ -25,7 +25,6 @@ const SkSurfaceProps::Flags SkSurfaceProps::kUseDistanceFieldFonts_Flag;
 
 void initSurface(py::module &m) {
 
-/*
 py::enum_<SkBackingFit>(m, "BackingFit", R"docstring(
     Indicates whether a backing store needs to be an exact match or can be
     larger than is strictly necessary.
@@ -33,7 +32,6 @@ py::enum_<SkBackingFit>(m, "BackingFit", R"docstring(
     .value("kApprox", SkBackingFit::kApprox)
     .value("kExact", SkBackingFit::kExact)
     .export_values();
-*/
 
 py::enum_<SkPixelGeometry>(m, "PixelGeometry", R"docstring(
     Description of how the LCD strips are arranged for each pixel.
@@ -66,12 +64,10 @@ py::enum_<SkSurfaceProps::Flags>(surfaceprops, "Flags", py::arithmetic())
 surfaceprops
     .def(py::init<uint32_t, SkPixelGeometry>(),
         py::arg("flags"), py::arg("geometry"))
-/*
     .def(py::init<SkSurfaceProps::InitType>(),
         py::arg("initType"))
     .def(py::init<uint32_t, SkSurfaceProps::InitType>(),
         py::arg("flags"), py::arg("initType"))
-*/
     .def(py::init<const SkSurfaceProps&>(),
         py::arg("props"))
     .def("flags", &SkSurfaceProps::flags)
@@ -106,11 +102,9 @@ py::class_<SkSurfaceCharacterization>(m, "SurfaceCharacterization")
     .def("isValid", &SkSurfaceCharacterization::isValid)
     .def("width", &SkSurfaceCharacterization::width)
     .def("height", &SkSurfaceCharacterization::height)
-/*
     #if !SK_SUPPORT_GPU
     .def("stencilCount", &SkSurfaceCharacterization::stencilCount)
     #endif
-*/
     .def("isTextureable", &SkSurfaceCharacterization::isTextureable)
     .def("isMipMapped", &SkSurfaceCharacterization::isMipMapped)
     .def("usesGLFBO0", &SkSurfaceCharacterization::usesGLFBO0)
@@ -667,7 +661,6 @@ surface
         py::arg("yuvColorSpace"), py::arg("dstColorSpace"), py::arg("srcRect"),
         py::arg("dstSize"), py::arg("rescaleGamma"), py::arg("rescaleQuality"),
         py::arg("callback"))
-*/
     .def("writePixels",
         py::overload_cast<const SkPixmap&, int, int>(&SkSurface::writePixels),
         R"docstring(
@@ -717,7 +710,6 @@ surface
         :return: LCD striping orientation and setting for device independent
             fonts
         )docstring")
-/*
     .def("flushAndSubmit",
         py::overload_cast<>(&SkSurface::flushAndSubmit),
         R"docstring(
@@ -850,7 +842,6 @@ surface
         :param newState: optional state change request after flush
         )docstring",
         py::arg("info"), py::arg("newState") = nullptr)
-*/
     .def("characterize", &SkSurface::characterize,
         R"docstring(
         Initializes :py:class:`SurfaceCharacterization` that can be used to
@@ -868,7 +859,6 @@ surface
         :return: true if supported
         )docstring",
         py::arg("characterization"))
-/*
     .def("draw",
         py::overload_cast<sk_sp<const SkDeferredDisplayList>>(&SkSurface::draw),
         R"docstring(

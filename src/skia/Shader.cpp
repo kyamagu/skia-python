@@ -27,7 +27,6 @@ py::class_<SkShader, sk_sp<SkShader>, SkFlattenable> shader(
         ~skia.PerlinNoiseShader
     )docstring");
 
-/*
 py::class_<SkShader::GradientInfo>(shader, "GradientInfo")
     .def(py::init<>())
     .def_readwrite("fColorCount", &SkShader::GradientInfo::fColorCount,
@@ -107,7 +106,6 @@ py::enum_<SkShader::GradientType>(shader, "GradientType", R"docstring(
     .value("kLast_GradientType",
         SkShader::GradientType::kLast_GradientType)
     .export_values();
-*/
 
 shader
     .def("isOpaque", &SkShader::isOpaque,
@@ -134,9 +132,7 @@ shader
         )docstring",
         py::arg("localMatrix"), py::arg("xy") = nullptr)
     .def("isAImage", py::overload_cast<>(&SkShader::isAImage, py::const_))
-/*
     .def("asAGradient", &SkShader::asAGradient, py::arg("info"))
-*/
     .def("makeWithLocalMatrix", &SkShader::makeWithLocalMatrix,
         R"docstring(
         Return a shader that will apply the specified localMatrix to this
@@ -152,7 +148,6 @@ shader
         shader and then applying the colorfilter.
         )docstring",
         py::arg("colorFilter"))
-/*
     .def_static("Deserialize",
         [] (py::buffer b) {
             auto info = b.request();
@@ -163,7 +158,6 @@ shader
                 reinterpret_cast<SkShader*>(shader.release()));
         },
         py::arg("data"))
-*/
     ;
 
 py::class_<std::unique_ptr<int>>(m, "Shaders")
@@ -189,7 +183,6 @@ py::class_<std::unique_ptr<int>>(m, "Shaders")
                 blender, dst, src);
         },
         py::arg("blender"), py::arg("dst"), py::arg("src"))
-/*
     .def_static("Lerp",
         [] (SkScalar t, const SkShader& dst,
             const SkShader& src) {
@@ -197,7 +190,6 @@ py::class_<std::unique_ptr<int>>(m, "Shaders")
                 t, CloneFlattenable(dst), CloneFlattenable(src));
         },
         py::arg("t"), py::arg("dst"), py::arg("src"))
-*/
     ;
 
 py::class_<SkGradientShader> gradientshader(m, "GradientShader");
@@ -321,7 +313,6 @@ gradientshader
         py::arg("flags") = 0, py::arg("localMatrix") = nullptr)
     ;
 
-/*
 py::class_<SkPerlinNoiseShader>(m, "PerlinNoiseShader",
     R"docstring(
     :py:class:`PerlinNoiseShader` creates an image using the Perlin turbulence
@@ -369,5 +360,4 @@ py::class_<SkPerlinNoiseShader>(m, "PerlinNoiseShader",
         py::arg("baseFrequencyX"), py::arg("baseFrequencyY"),
         py::arg("numOctaves"), py::arg("z"))
     ;
-*/
 }

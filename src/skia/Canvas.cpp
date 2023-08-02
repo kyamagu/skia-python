@@ -122,12 +122,10 @@ py::enum_<SkCanvas::SaveLayerFlagsSet>(
     .value("kInitWithPrevious_SaveLayerFlag",
         SkCanvas::SaveLayerFlagsSet::kInitWithPrevious_SaveLayerFlag,
         "initializes with previous contents")
-/*
     .value("kMaskAgainstCoverage_EXPERIMENTAL_DONT_USE_SaveLayerFlag",
         SkCanvas::SaveLayerFlagsSet::
         kMaskAgainstCoverage_EXPERIMENTAL_DONT_USE_SaveLayerFlag,
         "experimental: do not use")
-*/
     .value("kF16ColorType",
         SkCanvas::SaveLayerFlagsSet::kF16ColorType)
     .export_values();
@@ -1819,7 +1817,6 @@ canvas
     //         const SkPaint*>(&SkCanvas::drawImageRect),
     //     "Draws SkImage image, scaled and translated to fill SkRect dst, using "
     //     "clip, SkMatrix, and optional SkPaint paint.")
-/*
     .def("drawImageNine",
         py::overload_cast<const SkImage*, const SkIRect&, const SkRect&,
             const SkPaint*>(&SkCanvas::drawImageNine),
@@ -1863,7 +1860,6 @@ canvas
         )docstring",
         py::arg("image"), py::arg("center"), py::arg("dst"),
         py::arg("paint") = nullptr)
-*/
     // .def("drawImageNine",
     //     py::overload_cast<const sk_sp<SkImage>&, const SkIRect&,
     //         const SkRect&, const SkPaint*>(&SkCanvas::drawImageNine))

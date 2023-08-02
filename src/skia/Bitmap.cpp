@@ -732,7 +732,6 @@ bitmap
 
         Subsequent calls to :py:meth:`getGenerationID` return a different value.
         )docstring")
-/*
     .def("eraseColor", &SkBitmap::eraseColor,
         R"docstring(
         Replaces pixel values with c, interpreted as being in the sRGB
@@ -747,7 +746,6 @@ bitmap
         :param int c: unpremultiplied color
         )docstring",
         py::arg("c"))
-*/
     .def("eraseARGB", &SkBitmap::eraseARGB,
         R"docstring(
         Replaces pixel values with unpremultiplied color built from a, r, g, and
@@ -1024,13 +1022,11 @@ bitmap
         :return: true if :py:class:`Bitmap` has direct access to pixels
         )docstring",
         py::arg("pixmap"))
-/*
     .def("makeShader",
         py::overload_cast<SkTileMode, SkTileMode, const SkMatrix*>(
             &SkBitmap::makeShader, py::const_),
         py::arg("tmx") = SkTileMode::kClamp,
         py::arg("tmy") = SkTileMode::kClamp, py::arg("localMatrix") = nullptr)
-*/
     ;
 
 

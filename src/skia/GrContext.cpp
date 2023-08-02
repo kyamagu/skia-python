@@ -96,10 +96,8 @@ py::enum_<GrGLBackendState>(m, "GrGLBackendState", R"docstring(
         GrGLBackendState::kFixedFunction_GrGLBackendState)
     .value("kMisc_GrGLBackendState",
         GrGLBackendState::kMisc_GrGLBackendState)
-/*
     .value("kPathRendering_GrGLBackendState",
         GrGLBackendState::kPathRendering_GrGLBackendState)
-*/
     .value("kALL_GrGLBackendState",
         GrGLBackendState::kALL_GrGLBackendState)
     .export_values();
@@ -217,25 +215,21 @@ py::class_<GrBackendSemaphore>(m, "GrBackendSemaphore")
             semaphore.initGL(reinterpret_cast<GrGLsync>(glsync));
         },
         py::arg("glsync"))
-/*
     .def("initVulkan",
         [] (GrBackendSemaphore& semaphore, void* vksemaphore) {
             semaphore.initVulkan(reinterpret_cast<VkSemaphore>(vksemaphore));
         },
         py::arg("semaphore"))
-*/
     // .def("initMetal", &GrBackendSemaphore::initMetal)
     .def("isInitialized", &GrBackendSemaphore::isInitialized)
     .def("glSync",
         [] (GrBackendSemaphore& semaphore) {
             return reinterpret_cast<void*>(semaphore.glSync());
         })
-/*
     .def("vkSemaphore",
         [] (GrBackendSemaphore& semaphore) {
             return reinterpret_cast<void*>(semaphore.vkSemaphore());
         })
-*/
     // .def("mtlSemaphore", &GrBackendSemaphore::mtlSemaphore)
     // .def("mtlValue", &GrBackendSemaphore::mtlValue)
     ;
@@ -243,7 +237,6 @@ py::class_<GrBackendSemaphore>(m, "GrBackendSemaphore")
 py::class_<GrBackendFormat>(m, "GrBackendFormat")
     .def(py::init<>())
     .def(py::init<const GrBackendFormat&>())
-/*
     .def_static("MakeGL", &GrBackendFormat::MakeGL,
         py::arg("format"), py::arg("target"))
     .def_static("MakeVk", py::overload_cast<VkFormat>(&GrBackendFormat::MakeVk),
@@ -254,7 +247,6 @@ py::class_<GrBackendFormat>(m, "GrBackendFormat")
         py::arg("ycbcrInfo"))
     .def_static("MakeMock", &GrBackendFormat::MakeMock,
         py::arg("colorType"), py::arg("compression"), py::arg("isStencilFormat") = false)
-*/
     .def("__eq__", &GrBackendFormat::operator==, py::arg("other"),
         py::is_operator())
 /*
@@ -265,11 +257,9 @@ py::class_<GrBackendFormat>(m, "GrBackendFormat")
 */
     .def("channelMask", &GrBackendFormat::channelMask)
     .def("asGLFormat", &GrBackendFormat::asGLFormat)
-/*
     .def("asVkFormat", &GrBackendFormat::asVkFormat, py::arg("format"))
     .def("getVkYcbcrConversionInfo",
         &GrBackendFormat::getVkYcbcrConversionInfo)
-*/
     .def("asMockColorType", &GrBackendFormat::asMockColorType)
     .def("asMockCompressionType", &GrBackendFormat::asMockCompressionType)
     .def("makeTexture2D", &GrBackendFormat::makeTexture2D)
@@ -302,12 +292,10 @@ py::class_<GrBackendTexture>(m, "GrBackendTexture")
         py::arg("info"))
     .def("glTextureParametersModified",
         &GrBackendTexture::glTextureParametersModified)
-/*
     .def("getVkImageInfo", &GrBackendTexture::getVkImageInfo,
         py::arg("info"))
     .def("setVkImageLayout", &GrBackendTexture::setVkImageLayout,
         py::arg("layout"))
-*/
     .def("getBackendFormat", &GrBackendTexture::getBackendFormat)
     .def("getMockTextureInfo", &GrBackendTexture::getMockTextureInfo,
         py::arg("info"))
@@ -396,7 +384,6 @@ py::class_<GrBackendRenderTarget>(m, "GrBackendRenderTarget")
         false if the backend API is not GL.
         )docstring",
         py::arg("info"))
-/*
     .def("getVkImageInfo", &GrBackendRenderTarget::getVkImageInfo,
         R"docstring(
         If the backend API is Vulkan, copies a snapshot of the GrVkImageInfo
@@ -412,7 +399,6 @@ py::class_<GrBackendRenderTarget>(m, "GrBackendRenderTarget")
         of the changed layout.
         )docstring",
         py::arg("layout"))
-*/
     .def("getBackendFormat", &GrBackendRenderTarget::getBackendFormat,
         R"docstring(
         Get the GrBackendFormat for this render target (or an invalid format if
@@ -444,7 +430,6 @@ py::class_<GrContext_Base, sk_sp<GrContext_Base>, SkRefCnt>(m, "GrContext_Base")
         R"docstring(
         The 3D API backing this context.
         )docstring")
-/*
     .def("defaultBackendFormat", &GrContext_Base::defaultBackendFormat,
         R"docstring(
         Retrieve the default :py:class:`GrBackendFormat` for a given
@@ -456,7 +441,6 @@ py::class_<GrContext_Base, sk_sp<GrContext_Base>, SkRefCnt>(m, "GrContext_Base")
         The caller should check that the returned format is valid.
         )docstring")
     .def("compressedBackendFormat", &GrContext_Base::compressedBackendFormat)
-*/
     .def("threadSafeProxy", &GrContext_Base::threadSafeProxy)
     // .def("priv", py::overload_cast<>(&GrContext_Base::priv))
     // .def("priv", py::overload_cast<>(&GrContext_Base::priv, py::const_))
@@ -658,7 +642,6 @@ py::class_<GrDirectContext, sk_sp<GrDirectContext>, GrRecordingContext>(m, "GrCo
 
         Can be called to reduce GPU memory pressure.
         )docstring")
-/*
     .def("performDeferredCleanup", &GrDirectContext::performDeferredCleanup,
         R"docstring(
         Purge GPU resources that haven't been used in the past 'msNotUsed'
@@ -666,7 +649,6 @@ py::class_<GrDirectContext, sk_sp<GrDirectContext>, GrRecordingContext>(m, "GrCo
         the context is under budget.
         )docstring",
         py::arg("msNotUsed"))
-*/
     .def("purgeResourcesNotUsedInMs", &GrDirectContext::purgeResourcesNotUsedInMs,
         py::arg("msNotUsed"))
     .def("purgeUnlockedResources",
@@ -750,14 +732,12 @@ py::class_<GrDirectContext, sk_sp<GrDirectContext>, GrRecordingContext>(m, "GrCo
         client will still own the semaphores.
         )docstring",
         py::arg("semaphores"), py::arg("deleteSemaphoresAfterWait") = true)
-/*
     .def("flushAndSubmit", &GrDirectContext::flushAndSubmit,
         R"docstring(
         Call to ensure all drawing to the context has been flushed and submitted
         to the underlying 3D API. This is equivalent to calling :py:meth:`flush`
         with a default :py:class:`GrFlushInfo` followed by :py:meth:`submit`.
         )docstring")
-*/
     .def("flush", py::overload_cast<const GrFlushInfo&>(&GrDirectContext::flush),
         R"docstring(
         Call to ensure all drawing to the context has been flushed to underlying
