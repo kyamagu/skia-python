@@ -21,9 +21,7 @@ py::class_<GrMockRenderTargetInfo>(m, "GrMockRenderTargetInfo")
     .def(py::init<GrColorType, int>(),
         py::arg("colorType"), py::arg("id"))
     .def("__eq__", &GrMockRenderTargetInfo::operator==, py::is_operator())
-/*
     .def("getBackendFormat", &GrMockRenderTargetInfo::getBackendFormat)
-*/
     .def("colorType", &GrMockRenderTargetInfo::colorType)
     ;
 

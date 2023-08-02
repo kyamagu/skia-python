@@ -175,7 +175,6 @@ sk_sp<SkImage> ImageResize(
         throw std::runtime_error("Failed to resize image.");
     return SkImages::RasterFromData(imageInfo, buffer, imageInfo.minRowBytes());
 }
-*/
 
 }  // namespace
 
@@ -187,6 +186,7 @@ py::enum_<skgpu::Budgeted>(m, "Budgeted", R"docstring(
     .value("kYes", skgpu::Budgeted::kYes)
     .export_values();
 
+/*
 py::enum_<SkFilterQuality>(m, "FilterQuality",
     R"docstring(
     Controls how much filtering to be done when scaling/transforming complex
@@ -486,7 +486,6 @@ image
         py::arg("colorType") = kUnknown_SkColorType,
         py::arg("alphaType") = kUnknown_SkAlphaType,
         py::arg("colorSpace") = nullptr)
-/*
     .def("resize", &ImageResize,
         R"docstring(
         Creates :py:class:`Image` by scaling pixels to fit width and height.
@@ -661,7 +660,6 @@ image
         py::arg("height"), py::arg("type"),
         py::arg("mipMapped") = GrMipmapped::kNo,
         py::arg("isProtected") = GrProtected::kNo)
-*/
     .def_static("MakeRasterFromCompressed", &SkImages::RasterFromCompressedTextureData,
         R"docstring(
         Creates a CPU-backed :py:class:`Image` from compressed data.
@@ -677,7 +675,6 @@ image
         :return: created :py:class:`Image`, or nullptr
         )docstring",
         py::arg("data"), py::arg("width"), py::arg("height"), py::arg("type"))
-/*
     .def_static("MakeFromTexture",
         [] (GrRecordingContext* context, const GrBackendTexture& texture,
             GrSurfaceOrigin origin, SkColorType colorType,
@@ -1434,7 +1431,6 @@ image
     // .def("asyncRescaleAndReadPixels", &SkImage::asyncRescaleAndReadPixels)
     // .def("asyncRescaleAndReadPixelsYUV420",
     //      &SkImage::asyncRescaleAndReadPixelsYUV420)
-/*
     .def("scalePixels", &SkImage::scalePixels,
         R"docstring(
         Copies :py:class:`Image` to dst, scaling pixels to fit ``dst.width()``
@@ -1567,7 +1563,6 @@ image
 
         :return: encoded :py:class:`Image`, or nullptr
         )docstring")
-*/
     .def("refEncodedData", &SkImage::refEncodedData,
         R"docstring(
         Returns encoded :py:class:`Image` pixels as :py:class:`Data`, if

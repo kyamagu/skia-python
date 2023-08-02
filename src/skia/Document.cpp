@@ -134,6 +134,7 @@ py::class_<PyAutoDocumentPage>(m, "_AutoDocumentPage")
 
 py::class_<PyPDF> pdf(m, "PDF");
 
+/*
 py::enum_<SkPDF::DocumentStructureType>(pdf, "DocumentStructureType")
     .value("kDocument", SkPDF::DocumentStructureType::kDocument)
     .value("kPart", SkPDF::DocumentStructureType::kPart)
@@ -185,6 +186,7 @@ py::enum_<SkPDF::DocumentStructureType>(pdf, "DocumentStructureType")
     .value("kFormula", SkPDF::DocumentStructureType::kFormula)
     .value("kForm", SkPDF::DocumentStructureType::kForm)
     .export_values();
+*/
 
 py::class_<SkPDF::AttributeList>(pdf, "AttributeList")
     .def(py::init<>())

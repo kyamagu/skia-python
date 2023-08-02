@@ -730,6 +730,7 @@ py::class_<SkYUVAInfo> yuvainfo(m, "YUVAInfo",
     in external textures or pixmaps.
     )docstring");
 
+/*
 py::enum_<SkYUVAInfo::PlanarConfig>(yuvainfo, "PlanarConfig",
     R"docstring(
     Specifies how YUV (and optionally A) are divided among planes. Planes are
@@ -788,6 +789,7 @@ py::enum_<SkYUVAInfo::PlanarConfig>(yuvainfo, "PlanarConfig",
     .value("kUYVA_4444", SkYUVAInfo::PlanarConfig::kUYVA_4444,
         "Plane 0: UYVA")
     .export_values();
+*/
 
 py::enum_<SkYUVAInfo::Siting>(yuvainfo, "Siting",
     R"docstring(
@@ -805,6 +807,7 @@ py::enum_<SkYUVAInfo::Siting>(yuvainfo, "Siting",
 
 yuvainfo
     .def_readonly_static("kMaxPlanes", &SkYUVAInfo::kMaxPlanes)
+/*
     .def_static("PlaneDimensions",
         [] (SkISize imageDimensions, SkYUVAInfo::PlanarConfig config,
             SkEncodedOrigin origin) {
@@ -824,6 +827,7 @@ yuvainfo
         been transformed to the intended display orientation).
         )docstring",
         py::arg("imageDimensions"), py::arg("config"), py::arg("origin"))
+*/
     .def_static("NumPlanes", &SkYUVAInfo::NumPlanes,
         R"docstring(
         Number of planes for a given PlanarConfig.
@@ -841,6 +845,7 @@ yuvainfo
         )docstring",
         py::arg("config"))
     .def(py::init<>())
+/*
     .def(py::init<SkISize, SkYUVAInfo::PlanarConfig, SkYUVColorSpace,
         SkEncodedOrigin, SkYUVAInfo::Siting, SkYUVAInfo::Siting>(),
         R"docstring(
@@ -853,6 +858,7 @@ yuvainfo
         py::arg("sittingX") = SkYUVAInfo::Siting::kCentered,
         py::arg("sittingY") = SkYUVAInfo::Siting::kCentered)
     .def("planarConfig", &SkYUVAInfo::planarConfig)
+*/
     .def("dimensions", &SkYUVAInfo::dimensions,
         R"docstring(
         Dimensions of the full resolution image (after planes have been oriented
