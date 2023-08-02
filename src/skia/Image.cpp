@@ -1200,7 +1200,7 @@ image
             :py:attr:`~AlphaType.kOpaque_AlphaType`
         )docstring")
     .def("makeShader",
-        py::overload_cast<SkTileMode, SkTileMode, const SkMatrix*>(
+        py::overload_cast<SkTileMode, SkTileMode, const SkSamplingOptions&, const SkMatrix*>(
             &SkImage::makeShader, py::const_),
         R"docstring(
         Creates :py:class:`Shader` from :py:class:`Image`.
@@ -1217,7 +1217,7 @@ image
         :return: :py:class:`Shader` containing :py:class:`Image`
         )docstring",
         py::arg("tmx") = SkTileMode::kClamp,
-        py::arg("tmy") = SkTileMode::kClamp, py::arg("localMatrix") = nullptr)
+        py::arg("tmy") = SkTileMode::kClamp, py::arg("samplingOptions") = SkSamplingOptions(), py::arg("localMatrix") = nullptr)
     // TODO: Other makeShader overloads.
     .def("peekPixels", &SkImage::peekPixels,
         R"docstring(
@@ -1631,7 +1631,7 @@ image
 
         :return: raster image, lazy image, or nullptr
         )docstring")
-   .def("makeRasterImage", py::overload_cast<CachingHint>(&SkImage::makeRasterImage),
+   .def("makeRasterImage", py::overload_cast<SkImage::CachingHint>(&SkImage::makeRasterImage, py::const_),
         R"docstring(
         Returns raster image.
 
