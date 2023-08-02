@@ -34,7 +34,6 @@ git clone https://gn.googlesource.com/gn && \
 cd skia && \
     patch -p1 < ../patch/skia-m116-minimize-download.patch && \
     python tools/git-sync-deps && \
-    patch -p1 < ../patch/make_data_assembly.patch && \
     patch -p1 < ../patch/libjpeg-arm.patch && \
     bin/gn gen out/Release --args="
 is_official_build=true
