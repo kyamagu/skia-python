@@ -786,7 +786,7 @@ surface
         py::arg("access"), py::arg("info"))
     .def("flush",
         py::overload_cast<
-            const GrFlushInfo&, const GrBackendSurfaceMutableState*>(
+            const GrFlushInfo&, const skgpu::MutableTextureState*>(
             &SkSurface::flush),
         R"docstring(
         Issues pending :py:class:`Surface` commands to the GPU-backed API
