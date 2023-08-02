@@ -715,7 +715,7 @@ py::class_<GrDirectContext, sk_sp<GrDirectContext>, GrRecordingContext>(m, "GrCo
         client will still own the semaphores.
         )docstring",
         py::arg("semaphores"), py::arg("deleteSemaphoresAfterWait") = true)
-    .def("flushAndSubmit", &GrDirectContext::flushAndSubmit,
+    .def("flushAndSubmit", py::overload_cast<bool>(&GrDirectContext::flushAndSubmit),
         R"docstring(
         Call to ensure all drawing to the context has been flushed and submitted
         to the underlying 3D API. This is equivalent to calling :py:meth:`flush`
