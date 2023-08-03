@@ -591,9 +591,9 @@ py::class_<SkImageFilters>(m, "ImageFilters")
         py::arg("cropRect") = nullptr)
     .def_static("Image",
         [] (const SkImage& image, const SkRect& srcRect, const SkRect& dstRect,
-            SkFilterQuality filterQuality) {
+            const SkSamplingOptions& options) {
             return SkImageFilters::Image(
-                CloneImage(image), srcRect, dstRect, filterQuality);
+                CloneImage(image), srcRect, dstRect, options);
         },
         R"docstring(
         Create a filter that draws the 'srcRect' portion of image into 'dstRect'
@@ -608,22 +608,24 @@ py::class_<SkImageFilters>(m, "ImageFilters")
         :filterQuality: The filter quality that is used when sampling the image.
         )docstring",
         py::arg("image"), py::arg("srcRect"), py::arg("dstRect"),
-        py::arg("filterQuality") = SkFilterQuality::kHigh_SkFilterQuality)
+        py::arg("options") = SkSamplingOptions())
     .def_static("Image",
-        [] (const SkImage& image) {
-            return SkImageFilters::Image(CloneImage(image));
+        [] (const SkImage& image, const SkSamplingOptions& options) {
+            return SkImageFilters::Image(CloneImage(image), options);
         },
         R"docstring(
         Create a filter that produces the image contents.
 
         :image: The image that is output by the filter.
         )docstring",
-        py::arg("image"))
+        py::arg("image"), py::arg("options") = SkSamplingOptions())
     .def_static("Magnifier",
-        [] (const SkRect& srcRect, SkScalar inset, const SkImageFilter* input,
+            [] (const SkRect& srcRect, SkScalar zoomAmount, SkScalar inset,
+            const SkSamplingOptions& sampling,
+            const SkImageFilter* input,
             const SkIRect* cropRect) {
             return SkImageFilters::Magnifier(
-                srcRect, inset, CLONE(input), cropRect);
+                srcRect, zoomAmount, inset, sampling, CLONE(input), cropRect);
         },
         R"docstring(
         Create a filter that mimics a zoom/magnifying lens effect.
@@ -635,7 +637,7 @@ py::class_<SkImageFilters>(m, "ImageFilters")
         :param skia.Rect cropRect: Optional rectangle that crops the input and
             output.
         )docstring",
-        py::arg("srcRect"), py::arg("inset"), py::arg("input") = nullptr,
+        py::arg("srcRect"), py::arg("zoomAmount"), py::arg("inset"), py::arg("sampling"), py::arg("input") = nullptr,
         py::arg("cropRect") = nullptr)
     .def_static("MatrixConvolution",
         [] (const SkISize& kernelSize,
@@ -683,10 +685,10 @@ py::class_<SkImageFilters>(m, "ImageFilters")
         py::arg("convolveAlpha"), py::arg("input") = nullptr,
         py::arg("cropRect") = nullptr)
     .def_static("MatrixTransform",
-        [] (const SkMatrix& matrix, SkFilterQuality filterQuality,
+        [] (const SkMatrix& matrix, const SkSamplingOptions& sampling,
             const SkImageFilter* input) {
             return SkImageFilters::MatrixTransform(
-                matrix, filterQuality, CLONE(input));
+                matrix, sampling, CLONE(input));
         },
         R"docstring(
         Create a filter that transforms the input image by 'matrix'.
@@ -696,12 +698,11 @@ py::class_<SkImageFilters>(m, "ImageFilters")
         the filtering.
 
         :param skia.Matrix matrix: The matrix to apply to the original content.
-        :param skia.FilterQuality filterQuality: The filter quality to use when
-            sampling the input image.
+        :param skia.SamplingOptions sampling: How the image will be sampled when it is transformed
         :param skia.ImageFilter input: The image filter to transform, or null to
             use the source image.
         )docstring",
-        py::arg("matrix"), py::arg("filterQuality"), py::arg("input") = nullptr)
+        py::arg("matrix"), py::arg("sampling"), py::arg("input") = nullptr)
     .def_static("Merge",
         [] (py::list filters, const SkIRect* cropRect) {
             std::vector<sk_sp<SkImageFilter>> filters_(filters.size());
