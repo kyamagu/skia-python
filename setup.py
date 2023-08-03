@@ -29,6 +29,7 @@ if sys.platform == 'win32':
         'Usp10',
         'OpenGL32',
         'Gdi32',
+        'Advapi32',
     ]
     EXTRA_OBJECTS = list(
     ) + [os.path.join(SKIA_OUT_PATH, 'svg.lib'), os.path.join(SKIA_OUT_PATH, 'skia.lib'),
