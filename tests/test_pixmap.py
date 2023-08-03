@@ -195,7 +195,7 @@ def test_YUVAPixmapInfo_SupportedDataTypes_All():
 def test_YUVAPixmapInfo_SupportedDataTypes_supported(supported_data_types):
     assert isinstance(
         supported_data_types.supported(
-            skia.YUVAInfo.kY_U_V_444, skia.YUVAPixmapInfo.kUnorm8),
+            skia.YUVAInfo.kY_U_V, skia.YUVAPixmapInfo.kUnorm8),
         bool)
 
 
@@ -208,7 +208,8 @@ def yuva_pixmap_info():
     return skia.YUVAPixmapInfo(
         skia.YUVAInfo(
             (100, 100),
-            skia.YUVAInfo.kY_U_V_444,
+            skia.YUVAInfo.PlaneConfig.kY_U_V,
+            skia.YUVAInfo.Subsampling.k444,
             skia.kJPEG_YUVColorSpace),
         skia.YUVAPixmapInfo.kUnorm8)
 

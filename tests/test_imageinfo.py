@@ -299,16 +299,16 @@ def test_YUVAInfo_PlaneDimensions():
 
 
 def test_YUVAInfo_NumPlanes():
-    assert isinstance(skia.YUVAInfo.NumPlanes(skia.YUVAInfo.kY_U_V_444), int)
+    assert isinstance(skia.YUVAInfo.NumPlanes(skia.YUVAInfo.kY_U_V), int)
 
 
 def test_YUVAInfo_NumChannelsInPlane():
     assert isinstance(
-        skia.YUVAInfo.NumChannelsInPlane(skia.YUVAInfo.kY_U_V_444, 0), int)
+        skia.YUVAInfo.NumChannelsInPlane(skia.YUVAInfo.kY_U_V, 0), int)
 
 
 def test_YUVAInfo_HasAlpha():
-    assert isinstance(skia.YUVAInfo.HasAlpha(skia.YUVAInfo.kY_U_V_444), bool)
+    assert isinstance(skia.YUVAInfo.HasAlpha(skia.YUVAInfo.kY_U_V), bool)
 
 
 def test_YUVAInfo_init():
@@ -322,7 +322,7 @@ def test_YUVAInfo_init():
 
 
 def test_YUVAInfo_planarConfig(yuva_info):
-    assert isinstance(yuva_info.planarConfig(), skia.YUVAInfo.PlanarConfig)
+    assert isinstance(yuva_info.planeConfig(), skia.YUVAInfo.PlaneConfig)
 
 
 def test_YUVAInfo_dimensions(yuva_info):
