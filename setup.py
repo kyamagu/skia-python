@@ -65,7 +65,7 @@ elif sys.platform == 'darwin':
     ) + [os.path.join(SKIA_OUT_PATH, 'libsvg.a'), os.path.join(SKIA_OUT_PATH, 'libskia.a'),
          os.path.join(SKIA_OUT_PATH, 'libskshaper.a'), os.path.join(SKIA_OUT_PATH, 'libskunicode.a')]
     EXTRA_COMPILE_ARGS = [
-        '-std=c++14',
+        '-std=c++17',
         '-stdlib=libc++',
         '-mmacosx-version-min=10.9',
         '-fvisibility=hidden',
