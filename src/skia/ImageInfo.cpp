@@ -808,11 +808,11 @@ py::enum_<SkYUVAInfo::Siting>(yuvainfo, "Siting",
 yuvainfo
     .def_readonly_static("kMaxPlanes", &SkYUVAInfo::kMaxPlanes)
     .def_static("PlaneDimensions",
-        [] (SkISize imageDimensions, SkYUVAInfo::PlanarConfig config,
+            [] (SkISize imageDimensions, SkYUVAInfo::PlaneConfig config, SkYUVAInfo::Subsampling sampling,
             SkEncodedOrigin origin) {
             std::vector<SkISize> planeDimensions(SkYUVAInfo::kMaxPlanes);
             auto size = SkYUVAInfo::PlaneDimensions(
-                imageDimensions, config, origin, planeDimensions.data());
+                imageDimensions, config, sampling, origin, planeDimensions.data());
             planeDimensions.erase(
                 planeDimensions.begin() + size, planeDimensions.end());
             return planeDimensions;
@@ -825,36 +825,37 @@ yuvainfo
         The input image dimensions are as displayed (after the planes have
         been transformed to the intended display orientation).
         )docstring",
-        py::arg("imageDimensions"), py::arg("config"), py::arg("origin"))
+        py::arg("imageDimensions"), py::arg("config"), py::arg("sampling"), py::arg("origin"))
     .def_static("NumPlanes", &SkYUVAInfo::NumPlanes,
         R"docstring(
-        Number of planes for a given PlanarConfig.
+        Number of planes for a given PlaneConfig.
         )docstring",
         py::arg("config"))
     .def_static("NumChannelsInPlane", &SkYUVAInfo::NumChannelsInPlane,
         R"docstring(
-        Number of Y, U, V, A channels in the ith plane for a given PlanarConfig
+        Number of Y, U, V, A channels in the ith plane for a given PlaneConfig
         (or 0 if i is invalid).
         )docstring",
         py::arg("config"), py::arg("i"))
     .def_static("HasAlpha", &SkYUVAInfo::HasAlpha,
         R"docstring(
-        Does the PlanarConfig have alpha values?
+        Does the PlaneConfig have alpha values?
         )docstring",
         py::arg("config"))
     .def(py::init<>())
-    .def(py::init<SkISize, SkYUVAInfo::PlanarConfig, SkYUVColorSpace,
+    .def(py::init<SkISize, SkYUVAInfo::PlaneConfig, SkYUVAInfo::Subsampling, SkYUVColorSpace,
         SkEncodedOrigin, SkYUVAInfo::Siting, SkYUVAInfo::Siting>(),
         R"docstring(
         'dimensions' should specify the size of the full resolution image (after
         planes have been oriented to how the image is displayed as indicated by
         'origin').
         )docstring",
-        py::arg("dimensions"), py::arg("config"), py::arg("yuvColorSpace"),
+        py::arg("dimensions"), py::arg("config"), py::arg("sampling"), py::arg("yuvColorSpace"),
         py::arg("origin") = kTopLeft_SkEncodedOrigin,
         py::arg("sittingX") = SkYUVAInfo::Siting::kCentered,
         py::arg("sittingY") = SkYUVAInfo::Siting::kCentered)
-    .def("planarConfig", &SkYUVAInfo::planarConfig)
+    .def("planeConfig", &SkYUVAInfo::planeConfig)
+    .def("subSampling", &SkYUVAInfo::subsampling)
     .def("dimensions", &SkYUVAInfo::dimensions,
         R"docstring(
         Dimensions of the full resolution image (after planes have been oriented
