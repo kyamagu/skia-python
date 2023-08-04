@@ -190,7 +190,7 @@ def test_ImageFilters_Image(image, args):
 
 def test_ImageFilters_Magnifier():
     assert isinstance(
-        skia.ImageFilters.Magnifier(skia.Rect(100, 100), 1.), skia.ImageFilter)
+        skia.ImageFilters.Magnifier(skia.Rect(100, 100), 1., 1., skia.SamplingOptions()), skia.ImageFilter)
 
 
 def test_ImageFilters_MatrixConvolution():
