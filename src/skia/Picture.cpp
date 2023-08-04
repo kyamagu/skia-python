@@ -143,7 +143,6 @@ py::class_<SkPicture, PyPicture, sk_sp<SkPicture>, SkRefCnt>(
 
         :return: approximate size
         )docstring")
-/*
     .def("makeShader",
         py::overload_cast<SkTileMode, SkTileMode, SkFilterMode, const SkMatrix*,
         const SkRect*>(&SkPicture::makeShader, py::const_),
@@ -165,7 +164,6 @@ py::class_<SkPicture, PyPicture, sk_sp<SkPicture>, SkRefCnt>(
         )docstring",
         py::arg("tmx"), py::arg("tmy"), py::arg("mode"), py::arg("localMatrix") = nullptr,
         py::arg("tile") = nullptr)
-*/
     .def_static("MakeFromStream",
         [] (SkStream* stream) {
             return SkPicture::MakeFromStream(stream);

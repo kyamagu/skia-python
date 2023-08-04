@@ -359,6 +359,7 @@ py::class_<std::unique_ptr<uint>>(m, "PerlinNoiseShader",
     .def_static("MakeTurbulence", &SkShaders::MakeTurbulence,
         py::arg("baseFrequencyX"), py::arg("baseFrequencyY"),
         py::arg("numOctaves"), py::arg("seed"), py::arg("tileSize") = nullptr)
+/*
     .def_static("MakeImprovedNoise", &SkShaders::MakeImprovedNoise,
         R"docstring(
         Creates an Improved Perlin Noise shader.

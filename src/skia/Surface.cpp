@@ -715,7 +715,6 @@ surface
         :return: LCD striping orientation and setting for device independent
             fonts
         )docstring")
-/*
     .def("flushAndSubmit",
         py::overload_cast<bool>(&SkSurface::flushAndSubmit),
         R"docstring(

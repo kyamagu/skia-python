@@ -67,6 +67,7 @@ py::class_<SkImageFilter, sk_sp<SkImageFilter>, SkFlattenable> imagefilter(
 
 py::class_<SkImageFilters::CropRect> croprect(imagefilter, "CropRect");
 
+/*
 py::enum_<SkImageFilters::CropRect::CropEdge>(croprect, "CropEdge")
     .value("kHasLeft_CropEdge", SkImageFilters::CropRect::kHasLeft_CropEdge)
     .value("kHasTop_CropEdge", SkImageFilters::CropRect::kHasTop_CropEdge)
@@ -74,11 +75,13 @@ py::enum_<SkImageFilters::CropRect::CropEdge>(croprect, "CropEdge")
     .value("kHasHeight_CropEdge", SkImageFilters::CropRect::kHasHeight_CropEdge)
     .value("kHasAll_CropEdge", SkImageFilters::CropRect::kHasAll_CropEdge)
     .export_values();
+*/
 
 croprect
     .def(py::init<>())
     .def(py::init<const SkRect&>(),
         py::arg("rect"))
+/*
         py::arg("flags") = SkImageFilters::CropRect::kHasAll_CropEdge)
     .def("flags", &SkImageFilters::CropRect::flags)
     .def("rect", &SkImageFilters::CropRect::rect)

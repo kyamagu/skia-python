@@ -774,6 +774,7 @@ py::enum_<SkYUVAInfo::PlaneConfig>(yuvainfo, "PlaneConfig",
         "Plane 0: UYVA")
     .export_values();
 
+
 py::enum_<SkYUVAInfo::Subsampling>(yuvainfo, "Subsampling",
     R"docstring(
     UV subsampling is also specified in the enum value names using J:a:b notation (e.g. 4:2:0 is
@@ -790,6 +791,7 @@ py::enum_<SkYUVAInfo::Subsampling>(yuvainfo, "Subsampling",
     .value("k411", SkYUVAInfo::Subsampling::k411)
     .value("k410", SkYUVAInfo::Subsampling::k410)
     .export_values();
+
 
 py::enum_<SkYUVAInfo::Siting>(yuvainfo, "Siting",
     R"docstring(

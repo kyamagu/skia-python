@@ -223,7 +223,6 @@ py::enum_<SkEncodedImageFormat>(m, "EncodedImageFormat", R"docstring(
     .export_values();
 
 
-/*
 py::class_<SkMipmapBuilder>(m, "MipmapBuilder")
     .def(py::init<const SkImageInfo&>())
     .def("countLevels", &SkMipmapBuilder::countLevels)
