@@ -524,7 +524,7 @@ def test_Path_getSegmentMasks(path):
 
 def test_Path_dump(path):
     stream = skia.DynamicMemoryWStream()
-    path.dump(stream, False, False)
+    path.dump(stream, False)
 
 
 def test_Path_dump_2(path):
