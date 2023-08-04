@@ -1,5 +1,6 @@
 #include "common.h"
 #include <include/core/SkPixelRef.h>
+#include <include/core/SkSamplingOptions.h>
 #include <algorithm>
 
 
@@ -1024,13 +1025,11 @@ bitmap
         :return: true if :py:class:`Bitmap` has direct access to pixels
         )docstring",
         py::arg("pixmap"))
-/*
     .def("makeShader",
-        py::overload_cast<SkTileMode, SkTileMode, const SkMatrix*>(
+        py::overload_cast<SkTileMode, SkTileMode, const SkSamplingOptions&, const SkMatrix*>(
             &SkBitmap::makeShader, py::const_),
         py::arg("tmx") = SkTileMode::kClamp,
-        py::arg("tmy") = SkTileMode::kClamp, py::arg("localMatrix") = nullptr)
-*/
+        py::arg("tmy") = SkTileMode::kClamp, py::arg("sampling") = SkSamplingOptions(),  py::arg("localMatrix") = nullptr)
     ;
 
 
