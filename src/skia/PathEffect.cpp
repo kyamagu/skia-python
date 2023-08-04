@@ -283,6 +283,7 @@ patheffect
         py::arg("outer"), py::arg("inner"))
 /*
     .def_static("RegisterFlattenables", &SkPathEffect::RegisterFlattenables)
+*/
     .def_static("GetFlattenableType", &SkPathEffect::GetFlattenableType)
     .def_static("Deserialize",
         [] (py::buffer b) {
@@ -291,7 +292,6 @@ patheffect
             return SkPathEffect::Deserialize(info.ptr, size);
         },
         py::arg("data"))
-*/
     ;
 
 py::class_<SkDiscretePathEffect>(
