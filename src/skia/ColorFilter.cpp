@@ -120,18 +120,13 @@ colorfilter
         result = this(inner(...))
         )docstring",
         py::arg("inner"))
-/*
     .def_static("Deserialize",
         [] (py::buffer b) {
             auto info = b.request();
-            auto flattenable = SkColorFilter::Deserialize(
-                SkColorFilter::GetFlattenableType(), info.ptr,
-                info.shape[0] * info.strides[0]);
-            return sk_sp<SkColorFilter>(
-                reinterpret_cast<SkColorFilter*>(flattenable.release()));
+            size_t size = (info.ndim) ? info.strides[0] * info.shape[0] : 0;
+            return SkColorFilter::Deserialize(info.ptr, size);
         },
         py::arg("data"))
-*/
     ;
 
 py::class_<SkColorMatrix>(m, "ColorMatrix")
