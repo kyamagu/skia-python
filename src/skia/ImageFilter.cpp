@@ -104,8 +104,8 @@ croprect
         cropRect's bounds.
         )docstring",
         py::arg("imageBounds"), py::arg("matrix"), py::arg("embiggen"))
-    ;
 */
+    ;
 
 py::enum_<SkImageFilter::MapDirection>(imagefilter, "MapDirection")
     .value("kForward_MapDirection", SkImageFilter::kForward_MapDirection)
@@ -736,7 +736,6 @@ py::class_<SkImageFilters>(m, "ImageFilters")
             filters and the output.
         )docstring",
         py::arg("filters"), py::arg("cropRect") = nullptr)
-*/
     // .def_static("Merge")
     .def_static("Offset",
         [] (SkScalar dx, SkScalar dy, const SkImageFilter* input,

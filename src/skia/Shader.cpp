@@ -368,6 +368,6 @@ py::class_<SkPerlinNoiseShader>(m, "PerlinNoiseShader",
         )docstring",
         py::arg("baseFrequencyX"), py::arg("baseFrequencyY"),
         py::arg("numOctaves"), py::arg("z"))
-    ;
 */
+    ;
 }

@@ -847,7 +847,6 @@ surface
         :param newState: optional state change request after flush
         )docstring",
         py::arg("info"), py::arg("newState") = nullptr)
-*/
     .def("characterize", &SkSurface::characterize,
         R"docstring(
         Initializes :py:class:`SurfaceCharacterization` that can be used to

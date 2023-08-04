@@ -245,18 +245,18 @@ py::class_<GrBackendSemaphore>(m, "GrBackendSemaphore")
 py::class_<GrBackendFormat>(m, "GrBackendFormat")
     .def(py::init<>())
     .def(py::init<const GrBackendFormat&>())
-/*
     .def_static("MakeGL", &GrBackendFormat::MakeGL,
         py::arg("format"), py::arg("target"))
+/*
     .def_static("MakeVk", py::overload_cast<VkFormat>(&GrBackendFormat::MakeVk),
         py::arg("format"))
     .def_static("MakeVk",
         py::overload_cast<const GrVkYcbcrConversionInfo&>(
             &GrBackendFormat::MakeVk),
         py::arg("ycbcrInfo"))
+*/
     .def_static("MakeMock", &GrBackendFormat::MakeMock,
         py::arg("colorType"), py::arg("compression"), py::arg("isStencilFormat") = false)
-*/
     .def("__eq__", &GrBackendFormat::operator==, py::arg("other"),
         py::is_operator())
     .def("__ne__", &GrBackendFormat::operator!=, py::arg("other"),

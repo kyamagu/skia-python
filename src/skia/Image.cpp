@@ -236,7 +236,6 @@ py::class_<SkMipmapBuilder>(m, "MipmapBuilder")
         If not compatible, this returns nullptr.
         )docstring")
     ;
-*/
 
 
 py::class_<SkImage, sk_sp<SkImage>, SkRefCnt> image(m, "Image",
@@ -1664,7 +1663,6 @@ image
         :return: raster image, or nullptr
         )docstring",
         py::arg("cachingHint") = SkImage::kAllow_CachingHint)
-*/
     .def("makeWithFilter",
         py::overload_cast<GrRecordingContext*, const SkImageFilter*,
             const SkIRect&, const SkIRect&, SkIRect*, SkIPoint*>(
