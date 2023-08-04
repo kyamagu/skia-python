@@ -349,12 +349,14 @@ def test_YUVAPixmaps_plane(yuva_pixmaps):
     assert isinstance(yuva_pixmaps.plane(0), skia.Pixmap)
 
 
+@pytest.mark.skip(reason='"toLegacy()" method. Gone in m116. May not need REVISIT')
 def test_YUVAPixmaps_toLegacy(yuva_pixmaps):
     info, indices = yuva_pixmaps.toLegacy()
     assert isinstance(info, skia.YUVASizeInfo)
     assert isinstance(indices, list)
 
 
+@pytest.mark.skip(reason='"toLegacy()" method. Gone in m116. May not need REVISIT')
 @pytest.fixture
 def yuva_index(yuva_pixmaps):
     _, indices = yuva_pixmaps.toLegacy()
@@ -363,26 +365,32 @@ def yuva_index(yuva_pixmaps):
     return indices[0]
 
 
+@pytest.mark.skip(reason='"toLegacy()" method. Gone in m116. May not need REVISIT')
 def test_SkYUVAIndex___eq__(yuva_index):
     assert yuva_index == yuva_index
 
 
+@pytest.mark.skip(reason='"toLegacy()" method. Gone in m116. May not need REVISIT')
 def test_SkYUVAIndex___ne__(yuva_index):
     assert isinstance(yuva_index != yuva_index, bool)
 
 
+@pytest.mark.skip(reason='"toLegacy()" method. Gone in m116. May not need REVISIT')
 def test_SkYUVAIndex_kIndexCount(yuva_index):
     assert isinstance(yuva_index.kIndexCount, int)
 
 
+@pytest.mark.skip(reason='"toLegacy()" method. Gone in m116. May not need REVISIT')
 def test_SkYUVAIndex_fIndex(yuva_index):
     assert isinstance(yuva_index.fIndex, int)
 
 
+@pytest.mark.skip(reason='"toLegacy()" method. Gone in m116. May not need REVISIT')
 def test_SkYUVAIndex_fChannel(yuva_index):
     assert isinstance(yuva_index.fChannel, skia.ColorChannel)
 
 
+@pytest.mark.skip(reason='"toLegacy()" method. Gone in m116. May not need REVISIT')
 def test_SkYUVAIndex_AreValidIndices(yuva_index):
     assert isinstance(
         skia.YUVAIndex.AreValidIndices(
@@ -395,32 +403,38 @@ def test_SkYUVAIndex_AreValidIndices(yuva_index):
         tuple)
 
 
+@pytest.mark.skip(reason='"toLegacy()" method. Gone in m116. May not need REVISIT')
 @pytest.fixture
 def yuva_size_info(yuva_pixmaps):
     info, _ = yuva_pixmaps.toLegacy()
     return info
 
 
+@pytest.mark.skip(reason='"toLegacy()" method. Gone in m116. May not need REVISIT')
 def test_SkYUVASizeInfo_fSizes(yuva_size_info):
     value = yuva_size_info.fSizes
     assert isinstance(value, list)
     yuva_size_info.fSizes = value
 
 
+@pytest.mark.skip(reason='"toLegacy()" method. Gone in m116. May not need REVISIT')
 def test_SkYUVASizeInfo_fWidthBytes(yuva_size_info):
     value = yuva_size_info.fWidthBytes
     assert isinstance(value, list)
     yuva_size_info.fWidthBytes = value
 
 
+@pytest.mark.skip(reason='"toLegacy()" method. Gone in m116. May not need REVISIT')
 def test_SkYUVASizeInfo_fOrigin(yuva_size_info):
     assert isinstance(yuva_size_info.fOrigin, skia.EncodedOrigin)
     yuva_size_info.fOrigin = skia.kDefault_EncodedOrigin
 
 
+@pytest.mark.skip(reason='"toLegacy()" method. Gone in m116. May not need REVISIT')
 def test_SkYUVASizeInfo___eq__(yuva_size_info):
     assert yuva_size_info == yuva_size_info
 
 
+@pytest.mark.skip(reason='"toLegacy()" method. Gone in m116. May not need REVISIT')
 def test_SkYUVASizeInfo_computeTotalBytes(yuva_size_info):
     assert isinstance(yuva_size_info.computeTotalBytes(), int)
