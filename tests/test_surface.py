@@ -120,7 +120,7 @@ def test_Surface_asyncRescaleAndReadPixels(surface):
         assert isinstance(result, (type(None), skia.Surface.AsyncReadResult))
     surface.asyncRescaleAndReadPixels(
         info, (100, 100), skia.Surface.RescaleGamma.kSrc,
-        skia.kNone_FilterQuality, assert_result)
+        assert_result)
     surface.flushAndSubmit()
 
 

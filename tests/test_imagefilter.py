@@ -201,7 +201,7 @@ def test_ImageFilters_MatrixConvolution():
 
 def test_ImageFilters_MatrixTransform():
     assert isinstance(skia.ImageFilters.MatrixTransform(
-        skia.Matrix(), skia.FilterQuality.kLow_FilterQuality), skia.ImageFilter)
+        skia.Matrix(), skia.SamplingOptions()), skia.ImageFilter)
 
 
 def test_ImageFilters_Merge(imagefilter):
