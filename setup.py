@@ -67,7 +67,7 @@ elif sys.platform == 'darwin':
     EXTRA_COMPILE_ARGS = [
         '-std=c++17',
         '-stdlib=libc++',
-        '-mmacosx-version-min=10.9',
+        '-mmacosx-version-min=10.13',
         '-fvisibility=hidden',
     ]
     EXTRA_LINK_ARGS = [
