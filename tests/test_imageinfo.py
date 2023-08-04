@@ -293,7 +293,8 @@ def test_YUVAInfo_PlaneDimensions():
     assert isinstance(
         skia.YUVAInfo.PlaneDimensions(
             (100, 100),
-            skia.YUVAInfo.kY_U_V_444,
+            skia.YUVAInfo.PlaneConfig.kY_U_V,
+            skia.YUVAInfo.Subsampling.k444,
             skia.kTopLeft_EncodedOrigin),
         list)
 
@@ -316,7 +317,8 @@ def test_YUVAInfo_init():
     assert isinstance(
         skia.YUVAInfo(
             (100, 100),
-            skia.YUVAInfo.kY_U_V_444,
+            skia.YUVAInfo.PlaneConfig.kY_U_V,
+            skia.YUVAInfo.Subsampling.k444,
             skia.kJPEG_YUVColorSpace),
         skia.YUVAInfo)
 
