@@ -9,6 +9,7 @@
 #include <include/gpu/GrBackendSurfaceMutableState.h>
 #include <pybind11/chrono.h>
 #include <pybind11/stl.h>
+#include <pybind11/cast.h>
 
 void initGrContext_gl(py::module&);
 void initGrContext_mock(py::module&);
@@ -804,7 +805,7 @@ py::class_<GrDirectContext, sk_sp<GrDirectContext>, GrRecordingContext>(m, "GrCo
         py::arg("colorType"), py::arg("renderable") = GrRenderable::kNo)
     .def("createBackendTexture",
         py::overload_cast<int, int, const GrBackendFormat&, GrMipmapped,
-            GrRenderable, GrProtected>(&GrDirectContext::createBackendTexture),
+            GrRenderable, GrProtected, std::string_view>(&GrDirectContext::createBackendTexture),
         R"docstring(
         If possible, create an uninitialized backend texture.
 
@@ -814,10 +815,10 @@ py::class_<GrDirectContext, sk_sp<GrDirectContext>, GrRecordingContext>(m, "GrCo
         )docstring",
         py::arg("width"), py::arg("height"), py::arg("backendFormat"),
         py::arg("mipMapped"), py::arg("renderable"),
-        py::arg("isProtected") = GrProtected::kNo)
+        py::arg("isProtected") = GrProtected::kNo, py::arg("view") = std::string_view{})
     .def("createBackendTexture",
         py::overload_cast<int, int, SkColorType, GrMipmapped,
-            GrRenderable, GrProtected>(&GrDirectContext::createBackendTexture),
+            GrRenderable, GrProtected, std::string_view>(&GrDirectContext::createBackendTexture),
         R"docstring(
         If possible, create an uninitialized backend texture.
 
@@ -828,7 +829,7 @@ py::class_<GrDirectContext, sk_sp<GrDirectContext>, GrRecordingContext>(m, "GrCo
         )docstring",
         py::arg("width"), py::arg("height"), py::arg("colorType"),
         py::arg("mipMapped"), py::arg("renderable"),
-        py::arg("isProtected") = GrProtected::kNo)
+        py::arg("isProtected") = GrProtected::kNo, py::arg("view") = std::string_view{})
     .def("createBackendTexture",
         [] (GrDirectContext& context, int width, int height,
             const GrBackendFormat& backendFormat, const SkColor4f& color,
