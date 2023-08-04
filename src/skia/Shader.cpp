@@ -167,7 +167,7 @@ shader
 */
     ;
 
-py::class_<std::unique_ptr<int>>(m, "Shaders")
+py::class_<std::unique_ptr<int32_t>>(m, "Shaders")
     .def_static("Empty", &SkShaders::Empty)
     .def_static("Color", py::overload_cast<SkColor>(&SkShaders::Color),
         py::arg("color"))
@@ -322,7 +322,7 @@ gradientshader
         py::arg("flags") = 0, py::arg("localMatrix") = nullptr)
     ;
 
-py::class_<std::unique_ptr<uint>>(m, "PerlinNoiseShader",
+py::class_<std::unique_ptr<uint32_t>>(m, "PerlinNoiseShader",
     R"docstring(
     :py:class:`PerlinNoiseShader` creates an image using the Perlin turbulence
     function.
