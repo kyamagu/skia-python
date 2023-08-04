@@ -180,6 +180,7 @@ def supported_data_types():
     return skia.YUVAPixmapInfo.SupportedDataTypes.All()
 
 
+@pytest.mark.skip(reason='"SupportedDataTypes(const GrImageContext&)" gone in m116; may not need REVISIT')
 def test_YUVAPixmapInfo_SupportedDataTypes___init__(context):
     assert isinstance(
         skia.YUVAPixmapInfo.SupportedDataTypes(context),
