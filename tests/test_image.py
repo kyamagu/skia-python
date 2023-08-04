@@ -158,7 +158,9 @@ def test_Image_isOpaque(image):
 
 @pytest.mark.parametrize('args', [
     tuple(),
-    (skia.TileMode.kRepeat, skia.TileMode.kRepeat, None),
+    (skia.TileMode.kRepeat, skia.TileMode.kRepeat),
+    (skia.TileMode.kRepeat, skia.TileMode.kRepeat, skia.SamplingOptions()),
+    (skia.TileMode.kRepeat, skia.TileMode.kRepeat, skia.SamplingOptions(), None),
 ])
 def test_Image_makeShader(image, args):
     assert isinstance(image.makeShader(*args), skia.Shader)
