@@ -3,6 +3,7 @@
 #include <include/gpu/GrBackendSemaphore.h>
 #include <include/gpu/GrBackendSurface.h>
 #include <include/gpu/GrContextThreadSafeProxy.h>
+#include <include/gpu/GpuTypes.h>
 #include <include/gpu/mock/GrMockTypes.h>
 #include <include/gpu/gl/GrGLInterface.h>
 #include <include/gpu/vk/GrVkBackendContext.h>
@@ -37,6 +38,17 @@ py::enum_<GrBackendApi>(m, "GrBackendApi",
         Added here to support the legacy GrBackend enum value and clients who
         referenced it using :py:attr:`~skia.GrBackend.kOpenGL_GrBackend`.
         )docstring")
+    .export_values();
+
+py::enum_<skgpu::BackendApi>(m, "gpuBackendApi",
+    R"docstring(
+    Possible 3D APIs that may be used by Graphite.
+    )docstring",
+    py::arithmetic())
+    .value("kDawn", skgpu::BackendApi::kDawn)
+    .value("kMetal", skgpu::BackendApi::kMetal)
+    .value("kVulkan", skgpu::BackendApi::kVulkan)
+    .value("kMock", skgpu::BackendApi::kMock)
     .export_values();
 
 py::enum_<GrMipmapped>(m, "GrMipmapped",
@@ -1022,7 +1034,6 @@ py::class_<GrDirectContext, sk_sp<GrDirectContext>, GrRecordingContext>(m, "GrCo
         },
         py::arg("width"), py::arg("height"), py::arg("type"), py::arg("color"),
         py::arg("mipMapped"), py::arg("isProtected") = GrProtected::kNo)
-/*
     .def("createCompressedBackendTexture",
         [] (GrDirectContext& context, int width, int height,
             const GrBackendFormat& backendFormat, py::buffer b,
@@ -1036,7 +1047,6 @@ py::class_<GrDirectContext, sk_sp<GrDirectContext>, GrRecordingContext>(m, "GrCo
         py::arg("width"), py::arg("height"), py::arg("backendFormat"),
         py::arg("data"), py::arg("mipMapped"),
         py::arg("isProtected") = GrProtected::kNo)
-*/
     .def("createCompressedBackendTexture",
         [] (GrDirectContext& context, int width, int height,
             SkTextureCompressionType type, py::buffer b,
