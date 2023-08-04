@@ -170,6 +170,7 @@ def test_PathEffect_computeFastBounds(patheffect):
     patheffect.computeFastBounds(skia.Rect(100, 100), skia.Rect(100, 100))
 
 
+@pytest.mark.skip(reason='"PointData inner class in PathEffect. Gone in m116. May not need REVISIT')
 def test_PathEffect_asPoints(patheffect):
     results = skia.PathEffect.PointData()
     path = skia.Path()
