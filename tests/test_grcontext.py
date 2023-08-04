@@ -263,7 +263,7 @@ def test_GrBackendSurfaceMutableState_isValid(backend_surface_mutable_state):
 
 def test_GrBackendSurfaceMutableState_isValid(backend_surface_mutable_state):
     assert isinstance(
-        backend_surface_mutable_state.backend(), skia.GrBackendApi)
+        backend_surface_mutable_state.backend(), skia.gpuBackendApi)
 
 
 def test_GrContext_resetContext(context):
