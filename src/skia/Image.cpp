@@ -7,6 +7,7 @@
 #include <include/encode/SkPngEncoder.h>
 #include <include/encode/SkWebpEncoder.h>
 #include <include/core/SkTextureCompressionType.h>
+#include <src/core/SkMipmapBuilder.h>
 
 #include <pybind11/numpy.h>
 #include <pybind11/stl.h> // std::nullopt needs this.
@@ -228,7 +229,7 @@ py::class_<SkMipmapBuilder>(m, "MipmapBuilder")
     .def("countLevels", &SkMipmapBuilder::countLevels)
     .def("level", &SkMipmapBuilder::level)
     .def("attachTo",
-        py::overload_cast<const SkImage*>(&SkMipmapBuilder::attachTo),
+        py::overload_cast<sk_sp<const SkImage>>(&SkMipmapBuilder::attachTo),
         R"docstring(
         If these levels are compatible with src, return a new Image that
         combines src's base level with these levels as mip levels.
@@ -1203,9 +1204,8 @@ image
         :return: true if :py:class:`AlphaType` is
             :py:attr:`~AlphaType.kOpaque_AlphaType`
         )docstring")
-/*
     .def("makeShader",
-        py::overload_cast<SkTileMode, SkTileMode, const SkMatrix*>(
+        py::overload_cast<SkTileMode, SkTileMode, const SkSamplingOptions&, const SkMatrix*>(
             &SkImage::makeShader, py::const_),
         R"docstring(
         Creates :py:class:`Shader` from :py:class:`Image`.
@@ -1222,8 +1222,7 @@ image
         :return: :py:class:`Shader` containing :py:class:`Image`
         )docstring",
         py::arg("tmx") = SkTileMode::kClamp,
-        py::arg("tmy") = SkTileMode::kClamp, py::arg("localMatrix") = nullptr)
-*/
+        py::arg("tmy") = SkTileMode::kClamp, py::arg("samplingOptions") = SkSamplingOptions(), py::arg("localMatrix") = nullptr)
     // TODO: Other makeShader overloads.
     .def("peekPixels", &SkImage::peekPixels,
         R"docstring(
@@ -1643,8 +1642,7 @@ image
 
         :return: raster image, lazy image, or nullptr
         )docstring")
-/*
-    .def("makeRasterImage", &SkImage::makeRasterImage,
+   .def("makeRasterImage", py::overload_cast<SkImage::CachingHint>(&SkImage::makeRasterImage, py::const_),
         R"docstring(
         Returns raster image.
 

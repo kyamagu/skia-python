@@ -9,6 +9,7 @@
 #include <include/gpu/GrBackendSurfaceMutableState.h>
 #include <pybind11/chrono.h>
 #include <pybind11/stl.h>
+#include <pybind11/cast.h>
 
 void initGrContext_gl(py::module&);
 void initGrContext_mock(py::module&);
@@ -732,14 +733,13 @@ py::class_<GrDirectContext, sk_sp<GrDirectContext>, GrRecordingContext>(m, "GrCo
         client will still own the semaphores.
         )docstring",
         py::arg("semaphores"), py::arg("deleteSemaphoresAfterWait") = true)
-/*
-    .def("flushAndSubmit", &GrDirectContext::flushAndSubmit,
+    .def("flushAndSubmit", py::overload_cast<bool>(&GrDirectContext::flushAndSubmit),
         R"docstring(
         Call to ensure all drawing to the context has been flushed and submitted
         to the underlying 3D API. This is equivalent to calling :py:meth:`flush`
         with a default :py:class:`GrFlushInfo` followed by :py:meth:`submit`.
-        )docstring")
-*/
+        )docstring",
+        py::arg("syncCpu") = false)
     .def("flush", py::overload_cast<const GrFlushInfo&>(&GrDirectContext::flush),
         R"docstring(
         Call to ensure all drawing to the context has been flushed to underlying
@@ -824,10 +824,9 @@ py::class_<GrDirectContext, sk_sp<GrDirectContext>, GrRecordingContext>(m, "GrCo
         The caller should check that the returned format is valid.
         )docstring",
         py::arg("colorType"), py::arg("renderable") = GrRenderable::kNo)
-/*
     .def("createBackendTexture",
         py::overload_cast<int, int, const GrBackendFormat&, GrMipmapped,
-            GrRenderable, GrProtected>(&GrDirectContext::createBackendTexture),
+            GrRenderable, GrProtected, std::string_view>(&GrDirectContext::createBackendTexture),
         R"docstring(
         If possible, create an uninitialized backend texture.
 
@@ -837,10 +836,10 @@ py::class_<GrDirectContext, sk_sp<GrDirectContext>, GrRecordingContext>(m, "GrCo
         )docstring",
         py::arg("width"), py::arg("height"), py::arg("backendFormat"),
         py::arg("mipMapped"), py::arg("renderable"),
-        py::arg("isProtected") = GrProtected::kNo)
+        py::arg("isProtected") = GrProtected::kNo, py::arg("view") = std::string_view{})
     .def("createBackendTexture",
         py::overload_cast<int, int, SkColorType, GrMipmapped,
-            GrRenderable, GrProtected>(&GrDirectContext::createBackendTexture),
+            GrRenderable, GrProtected, std::string_view>(&GrDirectContext::createBackendTexture),
         R"docstring(
         If possible, create an uninitialized backend texture.
 
@@ -851,8 +850,7 @@ py::class_<GrDirectContext, sk_sp<GrDirectContext>, GrRecordingContext>(m, "GrCo
         )docstring",
         py::arg("width"), py::arg("height"), py::arg("colorType"),
         py::arg("mipMapped"), py::arg("renderable"),
-        py::arg("isProtected") = GrProtected::kNo)
-*/
+        py::arg("isProtected") = GrProtected::kNo, py::arg("view") = std::string_view{})
     .def("createBackendTexture",
         [] (GrDirectContext& context, int width, int height,
             const GrBackendFormat& backendFormat, const SkColor4f& color,

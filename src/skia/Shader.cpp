@@ -1,6 +1,7 @@
 #include "common.h"
 #include <include/effects/SkRuntimeEffect.h>
 #include <include/effects/SkGradientShader.h>
+#include <include/effects/SkPerlinNoiseShader.h>
 #include <pybind11/stl.h>
 
 #define GET_SKSCALAR_PTR(pos) \
@@ -321,8 +322,7 @@ gradientshader
         py::arg("flags") = 0, py::arg("localMatrix") = nullptr)
     ;
 
-/*
-py::class_<SkPerlinNoiseShader>(m, "PerlinNoiseShader",
+py::class_<std::unique_ptr<uint>>(m, "PerlinNoiseShader",
     R"docstring(
     :py:class:`PerlinNoiseShader` creates an image using the Perlin turbulence
     function.
@@ -335,7 +335,7 @@ py::class_<SkPerlinNoiseShader>(m, "PerlinNoiseShader",
     The algorithm used is described here:
     http://www.w3.org/TR/SVG/filters.html#feTurbulenceElement
     )docstring")
-    .def_static("MakeFractalNoise", &SkPerlinNoiseShader::MakeFractalNoise,
+    .def_static("MakeFractalNoise", &SkShaders::MakeFractalNoise,
         R"docstring(
         This will construct Perlin noise of the given type (Fractal Noise or
         Turbulence).
@@ -356,10 +356,10 @@ py::class_<SkPerlinNoiseShader>(m, "PerlinNoiseShader",
         )docstring",
         py::arg("baseFrequencyX"), py::arg("baseFrequencyY"),
         py::arg("numOctaves"), py::arg("seed"), py::arg("tileSize") = nullptr)
-    .def_static("MakeTurbulence", &SkPerlinNoiseShader::MakeTurbulence,
+    .def_static("MakeTurbulence", &SkShaders::MakeTurbulence,
         py::arg("baseFrequencyX"), py::arg("baseFrequencyY"),
         py::arg("numOctaves"), py::arg("seed"), py::arg("tileSize") = nullptr)
-    .def_static("MakeImprovedNoise", &SkPerlinNoiseShader::MakeImprovedNoise,
+    .def_static("MakeImprovedNoise", &SkShaders::MakeImprovedNoise,
         R"docstring(
         Creates an Improved Perlin Noise shader.
 

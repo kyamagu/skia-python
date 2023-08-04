@@ -730,66 +730,66 @@ py::class_<SkYUVAInfo> yuvainfo(m, "YUVAInfo",
     in external textures or pixmaps.
     )docstring");
 
-/*
-py::enum_<SkYUVAInfo::PlanarConfig>(yuvainfo, "PlanarConfig",
+py::enum_<SkYUVAInfo::PlaneConfig>(yuvainfo, "PlaneConfig",
     R"docstring(
-    Specifies how YUV (and optionally A) are divided among planes. Planes are
-    separated by underscores in the enum value names. Within each plane the
-    pixmap/texture channels are mapped to the YUVA channels in the order
-    specified, e.g. for kY_UV Y is in channel 0 of plane 0, U is in channel 0
-    of plane 1, and V is in channel 1 of plane 1. Channel ordering within a
-    pixmap/texture given the channels it contains::
-
-        A:               0:A
-        Luminance/Gray:  0:Gray
-        RG               0:R,    1:G
-        RGB              0:R,    1:G, 2:B
-        RGBA             0:R,    1:G, 2:B, 3:A
-
-    UV subsampling is also specified in the enum value names using J:a:b
-    notation (e.g. 4:2:0 is 1/2 horizontal and 1/2 vertical resolution for U
-    and V). A fourth number is added if alpha is present (always 4 as only
-    full resolution alpha is supported).
-
-    Currently this only has three-plane formats but more will be added as
-    usage and testing of this expands.
+    Specifies how YUV (and optionally A) are divided among planes. Planes are separated by
+    underscores in the enum value names. Within each plane the pixmap/texture channels are
+    mapped to the YUVA channels in the order specified, e.g. for kY_UV Y is in channel 0 of plane
+    0, U is in channel 0 of plane 1, and V is in channel 1 of plane 1. Channel ordering
+    within a pixmap/texture given the channels it contains:
+    A:                       0:A
+    Luminance/Gray:          0:Gray
+    Luminance/Gray + Alpha:  0:Gray, 1:A
+    RG                       0:R,    1:G
+    RGB                      0:R,    1:G, 2:B
+    RGBA                     0:R,    1:G, 2:B, 3:A
     )docstring")
-    .value("kY_U_V_444", SkYUVAInfo::PlanarConfig::kY_U_V_444,
+    .value("kUnknown", SkYUVAInfo::PlaneConfig::kUnknown,
+        "")
+    //
+    .value("kY_U_V", SkYUVAInfo::PlaneConfig::kY_U_V,
         "Plane 0: Y, Plane 1: U,  Plane 2: V")
-    .value("kY_U_V_422", SkYUVAInfo::PlanarConfig::kY_U_V_422,
-        "Plane 0: Y, Plane 1: U,  Plane 2: V")
-    .value("kY_U_V_420", SkYUVAInfo::PlanarConfig::kY_U_V_420,
-        "Plane 0: Y, Plane 1: U,  Plane 2: V")
-    .value("kY_V_U_420", SkYUVAInfo::PlanarConfig::kY_V_U_420,
-        "Plane 0: Y, Plane 1: V,  Plane 2: U")
-    .value("kY_U_V_440", SkYUVAInfo::PlanarConfig::kY_U_V_440,
-        "Plane 0: Y, Plane 1: U,  Plane 2: V")
-    .value("kY_U_V_411", SkYUVAInfo::PlanarConfig::kY_U_V_411,
-        "Plane 0: Y, Plane 1: U,  Plane 2: V")
-    .value("kY_U_V_410", SkYUVAInfo::PlanarConfig::kY_U_V_410,
-        "Plane 0: Y, Plane 1: U,  Plane 2: V")
-    .value("kY_U_V_A_4204", SkYUVAInfo::PlanarConfig::kY_U_V_A_4204,
-        "Plane 0: Y, Plane 1: U,  Plane 2: V, Plane 3: A")
-    .value("kY_V_U_A_4204", SkYUVAInfo::PlanarConfig::kY_V_U_A_4204,
-        "Plane 0: Y, Plane 1: V,  Plane 2: U, Plane 3: A")
-    .value("kY_UV_420", SkYUVAInfo::PlanarConfig::kY_UV_420,
+    .value("kY_V_U", SkYUVAInfo::PlaneConfig::kY_V_U,
+        "< Plane 0: Y, Plane 1: V,  Plane 2: U")
+    .value("kY_UV", SkYUVAInfo::PlaneConfig::kY_UV,
         "Plane 0: Y, Plane 1: UV")
-    .value("kY_VU_420", SkYUVAInfo::PlanarConfig::kY_VU_420,
+    .value("kY_VU", SkYUVAInfo::PlaneConfig::kY_VU,
         "Plane 0: Y, Plane 1: VU")
-    .value("kY_UV_A_4204", SkYUVAInfo::PlanarConfig::kY_UV_A_4204,
-        "Plane 0: Y, Plane 1: UV, Plane 2: A")
-    .value("kY_VU_A_4204", SkYUVAInfo::PlanarConfig::kY_VU_A_4204,
-        "Plane 0: Y, Plane 1: VU, Plane 2: A")
-    .value("kYUV_444", SkYUVAInfo::PlanarConfig::kYUV_444,
+    .value("kYUV", SkYUVAInfo::PlaneConfig::kYUV,
         "Plane 0: YUV")
-    .value("kUYV_444", SkYUVAInfo::PlanarConfig::kUYV_444,
+    .value("kUYV", SkYUVAInfo::PlaneConfig::kUYV,
         "Plane 0: UYV")
-    .value("kYUVA_4444", SkYUVAInfo::PlanarConfig::kYUVA_4444,
+    //
+    .value("kY_U_V_A", SkYUVAInfo::PlaneConfig::kY_U_V_A,
+        "Plane 0: Y, Plane 1: U,  Plane 2: V, Plane 3: A")
+    .value("kY_V_U_A", SkYUVAInfo::PlaneConfig::kY_V_U_A,
+        "Plane 0: Y, Plane 1: V,  Plane 2: U, Plane 3: A")
+    .value("kY_UV_A", SkYUVAInfo::PlaneConfig::kY_UV_A,
+        "Plane 0: Y, Plane 1: UV, Plane 2: A")
+    .value("kY_VU_A", SkYUVAInfo::PlaneConfig::kY_VU_A,
+        "Plane 0: Y, Plane 1: VU, Plane 2: A")
+    .value("kYUVA", SkYUVAInfo::PlaneConfig::kYUVA,
         "Plane 0: YUVA")
-    .value("kUYVA_4444", SkYUVAInfo::PlanarConfig::kUYVA_4444,
+    .value("kUYVA", SkYUVAInfo::PlaneConfig::kUYVA,
         "Plane 0: UYVA")
     .export_values();
-*/
+
+py::enum_<SkYUVAInfo::Subsampling>(yuvainfo, "Subsampling",
+    R"docstring(
+    UV subsampling is also specified in the enum value names using J:a:b notation (e.g. 4:2:0 is
+    1/2 horizontal and 1/2 vertical resolution for U and V). If alpha is present it is not sub-
+    sampled. Note that Subsampling values other than k444 are only valid with PlaneConfig values
+    that have U and V in different planes than Y (and A, if present).
+    )docstring")
+    .value("kUnknown", SkYUVAInfo::Subsampling::kUnknown)
+    //
+    .value("k444", SkYUVAInfo::Subsampling::k444)
+    .value("k422", SkYUVAInfo::Subsampling::k422)
+    .value("k420", SkYUVAInfo::Subsampling::k420)
+    .value("k440", SkYUVAInfo::Subsampling::k440)
+    .value("k411", SkYUVAInfo::Subsampling::k411)
+    .value("k410", SkYUVAInfo::Subsampling::k410)
+    .export_values();
 
 py::enum_<SkYUVAInfo::Siting>(yuvainfo, "Siting",
     R"docstring(
@@ -807,13 +807,12 @@ py::enum_<SkYUVAInfo::Siting>(yuvainfo, "Siting",
 
 yuvainfo
     .def_readonly_static("kMaxPlanes", &SkYUVAInfo::kMaxPlanes)
-/*
     .def_static("PlaneDimensions",
-        [] (SkISize imageDimensions, SkYUVAInfo::PlanarConfig config,
+            [] (SkISize imageDimensions, SkYUVAInfo::PlaneConfig config, SkYUVAInfo::Subsampling sampling,
             SkEncodedOrigin origin) {
             std::vector<SkISize> planeDimensions(SkYUVAInfo::kMaxPlanes);
             auto size = SkYUVAInfo::PlaneDimensions(
-                imageDimensions, config, origin, planeDimensions.data());
+                imageDimensions, config, sampling, origin, planeDimensions.data());
             planeDimensions.erase(
                 planeDimensions.begin() + size, planeDimensions.end());
             return planeDimensions;
@@ -826,39 +825,37 @@ yuvainfo
         The input image dimensions are as displayed (after the planes have
         been transformed to the intended display orientation).
         )docstring",
-        py::arg("imageDimensions"), py::arg("config"), py::arg("origin"))
-*/
+        py::arg("imageDimensions"), py::arg("config"), py::arg("sampling"), py::arg("origin"))
     .def_static("NumPlanes", &SkYUVAInfo::NumPlanes,
         R"docstring(
-        Number of planes for a given PlanarConfig.
+        Number of planes for a given PlaneConfig.
         )docstring",
         py::arg("config"))
     .def_static("NumChannelsInPlane", &SkYUVAInfo::NumChannelsInPlane,
         R"docstring(
-        Number of Y, U, V, A channels in the ith plane for a given PlanarConfig
+        Number of Y, U, V, A channels in the ith plane for a given PlaneConfig
         (or 0 if i is invalid).
         )docstring",
         py::arg("config"), py::arg("i"))
     .def_static("HasAlpha", &SkYUVAInfo::HasAlpha,
         R"docstring(
-        Does the PlanarConfig have alpha values?
+        Does the PlaneConfig have alpha values?
         )docstring",
         py::arg("config"))
     .def(py::init<>())
-/*
-    .def(py::init<SkISize, SkYUVAInfo::PlanarConfig, SkYUVColorSpace,
+    .def(py::init<SkISize, SkYUVAInfo::PlaneConfig, SkYUVAInfo::Subsampling, SkYUVColorSpace,
         SkEncodedOrigin, SkYUVAInfo::Siting, SkYUVAInfo::Siting>(),
         R"docstring(
         'dimensions' should specify the size of the full resolution image (after
         planes have been oriented to how the image is displayed as indicated by
         'origin').
         )docstring",
-        py::arg("dimensions"), py::arg("config"), py::arg("yuvColorSpace"),
+        py::arg("dimensions"), py::arg("config"), py::arg("sampling"), py::arg("yuvColorSpace"),
         py::arg("origin") = kTopLeft_SkEncodedOrigin,
         py::arg("sittingX") = SkYUVAInfo::Siting::kCentered,
         py::arg("sittingY") = SkYUVAInfo::Siting::kCentered)
-    .def("planarConfig", &SkYUVAInfo::planarConfig)
-*/
+    .def("planeConfig", &SkYUVAInfo::planeConfig)
+    .def("subSampling", &SkYUVAInfo::subsampling)
     .def("dimensions", &SkYUVAInfo::dimensions,
         R"docstring(
         Dimensions of the full resolution image (after planes have been oriented
