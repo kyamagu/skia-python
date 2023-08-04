@@ -116,39 +116,48 @@ def test_PathEffect_DashInfo_fPhase(patheffect_dashinfo):
     assert isinstance(patheffect_dashinfo.fPhase, float)
 
 
+@pytest.mark.skip(reason='"PointData inner class in PathEffect. Gone in m116. May not need REVISIT')
 @pytest.fixture
 def patheffect_pointdata():
     return skia.PathEffect.PointData()
 
 
+@pytest.mark.skip(reason='"PointData inner class in PathEffect. Gone in m116. May not need REVISIT')
 def test_PathEffect_PointData_fFlags(patheffect_pointdata):
     assert isinstance(patheffect_pointdata.fFlags, int)
 
 
+@pytest.mark.skip(reason='"PointData inner class in PathEffect. Gone in m116. May not need REVISIT')
 def test_PathEffect_PointData_fPoints(patheffect_pointdata):
     assert isinstance(patheffect_pointdata.fPoints, list)
 
 
+@pytest.mark.skip(reason='"PointData inner class in PathEffect. Gone in m116. May not need REVISIT')
 def test_PathEffect_PointData_fNumPoints(patheffect_pointdata):
     assert isinstance(patheffect_pointdata.fNumPoints, int)
 
 
+@pytest.mark.skip(reason='"PointData inner class in PathEffect. Gone in m116. May not need REVISIT')
 def test_PathEffect_PointData_fSize(patheffect_pointdata):
     assert isinstance(patheffect_pointdata.fSize, skia.Point)
 
 
+@pytest.mark.skip(reason='"PointData inner class in PathEffect. Gone in m116. May not need REVISIT')
 def test_PathEffect_PointData_fClipRect(patheffect_pointdata):
     assert isinstance(patheffect_pointdata.fClipRect, skia.Rect)
 
 
+@pytest.mark.skip(reason='"PointData inner class in PathEffect. Gone in m116. May not need REVISIT')
 def test_PathEffect_PointData_fPath(patheffect_pointdata):
     assert isinstance(patheffect_pointdata.fPath, skia.Path)
 
 
+@pytest.mark.skip(reason='"PointData inner class in PathEffect. Gone in m116. May not need REVISIT')
 def test_PathEffect_PointData_fFirst(patheffect_pointdata):
     assert isinstance(patheffect_pointdata.fFirst, skia.Path)
 
 
+@pytest.mark.skip(reason='"PointData inner class in PathEffect. Gone in m116. May not need REVISIT')
 def test_PathEffect_PointData_fLast(patheffect_pointdata):
     assert isinstance(patheffect_pointdata.fLast, skia.Path)
 
