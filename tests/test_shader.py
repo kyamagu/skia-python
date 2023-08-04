@@ -2,7 +2,7 @@ import skia
 import pytest
 
 
-@pytest.mark.skip()
+@pytest.mark.skip(reason='segfault in m116; REVISIT')
 #@pytest.fixture
 def shader():
     return skia.GradientShader.MakeLinear(
