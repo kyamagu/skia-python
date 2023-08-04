@@ -1,0 +1,22 @@
+diff --git a/src/gn/desc_builder.cc b/src/gn/desc_builder.cc
+index 444a5e02..3ef170c3 100644
+--- a/src/gn/desc_builder.cc
++++ b/src/gn/desc_builder.cc
+@@ -167,7 +167,7 @@ class BaseDescBuilder {
+     base::ListValue res;
+     for (const auto& v : vector)
+       res.GetList().emplace_back(ToBaseValue(v));
+-    return std::move(res);
++    return res;
+   }
+ 
+   base::Value ToBaseValue(const Scope* scope) {
+@@ -176,7 +176,7 @@ class BaseDescBuilder {
+     scope->GetCurrentScopeValues(&map);
+     for (const auto& v : map)
+       res.SetKey(v.first, ToBaseValue(v.second));
+-    return std::move(res);
++    return res;
+   }
+ 
+   base::Value ToBaseValue(const Value& val) {

@@ -39,6 +39,7 @@ export LDFLAGS="-lrt"
 git clone https://gn.googlesource.com/gn && \
     cd gn && \
     git checkout fe330c0ae1ec29db30b6f830e50771a335e071fb && \
+    patch -p1 < ../patch/gn-newer-gcc-warnings-as-errors.patch && \
     python build/gen.py && \
     ninja -C out gn && \
     cd ..
