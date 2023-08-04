@@ -35,9 +35,13 @@ def test_Picture_approximateBytesUsed(picture):
     assert isinstance(picture.approximateBytesUsed(), int)
 
 
-def test_Picture_makeShader(picture):
+@pytest.mark.parametrize('args', [
+    (skia.TileMode.kClamp, skia.TileMode.kClamp, skia.FilterMode.kNearest),
+    (skia.TileMode.kClamp, skia.TileMode.kClamp, skia.FilterMode.kLinear),
+])
+def test_Picture_makeShader(picture, args):
     assert isinstance(
-        picture.makeShader(skia.TileMode.kClamp, skia.TileMode.kClamp),
+        picture.makeShader(*args),
         skia.Shader)
 
 
