@@ -41,27 +41,28 @@ of this update had taken from.
 * Where it is possible, when m87 APIs disappear, emulations with m116
   is done. So these are "new emulations of old APIs". While they work,
   they might be withdrawn/changed later:
-       Image I/O and decoding routines -
-       `encodeToData`, `MakeRasterCopy`,
-       `MakeFromRaster`, `MakeFromBitmap`, `MakeFromEncoded`,
-       `MakeTextureFromCompressed`, `MakeRasterFromCompressed`,
-       `MakeFromTexture`, `MakeFromCompressedTexture`,
-       `MakeCrossContextFromPixmap`, `MakeFromAdoptedTexture`,
-       `MakeFromYUVATexturesCopy`, `MakeFromYUVATexturesCopyWithExternalBackend`,
-       `MakeFromYUVATextures`, `MakeFromYUVAPixmaps`, `MakeFromYUVAPixmaps`,
-       `MakeFromPicture`, `MakeBackendTextureFromSkImage`,
-       `MakeBackendTextureFromSkImage`
-       - these are emulated in m116. In particular, upstream recommends
-         using the graphic format encoding/decoding routines directly.
+  
+  Image I/O and decoding routines -
+  `encodeToData`, `MakeRasterCopy`,
+  `MakeFromRaster`, `MakeFromBitmap`, `MakeFromEncoded`,
+  `MakeTextureFromCompressed`, `MakeRasterFromCompressed`,
+  `MakeFromTexture`, `MakeFromCompressedTexture`,
+  `MakeCrossContextFromPixmap`, `MakeFromAdoptedTexture`,
+  `MakeFromYUVATexturesCopy`, `MakeFromYUVATexturesCopyWithExternalBackend`,
+  `MakeFromYUVATextures`, `MakeFromYUVAPixmaps`, `MakeFromYUVAPixmaps`,
+  `MakeFromPicture`, `MakeBackendTextureFromSkImage`,
+  `MakeBackendTextureFromSkImage`
+  - these are emulated in m116. In particular, upstream recommends
+    using the graphic format encoding/decoding routines directly.
 
-       Surface methods -
-       `Surface.MakeRasterN32Premul`, `Surface.MakeRasterDirect`,
-       `Surface.getBackendTexture`, `Surface.getBackendRenderTarget`,
-       `Surface.MakeRaster`, `Surface.MakeFromBackendTexture`,
-       `Surface.MakeFromBackendRenderTarget`, `Surface::MakeRenderTarget`,
-       `Surface.MakeNull`.
-       - these are simple renamings; we might add the new names and remove
-         the old names, and document them as renamed.
+  Surface methods -
+  `Surface.MakeRasterN32Premul`, `Surface.MakeRasterDirect`,
+  `Surface.getBackendTexture`, `Surface.getBackendRenderTarget`,
+  `Surface.MakeRaster`, `Surface.MakeFromBackendTexture`,
+  `Surface.MakeFromBackendRenderTarget`, `Surface::MakeRenderTarget`,
+  `Surface.MakeNull`.
+  - these are simple renamings; we might add the new names and remove
+    the old names, and document them as renamed.
 
 * Most `GrContext` class methods were merged into `GrDirectContext` class
   methods. For now, we have an alias between those two classes, and
