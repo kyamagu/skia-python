@@ -1,12 +1,12 @@
 This is a partial port of [skia-python](https://github.com/kyamagu/skia-python/)
-from m87 to m116, possibly disabling any m87 APIs that have no close m116 equivalents.
+from `m87` to `m116`, possibly disabling any `m87` APIs that have no close `m116` equivalents.
 
 It concentrates on OT-SVG, and fixing these two issues:
 
-[SkSVGDOM::renderNode() is not exposed in python](https://github.com/kyamagu/skia-python/issues/192),
-[three-args contructor to SkMemoryStream not exposed.](https://github.com/kyamagu/skia-python/issues/194)
+* [SkSVGDOM::renderNode() is not exposed in python](https://github.com/kyamagu/skia-python/issues/192)
+* [three-args contructor to SkMemoryStream not exposed.](https://github.com/kyamagu/skia-python/issues/194)
 
-The SVG mododule left experimental in m88 upstream.
+The SVG mododule left experimental in `m88` upstream. It has received many improvements since.
 
 Some COLRv1-related Skia internals from upstream's on-going effort in this area
 are also exposed for access. This experimental functionality is available to
@@ -16,32 +16,32 @@ Special mention of [0lru](https://github.com/0lru) who provided a
 [draft m98 pull](https://github.com/kyamagu/skia-python/pull/181) for which some ideas
 of this update had taken from.
 
-# General overview of changes between m87 and m116
+# General overview of changes between `m87` and `m116`
 
-* TL;DR - m87 users would likely find most existing python scripts work. Some
+* TL;DR - `m87` users would likely find most existing python scripts work. Some
   routines need a new `skia.SamplingOptions()` argument, or
   switch from `skia.FilterQuality` to `skia.SamplingOptions()`.
   Please report `AttributeError: 'skia.AAA' object has no attribute 'BBB'` errors,
-  to prioritize fixing remaining differences between m87 and m116.
+  to prioritize fixing remaining differences between `m87` and `m116`.
 
 * The number of public symbols/routines in upstream skia is around 2400,
-  consistently between m87 and m116 (m88, m98, m103 were examined).
-  skia-python m87 accesses just over ~1000 at link time, and possibly
-  another 100 or two via dynamic_cast'ing at runtime. Less than ~800
+  consistently between `m87` and `m116` (`m88`, `m98`, `m103` were examined).
+  skia-python `m87` accesses just over ~1000 at link time, and possibly
+  another 100 or two via `dynamic_cast`'ing at runtime. Less than ~800
   of them has exact equivalents in m116. A good proportion of
   the 200+ differ by additional arguments, often with defaults
   (e.g. `skia.SamplingOptions()`). A few with not-useful arguments have them removed.
   Some of the rest, like the Image I/O routines and Surface routines,
-  are considered too often used and too important, and are emulated in m116.
+  are considered too often used and too important, and are emulated in m116. The rest ... read on:
 
-* Be **WARN**'ed: some m87 APIs are removed when there are no obvious
-  new-equivalents, or possible emulations with m116.
+* Be **WARN**'ed: some `m87` APIs are removed when there are no obvious
+  new-equivalents, or possible emulations with `m116`.
   The "AttributeError" error mentioned above.
 
-* Where it is possible, when m87 APIs disappear, emulations with m116
+* Where it is possible, when `m87` APIs disappear, emulations with m116
   is done. So these are "new emulations of old APIs". While they work,
   they might be withdrawn/changed later:
-  
+
   Image I/O and decoding routines -
   `encodeToData`, `MakeRasterCopy`,
   `MakeFromRaster`, `MakeFromBitmap`, `MakeFromEncoded`,
@@ -70,7 +70,7 @@ of this update had taken from.
   people should use `GrDirectContext`, to align with upstream documentation.
 
 * New `SamplingOptions` class; there is only a default constructor for now.
-  Many APIs changes from m87 to m116 concern adding new options with it, or
+  Many APIs changes from `m87` to `m116` concern adding new options with it, or
   changing from `FilterQuality` enum to `SamplingOptions`. If you use any
   value other than the default `FilterQuality.kMedium_SkFilterQuality`
   enum, you'll need to request addition to the `SamplingOptions` class.
