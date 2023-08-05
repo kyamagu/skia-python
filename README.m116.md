@@ -38,7 +38,7 @@ of this update had taken from.
   are removed/disabled when there are no obvious new-equivalents, or not-too-troblesome
   emulations with `m116`. The "AttributeError" error mentioned above.
 
-* Where it is possible, when `m87` APIs disappear, emulations with m116
+* Where it is possible, when `m87` APIs disappear, emulations with `m116`
   is done. So these are "new emulations of old APIs". While they work,
   they might be withdrawn/changed later:
 
@@ -52,8 +52,8 @@ of this update had taken from.
   `MakeFromYUVATextures`, `MakeFromYUVAPixmaps`, `MakeFromYUVAPixmaps`,
   `MakeFromPicture`, `MakeBackendTextureFromSkImage`,
   `MakeBackendTextureFromSkImage`
-  - these are emulated in m116. In particular, upstream recommends
-    using the graphic format encoding/decoding routines directly.
+  - these are emulated in `m116`. In particular, upstream recommends
+    using the graphic format encoding/decoding routines directly. Not yet directly exposed in `skia-python`.
 
   Surface methods -
   `Surface.MakeRasterN32Premul`, `Surface.MakeRasterDirect`,
@@ -77,5 +77,5 @@ of this update had taken from.
 
 * `yuvainfo.PlanarConfig` enums were splitted into a combination of
   `yuvainfo.PlaneConfig` and `yuvainfo.Subsampling` enums. Where the former
-  enum was used in m87, it is the equivalent of a combination of the latter
-  two in m116.
+  enum was used in `m87`, it is the equivalent of a combination of the latter
+  two in `m116`.
