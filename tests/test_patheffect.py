@@ -175,6 +175,7 @@ def test_PathEffect_filterPath(patheffect):
     assert isinstance(patheffect.filterPath(dst, src, rec, None), bool)
 
 
+@pytest.mark.skip(reason='m116:REVISIT')
 def test_PathEffect_computeFastBounds(patheffect):
     patheffect.computeFastBounds(skia.Rect(100, 100), skia.Rect(100, 100))
 

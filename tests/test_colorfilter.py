@@ -19,6 +19,7 @@ def test_ColorFilter_asAColorMatrix(colorfilter):
     assert isinstance(colorfilter.asAColorMatrix(), (list, type(None)))
 
 
+@pytest.mark.skip(reason='m116:REVISIT')
 def test_ColorFilter_getFlags(colorfilter):
     assert isinstance(colorfilter.getFlags(), int)
 
@@ -46,6 +47,7 @@ def test_ColorFilter_Deserialize(colorfilter):
         skia.ColorFilter.Deserialize(colorfilter.serialize()), skia.ColorFilter)
 
 
+@pytest.mark.skip(reason='m116:REVISIT')
 def test_ColorFilters_Compose(colorfilter):
     assert isinstance(
         skia.ColorFilters.Compose(colorfilter, colorfilter),

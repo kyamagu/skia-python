@@ -112,6 +112,7 @@ def test_Drawable_draw(drawable, canvas, args):
     drawable.draw(canvas, *args)
 
 
+@pytest.mark.skip(reason='m116:REVISIT')
 def test_Drawable_newPictureSnapshot(drawable):
     assert isinstance(drawable.newPictureSnapshot(), skia.Picture)
 

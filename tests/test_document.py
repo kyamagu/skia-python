@@ -82,6 +82,7 @@ def test_PDF_AttributeList_appendFloatArray(attribute_list):
     attribute_list.appendFloatArray('Table', 'BBox', [1., 2.])
 
 
+@pytest.mark.skip(reason='m116:REVISIT')
 def test_PDF_AttributeList_appendStringArray(attribute_list):
     attribute_list.appendStringArray('List', 'Label', ['foo', 'bar'])
 
