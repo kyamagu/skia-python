@@ -1,22 +1,45 @@
 This is a partial port of [skia-python](https://github.com/kyamagu/skia-python/)
-from m87 to m116, possibly disabling any API that's not working.
+from m87 to m116, possibly disabling any m87 APIs that have no close m116 equivalents.
 
 It concentrates on OT-SVG, and fixing these two issues:
 
 [SkSVGDOM::renderNode() is not exposed in python](https://github.com/kyamagu/skia-python/issues/192)
 [three-args contructor to SkMemoryStream not exposed.](https://github.com/kyamagu/skia-python/issues/194)
 
-Some COLRv1-related Skia internals are also exposed for access.
+The SVG mododule left experimental in m88 upstream.
 
+Some COLRv1-related Skia internals from upstream's on-going effect in this area
+are also exposed for access. This experimental functionality is available to
+Linux/FreeType users only.
 
-General overview of changes between m87 and m116
-================================================
+Special mention of [0lru](https://github.com/0lru) who provided a
+[draft m98](https://github.com/kyamagu/skia-python/pull/181) for which some ideas
+of this update had taken from.
+
+# General overview of changes between m87 and m116
+
+* TL;DR - m87 users would likely find most existing python scripts work. Some
+  routines need a new "skia.SamplingOptions()" argument, or
+  switch from "skia.FilterQuality" to "skia.SamplingOptions()".
+  Please report "AttributeError: 'skia.AAA' object has no attribute 'BBB'" errors,
+  to prioritize fixing remaining differences between m87 and m116.
+
+* The number of public symbols/routines in upstream skia is around 2400,
+  consistently between m87 and m116 (m88, m98, m103 were examined).
+  skia-python m87 accesses just over ~1000 at link time, and possibly
+  another 100 or two via dynamic_cast'ing at runtime. Less than ~800
+  of them has exact equivalents in m116. A good proportion of
+  the 200+ differ by additional arguments, often with defaults
+  (e.g. "skia.SamplingOptions()"). A few with not-useful arguments removed.
+  Some of the rest, like the Image I/O routines and Surface routines,
+  are considered too often used and too important, so are emulated in m116.
 
 * Be WARN'ed: some m87 APIs are removed when there are no obvious
   new-equivalents, or possible emulations with m116.
+  The "AttributeError" error mentioned above.
 
 * Where it is possible, when m87 APIs disappear, emulations with m116
-  is done. So these are "new emulations of old APIs" and while they work,
+  is done. So these are "new emulations of old APIs". While they work,
   they might be withdrawn/changed later:
        Image I/O and decoding routines -
        "encodeToData", "MakeRasterCopy",
