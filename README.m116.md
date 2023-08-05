@@ -28,15 +28,15 @@ of this update had taken from.
   consistently between `m87` and `m116` (`m88`, `m98`, `m103` were examined).
   skia-python `m87` accesses just over ~1000 at link time, and possibly
   another 100 or two via `dynamic_cast`'ing at runtime. Less than ~800
-  of them has exact equivalents in m116. A good proportion of
+  of them has exact equivalents in `m116`. A good proportion of
   the 200+ differ by additional arguments, often with defaults
   (e.g. `skia.SamplingOptions()`). A few with not-useful arguments have them removed.
   Some of the rest, like the Image I/O routines and Surface routines,
   are considered too often used and too important, and are emulated in m116. The rest ... read on:
 
-* Be **WARN**'ed: some `m87` APIs are removed when there are no obvious
-  new-equivalents, or possible emulations with `m116`.
-  The "AttributeError" error mentioned above.
+* Be **WARN**'ed: some `m87` APIs (about 5% in total, many in the `ImageFilter` namespace)
+  are removed/disabled when there are no obvious new-equivalents, or not-too-troblesome
+  emulations with `m116`. The "AttributeError" error mentioned above.
 
 * Where it is possible, when `m87` APIs disappear, emulations with m116
   is done. So these are "new emulations of old APIs". While they work,
