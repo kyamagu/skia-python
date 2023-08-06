@@ -652,7 +652,7 @@ py::class_<SkMemoryStream, PyMemoryStream<>, SkStreamMemory>(m, "MemoryStream")
                 new SkMemoryStream(info.ptr, size, copyData));
         }),
         py::arg("data"), py::arg("copyData") = false)
-    .def(py::init<const void*, size_t, bool>(), py::arg("data"), py::arg("length"), py::arg("copyData ") = false)
+    .def(py::init<const void*, size_t, bool>(), py::arg("data"), py::arg("length"), py::arg("copyData") = false)
     .def(py::init<sk_sp<SkData>>(), py::arg("data"))
     .def_static("MakeCopy",
         [] (py::buffer b) {
