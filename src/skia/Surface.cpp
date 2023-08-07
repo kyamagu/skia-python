@@ -26,6 +26,7 @@ const SkSurfaceProps::Flags SkSurfaceProps::kUseDistanceFieldFonts_Flag;
 
 void initSurface(py::module &m) {
 
+/* m111: SkBackingFit is no longer part of the public API. */
 /*
 py::enum_<SkBackingFit>(m, "BackingFit", R"docstring(
     Indicates whether a backing store needs to be an exact match or can be
