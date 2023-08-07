@@ -389,6 +389,7 @@ py::class_<SkErodeImageFilter>(m, "ErodeImageFilter")
 */
 
 py::class_<SkImageFilters>(m, "ImageFilters")
+/* SkImageFilters::AlphaThreshold removed in m116 */
 /*
     .def_static("AlphaThreshold",
         [] (const SkRegion& region, SkScalar innerMin, SkScalar outerMax,

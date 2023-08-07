@@ -148,7 +148,7 @@ def test_ErodeImageFilter_Make():
     assert isinstance(skia.ErodeImageFilter.Make(2, 2), skia.ImageFilter)
 
 
-@pytest.mark.skip(reason='m116:REVISIT')
+@pytest.mark.xfail(reason='SkImageFilters::AlphaThreshold removed in m116')
 def test_ImageFilters_AlphaThreshold():
     assert isinstance(skia.ImageFilters.AlphaThreshold(
         skia.Region(), 0, 1), skia.ImageFilter)
