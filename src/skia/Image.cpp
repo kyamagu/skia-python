@@ -1600,8 +1600,7 @@ image
         Returns an image with the same "base" pixels as the this image, but with
         mipmap levels automatically generated and attached.
         )docstring")
-/*
-    .def("makeTextureImage", &SkImage::makeTextureImage,
+    .def("makeTextureImage", &SkImages::TextureFromImage,
         R"docstring(
         Returns :py:class:`Image` backed by GPU texture associated with context.
 
