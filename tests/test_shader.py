@@ -102,7 +102,7 @@ def test_PerlinNoiseShader_MakeTurbulence():
         4, 4, 2, 0), skia.Shader)
 
 
-@pytest.mark.skip(reason='m116:REVISIT')
+@pytest.mark.xfail(reason='SkPerlinNoiseShader class slated for moving into private internals of Skia - m116')
 def test_PerlinNoiseShader_MakeImprovedNoise():
     assert isinstance(skia.PerlinNoiseShader.MakeImprovedNoise(
         4, 4, 2, 1), skia.Shader)
