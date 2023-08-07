@@ -669,6 +669,8 @@ py::class_<SkYUVAPixmapInfo::SupportedDataTypes>(
         R"docstring(
         Defaults to nothing supported.
         )docstring")
+/* m116: The `SkYUVAPixmapInfo::SupportedDataTypes(const GrImageContext&)` constructor has been removed from
+   the public API. */
 /*
     .def(py::init<const GrImageContext&>(),
         R"docstring(
