@@ -1,4 +1,5 @@
 #include "common.h"
+#include <include/core/SkPathUtils.h>
 #include <pybind11/operators.h>
 
 
@@ -452,10 +453,10 @@ paint
         Sets the geometry drawn at the corners of strokes.
         )docstring",
         py::arg("join"))
-/*
     .def("getFillPath",
-        py::overload_cast<const SkPath&, SkPath*, const SkRect*, SkScalar>(
-            &SkPaint::getFillPath, py::const_),
+        [] (const SkPaint& paint, const SkPath &src, SkPath *dst, const SkRect *cullRect, SkScalar resScale) {
+            return skpathutils::FillPathWithPaint(src, paint, dst, cullRect, resScale);
+        },
         R"docstring(
         Returns the filled equivalent of the stroked path.
 
@@ -470,7 +471,6 @@ paint
         )docstring",
         py::arg("src"), py::arg("dst"), py::arg("cullRect") = nullptr,
         py::arg("resScale") = 1)
-*/
     // .def("getFillPath",
     //     py::overload_cast<const SkPath&, SkPath*>(
     //         &SkPaint::getFillPath, py::const_))

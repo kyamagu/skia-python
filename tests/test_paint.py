@@ -149,7 +149,6 @@ def test_Paint_setStrokeJoin(paint):
     paint.setStrokeJoin(skia.Paint.kMiter_Join)
 
 
-@pytest.mark.skip(reason='m116:REVISIT')
 @pytest.mark.parametrize('args', [
     (skia.Path(), skia.Path(),),
     (skia.Path(), skia.Path(), skia.Rect(100, 100), 1),
