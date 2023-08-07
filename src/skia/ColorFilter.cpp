@@ -279,6 +279,7 @@ py::class_<SkOverdrawColorFilter>(
     .def_readonly_static("kNumColors", &SkOverdrawColorFilter::kNumColors)
     ;
 
+/* SkTableColorFilter class removed in m116 */
 /*
 py::class_<SkTableColorFilter>(
     m, "TableColorFilter")
