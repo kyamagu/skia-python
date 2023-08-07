@@ -6,7 +6,7 @@ It concentrates on OT-SVG, and fixing these two issues:
 * [SkSVGDOM::renderNode() is not exposed in python](https://github.com/kyamagu/skia-python/issues/192)
 * [three-args contructor to SkMemoryStream not exposed.](https://github.com/kyamagu/skia-python/issues/194)
 
-The SVG mododule left experimental in `m88` upstream. It has received many improvements since.
+The SVG module left experimental in `m88` upstream. It has received many improvements since.
 
 Some COLRv1-related Skia internals from upstream's on-going effort in this area
 are also exposed for access. This experimental functionality is available to
