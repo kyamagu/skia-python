@@ -19,15 +19,14 @@ fi
 
 function apply_patch {
     patch -p1 < ../patch/find_xcode_sysroot.patch;
-    patch -p1 < ../patch/make_data_assembly.patch;
 }
 
 cd skia && \
-    python tools/git-sync-deps && \
-    apply_patch && \
+    patch -p1 < ../patch/skia-m116-colrv1-freetype.diff && \
+    python3 tools/git-sync-deps && \
     bin/gn gen out/Release --args="
 is_official_build=true
-skia_enable_tools=true
+skia_enable_svg=true
 skia_use_system_libjpeg_turbo=false
 skia_use_system_libwebp=false
 skia_use_system_libpng=false
@@ -37,5 +36,5 @@ skia_use_system_expat=false
 extra_cflags_cc=[\"-frtti\"]
 ${EXTRA_ARGS}
 " && \
-    ninja -C out/Release skia skia.h experimental_svg_model && \
+    ninja -C out/Release && \
     cd ..

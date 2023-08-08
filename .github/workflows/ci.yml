@@ -24,7 +24,7 @@ jobs:
             skia
           key: linux-aarch64-skia-${{ github.sha }}
       - name: Pre-fetch skia deps
-        run: git config --global core.compression 0 && cd skia && python tools/git-sync-deps
+        run: git config --global core.compression 0 && cd skia && patch -p1 -i ../patch/skia-m116-minimize-download.patch && python tools/git-sync-deps && patch -p1 -R -i ../patch/skia-m116-minimize-download.patch
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v2
       - name: Build skia

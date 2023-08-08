@@ -1,4 +1,6 @@
 #include "common.h"
+#include <include/gpu/gl/GrGLTypes.h>
+#include <include/gpu/gl/GrGLInterface.h>
 
 void initGrContext_gl(py::module &m) {
 

@@ -1,7 +1,13 @@
 #include "common.h"
+#include <include/core/SkFontMetrics.h>
 #include <pybind11/stl.h>
 #include <pybind11/stl_bind.h>
 #include <pybind11/iostream.h>
+#ifdef __linux__
+#include <freetype/freetype.h>
+#include <freetype/ftcolor.h>
+#include <src/ports/SkFontHost_FreeType_common.h>
+#endif
 
 using Axis = SkFontParameters::Variation::Axis;
 using Coordinate = SkFontArguments::VariationPosition::Coordinate;
@@ -815,6 +821,18 @@ font
         )docstring",
         py::arg("typeface"), py::arg("size"), py::arg("scaleX"),
         py::arg("skewX"))
+#ifdef __linux___
+    .def_static("COLRv1Bound",
+        py::overload_cast<FT_Face, SkGlyphID, SkRect*>(&SkScalerContext_FreeType_Base::computeColrV1GlyphBoundingBox),
+        R"docstring(
+        )docstring",
+        py::arg("face"), py::arg("id"), py::arg("bound"))
+    .def_static("COLRV1DrawCanvas",
+        py::overload_cast<SkCanvas*, FT_Face, uint16_t, FT_UShort, FT_Color_Root_Transform>(&SkScalerContext_FreeType_Base::skia_colrv1_start_glyph),
+        R"docstring(
+        )docstring",
+        py::arg("canvas"), py::arg("face"), py::arg("glyphId"), py::arg("palette_index"), py::arg("rootTransform"))
+#endif
     .def("__eq__", &SkFont::operator==,
         R"docstring(
         Compares :py:class:`Font` and font, and returns true if they are

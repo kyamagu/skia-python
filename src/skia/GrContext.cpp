@@ -1,7 +1,16 @@
 #include "common.h"
+#include <include/core/SkTextureCompressionType.h>
+#include <include/gpu/GrBackendSemaphore.h>
+#include <include/gpu/GrBackendSurface.h>
+#include <include/gpu/GrContextThreadSafeProxy.h>
+#include <include/gpu/GpuTypes.h>
+#include <include/gpu/mock/GrMockTypes.h>
+#include <include/gpu/gl/GrGLInterface.h>
 #include <include/gpu/vk/GrVkBackendContext.h>
+#include <include/gpu/GrBackendSurfaceMutableState.h>
 #include <pybind11/chrono.h>
 #include <pybind11/stl.h>
+#include <pybind11/cast.h>
 
 void initGrContext_gl(py::module&);
 void initGrContext_mock(py::module&);
@@ -29,6 +38,17 @@ py::enum_<GrBackendApi>(m, "GrBackendApi",
         Added here to support the legacy GrBackend enum value and clients who
         referenced it using :py:attr:`~skia.GrBackend.kOpenGL_GrBackend`.
         )docstring")
+    .export_values();
+
+py::enum_<skgpu::BackendApi>(m, "gpuBackendApi",
+    R"docstring(
+    Possible 3D APIs that may be used by Graphite.
+    )docstring",
+    py::arithmetic())
+    .value("kDawn", skgpu::BackendApi::kDawn)
+    .value("kMetal", skgpu::BackendApi::kMetal)
+    .value("kVulkan", skgpu::BackendApi::kVulkan)
+    .value("kMock", skgpu::BackendApi::kMock)
     .export_values();
 
 py::enum_<GrMipmapped>(m, "GrMipmapped",
@@ -91,8 +111,10 @@ py::enum_<GrGLBackendState>(m, "GrGLBackendState", R"docstring(
         GrGLBackendState::kFixedFunction_GrGLBackendState)
     .value("kMisc_GrGLBackendState",
         GrGLBackendState::kMisc_GrGLBackendState)
+/*
     .value("kPathRendering_GrGLBackendState",
         GrGLBackendState::kPathRendering_GrGLBackendState)
+*/
     .value("kALL_GrGLBackendState",
         GrGLBackendState::kALL_GrGLBackendState)
     .export_values();
@@ -131,10 +153,10 @@ py::class_<GrFlushInfo>(m, "GrFlushInfo",
     Note about GL: In GL work gets sent to the driver immediately during the
     flush call, but we don't really know when the driver sends the work to the
     GPU. Therefore, we treat the submitted proc as we do in other backends. It
-    will be called when the next GrContext::submit is called after the flush (or
+    will be called when the next GrDirectContext::submit is called after the flush (or
     possibly during the flush if there is no work to be done for the flush). The
     main use case for the submittedProc is to know when semaphores have been
-    sent to the GPU and even in GL it is required to call GrContext::submit to
+    sent to the GPU and even in GL it is required to call GrDirectContext::submit to
     flush them. So a client should be able to treat all backend APIs the same in
     terms of how the submitted procs are treated.
     )docstring")
@@ -210,21 +232,25 @@ py::class_<GrBackendSemaphore>(m, "GrBackendSemaphore")
             semaphore.initGL(reinterpret_cast<GrGLsync>(glsync));
         },
         py::arg("glsync"))
+/*
     .def("initVulkan",
         [] (GrBackendSemaphore& semaphore, void* vksemaphore) {
             semaphore.initVulkan(reinterpret_cast<VkSemaphore>(vksemaphore));
         },
         py::arg("semaphore"))
+*/
     // .def("initMetal", &GrBackendSemaphore::initMetal)
     .def("isInitialized", &GrBackendSemaphore::isInitialized)
     .def("glSync",
         [] (GrBackendSemaphore& semaphore) {
             return reinterpret_cast<void*>(semaphore.glSync());
         })
+/*
     .def("vkSemaphore",
         [] (GrBackendSemaphore& semaphore) {
             return reinterpret_cast<void*>(semaphore.vkSemaphore());
         })
+*/
     // .def("mtlSemaphore", &GrBackendSemaphore::mtlSemaphore)
     // .def("mtlValue", &GrBackendSemaphore::mtlValue)
     ;
@@ -234,14 +260,16 @@ py::class_<GrBackendFormat>(m, "GrBackendFormat")
     .def(py::init<const GrBackendFormat&>())
     .def_static("MakeGL", &GrBackendFormat::MakeGL,
         py::arg("format"), py::arg("target"))
+/*
     .def_static("MakeVk", py::overload_cast<VkFormat>(&GrBackendFormat::MakeVk),
         py::arg("format"))
     .def_static("MakeVk",
         py::overload_cast<const GrVkYcbcrConversionInfo&>(
             &GrBackendFormat::MakeVk),
         py::arg("ycbcrInfo"))
+*/
     .def_static("MakeMock", &GrBackendFormat::MakeMock,
-        py::arg("colorType"), py::arg("compression"))
+        py::arg("colorType"), py::arg("compression"), py::arg("isStencilFormat") = false)
     .def("__eq__", &GrBackendFormat::operator==, py::arg("other"),
         py::is_operator())
     .def("__ne__", &GrBackendFormat::operator!=, py::arg("other"),
@@ -250,9 +278,11 @@ py::class_<GrBackendFormat>(m, "GrBackendFormat")
     .def("textureType", &GrBackendFormat::textureType)
     .def("channelMask", &GrBackendFormat::channelMask)
     .def("asGLFormat", &GrBackendFormat::asGLFormat)
+/*
     .def("asVkFormat", &GrBackendFormat::asVkFormat, py::arg("format"))
     .def("getVkYcbcrConversionInfo",
         &GrBackendFormat::getVkYcbcrConversionInfo)
+*/
     .def("asMockColorType", &GrBackendFormat::asMockColorType)
     .def("asMockCompressionType", &GrBackendFormat::asMockCompressionType)
     .def("makeTexture2D", &GrBackendFormat::makeTexture2D)
@@ -281,10 +311,12 @@ py::class_<GrBackendTexture>(m, "GrBackendTexture")
         py::arg("info"))
     .def("glTextureParametersModified",
         &GrBackendTexture::glTextureParametersModified)
+/*
     .def("getVkImageInfo", &GrBackendTexture::getVkImageInfo,
         py::arg("info"))
     .def("setVkImageLayout", &GrBackendTexture::setVkImageLayout,
         py::arg("layout"))
+*/
     .def("getBackendFormat", &GrBackendTexture::getBackendFormat)
     .def("getMockTextureInfo", &GrBackendTexture::getMockTextureInfo,
         py::arg("info"))
@@ -365,6 +397,7 @@ py::class_<GrBackendRenderTarget>(m, "GrBackendRenderTarget")
         false if the backend API is not GL.
         )docstring",
         py::arg("info"))
+/*
     .def("getVkImageInfo", &GrBackendRenderTarget::getVkImageInfo,
         R"docstring(
         If the backend API is Vulkan, copies a snapshot of the GrVkImageInfo
@@ -380,6 +413,7 @@ py::class_<GrBackendRenderTarget>(m, "GrBackendRenderTarget")
         of the changed layout.
         )docstring",
         py::arg("layout"))
+*/
     .def("getBackendFormat", &GrBackendRenderTarget::getBackendFormat,
         R"docstring(
         Get the GrBackendFormat for this render target (or an invalid format if
@@ -407,6 +441,7 @@ py::class_<GrContext_Base, sk_sp<GrContext_Base>, SkRefCnt>(m, "GrContext_Base")
         R"docstring(
         The 3D API backing this context.
         )docstring")
+/*
     .def("defaultBackendFormat", &GrContext_Base::defaultBackendFormat,
         R"docstring(
         Retrieve the default :py:class:`GrBackendFormat` for a given
@@ -418,6 +453,7 @@ py::class_<GrContext_Base, sk_sp<GrContext_Base>, SkRefCnt>(m, "GrContext_Base")
         The caller should check that the returned format is valid.
         )docstring")
     .def("compressedBackendFormat", &GrContext_Base::compressedBackendFormat)
+*/
     .def("threadSafeProxy", &GrContext_Base::threadSafeProxy)
     // .def("priv", py::overload_cast<>(&GrContext_Base::priv))
     // .def("priv", py::overload_cast<>(&GrContext_Base::priv, py::const_))
@@ -487,8 +523,8 @@ py::class_<GrRecordingContext, sk_sp<GrRecordingContext>, GrImageContext>(
     //     py::overload_cast<>(&GrRecordingContext::priv, py::const_))
     ;
 
-py::class_<GrContext, sk_sp<GrContext>, GrRecordingContext>(m, "GrContext")
-    .def("resetContext", &GrContext::resetContext,
+py::class_<GrDirectContext, sk_sp<GrDirectContext>, GrRecordingContext>(m, "GrContext")
+    .def("resetContext", &GrDirectContext::resetContext,
         R"docstring(
         The :py:class:`GrContext` normally assumes that no outsider is setting
         state within the underlying 3D API's context/device/whatever.
@@ -499,7 +535,7 @@ py::class_<GrContext, sk_sp<GrContext>, GrRecordingContext>(m, "GrContext")
         either GL or D3D (possible in future).
         )docstring",
         py::arg("state") = kAll_GrBackendState)
-    .def("resetGLTextureBindings", &GrContext::resetGLTextureBindings,
+    .def("resetGLTextureBindings", &GrDirectContext::resetGLTextureBindings,
         R"docstring(
         If the backend is :py:attr:`~GrBackendApi.kOpenGL`, then all texture
         unit/target combinations for which the GrContext has modified the bound
@@ -514,7 +550,7 @@ py::class_<GrContext, sk_sp<GrContext>, GrRecordingContext>(m, "GrContext")
         intervening :py:class:`GrContext` usage then the second call is a
         no-op.)
         )docstring")
-    .def("abandonContext", &GrContext::abandonContext,
+    .def("abandonContext", &GrDirectContext::abandonContext,
         R"docstring(
         Abandons all GPU resources and assumes the underlying backend 3D API
         context is no longer usable.
@@ -533,7 +569,7 @@ py::class_<GrContext, sk_sp<GrContext>, GrRecordingContext>(m, "GrContext")
         VkInstance used to create the GrContext must be alive before calling
         abandonContext.
         )docstring")
-    .def("abandoned", &GrContext::abandoned,
+    .def("abandoned", &GrDirectContext::abandoned,
         R"docstring(
         Returns true if the context was abandoned or if the if the backend
         specific context has gotten into an unrecoverarble, lost state (e.g.
@@ -541,7 +577,7 @@ py::class_<GrContext, sk_sp<GrContext>, GrRecordingContext>(m, "GrContext")
         in Vulkan backend if we've gotten a VK_ERROR_DEVICE_LOST). If the
         backend context is lost, this call will also abandon the GrContext.
         )docstring")
-    .def("oomed", &GrContext::oomed,
+    .def("oomed", &GrDirectContext::oomed,
         R"docstring(
         Checks if the underlying 3D API reported an out-of-memory error.
 
@@ -561,7 +597,7 @@ py::class_<GrContext, sk_sp<GrContext>, GrRecordingContext>(m, "GrContext")
         VK_ERROR_OUT_OF_DEVICE_MEMORY has occurred.
         )docstring")
     .def("releaseResourcesAndAbandonContext",
-        &GrContext::releaseResourcesAndAbandonContext,
+        &GrDirectContext::releaseResourcesAndAbandonContext,
         R"docstring(
         This is similar to :py:meth:`abandonContext` however the underlying 3D
         context is not yet lost and the :py:class:`GrContext` will cleanup all
@@ -579,11 +615,11 @@ py::class_<GrContext, sk_sp<GrContext>, GrRecordingContext>(m, "GrContext")
         VkInstance used to create the GrContext must be alive before calling
         :py:meth:`releaseResourcesAndAbandonContext`.
         )docstring")
-    .def("getResourceCacheLimit", &GrContext::getResourceCacheLimit,
+    .def("getResourceCacheLimit", &GrDirectContext::getResourceCacheLimit,
         R"docstring(
         Return the current GPU resource cache limit in bytes.
         )docstring")
-    .def("getResourceCacheUsage", &GrContext::getResourceCacheUsage,
+    .def("getResourceCacheUsage", &GrDirectContext::getResourceCacheUsage,
         R"docstring(
         Gets the current GPU resource cache usage.
 
@@ -595,12 +631,12 @@ py::class_<GrContext, sk_sp<GrContext>, GrRecordingContext>(m, "GrContext")
         py::arg("resourceCount") = nullptr,
         py::arg("maxResourceBytes") = nullptr)
     .def("getResourceCachePurgeableBytes",
-        &GrContext::getResourceCachePurgeableBytes,
+        &GrDirectContext::getResourceCachePurgeableBytes,
         R"docstring(
         Gets the number of bytes in the cache consumed by purgeable (e.g.
         unlocked) resources.
         )docstring")
-    .def("setResourceCacheLimit", &GrContext::setResourceCacheLimit,
+    .def("setResourceCacheLimit", &GrDirectContext::setResourceCacheLimit,
         R"docstring(
         Specify the GPU resource cache limit.
 
@@ -611,23 +647,25 @@ py::class_<GrContext, sk_sp<GrContext>, GrRecordingContext>(m, "GrContext")
             that can be held in the cache.
         )docstring",
         py::arg("maxResourceBytes"))
-    .def("freeGpuResources", &GrContext::freeGpuResources,
+    .def("freeGpuResources", &GrDirectContext::freeGpuResources,
         R"docstring(
         Frees GPU created by the context.
 
         Can be called to reduce GPU memory pressure.
         )docstring")
-    .def("performDeferredCleanup", &GrContext::performDeferredCleanup,
+/*
+    .def("performDeferredCleanup", &GrDirectContext::performDeferredCleanup,
         R"docstring(
         Purge GPU resources that haven't been used in the past 'msNotUsed'
         milliseconds or are otherwise marked for deletion, regardless of whether
         the context is under budget.
         )docstring",
         py::arg("msNotUsed"))
-    .def("purgeResourcesNotUsedInMs", &GrContext::purgeResourcesNotUsedInMs,
+*/
+    .def("purgeResourcesNotUsedInMs", &GrDirectContext::purgeResourcesNotUsedInMs,
         py::arg("msNotUsed"))
     .def("purgeUnlockedResources",
-        py::overload_cast<size_t, bool>(&GrContext::purgeUnlockedResources),
+        py::overload_cast<size_t, bool>(&GrDirectContext::purgeUnlockedResources),
         R"docstring(
         Purge unlocked resources from the cache until the the provided byte
         count has been reached or we have purged all unlocked resources.
@@ -642,7 +680,7 @@ py::class_<GrContext, sk_sp<GrContext>, GrRecordingContext>(m, "GrContext")
         )docstring",
         py::arg("maxBytesToPurge"), py::arg("preferScratchResources"))
     .def("purgeUnlockedResources",
-        py::overload_cast<bool>(&GrContext::purgeUnlockedResources),
+        py::overload_cast<bool>(&GrDirectContext::purgeUnlockedResources),
         R"docstring(
         This entry point is intended for instances where an app has been
         backgrounded or suspended.
@@ -659,20 +697,20 @@ py::class_<GrContext, sk_sp<GrContext>, GrRecordingContext>(m, "GrContext")
             purged prior enforcing the budget requirements.
         )docstring",
         py::arg("scratchResourcesOnly"))
-    .def("maxTextureSize", &GrContext::maxTextureSize,
+    .def("maxTextureSize", &GrDirectContext::maxTextureSize,
         R"docstring(
         Gets the maximum supported texture size.
         )docstring")
-    .def("maxRenderTargetSize", &GrContext::maxRenderTargetSize,
+    .def("maxRenderTargetSize", &GrDirectContext::maxRenderTargetSize,
         R"docstring(
         Gets the maximum supported render target size.
         )docstring")
-    .def("colorTypeSupportedAsImage", &GrContext::colorTypeSupportedAsImage,
+    .def("colorTypeSupportedAsImage", &GrDirectContext::colorTypeSupportedAsImage,
         R"docstring(
         Can a :py:class:`Image` be created with the given color type.
         )docstring",
         py::arg("colorType"))
-    .def("colorTypeSupportedAsSurface", &GrContext::colorTypeSupportedAsSurface,
+    .def("colorTypeSupportedAsSurface", &GrDirectContext::colorTypeSupportedAsSurface,
         R"docstring(
         Can a SkSurface be created with the given color type.
 
@@ -681,7 +719,7 @@ py::class_<GrContext, sk_sp<GrContext>, GrRecordingContext>(m, "GrContext")
         )docstring",
         py::arg("colorType"))
     .def("maxSurfaceSampleCountForColorType",
-        &GrContext::maxSurfaceSampleCountForColorType,
+        &GrDirectContext::maxSurfaceSampleCountForColorType,
         R"docstring(
         Gets the maximum supported sample count for a color type.
 
@@ -691,7 +729,7 @@ py::class_<GrContext, sk_sp<GrContext>, GrRecordingContext>(m, "GrContext")
         )docstring",
         py::arg("colorType"))
     .def("wait",
-        [] (GrContext& context,
+        [] (GrDirectContext& context,
             const std::vector<GrBackendSemaphore>& semaphores,
             bool deleteSemaphoresAfterWait) {
             return context.wait(
@@ -707,13 +745,14 @@ py::class_<GrContext, sk_sp<GrContext>, GrRecordingContext>(m, "GrContext")
         client will still own the semaphores.
         )docstring",
         py::arg("semaphores"), py::arg("deleteSemaphoresAfterWait") = true)
-    .def("flushAndSubmit", &GrContext::flushAndSubmit,
+    .def("flushAndSubmit", py::overload_cast<bool>(&GrDirectContext::flushAndSubmit),
         R"docstring(
         Call to ensure all drawing to the context has been flushed and submitted
         to the underlying 3D API. This is equivalent to calling :py:meth:`flush`
         with a default :py:class:`GrFlushInfo` followed by :py:meth:`submit`.
-        )docstring")
-    .def("flush", py::overload_cast<const GrFlushInfo&>(&GrContext::flush),
+        )docstring",
+        py::arg("syncCpu") = false)
+    .def("flush", py::overload_cast<const GrFlushInfo&>(&GrDirectContext::flush),
         R"docstring(
         Call to ensure all drawing to the context has been flushed to underlying
         3D API specific objects. A call to :py:meth:`GrContext.submit` is always
@@ -749,8 +788,8 @@ py::class_<GrContext, sk_sp<GrContext>, GrRecordingContext>(m, "GrContext")
         submitted.
         )docstring",
         py::arg("info"))
-    .def("flush", py::overload_cast<>(&GrContext::flush))
-    .def("submit", &GrContext::submit,
+    .def("flush", py::overload_cast<>(&GrDirectContext::flush))
+    .def("submit", &GrDirectContext::submit,
         R"docstring(
         Submit outstanding work to the gpu from all previously un-submitted
         flushes. The return value of the submit will indicate whether or not the
@@ -769,21 +808,23 @@ py::class_<GrContext, sk_sp<GrContext>, GrRecordingContext>(m, "GrContext")
         finished with all submitted work.
         )docstring",
         py::arg("syncCpu") = false)
-    .def("checkAsyncWorkCompletion", &GrContext::checkAsyncWorkCompletion,
+    .def("checkAsyncWorkCompletion", &GrDirectContext::checkAsyncWorkCompletion,
         R"docstring(
         Checks whether any asynchronous work is complete and if so calls related
         callbacks.
         )docstring")
-    // .def("priv", (GrContextPriv (GrContext::*)()) &GrContext::priv)
-    // .def("priv", (const GrContextPriv (GrContext::*)() const) &GrContext::priv)
-    // .def("dumpMemoryStatistics", &GrContext::dumpMemoryStatistics,
+    // .def("priv", (GrContextPriv (GrDirectContext::*)()) &GrContext::priv)
+    // .def("priv", (const GrContextPriv (GrDirectContext::*)() const) &GrContext::priv)
+    // .def("dumpMemoryStatistics", &GrDirectContext::dumpMemoryStatistics,
     //     "Enumerates all cached GPU resources and dumps their memory to "
     //     "traceMemoryDump.")
-    .def("supportsDistanceFieldText", &GrContext::supportsDistanceFieldText)
-    .def("storeVkPipelineCacheData", &GrContext::storeVkPipelineCacheData)
-    .def_static("ComputeImageSize", &GrContext::ComputeImageSize,
+    .def("supportsDistanceFieldText", &GrDirectContext::supportsDistanceFieldText)
+    .def("storeVkPipelineCacheData", &GrDirectContext::storeVkPipelineCacheData)
+/*
+    .def_static("ComputeImageSize", &GrDirectContext::ComputeImageSize,
         py::arg("image"), py::arg("mipMapped"), py::arg("useNextPow2") = false)
-    .def("defaultBackendFormat", &GrContext::defaultBackendFormat,
+*/
+    .def("defaultBackendFormat", &GrDirectContext::defaultBackendFormat,
         R"docstring(
         Retrieve the default :py:class:`GrBackendFormat` for a given
         :py:class:`ColorType` and renderability.
@@ -797,7 +838,7 @@ py::class_<GrContext, sk_sp<GrContext>, GrRecordingContext>(m, "GrContext")
         py::arg("colorType"), py::arg("renderable") = GrRenderable::kNo)
     .def("createBackendTexture",
         py::overload_cast<int, int, const GrBackendFormat&, GrMipmapped,
-            GrRenderable, GrProtected>(&GrContext::createBackendTexture),
+            GrRenderable, GrProtected, std::string_view>(&GrDirectContext::createBackendTexture),
         R"docstring(
         If possible, create an uninitialized backend texture.
 
@@ -807,10 +848,10 @@ py::class_<GrContext, sk_sp<GrContext>, GrRecordingContext>(m, "GrContext")
         )docstring",
         py::arg("width"), py::arg("height"), py::arg("backendFormat"),
         py::arg("mipMapped"), py::arg("renderable"),
-        py::arg("isProtected") = GrProtected::kNo)
+        py::arg("isProtected") = GrProtected::kNo, py::arg("view") = std::string_view{})
     .def("createBackendTexture",
         py::overload_cast<int, int, SkColorType, GrMipmapped,
-            GrRenderable, GrProtected>(&GrContext::createBackendTexture),
+            GrRenderable, GrProtected, std::string_view>(&GrDirectContext::createBackendTexture),
         R"docstring(
         If possible, create an uninitialized backend texture.
 
@@ -821,9 +862,9 @@ py::class_<GrContext, sk_sp<GrContext>, GrRecordingContext>(m, "GrContext")
         )docstring",
         py::arg("width"), py::arg("height"), py::arg("colorType"),
         py::arg("mipMapped"), py::arg("renderable"),
-        py::arg("isProtected") = GrProtected::kNo)
+        py::arg("isProtected") = GrProtected::kNo, py::arg("view") = std::string_view{})
     .def("createBackendTexture",
-        [] (GrContext& context, int width, int height,
+        [] (GrDirectContext& context, int width, int height,
             const GrBackendFormat& backendFormat, const SkColor4f& color,
             GrMipmapped mipMapped, GrRenderable renderable,
             GrProtected isProtected) {
@@ -837,7 +878,7 @@ py::class_<GrContext, sk_sp<GrContext>, GrRecordingContext>(m, "GrContext")
         The client should ensure that the returned backend texture is valid. The
         client can pass in a finishedProc to be notified when the data has been
         uploaded by the gpu and the texture can be deleted. The client is
-        required to call GrContext::submit to send the upload work to the gpu.
+        required to call GrDirectContext::submit to send the upload work to the gpu.
         The finishedProc will always get called even if we failed to create the
         GrBackendTexture.
         For the Vulkan backend the layout of the created VkImage will be:
@@ -847,7 +888,7 @@ py::class_<GrContext, sk_sp<GrContext>, GrRecordingContext>(m, "GrContext")
         py::arg("color"), py::arg("mipMapped"), py::arg("renderable"),
         py::arg("isProtected") = GrProtected::kNo)
     .def("createBackendTexture",
-        [] (GrContext& context, int width, int height,
+        [] (GrDirectContext& context, int width, int height,
             SkColorType colorType, const SkColor4f& color,
             GrMipmapped mipMapped, GrRenderable renderable,
             GrProtected isProtected) {
@@ -867,7 +908,7 @@ py::class_<GrContext, sk_sp<GrContext>, GrRecordingContext>(m, "GrContext")
         py::arg("color"), py::arg("mipMapped"), py::arg("renderable"),
         py::arg("isProtected") = GrProtected::kNo)
     .def("createBackendTexture",
-        [] (GrContext& context, const std::vector<SkPixmap>& srcData,
+        [] (GrDirectContext& context, const std::vector<SkPixmap>& srcData,
             GrRenderable renderable, GrProtected isProtected) {
             return context.createBackendTexture(
                 (srcData.empty()) ? nullptr : srcData.data(),
@@ -880,7 +921,7 @@ py::class_<GrContext, sk_sp<GrContext>, GrRecordingContext>(m, "GrContext")
         pixmap data. The client should ensure that the returned backend texture
         is valid. The client can pass in a finishedProc to be notified when the
         data has been uploaded by the gpu and the texture can be deleted. The
-        client is required to call GrContext::submit to send the upload work to
+        client is required to call GrDirectContext::submit to send the upload work to
         the gpu. The finishedProc will always get called even if we failed to
         create the GrBackendTexture. If successful, the created backend texture
         will be compatible with the provided pixmap(s). Compatible, in this
@@ -900,7 +941,7 @@ py::class_<GrContext, sk_sp<GrContext>, GrRecordingContext>(m, "GrContext")
         py::arg("srcData"),  py::arg("renderable"),
         py::arg("isProtected") = GrProtected::kNo)
     .def("createBackendTexture",
-        [] (GrContext& context, const SkPixmap& pixmap, GrRenderable renderable,
+        [] (GrDirectContext& context, const SkPixmap& pixmap, GrRenderable renderable,
             GrProtected isProtected) {
             return context.createBackendTexture(
                 pixmap, renderable, isProtected);
@@ -908,7 +949,7 @@ py::class_<GrContext, sk_sp<GrContext>, GrRecordingContext>(m, "GrContext")
         py::arg("pixmap"), py::arg("renderable"),
         py::arg("isProtected") = GrProtected::kNo)
     .def("updateBackendTexture",
-        [] (GrContext& context, const GrBackendTexture& texture,
+        [] (GrDirectContext& context, const GrBackendTexture& texture,
             const SkColor4f& color) {
             return context.updateBackendTexture(
                 texture, color, nullptr, nullptr);
@@ -928,7 +969,7 @@ py::class_<GrContext, sk_sp<GrContext>, GrRecordingContext>(m, "GrContext")
         )docstring",
         py::arg("backendTexture"), py::arg("color"))
     .def("updateBackendTexture",
-        [] (GrContext& context, const GrBackendTexture& texture,
+        [] (GrDirectContext& context, const GrBackendTexture& texture,
             const std::vector<SkPixmap>& srcData) {
             return context.updateBackendTexture(
                 texture, &srcData[0], srcData.size(), nullptr, nullptr);
@@ -955,7 +996,7 @@ py::class_<GrContext, sk_sp<GrContext>, GrRecordingContext>(m, "GrContext")
         the created VkImage will be: VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL
         )docstring",
         py::arg("backendTexture"), py::arg("srcData"))
-    .def("compressedBackendFormat", &GrContext::compressedBackendFormat,
+    .def("compressedBackendFormat", &GrDirectContext::compressedBackendFormat,
         R"docstring(
         Retrieve the :py:class:`GrBackendFormat` for a given
         :py:class:`Image.CompressionType`.
@@ -967,7 +1008,7 @@ py::class_<GrContext, sk_sp<GrContext>, GrRecordingContext>(m, "GrContext")
         )docstring",
         py::arg("compressionType"))
     .def("createCompressedBackendTexture",
-        [] (GrContext& context, int width, int height,
+        [] (GrDirectContext& context, int width, int height,
             const GrBackendFormat& backendFormat, const SkColor4f& color,
             GrMipmapped mipMapped, GrProtected isProtected) {
             return context.createCompressedBackendTexture(
@@ -985,8 +1026,8 @@ py::class_<GrContext, sk_sp<GrContext>, GrRecordingContext>(m, "GrContext")
         py::arg("color"), py::arg("mipMapped"),
         py::arg("isProtected") = GrProtected::kNo)
     .def("createCompressedBackendTexture",
-        [] (GrContext& context, int width, int height,
-            SkImage::CompressionType type, const SkColor4f& color,
+        [] (GrDirectContext& context, int width, int height,
+            SkTextureCompressionType type, const SkColor4f& color,
             GrMipmapped mipMapped, GrProtected isProtected) {
             return context.createCompressedBackendTexture(
                 width, height, type, color, mipMapped, isProtected);
@@ -994,7 +1035,7 @@ py::class_<GrContext, sk_sp<GrContext>, GrRecordingContext>(m, "GrContext")
         py::arg("width"), py::arg("height"), py::arg("type"), py::arg("color"),
         py::arg("mipMapped"), py::arg("isProtected") = GrProtected::kNo)
     .def("createCompressedBackendTexture",
-        [] (GrContext& context, int width, int height,
+        [] (GrDirectContext& context, int width, int height,
             const GrBackendFormat& backendFormat, py::buffer b,
             GrMipmapped mipMapped, GrProtected isProtected) {
             auto info = b.request();
@@ -1007,8 +1048,8 @@ py::class_<GrContext, sk_sp<GrContext>, GrRecordingContext>(m, "GrContext")
         py::arg("data"), py::arg("mipMapped"),
         py::arg("isProtected") = GrProtected::kNo)
     .def("createCompressedBackendTexture",
-        [] (GrContext& context, int width, int height,
-            SkImage::CompressionType type, py::buffer b,
+        [] (GrDirectContext& context, int width, int height,
+            SkTextureCompressionType type, py::buffer b,
             GrMipmapped mipMapped, GrProtected isProtected) {
             auto info = b.request();
             size_t size = (info.ndim) ? info.strides[0] * info.shape[0] : 0;
@@ -1018,7 +1059,7 @@ py::class_<GrContext, sk_sp<GrContext>, GrRecordingContext>(m, "GrContext")
         py::arg("width"), py::arg("height"), py::arg("type"), py::arg("data"),
         py::arg("mipMapped"), py::arg("isProtected") = GrProtected::kNo)
     .def("setBackendTextureState",
-        [] (GrContext& context, const GrBackendTexture& texture,
+        [] (GrDirectContext& context, const GrBackendTexture& texture,
             const GrBackendSurfaceMutableState& mutableState,
             GrBackendSurfaceMutableState* previousState) {
             return context.setBackendTextureState(
@@ -1051,7 +1092,7 @@ py::class_<GrContext, sk_sp<GrContext>, GrRecordingContext>(m, "GrContext")
         py::arg("texture"), py::arg("mutableState"),
         py::arg("previousState") = nullptr)
     .def("setBackendRenderTargetState",
-        [] (GrContext& context, const GrBackendRenderTarget& target,
+        [] (GrDirectContext& context, const GrBackendRenderTarget& target,
             const GrBackendSurfaceMutableState& mutableState,
             GrBackendSurfaceMutableState* previousState) {
             return context.setBackendRenderTargetState(
@@ -1059,14 +1100,10 @@ py::class_<GrContext, sk_sp<GrContext>, GrRecordingContext>(m, "GrContext")
         },
         py::arg("target"), py::arg("mutableState"),
         py::arg("previousState") = nullptr)
-    .def("deleteBackendTexture", &GrContext::deleteBackendTexture,
+    .def("deleteBackendTexture", &GrDirectContext::deleteBackendTexture,
         py::arg("texture"))
-    .def("precompileShader", &GrContext::precompileShader,
+    .def("precompileShader", &GrDirectContext::precompileShader,
         py::arg("key"), py::arg("data"))
-    ;
-
-py::class_<GrDirectContext, sk_sp<GrDirectContext>, GrContext>(
-    m, "GrDirectContext")
 #ifdef SK_GL
     .def_static("MakeGL",
         py::overload_cast<sk_sp<const GrGLInterface>, const GrContextOptions&>(
@@ -1157,6 +1194,8 @@ py::class_<GrDirectContext, sk_sp<GrDirectContext>, GrContext>(
         Can be called to reduce GPU memory pressure.
         )docstring")
     ;
+
+m.attr("GrDirectContext") = m.attr("GrContext");
 
 initGrContext_gl(m);
 initGrContext_vk(m);

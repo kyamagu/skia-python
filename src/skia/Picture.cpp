@@ -1,4 +1,7 @@
 #include "common.h"
+#include <include/core/SkDrawable.h>
+#include <include/core/SkBBHFactory.h>
+#include <include/core/SkPictureRecorder.h>
 
 namespace {
 
@@ -141,8 +144,8 @@ py::class_<SkPicture, PyPicture, sk_sp<SkPicture>, SkRefCnt>(
         :return: approximate size
         )docstring")
     .def("makeShader",
-        py::overload_cast<SkTileMode, SkTileMode, const SkMatrix*,
-            const SkRect*>(&SkPicture::makeShader, py::const_),
+        py::overload_cast<SkTileMode, SkTileMode, SkFilterMode, const SkMatrix*,
+        const SkRect*>(&SkPicture::makeShader, py::const_),
         R"docstring(
         Return a new shader that will draw with this picture.
 
@@ -159,7 +162,7 @@ py::class_<SkPicture, PyPicture, sk_sp<SkPicture>, SkRefCnt>(
         :return: Returns a new shader object. Note: this function never returns
             null.
         )docstring",
-        py::arg("tmx"), py::arg("tmy"), py::arg("localMatrix") = nullptr,
+        py::arg("tmx"), py::arg("tmy"), py::arg("mode"), py::arg("localMatrix") = nullptr,
         py::arg("tile") = nullptr)
     .def_static("MakeFromStream",
         [] (SkStream* stream) {
@@ -238,10 +241,7 @@ py::class_<SkDrawable, sk_sp<SkDrawable>, SkFlattenable>(m, "Drawable",
         py::overload_cast<SkCanvas*, SkScalar, SkScalar>(&SkDrawable::draw),
         py::arg("canvas").none(false), py::arg("x"), py::arg("y"))
     // .def("snapGpuDrawHandler", &SkDrawable::snapGpuDrawHandler)
-    .def("newPictureSnapshot",
-        [] (SkDrawable& drawable) {
-            return sk_sp<SkPicture>(drawable.newPictureSnapshot());
-        })
+    .def("newPictureSnapshot", &SkDrawable::makePictureSnapshot)
     .def("getGenerationID", &SkDrawable::getGenerationID,
         R"docstring(
         Return a unique value for this instance.

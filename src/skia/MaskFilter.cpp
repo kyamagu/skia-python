@@ -1,4 +1,9 @@
 #include "common.h"
+#include <include/core/SkBlurTypes.h>
+#include <include/core/SkCoverageMode.h>
+#include <include/effects/SkShaderMaskFilter.h>
+#include <include/effects/SkTableMaskFilter.h>
+#include <include/effects/SkBlurMaskFilter.h>
 #include <pybind11/stl.h>
 
 void initMaskFilter(py::module &m) {

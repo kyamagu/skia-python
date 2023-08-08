@@ -1,4 +1,7 @@
 #include "common.h"
+#include <include/effects/SkRuntimeEffect.h>
+#include <include/effects/SkGradientShader.h>
+#include <include/effects/SkPerlinNoiseShader.h>
 #include <pybind11/stl.h>
 
 #define GET_SKSCALAR_PTR(pos) \
@@ -25,6 +28,7 @@ py::class_<SkShader, sk_sp<SkShader>, SkFlattenable> shader(
         ~skia.PerlinNoiseShader
     )docstring");
 
+/*
 py::class_<SkShader::GradientInfo>(shader, "GradientInfo")
     .def(py::init<>())
     .def_readwrite("fColorCount", &SkShader::GradientInfo::fColorCount,
@@ -104,6 +108,7 @@ py::enum_<SkShader::GradientType>(shader, "GradientType", R"docstring(
     .value("kLast_GradientType",
         SkShader::GradientType::kLast_GradientType)
     .export_values();
+*/
 
 shader
     .def("isOpaque", &SkShader::isOpaque,
@@ -130,7 +135,9 @@ shader
         )docstring",
         py::arg("localMatrix"), py::arg("xy") = nullptr)
     .def("isAImage", py::overload_cast<>(&SkShader::isAImage, py::const_))
+/*
     .def("asAGradient", &SkShader::asAGradient, py::arg("info"))
+*/
     .def("makeWithLocalMatrix", &SkShader::makeWithLocalMatrix,
         R"docstring(
         Return a shader that will apply the specified localMatrix to this
@@ -146,6 +153,7 @@ shader
         shader and then applying the colorfilter.
         )docstring",
         py::arg("colorFilter"))
+/*
     .def_static("Deserialize",
         [] (py::buffer b) {
             auto info = b.request();
@@ -156,9 +164,10 @@ shader
                 reinterpret_cast<SkShader*>(shader.release()));
         },
         py::arg("data"))
+*/
     ;
 
-py::class_<SkShaders>(m, "Shaders")
+py::class_<std::unique_ptr<int32_t>>(m, "Shaders")
     .def_static("Empty", &SkShaders::Empty)
     .def_static("Color", py::overload_cast<SkColor>(&SkShaders::Color),
         py::arg("color"))
@@ -174,6 +183,14 @@ py::class_<SkShaders>(m, "Shaders")
                 mode, CloneFlattenable(dst), CloneFlattenable(src));
         },
         py::arg("mode"), py::arg("dst"), py::arg("src"))
+    .def_static("Blend",
+        [] (sk_sp<SkBlender> blender, sk_sp<SkShader> dst,
+            sk_sp<SkShader> src) {
+            return SkShaders::Blend(
+                blender, dst, src);
+        },
+        py::arg("blender"), py::arg("dst"), py::arg("src"))
+/*
     .def_static("Lerp",
         [] (SkScalar t, const SkShader& dst,
             const SkShader& src) {
@@ -181,6 +198,7 @@ py::class_<SkShaders>(m, "Shaders")
                 t, CloneFlattenable(dst), CloneFlattenable(src));
         },
         py::arg("t"), py::arg("dst"), py::arg("src"))
+*/
     ;
 
 py::class_<SkGradientShader> gradientshader(m, "GradientShader");
@@ -304,7 +322,7 @@ gradientshader
         py::arg("flags") = 0, py::arg("localMatrix") = nullptr)
     ;
 
-py::class_<SkPerlinNoiseShader>(m, "PerlinNoiseShader",
+py::class_<std::unique_ptr<uint32_t>>(m, "PerlinNoiseShader",
     R"docstring(
     :py:class:`PerlinNoiseShader` creates an image using the Perlin turbulence
     function.
@@ -317,7 +335,7 @@ py::class_<SkPerlinNoiseShader>(m, "PerlinNoiseShader",
     The algorithm used is described here:
     http://www.w3.org/TR/SVG/filters.html#feTurbulenceElement
     )docstring")
-    .def_static("MakeFractalNoise", &SkPerlinNoiseShader::MakeFractalNoise,
+    .def_static("MakeFractalNoise", &SkShaders::MakeFractalNoise,
         R"docstring(
         This will construct Perlin noise of the given type (Fractal Noise or
         Turbulence).
@@ -338,10 +356,11 @@ py::class_<SkPerlinNoiseShader>(m, "PerlinNoiseShader",
         )docstring",
         py::arg("baseFrequencyX"), py::arg("baseFrequencyY"),
         py::arg("numOctaves"), py::arg("seed"), py::arg("tileSize") = nullptr)
-    .def_static("MakeTurbulence", &SkPerlinNoiseShader::MakeTurbulence,
+    .def_static("MakeTurbulence", &SkShaders::MakeTurbulence,
         py::arg("baseFrequencyX"), py::arg("baseFrequencyY"),
         py::arg("numOctaves"), py::arg("seed"), py::arg("tileSize") = nullptr)
-    .def_static("MakeImprovedNoise", &SkPerlinNoiseShader::MakeImprovedNoise,
+/*
+    .def_static("MakeImprovedNoise", &SkShaders::MakeImprovedNoise,
         R"docstring(
         Creates an Improved Perlin Noise shader.
 
@@ -350,5 +369,6 @@ py::class_<SkPerlinNoiseShader>(m, "PerlinNoiseShader",
         )docstring",
         py::arg("baseFrequencyX"), py::arg("baseFrequencyY"),
         py::arg("numOctaves"), py::arg("z"))
+*/
     ;
 }

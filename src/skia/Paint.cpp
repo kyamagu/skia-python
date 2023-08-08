@@ -1,4 +1,5 @@
 #include "common.h"
+#include <include/core/SkPathUtils.h>
 #include <pybind11/operators.h>
 
 
@@ -61,8 +62,10 @@ SkPaint MakeFromDict(py::dict dict) {
             paint.setColorFilter(value.cast<sk_sp<SkColorFilter>>());
         else if (key == "Dither")
             paint.setDither(value.cast<bool>());
+/*
         else if (key == "FilterQuality")
             paint.setFilterQuality(value.cast<SkFilterQuality>());
+*/
         else if (key == "ImageFilter")
             paint.setImageFilter(value.cast<sk_sp<SkImageFilter>>());
         else if (key == "MaskFilter")
@@ -243,6 +246,7 @@ paint
 
         )docstring",
         py::arg("d").none(false))
+/*
     .def("getHash", &SkPaint::getHash,
         R"docstring(
         Returns a hash generated from :py:class:`Paint` values and pointers.
@@ -257,6 +261,7 @@ paint
 
         :return: a shallow hash
         )docstring")
+*/
     .def("reset", &SkPaint::reset,
         R"docstring(
         Sets all :py:class:`Paint` contents to their initial values.
@@ -293,6 +298,7 @@ paint
         :param bool dither: dither  setting for ditering
         )docstring",
         py::arg("dither"))
+/*
     .def("getFilterQuality", &SkPaint::getFilterQuality,
         R"docstring(
         Returns :py:class:`FilterQuality`, the image filtering level.
@@ -310,6 +316,7 @@ paint
         :param skia.FilterQuality quality: filter quality
         )docstring",
         py::arg("quality"))
+*/
     .def("getStyle", &SkPaint::getStyle,
         R"docstring(
         Returns whether the geometry is filled, stroked, or filled and stroked.
@@ -447,8 +454,9 @@ paint
         )docstring",
         py::arg("join"))
     .def("getFillPath",
-        py::overload_cast<const SkPath&, SkPath*, const SkRect*, SkScalar>(
-            &SkPaint::getFillPath, py::const_),
+        [] (const SkPaint& paint, const SkPath &src, SkPath *dst, const SkRect *cullRect, SkScalar resScale) {
+            return skpathutils::FillPathWithPaint(src, paint, dst, cullRect, resScale);
+        },
         R"docstring(
         Returns the filled equivalent of the stroked path.
 
@@ -535,6 +543,7 @@ paint
             subsequent draw
         )docstring",
         py::arg("colorFilter"))
+/*
     .def("getBlendMode", &SkPaint::getBlendMode,
         R"docstring(
         Returns :py:class:`BlendMode`.
@@ -543,6 +552,7 @@ paint
 
         :return: mode used to combine source color with destination color
         )docstring")
+*/
     .def("isSrcOver", &SkPaint::isSrcOver,
         R"docstring(
         Returns true if :py:class:`BlendMode` is :py:attr:`BlendMode.kSrcOver`,
@@ -775,12 +785,14 @@ py::enum_<SkFlattenable::Type>(flattenable, "Type")
     .value("kImageFilter_Type", SkFlattenable::Type::kSkImageFilter_Type)
     .value("kMaskFilter_Type", SkFlattenable::Type::kSkMaskFilter_Type)
     .value("kPathEffect_Type", SkFlattenable::Type::kSkPathEffect_Type)
+/*
     .value("kPixelRef_Type", SkFlattenable::Type::kSkPixelRef_Type)
     .value("kUnused_Type4", SkFlattenable::Type::kSkUnused_Type4)
     .value("kShaderBase_Type", SkFlattenable::Type::kSkShaderBase_Type)
     .value("kUnused_Type", SkFlattenable::Type::kSkUnused_Type)
     .value("kUnused_Type2", SkFlattenable::Type::kSkUnused_Type2)
     .value("kUnused_Type3", SkFlattenable::Type::kSkUnused_Type3)
+*/
     .export_values();
 
 flattenable
