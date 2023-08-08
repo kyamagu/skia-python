@@ -1,20 +1,19 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Install &mdash; skia-python 87.5 documentation</title>
+  <title>Install &mdash; skia-python 116.0b2 documentation</title>
       <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <!--[if lt IE 9]>
     <script src="_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
         <script src="_static/jquery.js"></script>
-        <script src="_static/underscore.js"></script>
         <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
         <script src="_static/doctools.js"></script>
         <script src="_static/sphinx_highlight.js"></script>
     <script src="_static/js/theme.js"></script>
@@ -29,14 +28,18 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-            <a href="index.html" class="icon icon-home"> skia-python
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            skia-python
           </a>
               <div class="version">
-                87.5
+                116.0b2
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" />
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
@@ -73,7 +76,7 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="index.html" class="icon icon-home"></a></li>
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
       <li class="breadcrumb-item active">Install</li>
       <li class="wy-breadcrumbs-aside">
             <a href="_sources/install.rst.txt" rel="nofollow"> View page source</a>
@@ -89,7 +92,7 @@
 <section id="pypi-distribution">
 <h2>PyPI distribution<a class="headerlink" href="#pypi-distribution" title="Permalink to this heading"></a></h2>
 <p>Binary package is available on PyPI:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip install skia-python
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip<span class="w"> </span>install<span class="w"> </span>skia-python
 </pre></div>
 </div>
 <p>Supported platforms:</p>
@@ -99,11 +102,11 @@
 <li><p>Windows x86_64</p></li>
 </ul>
 <p>For Linux platforms, there must be OpenGL and fontconfig installed:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>apt-get install libfontconfig1 libgl1-mesa-glx libgl1-mesa-dri
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>apt-get<span class="w"> </span>install<span class="w"> </span>libfontconfig1<span class="w"> </span>libgl1-mesa-glx<span class="w"> </span>libgl1-mesa-dri
 </pre></div>
 </div>
 <p>Or:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>yum install fontconfig mesa-libGL mesa-dri-drivers
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>yum<span class="w"> </span>install<span class="w"> </span>fontconfig<span class="w"> </span>mesa-libGL<span class="w"> </span>mesa-dri-drivers
 </pre></div>
 </div>
 <p>For unsupported platforms, check the <a class="reference internal" href="#build-instruction">Build instruction</a>.</p>
@@ -111,8 +114,8 @@
 <section id="build-instruction">
 <h2>Build instruction<a class="headerlink" href="#build-instruction" title="Permalink to this heading"></a></h2>
 <p>First, clone the repo.</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git clone --recursive https://github.com/kyamagu/skia-python.git
-<span class="nb">cd</span> skia-python
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git<span class="w"> </span>clone<span class="w"> </span>--recursive<span class="w"> </span>https://github.com/kyamagu/skia-python.git
+<span class="nb">cd</span><span class="w"> </span>skia-python
 </pre></div>
 </div>
 <p>The repository bundles <cite>skia</cite> and its build tools (<cite>depot_tools</cite>) as submodules.
@@ -145,30 +148,30 @@
 <li><p>OpenGL</p></li>
 </ul>
 <p>Install dependencies:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>apt-get install -y libfontconfig1-dev libgl-dev libgl1-mesa-dri
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>apt-get<span class="w"> </span>install<span class="w"> </span>-y<span class="w"> </span>libfontconfig1-dev<span class="w"> </span>libgl-dev<span class="w"> </span>libgl1-mesa-dri
 </pre></div>
 </div>
 <p>or:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>yum install -y fontconfig-devel mesa-libGL-devel mesa-dri-drivers
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>yum<span class="w"> </span>install<span class="w"> </span>-y<span class="w"> </span>fontconfig-devel<span class="w"> </span>mesa-libGL-devel<span class="w"> </span>mesa-dri-drivers
 </pre></div>
 </div>
 <p>Set up <code class="docutils literal notranslate"><span class="pre">PATH</span></code> to the <code class="docutils literal notranslate"><span class="pre">depot_tools</span></code>. build skia library. At this point,
 <code class="docutils literal notranslate"><span class="pre">python</span></code> executable should be python 2. Note the build tools require
 relatively new glibc and python 2.7.</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">export</span> <span class="nv">PATH</span><span class="o">=</span><span class="s2">&quot;</span><span class="nv">$PWD</span><span class="s2">/depot_tools:</span><span class="nv">$PATH</span><span class="s2">&quot;</span>
-<span class="nb">cd</span> skia
-python2 tools/git-sync-deps
-bin/gn gen out/Release --args<span class="o">=</span><span class="s1">&#39;is_official_build=true skia_enable_tools=true skia_use_system_libjpeg_turbo=false skia_use_system_libwebp=false skia_use_system_libpng=false skia_use_system_icu=false skia_use_system_harfbuzz=false extra_cflags_cc=[&quot;-frtti&quot;] extra_ldflags=[&quot;-lrt&quot;]&#39;</span>
-ninja -C out/Release skia skia.h
-<span class="nb">cd</span> ..
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">export</span><span class="w"> </span><span class="nv">PATH</span><span class="o">=</span><span class="s2">&quot;</span><span class="nv">$PWD</span><span class="s2">/depot_tools:</span><span class="nv">$PATH</span><span class="s2">&quot;</span>
+<span class="nb">cd</span><span class="w"> </span>skia
+python2<span class="w"> </span>tools/git-sync-deps
+bin/gn<span class="w"> </span>gen<span class="w"> </span>out/Release<span class="w"> </span>--args<span class="o">=</span><span class="s1">&#39;is_official_build=true skia_enable_tools=true skia_use_system_libjpeg_turbo=false skia_use_system_libwebp=false skia_use_system_libpng=false skia_use_system_icu=false skia_use_system_harfbuzz=false extra_cflags_cc=[&quot;-frtti&quot;] extra_ldflags=[&quot;-lrt&quot;]&#39;</span>
+ninja<span class="w"> </span>-C<span class="w"> </span>out/Release<span class="w"> </span>skia<span class="w"> </span>skia.h
+<span class="nb">cd</span><span class="w"> </span>..
 </pre></div>
 </div>
 <p>Then, build the skia python binding. At this point, <code class="docutils literal notranslate"><span class="pre">python</span></code> should be set to
 the desired version.</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">export</span> <span class="nv">SKIA_PATH</span><span class="o">=</span><span class="nv">$PWD</span>/skia
-<span class="nb">export</span> <span class="nv">SKIA_OUT_PATH</span><span class="o">=</span><span class="nv">$SKIA_PATH</span>/out/Release
-python -m pip install pybind11 numpy wheel
-python setup.py bdist_wheel
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">export</span><span class="w"> </span><span class="nv">SKIA_PATH</span><span class="o">=</span><span class="nv">$PWD</span>/skia
+<span class="nb">export</span><span class="w"> </span><span class="nv">SKIA_OUT_PATH</span><span class="o">=</span><span class="nv">$SKIA_PATH</span>/out/Release
+python<span class="w"> </span>-m<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>pybind11<span class="w"> </span>numpy<span class="w"> </span>wheel
+python<span class="w"> </span>setup.py<span class="w"> </span>bdist_wheel
 </pre></div>
 </div>
 </section>
@@ -181,20 +184,20 @@ python setup.py bdist_wheel
 </ul>
 <p>Set up <code class="docutils literal notranslate"><span class="pre">PATH</span></code> to the <code class="docutils literal notranslate"><span class="pre">depot_tools</span></code>, and build skia library. At this point,
 <code class="docutils literal notranslate"><span class="pre">python</span></code> executable should be python 2.</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">export</span> <span class="nv">PATH</span><span class="o">=</span><span class="s2">&quot;</span><span class="nv">$PWD</span><span class="s2">/depot_tools:</span><span class="nv">$PATH</span><span class="s2">&quot;</span>
-<span class="nb">cd</span> skia
-python2 tools/git-sync-deps
-bin/gn gen out/Release --args<span class="o">=</span><span class="s1">&#39;is_official_build=true skia_enable_tools=true skia_use_system_libjpeg_turbo=false skia_use_system_libwebp=false skia_use_system_libpng=false skia_use_system_icu=false skia_use_system_harfbuzz=false extra_cflags_cc=[&quot;-frtti&quot;]&#39;</span>
-ninja -C out/Release skia skia.h
-<span class="nb">cd</span> ..
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">export</span><span class="w"> </span><span class="nv">PATH</span><span class="o">=</span><span class="s2">&quot;</span><span class="nv">$PWD</span><span class="s2">/depot_tools:</span><span class="nv">$PATH</span><span class="s2">&quot;</span>
+<span class="nb">cd</span><span class="w"> </span>skia
+python2<span class="w"> </span>tools/git-sync-deps
+bin/gn<span class="w"> </span>gen<span class="w"> </span>out/Release<span class="w"> </span>--args<span class="o">=</span><span class="s1">&#39;is_official_build=true skia_enable_tools=true skia_use_system_libjpeg_turbo=false skia_use_system_libwebp=false skia_use_system_libpng=false skia_use_system_icu=false skia_use_system_harfbuzz=false extra_cflags_cc=[&quot;-frtti&quot;]&#39;</span>
+ninja<span class="w"> </span>-C<span class="w"> </span>out/Release<span class="w"> </span>skia<span class="w"> </span>skia.h
+<span class="nb">cd</span><span class="w"> </span>..
 </pre></div>
 </div>
 <p>Then, build the skia python binding. At this point, <code class="docutils literal notranslate"><span class="pre">python</span></code> should be set to
 the desired version.</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">export</span> <span class="nv">SKIA_PATH</span><span class="o">=</span><span class="nv">$PWD</span>/skia
-<span class="nb">export</span> <span class="nv">SKIA_OUT_PATH</span><span class="o">=</span><span class="nv">$SKIA_PATH</span>/out/Release
-python -m pip install pybind11 numpy wheel
-python setup.py bdist_wheel
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">export</span><span class="w"> </span><span class="nv">SKIA_PATH</span><span class="o">=</span><span class="nv">$PWD</span>/skia
+<span class="nb">export</span><span class="w"> </span><span class="nv">SKIA_OUT_PATH</span><span class="o">=</span><span class="nv">$SKIA_PATH</span>/out/Release
+python<span class="w"> </span>-m<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>pybind11<span class="w"> </span>numpy<span class="w"> </span>wheel
+python<span class="w"> </span>setup.py<span class="w"> </span>bdist_wheel
 </pre></div>
 </div>
 </section>
@@ -222,13 +225,13 @@ python setup.py bdist_wheel
 </section>
 <section id="testing">
 <h2>Testing<a class="headerlink" href="#testing" title="Permalink to this heading"></a></h2>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python -m pip install pytest numpy glfw
-python -m pytest tests
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python<span class="w"> </span>-m<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>pytest<span class="w"> </span>numpy<span class="w"> </span>glfw
+python<span class="w"> </span>-m<span class="w"> </span>pytest<span class="w"> </span>tests
 </pre></div>
 </div>
 <p>Alternatively, use <code class="docutils literal notranslate"><span class="pre">tox</span></code> to run tests under various python versions.</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">export</span> <span class="nv">SKIA_PATH</span><span class="o">=</span><span class="nv">$PWD</span>/skia
-<span class="nb">export</span> <span class="nv">SKIA_OUT_PATH</span><span class="o">=</span><span class="nv">$SKIA_PATH</span>/out/Release
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">export</span><span class="w"> </span><span class="nv">SKIA_PATH</span><span class="o">=</span><span class="nv">$PWD</span>/skia
+<span class="nb">export</span><span class="w"> </span><span class="nv">SKIA_OUT_PATH</span><span class="o">=</span><span class="nv">$SKIA_PATH</span>/out/Release
 tox
 </pre></div>
 </div>
@@ -236,8 +239,8 @@ tox
 <section id="documentation">
 <h2>Documentation<a class="headerlink" href="#documentation" title="Permalink to this heading"></a></h2>
 <p>Once skia-python is installed, sphinx documentation can be built:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python -m pip install sphinx sphinx-rtd-theme
-python setup.py build_sphinx
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python<span class="w"> </span>-m<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>sphinx<span class="w"> </span>sphinx-rtd-theme
+python<span class="w"> </span>setup.py<span class="w"> </span>build_sphinx
 </pre></div>
 </div>
 </section>

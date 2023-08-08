@@ -1,20 +1,19 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>ImageFilters &mdash; skia-python 87.5 documentation</title>
+  <title>ImageFilters &mdash; skia-python 116.0b2 documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   <!--[if lt IE 9]>
     <script src="../_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
         <script src="../_static/jquery.js"></script>
-        <script src="../_static/underscore.js"></script>
         <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
         <script src="../_static/doctools.js"></script>
         <script src="../_static/sphinx_highlight.js"></script>
     <script src="../_static/js/theme.js"></script>
@@ -29,14 +28,18 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-            <a href="../index.html" class="icon icon-home"> skia-python
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            skia-python
           </a>
               <div class="version">
-                87.5
+                116.0b2
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" />
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
@@ -252,7 +255,7 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="../index.html" class="icon icon-home"></a></li>
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
           <li class="breadcrumb-item"><a href="../reference.html">Reference</a></li>
           <li class="breadcrumb-item"><a href="skia.html">skia</a></li>
       <li class="breadcrumb-item active">ImageFilters</li>
@@ -272,10 +275,6 @@
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">ImageFilters</span></span><a class="headerlink" href="#skia.ImageFilters" title="Permalink to this definition"></a></dt>
 <dd><p class="rubric">Methods</p>
 <table class="autosummary longtable docutils align-default">
-<colgroup>
-<col style="width: 10%" />
-<col style="width: 90%" />
-</colgroup>
 <tbody>
 <tr class="row-odd"><td><p><a class="reference internal" href="#skia.ImageFilters.AlphaThreshold" title="skia.ImageFilters.AlphaThreshold"><code class="xref py py-obj docutils literal notranslate"><span class="pre">AlphaThreshold</span></code></a></p></td>
 <td><p>Create a filter that updates the alpha of the image based on 'region'.</p></td>
@@ -374,7 +373,7 @@ made more transparent.</p>
 max(innerMin, pixel’s alpha). If a pixel is outside the region, its
 alpha will be updated to min(outerMax, pixel’s alpha).</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>region</strong> (<a class="reference internal" href="skia.Region.html#skia.Region" title="skia.Region"><em>skia.Region</em></a>) – The geometric region controlling the inner
 and outer alpha thresholds.</p></li>
@@ -402,7 +401,7 @@ background and foreground pixels using the 4 coefficients:</p>
 </pre></div>
 </div>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>k1</strong> (<em>float</em>) – The first coefficients used to combine the foreground
 and background.</p></li>
@@ -432,7 +431,7 @@ output.</p></li>
 <p>The provided tile mode is used when the blur kernel goes outside the
 input image.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>sigmaX</strong> (<em>float</em>) – The Gaussian sigma value for blurring along the X
 axis.</p></li>
@@ -455,7 +454,7 @@ and output.</p></li>
 <dd><p>Create a filter that applies the color filter to the input filter
 results.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>cf</strong> (<a class="reference internal" href="skia.ColorFilter.html#skia.ColorFilter" title="skia.ColorFilter"><em>skia.ColorFilter</em></a>) – The color filter that transforms the input
 image.</p></li>
@@ -475,7 +474,7 @@ output.</p></li>
 results of ‘inner’ are treated as the source bitmap passed to ‘outer’,
 i.e. result = outer(inner(source)).</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>outer</strong> (<a class="reference internal" href="skia.ImageFilter.html#skia.ImageFilter" title="skia.ImageFilter"><em>skia.ImageFilter</em></a>) – The outer filter that evaluates the
 results of inner.</p></li>
@@ -492,7 +491,7 @@ to outer.</p></li>
 <dd><p>Create a filter that dilates each input pixel’s channel values to the
 max value within the given radii along the x and y axes.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>radiusX</strong> (<em>float</em>) – The distance to dilate along the x axis to either
 side of each pixel.</p></li>
@@ -516,7 +515,7 @@ output.</p></li>
 as scale * (color[xChannel], color[yChannel]), where the channel
 selectors are one of R, G, B, or A.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>xChannelSelector</strong> (<a class="reference internal" href="skia.ColorChannel.html#skia.ColorChannel" title="skia.ColorChannel"><em>skia.ColorChannel</em></a>) – RGBA channel that encodes the
 x displacement per pixel.</p></li>
@@ -541,7 +540,7 @@ input and output.</p></li>
 light source, interpreting the alpha channel of the input as the height
 profile of the surface (to approximate normal vectors).</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>direction</strong> (<a class="reference internal" href="skia.Point3.html#skia.Point3" title="skia.Point3"><em>skia.Point3</em></a>) – The direction to the distance light.</p></li>
 <li><p><strong>lightColor</strong> (<em>int</em>) – The color of the diffuse light source.</p></li>
@@ -564,7 +563,7 @@ output.</p></li>
 light source, interpreting the alpha channel of the input as the height
 profile of the surface (to approximate normal vectors).</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>direction</strong> (<a class="reference internal" href="skia.Point3.html#skia.Point3" title="skia.Point3"><em>skia.Point3</em></a>) – The direction to the distance light.</p></li>
 <li><p><strong>lightColor</strong> (<em>int</em>) – The color of the diffuse light source.</p></li>
@@ -588,7 +587,7 @@ output.</p></li>
 <dd><p>Create a filter that draws a drop shadow under the input content.</p>
 <p>This filter produces an image that includes the inputs’ content.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>dx</strong> (<em>float</em>) – The X offset of the shadow.</p></li>
 <li><p><strong>dy</strong> (<em>float</em>) – The Y offset of the shadow.</p></li>
@@ -613,7 +612,7 @@ does not include the input content.</p>
 <p>This allows the shadow and input to be composed by a filter DAG in a
 more flexible manner.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>dx</strong> (<em>float</em>) – The X offset of the shadow.</p></li>
 <li><p><strong>dy</strong> (<em>float</em>) – The Y offset of the shadow.</p></li>
@@ -635,7 +634,7 @@ output.</p></li>
 <dd><p>Create a filter that erodes each input pixel’s channel values to the
 minimum channel value within the given radii along the x and y axes.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>radiusX</strong> (<em>float</em>) – The distance to erode along the x axis to either
 side of each pixel.</p></li>
@@ -662,16 +661,16 @@ using the given filter quality.</p>
 <p>Similar to <a class="reference internal" href="skia.Canvas.html#skia.Canvas.drawImageRect" title="skia.Canvas.drawImageRect"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Canvas.drawImageRect()</span></code></a>. Returns null if ‘image’ is
 null.</p>
 <dl class="field-list simple">
-<dt class="field-odd">image</dt>
+<dt class="field-odd">image<span class="colon">:</span></dt>
 <dd class="field-odd"><p>The image that is output by the filter, subset by ‘srcRect’.</p>
 </dd>
-<dt class="field-even">srcRect</dt>
+<dt class="field-even">srcRect<span class="colon">:</span></dt>
 <dd class="field-even"><p>The source pixels sampled into ‘dstRect’</p>
 </dd>
-<dt class="field-odd">dstRect</dt>
+<dt class="field-odd">dstRect<span class="colon">:</span></dt>
 <dd class="field-odd"><p>The local rectangle to draw the image into.</p>
 </dd>
-<dt class="field-even">filterQuality</dt>
+<dt class="field-even">filterQuality<span class="colon">:</span></dt>
 <dd class="field-even"><p>The filter quality that is used when sampling the image.</p>
 </dd>
 </dl>
@@ -681,7 +680,7 @@ null.</p>
 <blockquote>
 <div><p>Create a filter that produces the image contents.</p>
 <dl class="field-list simple">
-<dt class="field-odd">image</dt>
+<dt class="field-odd">image<span class="colon">:</span></dt>
 <dd class="field-odd"><p>The image that is output by the filter.</p>
 </dd>
 </dl>
@@ -695,7 +694,7 @@ null.</p>
 <em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">ImageFilters.</span></span><span class="sig-name descname"><span class="pre">Magnifier</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">srcRect</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="skia.Rect.html#skia.Rect" title="skia.Rect"><span class="pre">skia.Rect</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">inset</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">input</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="skia.ImageFilter.html#skia.ImageFilter" title="skia.ImageFilter"><span class="pre">skia.ImageFilter</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cropRect</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="skia.IRect.html#skia.IRect" title="skia.IRect"><span class="pre">skia.IRect</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="skia.ImageFilter.html#skia.ImageFilter" title="skia.ImageFilter"><span class="pre">skia.ImageFilter</span></a></span></span><a class="headerlink" href="#skia.ImageFilters.Magnifier" title="Permalink to this definition"></a></dt>
 <dd><p>Create a filter that mimics a zoom/magnifying lens effect.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>srcRect</strong> (<a class="reference internal" href="skia.Rect.html#skia.Rect" title="skia.Rect"><em>skia.Rect</em></a>) – Source rect.</p></li>
 <li><p><strong>inset</strong> (<em>float</em>) – Inset.</p></li>
@@ -716,7 +715,7 @@ image.</p>
 <p>This can be used to produce effects such as sharpening, blurring, edge
 detection, etc.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>kernelSize</strong> (<a class="reference internal" href="skia.ISize.html#skia.ISize" title="skia.ISize"><em>skia.ISize</em></a>) – The kernel size in pixels, in each
 dimension (N by M).</p></li>
@@ -751,7 +750,7 @@ processing will be limited.</p></li>
 happens prior to any transformation coming from the SkCanvas initiating
 the filtering.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>matrix</strong> (<a class="reference internal" href="skia.Matrix.html#skia.Matrix" title="skia.Matrix"><em>skia.Matrix</em></a>) – The matrix to apply to the original content.</p></li>
 <li><p><strong>filterQuality</strong> (<a class="reference internal" href="skia.FilterQuality.html#skia.FilterQuality" title="skia.FilterQuality"><em>skia.FilterQuality</em></a>) – The filter quality to use when
@@ -769,7 +768,7 @@ use the source image.</p></li>
 <dd><p>Create a filter that merges the ‘count’ filters together by drawing
 their results in order with src-over blending.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>filters</strong> (<em>List</em><em>[</em><a class="reference internal" href="skia.ImageFilter.html#skia.ImageFilter" title="skia.ImageFilter"><em>skia.ImageFilter</em></a><em>]</em>) – The input filter array to merge,
 which must have ‘count’ elements. Any null filter pointers will use
@@ -786,7 +785,7 @@ filters and the output.</p></li>
 <em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">ImageFilters.</span></span><span class="sig-name descname"><span class="pre">Offset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dx</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dy</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">input</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="skia.ImageFilter.html#skia.ImageFilter" title="skia.ImageFilter"><span class="pre">skia.ImageFilter</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cropRect</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="skia.IRect.html#skia.IRect" title="skia.IRect"><span class="pre">skia.IRect</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="skia.ImageFilter.html#skia.ImageFilter" title="skia.ImageFilter"><span class="pre">skia.ImageFilter</span></a></span></span><a class="headerlink" href="#skia.ImageFilters.Offset" title="Permalink to this definition"></a></dt>
 <dd><p>Create a filter that offsets the input filter by the given vector.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>dx</strong> (<em>float</em>) – The x offset in local space that the image is shifted.</p></li>
 <li><p><strong>dy</strong> (<em>float</em>) – The y offset in local space that the image is shifted.</p></li>
@@ -804,7 +803,7 @@ output.</p></li>
 <em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">ImageFilters.</span></span><span class="sig-name descname"><span class="pre">Paint</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">paint</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="skia.Paint.html#skia.Paint" title="skia.Paint"><span class="pre">skia.Paint</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">cropRect</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="skia.IRect.html#skia.IRect" title="skia.IRect"><span class="pre">skia.IRect</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="skia.ImageFilter.html#skia.ImageFilter" title="skia.ImageFilter"><span class="pre">skia.ImageFilter</span></a></span></span><a class="headerlink" href="#skia.ImageFilters.Paint" title="Permalink to this definition"></a></dt>
 <dd><p>Create a filter that fills the output with the given paint.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>paint</strong> (<a class="reference internal" href="skia.Paint.html#skia.Paint" title="skia.Paint"><em>skia.Paint</em></a>) – The paint to fill</p></li>
 <li><p><strong>cropRect</strong> (<a class="reference internal" href="skia.Rect.html#skia.Rect" title="skia.Rect"><em>skia.Rect</em></a>) – Optional rectangle that will be filled. If
@@ -823,7 +822,7 @@ targetRect.</p>
 <p>Note that the targetRect is not the same as the SkIRect cropRect that
 many filters accept. Returns null if ‘pic’ is null.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>pic</strong> (<a class="reference internal" href="skia.Picture.html#skia.Picture" title="skia.Picture"><em>skia.Picture</em></a>) – The picture that is drawn for the filter
 output.</p></li>
@@ -840,7 +839,7 @@ output.</p></li>
 light source, using alpha channel of the input as the height profile of
 the surface (to approximate normal vectors).</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>location</strong> (<a class="reference internal" href="skia.Point3.html#skia.Point3" title="skia.Point3"><em>skia.Point3</em></a>) – The location of the point light.</p></li>
 <li><p><strong>lightColor</strong> (<em>int</em>) – The color of the diffuse light source.</p></li>
@@ -863,7 +862,7 @@ output.</p></li>
 light source, using alpha channel of the input as the height profile of
 the surface (to approximate normal vectors).</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>location</strong> (<a class="reference internal" href="skia.Point3.html#skia.Point3" title="skia.Point3"><em>skia.Point3</em></a>) – The location of the point light.</p></li>
 <li><p><strong>lightColor</strong> (<em>int</em>) – The color of the diffuse light source.</p></li>
@@ -890,7 +889,7 @@ the surface (to approximate normal vectors).</p>
 <p>The spot light is restricted to be within ‘cutoffAngle’ of the vector
 between the location and target.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>location</strong> (<a class="reference internal" href="skia.Point3.html#skia.Point3" title="skia.Point3"><em>skia.Point3</em></a>) – The location of the spot light.</p></li>
 <li><p><strong>target</strong> (<a class="reference internal" href="skia.Point3.html#skia.Point3" title="skia.Point3"><em>skia.Point3</em></a>) – The location that the spot light is point
@@ -921,7 +920,7 @@ the surface (to approximate normal vectors).</p>
 <p>The spot light is restricted to be within ‘cutoffAngle’ of the vector
 between the location and target.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>location</strong> (<a class="reference internal" href="skia.Point3.html#skia.Point3" title="skia.Point3"><em>skia.Point3</em></a>) – The location of the spot light.</p></li>
 <li><p><strong>target</strong> (<a class="reference internal" href="skia.Point3.html#skia.Point3" title="skia.Point3"><em>skia.Point3</em></a>) – The location that the spot light is point
@@ -950,7 +949,7 @@ output.</p></li>
 <em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">ImageFilters.</span></span><span class="sig-name descname"><span class="pre">Tile</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">src</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="skia.Rect.html#skia.Rect" title="skia.Rect"><span class="pre">skia.Rect</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">dst</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="skia.Rect.html#skia.Rect" title="skia.Rect"><span class="pre">skia.Rect</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">input</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="skia.ImageFilter.html#skia.ImageFilter" title="skia.ImageFilter"><span class="pre">skia.ImageFilter</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="skia.ImageFilter.html#skia.ImageFilter" title="skia.ImageFilter"><span class="pre">skia.ImageFilter</span></a></span></span><a class="headerlink" href="#skia.ImageFilters.Tile" title="Permalink to this definition"></a></dt>
 <dd><p>Create a tile image filter.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>src</strong> (<a class="reference internal" href="skia.Rect.html#skia.Rect" title="skia.Rect"><em>skia.Rect</em></a>) – Defines the pixels to tile</p></li>
 <li><p><strong>dst</strong> (<a class="reference internal" href="skia.Rect.html#skia.Rect" title="skia.Rect"><em>skia.Rect</em></a>) – Defines the pixel region that the tiles will be
@@ -968,7 +967,7 @@ source bitmap is used instead.</p></li>
 <dd><p>This filter takes an <a class="reference internal" href="skia.BlendMode.html#skia.BlendMode" title="skia.BlendMode"><code class="xref py py-class docutils literal notranslate"><span class="pre">BlendMode</span></code></a> and uses it to composite the
 two filters together.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>background</strong> (<a class="reference internal" href="skia.ImageFilter.html#skia.ImageFilter" title="skia.ImageFilter"><em>skia.ImageFilter</em></a>) – The Dst pixels used in blending, if
 null the source bitmap is used.</p></li>

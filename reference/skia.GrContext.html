@@ -1,20 +1,19 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>GrContext &mdash; skia-python 87.5 documentation</title>
+  <title>GrContext &mdash; skia-python 116.0b2 documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   <!--[if lt IE 9]>
     <script src="../_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
         <script src="../_static/jquery.js"></script>
-        <script src="../_static/underscore.js"></script>
         <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
         <script src="../_static/doctools.js"></script>
         <script src="../_static/sphinx_highlight.js"></script>
     <script src="../_static/js/theme.js"></script>
@@ -29,14 +28,18 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-            <a href="../index.html" class="icon icon-home"> skia-python
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            skia-python
           </a>
               <div class="version">
-                87.5
+                116.0b2
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" />
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
@@ -252,7 +255,7 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="../index.html" class="icon icon-home"></a></li>
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
           <li class="breadcrumb-item"><a href="../reference.html">Reference</a></li>
           <li class="breadcrumb-item"><a href="skia.html">skia</a></li>
       <li class="breadcrumb-item active">GrContext</li>
@@ -272,10 +275,6 @@
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">GrContext</span></span><a class="headerlink" href="#skia.GrContext" title="Permalink to this definition"></a></dt>
 <dd><p class="rubric">Methods</p>
 <table class="autosummary longtable docutils align-default">
-<colgroup>
-<col style="width: 10%" />
-<col style="width: 90%" />
-</colgroup>
 <tbody>
 <tr class="row-odd"><td><p><a class="reference internal" href="#skia.GrContext.ComputeImageSize" title="skia.GrContext.ComputeImageSize"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ComputeImageSize</span></code></a></p></td>
 <td><p></p></td>
@@ -616,12 +615,12 @@ following <a class="reference internal" href="skia.ColorType.html#skia.ColorType
 required to ensure work is actually sent to the gpu. Some specific API
 details:</p>
 <dl class="field-list simple">
-<dt class="field-odd">GL</dt>
+<dt class="field-odd">GL<span class="colon">:</span></dt>
 <dd class="field-odd"><p>Commands are actually sent to the driver, but glFlush is never
 called. Thus some sync objects from the flush will not be valid
 until a submission occurs.</p>
 </dd>
-<dt class="field-even">Vulkan/Metal/D3D/Dawn</dt>
+<dt class="field-even">Vulkan/Metal/D3D/Dawn<span class="colon">:</span></dt>
 <dd class="field-even"><p>Commands are recorded to the backend APIs
 corresponding command buffer or encoder objects. However, these
 objects are not sent to the gpu until a submission occurs.</p>
@@ -684,7 +683,7 @@ unlocked) resources.</p>
 <span class="sig-prename descclassname"><span class="pre">GrContext.</span></span><span class="sig-name descname"><span class="pre">getResourceCacheUsage</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#skia.GrContext" title="skia.GrContext"><span class="pre">skia.GrContext</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">resourceCount</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">maxResourceBytes</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#skia.GrContext.getResourceCacheUsage" title="Permalink to this definition"></a></dt>
 <dd><p>Gets the current GPU resource cache usage.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>resourceCount</strong> (<em>int</em>) – If non-null, returns the number of resources
 that are held in the cache.</p></li>
@@ -764,10 +763,10 @@ count has been reached or we have purged all unlocked resources.</p>
 prefer purging scratch resources (in LRU order) prior to purging other
 resource types.</p>
 <dl class="field-list simple">
-<dt class="field-odd">maxBytesToPurge</dt>
+<dt class="field-odd">maxBytesToPurge<span class="colon">:</span></dt>
 <dd class="field-odd"><p>the desired number of bytes to be purged.</p>
 </dd>
-<dt class="field-even">preferScratchResources</dt>
+<dt class="field-even">preferScratchResources<span class="colon">:</span></dt>
 <dd class="field-even"><p>If true scratch resources will be purged prior
 to other resource types.</p>
 </dd>
@@ -786,7 +785,7 @@ separate pass will be made to ensure that resource usage is under budget
 (i.e., even if ‘scratchResourcesOnly’ is true some resources with
 persistent data may be purged to be under budget).</p>
 <dl class="field-list simple">
-<dt class="field-odd">scratchResourcesOnly</dt>
+<dt class="field-odd">scratchResourcesOnly<span class="colon">:</span></dt>
 <dd class="field-odd"><p>If true only unlocked scratch resources will be
 purged prior enforcing the budget requirements.</p>
 </dd>
@@ -882,7 +881,7 @@ call.</p>
 <p>If the cache currently exceeds this limit, it will be purged (LRU) to
 keep the cache within the limit.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>maxResourceBytes</strong> – The maximum number of bytes of video memory
 that can be held in the cache.</p>
 </dd>

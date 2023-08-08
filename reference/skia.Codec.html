@@ -1,20 +1,19 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Codec &mdash; skia-python 87.5 documentation</title>
+  <title>Codec &mdash; skia-python 116.0b2 documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   <!--[if lt IE 9]>
     <script src="../_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
         <script src="../_static/jquery.js"></script>
-        <script src="../_static/underscore.js"></script>
         <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
         <script src="../_static/doctools.js"></script>
         <script src="../_static/sphinx_highlight.js"></script>
     <script src="../_static/js/theme.js"></script>
@@ -29,14 +28,18 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-            <a href="../index.html" class="icon icon-home"> skia-python
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            skia-python
           </a>
               <div class="version">
-                87.5
+                116.0b2
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" />
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
@@ -260,7 +263,7 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="../index.html" class="icon icon-home"></a></li>
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
           <li class="breadcrumb-item"><a href="../reference.html">Reference</a></li>
           <li class="breadcrumb-item"><a href="skia.html">skia</a></li>
       <li class="breadcrumb-item active">Codec</li>
@@ -281,10 +284,6 @@
 <dd><p><a class="reference internal" href="#skia.Codec" title="skia.Codec"><code class="xref py py-class docutils literal notranslate"><span class="pre">Codec</span></code></a> Abstraction layer directly on top of an image codec.</p>
 <p class="rubric">Classes</p>
 <table class="autosummary longtable docutils align-default">
-<colgroup>
-<col style="width: 10%" />
-<col style="width: 90%" />
-</colgroup>
 <tbody>
 <tr class="row-odd"><td><p><a class="reference internal" href="skia.Codec.DisposalMethod.html#skia.Codec.DisposalMethod" title="skia.Codec.DisposalMethod"><code class="xref py py-obj docutils literal notranslate"><span class="pre">DisposalMethod</span></code></a></p></td>
 <td><p>This specifies how the next frame is based on this frame.</p></td>
@@ -311,10 +310,6 @@
 </table>
 <p class="rubric">Methods</p>
 <table class="autosummary longtable docutils align-default">
-<colgroup>
-<col style="width: 10%" />
-<col style="width: 90%" />
-</colgroup>
 <tbody>
 <tr class="row-odd"><td><p><a class="reference internal" href="#skia.Codec.MakeFromData" title="skia.Codec.MakeFromData"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MakeFromData</span></code></a></p></td>
 <td><p>If this data represents an encoded image that we know how to decode, return an <a class="reference internal" href="#skia.Codec" title="skia.Codec"><code class="xref py py-class docutils literal notranslate"><span class="pre">Codec</span></code></a> that can decode it.</p></td>
@@ -395,10 +390,6 @@
 </table>
 <p class="rubric">Attributes</p>
 <table class="autosummary longtable docutils align-default">
-<colgroup>
-<col style="width: 10%" />
-<col style="width: 90%" />
-</colgroup>
 <tbody>
 <tr class="row-odd"><td><p><a class="reference internal" href="#skia.Codec.kCouldNotRewind" title="skia.Codec.kCouldNotRewind"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kCouldNotRewind</span></code></a></p></td>
 <td><p></p></td>
@@ -569,7 +560,7 @@ allowing the PixelRef to be immutable.</p>
 the client to call <a class="reference internal" href="#skia.Codec.startScanlineDecode" title="skia.Codec.startScanlineDecode"><code class="xref py py-meth docutils literal notranslate"><span class="pre">startScanlineDecode()</span></code></a> in order to return to
 decoding scanlines.</p>
 <dl class="field-list">
-<dt class="field-odd">info</dt>
+<dt class="field-odd">info<span class="colon">:</span></dt>
 <dd class="field-odd"><p>A description of the format (config, size)
 expected by the caller.  This can simply be identical
 to the info returned by getInfo().</p>
@@ -587,7 +578,7 @@ transformation is a no-op.</p>
 <p>If the caller passes a null SkColorSpace, no color space
 transformation will be done.</p>
 </dd>
-<dt class="field-even">return</dt>
+<dt class="field-even">return<span class="colon">:</span></dt>
 <dd class="field-even"><p>Result kSuccess, or another value explaining the type of
 failure.</p>
 </dd>
@@ -636,7 +627,7 @@ the scanline decoder.</p>
 <dd><p>Write the next countLines scanlines into dst.</p>
 <p>Not valid to call before calling startScanlineDecode().</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>dst</strong> – Must be non-null, and large enough to hold countLines
 scanlines of size rowBytes.</p></li>
@@ -646,7 +637,7 @@ a scanline based on the <a class="reference internal" href="skia.ImageInfo.html#
 object.</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>the number of lines successfully decoded.  If this value is
 less than countLines, this will fill the remaining lines with a
 default value.</p>
@@ -661,7 +652,7 @@ default value.</p>
 or false if this codec cannot decode subsets or anything similar to
 <cite>desiredSubset</cite>.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>desiredSubset</strong> – In/out parameter. As input, a desired subset of
 the original bounds (as specified by getInfo). If true is returned,
 desiredSubset may have been modified to a subset which is
@@ -670,7 +661,7 @@ desiredSubset to create something supported, it is possible other
 changes could result in a valid subset.
 If false is returned, desiredSubset’s value is undefined.</p>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>true if this codec supports decoding <cite>desiredSubset</cite> (as
 returned, potentially modified)</p>
 </dd>
@@ -684,7 +675,7 @@ returned, potentially modified)</p>
 This always attempts to perform a full decode. To get the planar
 configuration without decoding use queryYUVAInfo().</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>yuvaPixmaps</strong> – Contains preallocated pixmaps configured according
 to a successful call to <a class="reference internal" href="#skia.Codec.queryYUVAInfo" title="skia.Codec.queryYUVAInfo"><code class="xref py py-meth docutils literal notranslate"><span class="pre">queryYUVAInfo()</span></code></a>.</p>
 </dd>
@@ -705,7 +696,7 @@ the decode later. In the latter case, they may choose to initialize all
 lines first, or only initialize the remaining lines after the first
 call.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>rowsDecoded</strong> – Optional output variable returning the total number
 of lines initialized. Only meaningful if this method returns
 kIncompleteInput. Otherwise the implementation may not set it.
@@ -714,7 +705,7 @@ but not necessarily finished those rows (e.g. interlaced PNG). This
 may be useful for determining what rows the client needs to
 initialize.</p>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>kSuccess if all lines requested in startIncrementalDecode have
 been completely decoded. kIncompleteInput otherwise.</p>
 </dd>
@@ -747,13 +738,13 @@ encoded image types (bottom-up bmps, interlaced gifs).</p>
 <dd><p>If decoding to YUV is supported, this returns true. Otherwise, this
 returns false;</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>supportedDataTypes</strong> – Indicates the data type/planar config
 combinations that are supported by the caller. If the generator
 supports decoding to YUV(A), but not as a type in
 supportedDataTypes, this method returns false.</p>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>Output that specifies the planar configuration, subsampling,
 orientation, chroma siting, plane color types, and row bytes.</p>
 </dd>
@@ -770,7 +761,7 @@ NOTE: If skipped lines are the only lines with alpha, this default
 will make reallyHasAlpha return true, when it could have returned
 false.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Returns</dt>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
 <dd class="field-odd"><p><p>true if the scanlines were successfully skipped
 false on failure, possible reasons for failure include:</p>
 <ul class="simple">
@@ -795,7 +786,7 @@ false on failure, possible reasons for failure include:</p>
 <p>If kIncompleteInput is returned, may be called again after more data has
 been provided to the source <a class="reference internal" href="skia.Stream.html#skia.Stream" title="skia.Stream"><code class="xref py py-class docutils literal notranslate"><span class="pre">Stream</span></code></a>.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>dstInfo</strong> – Info of the destination. If the dimensions do not match
 those of getInfo, this implies a scale.</p></li>
@@ -805,7 +796,7 @@ subset, if present, or the full image as described in dstInfo.</p></li>
 initialized and whether to decode a subset.</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>Enum representing success or reason for failure.</p>
 </dd>
 </dl>
@@ -821,7 +812,7 @@ initialized and whether to decode a subset.</p></li>
 <p>This may require rewinding the stream.</p>
 <p>Not all Codecs support this.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>dstInfo</strong> – Info of the destination. If the dimensions do not match
 those of getInfo, this implies a scale.</p></li>
@@ -829,7 +820,7 @@ those of getInfo, this implies a scale.</p></li>
 initialized.</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>Enum representing success or reason for failure.</p>
 </dd>
 </dl>
