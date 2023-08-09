@@ -4,14 +4,11 @@ export PATH=${PWD}/depot_tools:$PATH
 
 EXTRA_CFLAGS=""
 
-if [[ $(uname -m) == "aarch64" ]]; then
-    # Install ninja for aarch64
-    yum -y install epel-release && \
-        yum repolist && \
-        yum install -y ninja-build && \
-        ln -s ninja-build /usr/bin/ninja &&
-        mv depot_tools/ninja depot_tools/ninja.bak
-fi
+export CC=gcc
+export CXX=g++
+export AR=ar
+export CFLAGS="-Wno-deprecated-copy"
+export LDFLAGS="-lrt"
 
 # Install system dependencies
 if [[ $EUID -eq 0 ]]; then
@@ -25,17 +22,35 @@ if [[ $EUID -eq 0 ]]; then
         rm -rf /var/cache/yum
 fi
 
-if [[ $(uname -m) == "aarch64" ]] && [[ $CI_SKIP_BUILD == "true" ]]; then
-    # gn and skia already built in a previous job
+# Wheel-building needs fontconfig-devel from above.
+# Simply quit, if it looks like a previous run was successful:
+if [[ -f "skia/out/Release/libskia.a" ]] ; then
     exit 0
 fi
 
+if [[ $(uname -m) == "aarch64" ]]; then
+    # Install ninja for aarch64
+    yum -y install epel-release && \
+        yum repolist && \
+        yum install -y ninja-build && \
+        ln -s ninja-build /usr/bin/ninja &&
+        mv depot_tools/ninja depot_tools/ninja.bak
+fi
+
+# libicu.a is the largest 3rd-party; if it already exists, we run ninja
+# a 2nd time and exit.
+# Running ninja a 2nd-time is safe - it is no-ops if skia is already built too.
+# The 3rd-party libraries below are built in size-order; we built libicu last to signal
+# having built most of them.
+if [[ -f "skia/out/Release/libicu.a" ]] ; then
+    cd skia && \
+        ninja -C out/Release && \
+        cd ..
+    exit $?
+fi
+### 2nd round<->1st round ###
+
 # Build gn
-export CC=gcc
-export CXX=g++
-export AR=ar
-export CFLAGS="-Wno-deprecated-copy"
-export LDFLAGS="-lrt"
 git clone https://gn.googlesource.com/gn && \
     cd gn && \
     git checkout fe330c0ae1ec29db30b6f830e50771a335e071fb && \
@@ -61,5 +76,12 @@ skia_use_system_freetype2=false
 extra_cflags_cc=[\"-frtti\"]
 extra_ldflags=[\"-lrt\"]
 " && \
-    ninja -C out/Release && \
+    ninja -C out/Release \
+          third_party/freetype2 \
+          third_party/libwebp \
+          third_party/dng_sdk \
+          third_party/harfbuzz \
+          third_party/icu && \
+    ( ( [[ $(uname -m) == "aarch64" ]] && echo "On aarch64 - Please run me again!" ) || \
+          ninja -C out/Release ) && \
     cd ..
