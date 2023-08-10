@@ -305,7 +305,10 @@ bboxhierarchy
 
 py::class_<SkPictureRecorder> picturerecorder(m, "PictureRecorder");
 
+/* m117: Remove slug-related #ifdefs from src/core */
+/*
 py::enum_<SkPictureRecorder::FinishFlags>(picturerecorder, "FinishFlags");
+*/
 
 picturerecorder
     .def(py::init())
