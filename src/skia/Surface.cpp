@@ -1,6 +1,7 @@
 #include "common.h"
-#include <include/core/SkSurfaceCharacterization.h>
 #include <include/core/SkSurfaceProps.h>
+#include <include/gpu/ganesh/gl/GrGLBackendSurface.h>
+#include <include/private/chromium/GrSurfaceCharacterization.h>
 #include <include/gpu/GpuTypes.h>
 #include <include/gpu/ganesh/SkSurfaceGanesh.h>
 #include <include/gpu/GrBackendSurfaceMutableState.h>
@@ -91,37 +92,37 @@ surfaceprops
         )docstring")
     ;
 
-py::class_<SkSurfaceCharacterization>(m, "SurfaceCharacterization")
+py::class_<GrSurfaceCharacterization>(m, "SurfaceCharacterization")
     .def(py::init())
-    .def("createResized", &SkSurfaceCharacterization::createResized,
+    .def("createResized", &GrSurfaceCharacterization::createResized,
         py::arg("width"), py::arg("height"))
-    .def("createColorSpace", &SkSurfaceCharacterization::createColorSpace,
+    .def("createColorSpace", &GrSurfaceCharacterization::createColorSpace,
         py::arg("cs"))
-    .def("createBackendFormat", &SkSurfaceCharacterization::createBackendFormat,
+    .def("createBackendFormat", &GrSurfaceCharacterization::createBackendFormat,
         py::arg("colorType"), py::arg("backendFormat"))
-    .def("createFBO0", &SkSurfaceCharacterization::createFBO0,
+    .def("createFBO0", &GrSurfaceCharacterization::createFBO0,
         py::arg("usesGLFBO0"))
     .def(py::self == py::self)
     .def(py::self != py::self)
     .def("cacheMaxResourceBytes",
-        &SkSurfaceCharacterization::cacheMaxResourceBytes)
-    .def("isValid", &SkSurfaceCharacterization::isValid)
-    .def("width", &SkSurfaceCharacterization::width)
-    .def("height", &SkSurfaceCharacterization::height)
+        &GrSurfaceCharacterization::cacheMaxResourceBytes)
+    .def("isValid", &GrSurfaceCharacterization::isValid)
+    .def("width", &GrSurfaceCharacterization::width)
+    .def("height", &GrSurfaceCharacterization::height)
 /*
     #if !SK_SUPPORT_GPU
-    .def("stencilCount", &SkSurfaceCharacterization::stencilCount)
+    .def("stencilCount", &GrSurfaceCharacterization::stencilCount)
     #endif
 */
-    .def("isTextureable", &SkSurfaceCharacterization::isTextureable)
-    .def("isMipMapped", &SkSurfaceCharacterization::isMipMapped)
-    .def("usesGLFBO0", &SkSurfaceCharacterization::usesGLFBO0)
+    .def("isTextureable", &GrSurfaceCharacterization::isTextureable)
+    .def("isMipMapped", &GrSurfaceCharacterization::isMipMapped)
+    .def("usesGLFBO0", &GrSurfaceCharacterization::usesGLFBO0)
     .def("vulkanSecondaryCBCompatible",
-        &SkSurfaceCharacterization::vulkanSecondaryCBCompatible)
-    .def("colorSpace", &SkSurfaceCharacterization::colorSpace,
+        &GrSurfaceCharacterization::vulkanSecondaryCBCompatible)
+    .def("colorSpace", &GrSurfaceCharacterization::colorSpace,
         py::return_value_policy::reference_internal)
-    .def("refColorSpace", &SkSurfaceCharacterization::refColorSpace)
-    .def("surfaceProps", &SkSurfaceCharacterization::surfaceProps)
+    .def("refColorSpace", &GrSurfaceCharacterization::refColorSpace)
+    .def("surfaceProps", &GrSurfaceCharacterization::surfaceProps)
     ;
 
 py::class_<SkSurface, sk_sp<SkSurface>, SkRefCnt> surface(
@@ -1173,7 +1174,7 @@ surface
         py::arg("context"), py::arg("budgeted"), py::arg("imageInfo"))
     .def_static("MakeRenderTarget",
         py::overload_cast<GrRecordingContext*,
-        const SkSurfaceCharacterization&, skgpu::Budgeted>(
+        const GrSurfaceCharacterization&, skgpu::Budgeted>(
             &SkSurfaces::RenderTarget),
         R"docstring(
         Returns :py:class:`Surface` on GPU indicated by context that is
