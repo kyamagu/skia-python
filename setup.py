@@ -90,7 +90,6 @@ else:
     LIBRARIES = [
         'dl',
         'fontconfig',
-        'freetype',
         'GL',
         'expat',
     ]
