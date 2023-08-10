@@ -717,6 +717,8 @@ surface
         :return: LCD striping orientation and setting for device independent
             fonts
         )docstring")
+/* m117: Remove legacy SkImage and SkSurface methods */
+/*
     .def("flushAndSubmit",
         py::overload_cast<bool>(&SkSurface::flushAndSubmit),
         R"docstring(
@@ -734,7 +736,7 @@ surface
         )docstring",
         py::arg("syncCpu") = false)
     .def("flush",
-        py::overload_cast<SkSurface::BackendSurfaceAccess, const GrFlushInfo&>(
+        py::overload_cast<SkSurfaces::BackendSurfaceAccess, const GrFlushInfo&>(
             &SkSurface::flush),
         R"docstring(
         Issues pending :py:class:`Surface` commands to the GPU-backed API
@@ -850,6 +852,7 @@ surface
         :param newState: optional state change request after flush
         )docstring",
         py::arg("info"), py::arg("newState") = nullptr)
+*/
     .def("characterize", &SkSurface::characterize,
         R"docstring(
         Initializes :py:class:`SurfaceCharacterization` that can be used to

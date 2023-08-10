@@ -148,8 +148,8 @@ sk_sp<SkImage> ImageConvert(
         at = image.alphaType();
     if (at == image.alphaType()) {
         if (ct == image.colorType())
-            return image.makeColorSpace(CloneColorSpace(cs));
-        return image.makeColorTypeAndColorSpace(ct, CloneColorSpace(cs));
+            return image.makeColorSpace(nullptr, CloneColorSpace(cs));
+        return image.makeColorTypeAndColorSpace(nullptr, ct, CloneColorSpace(cs));
     }
 
     auto imageInfo = SkImageInfo::Make(
@@ -1757,7 +1757,7 @@ image
     .def("makeColorSpace",
         [] (const SkImage& image, const SkColorSpace* target,
             GrDirectContext* direct) {
-            return image.makeColorSpace(CloneColorSpace(target), direct);
+            return image.makeColorSpace(direct, CloneColorSpace(target));
         },
         R"docstring(
         Creates :py:class:`Image` in target :py:class:`ColorSpace`.
@@ -1779,7 +1779,7 @@ image
         [] (const SkImage& image, SkColorType ct, const SkColorSpace* cs,
             GrDirectContext* direct) {
             return image.makeColorTypeAndColorSpace(
-                ct, CloneColorSpace(cs), direct);
+                direct, ct, CloneColorSpace(cs));
         },
         R"docstring(
         Experimental.
