@@ -114,6 +114,7 @@ def test_Surface_readPixels(surface, args):
     assert isinstance(surface.readPixels(*args), bool)
 
 
+@pytest.mark.xfail(reason='m117: Remove legacy SkImage and SkSurface methods; may need REVISIT for emulation/no-op stub')
 def test_Surface_asyncRescaleAndReadPixels(surface):
     info = skia.ImageInfo.MakeN32Premul(100, 100)
     def assert_result(result):
@@ -146,10 +147,12 @@ def test_Surface_props(surface):
     assert isinstance(surface.props(), skia.SurfaceProps)
 
 
+@pytest.mark.xfail(reason='m117: Remove legacy SkImage and SkSurface methods; may need REVISIT for emulation/no-op stub')
 def test_Surface_flushAndSubmit(surface):
     surface.flushAndSubmit()
 
 
+@pytest.mark.xfail(reason='m117: Remove legacy SkImage and SkSurface methods; may need REVISIT for emulation/no-op stub')
 def test_Surface_flush(surface):
     surface.flush(skia.Surface.kNoAccess, skia.GrFlushInfo())
 
