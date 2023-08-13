@@ -991,15 +991,14 @@ surface
             nullptr
         )docstring",
         py::arg("width"), py::arg("height"), py::arg("surfaceProps") = nullptr)
-/*
     .def_static("MakeFromBackendTexture",
-        [] (GrDirectContext* context, const GrBackendTexture& backendTexture,
+        [] (GrRecordingContext* context, const GrBackendTexture& backendTexture,
             GrSurfaceOrigin origin, int sampleCnt, SkColorType colorType,
             sk_sp<SkColorSpace> colorSpace,
-            const SkSurfaceProps* surfaceProps) {
+            const SkSurfaceProps* surfaceProps, RenderTargetReleaseProc releaseProc, ReleaseContext releaseContext) {
             return SkSurfaces::WrapBackendTexture(
                 context, backendTexture, origin, sampleCnt, colorType,
-                colorSpace, surfaceProps);
+                colorSpace, surfaceProps, releaseProc, releaseContext);
         },
         R"docstring(
         Wraps a GPU-backed texture into :py:class:`Surface`. Caller must ensure
@@ -1036,14 +1035,14 @@ surface
         )docstring",
         py::arg("context"), py::arg("backendTexture"), py::arg("origin"),
         py::arg("sampleCnt"), py::arg("colorType"), py::arg("colorSpace"),
-        py::arg("surfaceProps"))
+        py::arg("surfaceProps"), py::arg("releaseProc") = nullptr, py::arg("releaseContext") = nullptr)
     .def_static("MakeFromBackendRenderTarget",
-        [] (GrDirectContext* context, const GrBackendRenderTarget& target,
+        [] (GrRecordingContext* context, const GrBackendRenderTarget& target,
             GrSurfaceOrigin origin, SkColorType colorType,
             sk_sp<SkColorSpace> colorSpace,
-            const SkSurfaceProps* surfaceProps) {
+            const SkSurfaceProps* surfaceProps, RenderTargetReleaseProc releaseProc, ReleaseContext releaseContext) {
             return SkSurfaces::WrapBackendRenderTarget(
-                context, target, origin, colorType, colorSpace, surfaceProps);
+                context, target, origin, colorType, colorSpace, surfaceProps, releaseProc, releaseContext);
         },
         R"docstring(
         Wraps a GPU-backed buffer into :py:class:`Surface`.
@@ -1076,8 +1075,7 @@ surface
         )docstring",
         py::arg("context"), py::arg("backendRenderTarget"), py::arg("origin"),
         py::arg("colorType"), py::arg("colorSpace"),
-        py::arg("surfaceProps") = nullptr)
-*/
+        py::arg("surfaceProps") = nullptr, py::arg("releaseProc") = nullptr, py::arg("releaseContext") = nullptr)
     .def_static("MakeRenderTarget",
         py::overload_cast<GrRecordingContext*, skgpu::Budgeted, const SkImageInfo&, int,
         GrSurfaceOrigin, const SkSurfaceProps*, bool>(
