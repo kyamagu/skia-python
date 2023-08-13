@@ -199,7 +199,6 @@ def test_Surface_MakeRasterN32Premul(args):
     check_surface(skia.Surface.MakeRasterN32Premul(*args))
 
 
-@pytest.mark.skip(reason='m116:REVISIT')
 def test_Surface_MakeFromBackendTexture(context):
     texture = skia.GrBackendTexture()
     assert isinstance(
@@ -209,7 +208,6 @@ def test_Surface_MakeFromBackendTexture(context):
         (type(None), skia.Surface))
 
 
-@pytest.mark.skip(reason='m116:REVISIT')
 def test_Surface_MakeFromBackendRenderTarget(context):
     target = skia.GrBackendRenderTarget()
     assert isinstance(
