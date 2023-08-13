@@ -232,7 +232,6 @@ def test_Image_encodeToData(image, args):
 def test_Image_refEncodedData(image):
     assert isinstance(image.refEncodedData(), skia.Data)
 
-@pytest.mark.skip(reason='m116:REVISIT')
 def test_Image_makeSubset(image):
     assert isinstance(image.makeSubset((10, 10)), skia.Image)
 

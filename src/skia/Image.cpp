@@ -1572,8 +1572,10 @@ image
 
         :return: encoded :py:class:`Image`, or nullptr
         )docstring")
-/*
-    .def("makeSubset", &SkImage::makeSubset,
+    .def("makeSubset",
+        [] (SkImage& image, const SkIRect& subset, GrDirectContext* direct) {
+            return image.makeSubset(direct, subset);
+        },
         R"docstring(
         Returns subset of :py:class:`Image`.
 
@@ -1588,7 +1590,6 @@ image
         :return: partial or full :py:class:`Image`, or nullptr
         )docstring",
         py::arg("subset"), py::arg("direct") = nullptr)
-*/
     .def("hasMipmaps", &SkImage::hasMipmaps,
         R"docstring(
         Returns true if the image has mipmap levels.
