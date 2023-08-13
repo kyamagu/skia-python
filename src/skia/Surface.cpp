@@ -3,6 +3,7 @@
 #include <include/gpu/ganesh/gl/GrGLBackendSurface.h>
 #include <include/private/chromium/GrSurfaceCharacterization.h>
 #include <include/gpu/GpuTypes.h>
+#include <include/gpu/GrTypes.h>
 #include <include/gpu/ganesh/SkSurfaceGanesh.h>
 #include <include/gpu/GrBackendSurfaceMutableState.h>
 #include <pybind11/operators.h>
@@ -718,9 +719,14 @@ surface
             fonts
         )docstring")
 /* m117: Remove legacy SkImage and SkSurface methods */
-/*
     .def("flushAndSubmit",
-        py::overload_cast<bool>(&SkSurface::flushAndSubmit),
+        [] (SkSurface& surface, bool syncCpu) {
+            auto direct = GrAsDirectContext(surface.recordingContext());
+            if (direct) {
+                direct->flush(&surface, SkSurfaces::BackendSurfaceAccess::kNoAccess, GrFlushInfo());
+                direct->submit(syncCpu);
+            }
+        },
         R"docstring(
         Call to ensure all reads/writes of the surface have been issued to the
         underlying 3D API.
@@ -736,8 +742,13 @@ surface
         )docstring",
         py::arg("syncCpu") = false)
     .def("flush",
-        py::overload_cast<SkSurfaces::BackendSurfaceAccess, const GrFlushInfo&>(
-            &SkSurface::flush),
+        [] (SkSurface& surface, SkSurfaces::BackendSurfaceAccess access, const GrFlushInfo& info) {
+            auto dContext = GrAsDirectContext(surface.recordingContext());
+            if (!dContext) {
+                return GrSemaphoresSubmitted::kNo;
+            }
+            return dContext->flush(&surface, access, info);
+        },
         R"docstring(
         Issues pending :py:class:`Surface` commands to the GPU-backed API
         objects and resolves any :py:class:`Surface` MSAA. A call to
@@ -797,9 +808,14 @@ surface
         )docstring",
         py::arg("access"), py::arg("info"))
     .def("flush",
-        py::overload_cast<
-            const GrFlushInfo&, const skgpu::MutableTextureState*>(
-            &SkSurface::flush),
+        [] (SkSurface& surface, const GrFlushInfo& info,
+            const skgpu::MutableTextureState* newState) {
+            auto dContext = GrAsDirectContext(surface.recordingContext());
+            if (!dContext) {
+                return GrSemaphoresSubmitted::kNo;
+            }
+            return dContext->flush(&surface, info, newState);
+        },
         R"docstring(
         Issues pending :py:class:`Surface` commands to the GPU-backed API
         objects and resolves any :py:class:`Surface` MSAA.
@@ -852,7 +868,6 @@ surface
         :param newState: optional state change request after flush
         )docstring",
         py::arg("info"), py::arg("newState") = nullptr)
-*/
     .def("characterize", &SkSurface::characterize,
         R"docstring(
         Initializes :py:class:`SurfaceCharacterization` that can be used to
@@ -995,7 +1010,7 @@ surface
         [] (GrRecordingContext* context, const GrBackendTexture& backendTexture,
             GrSurfaceOrigin origin, int sampleCnt, SkColorType colorType,
             sk_sp<SkColorSpace> colorSpace,
-            const SkSurfaceProps* surfaceProps, RenderTargetReleaseProc releaseProc, ReleaseContext releaseContext) {
+            const SkSurfaceProps* surfaceProps, SkSurfaces::RenderTargetReleaseProc releaseProc, SkSurfaces::ReleaseContext releaseContext) {
             return SkSurfaces::WrapBackendTexture(
                 context, backendTexture, origin, sampleCnt, colorType,
                 colorSpace, surfaceProps, releaseProc, releaseContext);
@@ -1040,7 +1055,7 @@ surface
         [] (GrRecordingContext* context, const GrBackendRenderTarget& target,
             GrSurfaceOrigin origin, SkColorType colorType,
             sk_sp<SkColorSpace> colorSpace,
-            const SkSurfaceProps* surfaceProps, RenderTargetReleaseProc releaseProc, ReleaseContext releaseContext) {
+            const SkSurfaceProps* surfaceProps, SkSurfaces::RenderTargetReleaseProc releaseProc, SkSurfaces::ReleaseContext releaseContext) {
             return SkSurfaces::WrapBackendRenderTarget(
                 context, target, origin, colorType, colorSpace, surfaceProps, releaseProc, releaseContext);
         },
