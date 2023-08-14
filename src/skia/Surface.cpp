@@ -1055,9 +1055,9 @@ surface
         [] (GrRecordingContext* context, const GrBackendRenderTarget& target,
             GrSurfaceOrigin origin, SkColorType colorType,
             sk_sp<SkColorSpace> colorSpace,
-            const SkSurfaceProps* surfaceProps, SkSurfaces::RenderTargetReleaseProc releaseProc, SkSurfaces::ReleaseContext releaseContext) {
+            const SkSurfaceProps* surfaceProps) {
             return SkSurfaces::WrapBackendRenderTarget(
-                context, target, origin, colorType, colorSpace, surfaceProps, releaseProc, releaseContext);
+                context, target, origin, colorType, colorSpace, surfaceProps, NULL, NULL);
         },
         R"docstring(
         Wraps a GPU-backed buffer into :py:class:`Surface`.
@@ -1090,7 +1090,7 @@ surface
         )docstring",
         py::arg("context"), py::arg("backendRenderTarget"), py::arg("origin"),
         py::arg("colorType"), py::arg("colorSpace"),
-        py::arg("surfaceProps") = nullptr, py::arg("releaseProc") = nullptr, py::arg("releaseContext") = nullptr)
+        py::arg("surfaceProps") = nullptr)
     .def_static("MakeRenderTarget",
         py::overload_cast<GrRecordingContext*, skgpu::Budgeted, const SkImageInfo&, int,
         GrSurfaceOrigin, const SkSurfaceProps*, bool>(

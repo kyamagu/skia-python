@@ -523,7 +523,7 @@ py::class_<GrRecordingContext, sk_sp<GrRecordingContext>, GrImageContext>(
     //     py::overload_cast<>(&GrRecordingContext::priv, py::const_))
     ;
 
-py::class_<GrDirectContext, sk_sp<GrDirectContext>, GrRecordingContext>(m, "GrContext")
+py::class_<GrDirectContext, sk_sp<GrDirectContext>, GrRecordingContext>(m, "GrDirectContext")
     .def("resetContext", &GrDirectContext::resetContext,
         R"docstring(
         The :py:class:`GrContext` normally assumes that no outsider is setting
@@ -1195,7 +1195,7 @@ py::class_<GrDirectContext, sk_sp<GrDirectContext>, GrRecordingContext>(m, "GrCo
         )docstring")
     ;
 
-m.attr("GrDirectContext") = m.attr("GrContext");
+m.attr("GrContext") = m.attr("GrDirectContext");
 
 initGrContext_gl(m);
 initGrContext_vk(m);
