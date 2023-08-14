@@ -3,6 +3,7 @@
 #include <include/core/SkSamplingOptions.h>
 #include <include/gpu/GrBackendSurface.h>
 #include <include/gpu/GpuTypes.h>
+#include <include/gpu/ganesh/SkImageGanesh.h>
 #include <include/encode/SkJpegEncoder.h>
 #include <include/encode/SkPngEncoder.h>
 #include <include/encode/SkWebpEncoder.h>
@@ -674,6 +675,7 @@ image
         :return: created :py:class:`Image`, or nullptr
         )docstring",
         py::arg("data"), py::arg("width"), py::arg("height"), py::arg("type"))
+*/
     .def_static("MakeFromTexture",
         [] (GrRecordingContext* context, const GrBackendTexture& texture,
             GrSurfaceOrigin origin, SkColorType colorType,
@@ -698,6 +700,7 @@ image
         py::arg("context"), py::arg("texture"), py::arg("origin"),
         py::arg("colorType"), py::arg("alphaType"),
         py::arg("colorSpace") = nullptr)
+/*
     .def_static("MakeFromCompressedTexture",
         [] (GrRecordingContext* context, const GrBackendTexture& texture,
             GrSurfaceOrigin origin, SkAlphaType alphaType,
