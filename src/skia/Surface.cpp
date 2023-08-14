@@ -1010,10 +1010,10 @@ surface
         [] (GrRecordingContext* context, const GrBackendTexture& backendTexture,
             GrSurfaceOrigin origin, int sampleCnt, SkColorType colorType,
             sk_sp<SkColorSpace> colorSpace,
-            const SkSurfaceProps* surfaceProps, SkSurfaces::RenderTargetReleaseProc releaseProc, SkSurfaces::ReleaseContext releaseContext) {
+            const SkSurfaceProps* surfaceProps) {
             return SkSurfaces::WrapBackendTexture(
                 context, backendTexture, origin, sampleCnt, colorType,
-                colorSpace, surfaceProps, releaseProc, releaseContext);
+                colorSpace, surfaceProps, NULL, NULL);
         },
         R"docstring(
         Wraps a GPU-backed texture into :py:class:`Surface`. Caller must ensure
@@ -1043,14 +1043,12 @@ surface
         :colorSpace:  range of colors; may be nullptr
         :surfaceProps:    LCD striping orientation and setting for device
             independent fonts; may be nullptr
-        :textureReleaseProc:  function called when texture can be released
-        :releaseContext:  state passed to textureReleaseProc
         :return: :py:class:`Surface` if all parameters are valid; otherwise,
             nullptr
         )docstring",
         py::arg("context"), py::arg("backendTexture"), py::arg("origin"),
         py::arg("sampleCnt"), py::arg("colorType"), py::arg("colorSpace"),
-        py::arg("surfaceProps"), py::arg("releaseProc") = nullptr, py::arg("releaseContext") = nullptr)
+        py::arg("surfaceProps") = nullptr)
     .def_static("MakeFromBackendRenderTarget",
         [] (GrRecordingContext* context, const GrBackendRenderTarget& target,
             GrSurfaceOrigin origin, SkColorType colorType,
@@ -1167,7 +1165,7 @@ surface
             nullptr
         )docstring",
         py::arg("context"), py::arg("budgeted"), py::arg("imageInfo"),
-        py::arg("sampleCount"), py::arg("surfaceProps"))
+        py::arg("sampleCount"), py::arg("surfaceProps") = nullptr)
     .def_static("MakeRenderTarget",
         py::overload_cast<GrRecordingContext*, skgpu::Budgeted, const SkImageInfo&>(
             &SkSurfaces::RenderTarget),
