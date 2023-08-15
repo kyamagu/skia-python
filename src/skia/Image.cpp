@@ -1646,8 +1646,7 @@ image
         :return: created :py:class:`Image`, or nullptr
         )docstring",
         py::arg("context").none(false), py::arg("mipMapped") = GrMipmapped::kNo,
-        py::arg("budgeted") = SkBudgeted::kYes)
-*/
+        py::arg("budgeted") = skgpu::Budgeted::kYes)
     .def("makeNonTextureImage", &SkImage::makeNonTextureImage,
         R"docstring(
         Returns raster image or lazy image.
