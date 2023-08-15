@@ -178,7 +178,6 @@ def test_Image_isValid(image):
     assert isinstance(image.isValid(), bool)
 
 
-@pytest.mark.skip(reason='m116:REVISIT')
 def test_Image_flush(image, context):
     image.flush(context)
 
@@ -241,7 +240,6 @@ def test_Image_hasMipmaps(image):
 def test_Image_withDefaultMipmaps(context, image):
     assert isinstance(image.withDefaultMipmaps(), (type(None), skia.Image))
 
-@pytest.mark.skip(reason='m116:REVISIT')
 def test_Image_makeTextureImage(image, context):
     assert isinstance(
         image.makeTextureImage(
@@ -365,7 +363,6 @@ def texture(context):
     return backend_texture
 
 
-@pytest.mark.skip(reason='m116:REVISIT')
 def test_Image_MakeFromTexture(context, texture):
     assert isinstance(
         skia.Image.MakeFromTexture(
@@ -455,7 +452,6 @@ def test_Image_MakeFromPicture(picture):
         (skia.Image, type(None)))
 
 
-@pytest.mark.skip(reason='m116:REVISIT')
 def test_Imag_MakeBackendTextureFromImage(context, image):
     backendTexture = skia.GrBackendTexture()
     assert isinstance(
