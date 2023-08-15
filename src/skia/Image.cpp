@@ -1299,7 +1299,12 @@ image
         Also submits the flushed work to the GPU.
         )docstring",
         py::arg("context").none(false))
-    .def("getBackendTexture", &SkImages::GetBackendTextureFromImage,
+    .def("getBackendTexture",
+        [] (const SkImage* img,
+            bool flushPendingGrContextIO,
+            GrSurfaceOrigin* origin) {
+            return SkImages::GetBackendTextureFromImage(img, nullptr, flushPendingGrContextIO, origin);
+        },
         R"docstring(
         Retrieves the back-end texture. If :py:class:`Image` has no back-end
         texture, an invalid object is returned. Call
@@ -1607,7 +1612,13 @@ image
         Returns an image with the same "base" pixels as the this image, but with
         mipmap levels automatically generated and attached.
         )docstring")
-    .def("makeTextureImage", &SkImages::TextureFromImage,
+    .def("makeTextureImage",
+        [] (const SkImage* img,
+            GrDirectContext* ctx,
+            skgpu::Mipmapped m,
+            skgpu::Budgeted b) {
+            return SkImages::TextureFromImage(ctx, img, m, b);
+        },
         R"docstring(
         Returns :py:class:`Image` backed by GPU texture associated with context.
 
