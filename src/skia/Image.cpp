@@ -1265,7 +1265,9 @@ image
         )docstring",
         py::arg("context") = nullptr)
     .def("flush",
-        py::overload_cast<GrDirectContext*, const GrFlushInfo&>(&GrDirectContext::flush),
+        [] (sk_sp<const SkImage> image, sk_sp<GrDirectContext> context, const GrFlushInfo& info) {
+            return context->flush(image, info);
+        },
         R"docstring(
         Flushes any pending uses of texture-backed images in the GPU backend. If
         the image is not texture-backed (including promise texture images) or if
@@ -1283,9 +1285,14 @@ image
         )docstring"
         )
     .def("flush",
-        py::overload_cast<GrDirectContext*>(&GrDirectContext::flush),
+        [] (sk_sp<const SkImage> image, sk_sp<GrDirectContext> context) {
+            return context->flush(image);
+        },
         py::arg("context").none(false))
-    .def("flushAndSubmit", &GrDirectContext::flushAndSubmit,
+    .def("flushAndSubmit",
+        [] (sk_sp<const SkImage> image, sk_sp<GrDirectContext> context) {
+            return context->flushAndSubmit(image);
+        },
         R"docstring(
         Version of :py:meth:`flush` that uses a default GrFlushInfo.
 
