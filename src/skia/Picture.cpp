@@ -2,6 +2,7 @@
 #include <include/core/SkDrawable.h>
 #include <include/core/SkBBHFactory.h>
 #include <include/core/SkPictureRecorder.h>
+#include <pybind11/operators.h>
 
 namespace {
 
@@ -272,6 +273,12 @@ py::class_<SkDrawable, sk_sp<SkDrawable>, SkFlattenable>(m, "Drawable",
     ;
 
 py::class_<SkBBHFactory>(m, "BBHFactory");
+
+py::class_<SkRTreeFactory, SkBBHFactory> rTreeFactory(m, "RTreeFactory");
+
+rTreeFactory
+    .def(py::init<>())
+    .def("__call__", &SkBBHFactory::operator());
 
 py::class_<SkBBoxHierarchy, PyBBoxHierarchy, sk_sp<SkBBoxHierarchy>, SkRefCnt>
     bboxhierarchy(m, "BBoxHierarchy");
