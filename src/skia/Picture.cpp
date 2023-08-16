@@ -324,6 +324,13 @@ picturerecorder
     //         &SkPictureRecorder::beginRecording),
     //     "Returns the canvas that records the drawing commands.")
     .def("beginRecording",
+        py::overload_cast<const SkRect&, sk_sp<SkBBoxHierarchy>>(
+            &SkPictureRecorder::beginRecording),
+        R"docstring(
+        Returns the canvas that records the drawing commands.
+        )docstring",
+        py::arg("bounds"), py::arg("bbh"))
+    .def("beginRecording",
         [] (SkPictureRecorder& recorder, const SkRect& bounds) {
             return recorder.beginRecording(bounds, nullptr);
         },
