@@ -329,7 +329,8 @@ picturerecorder
         R"docstring(
         Returns the canvas that records the drawing commands.
         )docstring",
-        py::arg("bounds"), py::arg("bbh"))
+        py::arg("bounds"), py::arg("bbh"),
+        py::return_value_policy::reference_internal)
     .def("beginRecording",
         [] (SkPictureRecorder& recorder, const SkRect& bounds) {
             return recorder.beginRecording(bounds, nullptr);
