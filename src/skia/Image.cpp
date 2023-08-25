@@ -1660,7 +1660,8 @@ image
         Returns nullptr if backed by GPU texture and copy fails.
 
         :return: raster image, lazy image, or nullptr
-        )docstring")
+        )docstring",
+        py::arg("context") = nullptr)
     .def("makeRasterImage", py::overload_cast<SkImage::CachingHint>(&SkImage::makeRasterImage, py::const_),
         R"docstring(
         Returns raster image.
