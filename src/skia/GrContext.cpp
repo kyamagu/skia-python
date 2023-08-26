@@ -820,10 +820,12 @@ py::class_<GrDirectContext, sk_sp<GrDirectContext>, GrRecordingContext>(m, "GrDi
     //     "traceMemoryDump.")
     .def("supportsDistanceFieldText", &GrDirectContext::supportsDistanceFieldText)
     .def("storeVkPipelineCacheData", &GrDirectContext::storeVkPipelineCacheData)
-/*
-    .def_static("ComputeImageSize", &GrDirectContext::ComputeImageSize,
+    .def_static("ComputeImageSize",
+        [] (sk_sp<SkImage> image, GrMipmapped mapped, bool useNextPow2) {
+            // REVISIT: process GrMipmapped and useNextPow2 = true
+            return image->textureSize();
+        },
         py::arg("image"), py::arg("mipMapped"), py::arg("useNextPow2") = false)
-*/
     .def("defaultBackendFormat", &GrDirectContext::defaultBackendFormat,
         R"docstring(
         Retrieve the default :py:class:`GrBackendFormat` for a given
