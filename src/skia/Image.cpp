@@ -94,7 +94,8 @@ sk_sp<SkImage> ImageOpen(py::object fp) {
 
 void ImageSave(const SkImage& image, py::object fp,
                SkEncodedImageFormat format, int quality) {
-    sk_sp<SkData> data = image.refEncodedData();
+    sk_sp<SkData> data;
+    sk_sp<SkImage> copy = image.makeRasterImage(); // isTextureBacked/isLazyGenerated images needs this
     switch (format) {
     case SkEncodedImageFormat::kWEBP:
         {
@@ -108,7 +109,7 @@ void ImageSave(const SkImage& image, py::object fp,
                 // which follows Blink and WebPConfigInit.
                 options.fQuality = 70;
             }
-            data = SkWebpEncoder::Encode(nullptr, &image, options);
+            data = SkWebpEncoder::Encode(nullptr, copy.get(), options);
         }
         break;
 
@@ -116,7 +117,7 @@ void ImageSave(const SkImage& image, py::object fp,
         {
             SkJpegEncoder::Options options;
             options.fQuality = quality;
-            data = SkJpegEncoder::Encode(nullptr, &image, options);
+            data = SkJpegEncoder::Encode(nullptr, copy.get(), options);
         }
         break;
 
@@ -124,7 +125,7 @@ void ImageSave(const SkImage& image, py::object fp,
     default:
         {
              SkPngEncoder::Options options; // Not used
-             data = SkPngEncoder::Encode(nullptr, &image, {});
+             data = SkPngEncoder::Encode(nullptr, copy.get(), {});
         }
         break;
     }
@@ -1489,7 +1490,8 @@ image
         py::arg("cachingHint") = SkImage::kAllow_CachingHint)
     .def("encodeToData",
         [] (SkImage& image, SkEncodedImageFormat format, int quality) {
-            sk_sp<SkData> data = image.refEncodedData();
+            sk_sp<SkData> data;
+            sk_sp<SkImage> copy = image.makeRasterImage(); // isTextureBacked/isLazyGenerated images needs this
             switch (format) {
             case SkEncodedImageFormat::kWEBP:
                 {
@@ -1503,7 +1505,7 @@ image
                     // which follows Blink and WebPConfigInit.
                     options.fQuality = 70;
                 }
-                data = SkWebpEncoder::Encode(nullptr, &image, options);
+                data = SkWebpEncoder::Encode(nullptr, copy.get(), options);
                 }
                 break;
 
@@ -1511,7 +1513,7 @@ image
                 {
                 SkJpegEncoder::Options options;
                 options.fQuality = quality;
-                data = SkJpegEncoder::Encode(nullptr, &image, options);
+                data = SkJpegEncoder::Encode(nullptr, copy.get(), options);
                 }
                 break;
 
@@ -1519,7 +1521,7 @@ image
             default:
                 {
                 SkPngEncoder::Options options; // Not used
-                data = SkPngEncoder::Encode(nullptr, &image, {});
+                data = SkPngEncoder::Encode(nullptr, copy.get(), {});
                 }
                 break;
             }
