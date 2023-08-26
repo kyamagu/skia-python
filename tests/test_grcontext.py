@@ -498,7 +498,6 @@ def test_GrContext_precompileShader(context):
     assert isinstance(context.precompileShader(b'', b''), bool)
 
 
-@pytest.mark.skip(reason='m116:REVISIT')
 def test_GrContext_ComputeImageSize(image):
     assert isinstance(
         skia.GrContext.ComputeImageSize(image, skia.GrMipmapped.kYes),
