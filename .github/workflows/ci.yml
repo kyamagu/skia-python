@@ -155,7 +155,7 @@ jobs:
       - name: Build docs
         run: |
           python -m pip install -f dist skia-python
-          python -m pip install sphinx sphinx-rtd-theme
+          python -m pip install sphinx==6.2.1 sphinx-rtd-theme
           python setup.py build_sphinx
 
       - name: Deploy docs
