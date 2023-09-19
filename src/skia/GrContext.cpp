@@ -7,7 +7,7 @@
 #include <include/gpu/mock/GrMockTypes.h>
 #include <include/gpu/gl/GrGLInterface.h>
 #include <include/gpu/vk/GrVkBackendContext.h>
-#include <include/gpu/GrBackendSurfaceMutableState.h>
+#include <include/gpu/MutableTextureState.h>
 #include <pybind11/chrono.h>
 #include <pybind11/stl.h>
 #include <pybind11/cast.h>

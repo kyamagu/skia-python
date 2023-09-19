@@ -5,7 +5,7 @@
 #include <include/gpu/GpuTypes.h>
 #include <include/gpu/GrTypes.h>
 #include <include/gpu/ganesh/SkSurfaceGanesh.h>
-#include <include/gpu/GrBackendSurfaceMutableState.h>
+#include <include/gpu/MutableTextureState.h>
 #include <pybind11/operators.h>
 #include <pybind11/numpy.h>
 
