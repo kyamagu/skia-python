@@ -3,7 +3,7 @@ Since m116:
 * Surface::flushAndSubmit() and Surface::flush() now emulated
   ("Remove legacy SkImage and SkSurface methods")
 * Canvas::flush() emulated
-* GrDirectContext/GrContext reorganized
+* GrDirectContext/GrContext reorganized (#198)
 * Image::getBackendTexture() / Image::flush()/Image::flushAndSubmit() emulated
 * Image::encodeToData() from GPU backend now works (was broken between m87 and m116)
 * new RTreeFactory class added
@@ -18,8 +18,8 @@ Since m116:
 
 Since m87 (disabled in m116):
 * GrDirectContext::ComputeImageSize() now emulated
-* Image::MakeFromTexture() re-enabled
+* Image::MakeFromTexture() re-enabled (#198)
 * Image::makeSubset()/Image::flush() re-enabled
 * Image::makeTextureImage() / Image::MakeBackendTextureFromImage() emulated
-* Shader::Lerp() emulated
-* Surface::MakeFromBackendTexture()/Surface::MakeFromBackendRenderTarget() re-enabled
+* Shader::Lerp() emulated (#198)
+* Surface::MakeFromBackendTexture()/Surface::MakeFromBackendRenderTarget() re-enabled (#198)
