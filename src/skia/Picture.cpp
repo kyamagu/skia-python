@@ -2,6 +2,7 @@
 #include <include/core/SkDrawable.h>
 #include <include/core/SkBBHFactory.h>
 #include <include/core/SkPictureRecorder.h>
+#include <pybind11/operators.h>
 
 namespace {
 
@@ -273,6 +274,12 @@ py::class_<SkDrawable, sk_sp<SkDrawable>, SkFlattenable>(m, "Drawable",
 
 py::class_<SkBBHFactory>(m, "BBHFactory");
 
+py::class_<SkRTreeFactory, SkBBHFactory> rTreeFactory(m, "RTreeFactory");
+
+rTreeFactory
+    .def(py::init<>())
+    .def("__call__", &SkBBHFactory::operator());
+
 py::class_<SkBBoxHierarchy, PyBBoxHierarchy, sk_sp<SkBBoxHierarchy>, SkRefCnt>
     bboxhierarchy(m, "BBoxHierarchy");
 
@@ -305,7 +312,10 @@ bboxhierarchy
 
 py::class_<SkPictureRecorder> picturerecorder(m, "PictureRecorder");
 
+/* m117: Remove slug-related #ifdefs from src/core */
+/*
 py::enum_<SkPictureRecorder::FinishFlags>(picturerecorder, "FinishFlags");
+*/
 
 picturerecorder
     .def(py::init())
@@ -313,6 +323,14 @@ picturerecorder
     //     py::overload_cast<const SkRect&, sk_sp<SkBBoxHierarchy>, uint32_t>(
     //         &SkPictureRecorder::beginRecording),
     //     "Returns the canvas that records the drawing commands.")
+    .def("beginRecording",
+        py::overload_cast<const SkRect&, sk_sp<SkBBoxHierarchy>>(
+            &SkPictureRecorder::beginRecording),
+        R"docstring(
+        Returns the canvas that records the drawing commands.
+        )docstring",
+        py::arg("bounds"), py::arg("bbh"),
+        py::return_value_policy::reference_internal)
     .def("beginRecording",
         [] (SkPictureRecorder& recorder, const SkRect& bounds) {
             return recorder.beginRecording(bounds, nullptr);

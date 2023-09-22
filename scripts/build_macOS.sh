@@ -22,6 +22,7 @@ function apply_patch {
 }
 
 cd skia && \
+    patch -p1 < ../patch/skia-m117-minimize-download.patch && \
     patch -p1 < ../patch/skia-m116-colrv1-freetype.diff && \
     python3 tools/git-sync-deps && \
     bin/gn gen out/Release --args="

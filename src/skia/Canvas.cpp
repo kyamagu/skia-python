@@ -385,7 +385,12 @@ canvas
         :return: true if :py:class:`SurfaceProps` was copied
         )docstring",
         py::arg("props"))
-    .def("flush", &SkCanvas::flush,
+    .def("flush",
+        [] (const SkCanvas& canvas) {
+            if (auto dContext = GrAsDirectContext(canvas.recordingContext())) {
+                dContext->flushAndSubmit();
+            }
+        },
         R"docstring(
         Triggers the immediate execution of all pending draw operations.
 

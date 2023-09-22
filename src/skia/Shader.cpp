@@ -2,6 +2,7 @@
 #include <include/effects/SkRuntimeEffect.h>
 #include <include/effects/SkGradientShader.h>
 #include <include/effects/SkPerlinNoiseShader.h>
+#include <include/effects/SkBlenders.h>
 #include <pybind11/stl.h>
 
 #define GET_SKSCALAR_PTR(pos) \
@@ -190,15 +191,14 @@ py::class_<std::unique_ptr<int32_t>>(m, "Shaders")
                 blender, dst, src);
         },
         py::arg("blender"), py::arg("dst"), py::arg("src"))
-/*
     .def_static("Lerp",
         [] (SkScalar t, const SkShader& dst,
             const SkShader& src) {
-            return SkShaders::Lerp(
-                t, CloneFlattenable(dst), CloneFlattenable(src));
+            return SkShaders::Blend(
+                SkBlenders::Arithmetic(0, t, 1-t, 0, false),
+                CloneFlattenable(dst), CloneFlattenable(src));
         },
         py::arg("t"), py::arg("dst"), py::arg("src"))
-*/
     ;
 
 py::class_<SkGradientShader> gradientshader(m, "GradientShader");

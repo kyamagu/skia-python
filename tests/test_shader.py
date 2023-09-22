@@ -2,8 +2,7 @@ import skia
 import pytest
 
 
-@pytest.mark.skip(reason='segfault in m116; REVISIT')
-#@pytest.fixture
+@pytest.fixture
 def shader():
     return skia.GradientShader.MakeLinear(
         [skia.Point(0, 0), skia.Point(1, 1)], [0xFFFF00FF, 0xFFFFFF00],
@@ -53,14 +52,12 @@ def test_Shaders_Color(args):
     assert isinstance(skia.Shaders.Color(*args), skia.Shader)
 
 
-@pytest.mark.skip(reason='m116:REVISIT')
 def test_Shaders_Blend(shader):
     assert isinstance(
         skia.Shaders.Blend(skia.BlendMode.kSrc, shader, shader),
         skia.Shader)
 
 
-@pytest.mark.skip(reason='m116:REVISIT')
 def test_Shaders_Lerp(shader):
     assert isinstance(
         skia.Shaders.Lerp(0.5, shader, shader), skia.Shader)

@@ -26,7 +26,8 @@ void initPoint(py::module &);
 void initRect(py::module &);
 void initRefCnt(py::module &);
 void initRegion(py::module &);
-void initSamplingOptions(py::module&);
+void initSamplingOptions(py::module &);
+void initScalar(py::module &);
 void initSize(py::module &);
 void initStream(py::module &);
 void initString(py::module &);
@@ -68,6 +69,7 @@ PYBIND11_MODULE(skia, m) {
     initPathMeasure(m);
     initPicture(m);
     initPixmap(m);
+    initScalar(m);
     initTextBlob(m);
     initVertices(m);
 

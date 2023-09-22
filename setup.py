@@ -12,7 +12,7 @@ except ImportError:
     pass
 
 NAME = 'skia-python'
-__version__ = '116.0b2'
+__version__ = '117.0b3'
 
 SKIA_PATH = os.getenv('SKIA_PATH', 'skia')
 SKIA_OUT_PATH = os.getenv(
@@ -90,7 +90,6 @@ else:
     LIBRARIES = [
         'dl',
         'fontconfig',
-        'freetype',
         'GL',
         'expat',
     ]

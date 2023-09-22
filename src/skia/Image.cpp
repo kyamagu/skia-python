@@ -3,6 +3,7 @@
 #include <include/core/SkSamplingOptions.h>
 #include <include/gpu/GrBackendSurface.h>
 #include <include/gpu/GpuTypes.h>
+#include <include/gpu/ganesh/SkImageGanesh.h>
 #include <include/encode/SkJpegEncoder.h>
 #include <include/encode/SkPngEncoder.h>
 #include <include/encode/SkWebpEncoder.h>
@@ -93,7 +94,8 @@ sk_sp<SkImage> ImageOpen(py::object fp) {
 
 void ImageSave(const SkImage& image, py::object fp,
                SkEncodedImageFormat format, int quality) {
-    sk_sp<SkData> data = image.refEncodedData();
+    sk_sp<SkData> data;
+    sk_sp<SkImage> copy = image.makeRasterImage(); // isTextureBacked/isLazyGenerated images needs this
     switch (format) {
     case SkEncodedImageFormat::kWEBP:
         {
@@ -107,7 +109,7 @@ void ImageSave(const SkImage& image, py::object fp,
                 // which follows Blink and WebPConfigInit.
                 options.fQuality = 70;
             }
-            data = SkWebpEncoder::Encode(nullptr, &image, options);
+            data = SkWebpEncoder::Encode(nullptr, copy.get(), options);
         }
         break;
 
@@ -115,7 +117,7 @@ void ImageSave(const SkImage& image, py::object fp,
         {
             SkJpegEncoder::Options options;
             options.fQuality = quality;
-            data = SkJpegEncoder::Encode(nullptr, &image, options);
+            data = SkJpegEncoder::Encode(nullptr, copy.get(), options);
         }
         break;
 
@@ -123,7 +125,7 @@ void ImageSave(const SkImage& image, py::object fp,
     default:
         {
              SkPngEncoder::Options options; // Not used
-             data = SkPngEncoder::Encode(nullptr, &image, {});
+             data = SkPngEncoder::Encode(nullptr, copy.get(), {});
         }
         break;
     }
@@ -148,8 +150,8 @@ sk_sp<SkImage> ImageConvert(
         at = image.alphaType();
     if (at == image.alphaType()) {
         if (ct == image.colorType())
-            return image.makeColorSpace(CloneColorSpace(cs));
-        return image.makeColorTypeAndColorSpace(ct, CloneColorSpace(cs));
+            return image.makeColorSpace(nullptr, CloneColorSpace(cs));
+        return image.makeColorTypeAndColorSpace(nullptr, ct, CloneColorSpace(cs));
     }
 
     auto imageInfo = SkImageInfo::Make(
@@ -674,6 +676,7 @@ image
         :return: created :py:class:`Image`, or nullptr
         )docstring",
         py::arg("data"), py::arg("width"), py::arg("height"), py::arg("type"))
+*/
     .def_static("MakeFromTexture",
         [] (GrRecordingContext* context, const GrBackendTexture& texture,
             GrSurfaceOrigin origin, SkColorType colorType,
@@ -698,6 +701,7 @@ image
         py::arg("context"), py::arg("texture"), py::arg("origin"),
         py::arg("colorType"), py::arg("alphaType"),
         py::arg("colorSpace") = nullptr)
+/*
     .def_static("MakeFromCompressedTexture",
         [] (GrRecordingContext* context, const GrBackendTexture& texture,
             GrSurfaceOrigin origin, SkAlphaType alphaType,
@@ -1261,9 +1265,10 @@ image
         :return: true if :py:class:`Image` can be drawn
         )docstring",
         py::arg("context") = nullptr)
-/*
     .def("flush",
-        py::overload_cast<GrDirectContext*, const GrFlushInfo&>(&SkImage::flush),
+        [] (sk_sp<const SkImage> image, sk_sp<GrDirectContext> context, const GrFlushInfo& info) {
+            return context->flush(image, info);
+        },
         R"docstring(
         Flushes any pending uses of texture-backed images in the GPU backend. If
         the image is not texture-backed (including promise texture images) or if
@@ -1281,16 +1286,26 @@ image
         )docstring"
         )
     .def("flush",
-        py::overload_cast<GrDirectContext*>(&SkImage::flush),
+        [] (sk_sp<const SkImage> image, sk_sp<GrDirectContext> context) {
+            return context->flush(image);
+        },
         py::arg("context").none(false))
-    .def("flushAndSubmit", &SkImage::flushAndSubmit,
+    .def("flushAndSubmit",
+        [] (sk_sp<const SkImage> image, sk_sp<GrDirectContext> context) {
+            return context->flushAndSubmit(image);
+        },
         R"docstring(
         Version of :py:meth:`flush` that uses a default GrFlushInfo.
 
         Also submits the flushed work to the GPU.
         )docstring",
         py::arg("context").none(false))
-    .def("getBackendTexture", &SkImage::getBackendTexture,
+    .def("getBackendTexture",
+        [] (const SkImage* img,
+            bool flushPendingGrContextIO,
+            GrSurfaceOrigin* origin) {
+            return SkImages::GetBackendTextureFromImage(img, nullptr, flushPendingGrContextIO, origin);
+        },
         R"docstring(
         Retrieves the back-end texture. If :py:class:`Image` has no back-end
         texture, an invalid object is returned. Call
@@ -1305,7 +1320,6 @@ image
         :return: back-end API texture handle; invalid on failure
         )docstring",
         py::arg("flushPendingGrContextIO"), py::arg("origin") = nullptr)
-*/
     .def("readPixels", &ImageReadPixels,
         R"docstring(
         Copies a :py:class:`Rect` of pixels from :py:class:`Image` to dst. Copy
@@ -1476,7 +1490,8 @@ image
         py::arg("cachingHint") = SkImage::kAllow_CachingHint)
     .def("encodeToData",
         [] (SkImage& image, SkEncodedImageFormat format, int quality) {
-            sk_sp<SkData> data = image.refEncodedData();
+            sk_sp<SkData> data;
+            sk_sp<SkImage> copy = image.makeRasterImage(); // isTextureBacked/isLazyGenerated images needs this
             switch (format) {
             case SkEncodedImageFormat::kWEBP:
                 {
@@ -1490,7 +1505,7 @@ image
                     // which follows Blink and WebPConfigInit.
                     options.fQuality = 70;
                 }
-                data = SkWebpEncoder::Encode(nullptr, &image, options);
+                data = SkWebpEncoder::Encode(nullptr, copy.get(), options);
                 }
                 break;
 
@@ -1498,7 +1513,7 @@ image
                 {
                 SkJpegEncoder::Options options;
                 options.fQuality = quality;
-                data = SkJpegEncoder::Encode(nullptr, &image, options);
+                data = SkJpegEncoder::Encode(nullptr, copy.get(), options);
                 }
                 break;
 
@@ -1506,7 +1521,7 @@ image
             default:
                 {
                 SkPngEncoder::Options options; // Not used
-                data = SkPngEncoder::Encode(nullptr, &image, {});
+                data = SkPngEncoder::Encode(nullptr, copy.get(), {});
                 }
                 break;
             }
@@ -1572,8 +1587,10 @@ image
 
         :return: encoded :py:class:`Image`, or nullptr
         )docstring")
-/*
-    .def("makeSubset", &SkImage::makeSubset,
+    .def("makeSubset",
+        [] (SkImage& image, const SkIRect& subset, GrDirectContext* direct) {
+            return image.makeSubset(direct, subset);
+        },
         R"docstring(
         Returns subset of :py:class:`Image`.
 
@@ -1588,7 +1605,6 @@ image
         :return: partial or full :py:class:`Image`, or nullptr
         )docstring",
         py::arg("subset"), py::arg("direct") = nullptr)
-*/
     .def("hasMipmaps", &SkImage::hasMipmaps,
         R"docstring(
         Returns true if the image has mipmap levels.
@@ -1598,8 +1614,13 @@ image
         Returns an image with the same "base" pixels as the this image, but with
         mipmap levels automatically generated and attached.
         )docstring")
-/*
-    .def("makeTextureImage", &SkImage::makeTextureImage,
+    .def("makeTextureImage",
+        [] (const SkImage* img,
+            GrDirectContext* ctx,
+            skgpu::Mipmapped m,
+            skgpu::Budgeted b) {
+            return SkImages::TextureFromImage(ctx, img, m, b);
+        },
         R"docstring(
         Returns :py:class:`Image` backed by GPU texture associated with context.
 
@@ -1627,8 +1648,7 @@ image
         :return: created :py:class:`Image`, or nullptr
         )docstring",
         py::arg("context").none(false), py::arg("mipMapped") = GrMipmapped::kNo,
-        py::arg("budgeted") = SkBudgeted::kYes)
-*/
+        py::arg("budgeted") = skgpu::Budgeted::kYes)
     .def("makeNonTextureImage", &SkImage::makeNonTextureImage,
         R"docstring(
         Returns raster image or lazy image.
@@ -1640,7 +1660,8 @@ image
         Returns nullptr if backed by GPU texture and copy fails.
 
         :return: raster image, lazy image, or nullptr
-        )docstring")
+        )docstring",
+        py::arg("context") = nullptr)
     .def("makeRasterImage", py::overload_cast<SkImage::CachingHint>(&SkImage::makeRasterImage, py::const_),
         R"docstring(
         Returns raster image.
@@ -1701,11 +1722,10 @@ image
         py::arg("context"), py::arg("filter"), py::arg("subset"),
         py::arg("clipBounds"), py::arg("outSubset").none(false),
         py::arg("offset").none(false))
-/*
     .def_static("MakeBackendTextureFromImage",
         [] (GrDirectContext* context, sk_sp<SkImage>& image,
             GrBackendTexture* backendTexture) {
-            return SkImages::GetBackendTextureFromImage(
+            return SkImages::MakeBackendTextureFromImage(
                 context, image, backendTexture, nullptr);
         },
         R"docstring(
@@ -1730,7 +1750,6 @@ image
         :return: true if back-end texture was created
         )docstring",
         py::arg("context"), py::arg("image"), py::arg("backendTexture"))
-*/
     .def("asLegacyBitmap", &SkImage::asLegacyBitmap,
         R"docstring(
         Deprecated.
@@ -1757,7 +1776,7 @@ image
     .def("makeColorSpace",
         [] (const SkImage& image, const SkColorSpace* target,
             GrDirectContext* direct) {
-            return image.makeColorSpace(CloneColorSpace(target), direct);
+            return image.makeColorSpace(direct, CloneColorSpace(target));
         },
         R"docstring(
         Creates :py:class:`Image` in target :py:class:`ColorSpace`.
@@ -1779,7 +1798,7 @@ image
         [] (const SkImage& image, SkColorType ct, const SkColorSpace* cs,
             GrDirectContext* direct) {
             return image.makeColorTypeAndColorSpace(
-                ct, CloneColorSpace(cs), direct);
+                direct, ct, CloneColorSpace(cs));
         },
         R"docstring(
         Experimental.

@@ -81,11 +81,12 @@ textblob
                 return SkTextBlob::MakeFromText(
                     text.c_str(), text.size(), font, encoding);
             std::vector<SkPoint> pos_(pos.cast<std::vector<SkPoint>>());
-            if (text.size() != pos_.size())
+            int count = font.countText(text.c_str(), text.size(), encoding);
+            if (count != pos_.size())
                 throw py::value_error(
                     py::str(
                         "len(text) = {} does not match len(pos) = {}").format(
-                        text.size(), pos_.size()));
+                        count, pos_.size()));
             return SkTextBlob::MakeFromPosText(
                 text.c_str(), text.size(), &pos_[0], font, encoding);
         }),
@@ -250,10 +251,11 @@ textblob
         [] (const std::string& text, py::iterable xpos,
             SkScalar constY, const SkFont& font, SkTextEncoding encoding) {
             auto xpos_ = xpos.cast<std::vector<SkScalar>>();
-            if (text.size() != xpos_.size()) {
+            int count = font.countText(text.c_str(), text.size(), encoding);
+            if (count != xpos_.size()) {
                 std::stringstream stream;
                 stream << "text and xpos must have the same number of elements "
-                    << "(len(text) = " << text.size() << ", "
+                    << "(len(text) = " << count << ", "
                     << "len(xpos) = " << xpos_.size() << ").";
                 throw py::value_error(stream.str());
             }
@@ -283,7 +285,8 @@ textblob
     .def_static("MakeFromPosText",
         [] (const std::string& text, const std::vector<SkPoint>& pos,
             const SkFont& font, SkTextEncoding encoding) {
-            if (text.size() != pos.size())
+            int count = font.countText(text.c_str(), text.size(), encoding);
+            if (count != pos.size())
                 throw std::runtime_error(
                     "text and pos must have the same number of elements.");
             return SkTextBlob::MakeFromPosText(
@@ -310,7 +313,8 @@ textblob
     .def_static("MakeFromRSXform",
         [] (const std::string& text, const std::vector<SkRSXform>& xform,
             const SkFont& font, SkTextEncoding encoding) {
-            if (text.size() != xform.size())
+            int count = font.countText(text.c_str(), text.size(), encoding);
+            if (count != xform.size())
                 throw std::runtime_error(
                     "text and xform must have the same number of elements.");
             return SkTextBlob::MakeFromRSXform(
