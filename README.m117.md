@@ -10,7 +10,7 @@ Since m116:
 * PictureRecorder.FinishFlags removed
 * more PictureRecorder.beginRecording() overloads
 * new ScalarInfinity/ScalarNegativeInfinity defines
-* bug fix in TextBlob textcount
+* bug fix in TextBlob textcount (#200)
 
 * CI aarch64 build further split into 3rd-party and main to lower job time
 * documentation: locking to sphinx==6.2.1 as an interrim measure for splinx 7 breakage.
