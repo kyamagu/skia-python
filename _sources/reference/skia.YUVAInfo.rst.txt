@@ -16,8 +16,9 @@ YUVAInfo
       :nosignatures:
       :template: class.rst
    
-      ~skia.YUVAInfo.PlanarConfig
+      ~skia.YUVAInfo.PlaneConfig
       ~skia.YUVAInfo.Siting
+      ~skia.YUVAInfo.Subsampling
    
 
    
@@ -39,10 +40,11 @@ YUVAInfo
       ~skia.YUVAInfo.numChannelsInPlane
       ~skia.YUVAInfo.numPlanes
       ~skia.YUVAInfo.origin
-      ~skia.YUVAInfo.planarConfig
+      ~skia.YUVAInfo.planeConfig
       ~skia.YUVAInfo.planeDimensions
       ~skia.YUVAInfo.sitingX
       ~skia.YUVAInfo.sitingY
+      ~skia.YUVAInfo.subSampling
       ~skia.YUVAInfo.width
       ~skia.YUVAInfo.yuvColorSpace
    
@@ -54,25 +56,27 @@ YUVAInfo
 
    .. autosummary::
    
+      ~skia.YUVAInfo.k410
+      ~skia.YUVAInfo.k411
+      ~skia.YUVAInfo.k420
+      ~skia.YUVAInfo.k422
+      ~skia.YUVAInfo.k440
+      ~skia.YUVAInfo.k444
       ~skia.YUVAInfo.kCentered
       ~skia.YUVAInfo.kMaxPlanes
-      ~skia.YUVAInfo.kUYVA_4444
-      ~skia.YUVAInfo.kUYV_444
-      ~skia.YUVAInfo.kYUVA_4444
-      ~skia.YUVAInfo.kYUV_444
-      ~skia.YUVAInfo.kY_UV_420
-      ~skia.YUVAInfo.kY_UV_A_4204
-      ~skia.YUVAInfo.kY_U_V_410
-      ~skia.YUVAInfo.kY_U_V_411
-      ~skia.YUVAInfo.kY_U_V_420
-      ~skia.YUVAInfo.kY_U_V_422
-      ~skia.YUVAInfo.kY_U_V_440
-      ~skia.YUVAInfo.kY_U_V_444
-      ~skia.YUVAInfo.kY_U_V_A_4204
-      ~skia.YUVAInfo.kY_VU_420
-      ~skia.YUVAInfo.kY_VU_A_4204
-      ~skia.YUVAInfo.kY_V_U_420
-      ~skia.YUVAInfo.kY_V_U_A_4204
+      ~skia.YUVAInfo.kUYV
+      ~skia.YUVAInfo.kUYVA
+      ~skia.YUVAInfo.kUnknown
+      ~skia.YUVAInfo.kYUV
+      ~skia.YUVAInfo.kYUVA
+      ~skia.YUVAInfo.kY_UV
+      ~skia.YUVAInfo.kY_UV_A
+      ~skia.YUVAInfo.kY_U_V
+      ~skia.YUVAInfo.kY_U_V_A
+      ~skia.YUVAInfo.kY_VU
+      ~skia.YUVAInfo.kY_VU_A
+      ~skia.YUVAInfo.kY_V_U
+      ~skia.YUVAInfo.kY_V_U_A
    
    
 
@@ -108,13 +112,15 @@ Methods
 
 .. automethod:: skia.YUVAInfo.origin
 
-.. automethod:: skia.YUVAInfo.planarConfig
+.. automethod:: skia.YUVAInfo.planeConfig
 
 .. automethod:: skia.YUVAInfo.planeDimensions
 
 .. automethod:: skia.YUVAInfo.sitingX
 
 .. automethod:: skia.YUVAInfo.sitingY
+
+.. automethod:: skia.YUVAInfo.subSampling
 
 .. automethod:: skia.YUVAInfo.width
 
@@ -130,41 +136,45 @@ Attributes
 
 
 
+.. autoattribute:: skia.YUVAInfo.k410
+
+.. autoattribute:: skia.YUVAInfo.k411
+
+.. autoattribute:: skia.YUVAInfo.k420
+
+.. autoattribute:: skia.YUVAInfo.k422
+
+.. autoattribute:: skia.YUVAInfo.k440
+
+.. autoattribute:: skia.YUVAInfo.k444
+
 .. autoattribute:: skia.YUVAInfo.kCentered
 
 .. autoattribute:: skia.YUVAInfo.kMaxPlanes
 
-.. autoattribute:: skia.YUVAInfo.kUYVA_4444
+.. autoattribute:: skia.YUVAInfo.kUYV
 
-.. autoattribute:: skia.YUVAInfo.kUYV_444
+.. autoattribute:: skia.YUVAInfo.kUYVA
 
-.. autoattribute:: skia.YUVAInfo.kYUVA_4444
+.. autoattribute:: skia.YUVAInfo.kUnknown
 
-.. autoattribute:: skia.YUVAInfo.kYUV_444
+.. autoattribute:: skia.YUVAInfo.kYUV
 
-.. autoattribute:: skia.YUVAInfo.kY_UV_420
+.. autoattribute:: skia.YUVAInfo.kYUVA
 
-.. autoattribute:: skia.YUVAInfo.kY_UV_A_4204
+.. autoattribute:: skia.YUVAInfo.kY_UV
 
-.. autoattribute:: skia.YUVAInfo.kY_U_V_410
+.. autoattribute:: skia.YUVAInfo.kY_UV_A
 
-.. autoattribute:: skia.YUVAInfo.kY_U_V_411
+.. autoattribute:: skia.YUVAInfo.kY_U_V
 
-.. autoattribute:: skia.YUVAInfo.kY_U_V_420
+.. autoattribute:: skia.YUVAInfo.kY_U_V_A
 
-.. autoattribute:: skia.YUVAInfo.kY_U_V_422
+.. autoattribute:: skia.YUVAInfo.kY_VU
 
-.. autoattribute:: skia.YUVAInfo.kY_U_V_440
+.. autoattribute:: skia.YUVAInfo.kY_VU_A
 
-.. autoattribute:: skia.YUVAInfo.kY_U_V_444
+.. autoattribute:: skia.YUVAInfo.kY_V_U
 
-.. autoattribute:: skia.YUVAInfo.kY_U_V_A_4204
-
-.. autoattribute:: skia.YUVAInfo.kY_VU_420
-
-.. autoattribute:: skia.YUVAInfo.kY_VU_A_4204
-
-.. autoattribute:: skia.YUVAInfo.kY_V_U_420
-
-.. autoattribute:: skia.YUVAInfo.kY_V_U_A_4204
+.. autoattribute:: skia.YUVAInfo.kY_V_U_A
 
