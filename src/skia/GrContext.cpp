@@ -27,7 +27,10 @@ py::enum_<GrBackendApi>(m, "GrBackendApi",
     .value("kVulkan", GrBackendApi::kVulkan)
     .value("kMetal", GrBackendApi::kMetal)
     .value("kDirect3D", GrBackendApi::kDirect3D)
+/* m118: Remove GrBackendApi::kDawn */
+/*
     .value("kDawn", GrBackendApi::kDawn)
+*/
     .value("kMock", GrBackendApi::kMock,
         R"docstring(
         Mock is a backend that does not draw anything. It is used for unit tests
