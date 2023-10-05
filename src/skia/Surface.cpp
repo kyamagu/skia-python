@@ -1091,7 +1091,7 @@ surface
         py::arg("surfaceProps") = nullptr)
     .def_static("MakeRenderTarget",
         py::overload_cast<GrRecordingContext*, skgpu::Budgeted, const SkImageInfo&, int,
-        GrSurfaceOrigin, const SkSurfaceProps*, bool>(
+        GrSurfaceOrigin, const SkSurfaceProps*, bool, bool>(
             &SkSurfaces::RenderTarget),
         R"docstring(
         Returns :py:class:`Surface` on GPU indicated by context.
@@ -1126,6 +1126,7 @@ surface
             setting for device independent fonts; may be nullptr
         :param shouldCreateWithMips: hint that :py:class:`Surface` will host mip
             map images
+        :param isProtected: protected-ness
         :return: :py:class:`Surface` if all parameters are valid; otherwise,
             nullptr
         )docstring",
@@ -1133,7 +1134,8 @@ surface
         py::arg("sampleCount") = 0,
         py::arg("surfaceOrigin") = GrSurfaceOrigin::kBottomLeft_GrSurfaceOrigin,
         py::arg("surfaceProps") = nullptr,
-        py::arg("shouldCreateWithMips") = false)
+        py::arg("shouldCreateWithMips") = false,
+        py::arg("isProtected") = false)
     .def_static("MakeRenderTarget",
         py::overload_cast<GrRecordingContext*, skgpu::Budgeted, const SkImageInfo&, int,
             const SkSurfaceProps*>(&SkSurfaces::RenderTarget),
