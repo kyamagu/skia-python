@@ -6,6 +6,7 @@
 #include <include/gpu/GpuTypes.h>
 #include <include/gpu/mock/GrMockTypes.h>
 #include <include/gpu/gl/GrGLInterface.h>
+#include <include/gpu/ganesh/gl/GrGLBackendSurface.h>
 #include <include/gpu/vk/GrVkBackendContext.h>
 #include <include/gpu/MutableTextureState.h>
 #include <pybind11/chrono.h>
@@ -261,7 +262,7 @@ py::class_<GrBackendSemaphore>(m, "GrBackendSemaphore")
 py::class_<GrBackendFormat>(m, "GrBackendFormat")
     .def(py::init<>())
     .def(py::init<const GrBackendFormat&>())
-    .def_static("MakeGL", &GrBackendFormat::MakeGL,
+    .def_static("MakeGL", &GrBackendFormats::MakeGL,
         py::arg("format"), py::arg("target"))
 /*
     .def_static("MakeVk", py::overload_cast<VkFormat>(&GrBackendFormat::MakeVk),
@@ -280,7 +281,7 @@ py::class_<GrBackendFormat>(m, "GrBackendFormat")
     .def("backend", &GrBackendFormat::backend)
     .def("textureType", &GrBackendFormat::textureType)
     .def("channelMask", &GrBackendFormat::channelMask)
-    .def("asGLFormat", &GrBackendFormat::asGLFormat)
+    .def("asGLFormat", &GrBackendFormats::AsGLFormat)
 /*
     .def("asVkFormat", &GrBackendFormat::asVkFormat, py::arg("format"))
     .def("getVkYcbcrConversionInfo",
@@ -310,10 +311,10 @@ py::class_<GrBackendTexture>(m, "GrBackendTexture")
     .def("height", &GrBackendTexture::height)
     .def("hasMipmaps", &GrBackendTexture::hasMipmaps)
     .def("backend", &GrBackendTexture::backend)
-    .def("getGLTextureInfo", &GrBackendTexture::getGLTextureInfo,
+    .def("getGLTextureInfo", &GrBackendTextures::GetGLTextureInfo,
         py::arg("info"))
     .def("glTextureParametersModified",
-        &GrBackendTexture::glTextureParametersModified)
+        &GrBackendTextures::GLTextureParametersModified)
 /*
     .def("getVkImageInfo", &GrBackendTexture::getVkImageInfo,
         py::arg("info"))
@@ -396,7 +397,7 @@ py::class_<GrBackendRenderTarget>(m, "GrBackendRenderTarget")
     .def("stencilBits", &GrBackendRenderTarget::stencilBits)
     .def("backend", &GrBackendRenderTarget::backend)
     .def("isFramebufferOnly", &GrBackendRenderTarget::isFramebufferOnly)
-    .def("getGLFramebufferInfo", &GrBackendRenderTarget::getGLFramebufferInfo,
+    .def("getGLFramebufferInfo", &GrBackendRenderTargets::GetGLFramebufferInfo,
         R"docstring(
         If the backend API is GL, copies a snapshot of the GrGLFramebufferInfo
         struct into the passed in pointer and returns true. Otherwise returns
