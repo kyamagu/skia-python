@@ -333,6 +333,8 @@ py::class_<GrContextOptions>(m, "GrContextOptions")
     // TODO: Implement me!
     ;
 
+/* m118: Remove GrBackendSurfaceMutableState */
+/*
 py::class_<GrBackendSurfaceMutableState>(m, "GrBackendSurfaceMutableState",
     R"docstring(
     Since Skia and clients can both modify gpu textures and their connected
@@ -367,6 +369,7 @@ py::class_<GrBackendSurfaceMutableState>(m, "GrBackendSurfaceMutableState",
     .def("isValid", &GrBackendSurfaceMutableState::isValid)
     .def("backend", &GrBackendSurfaceMutableState::backend)
     ;
+*/
 
 py::class_<GrBackendRenderTarget>(m, "GrBackendRenderTarget")
     .def(py::init<>())
@@ -1062,8 +1065,8 @@ py::class_<GrDirectContext, sk_sp<GrDirectContext>, GrRecordingContext>(m, "GrDi
         py::arg("mipMapped"), py::arg("isProtected") = GrProtected::kNo)
     .def("setBackendTextureState",
         [] (GrDirectContext& context, const GrBackendTexture& texture,
-            const GrBackendSurfaceMutableState& mutableState,
-            GrBackendSurfaceMutableState* previousState) {
+            const skgpu::MutableTextureState& mutableState,
+            skgpu::MutableTextureState* previousState) {
             return context.setBackendTextureState(
                 texture, mutableState, previousState, nullptr, nullptr);
         },
@@ -1095,8 +1098,8 @@ py::class_<GrDirectContext, sk_sp<GrDirectContext>, GrRecordingContext>(m, "GrDi
         py::arg("previousState") = nullptr)
     .def("setBackendRenderTargetState",
         [] (GrDirectContext& context, const GrBackendRenderTarget& target,
-            const GrBackendSurfaceMutableState& mutableState,
-            GrBackendSurfaceMutableState* previousState) {
+            const skgpu::MutableTextureState& mutableState,
+            skgpu::MutableTextureState* previousState) {
             return context.setBackendRenderTargetState(
                 target, mutableState, previousState, nullptr, nullptr);
         },
