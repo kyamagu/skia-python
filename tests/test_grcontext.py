@@ -284,7 +284,7 @@ def test_GrBackendSurfaceMutableState_isValid(backend_surface_mutable_state):
 
 
 @pytest.mark.skip(reason='m118:REVISIT')
-def test_GrBackendSurfaceMutableState_isValid(backend_surface_mutable_state):
+def test_GrBackendSurfaceMutableState_backend(backend_surface_mutable_state):
     assert isinstance(
         backend_surface_mutable_state.backend(), skia.gpuBackendApi)
 
