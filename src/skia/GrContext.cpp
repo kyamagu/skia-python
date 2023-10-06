@@ -295,9 +295,11 @@ py::class_<GrBackendFormat>(m, "GrBackendFormat")
 
 py::class_<GrBackendTexture>(m, "GrBackendTexture")
     .def(py::init<>())
+/*
     .def(py::init<int, int, GrMipmapped, const GrGLTextureInfo&>(),
         py::arg("width"), py::arg("height"), py::arg("mipMapped"),
         py::arg("glInfo"))
+*/
 #ifdef SK_VULKAN
     .def(py::init<int, int, const GrVkImageInfo&>(),
         py::arg("width"), py::arg("height"), py::arg("vkInfo"))
@@ -377,9 +379,11 @@ py::class_<GrBackendSurfaceMutableState>(m, "GrBackendSurfaceMutableState",
 
 py::class_<GrBackendRenderTarget>(m, "GrBackendRenderTarget")
     .def(py::init<>())
+/*
     .def(py::init<int, int, int, int, const GrGLFramebufferInfo&>(),
         py::arg("width"), py::arg("height"), py::arg("sampleCnt"),
         py::arg("stencilBits"), py::arg("glInfo"))
+*/
 #ifdef SK_VULKAN
     .def(py::init<int, int, int, const GrVkImageInfo&>(),
         py::arg("width"), py::arg("height"), py::arg("vkInfo"))
