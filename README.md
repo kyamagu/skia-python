@@ -1,6 +1,6 @@
 # Skia python binding
 
-![Build and test](https://github.com/kyamagu/skia-python/workflows/Build%20and%20test/badge.svg)
+[![CI](https://github.com/kyamagu/skia-python/actions/workflows/ci.yml/badge.svg)](https://github.com/kyamagu/skia-python/actions/workflows/ci.yml)
 [![PyPI version](https://badge.fury.io/py/skia-python.svg)](https://badge.fury.io/py/skia-python)
 
 Python binding to [Skia Graphics Library](https://skia.org/).

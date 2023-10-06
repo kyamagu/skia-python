@@ -28,8 +28,8 @@ jobs:
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v2
       - name: Build skia 3rd-Party
-        # Taken from https://github.com/pypa/cibuildwheel/blob/v2.12.1/cibuildwheel/resources/pinned_docker_images.cfg
-        uses: docker://quay.io/pypa/manylinux2014_aarch64:2023-03-05-271004f
+        # Taken from https://github.com/pypa/cibuildwheel/blob/v2.16.2/cibuildwheel/resources/pinned_docker_images.cfg
+        uses: docker://quay.io/pypa/manylinux2014_aarch64:2023-10-03-72cdc42
         if: ${{ steps.cache-skia.outputs.cache-hit != 'true' }}
         with:
           args: bash -c "git config --global --add safe.directory '*' &&
@@ -60,7 +60,7 @@ jobs:
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v2
       - name: Build Skia Proper
-        uses: docker://quay.io/pypa/manylinux2014_aarch64:2023-03-05-271004f
+        uses: docker://quay.io/pypa/manylinux2014_aarch64:2023-10-03-72cdc42
         with:
           args: bash -c "git config --global --add safe.directory '*' &&
                          bash scripts/build_Linux.sh
@@ -74,11 +74,11 @@ jobs:
       matrix:
         os: [ubuntu-22.04, windows-2022, macos-12]
         arch: [auto64]
-        cp: ["cp3{7,8,9,10,11}"]
+        cp: ["cp3{7,8,9,10,11,12}"]
         include:
           - os: macos-12
             arch: arm64
-            cp: "cp3{7,8,9,10,11}"
+            cp: "cp3{7,8,9,10,11,12}"
           # aarch64 is emulated and takes longer, build one wheel per job
           - os: ubuntu-22.04
             arch: aarch64
@@ -95,6 +95,9 @@ jobs:
           - os: ubuntu-22.04
             arch: aarch64
             cp: cp311
+          - os: ubuntu-22.04
+            arch: aarch64
+            cp: cp312
 
     steps:
       - uses: actions/checkout@v3
@@ -116,7 +119,7 @@ jobs:
           platforms: ${{ matrix.arch }}
 
       - name: Build wheels
-        uses: pypa/cibuildwheel@v2.12.1
+        uses: pypa/cibuildwheel@v2.16.2
         env:
           CIBW_BUILD: "${{ matrix.cp }}-*"
           CIBW_SKIP: "*musllinux*"
