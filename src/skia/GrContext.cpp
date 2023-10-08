@@ -534,6 +534,22 @@ py::class_<GrRecordingContext, sk_sp<GrRecordingContext>, GrImageContext>(
     //     py::overload_cast<>(&GrRecordingContext::priv, py::const_))
     ;
 
+py::enum_<GrSyncCpu>(m, "GrSyncCpu",
+    R"docstring(
+    )docstring",
+    py::arithmetic())
+    .value("kNo", GrSyncCpu::kNo)
+    .value("kYes", GrSyncCpu::kYes)
+    .export_values();
+
+py::enum_<GrPurgeResourceOptions>(m, "GrPurgeResourceOptions",
+    R"docstring(
+    )docstring",
+    py::arithmetic())
+    .value("kAllResources", GrPurgeResourceOptions::kAllResources)
+    .value("kScratchResourcesOnly", GrPurgeResourceOptions::kScratchResourcesOnly)
+    .export_values();
+
 py::class_<GrDirectContext, sk_sp<GrDirectContext>, GrRecordingContext>(m, "GrDirectContext")
     .def("resetContext", &GrDirectContext::resetContext,
         R"docstring(
@@ -691,23 +707,15 @@ py::class_<GrDirectContext, sk_sp<GrDirectContext>, GrRecordingContext>(m, "GrDi
         )docstring",
         py::arg("maxBytesToPurge"), py::arg("preferScratchResources"))
     .def("purgeUnlockedResources",
-        py::overload_cast<bool>(&GrDirectContext::purgeUnlockedResources),
+        py::overload_cast<GrPurgeResourceOptions>(&GrDirectContext::purgeUnlockedResources),
         R"docstring(
         This entry point is intended for instances where an app has been
         backgrounded or suspended.
 
-        If 'scratchResourcesOnly' is true all unlocked scratch resources will be
-        purged but the unlocked resources with persistent data will remain. If
-        'scratchResourcesOnly' is false then all unlocked resources will be
-        purged. In either case, after the unlocked resources are purged a
-        separate pass will be made to ensure that resource usage is under budget
-        (i.e., even if 'scratchResourcesOnly' is true some resources with
-        persistent data may be purged to be under budget).
-
-        :scratchResourcesOnly: If true only unlocked scratch resources will be
-            purged prior enforcing the budget requirements.
+        :opts: If kScratchResourcesOnly only unlocked scratch resources will be purged prior
+            enforcing the budget requirements.
         )docstring",
-        py::arg("scratchResourcesOnly"))
+        py::arg("opts"))
     .def("maxTextureSize", &GrDirectContext::maxTextureSize,
         R"docstring(
         Gets the maximum supported texture size.
@@ -756,13 +764,13 @@ py::class_<GrDirectContext, sk_sp<GrDirectContext>, GrRecordingContext>(m, "GrDi
         client will still own the semaphores.
         )docstring",
         py::arg("semaphores"), py::arg("deleteSemaphoresAfterWait") = true)
-    .def("flushAndSubmit", py::overload_cast<bool>(&GrDirectContext::flushAndSubmit),
+    .def("flushAndSubmit", py::overload_cast<GrSyncCpu>(&GrDirectContext::flushAndSubmit),
         R"docstring(
         Call to ensure all drawing to the context has been flushed and submitted
         to the underlying 3D API. This is equivalent to calling :py:meth:`flush`
         with a default :py:class:`GrFlushInfo` followed by :py:meth:`submit`.
         )docstring",
-        py::arg("syncCpu") = false)
+        py::arg("sync") = GrSyncCpu::kNo)
     .def("flush", py::overload_cast<const GrFlushInfo&>(&GrDirectContext::flush),
         R"docstring(
         Call to ensure all drawing to the context has been flushed to underlying
@@ -818,7 +826,7 @@ py::class_<GrDirectContext, sk_sp<GrDirectContext>, GrRecordingContext>(m, "GrDi
         If the syncCpu flag is true this function will return once the gpu has
         finished with all submitted work.
         )docstring",
-        py::arg("syncCpu") = false)
+        py::arg("sync") = GrSyncCpu::kNo)
     .def("checkAsyncWorkCompletion", &GrDirectContext::checkAsyncWorkCompletion,
         R"docstring(
         Checks whether any asynchronous work is complete and if so calls related
