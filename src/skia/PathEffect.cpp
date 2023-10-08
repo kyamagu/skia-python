@@ -5,8 +5,6 @@
 #include <include/effects/SkCornerPathEffect.h>
 #include <include/effects/SkDashPathEffect.h>
 #include <include/effects/SkDiscretePathEffect.h>
-#include <include/effects/SkOpPathEffect.h>
-#include <include/effects/SkStrokeAndFillPathEffect.h>
 #include <include/effects/SkTrimPathEffect.h>
 #include <pybind11/stl.h>
 
@@ -397,6 +395,7 @@ py::class_<SkPath2DPathEffect>(
         py::arg("matrix"), py::arg("path"))
     ;
 
+/*
 py::class_<SkMergePathEffect>(m, "MergePathEffect")
     .def_static("Make",
         [] (const SkPathEffect& one, const SkPathEffect& two, SkPathOp op) {
@@ -420,6 +419,7 @@ py::class_<SkStrokePathEffect>(m, "StrokePathEffect")
     .def_static("Make", &SkStrokePathEffect::Make,
         py::arg("width"), py::arg("join"), py::arg("cap"), py::arg("miter") = 4)
     ;
+*/
 
 py::class_<SkTrimPathEffect> trimpatheffect(m, "TrimPathEffect");
 
