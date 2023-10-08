@@ -720,11 +720,11 @@ surface
         )docstring")
 /* m117: Remove legacy SkImage and SkSurface methods */
     .def("flushAndSubmit",
-        [] (SkSurface& surface, bool syncCpu) {
+        [] (SkSurface& surface, GrSyncCpu sync) {
             auto direct = GrAsDirectContext(surface.recordingContext());
             if (direct) {
                 direct->flush(&surface, SkSurfaces::BackendSurfaceAccess::kNoAccess, GrFlushInfo());
-                direct->submit(syncCpu);
+                direct->submit(sync);
             }
         },
         R"docstring(
@@ -740,7 +740,7 @@ surface
         with a default :py:class:`GrFlushInfo` followed by
         :py:meth:`GrContext.submit`.
         )docstring",
-        py::arg("syncCpu") = false)
+        py::arg("sync") = GrSyncCpu::kNo)
     .def("flush",
         [] (SkSurface& surface, SkSurfaces::BackendSurfaceAccess access, const GrFlushInfo& info) {
             auto dContext = GrAsDirectContext(surface.recordingContext());
