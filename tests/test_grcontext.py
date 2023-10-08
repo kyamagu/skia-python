@@ -347,7 +347,7 @@ def test_GrContext_purgeResourcesNotUsedInMs(context):
 
 @pytest.mark.parametrize('args', [
     (1 << 16, True),
-    (True,),
+    (skia.GrPurgeResourceOptions.kAllResources,),
 ])
 def test_GrContext_purgeUnlockedResources(context, args):
     context.purgeUnlockedResources(*args)
