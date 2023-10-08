@@ -241,6 +241,7 @@ def test_Path2DPathEffect_Make():
         skia.Path2DPathEffect.Make(skia.Matrix(), path), skia.PathEffect)
 
 
+@pytest.mark.skip(reason='"API withdrawn in m119. May not need REVISIT')
 def test_MergePathEffect_Make():
     assert isinstance(
         skia.MergePathEffect.Make(
@@ -249,16 +250,19 @@ def test_MergePathEffect_Make():
             skia.PathOp.kUnion_PathOp), skia.PathEffect)
 
 
+@pytest.mark.skip(reason='"API withdrawn in m119. May not need REVISIT')
 def test_MatrixPathEffect_Make():
     assert isinstance(
         skia.MatrixPathEffect.Make(skia.Matrix()), skia.PathEffect)
 
 
+@pytest.mark.skip(reason='"API withdrawn in m119. May not need REVISIT')
 def test_MatrixPathEffect_MakeTranslate():
     assert isinstance(
         skia.MatrixPathEffect.MakeTranslate(1., 1.), skia.PathEffect)
 
 
+@pytest.mark.skip(reason='"API withdrawn in m119. May not need REVISIT')
 def test_StrokePathEffect_Make():
     assert isinstance(
         skia.StrokePathEffect.Make(
