@@ -1682,9 +1682,20 @@ image
         )docstring",
         py::arg("cachingHint") = SkImage::kAllow_CachingHint)
     .def("makeWithFilter",
-        py::overload_cast<GrRecordingContext*, const SkImageFilter*,
-            const SkIRect&, const SkIRect&, SkIRect*, SkIPoint*>(
-                &SkImage::makeWithFilter, py::const_),
+        [] (SkImage& image, GrRecordingContext* rContext,
+            const SkImageFilter* filter,
+            const SkIRect& subset,
+            const SkIRect& clipBounds,
+            SkIRect* outSubset,
+            SkIPoint* offset) {
+                if (rContext) {
+                    return SkImages::MakeWithFilter(rContext, sk_ref_sp(&image), filter, subset, clipBounds,
+                        outSubset, offset);
+                }
+
+                return SkImages::MakeWithFilter(sk_ref_sp(&image), filter, subset, clipBounds,
+                    outSubset, offset);
+            },
         R"docstring(
         Creates filtered :py:class:`Image`.
 
