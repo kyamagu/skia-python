@@ -803,11 +803,10 @@ py::class_<SkImageFilters>(m, "ImageFilters")
             source bitmap is used instead.
         )docstring",
         py::arg("src"), py::arg("dst"), py::arg("input") = nullptr)
-/*
     .def_static("Xfermode",
         [] (SkBlendMode mode, const SkImageFilter* background,
             const SkImageFilter* foreground, const SkIRect* cropRect) {
-            return SkImageFilters::Xfermode(
+            return SkImageFilters::Blend(
                 mode, CLONE(background), CLONE(foreground), cropRect);
         },
         R"docstring(
@@ -822,7 +821,6 @@ py::class_<SkImageFilters>(m, "ImageFilters")
         )docstring",
         py::arg("mode"), py::arg("background") = nullptr,
         py::arg("foreground") = nullptr, py::arg("cropRect") = nullptr)
-*/
     .def_static("Dilate",
         [] (SkScalar radiusX, SkScalar radiusY, const SkImageFilter* input,
             const SkIRect* cropRect) {
