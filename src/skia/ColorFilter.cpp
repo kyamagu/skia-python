@@ -280,14 +280,13 @@ py::class_<SkOverdrawColorFilter>(
     ;
 
 /* SkTableColorFilter class removed in m116 */
-/*
-py::class_<SkTableColorFilter>(
+py::class_<std::unique_ptr<uint8_t>>(
     m, "TableColorFilter")
     .def_static("Make",
         [] (const std::vector<uint8_t>& table) {
             if (table.size() != 256)
                 throw std::runtime_error("table must have 256 elements");
-            return SkTableColorFilter::Make(&table[0]);
+            return SkColorFilters::Table(&table[0]);
         },
         R"docstring(
         Create a table colorfilter, copying the table into the filter, and
@@ -299,6 +298,7 @@ py::class_<SkTableColorFilter>(
         applied, and then the result is remultiplied.
         )docstring",
         py::arg("table"))
+/*
     .def_static("MakeARGB",
         [] (py::object tableA, py::object tableR, py::object tableG,
             py::object tableB) {
@@ -323,7 +323,7 @@ py::class_<SkTableColorFilter>(
         )docstring",
         py::arg("tableA"), py::arg("tableR"), py::arg("tableG"),
         py::arg("tableB"))
-    ;
 */
+    ;
 
 }
