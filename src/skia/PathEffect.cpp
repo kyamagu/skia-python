@@ -142,8 +142,11 @@ py::class_<SkPathEffect::DashInfo>(patheffect, "DashInfo")
     .def(py::init<>())
     .def_property_readonly("fIntervals",
         [] (const SkPathEffect::DashInfo& info) {
-            return std::vector<SkScalar>(
-                info.fIntervals, info.fIntervals + info.fCount);
+            if ( nullptr != info.fIntervals )
+                return std::vector<SkScalar>(
+                    info.fIntervals, info.fIntervals + info.fCount);
+            else
+                return std::vector<SkScalar>(0);
         },
         R"docstring(
         Length of on/off intervals for dashed lines.
