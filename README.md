@@ -52,7 +52,8 @@ https://kyamagu.github.io/skia-python
 - [Tutorial](https://kyamagu.github.io/skia-python/tutorial/)
 - [Reference](https://kyamagu.github.io/skia-python/reference.html)
 
-- For information about the `m87` to `m116` changes, and tips on migration: [README.m116](README.m116.md).
+- For information about changes after `m116`, and tips on migration from `m87`: [README.m116](README.m116.md),
+  [README.m117](README.m117.md), [README.m118](README.m118.md), [README.m119](README.m119.md).
 
 ## Contributing
 
