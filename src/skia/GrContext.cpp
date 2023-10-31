@@ -379,11 +379,13 @@ py::class_<GrBackendSurfaceMutableState>(m, "GrBackendSurfaceMutableState",
 
 py::class_<GrBackendRenderTarget>(m, "GrBackendRenderTarget")
     .def(py::init<>())
-/*
-    .def(py::init<int, int, int, int, const GrGLFramebufferInfo&>(),
+    .def(py::init(
+        [] (int width, int height, int sampleCnt, int stencilBits, const GrGLFramebufferInfo& glInfo) {
+            return GrBackendRenderTargets::MakeGL(width, height,
+                sampleCnt, stencilBits, glInfo);
+        }),
         py::arg("width"), py::arg("height"), py::arg("sampleCnt"),
         py::arg("stencilBits"), py::arg("glInfo"))
-*/
 #ifdef SK_VULKAN
     .def(py::init<int, int, int, const GrVkImageInfo&>(),
         py::arg("width"), py::arg("height"), py::arg("vkInfo"))
