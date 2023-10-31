@@ -8,3 +8,4 @@ Since m117:
     GrBackendRenderTarget::getGLFramebufferInfo,
     now emulated
   * GL-related GrBackendTexture, GrBackendRenderTarget constructors removed
+    (m119 adds emulation for these)

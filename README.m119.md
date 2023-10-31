@@ -5,6 +5,8 @@ Since m118:
   GrDirectContext::submit takes enums instead of true/false
 * some Sk*PathEffect have been removed from the public API
   (TODO: emulate?)
+* Emulate GL-related GrBackendTexture, GrBackendRenderTarget constructors
+  (was removed in m118)
 
 Since m87:
 
