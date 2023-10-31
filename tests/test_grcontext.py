@@ -104,7 +104,6 @@ def backend_texture(context, gl_texture_info):
         256, 256, skia.GrMipmapped.kNo, gl_texture_info)
 
 
-@pytest.mark.skip(reason='m118:REVISIT')
 def test_GrBackendTexture_init_glInfo(gl_texture_info):
     assert isinstance(
         skia.GrBackendTexture(128, 128, skia.GrMipmapped.kNo, gl_texture_info),
@@ -118,59 +117,48 @@ def test_GrBackendTexture_init_mockInfo(mock_texture_info):
         skia.GrBackendTexture)
 
 
-@pytest.mark.skip(reason='m118:REVISIT')
 def test_GrBackendTexture_dimensions(backend_texture):
     assert isinstance(backend_texture.dimensions(), skia.ISize)
 
 
-@pytest.mark.skip(reason='m118:REVISIT')
 def test_GrBackendTexture_width(backend_texture):
     assert isinstance(backend_texture.width(), int)
 
 
-@pytest.mark.skip(reason='m118:REVISIT')
 def test_GrBackendTexture_height(backend_texture):
     assert isinstance(backend_texture.height(), int)
 
 
-@pytest.mark.skip(reason='m118:REVISIT')
 def test_GrBackendTexture_hasMipmaps(backend_texture):
     assert isinstance(backend_texture.hasMipmaps(), bool)
 
 
-@pytest.mark.skip(reason='m118:REVISIT')
 def test_GrBackendTexture_getGLTextureInfo(backend_texture, gl_texture_info):
     assert isinstance(backend_texture.getGLTextureInfo(gl_texture_info), bool)
 
 
-@pytest.mark.skip(reason='m118:REVISIT')
 def test_GrBackendTexture_glTextureParametersModified(backend_texture):
     backend_texture.glTextureParametersModified()
 
 
-@pytest.mark.skip(reason='m118:REVISIT')
 def test_GrBackendTexture_getBackendFormat(backend_texture):
     assert isinstance(backend_texture.getBackendFormat(), skia.GrBackendFormat)
 
 
-@pytest.mark.skip(reason='m118:REVISIT')
 def test_GrBackendTexture_getMockTextureInfo(
     backend_texture, mock_texture_info):
     assert isinstance(
         backend_texture.getMockTextureInfo(mock_texture_info), bool)
 
 
-@pytest.mark.skip(reason='m118:REVISIT')
 def test_GrBackendTexture_isProtected(backend_texture):
     assert isinstance(backend_texture.isProtected(), bool)
 
 
-@pytest.mark.skip(reason='m118:REVISIT')
 def test_GrBackendTexture_isValid(backend_texture):
     assert isinstance(backend_texture.isValid(), bool)
 
 
-@pytest.mark.skip(reason='m118:REVISIT')
 def test_GrBackendTexture_isSameTexture(backend_texture):
     assert isinstance(backend_texture.isSameTexture(backend_texture), bool)
 
@@ -196,7 +184,7 @@ def backend_render_target():
 
 @pytest.mark.parametrize('args', [
     tuple(),
-    # (128, 128, 2, 8, skia.GrGLFramebufferInfo()),
+    (128, 128, 2, 8, skia.GrGLFramebufferInfo()),
     # (128, 128, 2, 8, skia.GrVkImageInfo()),
     (128, 128, 2, 8, skia.GrMockRenderTargetInfo()),
 ])
