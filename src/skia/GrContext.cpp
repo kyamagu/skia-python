@@ -295,11 +295,13 @@ py::class_<GrBackendFormat>(m, "GrBackendFormat")
 
 py::class_<GrBackendTexture>(m, "GrBackendTexture")
     .def(py::init<>())
-/*
-    .def(py::init<int, int, GrMipmapped, const GrGLTextureInfo&>(),
+    .def(py::init(
+        [] (int width, int height, skgpu::Mipmapped mipMapped, const GrGLTextureInfo& glInfo) {
+            return GrBackendTextures::MakeGL(width, height,
+                mipMapped, glInfo);
+        }),
         py::arg("width"), py::arg("height"), py::arg("mipMapped"),
         py::arg("glInfo"))
-*/
 #ifdef SK_VULKAN
     .def(py::init<int, int, const GrVkImageInfo&>(),
         py::arg("width"), py::arg("height"), py::arg("vkInfo"))
