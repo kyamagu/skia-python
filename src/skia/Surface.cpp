@@ -5,7 +5,7 @@
 #include <include/gpu/GpuTypes.h>
 #include <include/gpu/GrTypes.h>
 #include <include/gpu/ganesh/SkSurfaceGanesh.h>
-#include <include/gpu/GrBackendSurfaceMutableState.h>
+#include <include/gpu/MutableTextureState.h>
 #include <pybind11/operators.h>
 #include <pybind11/numpy.h>
 
@@ -720,11 +720,11 @@ surface
         )docstring")
 /* m117: Remove legacy SkImage and SkSurface methods */
     .def("flushAndSubmit",
-        [] (SkSurface& surface, bool syncCpu) {
+        [] (SkSurface& surface, GrSyncCpu sync) {
             auto direct = GrAsDirectContext(surface.recordingContext());
             if (direct) {
                 direct->flush(&surface, SkSurfaces::BackendSurfaceAccess::kNoAccess, GrFlushInfo());
-                direct->submit(syncCpu);
+                direct->submit(sync);
             }
         },
         R"docstring(
@@ -740,7 +740,7 @@ surface
         with a default :py:class:`GrFlushInfo` followed by
         :py:meth:`GrContext.submit`.
         )docstring",
-        py::arg("syncCpu") = false)
+        py::arg("sync") = GrSyncCpu::kNo)
     .def("flush",
         [] (SkSurface& surface, SkSurfaces::BackendSurfaceAccess access, const GrFlushInfo& info) {
             auto dContext = GrAsDirectContext(surface.recordingContext());
@@ -1091,7 +1091,7 @@ surface
         py::arg("surfaceProps") = nullptr)
     .def_static("MakeRenderTarget",
         py::overload_cast<GrRecordingContext*, skgpu::Budgeted, const SkImageInfo&, int,
-        GrSurfaceOrigin, const SkSurfaceProps*, bool>(
+        GrSurfaceOrigin, const SkSurfaceProps*, bool, bool>(
             &SkSurfaces::RenderTarget),
         R"docstring(
         Returns :py:class:`Surface` on GPU indicated by context.
@@ -1126,6 +1126,7 @@ surface
             setting for device independent fonts; may be nullptr
         :param shouldCreateWithMips: hint that :py:class:`Surface` will host mip
             map images
+        :param isProtected: protected-ness
         :return: :py:class:`Surface` if all parameters are valid; otherwise,
             nullptr
         )docstring",
@@ -1133,7 +1134,8 @@ surface
         py::arg("sampleCount") = 0,
         py::arg("surfaceOrigin") = GrSurfaceOrigin::kBottomLeft_GrSurfaceOrigin,
         py::arg("surfaceProps") = nullptr,
-        py::arg("shouldCreateWithMips") = false)
+        py::arg("shouldCreateWithMips") = false,
+        py::arg("isProtected") = false)
     .def_static("MakeRenderTarget",
         py::overload_cast<GrRecordingContext*, skgpu::Budgeted, const SkImageInfo&, int,
             const SkSurfaceProps*>(&SkSurfaces::RenderTarget),

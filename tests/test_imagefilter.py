@@ -243,10 +243,9 @@ def test_ImageFilters_Tile():
         skia.ImageFilter)
 
 
-@pytest.mark.skip(reason='m116:REVISIT')
 def test_ImageFilters_Xfermode():
     assert isinstance(
-        skia.ImageFilters.Xfermode(skia.BlendMode.kSrc), skia.ImageFilter)
+        skia.ImageFilters.Xfermode(skia.BlendMode.kSrcIn), skia.ImageFilter)
 
 
 def test_ImageFilters_Dilate():

@@ -6,8 +6,9 @@
 #include <include/gpu/GpuTypes.h>
 #include <include/gpu/mock/GrMockTypes.h>
 #include <include/gpu/gl/GrGLInterface.h>
+#include <include/gpu/ganesh/gl/GrGLBackendSurface.h>
 #include <include/gpu/vk/GrVkBackendContext.h>
-#include <include/gpu/GrBackendSurfaceMutableState.h>
+#include <include/gpu/MutableTextureState.h>
 #include <pybind11/chrono.h>
 #include <pybind11/stl.h>
 #include <pybind11/cast.h>
@@ -27,7 +28,10 @@ py::enum_<GrBackendApi>(m, "GrBackendApi",
     .value("kVulkan", GrBackendApi::kVulkan)
     .value("kMetal", GrBackendApi::kMetal)
     .value("kDirect3D", GrBackendApi::kDirect3D)
+/* m118: Remove GrBackendApi::kDawn */
+/*
     .value("kDawn", GrBackendApi::kDawn)
+*/
     .value("kMock", GrBackendApi::kMock,
         R"docstring(
         Mock is a backend that does not draw anything. It is used for unit tests
@@ -258,7 +262,7 @@ py::class_<GrBackendSemaphore>(m, "GrBackendSemaphore")
 py::class_<GrBackendFormat>(m, "GrBackendFormat")
     .def(py::init<>())
     .def(py::init<const GrBackendFormat&>())
-    .def_static("MakeGL", &GrBackendFormat::MakeGL,
+    .def_static("MakeGL", &GrBackendFormats::MakeGL,
         py::arg("format"), py::arg("target"))
 /*
     .def_static("MakeVk", py::overload_cast<VkFormat>(&GrBackendFormat::MakeVk),
@@ -277,7 +281,7 @@ py::class_<GrBackendFormat>(m, "GrBackendFormat")
     .def("backend", &GrBackendFormat::backend)
     .def("textureType", &GrBackendFormat::textureType)
     .def("channelMask", &GrBackendFormat::channelMask)
-    .def("asGLFormat", &GrBackendFormat::asGLFormat)
+    .def("asGLFormat", &GrBackendFormats::AsGLFormat)
 /*
     .def("asVkFormat", &GrBackendFormat::asVkFormat, py::arg("format"))
     .def("getVkYcbcrConversionInfo",
@@ -291,7 +295,11 @@ py::class_<GrBackendFormat>(m, "GrBackendFormat")
 
 py::class_<GrBackendTexture>(m, "GrBackendTexture")
     .def(py::init<>())
-    .def(py::init<int, int, GrMipmapped, const GrGLTextureInfo&>(),
+    .def(py::init(
+        [] (int width, int height, skgpu::Mipmapped mipMapped, const GrGLTextureInfo& glInfo) {
+            return GrBackendTextures::MakeGL(width, height,
+                mipMapped, glInfo);
+        }),
         py::arg("width"), py::arg("height"), py::arg("mipMapped"),
         py::arg("glInfo"))
 #ifdef SK_VULKAN
@@ -307,10 +315,10 @@ py::class_<GrBackendTexture>(m, "GrBackendTexture")
     .def("height", &GrBackendTexture::height)
     .def("hasMipmaps", &GrBackendTexture::hasMipmaps)
     .def("backend", &GrBackendTexture::backend)
-    .def("getGLTextureInfo", &GrBackendTexture::getGLTextureInfo,
+    .def("getGLTextureInfo", &GrBackendTextures::GetGLTextureInfo,
         py::arg("info"))
     .def("glTextureParametersModified",
-        &GrBackendTexture::glTextureParametersModified)
+        &GrBackendTextures::GLTextureParametersModified)
 /*
     .def("getVkImageInfo", &GrBackendTexture::getVkImageInfo,
         py::arg("info"))
@@ -333,6 +341,8 @@ py::class_<GrContextOptions>(m, "GrContextOptions")
     // TODO: Implement me!
     ;
 
+/* m118: Remove GrBackendSurfaceMutableState */
+/*
 py::class_<GrBackendSurfaceMutableState>(m, "GrBackendSurfaceMutableState",
     R"docstring(
     Since Skia and clients can both modify gpu textures and their connected
@@ -367,10 +377,15 @@ py::class_<GrBackendSurfaceMutableState>(m, "GrBackendSurfaceMutableState",
     .def("isValid", &GrBackendSurfaceMutableState::isValid)
     .def("backend", &GrBackendSurfaceMutableState::backend)
     ;
+*/
 
 py::class_<GrBackendRenderTarget>(m, "GrBackendRenderTarget")
     .def(py::init<>())
-    .def(py::init<int, int, int, int, const GrGLFramebufferInfo&>(),
+    .def(py::init(
+        [] (int width, int height, int sampleCnt, int stencilBits, const GrGLFramebufferInfo& glInfo) {
+            return GrBackendRenderTargets::MakeGL(width, height,
+                sampleCnt, stencilBits, glInfo);
+        }),
         py::arg("width"), py::arg("height"), py::arg("sampleCnt"),
         py::arg("stencilBits"), py::arg("glInfo"))
 #ifdef SK_VULKAN
@@ -390,7 +405,7 @@ py::class_<GrBackendRenderTarget>(m, "GrBackendRenderTarget")
     .def("stencilBits", &GrBackendRenderTarget::stencilBits)
     .def("backend", &GrBackendRenderTarget::backend)
     .def("isFramebufferOnly", &GrBackendRenderTarget::isFramebufferOnly)
-    .def("getGLFramebufferInfo", &GrBackendRenderTarget::getGLFramebufferInfo,
+    .def("getGLFramebufferInfo", &GrBackendRenderTargets::GetGLFramebufferInfo,
         R"docstring(
         If the backend API is GL, copies a snapshot of the GrGLFramebufferInfo
         struct into the passed in pointer and returns true. Otherwise returns
@@ -522,6 +537,22 @@ py::class_<GrRecordingContext, sk_sp<GrRecordingContext>, GrImageContext>(
     // .def("priv",
     //     py::overload_cast<>(&GrRecordingContext::priv, py::const_))
     ;
+
+py::enum_<GrSyncCpu>(m, "GrSyncCpu",
+    R"docstring(
+    )docstring",
+    py::arithmetic())
+    .value("kNo", GrSyncCpu::kNo)
+    .value("kYes", GrSyncCpu::kYes)
+    .export_values();
+
+py::enum_<GrPurgeResourceOptions>(m, "GrPurgeResourceOptions",
+    R"docstring(
+    )docstring",
+    py::arithmetic())
+    .value("kAllResources", GrPurgeResourceOptions::kAllResources)
+    .value("kScratchResourcesOnly", GrPurgeResourceOptions::kScratchResourcesOnly)
+    .export_values();
 
 py::class_<GrDirectContext, sk_sp<GrDirectContext>, GrRecordingContext>(m, "GrDirectContext")
     .def("resetContext", &GrDirectContext::resetContext,
@@ -680,23 +711,15 @@ py::class_<GrDirectContext, sk_sp<GrDirectContext>, GrRecordingContext>(m, "GrDi
         )docstring",
         py::arg("maxBytesToPurge"), py::arg("preferScratchResources"))
     .def("purgeUnlockedResources",
-        py::overload_cast<bool>(&GrDirectContext::purgeUnlockedResources),
+        py::overload_cast<GrPurgeResourceOptions>(&GrDirectContext::purgeUnlockedResources),
         R"docstring(
         This entry point is intended for instances where an app has been
         backgrounded or suspended.
 
-        If 'scratchResourcesOnly' is true all unlocked scratch resources will be
-        purged but the unlocked resources with persistent data will remain. If
-        'scratchResourcesOnly' is false then all unlocked resources will be
-        purged. In either case, after the unlocked resources are purged a
-        separate pass will be made to ensure that resource usage is under budget
-        (i.e., even if 'scratchResourcesOnly' is true some resources with
-        persistent data may be purged to be under budget).
-
-        :scratchResourcesOnly: If true only unlocked scratch resources will be
-            purged prior enforcing the budget requirements.
+        :opts: If kScratchResourcesOnly only unlocked scratch resources will be purged prior
+            enforcing the budget requirements.
         )docstring",
-        py::arg("scratchResourcesOnly"))
+        py::arg("opts"))
     .def("maxTextureSize", &GrDirectContext::maxTextureSize,
         R"docstring(
         Gets the maximum supported texture size.
@@ -745,13 +768,13 @@ py::class_<GrDirectContext, sk_sp<GrDirectContext>, GrRecordingContext>(m, "GrDi
         client will still own the semaphores.
         )docstring",
         py::arg("semaphores"), py::arg("deleteSemaphoresAfterWait") = true)
-    .def("flushAndSubmit", py::overload_cast<bool>(&GrDirectContext::flushAndSubmit),
+    .def("flushAndSubmit", py::overload_cast<GrSyncCpu>(&GrDirectContext::flushAndSubmit),
         R"docstring(
         Call to ensure all drawing to the context has been flushed and submitted
         to the underlying 3D API. This is equivalent to calling :py:meth:`flush`
         with a default :py:class:`GrFlushInfo` followed by :py:meth:`submit`.
         )docstring",
-        py::arg("syncCpu") = false)
+        py::arg("sync") = GrSyncCpu::kNo)
     .def("flush", py::overload_cast<const GrFlushInfo&>(&GrDirectContext::flush),
         R"docstring(
         Call to ensure all drawing to the context has been flushed to underlying
@@ -807,7 +830,7 @@ py::class_<GrDirectContext, sk_sp<GrDirectContext>, GrRecordingContext>(m, "GrDi
         If the syncCpu flag is true this function will return once the gpu has
         finished with all submitted work.
         )docstring",
-        py::arg("syncCpu") = false)
+        py::arg("sync") = GrSyncCpu::kNo)
     .def("checkAsyncWorkCompletion", &GrDirectContext::checkAsyncWorkCompletion,
         R"docstring(
         Checks whether any asynchronous work is complete and if so calls related
@@ -1062,8 +1085,8 @@ py::class_<GrDirectContext, sk_sp<GrDirectContext>, GrRecordingContext>(m, "GrDi
         py::arg("mipMapped"), py::arg("isProtected") = GrProtected::kNo)
     .def("setBackendTextureState",
         [] (GrDirectContext& context, const GrBackendTexture& texture,
-            const GrBackendSurfaceMutableState& mutableState,
-            GrBackendSurfaceMutableState* previousState) {
+            const skgpu::MutableTextureState& mutableState,
+            skgpu::MutableTextureState* previousState) {
             return context.setBackendTextureState(
                 texture, mutableState, previousState, nullptr, nullptr);
         },
@@ -1095,8 +1118,8 @@ py::class_<GrDirectContext, sk_sp<GrDirectContext>, GrRecordingContext>(m, "GrDi
         py::arg("previousState") = nullptr)
     .def("setBackendRenderTargetState",
         [] (GrDirectContext& context, const GrBackendRenderTarget& target,
-            const GrBackendSurfaceMutableState& mutableState,
-            GrBackendSurfaceMutableState* previousState) {
+            const skgpu::MutableTextureState& mutableState,
+            skgpu::MutableTextureState* previousState) {
             return context.setBackendRenderTargetState(
                 target, mutableState, previousState, nullptr, nullptr);
         },

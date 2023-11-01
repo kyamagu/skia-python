@@ -260,16 +260,19 @@ def backend_surface_mutable_state():
     return skia.GrBackendSurfaceMutableState()
 
 
+@pytest.mark.skip(reason='m118:REVISIT')
 def test_GrBackendSurfaceMutableState_init(backend_surface_mutable_state):
     assert isinstance(
         backend_surface_mutable_state, skia.GrBackendSurfaceMutableState)
 
 
+@pytest.mark.skip(reason='m118:REVISIT')
 def test_GrBackendSurfaceMutableState_isValid(backend_surface_mutable_state):
     assert isinstance(backend_surface_mutable_state.isValid(), bool)
 
 
-def test_GrBackendSurfaceMutableState_isValid(backend_surface_mutable_state):
+@pytest.mark.skip(reason='m118:REVISIT')
+def test_GrBackendSurfaceMutableState_backend(backend_surface_mutable_state):
     assert isinstance(
         backend_surface_mutable_state.backend(), skia.gpuBackendApi)
 
@@ -332,7 +335,7 @@ def test_GrContext_purgeResourcesNotUsedInMs(context):
 
 @pytest.mark.parametrize('args', [
     (1 << 16, True),
-    (True,),
+    (skia.GrPurgeResourceOptions.kAllResources,),
 ])
 def test_GrContext_purgeUnlockedResources(context, args):
     context.purgeUnlockedResources(*args)
