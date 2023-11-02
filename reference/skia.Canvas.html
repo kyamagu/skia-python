@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Canvas &mdash; skia-python 117.0b3 documentation</title>
+  <title>Canvas &mdash; skia-python 119.0b4 documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   <!--[if lt IE 9]>
@@ -35,7 +35,7 @@
             skia-python
           </a>
               <div class="version">
-                117.0b3
+                119.0b4
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
@@ -112,7 +112,6 @@
 <li class="toctree-l3"><a class="reference internal" href="skia.GrBackendFormat.html">GrBackendFormat</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.GrBackendRenderTarget.html">GrBackendRenderTarget</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.GrBackendSemaphore.html">GrBackendSemaphore</a></li>
-<li class="toctree-l3"><a class="reference internal" href="skia.GrBackendSurfaceMutableState.html">GrBackendSurfaceMutableState</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.GrBackendTexture.html">GrBackendTexture</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.GrColorType.html">GrColorType</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.GrContext.html">GrContext</a></li>
@@ -131,10 +130,12 @@
 <li class="toctree-l3"><a class="reference internal" href="skia.GrMockRenderTargetInfo.html">GrMockRenderTargetInfo</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.GrMockTextureInfo.html">GrMockTextureInfo</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.GrProtected.html">GrProtected</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.GrPurgeResourceOptions.html">GrPurgeResourceOptions</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.GrRecordingContext.html">GrRecordingContext</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.GrRenderable.html">GrRenderable</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.GrSemaphoresSubmitted.html">GrSemaphoresSubmitted</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.GrSurfaceOrigin.html">GrSurfaceOrigin</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.GrSyncCpu.html">GrSyncCpu</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.GrTextureType.html">GrTextureType</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.GrVkAlloc.html">GrVkAlloc</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.GrVkBackendContext.html">GrVkBackendContext</a></li>
@@ -158,9 +159,7 @@
 <li class="toctree-l3"><a class="reference internal" href="skia.M44.html">M44</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.MaskFilter.html">MaskFilter</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.Matrix.html">Matrix</a></li>
-<li class="toctree-l3"><a class="reference internal" href="skia.MatrixPathEffect.html">MatrixPathEffect</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.MemoryStream.html">MemoryStream</a></li>
-<li class="toctree-l3"><a class="reference internal" href="skia.MergePathEffect.html">MergePathEffect</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.MipmapBuilder.html">MipmapBuilder</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.NullWStream.html">NullWStream</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.OpBuilder.html">OpBuilder</a></li>
@@ -206,11 +205,11 @@
 <li class="toctree-l3"><a class="reference internal" href="skia.StreamRewindable.html">StreamRewindable</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.StreamSeekable.html">StreamSeekable</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.String.html">String</a></li>
-<li class="toctree-l3"><a class="reference internal" href="skia.StrokePathEffect.html">StrokePathEffect</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.StrokeRec.html">StrokeRec</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.Surface.html">Surface</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.SurfaceCharacterization.html">SurfaceCharacterization</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.SurfaceProps.html">SurfaceProps</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.TableColorFilter.html">TableColorFilter</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.TableMaskFilter.html">TableMaskFilter</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.TextBlob.html">TextBlob</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.TextBlobBuilder.html">TextBlobBuilder</a></li>
@@ -1088,7 +1087,7 @@ and so on, used to draw</p></li>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="skia.Canvas.drawAtlas">
-<span class="sig-prename descclassname"><span class="pre">Canvas.</span></span><span class="sig-name descname"><span class="pre">drawAtlas</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">self:</span> <span class="pre">skia.Canvas,</span> <span class="pre">atlas:</span> <span class="pre">skia.Image,</span> <span class="pre">xform:</span> <span class="pre">List[skia.RSXform],</span> <span class="pre">tex:</span> <span class="pre">List[skia.Rect],</span> <span class="pre">colors:</span> <span class="pre">List[int],</span> <span class="pre">mode:</span> <span class="pre">skia.BlendMode,</span> <span class="pre">options:</span> <span class="pre">skia.SamplingOptions</span> <span class="pre">=</span> <span class="pre">&lt;skia.SamplingOptions</span> <span class="pre">object</span> <span class="pre">at</span> <span class="pre">0x7fc5d9a36c30&gt;,</span> <span class="pre">cullRect:</span> <span class="pre">skia.Rect</span> <span class="pre">=</span> <span class="pre">None,</span> <span class="pre">paint:</span> <span class="pre">skia.Paint</span> <span class="pre">=</span> <span class="pre">None</span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#skia.Canvas.drawAtlas" title="Permalink to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">Canvas.</span></span><span class="sig-name descname"><span class="pre">drawAtlas</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">self:</span> <span class="pre">skia.Canvas,</span> <span class="pre">atlas:</span> <span class="pre">skia.Image,</span> <span class="pre">xform:</span> <span class="pre">List[skia.RSXform],</span> <span class="pre">tex:</span> <span class="pre">List[skia.Rect],</span> <span class="pre">colors:</span> <span class="pre">List[int],</span> <span class="pre">mode:</span> <span class="pre">skia.BlendMode,</span> <span class="pre">options:</span> <span class="pre">skia.SamplingOptions</span> <span class="pre">=</span> <span class="pre">&lt;skia.SamplingOptions</span> <span class="pre">object</span> <span class="pre">at</span> <span class="pre">0x7ff64017cd30&gt;,</span> <span class="pre">cullRect:</span> <span class="pre">skia.Rect</span> <span class="pre">=</span> <span class="pre">None,</span> <span class="pre">paint:</span> <span class="pre">skia.Paint</span> <span class="pre">=</span> <span class="pre">None</span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#skia.Canvas.drawAtlas" title="Permalink to this definition"></a></dt>
 <dd><p>Draws a set of sprites from atlas, using clip, <a class="reference internal" href="skia.Matrix.html#skia.Matrix" title="skia.Matrix"><code class="xref py py-class docutils literal notranslate"><span class="pre">Matrix</span></code></a>, and
 optional <a class="reference internal" href="skia.Paint.html#skia.Paint" title="skia.Paint"><code class="xref py py-class docutils literal notranslate"><span class="pre">Paint</span></code></a> paint.</p>
 <p>paint uses anti-alias, alpha, <a class="reference internal" href="skia.ColorFilter.html#skia.ColorFilter" title="skia.ColorFilter"><code class="xref py py-class docutils literal notranslate"><span class="pre">ColorFilter</span></code></a>,
@@ -1418,7 +1417,7 @@ to draw</p></li>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="skia.Canvas.drawImage">
-<span class="sig-prename descclassname"><span class="pre">Canvas.</span></span><span class="sig-name descname"><span class="pre">drawImage</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self:</span> <span class="pre">skia.Canvas</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">image:</span> <span class="pre">skia.Image</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">left:</span> <span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">top:</span> <span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">options:</span> <span class="pre">skia.SamplingOptions</span> <span class="pre">=</span> <span class="pre">&lt;skia.SamplingOptions</span> <span class="pre">object</span> <span class="pre">at</span> <span class="pre">0x7fc5db551630&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">paint:</span> <span class="pre">skia.Paint</span> <span class="pre">=</span> <span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#skia.Canvas.drawImage" title="Permalink to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">Canvas.</span></span><span class="sig-name descname"><span class="pre">drawImage</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self:</span> <span class="pre">skia.Canvas</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">image:</span> <span class="pre">skia.Image</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">left:</span> <span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">top:</span> <span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">options:</span> <span class="pre">skia.SamplingOptions</span> <span class="pre">=</span> <span class="pre">&lt;skia.SamplingOptions</span> <span class="pre">object</span> <span class="pre">at</span> <span class="pre">0x7ff6402295f0&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">paint:</span> <span class="pre">skia.Paint</span> <span class="pre">=</span> <span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#skia.Canvas.drawImage" title="Permalink to this definition"></a></dt>
 <dd><p>Draws <a class="reference internal" href="skia.Image.html#skia.Image" title="skia.Image"><code class="xref py py-class docutils literal notranslate"><span class="pre">Image</span></code></a> image, with its top-left corner at (left, top),
 using clip, <a class="reference internal" href="skia.Matrix.html#skia.Matrix" title="skia.Matrix"><code class="xref py py-class docutils literal notranslate"><span class="pre">Matrix</span></code></a>, and optional <a class="reference internal" href="skia.Paint.html#skia.Paint" title="skia.Paint"><code class="xref py py-class docutils literal notranslate"><span class="pre">Paint</span></code></a> paint.</p>
 <p>This is equivalent to drawImageRect() using a dst rect at (x,y) with the
@@ -1446,7 +1445,7 @@ nullptr</p>
 <span class="sig-prename descclassname"><span class="pre">Canvas.</span></span><span class="sig-name descname"><span class="pre">drawImageRect</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#skia.Canvas.drawImageRect" title="Permalink to this definition"></a></dt>
 <dd><p>Overloaded function.</p>
 <ol class="arabic">
-<li><p>drawImageRect(self: skia.Canvas, image: skia.Image, src: skia.Rect, dst: skia.Rect, options: skia.SamplingOptions = &lt;skia.SamplingOptions object at 0x7fc5d9a36870&gt;, paint: skia.Paint = None, constraint: skia.Canvas.SrcRectConstraint = &lt;SrcRectConstraint.kStrict_SrcRectConstraint: 0&gt;) -&gt; None</p>
+<li><p>drawImageRect(self: skia.Canvas, image: skia.Image, src: skia.Rect, dst: skia.Rect, options: skia.SamplingOptions = &lt;skia.SamplingOptions object at 0x7ff6402f39b0&gt;, paint: skia.Paint = None, constraint: skia.Canvas.SrcRectConstraint = &lt;SrcRectConstraint.kStrict_SrcRectConstraint: 0&gt;) -&gt; None</p>
 <blockquote>
 <div><p>Draws <a class="reference internal" href="skia.Rect.html#skia.Rect" title="skia.Rect"><code class="xref py py-class docutils literal notranslate"><span class="pre">Rect</span></code></a> src of <a class="reference internal" href="skia.Image.html#skia.Image" title="skia.Image"><code class="xref py py-class docutils literal notranslate"><span class="pre">Image</span></code></a> image, scaled and
 translated to fill <a class="reference internal" href="skia.Rect.html#skia.Rect" title="skia.Rect"><code class="xref py py-class docutils literal notranslate"><span class="pre">Rect</span></code></a> dst.</p>
@@ -1491,7 +1490,7 @@ nullptr</p>
 </dl>
 </div></blockquote>
 </li>
-<li><p>drawImageRect(self: skia.Canvas, image: skia.Image, isrc: skia.Rect, dst: skia.Rect, options: skia.SamplingOptions = &lt;skia.SamplingOptions object at 0x7fc5d9a367b0&gt;, paint: skia.Paint = None, constraint: skia.Canvas.SrcRectConstraint = &lt;SrcRectConstraint.kStrict_SrcRectConstraint: 0&gt;) -&gt; None</p>
+<li><p>drawImageRect(self: skia.Canvas, image: skia.Image, isrc: skia.Rect, dst: skia.Rect, options: skia.SamplingOptions = &lt;skia.SamplingOptions object at 0x7ff6402f3970&gt;, paint: skia.Paint = None, constraint: skia.Canvas.SrcRectConstraint = &lt;SrcRectConstraint.kStrict_SrcRectConstraint: 0&gt;) -&gt; None</p>
 <blockquote>
 <div><p>Draws <a class="reference internal" href="skia.IRect.html#skia.IRect" title="skia.IRect"><code class="xref py py-class docutils literal notranslate"><span class="pre">IRect</span></code></a> isrc of <a class="reference internal" href="skia.Image.html#skia.Image" title="skia.Image"><code class="xref py py-class docutils literal notranslate"><span class="pre">Image</span></code></a> image, scaled and
 translated to fill <a class="reference internal" href="skia.Rect.html#skia.Rect" title="skia.Rect"><code class="xref py py-class docutils literal notranslate"><span class="pre">Rect</span></code></a> dst.</p>
@@ -1536,7 +1535,7 @@ nullptr</p>
 </dl>
 </div></blockquote>
 </li>
-<li><p>drawImageRect(self: skia.Canvas, image: skia.Image, dst: skia.Rect, options: skia.SamplingOptions = &lt;skia.SamplingOptions object at 0x7fc5d9a366b0&gt;, paint: skia.Paint = None) -&gt; None</p>
+<li><p>drawImageRect(self: skia.Canvas, image: skia.Image, dst: skia.Rect, options: skia.SamplingOptions = &lt;skia.SamplingOptions object at 0x7ff64015df70&gt;, paint: skia.Paint = None) -&gt; None</p>
 <blockquote>
 <div><p>Draws <a class="reference internal" href="skia.Image.html#skia.Image" title="skia.Image"><code class="xref py py-class docutils literal notranslate"><span class="pre">Image</span></code></a> image, scaled and translated to fill
 <a class="reference internal" href="skia.Rect.html#skia.Rect" title="skia.Rect"><code class="xref py py-class docutils literal notranslate"><span class="pre">Rect</span></code></a> dst, using clip, <a class="reference internal" href="skia.Matrix.html#skia.Matrix" title="skia.Matrix"><code class="xref py py-class docutils literal notranslate"><span class="pre">Matrix</span></code></a>, and optional

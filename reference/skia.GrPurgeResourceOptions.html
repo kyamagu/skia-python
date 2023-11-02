@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>StrokePathEffect &mdash; skia-python 117.0b3 documentation</title>
+  <title>GrPurgeResourceOptions &mdash; skia-python 119.0b4 documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   <!--[if lt IE 9]>
@@ -19,8 +19,8 @@
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="StrokeRec" href="skia.StrokeRec.html" />
-    <link rel="prev" title="String" href="skia.String.html" /> 
+    <link rel="next" title="GrRecordingContext" href="skia.GrRecordingContext.html" />
+    <link rel="prev" title="GrProtected" href="skia.GrProtected.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -35,7 +35,7 @@
             skia-python
           </a>
               <div class="version">
-                117.0b3
+                119.0b4
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
@@ -101,7 +101,6 @@
 <li class="toctree-l3"><a class="reference internal" href="skia.GrBackendFormat.html">GrBackendFormat</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.GrBackendRenderTarget.html">GrBackendRenderTarget</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.GrBackendSemaphore.html">GrBackendSemaphore</a></li>
-<li class="toctree-l3"><a class="reference internal" href="skia.GrBackendSurfaceMutableState.html">GrBackendSurfaceMutableState</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.GrBackendTexture.html">GrBackendTexture</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.GrColorType.html">GrColorType</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.GrContext.html">GrContext</a></li>
@@ -120,10 +119,17 @@
 <li class="toctree-l3"><a class="reference internal" href="skia.GrMockRenderTargetInfo.html">GrMockRenderTargetInfo</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.GrMockTextureInfo.html">GrMockTextureInfo</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.GrProtected.html">GrProtected</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">GrPurgeResourceOptions</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#skia.GrPurgeResourceOptions"><code class="docutils literal notranslate"><span class="pre">GrPurgeResourceOptions</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#methods">Methods</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#attributes">Attributes</a></li>
+</ul>
+</li>
 <li class="toctree-l3"><a class="reference internal" href="skia.GrRecordingContext.html">GrRecordingContext</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.GrRenderable.html">GrRenderable</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.GrSemaphoresSubmitted.html">GrSemaphoresSubmitted</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.GrSurfaceOrigin.html">GrSurfaceOrigin</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.GrSyncCpu.html">GrSyncCpu</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.GrTextureType.html">GrTextureType</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.GrVkAlloc.html">GrVkAlloc</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.GrVkBackendContext.html">GrVkBackendContext</a></li>
@@ -147,9 +153,7 @@
 <li class="toctree-l3"><a class="reference internal" href="skia.M44.html">M44</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.MaskFilter.html">MaskFilter</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.Matrix.html">Matrix</a></li>
-<li class="toctree-l3"><a class="reference internal" href="skia.MatrixPathEffect.html">MatrixPathEffect</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.MemoryStream.html">MemoryStream</a></li>
-<li class="toctree-l3"><a class="reference internal" href="skia.MergePathEffect.html">MergePathEffect</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.MipmapBuilder.html">MipmapBuilder</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.NullWStream.html">NullWStream</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.OpBuilder.html">OpBuilder</a></li>
@@ -195,15 +199,11 @@
 <li class="toctree-l3"><a class="reference internal" href="skia.StreamRewindable.html">StreamRewindable</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.StreamSeekable.html">StreamSeekable</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.String.html">String</a></li>
-<li class="toctree-l3 current"><a class="current reference internal" href="#">StrokePathEffect</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#skia.StrokePathEffect"><code class="docutils literal notranslate"><span class="pre">StrokePathEffect</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#methods">Methods</a></li>
-</ul>
-</li>
 <li class="toctree-l3"><a class="reference internal" href="skia.StrokeRec.html">StrokeRec</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.Surface.html">Surface</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.SurfaceCharacterization.html">SurfaceCharacterization</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.SurfaceProps.html">SurfaceProps</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.TableColorFilter.html">TableColorFilter</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.TableMaskFilter.html">TableMaskFilter</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.TextBlob.html">TextBlob</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.TextBlobBuilder.html">TextBlobBuilder</a></li>
@@ -243,9 +243,9 @@
       <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
           <li class="breadcrumb-item"><a href="../reference.html">Reference</a></li>
           <li class="breadcrumb-item"><a href="skia.html">skia</a></li>
-      <li class="breadcrumb-item active">StrokePathEffect</li>
+      <li class="breadcrumb-item active">GrPurgeResourceOptions</li>
       <li class="wy-breadcrumbs-aside">
-            <a href="../_sources/reference/skia.StrokePathEffect.rst.txt" rel="nofollow"> View page source</a>
+            <a href="../_sources/reference/skia.GrPurgeResourceOptions.rst.txt" rel="nofollow"> View page source</a>
       </li>
   </ul>
   <hr/>
@@ -253,18 +253,37 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="strokepatheffect">
-<h1>StrokePathEffect<a class="headerlink" href="#strokepatheffect" title="Permalink to this heading"></a></h1>
+  <section id="grpurgeresourceoptions">
+<h1>GrPurgeResourceOptions<a class="headerlink" href="#grpurgeresourceoptions" title="Permalink to this heading"></a></h1>
 <dl class="py class">
-<dt class="sig sig-object py" id="skia.StrokePathEffect">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">StrokePathEffect</span></span><a class="headerlink" href="#skia.StrokePathEffect" title="Permalink to this definition"></a></dt>
-<dd><p class="rubric">Methods</p>
+<dt class="sig sig-object py" id="skia.GrPurgeResourceOptions">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">GrPurgeResourceOptions</span></span><a class="headerlink" href="#skia.GrPurgeResourceOptions" title="Permalink to this definition"></a></dt>
+<dd><p>Members:</p>
+<blockquote>
+<div><p>kAllResources</p>
+<p>kScratchResourcesOnly</p>
+</div></blockquote>
+<p class="rubric">Methods</p>
 <table class="autosummary longtable docutils align-default">
 <tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="#skia.StrokePathEffect.Make" title="skia.StrokePathEffect.Make"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Make</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.GrPurgeResourceOptions.__init__" title="skia.GrPurgeResourceOptions.__init__"><code class="xref py py-obj docutils literal notranslate"><span class="pre">__init__</span></code></a></p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#skia.StrokePathEffect.__init__" title="skia.StrokePathEffect.__init__"><code class="xref py py-obj docutils literal notranslate"><span class="pre">__init__</span></code></a></p></td>
+</tbody>
+</table>
+<p class="rubric">Attributes</p>
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.GrPurgeResourceOptions.kAllResources" title="skia.GrPurgeResourceOptions.kAllResources"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kAllResources</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.GrPurgeResourceOptions.kScratchResourcesOnly" title="skia.GrPurgeResourceOptions.kScratchResourcesOnly"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kScratchResourcesOnly</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.GrPurgeResourceOptions.name" title="skia.GrPurgeResourceOptions.name"><code class="xref py py-obj docutils literal notranslate"><span class="pre">name</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.GrPurgeResourceOptions.value" title="skia.GrPurgeResourceOptions.value"><code class="xref py py-obj docutils literal notranslate"><span class="pre">value</span></code></a></p></td>
 <td><p></p></td>
 </tr>
 </tbody>
@@ -274,13 +293,31 @@
 <section id="methods">
 <h2>Methods<a class="headerlink" href="#methods" title="Permalink to this heading"></a></h2>
 <dl class="py method">
-<dt class="sig sig-object py" id="skia.StrokePathEffect.Make">
-<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">StrokePathEffect.</span></span><span class="sig-name descname"><span class="pre">Make</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">width</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">join</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="skia.Paint.Join.html#skia.Paint.Join" title="skia.Paint.Join"><span class="pre">skia.Paint.Join</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">cap</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="skia.Paint.Cap.html#skia.Paint.Cap" title="skia.Paint.Cap"><span class="pre">skia.Paint.Cap</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">miter</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">4</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="skia.PathEffect.html#skia.PathEffect" title="skia.PathEffect"><span class="pre">skia.PathEffect</span></a></span></span><a class="headerlink" href="#skia.StrokePathEffect.Make" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="skia.GrPurgeResourceOptions.__init__">
+<span class="sig-prename descclassname"><span class="pre">GrPurgeResourceOptions.</span></span><span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#skia.GrPurgeResourceOptions" title="skia.GrPurgeResourceOptions"><span class="pre">skia.GrPurgeResourceOptions</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">value</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#skia.GrPurgeResourceOptions.__init__" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
-<dl class="py method">
-<dt class="sig sig-object py" id="skia.StrokePathEffect.__init__">
-<span class="sig-prename descclassname"><span class="pre">StrokePathEffect.</span></span><span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#skia.StrokePathEffect.__init__" title="Permalink to this definition"></a></dt>
+</section>
+<section id="attributes">
+<h2>Attributes<a class="headerlink" href="#attributes" title="Permalink to this heading"></a></h2>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="skia.GrPurgeResourceOptions.kAllResources">
+<span class="sig-prename descclassname"><span class="pre">GrPurgeResourceOptions.</span></span><span class="sig-name descname"><span class="pre">kAllResources</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;GrPurgeResourceOptions.kAllResources:</span> <span class="pre">0&gt;</span></em><a class="headerlink" href="#skia.GrPurgeResourceOptions.kAllResources" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="skia.GrPurgeResourceOptions.kScratchResourcesOnly">
+<span class="sig-prename descclassname"><span class="pre">GrPurgeResourceOptions.</span></span><span class="sig-name descname"><span class="pre">kScratchResourcesOnly</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;GrPurgeResourceOptions.kScratchResourcesOnly:</span> <span class="pre">1&gt;</span></em><a class="headerlink" href="#skia.GrPurgeResourceOptions.kScratchResourcesOnly" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="skia.GrPurgeResourceOptions.name">
+<span class="sig-prename descclassname"><span class="pre">GrPurgeResourceOptions.</span></span><span class="sig-name descname"><span class="pre">name</span></span><a class="headerlink" href="#skia.GrPurgeResourceOptions.name" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="skia.GrPurgeResourceOptions.value">
+<span class="sig-prename descclassname"><span class="pre">GrPurgeResourceOptions.</span></span><span class="sig-name descname"><span class="pre">value</span></span><a class="headerlink" href="#skia.GrPurgeResourceOptions.value" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 </section>
@@ -290,8 +327,8 @@
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="skia.String.html" class="btn btn-neutral float-left" title="String" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="skia.StrokeRec.html" class="btn btn-neutral float-right" title="StrokeRec" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="skia.GrProtected.html" class="btn btn-neutral float-left" title="GrProtected" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="skia.GrRecordingContext.html" class="btn btn-neutral float-right" title="GrRecordingContext" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>

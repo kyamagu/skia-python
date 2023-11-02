@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>GrBackendSurfaceMutableState &mdash; skia-python 117.0b3 documentation</title>
+  <title>TableColorFilter &mdash; skia-python 119.0b4 documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   <!--[if lt IE 9]>
@@ -19,8 +19,8 @@
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="GrBackendTexture" href="skia.GrBackendTexture.html" />
-    <link rel="prev" title="GrBackendSemaphore" href="skia.GrBackendSemaphore.html" /> 
+    <link rel="next" title="TableMaskFilter" href="skia.TableMaskFilter.html" />
+    <link rel="prev" title="SurfaceProps.Flags" href="skia.SurfaceProps.Flags.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -35,7 +35,7 @@
             skia-python
           </a>
               <div class="version">
-                117.0b3
+                119.0b4
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
@@ -101,11 +101,6 @@
 <li class="toctree-l3"><a class="reference internal" href="skia.GrBackendFormat.html">GrBackendFormat</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.GrBackendRenderTarget.html">GrBackendRenderTarget</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.GrBackendSemaphore.html">GrBackendSemaphore</a></li>
-<li class="toctree-l3 current"><a class="current reference internal" href="#">GrBackendSurfaceMutableState</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#skia.GrBackendSurfaceMutableState"><code class="docutils literal notranslate"><span class="pre">GrBackendSurfaceMutableState</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#methods">Methods</a></li>
-</ul>
-</li>
 <li class="toctree-l3"><a class="reference internal" href="skia.GrBackendTexture.html">GrBackendTexture</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.GrColorType.html">GrColorType</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.GrContext.html">GrContext</a></li>
@@ -124,10 +119,12 @@
 <li class="toctree-l3"><a class="reference internal" href="skia.GrMockRenderTargetInfo.html">GrMockRenderTargetInfo</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.GrMockTextureInfo.html">GrMockTextureInfo</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.GrProtected.html">GrProtected</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.GrPurgeResourceOptions.html">GrPurgeResourceOptions</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.GrRecordingContext.html">GrRecordingContext</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.GrRenderable.html">GrRenderable</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.GrSemaphoresSubmitted.html">GrSemaphoresSubmitted</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.GrSurfaceOrigin.html">GrSurfaceOrigin</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.GrSyncCpu.html">GrSyncCpu</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.GrTextureType.html">GrTextureType</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.GrVkAlloc.html">GrVkAlloc</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.GrVkBackendContext.html">GrVkBackendContext</a></li>
@@ -151,9 +148,7 @@
 <li class="toctree-l3"><a class="reference internal" href="skia.M44.html">M44</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.MaskFilter.html">MaskFilter</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.Matrix.html">Matrix</a></li>
-<li class="toctree-l3"><a class="reference internal" href="skia.MatrixPathEffect.html">MatrixPathEffect</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.MemoryStream.html">MemoryStream</a></li>
-<li class="toctree-l3"><a class="reference internal" href="skia.MergePathEffect.html">MergePathEffect</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.MipmapBuilder.html">MipmapBuilder</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.NullWStream.html">NullWStream</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.OpBuilder.html">OpBuilder</a></li>
@@ -199,11 +194,15 @@
 <li class="toctree-l3"><a class="reference internal" href="skia.StreamRewindable.html">StreamRewindable</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.StreamSeekable.html">StreamSeekable</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.String.html">String</a></li>
-<li class="toctree-l3"><a class="reference internal" href="skia.StrokePathEffect.html">StrokePathEffect</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.StrokeRec.html">StrokeRec</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.Surface.html">Surface</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.SurfaceCharacterization.html">SurfaceCharacterization</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.SurfaceProps.html">SurfaceProps</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">TableColorFilter</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#skia.TableColorFilter"><code class="docutils literal notranslate"><span class="pre">TableColorFilter</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#methods">Methods</a></li>
+</ul>
+</li>
 <li class="toctree-l3"><a class="reference internal" href="skia.TableMaskFilter.html">TableMaskFilter</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.TextBlob.html">TextBlob</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.TextBlobBuilder.html">TextBlobBuilder</a></li>
@@ -243,9 +242,9 @@
       <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
           <li class="breadcrumb-item"><a href="../reference.html">Reference</a></li>
           <li class="breadcrumb-item"><a href="skia.html">skia</a></li>
-      <li class="breadcrumb-item active">GrBackendSurfaceMutableState</li>
+      <li class="breadcrumb-item active">TableColorFilter</li>
       <li class="wy-breadcrumbs-aside">
-            <a href="../_sources/reference/skia.GrBackendSurfaceMutableState.rst.txt" rel="nofollow"> View page source</a>
+            <a href="../_sources/reference/skia.TableColorFilter.rst.txt" rel="nofollow"> View page source</a>
       </li>
   </ul>
   <hr/>
@@ -253,32 +252,18 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="grbackendsurfacemutablestate">
-<h1>GrBackendSurfaceMutableState<a class="headerlink" href="#grbackendsurfacemutablestate" title="Permalink to this heading"></a></h1>
+  <section id="tablecolorfilter">
+<h1>TableColorFilter<a class="headerlink" href="#tablecolorfilter" title="Permalink to this heading"></a></h1>
 <dl class="py class">
-<dt class="sig sig-object py" id="skia.GrBackendSurfaceMutableState">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">GrBackendSurfaceMutableState</span></span><a class="headerlink" href="#skia.GrBackendSurfaceMutableState" title="Permalink to this definition"></a></dt>
-<dd><p>Since Skia and clients can both modify gpu textures and their connected
-state, Skia needs a way for clients to inform us if they have modifiend any
-of this state.</p>
-<p>In order to not need setters for every single API and state, we use this
-class to be a generic wrapper around all the mutable state. This class is
-used for calls that inform Skia of these texture/image state changes by the
-client as well as for requesting state changes to be done by Skia. The
-backend specific state that is wrapped by this class are:</p>
-<blockquote>
-<div><p>Vulkan: VkImageLayout and QueueFamilyIndex</p>
-</div></blockquote>
-<p class="rubric">Methods</p>
+<dt class="sig sig-object py" id="skia.TableColorFilter">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">TableColorFilter</span></span><a class="headerlink" href="#skia.TableColorFilter" title="Permalink to this definition"></a></dt>
+<dd><p class="rubric">Methods</p>
 <table class="autosummary longtable docutils align-default">
 <tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="#skia.GrBackendSurfaceMutableState.__init__" title="skia.GrBackendSurfaceMutableState.__init__"><code class="xref py py-obj docutils literal notranslate"><span class="pre">__init__</span></code></a></p></td>
-<td><p></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.TableColorFilter.Make" title="skia.TableColorFilter.Make"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Make</span></code></a></p></td>
+<td><p>Create a table colorfilter, copying the table into the filter, and applying it to all 4 components.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#skia.GrBackendSurfaceMutableState.backend" title="skia.GrBackendSurfaceMutableState.backend"><code class="xref py py-obj docutils literal notranslate"><span class="pre">backend</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#skia.GrBackendSurfaceMutableState.isValid" title="skia.GrBackendSurfaceMutableState.isValid"><code class="xref py py-obj docutils literal notranslate"><span class="pre">isValid</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.TableColorFilter.__init__" title="skia.TableColorFilter.__init__"><code class="xref py py-obj docutils literal notranslate"><span class="pre">__init__</span></code></a></p></td>
 <td><p></p></td>
 </tr>
 </tbody>
@@ -288,18 +273,19 @@ backend specific state that is wrapped by this class are:</p>
 <section id="methods">
 <h2>Methods<a class="headerlink" href="#methods" title="Permalink to this heading"></a></h2>
 <dl class="py method">
-<dt class="sig sig-object py" id="skia.GrBackendSurfaceMutableState.__init__">
-<span class="sig-prename descclassname"><span class="pre">GrBackendSurfaceMutableState.</span></span><span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#skia.GrBackendSurfaceMutableState" title="skia.GrBackendSurfaceMutableState"><span class="pre">skia.GrBackendSurfaceMutableState</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#skia.GrBackendSurfaceMutableState.__init__" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
+<dt class="sig sig-object py" id="skia.TableColorFilter.Make">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">TableColorFilter.</span></span><span class="sig-name descname"><span class="pre">Make</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">table</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="skia.ColorFilter.html#skia.ColorFilter" title="skia.ColorFilter"><span class="pre">skia.ColorFilter</span></a></span></span><a class="headerlink" href="#skia.TableColorFilter.Make" title="Permalink to this definition"></a></dt>
+<dd><p>Create a table colorfilter, copying the table into the filter, and
+applying it to all 4 components.</p>
+<p>a’ = table[a]; r’ = table[r]; g’ = table[g]; b’ = table[b]; Compoents
+are operated on in unpremultiplied space. If the incomming colors are
+premultiplied, they are temporarily unpremultiplied, then the table is
+applied, and then the result is remultiplied.</p>
+</dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="skia.GrBackendSurfaceMutableState.backend">
-<span class="sig-prename descclassname"><span class="pre">GrBackendSurfaceMutableState.</span></span><span class="sig-name descname"><span class="pre">backend</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#skia.GrBackendSurfaceMutableState" title="skia.GrBackendSurfaceMutableState"><span class="pre">skia.GrBackendSurfaceMutableState</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="skia.gpuBackendApi.html#skia.gpuBackendApi" title="skia.gpuBackendApi"><span class="pre">skia.gpuBackendApi</span></a></span></span><a class="headerlink" href="#skia.GrBackendSurfaceMutableState.backend" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="skia.GrBackendSurfaceMutableState.isValid">
-<span class="sig-prename descclassname"><span class="pre">GrBackendSurfaceMutableState.</span></span><span class="sig-name descname"><span class="pre">isValid</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#skia.GrBackendSurfaceMutableState" title="skia.GrBackendSurfaceMutableState"><span class="pre">skia.GrBackendSurfaceMutableState</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#skia.GrBackendSurfaceMutableState.isValid" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="skia.TableColorFilter.__init__">
+<span class="sig-prename descclassname"><span class="pre">TableColorFilter.</span></span><span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#skia.TableColorFilter.__init__" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 </section>
@@ -309,8 +295,8 @@ backend specific state that is wrapped by this class are:</p>
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="skia.GrBackendSemaphore.html" class="btn btn-neutral float-left" title="GrBackendSemaphore" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="skia.GrBackendTexture.html" class="btn btn-neutral float-right" title="GrBackendTexture" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="skia.SurfaceProps.Flags.html" class="btn btn-neutral float-left" title="SurfaceProps.Flags" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="skia.TableMaskFilter.html" class="btn btn-neutral float-right" title="TableMaskFilter" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>
