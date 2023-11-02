@@ -538,6 +538,7 @@ typeface
         )docstring")
     // .def("filterRec", &SkTypeface::filterRec)
     // .def("getFontDescriptor", &SkTypeface::getFontDescriptor)
+/*
     .def_static("UniqueID", &SkTypeface::UniqueID,
         R"docstring(
         Return the uniqueID for the specified typeface.
@@ -546,6 +547,7 @@ typeface
         uniqueID. Will never return 0.
         )docstring",
         py::arg("typeface"))
+*/
     .def_static("Equal", &SkTypeface::Equal,
         R"docstring(
         Returns true if the two typefaces reference the same underlying font,
