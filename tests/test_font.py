@@ -176,6 +176,7 @@ def test_Typeface_getBounds(typeface):
     assert isinstance(typeface.getBounds(), skia.Rect)
 
 
+@pytest.mark.skip(reason='m120:withdrawn from public API')
 def test_Typeface_UniqueID(typeface):
     assert isinstance(skia.Typeface.UniqueID(typeface), int)
 
@@ -431,6 +432,7 @@ def test_Font_getTypeface(font):
     assert isinstance(font.getTypeface(), (skia.Typeface, type(None)))
 
 
+@pytest.mark.skip(reason='m120:withdrawn from public API')
 def test_Font_getTypefaceOrDefault(font):
     assert isinstance(font.getTypefaceOrDefault(), skia.Typeface)
 
@@ -455,6 +457,7 @@ def test_Font_refTypeface(font):
     assert isinstance(font.refTypeface(), (skia.Typeface, type(None)))
 
 
+@pytest.mark.skip(reason='m120:withdrawn from public API')
 def test_Font_refTypefaceOrDefault(font):
     assert isinstance(font.refTypefaceOrDefault(), skia.Typeface)
 

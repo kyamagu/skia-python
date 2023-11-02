@@ -8,6 +8,7 @@ def backend_semaphore():
     return skia.GrBackendSemaphore()
 
 
+@pytest.mark.skip(reason='m120:withdrawn from public API')
 def test_GrBackendSemaphore_initGL(backend_semaphore):
     backend_semaphore.initGL(None)
 
@@ -21,6 +22,7 @@ def test_GrBackendSemaphore_isInitialized(backend_semaphore):
     assert isinstance(backend_semaphore.isInitialized(), bool)
 
 
+@pytest.mark.skip(reason='m120:withdrawn from public API')
 def test_GrBackendSemaphore_glSync(backend_semaphore):
     backend_semaphore.glSync()
 
