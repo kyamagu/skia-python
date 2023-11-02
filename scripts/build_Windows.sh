@@ -4,7 +4,7 @@ export PATH="${PWD}/depot_tools:$PATH"
 
 # Build skia
 cd skia && \
-    patch -p1 < ../patch/skia-m119-minimize-download.patch && \
+    patch -p1 < ../patch/skia-m120-minimize-download.patch && \
     patch -p1 < ../patch/skia-m116-colrv1-freetype.diff && \
     python tools/git-sync-deps && \
     bin/gn gen out/Release --args='
