@@ -7,6 +7,7 @@
 #include <include/gpu/mock/GrMockTypes.h>
 #include <include/gpu/gl/GrGLInterface.h>
 #include <include/gpu/ganesh/gl/GrGLBackendSurface.h>
+#include <include/gpu/ganesh/gl/GrGLDirectContext.h>
 #include <include/gpu/vk/GrVkBackendContext.h>
 #include <include/gpu/MutableTextureState.h>
 #include <pybind11/chrono.h>
@@ -1136,7 +1137,7 @@ py::class_<GrDirectContext, sk_sp<GrDirectContext>, GrRecordingContext>(m, "GrDi
 #ifdef SK_GL
     .def_static("MakeGL",
         py::overload_cast<sk_sp<const GrGLInterface>, const GrContextOptions&>(
-            &GrDirectContext::MakeGL),
+            &GrDirectContexts::MakeGL),
         R"docstring(
         Creates a :py:class:`GrDirectContext` for a backend context. If no
         GrGLInterface is provided then the result of GrGLMakeNativeInterface()
@@ -1144,12 +1145,12 @@ py::class_<GrDirectContext, sk_sp<GrDirectContext>, GrRecordingContext>(m, "GrDi
         )docstring",
         py::arg("interface"), py::arg("options"))
     .def_static("MakeGL",
-        py::overload_cast<sk_sp<const GrGLInterface>>(&GrDirectContext::MakeGL),
+        py::overload_cast<sk_sp<const GrGLInterface>>(&GrDirectContexts::MakeGL),
         py::arg("interface"))
     .def_static("MakeGL",
-        py::overload_cast<const GrContextOptions&>(&GrDirectContext::MakeGL),
+        py::overload_cast<const GrContextOptions&>(&GrDirectContexts::MakeGL),
         py::arg("options"))
-    .def_static("MakeGL", py::overload_cast<>(&GrDirectContext::MakeGL))
+    .def_static("MakeGL", py::overload_cast<>(&GrDirectContexts::MakeGL))
 #endif
 
 #ifdef SK_VULKAN
