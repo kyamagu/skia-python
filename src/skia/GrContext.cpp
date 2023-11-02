@@ -231,11 +231,13 @@ py::enum_<GrTextureType>(m, "GrTextureType")
 
 py::class_<GrBackendSemaphore>(m, "GrBackendSemaphore")
     .def(py::init())
+/*
     .def("initGL",
         [] (GrBackendSemaphore& semaphore, void* glsync) {
             semaphore.initGL(reinterpret_cast<GrGLsync>(glsync));
         },
         py::arg("glsync"))
+*/
 /*
     .def("initVulkan",
         [] (GrBackendSemaphore& semaphore, void* vksemaphore) {
@@ -245,10 +247,12 @@ py::class_<GrBackendSemaphore>(m, "GrBackendSemaphore")
 */
     // .def("initMetal", &GrBackendSemaphore::initMetal)
     .def("isInitialized", &GrBackendSemaphore::isInitialized)
+/*
     .def("glSync",
         [] (GrBackendSemaphore& semaphore) {
             return reinterpret_cast<void*>(semaphore.glSync());
         })
+*/
 /*
     .def("vkSemaphore",
         [] (GrBackendSemaphore& semaphore) {
