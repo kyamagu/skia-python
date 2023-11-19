@@ -6,6 +6,7 @@ export PATH="${PWD}/depot_tools:$PATH"
 cd skia && \
     patch -p1 < ../patch/skia-m120-minimize-download.patch && \
     patch -p1 < ../patch/skia-m116-colrv1-freetype.diff && \
+    patch -p1 < ../patch/0001-Hook-up-SkSVGOpenTypeSVGDecoder-Make-to-enable-OT-SV.patch && \
     python tools/git-sync-deps && \
     bin/gn gen out/Release --args='
 is_official_build=true

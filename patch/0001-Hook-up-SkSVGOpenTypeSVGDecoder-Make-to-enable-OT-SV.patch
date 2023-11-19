@@ -1,0 +1,74 @@
+From 3915c83590705160000069f7d38ffe4a702551b7 Mon Sep 17 00:00:00 2001
+From: Hin-Tak Leung <htl10@users.sourceforge.net>
+Date: Sat, 18 Nov 2023 01:27:42 +0000
+Subject: [PATCH] Hook up SkSVGOpenTypeSVGDecoder::Make to enable OT-SVG
+
+"skia/dm/DM.cpp" and "skia/tools/viewer/Viewer.cpp" do this:
+
+    SkGraphics::Init();
+    SkGraphics::SetOpenTypeSVGDecoderFactory(SkSVGOpenTypeSVGDecoder::Make);
+
+so that "SkGraphics::GetOpenTypeSVGDecoderFactory()" returns true.
+
+"SetOpenTypeSVGDecoderFactory()" only needs to be called once ever.
+
+SK_ENABLE_SVG is only defined within the SVG module, cannot be used here.
+
+Signed-off-by: Hin-Tak Leung <htl10@users.sourceforge.net>
+---
+ src/ports/SkFontHost_FreeType.cpp    | 6 ++++++
+ src/ports/SkScalerContext_win_dw.cpp | 4 ++++
+ 2 files changed, 10 insertions(+)
+
+diff --git a/src/ports/SkFontHost_FreeType.cpp b/src/ports/SkFontHost_FreeType.cpp
+index 1f460fe..af39594 100644
+--- a/src/ports/SkFontHost_FreeType.cpp
++++ b/src/ports/SkFontHost_FreeType.cpp
+@@ -60,6 +60,8 @@
+ #include <freetype/t1tables.h>
+ #include <freetype/ftfntfmt.h>
+ 
++#include "modules/svg/include/SkSVGOpenTypeSVGDecoder.h"
++
+ using namespace skia_private;
+ 
+ namespace {
+@@ -999,9 +1001,13 @@ SkScalerContext_FreeType::SkScalerContext_FreeType(sk_sp<SkTypeface_FreeType> ty
+         // FT_LOAD_COLOR with scalable fonts means allow SVG.
+         // It also implies attempt to render COLR if available, but this is not used.
+ #if defined(FT_CONFIG_OPTION_SVG)
++        if (!SkGraphics::GetOpenTypeSVGDecoderFactory())
++            SkGraphics::SetOpenTypeSVGDecoderFactory(SkSVGOpenTypeSVGDecoder::Make);
+         if (SkGraphics::GetOpenTypeSVGDecoderFactory()) {
+             fLoadGlyphFlags |= FT_LOAD_COLOR;
+         }
++#else
++#error "FT_CONFIG_OPTION_SVG not on"
+ #endif
+     } else if (FT_HAS_FIXED_SIZES(fFaceRec->fFace)) {
+         fStrikeIndex = chooseBitmapStrike(fFaceRec->fFace.get(), scaleY);
+diff --git a/src/ports/SkScalerContext_win_dw.cpp b/src/ports/SkScalerContext_win_dw.cpp
+index 68b4744..808dfd5 100644
+--- a/src/ports/SkScalerContext_win_dw.cpp
++++ b/src/ports/SkScalerContext_win_dw.cpp
+@@ -45,6 +45,8 @@
+ #include "src/utils/win/SkHRESULT.h"
+ #include "src/utils/win/SkTScopedComPtr.h"
+ 
++#include "modules/svg/include/SkSVGOpenTypeSVGDecoder.h"
++
+ #include <dwrite.h>
+ #include <dwrite_1.h>
+ #include <dwrite_3.h>
+@@ -2275,6 +2277,8 @@ bool SkScalerContext_DW::drawSVGImage(const SkGlyph& glyph, SkCanvas& canvas) {
+         return false;
+     }
+ 
++    if (!SkGraphics::GetOpenTypeSVGDecoderFactory())
++        SkGraphics::SetOpenTypeSVGDecoderFactory(SkSVGOpenTypeSVGDecoder::Make);
+     SkGraphics::OpenTypeSVGDecoderFactory svgFactory = SkGraphics::GetOpenTypeSVGDecoderFactory();
+     if (!svgFactory) {
+         return false;
+-- 
+2.42.0
+
