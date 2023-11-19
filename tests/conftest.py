@@ -129,3 +129,7 @@ def vertices():
 @pytest.fixture(scope='session')
 def ttf_path(resource_path):
     return os.path.join(resource_path, 'fonts', 'Distortable.ttf')
+
+@pytest.fixture(scope='session')
+def svgfont_path(resource_path):
+    return os.path.join(resource_path, 'fonts', 'SampleSVG.ttf')
