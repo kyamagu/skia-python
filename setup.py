@@ -33,6 +33,7 @@ if sys.platform == 'win32':
     ]
     EXTRA_OBJECTS = list(
     ) + [os.path.join(SKIA_OUT_PATH, 'svg.lib'), os.path.join(SKIA_OUT_PATH, 'skia.lib'),
+         os.path.join(SKIA_OUT_PATH, 'svg.lib'), os.path.join(SKIA_OUT_PATH, 'skresources.lib'), os.path.join(SKIA_OUT_PATH, 'skia.lib'),
          os.path.join(SKIA_OUT_PATH, 'skshaper.lib'), os.path.join(SKIA_OUT_PATH, 'skunicode.lib')]
     EXTRA_COMPILE_ARGS = [
         '/std:c++17',  # c++20 fails.
@@ -95,6 +96,7 @@ else:
     ]
     EXTRA_OBJECTS = list(
     ) + [os.path.join(SKIA_OUT_PATH, 'libsvg.a'), os.path.join(SKIA_OUT_PATH, 'libskia.a'),
+         os.path.join(SKIA_OUT_PATH, 'libsvg.a'), os.path.join(SKIA_OUT_PATH, 'libskresources.a'), os.path.join(SKIA_OUT_PATH, 'libskia.a'),
          os.path.join(SKIA_OUT_PATH, 'libskshaper.a'), os.path.join(SKIA_OUT_PATH, 'libskunicode.a')]
     EXTRA_COMPILE_ARGS = [
         '-std=c++17',
