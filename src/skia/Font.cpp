@@ -1,5 +1,6 @@
 #include "common.h"
 #include <include/core/SkFontMetrics.h>
+#include <include/ports/SkFontMgr_empty.h>
 #include <pybind11/stl.h>
 #include <pybind11/stl_bind.h>
 #include <pybind11/iostream.h>
@@ -640,6 +641,7 @@ py::class_<SkFontMgr, sk_sp<SkFontMgr>, SkRefCnt>(m, "FontMgr",
 
     )docstring")
     .def(py::init([] () { return SkFontMgr::RefDefault(); }))
+    .def_static("New_Custom_Empty", &SkFontMgr_New_Custom_Empty)
     .def("__getitem__", &SkFontMgr_getFamilyName, py::arg("index"))
     .def("__len__", &SkFontMgr::countFamilies)
     .def("countFamilies", &SkFontMgr::countFamilies)
