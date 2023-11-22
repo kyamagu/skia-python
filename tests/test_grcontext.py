@@ -174,8 +174,9 @@ def test_GrFlushInfo_fNumSemaphores(grflushinfo):
     assert isinstance(grflushinfo.fNumSemaphores, int)
 
 
-@pytest.mark.skip(reason='m120:REVISIT:segfault')
 def test_GrFlushInfo_semaphores(grflushinfo, backend_semaphore):
+    if not backend_semaphore.isInitialized():
+        pytest.skip("backend_semaphore.initGL() withdrawn in m120. Segfault. Init differently? REVISIT")
     grflushinfo.semaphores = [backend_semaphore]
     assert isinstance(grflushinfo.semaphores, list)
 
@@ -367,8 +368,9 @@ def test_GrContext_maxSurfaceSampleCountForColorType(context):
         skia.ColorType.kRGBA_8888_ColorType), int)
 
 
-@pytest.mark.skip(reason='m120:REVISIT:segfault')
 def test_GrContext_wait(context, backend_semaphore):
+    if not backend_semaphore.isInitialized():
+        pytest.skip("backend_semaphore.initGL() withdrawn in m120. Segfault. Init differently? REVISIT")
     assert isinstance(context.wait([backend_semaphore]), bool)
 
 
