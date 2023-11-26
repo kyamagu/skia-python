@@ -12,7 +12,7 @@ except ImportError:
     pass
 
 NAME = 'skia-python'
-__version__ = '87.5'
+__version__ = '119.0b4'
 
 SKIA_PATH = os.getenv('SKIA_PATH', 'skia')
 SKIA_OUT_PATH = os.getenv(
@@ -29,23 +29,16 @@ if sys.platform == 'win32':
         'Usp10',
         'OpenGL32',
         'Gdi32',
+        'Advapi32',
     ]
     EXTRA_OBJECTS = list(
-        glob.glob(
-            os.path.join(
-                SKIA_OUT_PATH,
-                'obj',
-                'experimental',
-                'svg',
-                'model',
-                '*.obj',
-            )
-        )
-    ) + [os.path.join(SKIA_OUT_PATH, 'skia.lib')]
+    ) + [os.path.join(SKIA_OUT_PATH, 'svg.lib'), os.path.join(SKIA_OUT_PATH, 'skia.lib'),
+         os.path.join(SKIA_OUT_PATH, 'skshaper.lib'), os.path.join(SKIA_OUT_PATH, 'skunicode.lib')]
     EXTRA_COMPILE_ARGS = [
         '/std:c++17',  # c++20 fails.
         '/DVERSION_INFO=%s' % __version__,
         '/DSK_GL',
+        '/DSK_GANESH=1',
         '/Zc:inline',
         # Disable a bunch of warnings.
         '/wd5030',  # Warnings about unknown attributes.
@@ -63,26 +56,18 @@ elif sys.platform == 'darwin':
     DEFINE_MACROS = [
         ('VERSION_INFO', __version__),
         ('SK_GL', ''),
+        ('SK_GANESH', '1'),
     ]
     LIBRARIES = [
         'dl',
     ]
     EXTRA_OBJECTS = list(
-        glob.glob(
-            os.path.join(
-                SKIA_OUT_PATH,
-                'obj',
-                'experimental',
-                'svg',
-                'model',
-                '*.o',
-            )
-        )
-    ) + [os.path.join(SKIA_OUT_PATH, 'libskia.a')]
+    ) + [os.path.join(SKIA_OUT_PATH, 'libsvg.a'), os.path.join(SKIA_OUT_PATH, 'libskia.a'),
+         os.path.join(SKIA_OUT_PATH, 'libskshaper.a'), os.path.join(SKIA_OUT_PATH, 'libskunicode.a')]
     EXTRA_COMPILE_ARGS = [
-        '-std=c++14',
+        '-std=c++17',
         '-stdlib=libc++',
-        '-mmacosx-version-min=10.9',
+        '-mmacosx-version-min=10.13',
         '-fvisibility=hidden',
     ]
     EXTRA_LINK_ARGS = [
@@ -100,27 +85,19 @@ else:
     DEFINE_MACROS = [
         ('VERSION_INFO', __version__),
         ('SK_GL', ''),
+        ('SK_GANESH', '1'),
     ]
     LIBRARIES = [
         'dl',
         'fontconfig',
-        'freetype',
         'GL',
+        'expat',
     ]
     EXTRA_OBJECTS = list(
-        glob.glob(
-            os.path.join(
-                SKIA_OUT_PATH,
-                'obj',
-                'experimental',
-                'svg',
-                'model',
-                '*.o',
-            )
-        )
-    ) + [os.path.join(SKIA_OUT_PATH, 'libskia.a')]
+    ) + [os.path.join(SKIA_OUT_PATH, 'libsvg.a'), os.path.join(SKIA_OUT_PATH, 'libskia.a'),
+         os.path.join(SKIA_OUT_PATH, 'libskshaper.a'), os.path.join(SKIA_OUT_PATH, 'libskunicode.a')]
     EXTRA_COMPILE_ARGS = [
-        '-std=c++14',
+        '-std=c++17',
         '-fvisibility=hidden',
         '-Wno-attributes',
         '-fdata-sections',
@@ -166,6 +143,7 @@ extension = Extension(
         get_pybind_include(),
         get_pybind_include(user=True),
         SKIA_PATH,
+        os.path.join(SKIA_PATH, "third_party/externals/freetype/include"),
         os.path.join(SKIA_OUT_PATH, 'gen'),
     ],
     define_macros=DEFINE_MACROS,

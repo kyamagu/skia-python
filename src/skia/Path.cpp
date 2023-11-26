@@ -1,4 +1,7 @@
 #include "common.h"
+#include <include/pathops/SkPathOps.h>
+#include <include/core/SkPathBuilder.h>
+#include <include/core/SkRRect.h>
 #include <pybind11/operators.h>
 #include <pybind11/stl.h>
 #include <pybind11/iostream.h>
@@ -848,6 +851,7 @@ path
             allocate
         )docstring",
         py::arg("extraPtCount"))
+/* TODO: This was removed in m88
     .def("shrinkToFit", &SkPath::shrinkToFit,
         R"docstring(
         Shrinks :py:class:`Path` verb array and :py:class:`Point` array storage
@@ -856,6 +860,7 @@ path
         May reduce the heap overhead for :py:class:`Path` known to be fully
         constructed.
         )docstring")
+*/
     .def("moveTo",
         py::overload_cast<SkScalar, SkScalar>(&SkPath::moveTo),
         R"docstring(
@@ -1842,7 +1847,7 @@ path
         )docstring",
         py::arg("x"), py::arg("y"))
     .def("dump",
-        py::overload_cast<SkWStream*, bool, bool>(&SkPath::dump, py::const_),
+        py::overload_cast<SkWStream*, bool>(&SkPath::dump, py::const_),
         R"docstring(
         Writes text representation of :py:class:`Path` to stream.
 
@@ -1853,10 +1858,9 @@ path
 
         :stream: writable :py:class:`WStream` receiving :py:class:`Path` text
             representation; may be nullptr
-        :forceClose: true if missing kClose_Verb is output
         :dumpAsHex: true if :py:class:`Scalar` values are written as hexadecimal
         )docstring",
-        py::arg("stream"), py::arg("forceClose"), py::arg("dumpAsHex"))
+        py::arg("stream"), py::arg("dumpAsHex"))
     .def("dump",
         [] (const SkPath& path) {
             py::scoped_ostream_redirect stream;

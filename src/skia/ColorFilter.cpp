@@ -1,4 +1,8 @@
 #include "common.h"
+#include <include/effects/SkColorMatrix.h>
+#include <include/effects/SkOverdrawColorFilter.h>
+#include <include/effects/SkColorMatrixFilter.h>
+#include <include/effects/SkLumaColorFilter.h>
 #include <pybind11/stl.h>
 #include <include/effects/SkHighContrastFilter.h>
 
@@ -9,7 +13,7 @@ namespace {
 py::object ColorFilterAsAColorMode(SkColorFilter& colorFilter) {
     SkColor color;
     SkBlendMode mode;
-    auto result = colorFilter.asColorMode(&color, &mode);
+    auto result = colorFilter.asAColorMode(&color, &mode);
     if (result)
         return py::make_tuple(color, mode);
     else
@@ -53,9 +57,11 @@ py::class_<SkColorFilter, sk_sp<SkColorFilter>, SkFlattenable> colorfilter(
         ~skia.TableColorFilter
     )docstring");
 
+/*
 py::enum_<SkColorFilter::Flags>(colorfilter, "Flags", py::arithmetic())
     .value("kAlphaUnchanged_Flag", SkColorFilter::kAlphaUnchanged_Flag)
     .export_values();
+*/
 
 colorfilter
     .def("asColorMode", &ColorFilterAsAColorMode)
@@ -86,12 +92,14 @@ colorfilter
         )docstring")
     // .def("appendStages", &SkColorFilter::appendStages)
     // .def("program", &SkColorFilter::program)
+/*
     .def("getFlags", &SkColorFilter::getFlags,
         R"docstring(
         Returns the flags for this filter.
 
         Override in subclasses to return custom flags.
         )docstring")
+*/
     .def("filterColor", &SkColorFilter::filterColor, py::arg("color"))
     .def("filterColor4f", &SkColorFilter::filterColor4f,
         R"docstring(
@@ -115,11 +123,8 @@ colorfilter
     .def_static("Deserialize",
         [] (py::buffer b) {
             auto info = b.request();
-            auto flattenable = SkColorFilter::Deserialize(
-                SkColorFilter::GetFlattenableType(), info.ptr,
-                info.shape[0] * info.strides[0]);
-            return sk_sp<SkColorFilter>(
-                reinterpret_cast<SkColorFilter*>(flattenable.release()));
+            size_t size = (info.ndim) ? info.strides[0] * info.shape[0] : 0;
+            return SkColorFilter::Deserialize(info.ptr, size);
         },
         py::arg("data"))
     ;
@@ -130,6 +135,7 @@ py::class_<SkColorMatrix>(m, "ColorMatrix")
     ;
 
 py::class_<SkColorFilters>(m, "ColorFilters")
+/*
     .def_static("Compose",
         [] (const SkColorFilter& outer, const SkColorFilter& inner) {
             return SkColorFilters::Compose(
@@ -137,7 +143,13 @@ py::class_<SkColorFilters>(m, "ColorFilters")
                 CloneFlattenable<SkColorFilter>(inner));
         },
         py::arg("outer"), py::arg("inner"))
-    .def_static("Blend", &SkColorFilters::Blend, py::arg("c"), py::arg("mode"))
+*/
+    .def_static("Blend", py::overload_cast<const SkColor4f&, sk_sp<SkColorSpace>,
+        SkBlendMode>(&SkColorFilters::Blend),
+        py::arg("c"), py::arg("colorspace"), py::arg("mode"))
+    .def_static("Blend", py::overload_cast<SkColor,
+        SkBlendMode>(&SkColorFilters::Blend),
+        py::arg("c"), py::arg("mode"))
     // .def_static("Matrix",
     //     py::overload_cast<const SkColorMatrix&>(&SkColorFilters::Matrix))
     .def_static("Matrix",
@@ -267,13 +279,14 @@ py::class_<SkOverdrawColorFilter>(
     .def_readonly_static("kNumColors", &SkOverdrawColorFilter::kNumColors)
     ;
 
-py::class_<SkTableColorFilter>(
+/* SkTableColorFilter class removed in m116 */
+py::class_<std::unique_ptr<uint8_t>>(
     m, "TableColorFilter")
     .def_static("Make",
         [] (const std::vector<uint8_t>& table) {
             if (table.size() != 256)
                 throw std::runtime_error("table must have 256 elements");
-            return SkTableColorFilter::Make(&table[0]);
+            return SkColorFilters::Table(&table[0]);
         },
         R"docstring(
         Create a table colorfilter, copying the table into the filter, and
@@ -285,6 +298,7 @@ py::class_<SkTableColorFilter>(
         applied, and then the result is remultiplied.
         )docstring",
         py::arg("table"))
+/*
     .def_static("MakeARGB",
         [] (py::object tableA, py::object tableR, py::object tableG,
             py::object tableB) {
@@ -309,6 +323,7 @@ py::class_<SkTableColorFilter>(
         )docstring",
         py::arg("tableA"), py::arg("tableR"), py::arg("tableG"),
         py::arg("tableB"))
+*/
     ;
 
 }

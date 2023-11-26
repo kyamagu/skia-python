@@ -1,4 +1,8 @@
 #include "common.h"
+#include <include/core/SkDrawable.h>
+#include <include/core/SkBBHFactory.h>
+#include <include/core/SkPictureRecorder.h>
+#include <pybind11/operators.h>
 
 namespace {
 
@@ -141,8 +145,8 @@ py::class_<SkPicture, PyPicture, sk_sp<SkPicture>, SkRefCnt>(
         :return: approximate size
         )docstring")
     .def("makeShader",
-        py::overload_cast<SkTileMode, SkTileMode, const SkMatrix*,
-            const SkRect*>(&SkPicture::makeShader, py::const_),
+        py::overload_cast<SkTileMode, SkTileMode, SkFilterMode, const SkMatrix*,
+        const SkRect*>(&SkPicture::makeShader, py::const_),
         R"docstring(
         Return a new shader that will draw with this picture.
 
@@ -159,7 +163,7 @@ py::class_<SkPicture, PyPicture, sk_sp<SkPicture>, SkRefCnt>(
         :return: Returns a new shader object. Note: this function never returns
             null.
         )docstring",
-        py::arg("tmx"), py::arg("tmy"), py::arg("localMatrix") = nullptr,
+        py::arg("tmx"), py::arg("tmy"), py::arg("mode"), py::arg("localMatrix") = nullptr,
         py::arg("tile") = nullptr)
     .def_static("MakeFromStream",
         [] (SkStream* stream) {
@@ -238,10 +242,7 @@ py::class_<SkDrawable, sk_sp<SkDrawable>, SkFlattenable>(m, "Drawable",
         py::overload_cast<SkCanvas*, SkScalar, SkScalar>(&SkDrawable::draw),
         py::arg("canvas").none(false), py::arg("x"), py::arg("y"))
     // .def("snapGpuDrawHandler", &SkDrawable::snapGpuDrawHandler)
-    .def("newPictureSnapshot",
-        [] (SkDrawable& drawable) {
-            return sk_sp<SkPicture>(drawable.newPictureSnapshot());
-        })
+    .def("newPictureSnapshot", &SkDrawable::makePictureSnapshot)
     .def("getGenerationID", &SkDrawable::getGenerationID,
         R"docstring(
         Return a unique value for this instance.
@@ -272,6 +273,12 @@ py::class_<SkDrawable, sk_sp<SkDrawable>, SkFlattenable>(m, "Drawable",
     ;
 
 py::class_<SkBBHFactory>(m, "BBHFactory");
+
+py::class_<SkRTreeFactory, SkBBHFactory> rTreeFactory(m, "RTreeFactory");
+
+rTreeFactory
+    .def(py::init<>())
+    .def("__call__", &SkBBHFactory::operator());
 
 py::class_<SkBBoxHierarchy, PyBBoxHierarchy, sk_sp<SkBBoxHierarchy>, SkRefCnt>
     bboxhierarchy(m, "BBoxHierarchy");
@@ -305,7 +312,10 @@ bboxhierarchy
 
 py::class_<SkPictureRecorder> picturerecorder(m, "PictureRecorder");
 
+/* m117: Remove slug-related #ifdefs from src/core */
+/*
 py::enum_<SkPictureRecorder::FinishFlags>(picturerecorder, "FinishFlags");
+*/
 
 picturerecorder
     .def(py::init())
@@ -313,6 +323,14 @@ picturerecorder
     //     py::overload_cast<const SkRect&, sk_sp<SkBBoxHierarchy>, uint32_t>(
     //         &SkPictureRecorder::beginRecording),
     //     "Returns the canvas that records the drawing commands.")
+    .def("beginRecording",
+        py::overload_cast<const SkRect&, sk_sp<SkBBoxHierarchy>>(
+            &SkPictureRecorder::beginRecording),
+        R"docstring(
+        Returns the canvas that records the drawing commands.
+        )docstring",
+        py::arg("bounds"), py::arg("bbh"),
+        py::return_value_policy::reference_internal)
     .def("beginRecording",
         [] (SkPictureRecorder& recorder, const SkRect& bounds) {
             return recorder.beginRecording(bounds, nullptr);

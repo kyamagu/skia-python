@@ -1,0 +1,197 @@
+diff --git a/src/core/SkTypeface.cpp b/src/core/SkTypeface.cpp
+index eae8c84..8388891 100644
+--- a/src/core/SkTypeface.cpp
++++ b/src/core/SkTypeface.cpp
+@@ -24,6 +24,8 @@
+ #include "src/sfnt/SkOTTable_OS_2.h"
+ 
+ #ifdef SK_TYPEFACE_FACTORY_FREETYPE
++enum class FT_Color_Root_Transform_;
++typedef FT_Color_Root_Transform_ FT_Color_Root_Transform; /* freetype/ftcolor.h */
+ #include "src/ports/SkFontHost_FreeType_common.h"
+ #endif
+ 
+diff --git a/src/ports/SkFontConfigTypeface.h b/src/ports/SkFontConfigTypeface.h
+index 7955049..8551cf7 100644
+--- a/src/ports/SkFontConfigTypeface.h
++++ b/src/ports/SkFontConfigTypeface.h
+@@ -12,6 +12,8 @@
+ #include "include/core/SkStream.h"
+ #include "include/ports/SkFontConfigInterface.h"
+ #include "src/core/SkFontDescriptor.h"
++enum class FT_Color_Root_Transform_;
++typedef FT_Color_Root_Transform_ FT_Color_Root_Transform; /* freetype/ftcolor.h */
+ #include "src/ports/SkFontHost_FreeType_common.h"
+ 
+ class SkFontDescriptor;
+diff --git a/src/ports/SkFontHost_FreeType.cpp b/src/ports/SkFontHost_FreeType.cpp
+index f46bf19..def997a 100644
+--- a/src/ports/SkFontHost_FreeType.cpp
++++ b/src/ports/SkFontHost_FreeType.cpp
+@@ -31,7 +31,6 @@
+ #include "src/core/SkMask.h"
+ #include "src/core/SkMaskGamma.h"
+ #include "src/core/SkScalerContext.h"
+-#include "src/ports/SkFontHost_FreeType_common.h"
+ #include "src/sfnt/SkOTUtils.h"
+ #include "src/sfnt/SkSFNTHeader.h"
+ #include "src/sfnt/SkTTCFHeader.h"
+@@ -49,6 +48,7 @@
+ #ifdef FT_COLOR_H  // 2.10.0
+ #   include <freetype/ftcolor.h>
+ #endif
++#include "src/ports/SkFontHost_FreeType_common.h"
+ #include <freetype/freetype.h>
+ #include <freetype/ftlcdfil.h>
+ #include <freetype/ftmodapi.h>
+diff --git a/src/ports/SkFontHost_FreeType_common.cpp b/src/ports/SkFontHost_FreeType_common.cpp
+index 355ee02..22cd6af 100644
+--- a/src/ports/SkFontHost_FreeType_common.cpp
++++ b/src/ports/SkFontHost_FreeType_common.cpp
+@@ -6,7 +6,6 @@
+  * found in the LICENSE file.
+  */
+ 
+-#include "src/ports/SkFontHost_FreeType_common.h"
+ 
+ #include "include/core/SkBitmap.h"
+ #include "include/core/SkCanvas.h"
+@@ -32,6 +31,7 @@
+ #ifdef FT_COLOR_H
+ #   include <freetype/ftcolor.h>
+ #endif
++#include "src/ports/SkFontHost_FreeType_common.h"
+ #include <freetype/ftimage.h>
+ #include <freetype/ftoutln.h>
+ #include <freetype/ftsizes.h>
+@@ -1558,6 +1558,41 @@ bool SkScalerContext_FreeType_Base::drawCOLRv1Glyph(FT_Face face,
+     SkASSERTF(haveLayers, "Could not get COLRv1 layers from '%s'.", face->family_name);
+     return haveLayers;
+ }
++/*
++ * This content is mostly just
++ *       SkTypeface_FreeType::FaceRec::setupPalette()
++ +     + SkScalerContext_FreeType_Base::drawCOLRv1Glyph()
++ +*/
++bool SkScalerContext_FreeType_Base::skia_colrv1_start_glyph(SkCanvas* canvas,
++                                    FT_Face face,
++                                    uint16_t glyphId,
++                                    FT_UShort palette_index,
++                                    FT_Color_Root_Transform rootTransform
++                                    ) {
++    uint32_t fForegroundColor{SK_ColorBLACK};
++    FT_Palette_Data paletteData;
++    FT_Palette_Data_Get(face, &paletteData);
++
++    FT_Color* ftPalette = nullptr;
++    FT_Palette_Select(face, palette_index, &ftPalette);
++    std::unique_ptr<SkColor[]> ptr_palette(new SkColor[paletteData.num_palette_entries]);
++    for (int i = 0; i < paletteData.num_palette_entries; ++i) {
++      ptr_palette[i] = SkColorSetARGB(ftPalette[i].alpha,
++                                  ftPalette[i].red,
++                                  ftPalette[i].green,
++                                  ftPalette[i].blue);
++    }
++    SkSpan<SkColor> palette(ptr_palette.get(), paletteData.num_palette_entries);
++
++    VisitedSet activePaints;
++    bool haveLayers =  colrv1_start_glyph(canvas, palette,
++                                          fForegroundColor, // FT_Palette_Get_Foreground_Color?
++                                          face, glyphId,
++                                          FT_COLOR_INCLUDE_ROOT_TRANSFORM,
++                                          &activePaints);
++    SkASSERTF(haveLayers, "Could not get COLRv1 layers from '%s'.", face->family_name);
++    return haveLayers;
++}
+ #endif  // TT_SUPPORT_COLRV1
+ 
+ #ifdef FT_COLOR_H
+diff --git a/src/ports/SkFontHost_FreeType_common.h b/src/ports/SkFontHost_FreeType_common.h
+index 1d3a8f8..820106a 100644
+--- a/src/ports/SkFontHost_FreeType_common.h
++++ b/src/ports/SkFontHost_FreeType_common.h
+@@ -29,6 +29,7 @@ typedef struct FT_FaceRec_* FT_Face;
+ typedef struct FT_StreamRec_* FT_Stream;
+ typedef signed long FT_Pos;
+ typedef struct FT_BBox_ FT_BBox;
++typedef unsigned short  FT_UShort; /* freetype/fttypes.h */
+ 
+ 
+ #ifdef SK_DEBUG
+@@ -41,7 +42,15 @@ const char* SkTraceFtrGetError(int);
+ #endif
+ 
+ 
+-class SkScalerContext_FreeType_Base : public SkScalerContext {
++class SK_SPI SkScalerContext_FreeType_Base : public SkScalerContext {
++public:
++    static bool computeColrV1GlyphBoundingBox(FT_Face, SkGlyphID, SkRect* bounds);
++    static bool skia_colrv1_start_glyph(SkCanvas* canvas,
++                                        FT_Face face,
++                                        uint16_t glyphId,
++                                        FT_UShort palette_index,
++                                        FT_Color_Root_Transform rootTransform
++                                        );
+ protected:
+     // See http://freetype.sourceforge.net/freetype2/docs/reference/ft2-bitmap_handling.html#FT_Bitmap_Embolden
+     // This value was chosen by eyeballing the result in Firefox and trying to match it.
+@@ -68,7 +77,6 @@ protected:
+      *  configure size, matrix and load glyphs as needed after using this function to restore the
+      *  state of FT_Face.
+      */
+-    static bool computeColrV1GlyphBoundingBox(FT_Face, SkGlyphID, SkRect* bounds);
+ 
+     struct ScalerContextBits {
+         static const constexpr uint32_t COLRv0 = 1;
+diff --git a/src/ports/SkFontMgr_android.cpp b/src/ports/SkFontMgr_android.cpp
+index 25cc9f9..d9af46b 100644
+--- a/src/ports/SkFontMgr_android.cpp
++++ b/src/ports/SkFontMgr_android.cpp
+@@ -23,6 +23,8 @@
+ #include "src/core/SkFontDescriptor.h"
+ #include "src/core/SkOSFile.h"
+ #include "src/core/SkTypefaceCache.h"
++enum class FT_Color_Root_Transform_;
++typedef FT_Color_Root_Transform_ FT_Color_Root_Transform; /* freetype/ftcolor.h */
+ #include "src/ports/SkFontHost_FreeType_common.h"
+ #include "src/ports/SkFontMgr_android_parser.h"
+ 
+diff --git a/src/ports/SkFontMgr_custom.cpp b/src/ports/SkFontMgr_custom.cpp
+index cfa39ef..9d61da9 100644
+--- a/src/ports/SkFontMgr_custom.cpp
++++ b/src/ports/SkFontMgr_custom.cpp
+@@ -16,6 +16,8 @@
+ #include "include/private/base/SkTArray.h"
+ #include "include/private/base/SkTemplates.h"
+ #include "src/core/SkFontDescriptor.h"
++enum class FT_Color_Root_Transform_;
++typedef FT_Color_Root_Transform_ FT_Color_Root_Transform; /* freetype/ftcolor.h */
+ #include "src/ports/SkFontHost_FreeType_common.h"
+ #include "src/ports/SkFontMgr_custom.h"
+ 
+diff --git a/src/ports/SkFontMgr_custom.h b/src/ports/SkFontMgr_custom.h
+index 1e78f0b..8a22c02 100644
+--- a/src/ports/SkFontMgr_custom.h
++++ b/src/ports/SkFontMgr_custom.h
+@@ -14,6 +14,8 @@
+ #include "include/core/SkString.h"
+ #include "include/core/SkTypes.h"
+ #include "include/private/base/SkTArray.h"
++enum class FT_Color_Root_Transform_;
++typedef FT_Color_Root_Transform_ FT_Color_Root_Transform; /* freetype/ftcolor.h */
+ #include "src/ports/SkFontHost_FreeType_common.h"
+ 
+ class SkData;
+diff --git a/src/ports/SkFontMgr_fontconfig.cpp b/src/ports/SkFontMgr_fontconfig.cpp
+index 8022ac2..bee83e8 100644
+--- a/src/ports/SkFontMgr_fontconfig.cpp
++++ b/src/ports/SkFontMgr_fontconfig.cpp
+@@ -22,6 +22,8 @@
+ #include "src/core/SkFontDescriptor.h"
+ #include "src/core/SkOSFile.h"
+ #include "src/core/SkTypefaceCache.h"
++enum class FT_Color_Root_Transform_;
++typedef FT_Color_Root_Transform_ FT_Color_Root_Transform; /* freetype/ftcolor.h */
+ #include "src/ports/SkFontHost_FreeType_common.h"
+ 
+ #include <fontconfig/fontconfig.h>

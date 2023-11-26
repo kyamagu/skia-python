@@ -1,4 +1,5 @@
 #include "common.h"
+#include <include/encode/SkPngEncoder.h>
 #include <pybind11/numpy.h>
 
 
@@ -13,8 +14,7 @@ sk_sp<SkShader> CloneFlattenable(const SkShader& shader) {
 template <>
 sk_sp<SkColorFilter> CloneFlattenable(const SkColorFilter& colorFilter) {
     auto data = colorFilter.serialize();
-    auto flat = SkColorFilter::Deserialize(
-        colorFilter.getFlattenableType(), data->data(), data->size());
+    auto flat = colorFilter.Deserialize(data->data(), data->size());
     return sk_sp<SkColorFilter>(
         reinterpret_cast<SkColorFilter*>(flat.release()));
 }
@@ -27,8 +27,8 @@ sk_sp<SkColorSpace> CloneColorSpace(const SkColorSpace* cs) {
 sk_sp<SkImage> CloneImage(const SkImage& image) {
     SkPixmap pixmap;
     if (image.peekPixels(&pixmap))
-        return SkImage::MakeRasterCopy(pixmap);
-    return SkImage::MakeFromEncoded(image.encodeToData());
+        return SkImages::RasterFromPixmapCopy(pixmap);
+    return SkImages::DeferredFromEncodedData(SkPngEncoder::Encode(nullptr, &image, {}));
 }
 
 size_t ValidateBufferToImageInfo(

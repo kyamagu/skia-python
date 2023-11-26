@@ -116,39 +116,48 @@ def test_PathEffect_DashInfo_fPhase(patheffect_dashinfo):
     assert isinstance(patheffect_dashinfo.fPhase, float)
 
 
+@pytest.mark.skip(reason='"PointData inner class in PathEffect. Gone in m116. May not need REVISIT')
 @pytest.fixture
 def patheffect_pointdata():
     return skia.PathEffect.PointData()
 
 
+@pytest.mark.skip(reason='"PointData inner class in PathEffect. Gone in m116. May not need REVISIT')
 def test_PathEffect_PointData_fFlags(patheffect_pointdata):
     assert isinstance(patheffect_pointdata.fFlags, int)
 
 
+@pytest.mark.skip(reason='"PointData inner class in PathEffect. Gone in m116. May not need REVISIT')
 def test_PathEffect_PointData_fPoints(patheffect_pointdata):
     assert isinstance(patheffect_pointdata.fPoints, list)
 
 
+@pytest.mark.skip(reason='"PointData inner class in PathEffect. Gone in m116. May not need REVISIT')
 def test_PathEffect_PointData_fNumPoints(patheffect_pointdata):
     assert isinstance(patheffect_pointdata.fNumPoints, int)
 
 
+@pytest.mark.skip(reason='"PointData inner class in PathEffect. Gone in m116. May not need REVISIT')
 def test_PathEffect_PointData_fSize(patheffect_pointdata):
     assert isinstance(patheffect_pointdata.fSize, skia.Point)
 
 
+@pytest.mark.skip(reason='"PointData inner class in PathEffect. Gone in m116. May not need REVISIT')
 def test_PathEffect_PointData_fClipRect(patheffect_pointdata):
     assert isinstance(patheffect_pointdata.fClipRect, skia.Rect)
 
 
+@pytest.mark.skip(reason='"PointData inner class in PathEffect. Gone in m116. May not need REVISIT')
 def test_PathEffect_PointData_fPath(patheffect_pointdata):
     assert isinstance(patheffect_pointdata.fPath, skia.Path)
 
 
+@pytest.mark.skip(reason='"PointData inner class in PathEffect. Gone in m116. May not need REVISIT')
 def test_PathEffect_PointData_fFirst(patheffect_pointdata):
     assert isinstance(patheffect_pointdata.fFirst, skia.Path)
 
 
+@pytest.mark.skip(reason='"PointData inner class in PathEffect. Gone in m116. May not need REVISIT')
 def test_PathEffect_PointData_fLast(patheffect_pointdata):
     assert isinstance(patheffect_pointdata.fLast, skia.Path)
 
@@ -166,10 +175,12 @@ def test_PathEffect_filterPath(patheffect):
     assert isinstance(patheffect.filterPath(dst, src, rec, None), bool)
 
 
+@pytest.mark.skip(reason='m116:REVISIT')
 def test_PathEffect_computeFastBounds(patheffect):
     patheffect.computeFastBounds(skia.Rect(100, 100), skia.Rect(100, 100))
 
 
+@pytest.mark.skip(reason='"PointData inner class in PathEffect. Gone in m116. May not need REVISIT')
 def test_PathEffect_asPoints(patheffect):
     results = skia.PathEffect.PointData()
     path = skia.Path()
@@ -230,6 +241,7 @@ def test_Path2DPathEffect_Make():
         skia.Path2DPathEffect.Make(skia.Matrix(), path), skia.PathEffect)
 
 
+@pytest.mark.skip(reason='"API withdrawn in m119. May not need REVISIT')
 def test_MergePathEffect_Make():
     assert isinstance(
         skia.MergePathEffect.Make(
@@ -238,16 +250,19 @@ def test_MergePathEffect_Make():
             skia.PathOp.kUnion_PathOp), skia.PathEffect)
 
 
+@pytest.mark.skip(reason='"API withdrawn in m119. May not need REVISIT')
 def test_MatrixPathEffect_Make():
     assert isinstance(
         skia.MatrixPathEffect.Make(skia.Matrix()), skia.PathEffect)
 
 
+@pytest.mark.skip(reason='"API withdrawn in m119. May not need REVISIT')
 def test_MatrixPathEffect_MakeTranslate():
     assert isinstance(
         skia.MatrixPathEffect.MakeTranslate(1., 1.), skia.PathEffect)
 
 
+@pytest.mark.skip(reason='"API withdrawn in m119. May not need REVISIT')
 def test_StrokePathEffect_Make():
     assert isinstance(
         skia.StrokePathEffect.Make(

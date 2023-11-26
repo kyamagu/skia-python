@@ -1,4 +1,11 @@
 #include "common.h"
+#include <include/core/SkSurfaceProps.h>
+#include <include/gpu/ganesh/gl/GrGLBackendSurface.h>
+#include <include/private/chromium/GrSurfaceCharacterization.h>
+#include <include/gpu/GpuTypes.h>
+#include <include/gpu/GrTypes.h>
+#include <include/gpu/ganesh/SkSurfaceGanesh.h>
+#include <include/gpu/MutableTextureState.h>
 #include <pybind11/operators.h>
 #include <pybind11/numpy.h>
 
@@ -21,6 +28,8 @@ const SkSurfaceProps::Flags SkSurfaceProps::kUseDistanceFieldFonts_Flag;
 
 void initSurface(py::module &m) {
 
+/* m111: SkBackingFit is no longer part of the public API. */
+/*
 py::enum_<SkBackingFit>(m, "BackingFit", R"docstring(
     Indicates whether a backing store needs to be an exact match or can be
     larger than is strictly necessary.
@@ -28,6 +37,7 @@ py::enum_<SkBackingFit>(m, "BackingFit", R"docstring(
     .value("kApprox", SkBackingFit::kApprox)
     .value("kExact", SkBackingFit::kExact)
     .export_values();
+*/
 
 py::enum_<SkPixelGeometry>(m, "PixelGeometry", R"docstring(
     Description of how the LCD strips are arranged for each pixel.
@@ -55,18 +65,17 @@ py::enum_<SkSurfaceProps::Flags>(surfaceprops, "Flags", py::arithmetic())
         SkSurfaceProps::Flags::kUseDeviceIndependentFonts_Flag)
     .export_values();
 
-py::enum_<SkSurfaceProps::InitType>(surfaceprops, "InitType")
-    .value("kLegacyFontHost_InitType",
-        SkSurfaceProps::InitType::kLegacyFontHost_InitType)
-    .export_values();
+/* SkSurfaceProps::kLegacyFontHost_InitType was removed in m88 */
 
 surfaceprops
     .def(py::init<uint32_t, SkPixelGeometry>(),
         py::arg("flags"), py::arg("geometry"))
+/*
     .def(py::init<SkSurfaceProps::InitType>(),
         py::arg("initType"))
     .def(py::init<uint32_t, SkSurfaceProps::InitType>(),
         py::arg("flags"), py::arg("initType"))
+*/
     .def(py::init<const SkSurfaceProps&>(),
         py::arg("props"))
     .def("flags", &SkSurfaceProps::flags)
@@ -84,35 +93,37 @@ surfaceprops
         )docstring")
     ;
 
-py::class_<SkSurfaceCharacterization>(m, "SurfaceCharacterization")
+py::class_<GrSurfaceCharacterization>(m, "SurfaceCharacterization")
     .def(py::init())
-    .def("createResized", &SkSurfaceCharacterization::createResized,
+    .def("createResized", &GrSurfaceCharacterization::createResized,
         py::arg("width"), py::arg("height"))
-    .def("createColorSpace", &SkSurfaceCharacterization::createColorSpace,
+    .def("createColorSpace", &GrSurfaceCharacterization::createColorSpace,
         py::arg("cs"))
-    .def("createBackendFormat", &SkSurfaceCharacterization::createBackendFormat,
+    .def("createBackendFormat", &GrSurfaceCharacterization::createBackendFormat,
         py::arg("colorType"), py::arg("backendFormat"))
-    .def("createFBO0", &SkSurfaceCharacterization::createFBO0,
+    .def("createFBO0", &GrSurfaceCharacterization::createFBO0,
         py::arg("usesGLFBO0"))
     .def(py::self == py::self)
     .def(py::self != py::self)
     .def("cacheMaxResourceBytes",
-        &SkSurfaceCharacterization::cacheMaxResourceBytes)
-    .def("isValid", &SkSurfaceCharacterization::isValid)
-    .def("width", &SkSurfaceCharacterization::width)
-    .def("height", &SkSurfaceCharacterization::height)
+        &GrSurfaceCharacterization::cacheMaxResourceBytes)
+    .def("isValid", &GrSurfaceCharacterization::isValid)
+    .def("width", &GrSurfaceCharacterization::width)
+    .def("height", &GrSurfaceCharacterization::height)
+/*
     #if !SK_SUPPORT_GPU
-    .def("stencilCount", &SkSurfaceCharacterization::stencilCount)
+    .def("stencilCount", &GrSurfaceCharacterization::stencilCount)
     #endif
-    .def("isTextureable", &SkSurfaceCharacterization::isTextureable)
-    .def("isMipMapped", &SkSurfaceCharacterization::isMipMapped)
-    .def("usesGLFBO0", &SkSurfaceCharacterization::usesGLFBO0)
+*/
+    .def("isTextureable", &GrSurfaceCharacterization::isTextureable)
+    .def("isMipMapped", &GrSurfaceCharacterization::isMipMapped)
+    .def("usesGLFBO0", &GrSurfaceCharacterization::usesGLFBO0)
     .def("vulkanSecondaryCBCompatible",
-        &SkSurfaceCharacterization::vulkanSecondaryCBCompatible)
-    .def("colorSpace", &SkSurfaceCharacterization::colorSpace,
+        &GrSurfaceCharacterization::vulkanSecondaryCBCompatible)
+    .def("colorSpace", &GrSurfaceCharacterization::colorSpace,
         py::return_value_policy::reference_internal)
-    .def("refColorSpace", &SkSurfaceCharacterization::refColorSpace)
-    .def("surfaceProps", &SkSurfaceCharacterization::surfaceProps)
+    .def("refColorSpace", &GrSurfaceCharacterization::refColorSpace)
+    .def("surfaceProps", &GrSurfaceCharacterization::surfaceProps)
     ;
 
 py::class_<SkSurface, sk_sp<SkSurface>, SkRefCnt> surface(
@@ -155,15 +166,15 @@ py::enum_<SkSurface::ContentChangeMode>(surface, "ContentChangeMode")
         "preserves surface on change")
     .export_values();
 
-py::enum_<SkSurface::BackendHandleAccess>(surface, "BackendHandleAccess")
+py::enum_<SkSurfaces::BackendHandleAccess>(surface, "BackendHandleAccess")
     .value("kFlushRead_BackendHandleAccess",
-        SkSurface::BackendHandleAccess::kFlushRead_BackendHandleAccess,
+        SkSurfaces::BackendHandleAccess::kFlushRead,
         "back-end object is readable")
     .value("kFlushWrite_BackendHandleAccess",
-        SkSurface::BackendHandleAccess::kFlushWrite_BackendHandleAccess,
+        SkSurfaces::BackendHandleAccess::kFlushWrite,
         "back-end object is writable")
     .value("kDiscardWrite_BackendHandleAccess",
-        SkSurface::BackendHandleAccess::kDiscardWrite_BackendHandleAccess,
+        SkSurfaces::BackendHandleAccess::kDiscardWrite,
         "back-end object must be overwritten")
     .export_values();
 
@@ -176,10 +187,10 @@ py::enum_<SkSurface::RescaleGamma>(surface, "RescaleGamma", R"docstring(
     .value("kLinear", SkSurface::RescaleGamma::kLinear)
     .export_values();
 
-py::enum_<SkSurface::BackendSurfaceAccess>(surface, "BackendSurfaceAccess")
-    .value("kNoAccess", SkSurface::BackendSurfaceAccess::kNoAccess,
+py::enum_<SkSurfaces::BackendSurfaceAccess>(surface, "BackendSurfaceAccess")
+    .value("kNoAccess", SkSurfaces::BackendSurfaceAccess::kNoAccess,
         "back-end object will not be used by client")
-    .value("kPresent", SkSurface::BackendSurfaceAccess::kPresent,
+    .value("kPresent", SkSurfaces::BackendSurfaceAccess::kPresent,
         "back-end surface will be used for presenting to screen")
     .export_values();
 
@@ -210,7 +221,10 @@ surface
         py::arg("colorType") = kUnknown_SkColorType,
         py::arg("alphaType") = kUnpremul_SkAlphaType,
         py::arg("colorSpace") = nullptr)
-    .def(py::init(&SkSurface::MakeRasterN32Premul),
+    .def(py::init(
+        [] (int width, int height, const SkSurfaceProps* surfaceProps) {
+            return SkSurfaces::Raster(SkImageInfo::MakeN32Premul(width, height), surfaceProps);
+        }),
         R"docstring(
         See :py:meth:`~MakeRasterN32Premul`
         )docstring",
@@ -219,7 +233,7 @@ surface
         [] (py::array array, SkColorType ct, SkAlphaType at,
             const SkColorSpace* cs, const SkSurfaceProps *surfaceProps) {
             auto imageInfo = NumPyToImageInfo(array, ct, at, cs);
-            auto surface = SkSurface::MakeRasterDirect(
+            auto surface = SkSurfaces::WrapPixels(
                 imageInfo, array.mutable_data(), array.strides(0),
                 surfaceProps);
             if (!surface)
@@ -296,7 +310,7 @@ surface
         :return: GPU context, if available; nullptr otherwise
         )docstring",
         py::return_value_policy::reference_internal)
-    .def("getBackendTexture", &SkSurface::getBackendTexture,
+    .def("getBackendTexture", &SkSurfaces::GetBackendTexture,
         R"docstring(
         Retrieves the back-end texture.
 
@@ -310,7 +324,7 @@ surface
         :return: GPU texture reference; invalid on failure
         )docstring",
         py::arg("backendHandleAccess"))
-    .def("getBackendRenderTarget", &SkSurface::getBackendRenderTarget,
+    .def("getBackendRenderTarget", &SkSurfaces::GetBackendRenderTarget,
         R"docstring(
         Retrieves the back-end render target.
 
@@ -563,9 +577,9 @@ surface
     .def("asyncRescaleAndReadPixels",
         [] (SkSurface& surface, const SkImageInfo& info, const SkIRect& srcRect,
             SkSurface::RescaleGamma rescaleGamma,
-            SkFilterQuality rescaleQuality, py::function callback) {
+            py::function callback) {
             surface.asyncRescaleAndReadPixels(
-                info, srcRect, rescaleGamma, rescaleQuality,
+                info, srcRect, rescaleGamma, SkSurface::RescaleMode(),
                 &PyReadPixelsCallback, callback.release().ptr());
         },
         R"docstring(
@@ -605,7 +619,8 @@ surface
             takes one argument of :py:class:`Surface.AsyncReadResult`
         )docstring",
         py::arg("info"), py::arg("srcRect"), py::arg("rescaleGamma"),
-        py::arg("rescaleQuality"), py::arg("callback"))
+        py::arg("callback"))
+/*
     .def("asyncRescaleAndReadPixelsYUV420",
         [] (SkSurface& surface, SkYUVColorSpace yuvColorSpace,
             const SkColorSpace* dstColorSpace, const SkIRect& srcRect,
@@ -653,6 +668,7 @@ surface
         py::arg("yuvColorSpace"), py::arg("dstColorSpace"), py::arg("srcRect"),
         py::arg("dstSize"), py::arg("rescaleGamma"), py::arg("rescaleQuality"),
         py::arg("callback"))
+*/
     .def("writePixels",
         py::overload_cast<const SkPixmap&, int, int>(&SkSurface::writePixels),
         R"docstring(
@@ -702,8 +718,15 @@ surface
         :return: LCD striping orientation and setting for device independent
             fonts
         )docstring")
+/* m117: Remove legacy SkImage and SkSurface methods */
     .def("flushAndSubmit",
-        py::overload_cast<>(&SkSurface::flushAndSubmit),
+        [] (SkSurface& surface, GrSyncCpu sync) {
+            auto direct = GrAsDirectContext(surface.recordingContext());
+            if (direct) {
+                direct->flush(&surface, SkSurfaces::BackendSurfaceAccess::kNoAccess, GrFlushInfo());
+                direct->submit(sync);
+            }
+        },
         R"docstring(
         Call to ensure all reads/writes of the surface have been issued to the
         underlying 3D API.
@@ -716,10 +739,16 @@ surface
         :py:class:`GrContext`. This is equivalent to calling :py:meth:`flush`
         with a default :py:class:`GrFlushInfo` followed by
         :py:meth:`GrContext.submit`.
-        )docstring")
+        )docstring",
+        py::arg("sync") = GrSyncCpu::kNo)
     .def("flush",
-        py::overload_cast<SkSurface::BackendSurfaceAccess, const GrFlushInfo&>(
-            &SkSurface::flush),
+        [] (SkSurface& surface, SkSurfaces::BackendSurfaceAccess access, const GrFlushInfo& info) {
+            auto dContext = GrAsDirectContext(surface.recordingContext());
+            if (!dContext) {
+                return GrSemaphoresSubmitted::kNo;
+            }
+            return dContext->flush(&surface, access, info);
+        },
         R"docstring(
         Issues pending :py:class:`Surface` commands to the GPU-backed API
         objects and resolves any :py:class:`Surface` MSAA. A call to
@@ -779,9 +808,14 @@ surface
         )docstring",
         py::arg("access"), py::arg("info"))
     .def("flush",
-        py::overload_cast<
-            const GrFlushInfo&, const GrBackendSurfaceMutableState*>(
-            &SkSurface::flush),
+        [] (SkSurface& surface, const GrFlushInfo& info,
+            const skgpu::MutableTextureState* newState) {
+            auto dContext = GrAsDirectContext(surface.recordingContext());
+            if (!dContext) {
+                return GrSemaphoresSubmitted::kNo;
+            }
+            return dContext->flush(&surface, info, newState);
+        },
         R"docstring(
         Issues pending :py:class:`Surface` commands to the GPU-backed API
         objects and resolves any :py:class:`Surface` MSAA.
@@ -851,6 +885,7 @@ surface
         :return: true if supported
         )docstring",
         py::arg("characterization"))
+/*
     .def("draw",
         py::overload_cast<sk_sp<const SkDeferredDisplayList>>(&SkSurface::draw),
         R"docstring(
@@ -867,12 +902,13 @@ surface
         :return: false if deferredDisplayList is not compatible
         )docstring",
         py::arg("deferredDisplayList"))
+*/
     .def_static("MakeRasterDirect",
         [](const SkImageInfo& imageInfo, py::buffer b, size_t rowBytes,
             const SkSurfaceProps* surfaceProps) {
             py::buffer_info info = b.request();
             rowBytes = ValidateBufferToImageInfo(imageInfo, info, rowBytes);
-            return SkSurface::MakeRasterDirect(
+            return SkSurfaces::WrapPixels(
                 imageInfo, info.ptr, rowBytes, surfaceProps);
         },
         R"docstring(
@@ -906,11 +942,11 @@ surface
         py::arg("info"), py::arg("pixels"), py::arg("rowBytes") = 0,
         py::arg("surfaceProps") = nullptr)
     // .def_static("MakeRasterDirectReleaseProc",
-    //     &SkSurface::MakeRasterDirectReleaseProc,
+    //     &SkSurfaces::WrapPixels,
     //     "Allocates raster SkSurface.")
     .def_static("MakeRaster",
         py::overload_cast<const SkImageInfo&, size_t, const SkSurfaceProps*>(
-            &SkSurface::MakeRaster),
+            &SkSurfaces::Raster),
         R"docstring(
         Allocates raster :py:class:`Surface`.
 
@@ -940,7 +976,10 @@ surface
         )docstring",
         py::arg("imageInfo"), py::arg("rowBytes") = 0,
         py::arg("surfaceProps") = nullptr)
-    .def_static("MakeRasterN32Premul", &SkSurface::MakeRasterN32Premul,
+    .def_static("MakeRasterN32Premul",
+        [] (int width, int height, const SkSurfaceProps* surfaceProps) {
+            return SkSurfaces::Raster(SkImageInfo::MakeN32Premul(width, height), surfaceProps);
+        },
         R"docstring(
         Allocates raster :py:class:`Surface`.
 
@@ -968,13 +1007,13 @@ surface
         )docstring",
         py::arg("width"), py::arg("height"), py::arg("surfaceProps") = nullptr)
     .def_static("MakeFromBackendTexture",
-        [] (GrContext* context, const GrBackendTexture& backendTexture,
+        [] (GrRecordingContext* context, const GrBackendTexture& backendTexture,
             GrSurfaceOrigin origin, int sampleCnt, SkColorType colorType,
             sk_sp<SkColorSpace> colorSpace,
             const SkSurfaceProps* surfaceProps) {
-            return SkSurface::MakeFromBackendTexture(
+            return SkSurfaces::WrapBackendTexture(
                 context, backendTexture, origin, sampleCnt, colorType,
-                colorSpace, surfaceProps);
+                colorSpace, surfaceProps, NULL, NULL);
         },
         R"docstring(
         Wraps a GPU-backed texture into :py:class:`Surface`. Caller must ensure
@@ -1004,21 +1043,19 @@ surface
         :colorSpace:  range of colors; may be nullptr
         :surfaceProps:    LCD striping orientation and setting for device
             independent fonts; may be nullptr
-        :textureReleaseProc:  function called when texture can be released
-        :releaseContext:  state passed to textureReleaseProc
         :return: :py:class:`Surface` if all parameters are valid; otherwise,
             nullptr
         )docstring",
         py::arg("context"), py::arg("backendTexture"), py::arg("origin"),
         py::arg("sampleCnt"), py::arg("colorType"), py::arg("colorSpace"),
-        py::arg("surfaceProps"))
+        py::arg("surfaceProps") = nullptr)
     .def_static("MakeFromBackendRenderTarget",
-        [] (GrContext* context, const GrBackendRenderTarget& target,
+        [] (GrRecordingContext* context, const GrBackendRenderTarget& target,
             GrSurfaceOrigin origin, SkColorType colorType,
             sk_sp<SkColorSpace> colorSpace,
             const SkSurfaceProps* surfaceProps) {
-            return SkSurface::MakeFromBackendRenderTarget(
-                context, target, origin, colorType, colorSpace, surfaceProps);
+            return SkSurfaces::WrapBackendRenderTarget(
+                context, target, origin, colorType, colorSpace, surfaceProps, NULL, NULL);
         },
         R"docstring(
         Wraps a GPU-backed buffer into :py:class:`Surface`.
@@ -1053,9 +1090,9 @@ surface
         py::arg("colorType"), py::arg("colorSpace"),
         py::arg("surfaceProps") = nullptr)
     .def_static("MakeRenderTarget",
-        py::overload_cast<GrRecordingContext*, SkBudgeted, const SkImageInfo&, int,
-        GrSurfaceOrigin, const SkSurfaceProps*, bool>(
-            &SkSurface::MakeRenderTarget),
+        py::overload_cast<GrRecordingContext*, skgpu::Budgeted, const SkImageInfo&, int,
+        GrSurfaceOrigin, const SkSurfaceProps*, bool, bool>(
+            &SkSurfaces::RenderTarget),
         R"docstring(
         Returns :py:class:`Surface` on GPU indicated by context.
 
@@ -1089,6 +1126,7 @@ surface
             setting for device independent fonts; may be nullptr
         :param shouldCreateWithMips: hint that :py:class:`Surface` will host mip
             map images
+        :param isProtected: protected-ness
         :return: :py:class:`Surface` if all parameters are valid; otherwise,
             nullptr
         )docstring",
@@ -1096,10 +1134,11 @@ surface
         py::arg("sampleCount") = 0,
         py::arg("surfaceOrigin") = GrSurfaceOrigin::kBottomLeft_GrSurfaceOrigin,
         py::arg("surfaceProps") = nullptr,
-        py::arg("shouldCreateWithMips") = false)
+        py::arg("shouldCreateWithMips") = false,
+        py::arg("isProtected") = false)
     .def_static("MakeRenderTarget",
-        py::overload_cast<GrRecordingContext*, SkBudgeted, const SkImageInfo&, int,
-            const SkSurfaceProps*>(&SkSurface::MakeRenderTarget),
+        py::overload_cast<GrRecordingContext*, skgpu::Budgeted, const SkImageInfo&, int,
+            const SkSurfaceProps*>(&SkSurfaces::RenderTarget),
         R"docstring(
         Returns :py:class:`Surface` on GPU indicated by context.
 
@@ -1128,10 +1167,10 @@ surface
             nullptr
         )docstring",
         py::arg("context"), py::arg("budgeted"), py::arg("imageInfo"),
-        py::arg("sampleCount"), py::arg("surfaceProps"))
+        py::arg("sampleCount"), py::arg("surfaceProps") = nullptr)
     .def_static("MakeRenderTarget",
-        py::overload_cast<GrRecordingContext*, SkBudgeted, const SkImageInfo&>(
-            &SkSurface::MakeRenderTarget),
+        py::overload_cast<GrRecordingContext*, skgpu::Budgeted, const SkImageInfo&>(
+            &SkSurfaces::RenderTarget),
         R"docstring(
         Returns :py:class:`Surface` on GPU indicated by context.
 
@@ -1151,8 +1190,8 @@ surface
         py::arg("context"), py::arg("budgeted"), py::arg("imageInfo"))
     .def_static("MakeRenderTarget",
         py::overload_cast<GrRecordingContext*,
-        const SkSurfaceCharacterization&, SkBudgeted>(
-            &SkSurface::MakeRenderTarget),
+        const GrSurfaceCharacterization&, skgpu::Budgeted>(
+            &SkSurfaces::RenderTarget),
         R"docstring(
         Returns :py:class:`Surface` on GPU indicated by context that is
         compatible with the provided characterization.
@@ -1165,7 +1204,7 @@ surface
             nullptr
         )docstring",
         py::arg("context"), py::arg("characterization"), py::arg("budgeted"))
-    .def_static("MakeNull", &SkSurface::MakeNull,
+    .def_static("MakeNull", &SkSurfaces::Null,
         R"docstring(
         Returns :py:class:`Surface` without backing pixels.
 

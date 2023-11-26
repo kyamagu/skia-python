@@ -1,4 +1,6 @@
 #include "common.h"
+#include <include/core/SkPixelRef.h>
+#include <include/core/SkSamplingOptions.h>
 #include <algorithm>
 
 
@@ -731,6 +733,7 @@ bitmap
 
         Subsequent calls to :py:meth:`getGenerationID` return a different value.
         )docstring")
+/*
     .def("eraseColor", &SkBitmap::eraseColor,
         R"docstring(
         Replaces pixel values with c, interpreted as being in the sRGB
@@ -745,6 +748,7 @@ bitmap
         :param int c: unpremultiplied color
         )docstring",
         py::arg("c"))
+*/
     .def("eraseARGB", &SkBitmap::eraseARGB,
         R"docstring(
         Replaces pixel values with unpremultiplied color built from a, r, g, and
@@ -763,7 +767,7 @@ bitmap
         :param int b: amount of blue, from no blue (0) to full blue (255)
         )docstring",
         py::arg("a"), py::arg("r"), py::arg("g"), py::arg("b"))
-    .def("erase", &SkBitmap::erase,
+    .def("erase", py::overload_cast<SkColor4f, const SkIRect&>(&SkBitmap::erase, py::const_),
         R"docstring(
         Replaces pixel values inside area with c.
 
@@ -774,6 +778,14 @@ bitmap
         :py:attr:`~ColorType.kRGB_565_ColorType`, then alpha is ignored; RGB is
         treated as opaque. If colorType() is
         :py:attr:`~ColorType.kAlpha_8_ColorType`, then RGB is ignored.
+
+        :param int c: unpremultiplied color
+        :param skia.IRect area: rectangle to fill
+        )docstring",
+        py::arg("c"), py::arg("area"))
+    .def("erase", py::overload_cast<SkColor, const SkIRect&>(&SkBitmap::erase, py::const_),
+        R"docstring(
+        Deprecated.
 
         :param int c: unpremultiplied color
         :param skia.IRect area: rectangle to fill
@@ -1014,10 +1026,10 @@ bitmap
         )docstring",
         py::arg("pixmap"))
     .def("makeShader",
-        py::overload_cast<SkTileMode, SkTileMode, const SkMatrix*>(
+        py::overload_cast<SkTileMode, SkTileMode, const SkSamplingOptions&, const SkMatrix*>(
             &SkBitmap::makeShader, py::const_),
         py::arg("tmx") = SkTileMode::kClamp,
-        py::arg("tmy") = SkTileMode::kClamp, py::arg("localMatrix") = nullptr)
+        py::arg("tmy") = SkTileMode::kClamp, py::arg("sampling") = SkSamplingOptions(),  py::arg("localMatrix") = nullptr)
     ;
 
 

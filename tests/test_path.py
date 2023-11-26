@@ -282,6 +282,7 @@ def test_Path_incReserve(path):
     path.incReserve(0)
 
 
+@pytest.mark.skip(reason='Method made private in m88')
 def test_Path_shrinkToFit(path):
     path.shrinkToFit()
 
@@ -523,7 +524,7 @@ def test_Path_getSegmentMasks(path):
 
 def test_Path_dump(path):
     stream = skia.DynamicMemoryWStream()
-    path.dump(stream, False, False)
+    path.dump(stream, False)
 
 
 def test_Path_dump_2(path):

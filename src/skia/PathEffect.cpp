@@ -1,7 +1,12 @@
 #include "common.h"
+#include <include/core/SkStrokeRec.h>
+#include <include/effects/Sk1DPathEffect.h>
+#include <include/effects/Sk2DPathEffect.h>
+#include <include/effects/SkCornerPathEffect.h>
+#include <include/effects/SkDashPathEffect.h>
+#include <include/effects/SkDiscretePathEffect.h>
+#include <include/effects/SkTrimPathEffect.h>
 #include <pybind11/stl.h>
-#include "include/effects/SkOpPathEffect.h"
-#include "include/effects/SkTrimPathEffect.h"
 
 
 const int SkStrokeRec::kStyleCount;
@@ -137,8 +142,11 @@ py::class_<SkPathEffect::DashInfo>(patheffect, "DashInfo")
     .def(py::init<>())
     .def_property_readonly("fIntervals",
         [] (const SkPathEffect::DashInfo& info) {
-            return std::vector<SkScalar>(
-                info.fIntervals, info.fIntervals + info.fCount);
+            if ( nullptr != info.fIntervals )
+                return std::vector<SkScalar>(
+                    info.fIntervals, info.fIntervals + info.fCount);
+            else
+                return std::vector<SkScalar>(0);
         },
         R"docstring(
         Length of on/off intervals for dashed lines.
@@ -153,6 +161,7 @@ py::class_<SkPathEffect::DashInfo>(patheffect, "DashInfo")
         )docstring")
     ;
 
+/*
 py::class_<SkPathEffect::PointData> pointdata(patheffect, "PointData",
     R"docstring(
     :py:class:`PointData` aggregates all the information needed to draw the
@@ -184,6 +193,7 @@ pointdata
     .def_readonly("fFirst", &SkPathEffect::PointData::fFirst)
     .def_readonly("fLast", &SkPathEffect::PointData::fLast)
     ;
+*/
 
 py::enum_<SkPathEffect::DashType>(patheffect, "DashType",
     R"docstring(
@@ -207,7 +217,7 @@ py::enum_<SkPathEffect::DashType>(patheffect, "DashType",
     .export_values();
 
 patheffect
-    .def("filterPath", &SkPathEffect::filterPath,
+    .def("filterPath", py::overload_cast<SkPath*, const SkPath&, SkStrokeRec*, const SkRect*>(&SkPathEffect::filterPath, py::const_),
         R"docstring(
         Given a src path (input) and a stroke-rec (input and output), apply this
         effect to the src path, returning the new path in dst, and return true.
@@ -225,6 +235,7 @@ patheffect
         resulting stroke-rec to dst and then draw.
         )docstring",
         py::arg("dst"), py::arg("src"), py::arg("stroke_rec"), py::arg("cullR"))
+/*
     .def("computeFastBounds", &SkPathEffect::computeFastBounds,
         R"docstring(
         Compute a conservative bounds for its effect, given the src bounds.
@@ -239,6 +250,7 @@ patheffect
         )docstring",
         py::arg("results"), py::arg("src"), py::arg("stroke_rec"),
         py::arg("matrix"), py::arg("cullR"))
+*/
     .def("asADash", &SkPathEffect::asADash, py::arg("info"))
     .def_static("MakeSum",
         [] (const SkPathEffect& first, const SkPathEffect& second) {
@@ -270,7 +282,9 @@ patheffect
         result = outer(inner(path))
         )docstring",
         py::arg("outer"), py::arg("inner"))
+/*
     .def_static("RegisterFlattenables", &SkPathEffect::RegisterFlattenables)
+*/
     .def_static("GetFlattenableType", &SkPathEffect::GetFlattenableType)
     .def_static("Deserialize",
         [] (py::buffer b) {
@@ -281,7 +295,7 @@ patheffect
         py::arg("data"))
     ;
 
-py::class_<SkDiscretePathEffect, SkPathEffect, sk_sp<SkDiscretePathEffect>>(
+py::class_<SkDiscretePathEffect>(
     m, "DiscretePathEffect")
     .def_static("Make", &SkDiscretePathEffect::Make,
         R"docstring(
@@ -327,7 +341,7 @@ py::class_<SkDashPathEffect>(m, "DashPathEffect")
         py::arg("intervals"), py::arg("phase"))
     ;
 
-py::class_<SkCornerPathEffect, SkPathEffect, sk_sp<SkCornerPathEffect>>(
+py::class_<SkCornerPathEffect>(
     m, "CornerPathEffect",
     R"docstring(
     :py:class:`CornerPathEffect` is a subclass of :py:class:`PathEffect` that
@@ -342,7 +356,7 @@ py::class_<SkCornerPathEffect, SkPathEffect, sk_sp<SkCornerPathEffect>>(
         py::arg("radius"))
     ;
 
-py::class_<SkPath1DPathEffect, SkPathEffect, sk_sp<SkPath1DPathEffect>>
+py::class_<SkPath1DPathEffect>
     path1dpatheffect(m, "Path1DPathEffect");
 
 py::enum_<SkPath1DPathEffect::Style>(path1dpatheffect, "Style")
@@ -368,13 +382,13 @@ path1dpatheffect
         py::arg("path"), py::arg("advance"), py::arg("phase"), py::arg("style"))
     ;
 
-py::class_<SkLine2DPathEffect, SkPathEffect, sk_sp<SkLine2DPathEffect>>(
+py::class_<SkLine2DPathEffect>(
     m, "Line2DPathEffect")
     .def_static("Make", &SkLine2DPathEffect::Make,
         py::arg("width"), py::arg("matrix"))
     ;
 
-py::class_<SkPath2DPathEffect, SkPathEffect, sk_sp<SkPath2DPathEffect>>(
+py::class_<SkPath2DPathEffect>(
     m, "Path2DPathEffect")
     .def_static("Make", &SkPath2DPathEffect::Make,
         R"docstring(
@@ -384,6 +398,7 @@ py::class_<SkPath2DPathEffect, SkPathEffect, sk_sp<SkPath2DPathEffect>>(
         py::arg("matrix"), py::arg("path"))
     ;
 
+/*
 py::class_<SkMergePathEffect>(m, "MergePathEffect")
     .def_static("Make",
         [] (const SkPathEffect& one, const SkPathEffect& two, SkPathOp op) {
@@ -407,6 +422,7 @@ py::class_<SkStrokePathEffect>(m, "StrokePathEffect")
     .def_static("Make", &SkStrokePathEffect::Make,
         py::arg("width"), py::arg("join"), py::arg("cap"), py::arg("miter") = 4)
     ;
+*/
 
 py::class_<SkTrimPathEffect> trimpatheffect(m, "TrimPathEffect");
 
