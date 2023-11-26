@@ -27,7 +27,7 @@ jobs:
         run: git config --global core.compression 0 && cd skia && python tools/git-sync-deps
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v2
-      - name: Build skia
+      - name: Build skia 3rd-Party
         # Taken from https://github.com/pypa/cibuildwheel/blob/v2.16.2/cibuildwheel/resources/pinned_docker_images.cfg
         uses: docker://quay.io/pypa/manylinux2014_aarch64:2023-10-03-72cdc42
         if: ${{ steps.cache-skia.outputs.cache-hit != 'true' }}
