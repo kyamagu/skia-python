@@ -994,7 +994,6 @@ font
         Returns :py:class:`Typeface` if set, or nullptr.
 
         :return: :py:class:`Typeface` if previously set, nullptr otherwise
-
         )docstring",
         py::return_value_policy::reference)
 /*
