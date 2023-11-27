@@ -72,7 +72,7 @@ elif sys.platform == 'darwin':
     ]
     EXTRA_LINK_ARGS = [
         '-stdlib=libc++',
-        '-mmacosx-version-min=10.9',
+        '-mmacosx-version-min=10.13',
         '-dead_strip',
         '-framework',
         'AppKit',
