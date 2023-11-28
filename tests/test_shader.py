@@ -9,8 +9,9 @@ def shader():
         [])
 
 
-@pytest.mark.skip(reason='m116:REVISIT')
 def test_Shader_isOpaque(shader):
+    if (shader == None):
+        pytest.skip("segfault:m116:REVISIT")
     assert isinstance(shader.isOpaque(), bool)
 
 
