@@ -10,6 +10,7 @@ cd skia && \
     bin/gn gen out/Release --args='
 is_official_build=true
 skia_enable_svg=true
+skia_use_vulkan=true
 skia_use_freetype=true
 skia_use_system_freetype2=false
 skia_enable_fontmgr_custom_empty=true
