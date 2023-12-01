@@ -8,6 +8,7 @@
 #include <include/gpu/gl/GrGLInterface.h>
 #include <include/gpu/ganesh/gl/GrGLBackendSurface.h>
 #include <include/gpu/ganesh/gl/GrGLDirectContext.h>
+#include <include/gpu/ganesh/vk/GrVkDirectContext.h>
 #include <include/gpu/vk/GrVkBackendContext.h>
 #include <include/gpu/MutableTextureState.h>
 #include <pybind11/chrono.h>
@@ -1156,7 +1157,7 @@ py::class_<GrDirectContext, sk_sp<GrDirectContext>, GrRecordingContext>(m, "GrDi
 #ifdef SK_VULKAN
     .def_static("MakeVulkan",
         py::overload_cast<const GrVkBackendContext&, const GrContextOptions&>(
-            &GrDirectContext::MakeVulkan),
+            &GrDirectContexts::MakeVulkan),
         R"docstring(
         The Vulkan context (VkQueue, VkDevice, VkInstance) must be kept alive
         until the returned GrDirectContext is destroyed. This also means that
@@ -1168,7 +1169,7 @@ py::class_<GrDirectContext, sk_sp<GrDirectContext>, GrRecordingContext>(m, "GrDi
         py::arg("backendContext"), py::arg("options"))
     .def_static("MakeVulkan",
         py::overload_cast<const GrVkBackendContext&>(
-            &GrDirectContext::MakeVulkan),
+            &GrDirectContexts::MakeVulkan),
         py::arg("backendContext"))
 #endif
 
