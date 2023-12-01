@@ -1,3 +1,4 @@
+import sys
 import skia
 import pytest
 from datetime import timedelta
@@ -13,8 +14,9 @@ def test_GrBackendSemaphore_initGL(backend_semaphore):
     backend_semaphore.initGL(None)
 
 
-@pytest.mark.skip(reason='m116:REVISIT')
 def test_GrBackendSemaphore_initVulkan(backend_semaphore):
+    if sys.platform.startswith("darwin"):
+        pytest.skip("Known not to work")
     backend_semaphore.initVulkan(None)
 
 
@@ -27,8 +29,9 @@ def test_GrBackendSemaphore_glSync(backend_semaphore):
     backend_semaphore.glSync()
 
 
-@pytest.mark.skip(reason='m116:REVISIT')
 def test_GrBackendSemaphore_vkSemaphore(backend_semaphore):
+    if sys.platform.startswith("darwin"):
+        pytest.skip("Known not to work")
     backend_semaphore.vkSemaphore()
 
 
@@ -42,14 +45,16 @@ def test_GrBackendFormat_MakeGL():
     assert isinstance(skia.GrBackendFormat.MakeGL(0, 0), skia.GrBackendFormat)
 
 
-@pytest.mark.skip(reason='m116:REVISIT')
 def test_GrBackendFormat_MakeVk_1():
+    if sys.platform.startswith("darwin"):
+        pytest.skip("Known not to work")
     assert isinstance(
         skia.GrBackendFormat.MakeVk(0), (type(None), skia.GrBackendFormat))
 
 
-@pytest.mark.skip(reason='m116:REVISIT')
 def test_GrBackendFormat_MakeVk_2():
+    if sys.platform.startswith("darwin"):
+        pytest.skip("Known not to work")
     assert isinstance(
         skia.GrBackendFormat.MakeVk(skia.GrVkYcbcrConversionInfo()),
         (type(None), skia.GrBackendFormat))
@@ -79,9 +84,10 @@ def test_GrBackendFormat_channelMask(backend_format):
     assert isinstance(backend_format.channelMask(), int)
 
 
-@pytest.mark.skip(reason='m116:REVISIT')
 def test_GrBackendFormat_asVkFormat(backend_format):
     fmt = 1
+    if sys.platform.startswith("darwin"):
+        pytest.skip("Known not to work")
     assert isinstance(backend_format.asVkFormat(fmt), bool)
 
 
@@ -89,8 +95,9 @@ def test_GrBackendFormat_asGLFormat(backend_format):
     assert isinstance(backend_format.asGLFormat(), skia.GrGLFormat)
 
 
-@pytest.mark.skip(reason='m116:REVISIT')
 def test_GrBackendFormat_getVkYcbcrConversionInfo(backend_format):
+    if sys.platform.startswith("darwin"):
+        pytest.skip("Known not to work")
     assert isinstance(
         backend_format.getVkYcbcrConversionInfo(),
         (type(None), skia.GrVkYcbcrConversionInfo))
@@ -189,10 +196,12 @@ def backend_render_target():
 @pytest.mark.parametrize('args', [
     tuple(),
     (128, 128, 2, 8, skia.GrGLFramebufferInfo()),
-    # (128, 128, 2, 8, skia.GrVkImageInfo()),
+    (128, 128, skia.GrVkImageInfo()),
     (128, 128, 2, 8, skia.GrMockRenderTargetInfo()),
 ])
 def test_GrBackendRenderTarget_init(args):
+    if sys.platform.startswith("darwin"): # conditional on skia.GrVkImageInfo()?
+        pytest.skip("Known not to work")
     assert isinstance(
         skia.GrBackendRenderTarget(*args), skia.GrBackendRenderTarget)
 
@@ -230,14 +239,16 @@ def test_GrBackendRenderTarget_getGLFramebufferInfo(backend_render_target):
     assert isinstance(backend_render_target.getGLFramebufferInfo(info), bool)
 
 
-@pytest.mark.skip(reason='m116:REVISIT')
 def test_GrBackendRenderTarget_getVkImageInfo(backend_render_target):
+    if sys.platform.startswith("darwin"):
+        pytest.skip("Known not to work")
     info = skia.GrVkImageInfo()
     assert isinstance(backend_render_target.getVkImageInfo(info), bool)
 
 
-@pytest.mark.skip(reason='m116:REVISIT')
 def test_GrBackendRenderTarget_setVkImageLayout(backend_render_target):
+    if sys.platform.startswith("darwin"):
+        pytest.skip("Known not to work")
     backend_render_target.setVkImageLayout(0)
 
 
@@ -517,10 +528,11 @@ def test_GrDirectContext_MakeGL(context):
     assert isinstance(context, skia.GrContext)
 
 
-@pytest.mark.skip(reason='Vulkan not supported yet.')
 def test_GrDirectContext_MakeVulkan():
     context = skia.GrVkBackendContext()
     options = skia.GrContextOptions()
+    if sys.platform.startswith("darwin"):
+        pytest.skip("Known not to work")
     assert isinstance(
         skia.GrDirectContext.MakeVulkan(context),
         (type(None), skia.GrDirectContext))
@@ -572,11 +584,11 @@ def test_GrGLFramebufferInfo_init(gl_framebuffer_info):
     assert isinstance(gl_framebuffer_info, skia.GrGLFramebufferInfo)
 
 
-@pytest.mark.skip(reason='m116:REVISIT')
 def test_GrVkImageInfo_init():
+    # No op on "darwin", passes
     assert isinstance(skia.GrVkImageInfo(), skia.GrVkImageInfo)
 
 
-@pytest.mark.skip(reason='m116:REVISIT')
 def test_GrVkBackendContext_init():
+    # No op on "darwin", passes
     assert isinstance(skia.GrVkBackendContext(), skia.GrVkBackendContext)
