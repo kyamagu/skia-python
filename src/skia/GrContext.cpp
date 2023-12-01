@@ -241,11 +241,13 @@ py::class_<GrBackendSemaphore>(m, "GrBackendSemaphore")
         },
         py::arg("glsync"))
 */
+#ifdef SK_VULKAN
     .def("initVulkan",
         [] (GrBackendSemaphore& semaphore, void* vksemaphore) {
             semaphore.initVulkan(reinterpret_cast<VkSemaphore>(vksemaphore));
         },
         py::arg("semaphore"))
+#endif
     // .def("initMetal", &GrBackendSemaphore::initMetal)
     .def("isInitialized", &GrBackendSemaphore::isInitialized)
 /*
@@ -254,10 +256,12 @@ py::class_<GrBackendSemaphore>(m, "GrBackendSemaphore")
             return reinterpret_cast<void*>(semaphore.glSync());
         })
 */
+#ifdef SK_VULKAN
     .def("vkSemaphore",
         [] (GrBackendSemaphore& semaphore) {
             return reinterpret_cast<void*>(semaphore.vkSemaphore());
         })
+#endif
     // .def("mtlSemaphore", &GrBackendSemaphore::mtlSemaphore)
     // .def("mtlValue", &GrBackendSemaphore::mtlValue)
     ;
@@ -267,12 +271,14 @@ py::class_<GrBackendFormat>(m, "GrBackendFormat")
     .def(py::init<const GrBackendFormat&>())
     .def_static("MakeGL", &GrBackendFormats::MakeGL,
         py::arg("format"), py::arg("target"))
+#ifdef SK_VULKAN
     .def_static("MakeVk", py::overload_cast<VkFormat, bool>(&GrBackendFormats::MakeVk),
         py::arg("format"), py::arg("willUseDRMFormatModifiers") = false)
     .def_static("MakeVk",
         py::overload_cast<const GrVkYcbcrConversionInfo&, bool>(
             &GrBackendFormats::MakeVk),
         py::arg("ycbcrInfo"), py::arg("willUseDRMFormatModifiers") = false)
+#endif
     .def_static("MakeMock", &GrBackendFormat::MakeMock,
         py::arg("colorType"), py::arg("compression"), py::arg("isStencilFormat") = false)
     .def("__eq__", &GrBackendFormat::operator==, py::arg("other"),
@@ -283,9 +289,11 @@ py::class_<GrBackendFormat>(m, "GrBackendFormat")
     .def("textureType", &GrBackendFormat::textureType)
     .def("channelMask", &GrBackendFormat::channelMask)
     .def("asGLFormat", &GrBackendFormats::AsGLFormat)
+#ifdef SK_VULKAN
     .def("asVkFormat", &GrBackendFormats::AsVkFormat, py::arg("format"))
     .def("getVkYcbcrConversionInfo",
         &GrBackendFormats::GetVkYcbcrConversionInfo)
+#endif
     .def("asMockColorType", &GrBackendFormat::asMockColorType)
     .def("asMockCompressionType", &GrBackendFormat::asMockCompressionType)
     .def("makeTexture2D", &GrBackendFormat::makeTexture2D)
@@ -321,12 +329,12 @@ py::class_<GrBackendTexture>(m, "GrBackendTexture")
         py::arg("info"))
     .def("glTextureParametersModified",
         &GrBackendTextures::GLTextureParametersModified)
-/*
+#ifdef SK_VULKAN
     .def("getVkImageInfo", &GrBackendTextures::GetVkImageInfo,
         py::arg("info"))
     .def("setVkImageLayout", &GrBackendTextures::SetVkImageLayout,
         py::arg("layout"))
-*/
+#endif
     .def("getBackendFormat", &GrBackendTexture::getBackendFormat)
     .def("getMockTextureInfo", &GrBackendTexture::getMockTextureInfo,
         py::arg("info"))
@@ -420,6 +428,7 @@ py::class_<GrBackendRenderTarget>(m, "GrBackendRenderTarget")
         false if the backend API is not GL.
         )docstring",
         py::arg("info"))
+#ifdef SK_VULKAN
     .def("getVkImageInfo", &GrBackendRenderTargets::GetVkImageInfo,
         R"docstring(
         If the backend API is Vulkan, copies a snapshot of the GrVkImageInfo
@@ -435,6 +444,7 @@ py::class_<GrBackendRenderTarget>(m, "GrBackendRenderTarget")
         of the changed layout.
         )docstring",
         py::arg("layout"))
+#endif
     .def("getBackendFormat", &GrBackendRenderTarget::getBackendFormat,
         R"docstring(
         Get the GrBackendFormat for this render target (or an invalid format if
