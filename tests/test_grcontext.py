@@ -517,7 +517,6 @@ def test_GrContext_setBackendRenderTargetState(context, backend_render_target):
 #     pass
 
 
-@pytest.mark.skip()
 def test_GrContext_precompileShader(context):
     assert isinstance(context.precompileShader(b'', b''), bool)
 
