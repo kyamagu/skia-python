@@ -200,7 +200,11 @@ def backend_render_target():
     (128, 128, 2, 8, skia.GrMockRenderTargetInfo()),
 ])
 def test_GrBackendRenderTarget_init(args):
-    if sys.platform.startswith("darwin"): # conditional on skia.GrVkImageInfo()?
+    args_has_Vk_types = False
+    for x in args:
+        if isinstance(x, skia.GrVkImageInfo):
+            args_has_Vk_types = True
+    if sys.platform.startswith("darwin") and args_has_Vk_types:
         pytest.skip("Known not to work")
     assert isinstance(
         skia.GrBackendRenderTarget(*args), skia.GrBackendRenderTarget)
