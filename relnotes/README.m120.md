@@ -1,6 +1,6 @@
 New in m120:
 
-* Ruimentary support (TextBlob::MakeFromShapedText) of text-shaping via
+* Rudimentary support (TextBlob::MakeFromShapedText) of text-shaping via
   upstream's libSkShaper module. Intially this was added to support
   emoji's with skin-tone modifiers (#195), but has the fortunate side-effect
   that now LTR languages (Arabic, Hebrew, Tibetan ...) work as desired in
