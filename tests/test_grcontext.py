@@ -489,9 +489,9 @@ def test_GrContext_compressedBackendFormat(context):
 
 @pytest.mark.parametrize('args', [
     (64, 64, skia.GrBackendFormat(), 0xFFFFFFFF, skia.GrMipmapped.kNo),
-#    (64, 64, skia.Image.kBC1_RGBA8_UNORM, 0xFFFFFFFF, skia.GrMipmapped.kNo),
+    (64, 64, skia.Image.kBC1_RGBA8_UNORM, 0xFFFFFFFF, skia.GrMipmapped.kNo),
     (16, 16, skia.GrBackendFormat(), bytearray(256), skia.GrMipmapped.kNo),
-#    (16, 16, skia.Image.kBC1_RGBA8_UNORM, bytearray(256), skia.GrMipmapped.kNo),
+    (16, 16, skia.Image.kBC1_RGBA8_UNORM, bytearray(256), skia.GrMipmapped.kNo),
 ])
 def test_GrContext_createCompressedBackendTexture(context, args):
     backend_texture = context.createCompressedBackendTexture(*args)
