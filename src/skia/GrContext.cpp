@@ -405,7 +405,14 @@ py::class_<GrBackendRenderTarget>(m, "GrBackendRenderTarget")
         }),
         py::arg("width"), py::arg("height"), py::arg("vkInfo"))
     .def(py::init(
-        [] (int width, int height, int sampleCnt, const GrVkImageInfo& vkInfo) { // ignoring sampleCnt
+        [] (int width, int height, int sampleCnt, const GrVkImageInfo& vkInfo) {
+            /*
+             * m87's include/gpu/GrBackendSurface.h has this line:
+             * "Deprecated. Samplecount is now part of GrVkImageInfo."
+             * up to m117, until this was moved.
+             *
+             * So it is appropriate to ignore sampleCnt in this emulation.
+             */
             return GrBackendRenderTargets::MakeVk(width, height, vkInfo);
         }),
         py::arg("width"), py::arg("height"), py::arg("sampleCnt"),
