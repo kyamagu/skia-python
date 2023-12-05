@@ -1,12 +1,14 @@
 <!DOCTYPE html>
-<html class="writer-html5" lang="en" >
+<html class="writer-html5" lang="en">
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>TextBlob &mdash; skia-python 119.0b4 documentation</title>
-      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <title>TextBlob &mdash; skia-python 120.0b5 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css" />
+
+  
   <!--[if lt IE 9]>
     <script src="../_static/js/html5shiv.min.js"></script>
   <![endif]-->
@@ -35,7 +37,7 @@
             skia-python
           </a>
               <div class="version">
-                119.0b4
+                120.0b5
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
@@ -292,40 +294,43 @@ run.</p>
 <tr class="row-even"><td><p><a class="reference internal" href="#skia.TextBlob.MakeFromRSXform" title="skia.TextBlob.MakeFromRSXform"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MakeFromRSXform</span></code></a></p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#skia.TextBlob.MakeFromString" title="skia.TextBlob.MakeFromString"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MakeFromString</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.TextBlob.MakeFromShapedText" title="skia.TextBlob.MakeFromShapedText"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MakeFromShapedText</span></code></a></p></td>
+<td><p>Creates <a class="reference internal" href="#skia.TextBlob" title="skia.TextBlob"><code class="xref py py-class docutils literal notranslate"><span class="pre">TextBlob</span></code></a> in a single run, with shaping, for a text-run direction.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.TextBlob.MakeFromString" title="skia.TextBlob.MakeFromString"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MakeFromString</span></code></a></p></td>
 <td><p>Creates <a class="reference internal" href="#skia.TextBlob" title="skia.TextBlob"><code class="xref py py-class docutils literal notranslate"><span class="pre">TextBlob</span></code></a> with a single run.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#skia.TextBlob.MakeFromText" title="skia.TextBlob.MakeFromText"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MakeFromText</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.TextBlob.MakeFromText" title="skia.TextBlob.MakeFromText"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MakeFromText</span></code></a></p></td>
 <td><p>Creates <a class="reference internal" href="#skia.TextBlob" title="skia.TextBlob"><code class="xref py py-class docutils literal notranslate"><span class="pre">TextBlob</span></code></a> with a single run.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#skia.TextBlob.__init__" title="skia.TextBlob.__init__"><code class="xref py py-obj docutils literal notranslate"><span class="pre">__init__</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.TextBlob.__init__" title="skia.TextBlob.__init__"><code class="xref py py-obj docutils literal notranslate"><span class="pre">__init__</span></code></a></p></td>
 <td><p>Creates <a class="reference internal" href="#skia.TextBlob" title="skia.TextBlob"><code class="xref py py-class docutils literal notranslate"><span class="pre">TextBlob</span></code></a> with a single run.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#skia.TextBlob.bounds" title="skia.TextBlob.bounds"><code class="xref py py-obj docutils literal notranslate"><span class="pre">bounds</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.TextBlob.bounds" title="skia.TextBlob.bounds"><code class="xref py py-obj docutils literal notranslate"><span class="pre">bounds</span></code></a></p></td>
 <td><p>Returns conservative bounding box.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#skia.TextBlob.deref" title="skia.TextBlob.deref"><code class="xref py py-obj docutils literal notranslate"><span class="pre">deref</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.TextBlob.deref" title="skia.TextBlob.deref"><code class="xref py py-obj docutils literal notranslate"><span class="pre">deref</span></code></a></p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#skia.TextBlob.getIntercepts" title="skia.TextBlob.getIntercepts"><code class="xref py py-obj docutils literal notranslate"><span class="pre">getIntercepts</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.TextBlob.getIntercepts" title="skia.TextBlob.getIntercepts"><code class="xref py py-obj docutils literal notranslate"><span class="pre">getIntercepts</span></code></a></p></td>
 <td><p>Returns the number of intervals that intersect bounds.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#skia.TextBlob.ref" title="skia.TextBlob.ref"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ref</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.TextBlob.ref" title="skia.TextBlob.ref"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ref</span></code></a></p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#skia.TextBlob.refCntGreaterThan" title="skia.TextBlob.refCntGreaterThan"><code class="xref py py-obj docutils literal notranslate"><span class="pre">refCntGreaterThan</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.TextBlob.refCntGreaterThan" title="skia.TextBlob.refCntGreaterThan"><code class="xref py py-obj docutils literal notranslate"><span class="pre">refCntGreaterThan</span></code></a></p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#skia.TextBlob.serialize" title="skia.TextBlob.serialize"><code class="xref py py-obj docutils literal notranslate"><span class="pre">serialize</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.TextBlob.serialize" title="skia.TextBlob.serialize"><code class="xref py py-obj docutils literal notranslate"><span class="pre">serialize</span></code></a></p></td>
 <td><p>Returns storage containing <a class="reference internal" href="skia.Data.html#skia.Data" title="skia.Data"><code class="xref py py-class docutils literal notranslate"><span class="pre">Data</span></code></a> describing <a class="reference internal" href="#skia.TextBlob" title="skia.TextBlob"><code class="xref py py-class docutils literal notranslate"><span class="pre">TextBlob</span></code></a>, using optional custom encoders.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#skia.TextBlob.unique" title="skia.TextBlob.unique"><code class="xref py py-obj docutils literal notranslate"><span class="pre">unique</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.TextBlob.unique" title="skia.TextBlob.unique"><code class="xref py py-obj docutils literal notranslate"><span class="pre">unique</span></code></a></p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#skia.TextBlob.uniqueID" title="skia.TextBlob.uniqueID"><code class="xref py py-obj docutils literal notranslate"><span class="pre">uniqueID</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.TextBlob.uniqueID" title="skia.TextBlob.uniqueID"><code class="xref py py-obj docutils literal notranslate"><span class="pre">uniqueID</span></code></a></p></td>
 <td><p>Returns a non-zero value unique among all text blobs.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#skia.TextBlob.unref" title="skia.TextBlob.unref"><code class="xref py py-obj docutils literal notranslate"><span class="pre">unref</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.TextBlob.unref" title="skia.TextBlob.unref"><code class="xref py py-obj docutils literal notranslate"><span class="pre">unref</span></code></a></p></td>
 <td><p></p></td>
 </tr>
 </tbody>
@@ -412,6 +417,25 @@ array.</p></li>
 <dt class="sig sig-object py" id="skia.TextBlob.MakeFromRSXform">
 <em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">TextBlob.</span></span><span class="sig-name descname"><span class="pre">MakeFromRSXform</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">text:</span> <span class="pre">str,</span> <span class="pre">xform:</span> <span class="pre">List[skia.RSXform],</span> <span class="pre">font:</span> <span class="pre">skia.Font,</span> <span class="pre">encoding:</span> <span class="pre">skia.TextEncoding</span> <span class="pre">=</span> <span class="pre">&lt;TextEncoding.kUTF8:</span> <span class="pre">0&gt;</span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#skia.TextBlob" title="skia.TextBlob"><span class="pre">skia.TextBlob</span></a></span></span><a class="headerlink" href="#skia.TextBlob.MakeFromRSXform" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="skia.TextBlob.MakeFromShapedText">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">TextBlob.</span></span><span class="sig-name descname"><span class="pre">MakeFromShapedText</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">utf8text</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">font</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="skia.Font.html#skia.Font" title="skia.Font"><span class="pre">skia.Font</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">leftToRight</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#skia.TextBlob" title="skia.TextBlob"><span class="pre">skia.TextBlob</span></a></span></span><a class="headerlink" href="#skia.TextBlob.MakeFromShapedText" title="Permalink to this definition"></a></dt>
+<dd><p>Creates <a class="reference internal" href="#skia.TextBlob" title="skia.TextBlob"><code class="xref py py-class docutils literal notranslate"><span class="pre">TextBlob</span></code></a> in a single run, with shaping, for a text-run direction.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>utf8text</strong> (<em>str</em>) – character code points drawn</p></li>
+<li><p><strong>font</strong> (<a class="reference internal" href="skia.Font.html#skia.Font" title="skia.Font"><em>skia.Font</em></a>) – text size, typeface, text scale, and so on, used
+to draw</p></li>
+<li><p><strong>bool</strong> (<em>leftToRight</em>) – text-run direction</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference internal" href="#skia.TextBlob" title="skia.TextBlob"><code class="xref py py-class docutils literal notranslate"><span class="pre">TextBlob</span></code></a> constructed from one run</p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="skia.TextBlob.MakeFromString">

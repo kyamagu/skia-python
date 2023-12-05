@@ -1,12 +1,14 @@
 <!DOCTYPE html>
-<html class="writer-html5" lang="en" >
+<html class="writer-html5" lang="en">
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>GrBackendRenderTarget &mdash; skia-python 119.0b4 documentation</title>
-      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <title>GrBackendRenderTarget &mdash; skia-python 120.0b5 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css" />
+
+  
   <!--[if lt IE 9]>
     <script src="../_static/js/html5shiv.min.js"></script>
   <![endif]-->
@@ -35,7 +37,7 @@
             skia-python
           </a>
               <div class="version">
-                119.0b4
+                120.0b5
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
@@ -278,20 +280,26 @@
 <tr class="row-even"><td><p><a class="reference internal" href="#skia.GrBackendRenderTarget.getMockRenderTargetInfo" title="skia.GrBackendRenderTarget.getMockRenderTargetInfo"><code class="xref py py-obj docutils literal notranslate"><span class="pre">getMockRenderTargetInfo</span></code></a></p></td>
 <td><p>If the backend API is Mock, copies a snapshot of the GrMockTextureInfo struct into the passed in pointer and returns true.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#skia.GrBackendRenderTarget.height" title="skia.GrBackendRenderTarget.height"><code class="xref py py-obj docutils literal notranslate"><span class="pre">height</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.GrBackendRenderTarget.getVkImageInfo" title="skia.GrBackendRenderTarget.getVkImageInfo"><code class="xref py py-obj docutils literal notranslate"><span class="pre">getVkImageInfo</span></code></a></p></td>
+<td><p>If the backend API is Vulkan, copies a snapshot of the GrVkImageInfo struct into the passed in pointer and returns true.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.GrBackendRenderTarget.height" title="skia.GrBackendRenderTarget.height"><code class="xref py py-obj docutils literal notranslate"><span class="pre">height</span></code></a></p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#skia.GrBackendRenderTarget.isFramebufferOnly" title="skia.GrBackendRenderTarget.isFramebufferOnly"><code class="xref py py-obj docutils literal notranslate"><span class="pre">isFramebufferOnly</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.GrBackendRenderTarget.isFramebufferOnly" title="skia.GrBackendRenderTarget.isFramebufferOnly"><code class="xref py py-obj docutils literal notranslate"><span class="pre">isFramebufferOnly</span></code></a></p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#skia.GrBackendRenderTarget.isProtected" title="skia.GrBackendRenderTarget.isProtected"><code class="xref py py-obj docutils literal notranslate"><span class="pre">isProtected</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.GrBackendRenderTarget.isProtected" title="skia.GrBackendRenderTarget.isProtected"><code class="xref py py-obj docutils literal notranslate"><span class="pre">isProtected</span></code></a></p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#skia.GrBackendRenderTarget.isValid" title="skia.GrBackendRenderTarget.isValid"><code class="xref py py-obj docutils literal notranslate"><span class="pre">isValid</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.GrBackendRenderTarget.isValid" title="skia.GrBackendRenderTarget.isValid"><code class="xref py py-obj docutils literal notranslate"><span class="pre">isValid</span></code></a></p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#skia.GrBackendRenderTarget.sampleCnt" title="skia.GrBackendRenderTarget.sampleCnt"><code class="xref py py-obj docutils literal notranslate"><span class="pre">sampleCnt</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.GrBackendRenderTarget.sampleCnt" title="skia.GrBackendRenderTarget.sampleCnt"><code class="xref py py-obj docutils literal notranslate"><span class="pre">sampleCnt</span></code></a></p></td>
 <td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.GrBackendRenderTarget.setVkImageLayout" title="skia.GrBackendRenderTarget.setVkImageLayout"><code class="xref py py-obj docutils literal notranslate"><span class="pre">setVkImageLayout</span></code></a></p></td>
+<td><p>Anytime the client changes the VkImageLayout of the VkImage captured by this GrBackendRenderTarget, they must call this function to notify Skia of the changed layout.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#skia.GrBackendRenderTarget.stencilBits" title="skia.GrBackendRenderTarget.stencilBits"><code class="xref py py-obj docutils literal notranslate"><span class="pre">stencilBits</span></code></a></p></td>
 <td><p></p></td>
@@ -312,6 +320,8 @@
 <ol class="arabic simple">
 <li><p>__init__(self: skia.GrBackendRenderTarget) -&gt; None</p></li>
 <li><p>__init__(self: skia.GrBackendRenderTarget, width: int, height: int, sampleCnt: int, stencilBits: int, glInfo: GrGLFramebufferInfo) -&gt; None</p></li>
+<li><p>__init__(self: skia.GrBackendRenderTarget, width: int, height: int, vkInfo: GrVkImageInfo) -&gt; None</p></li>
+<li><p>__init__(self: skia.GrBackendRenderTarget, width: int, height: int, sampleCnt: int, vkInfo: GrVkImageInfo) -&gt; None</p></li>
 <li><p>__init__(self: skia.GrBackendRenderTarget, width: int, height: int, sampleCnt: int, stencilBits: int, mockInfo: GrMockRenderTargetInfo) -&gt; None</p></li>
 </ol>
 </dd></dl>
@@ -350,6 +360,15 @@ false if the backend API is not Mock.</p>
 </dd></dl>
 
 <dl class="py method">
+<dt class="sig sig-object py" id="skia.GrBackendRenderTarget.getVkImageInfo">
+<span class="sig-prename descclassname"><span class="pre">GrBackendRenderTarget.</span></span><span class="sig-name descname"><span class="pre">getVkImageInfo</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#skia.GrBackendRenderTarget" title="skia.GrBackendRenderTarget"><span class="pre">skia.GrBackendRenderTarget</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">info</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="skia.GrVkImageInfo.html#skia.GrVkImageInfo" title="skia.GrVkImageInfo"><span class="pre">GrVkImageInfo</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#skia.GrBackendRenderTarget.getVkImageInfo" title="Permalink to this definition"></a></dt>
+<dd><p>If the backend API is Vulkan, copies a snapshot of the GrVkImageInfo
+struct into the passed in pointer and returns true. This snapshot will
+set the fImageLayout to the current layout state. Otherwise returns
+false if the backend API is not Vulkan.</p>
+</dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="skia.GrBackendRenderTarget.height">
 <span class="sig-prename descclassname"><span class="pre">GrBackendRenderTarget.</span></span><span class="sig-name descname"><span class="pre">height</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#skia.GrBackendRenderTarget" title="skia.GrBackendRenderTarget"><span class="pre">skia.GrBackendRenderTarget</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="headerlink" href="#skia.GrBackendRenderTarget.height" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
@@ -373,6 +392,14 @@ false if the backend API is not Mock.</p>
 <dt class="sig sig-object py" id="skia.GrBackendRenderTarget.sampleCnt">
 <span class="sig-prename descclassname"><span class="pre">GrBackendRenderTarget.</span></span><span class="sig-name descname"><span class="pre">sampleCnt</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#skia.GrBackendRenderTarget" title="skia.GrBackendRenderTarget"><span class="pre">skia.GrBackendRenderTarget</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="headerlink" href="#skia.GrBackendRenderTarget.sampleCnt" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="skia.GrBackendRenderTarget.setVkImageLayout">
+<span class="sig-prename descclassname"><span class="pre">GrBackendRenderTarget.</span></span><span class="sig-name descname"><span class="pre">setVkImageLayout</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#skia.GrBackendRenderTarget" title="skia.GrBackendRenderTarget"><span class="pre">skia.GrBackendRenderTarget</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">layout</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="skia.VkImageLayout.html#skia.VkImageLayout" title="skia.VkImageLayout"><span class="pre">VkImageLayout</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#skia.GrBackendRenderTarget.setVkImageLayout" title="Permalink to this definition"></a></dt>
+<dd><p>Anytime the client changes the VkImageLayout of the VkImage captured by
+this GrBackendRenderTarget, they must call this function to notify Skia
+of the changed layout.</p>
+</dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="skia.GrBackendRenderTarget.stencilBits">

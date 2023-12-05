@@ -1,12 +1,14 @@
 <!DOCTYPE html>
-<html class="writer-html5" lang="en" >
+<html class="writer-html5" lang="en">
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>GrBackendSemaphore &mdash; skia-python 119.0b4 documentation</title>
-      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <title>GrBackendSemaphore &mdash; skia-python 120.0b5 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css" />
+
+  
   <!--[if lt IE 9]>
     <script src="../_static/js/html5shiv.min.js"></script>
   <![endif]-->
@@ -35,7 +37,7 @@
             skia-python
           </a>
               <div class="version">
-                119.0b4
+                120.0b5
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
@@ -263,13 +265,13 @@
 <tr class="row-odd"><td><p><a class="reference internal" href="#skia.GrBackendSemaphore.__init__" title="skia.GrBackendSemaphore.__init__"><code class="xref py py-obj docutils literal notranslate"><span class="pre">__init__</span></code></a></p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#skia.GrBackendSemaphore.glSync" title="skia.GrBackendSemaphore.glSync"><code class="xref py py-obj docutils literal notranslate"><span class="pre">glSync</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.GrBackendSemaphore.initVulkan" title="skia.GrBackendSemaphore.initVulkan"><code class="xref py py-obj docutils literal notranslate"><span class="pre">initVulkan</span></code></a></p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#skia.GrBackendSemaphore.initGL" title="skia.GrBackendSemaphore.initGL"><code class="xref py py-obj docutils literal notranslate"><span class="pre">initGL</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.GrBackendSemaphore.isInitialized" title="skia.GrBackendSemaphore.isInitialized"><code class="xref py py-obj docutils literal notranslate"><span class="pre">isInitialized</span></code></a></p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#skia.GrBackendSemaphore.isInitialized" title="skia.GrBackendSemaphore.isInitialized"><code class="xref py py-obj docutils literal notranslate"><span class="pre">isInitialized</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.GrBackendSemaphore.vkSemaphore" title="skia.GrBackendSemaphore.vkSemaphore"><code class="xref py py-obj docutils literal notranslate"><span class="pre">vkSemaphore</span></code></a></p></td>
 <td><p></p></td>
 </tr>
 </tbody>
@@ -284,18 +286,18 @@
 <dd></dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="skia.GrBackendSemaphore.glSync">
-<span class="sig-prename descclassname"><span class="pre">GrBackendSemaphore.</span></span><span class="sig-name descname"><span class="pre">glSync</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#skia.GrBackendSemaphore" title="skia.GrBackendSemaphore"><span class="pre">skia.GrBackendSemaphore</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">capsule</span></span></span><a class="headerlink" href="#skia.GrBackendSemaphore.glSync" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="skia.GrBackendSemaphore.initGL">
-<span class="sig-prename descclassname"><span class="pre">GrBackendSemaphore.</span></span><span class="sig-name descname"><span class="pre">initGL</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#skia.GrBackendSemaphore" title="skia.GrBackendSemaphore"><span class="pre">skia.GrBackendSemaphore</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">glsync</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">capsule</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#skia.GrBackendSemaphore.initGL" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="skia.GrBackendSemaphore.initVulkan">
+<span class="sig-prename descclassname"><span class="pre">GrBackendSemaphore.</span></span><span class="sig-name descname"><span class="pre">initVulkan</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#skia.GrBackendSemaphore" title="skia.GrBackendSemaphore"><span class="pre">skia.GrBackendSemaphore</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">semaphore</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">capsule</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#skia.GrBackendSemaphore.initVulkan" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="skia.GrBackendSemaphore.isInitialized">
 <span class="sig-prename descclassname"><span class="pre">GrBackendSemaphore.</span></span><span class="sig-name descname"><span class="pre">isInitialized</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#skia.GrBackendSemaphore" title="skia.GrBackendSemaphore"><span class="pre">skia.GrBackendSemaphore</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#skia.GrBackendSemaphore.isInitialized" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="skia.GrBackendSemaphore.vkSemaphore">
+<span class="sig-prename descclassname"><span class="pre">GrBackendSemaphore.</span></span><span class="sig-name descname"><span class="pre">vkSemaphore</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#skia.GrBackendSemaphore" title="skia.GrBackendSemaphore"><span class="pre">skia.GrBackendSemaphore</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">capsule</span></span></span><a class="headerlink" href="#skia.GrBackendSemaphore.vkSemaphore" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 </section>

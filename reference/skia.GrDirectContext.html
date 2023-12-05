@@ -1,12 +1,14 @@
 <!DOCTYPE html>
-<html class="writer-html5" lang="en" >
+<html class="writer-html5" lang="en">
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>GrDirectContext &mdash; skia-python 119.0b4 documentation</title>
-      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <title>GrDirectContext &mdash; skia-python 120.0b5 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css" />
+
+  
   <!--[if lt IE 9]>
     <script src="../_static/js/html5shiv.min.js"></script>
   <![endif]-->
@@ -35,7 +37,7 @@
             skia-python
           </a>
               <div class="version">
-                119.0b4
+                120.0b5
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
@@ -269,127 +271,130 @@
 <tr class="row-odd"><td><p><a class="reference internal" href="#skia.GrDirectContext.MakeMock" title="skia.GrDirectContext.MakeMock"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MakeMock</span></code></a></p></td>
 <td><p>Overloaded function.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#skia.GrDirectContext.__init__" title="skia.GrDirectContext.__init__"><code class="xref py py-obj docutils literal notranslate"><span class="pre">__init__</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#skia.GrDirectContext.abandonContext" title="skia.GrDirectContext.abandonContext"><code class="xref py py-obj docutils literal notranslate"><span class="pre">abandonContext</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.GrDirectContext.MakeVulkan" title="skia.GrDirectContext.MakeVulkan"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MakeVulkan</span></code></a></p></td>
 <td><p>Overloaded function.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#skia.GrDirectContext.abandoned" title="skia.GrDirectContext.abandoned"><code class="xref py py-obj docutils literal notranslate"><span class="pre">abandoned</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.GrDirectContext.__init__" title="skia.GrDirectContext.__init__"><code class="xref py py-obj docutils literal notranslate"><span class="pre">__init__</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.GrDirectContext.abandonContext" title="skia.GrDirectContext.abandonContext"><code class="xref py py-obj docutils literal notranslate"><span class="pre">abandonContext</span></code></a></p></td>
+<td><p>Overloaded function.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.GrDirectContext.abandoned" title="skia.GrDirectContext.abandoned"><code class="xref py py-obj docutils literal notranslate"><span class="pre">abandoned</span></code></a></p></td>
 <td><p>Returns true if the context was abandoned or if the if the backend specific context has gotten into an unrecoverarble, lost state (e.g.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#skia.GrDirectContext.asDirectContext" title="skia.GrDirectContext.asDirectContext"><code class="xref py py-obj docutils literal notranslate"><span class="pre">asDirectContext</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.GrDirectContext.asDirectContext" title="skia.GrDirectContext.asDirectContext"><code class="xref py py-obj docutils literal notranslate"><span class="pre">asDirectContext</span></code></a></p></td>
 <td><p>Safely downcast to a <a class="reference internal" href="#skia.GrDirectContext" title="skia.GrDirectContext"><code class="xref py py-class docutils literal notranslate"><span class="pre">GrDirectContext</span></code></a>.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#skia.GrDirectContext.backend" title="skia.GrDirectContext.backend"><code class="xref py py-obj docutils literal notranslate"><span class="pre">backend</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.GrDirectContext.backend" title="skia.GrDirectContext.backend"><code class="xref py py-obj docutils literal notranslate"><span class="pre">backend</span></code></a></p></td>
 <td><p>The 3D API backing this context.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#skia.GrDirectContext.checkAsyncWorkCompletion" title="skia.GrDirectContext.checkAsyncWorkCompletion"><code class="xref py py-obj docutils literal notranslate"><span class="pre">checkAsyncWorkCompletion</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.GrDirectContext.checkAsyncWorkCompletion" title="skia.GrDirectContext.checkAsyncWorkCompletion"><code class="xref py py-obj docutils literal notranslate"><span class="pre">checkAsyncWorkCompletion</span></code></a></p></td>
 <td><p>Checks whether any asynchronous work is complete and if so calls related callbacks.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#skia.GrDirectContext.colorTypeSupportedAsImage" title="skia.GrDirectContext.colorTypeSupportedAsImage"><code class="xref py py-obj docutils literal notranslate"><span class="pre">colorTypeSupportedAsImage</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.GrDirectContext.colorTypeSupportedAsImage" title="skia.GrDirectContext.colorTypeSupportedAsImage"><code class="xref py py-obj docutils literal notranslate"><span class="pre">colorTypeSupportedAsImage</span></code></a></p></td>
 <td><p>Can a <a class="reference internal" href="skia.Image.html#skia.Image" title="skia.Image"><code class="xref py py-class docutils literal notranslate"><span class="pre">Image</span></code></a> be created with the given color type.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#skia.GrDirectContext.colorTypeSupportedAsSurface" title="skia.GrDirectContext.colorTypeSupportedAsSurface"><code class="xref py py-obj docutils literal notranslate"><span class="pre">colorTypeSupportedAsSurface</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.GrDirectContext.colorTypeSupportedAsSurface" title="skia.GrDirectContext.colorTypeSupportedAsSurface"><code class="xref py py-obj docutils literal notranslate"><span class="pre">colorTypeSupportedAsSurface</span></code></a></p></td>
 <td><p>Can a SkSurface be created with the given color type.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#skia.GrDirectContext.compressedBackendFormat" title="skia.GrDirectContext.compressedBackendFormat"><code class="xref py py-obj docutils literal notranslate"><span class="pre">compressedBackendFormat</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.GrDirectContext.compressedBackendFormat" title="skia.GrDirectContext.compressedBackendFormat"><code class="xref py py-obj docutils literal notranslate"><span class="pre">compressedBackendFormat</span></code></a></p></td>
 <td><p>Retrieve the <a class="reference internal" href="skia.GrBackendFormat.html#skia.GrBackendFormat" title="skia.GrBackendFormat"><code class="xref py py-class docutils literal notranslate"><span class="pre">GrBackendFormat</span></code></a> for a given <a class="reference internal" href="skia.Image.CompressionType.html#skia.Image.CompressionType" title="skia.Image.CompressionType"><code class="xref py py-class docutils literal notranslate"><span class="pre">Image.CompressionType</span></code></a>.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#skia.GrDirectContext.createBackendTexture" title="skia.GrDirectContext.createBackendTexture"><code class="xref py py-obj docutils literal notranslate"><span class="pre">createBackendTexture</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.GrDirectContext.createBackendTexture" title="skia.GrDirectContext.createBackendTexture"><code class="xref py py-obj docutils literal notranslate"><span class="pre">createBackendTexture</span></code></a></p></td>
 <td><p>Overloaded function.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#skia.GrDirectContext.createCompressedBackendTexture" title="skia.GrDirectContext.createCompressedBackendTexture"><code class="xref py py-obj docutils literal notranslate"><span class="pre">createCompressedBackendTexture</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.GrDirectContext.createCompressedBackendTexture" title="skia.GrDirectContext.createCompressedBackendTexture"><code class="xref py py-obj docutils literal notranslate"><span class="pre">createCompressedBackendTexture</span></code></a></p></td>
 <td><p>Overloaded function.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#skia.GrDirectContext.defaultBackendFormat" title="skia.GrDirectContext.defaultBackendFormat"><code class="xref py py-obj docutils literal notranslate"><span class="pre">defaultBackendFormat</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.GrDirectContext.defaultBackendFormat" title="skia.GrDirectContext.defaultBackendFormat"><code class="xref py py-obj docutils literal notranslate"><span class="pre">defaultBackendFormat</span></code></a></p></td>
 <td><p>Retrieve the default <a class="reference internal" href="skia.GrBackendFormat.html#skia.GrBackendFormat" title="skia.GrBackendFormat"><code class="xref py py-class docutils literal notranslate"><span class="pre">GrBackendFormat</span></code></a> for a given <a class="reference internal" href="skia.ColorType.html#skia.ColorType" title="skia.ColorType"><code class="xref py py-class docutils literal notranslate"><span class="pre">ColorType</span></code></a> and renderability.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#skia.GrDirectContext.deleteBackendTexture" title="skia.GrDirectContext.deleteBackendTexture"><code class="xref py py-obj docutils literal notranslate"><span class="pre">deleteBackendTexture</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.GrDirectContext.deleteBackendTexture" title="skia.GrDirectContext.deleteBackendTexture"><code class="xref py py-obj docutils literal notranslate"><span class="pre">deleteBackendTexture</span></code></a></p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#skia.GrDirectContext.flush" title="skia.GrDirectContext.flush"><code class="xref py py-obj docutils literal notranslate"><span class="pre">flush</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.GrDirectContext.flush" title="skia.GrDirectContext.flush"><code class="xref py py-obj docutils literal notranslate"><span class="pre">flush</span></code></a></p></td>
 <td><p>Overloaded function.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#skia.GrDirectContext.flushAndSubmit" title="skia.GrDirectContext.flushAndSubmit"><code class="xref py py-obj docutils literal notranslate"><span class="pre">flushAndSubmit</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.GrDirectContext.flushAndSubmit" title="skia.GrDirectContext.flushAndSubmit"><code class="xref py py-obj docutils literal notranslate"><span class="pre">flushAndSubmit</span></code></a></p></td>
 <td><p>Call to ensure all drawing to the context has been flushed and submitted to the underlying 3D API.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#skia.GrDirectContext.freeGpuResources" title="skia.GrDirectContext.freeGpuResources"><code class="xref py py-obj docutils literal notranslate"><span class="pre">freeGpuResources</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.GrDirectContext.freeGpuResources" title="skia.GrDirectContext.freeGpuResources"><code class="xref py py-obj docutils literal notranslate"><span class="pre">freeGpuResources</span></code></a></p></td>
 <td><p>Overloaded function.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#skia.GrDirectContext.getResourceCacheLimit" title="skia.GrDirectContext.getResourceCacheLimit"><code class="xref py py-obj docutils literal notranslate"><span class="pre">getResourceCacheLimit</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.GrDirectContext.getResourceCacheLimit" title="skia.GrDirectContext.getResourceCacheLimit"><code class="xref py py-obj docutils literal notranslate"><span class="pre">getResourceCacheLimit</span></code></a></p></td>
 <td><p>Return the current GPU resource cache limit in bytes.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#skia.GrDirectContext.getResourceCachePurgeableBytes" title="skia.GrDirectContext.getResourceCachePurgeableBytes"><code class="xref py py-obj docutils literal notranslate"><span class="pre">getResourceCachePurgeableBytes</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.GrDirectContext.getResourceCachePurgeableBytes" title="skia.GrDirectContext.getResourceCachePurgeableBytes"><code class="xref py py-obj docutils literal notranslate"><span class="pre">getResourceCachePurgeableBytes</span></code></a></p></td>
 <td><p>Gets the number of bytes in the cache consumed by purgeable (e.g.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#skia.GrDirectContext.getResourceCacheUsage" title="skia.GrDirectContext.getResourceCacheUsage"><code class="xref py py-obj docutils literal notranslate"><span class="pre">getResourceCacheUsage</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.GrDirectContext.getResourceCacheUsage" title="skia.GrDirectContext.getResourceCacheUsage"><code class="xref py py-obj docutils literal notranslate"><span class="pre">getResourceCacheUsage</span></code></a></p></td>
 <td><p>Gets the current GPU resource cache usage.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#skia.GrDirectContext.maxRenderTargetSize" title="skia.GrDirectContext.maxRenderTargetSize"><code class="xref py py-obj docutils literal notranslate"><span class="pre">maxRenderTargetSize</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.GrDirectContext.maxRenderTargetSize" title="skia.GrDirectContext.maxRenderTargetSize"><code class="xref py py-obj docutils literal notranslate"><span class="pre">maxRenderTargetSize</span></code></a></p></td>
 <td><p>Gets the maximum supported render target size.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#skia.GrDirectContext.maxSurfaceSampleCountForColorType" title="skia.GrDirectContext.maxSurfaceSampleCountForColorType"><code class="xref py py-obj docutils literal notranslate"><span class="pre">maxSurfaceSampleCountForColorType</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.GrDirectContext.maxSurfaceSampleCountForColorType" title="skia.GrDirectContext.maxSurfaceSampleCountForColorType"><code class="xref py py-obj docutils literal notranslate"><span class="pre">maxSurfaceSampleCountForColorType</span></code></a></p></td>
 <td><p>Gets the maximum supported sample count for a color type.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#skia.GrDirectContext.maxTextureSize" title="skia.GrDirectContext.maxTextureSize"><code class="xref py py-obj docutils literal notranslate"><span class="pre">maxTextureSize</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.GrDirectContext.maxTextureSize" title="skia.GrDirectContext.maxTextureSize"><code class="xref py py-obj docutils literal notranslate"><span class="pre">maxTextureSize</span></code></a></p></td>
 <td><p>Gets the maximum supported texture size.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#skia.GrDirectContext.oomed" title="skia.GrDirectContext.oomed"><code class="xref py py-obj docutils literal notranslate"><span class="pre">oomed</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.GrDirectContext.oomed" title="skia.GrDirectContext.oomed"><code class="xref py py-obj docutils literal notranslate"><span class="pre">oomed</span></code></a></p></td>
 <td><p>Checks if the underlying 3D API reported an out-of-memory error.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#skia.GrDirectContext.precompileShader" title="skia.GrDirectContext.precompileShader"><code class="xref py py-obj docutils literal notranslate"><span class="pre">precompileShader</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.GrDirectContext.precompileShader" title="skia.GrDirectContext.precompileShader"><code class="xref py py-obj docutils literal notranslate"><span class="pre">precompileShader</span></code></a></p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#skia.GrDirectContext.purgeResourcesNotUsedInMs" title="skia.GrDirectContext.purgeResourcesNotUsedInMs"><code class="xref py py-obj docutils literal notranslate"><span class="pre">purgeResourcesNotUsedInMs</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.GrDirectContext.purgeResourcesNotUsedInMs" title="skia.GrDirectContext.purgeResourcesNotUsedInMs"><code class="xref py py-obj docutils literal notranslate"><span class="pre">purgeResourcesNotUsedInMs</span></code></a></p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#skia.GrDirectContext.purgeUnlockedResources" title="skia.GrDirectContext.purgeUnlockedResources"><code class="xref py py-obj docutils literal notranslate"><span class="pre">purgeUnlockedResources</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.GrDirectContext.purgeUnlockedResources" title="skia.GrDirectContext.purgeUnlockedResources"><code class="xref py py-obj docutils literal notranslate"><span class="pre">purgeUnlockedResources</span></code></a></p></td>
 <td><p>Overloaded function.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#skia.GrDirectContext.ref" title="skia.GrDirectContext.ref"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ref</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.GrDirectContext.ref" title="skia.GrDirectContext.ref"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ref</span></code></a></p></td>
 <td><p>Increment the reference count.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#skia.GrDirectContext.releaseResourcesAndAbandonContext" title="skia.GrDirectContext.releaseResourcesAndAbandonContext"><code class="xref py py-obj docutils literal notranslate"><span class="pre">releaseResourcesAndAbandonContext</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.GrDirectContext.releaseResourcesAndAbandonContext" title="skia.GrDirectContext.releaseResourcesAndAbandonContext"><code class="xref py py-obj docutils literal notranslate"><span class="pre">releaseResourcesAndAbandonContext</span></code></a></p></td>
 <td><p>Overloaded function.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#skia.GrDirectContext.resetContext" title="skia.GrDirectContext.resetContext"><code class="xref py py-obj docutils literal notranslate"><span class="pre">resetContext</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.GrDirectContext.resetContext" title="skia.GrDirectContext.resetContext"><code class="xref py py-obj docutils literal notranslate"><span class="pre">resetContext</span></code></a></p></td>
 <td><p>The <a class="reference internal" href="skia.GrContext.html#skia.GrContext" title="skia.GrContext"><code class="xref py py-class docutils literal notranslate"><span class="pre">GrContext</span></code></a> normally assumes that no outsider is setting state within the underlying 3D API's context/device/whatever.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#skia.GrDirectContext.resetGLTextureBindings" title="skia.GrDirectContext.resetGLTextureBindings"><code class="xref py py-obj docutils literal notranslate"><span class="pre">resetGLTextureBindings</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.GrDirectContext.resetGLTextureBindings" title="skia.GrDirectContext.resetGLTextureBindings"><code class="xref py py-obj docutils literal notranslate"><span class="pre">resetGLTextureBindings</span></code></a></p></td>
 <td><p>If the backend is <a class="reference internal" href="skia.GrBackendApi.html#skia.GrBackendApi.kOpenGL" title="skia.GrBackendApi.kOpenGL"><code class="xref py py-attr docutils literal notranslate"><span class="pre">kOpenGL</span></code></a>, then all texture unit/target combinations for which the GrContext has modified the bound texture will have texture id 0 bound.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#skia.GrDirectContext.setBackendRenderTargetState" title="skia.GrDirectContext.setBackendRenderTargetState"><code class="xref py py-obj docutils literal notranslate"><span class="pre">setBackendRenderTargetState</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.GrDirectContext.setBackendRenderTargetState" title="skia.GrDirectContext.setBackendRenderTargetState"><code class="xref py py-obj docutils literal notranslate"><span class="pre">setBackendRenderTargetState</span></code></a></p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#skia.GrDirectContext.setBackendTextureState" title="skia.GrDirectContext.setBackendTextureState"><code class="xref py py-obj docutils literal notranslate"><span class="pre">setBackendTextureState</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.GrDirectContext.setBackendTextureState" title="skia.GrDirectContext.setBackendTextureState"><code class="xref py py-obj docutils literal notranslate"><span class="pre">setBackendTextureState</span></code></a></p></td>
 <td><p>Updates the state of the GrBackendTexture/RenderTarget to have the passed in GrBackendSurfaceMutableState.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#skia.GrDirectContext.setResourceCacheLimit" title="skia.GrDirectContext.setResourceCacheLimit"><code class="xref py py-obj docutils literal notranslate"><span class="pre">setResourceCacheLimit</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.GrDirectContext.setResourceCacheLimit" title="skia.GrDirectContext.setResourceCacheLimit"><code class="xref py py-obj docutils literal notranslate"><span class="pre">setResourceCacheLimit</span></code></a></p></td>
 <td><p>Specify the GPU resource cache limit.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#skia.GrDirectContext.storeVkPipelineCacheData" title="skia.GrDirectContext.storeVkPipelineCacheData"><code class="xref py py-obj docutils literal notranslate"><span class="pre">storeVkPipelineCacheData</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.GrDirectContext.storeVkPipelineCacheData" title="skia.GrDirectContext.storeVkPipelineCacheData"><code class="xref py py-obj docutils literal notranslate"><span class="pre">storeVkPipelineCacheData</span></code></a></p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#skia.GrDirectContext.submit" title="skia.GrDirectContext.submit"><code class="xref py py-obj docutils literal notranslate"><span class="pre">submit</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.GrDirectContext.submit" title="skia.GrDirectContext.submit"><code class="xref py py-obj docutils literal notranslate"><span class="pre">submit</span></code></a></p></td>
 <td><p>Submit outstanding work to the gpu from all previously un-submitted flushes.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#skia.GrDirectContext.supportsDistanceFieldText" title="skia.GrDirectContext.supportsDistanceFieldText"><code class="xref py py-obj docutils literal notranslate"><span class="pre">supportsDistanceFieldText</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.GrDirectContext.supportsDistanceFieldText" title="skia.GrDirectContext.supportsDistanceFieldText"><code class="xref py py-obj docutils literal notranslate"><span class="pre">supportsDistanceFieldText</span></code></a></p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#skia.GrDirectContext.threadSafeProxy" title="skia.GrDirectContext.threadSafeProxy"><code class="xref py py-obj docutils literal notranslate"><span class="pre">threadSafeProxy</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.GrDirectContext.threadSafeProxy" title="skia.GrDirectContext.threadSafeProxy"><code class="xref py py-obj docutils literal notranslate"><span class="pre">threadSafeProxy</span></code></a></p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#skia.GrDirectContext.unique" title="skia.GrDirectContext.unique"><code class="xref py py-obj docutils literal notranslate"><span class="pre">unique</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.GrDirectContext.unique" title="skia.GrDirectContext.unique"><code class="xref py py-obj docutils literal notranslate"><span class="pre">unique</span></code></a></p></td>
 <td><p>May return true if the caller is the only owner.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#skia.GrDirectContext.unref" title="skia.GrDirectContext.unref"><code class="xref py py-obj docutils literal notranslate"><span class="pre">unref</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.GrDirectContext.unref" title="skia.GrDirectContext.unref"><code class="xref py py-obj docutils literal notranslate"><span class="pre">unref</span></code></a></p></td>
 <td><p>Decrement the reference count.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#skia.GrDirectContext.updateBackendTexture" title="skia.GrDirectContext.updateBackendTexture"><code class="xref py py-obj docutils literal notranslate"><span class="pre">updateBackendTexture</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.GrDirectContext.updateBackendTexture" title="skia.GrDirectContext.updateBackendTexture"><code class="xref py py-obj docutils literal notranslate"><span class="pre">updateBackendTexture</span></code></a></p></td>
 <td><p>Overloaded function.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#skia.GrDirectContext.wait" title="skia.GrDirectContext.wait"><code class="xref py py-obj docutils literal notranslate"><span class="pre">wait</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.GrDirectContext.wait" title="skia.GrDirectContext.wait"><code class="xref py py-obj docutils literal notranslate"><span class="pre">wait</span></code></a></p></td>
 <td><p>Inserts a list of GPU semaphores that the current GPU-backed API must wait on before executing any more commands on the GPU.</p></td>
 </tr>
 </tbody>
@@ -428,6 +433,25 @@ is used if it succeeds.</p>
 <ol class="arabic simple">
 <li><p>MakeMock(mockOptions: GrMockOptions, options: skia.GrContextOptions) -&gt; skia.GrDirectContext</p></li>
 <li><p>MakeMock(mockOptions: GrMockOptions) -&gt; skia.GrDirectContext</p></li>
+</ol>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="skia.GrDirectContext.MakeVulkan">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">GrDirectContext.</span></span><span class="sig-name descname"><span class="pre">MakeVulkan</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#skia.GrDirectContext.MakeVulkan" title="Permalink to this definition"></a></dt>
+<dd><p>Overloaded function.</p>
+<ol class="arabic">
+<li><p>MakeVulkan(backendContext: GrVkBackendContext, options: skia.GrContextOptions) -&gt; skia.GrDirectContext</p>
+<blockquote>
+<div><p>The Vulkan context (VkQueue, VkDevice, VkInstance) must be kept alive
+until the returned GrDirectContext is destroyed. This also means that
+any objects created with this GrDirectContext (e.g. Surfaces, Images,
+etc.) must also be released as they may hold refs on the
+GrDirectContext. Once all these objects and the GrDirectContext are
+released, then it is safe to delete the vulkan objects.</p>
+</div></blockquote>
+</li>
+<li><p>MakeVulkan(backendContext: GrVkBackendContext) -&gt; skia.GrDirectContext</p></li>
 </ol>
 </dd></dl>
 
