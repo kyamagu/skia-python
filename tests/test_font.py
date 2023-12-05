@@ -176,6 +176,7 @@ def test_Typeface_getBounds(typeface):
     assert isinstance(typeface.getBounds(), skia.Rect)
 
 
+@pytest.mark.skip(reason='m120:withdrawn from public API')
 def test_Typeface_UniqueID(typeface):
     assert isinstance(skia.Typeface.UniqueID(typeface), int)
 
@@ -222,6 +223,57 @@ def test_Typeface_MakeFromData(typeface, args):
 def test_Typeface_MakeDeserialize(typeface):
     assert isinstance(
         skia.Typeface.MakeDeserialize(typeface.serialize()), skia.Typeface)
+
+
+@pytest.fixture
+def svgface(svgfont_path):
+    return skia.Typeface.MakeFromFile(svgfont_path)
+
+
+def test_svgface_typeface(svgface):
+    assert (svgface.getFamilyName() == "SampleSVG")
+
+
+@pytest.fixture
+def svg_blob(svgface):
+    text = "abcdefgh"
+    font = skia.Font(svgface,109)
+    blob = skia.TextBlob.MakeFromShapedText(text, font)
+    return blob
+
+
+# This test doesn't really test that the SVG table loads correctly -
+# Rather, it depends on the fact that, for this particular font,
+# the glyf table and the SVG table is substantially different,
+# so the resulting bound box is very different, depending on which
+# table is used for rendering.
+#
+# Before change (glyf?):
+# Mac:   (-1, 14.2852, 292,     88.2852)
+# Linux: ( 0, 43.2852, 356,     98.2852)
+# Win:   ( 0, 43.6426, 352.547, 98.1958)
+def test_svg_blob_bounds(svg_blob):
+    bounds = svg_blob.bounds()
+    import math, sys
+    if not sys.platform.startswith("linux"):
+        pytest.skip("This should work on linux and windows, but somehow only on Linux. REVISIT.")
+    assert (math.isclose(bounds.fLeft,   10,      abs_tol=0.5) and
+            math.isclose(bounds.fTop,    15.2852, abs_tol=0.5) and
+            math.isclose(bounds.fRight,  334,     abs_tol=0.5) and
+            math.isclose(bounds.fBottom, 87.2852, abs_tol=0.5))
+
+
+def test_fontmgr_custom_svg_blob_bounds(svgfont_path):
+    svgface = skia.FontMgr.New_Custom_Empty().makeFromFile(svgfont_path)
+    text = "abcdefgh"
+    font = skia.Font(svgface,109)
+    svg_blob = skia.TextBlob.MakeFromShapedText(text, font)
+    bounds = svg_blob.bounds()
+    import math
+    assert (math.isclose(bounds.fLeft,   10,      abs_tol=0.5) and
+            math.isclose(bounds.fTop,    15.2852, abs_tol=0.5) and
+            math.isclose(bounds.fRight,  334,     abs_tol=3.0) and # The horizontal metric on freetype/Windows differ from freetype/Linux somewhat.
+            math.isclose(bounds.fBottom, 87.2852, abs_tol=0.5))
 
 
 @pytest.fixture
@@ -431,6 +483,7 @@ def test_Font_getTypeface(font):
     assert isinstance(font.getTypeface(), (skia.Typeface, type(None)))
 
 
+@pytest.mark.skip(reason='m120:withdrawn from public API')
 def test_Font_getTypefaceOrDefault(font):
     assert isinstance(font.getTypefaceOrDefault(), skia.Typeface)
 
@@ -455,6 +508,7 @@ def test_Font_refTypeface(font):
     assert isinstance(font.refTypeface(), (skia.Typeface, type(None)))
 
 
+@pytest.mark.skip(reason='m120:withdrawn from public API')
 def test_Font_refTypefaceOrDefault(font):
     assert isinstance(font.refTypefaceOrDefault(), skia.Typeface)
 

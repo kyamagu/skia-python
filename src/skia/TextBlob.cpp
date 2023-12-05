@@ -1,7 +1,9 @@
 #include "common.h"
 #include <include/core/SkSerialProcs.h>
 #include <include/core/SkRSXform.h>
+#include <modules/skshaper/include/SkShaper.h>
 #include <pybind11/stl.h>
+#include <float.h> // FLT_MAX
 
 template<>
 struct py::detail::has_operator_delete<SkTextBlob, void> : std::false_type {};
@@ -247,6 +249,26 @@ textblob
         )docstring",
         py::arg("string"), py::arg("font"),
         py::arg("encoding") = SkTextEncoding::kUTF8)
+    .def_static("MakeFromShapedText",
+        [] (const std::string& utf8text, const SkFont& font,
+            bool leftToRight) {
+            std::unique_ptr<SkShaper> shaper = SkShaper::Make();
+            SkTextBlobBuilderRunHandler textBlobBuilder(utf8text.c_str(), {0, 0});
+            shaper->shape(
+                utf8text.c_str(), utf8text.size(), font, leftToRight, FLT_MAX, &textBlobBuilder);
+            return textBlobBuilder.makeBlob();
+        },
+        R"docstring(
+        Creates :py:class:`TextBlob` in a single run, with shaping, for a text-run direction.
+
+        :param str utf8text: character code points drawn
+        :param skia.Font font: text size, typeface, text scale, and so on, used
+            to draw
+        :param leftToRight bool: text-run direction
+        :return: :py:class:`TextBlob` constructed from one run
+        )docstring",
+        py::arg("utf8text"), py::arg("font"),
+        py::arg("leftToRight") = true)
     .def_static("MakeFromPosTextH",
         [] (const std::string& text, py::iterable xpos,
             SkScalar constY, const SkFont& font, SkTextEncoding encoding) {

@@ -7,6 +7,9 @@
 #include <include/gpu/mock/GrMockTypes.h>
 #include <include/gpu/gl/GrGLInterface.h>
 #include <include/gpu/ganesh/gl/GrGLBackendSurface.h>
+#include <include/gpu/ganesh/gl/GrGLDirectContext.h>
+#include <include/gpu/ganesh/vk/GrVkBackendSurface.h>
+#include <include/gpu/ganesh/vk/GrVkDirectContext.h>
 #include <include/gpu/vk/GrVkBackendContext.h>
 #include <include/gpu/MutableTextureState.h>
 #include <pybind11/chrono.h>
@@ -231,30 +234,34 @@ py::enum_<GrTextureType>(m, "GrTextureType")
 
 py::class_<GrBackendSemaphore>(m, "GrBackendSemaphore")
     .def(py::init())
+/*
     .def("initGL",
         [] (GrBackendSemaphore& semaphore, void* glsync) {
             semaphore.initGL(reinterpret_cast<GrGLsync>(glsync));
         },
         py::arg("glsync"))
-/*
+*/
+#ifdef SK_VULKAN
     .def("initVulkan",
         [] (GrBackendSemaphore& semaphore, void* vksemaphore) {
             semaphore.initVulkan(reinterpret_cast<VkSemaphore>(vksemaphore));
         },
         py::arg("semaphore"))
-*/
+#endif
     // .def("initMetal", &GrBackendSemaphore::initMetal)
     .def("isInitialized", &GrBackendSemaphore::isInitialized)
+/*
     .def("glSync",
         [] (GrBackendSemaphore& semaphore) {
             return reinterpret_cast<void*>(semaphore.glSync());
         })
-/*
+*/
+#ifdef SK_VULKAN
     .def("vkSemaphore",
         [] (GrBackendSemaphore& semaphore) {
             return reinterpret_cast<void*>(semaphore.vkSemaphore());
         })
-*/
+#endif
     // .def("mtlSemaphore", &GrBackendSemaphore::mtlSemaphore)
     // .def("mtlValue", &GrBackendSemaphore::mtlValue)
     ;
@@ -264,14 +271,14 @@ py::class_<GrBackendFormat>(m, "GrBackendFormat")
     .def(py::init<const GrBackendFormat&>())
     .def_static("MakeGL", &GrBackendFormats::MakeGL,
         py::arg("format"), py::arg("target"))
-/*
-    .def_static("MakeVk", py::overload_cast<VkFormat>(&GrBackendFormat::MakeVk),
-        py::arg("format"))
+#ifdef SK_VULKAN
+    .def_static("MakeVk", py::overload_cast<VkFormat, bool>(&GrBackendFormats::MakeVk),
+        py::arg("format"), py::arg("willUseDRMFormatModifiers") = false)
     .def_static("MakeVk",
-        py::overload_cast<const GrVkYcbcrConversionInfo&>(
-            &GrBackendFormat::MakeVk),
-        py::arg("ycbcrInfo"))
-*/
+        py::overload_cast<const GrVkYcbcrConversionInfo&, bool>(
+            &GrBackendFormats::MakeVk),
+        py::arg("ycbcrInfo"), py::arg("willUseDRMFormatModifiers") = false)
+#endif
     .def_static("MakeMock", &GrBackendFormat::MakeMock,
         py::arg("colorType"), py::arg("compression"), py::arg("isStencilFormat") = false)
     .def("__eq__", &GrBackendFormat::operator==, py::arg("other"),
@@ -282,11 +289,11 @@ py::class_<GrBackendFormat>(m, "GrBackendFormat")
     .def("textureType", &GrBackendFormat::textureType)
     .def("channelMask", &GrBackendFormat::channelMask)
     .def("asGLFormat", &GrBackendFormats::AsGLFormat)
-/*
-    .def("asVkFormat", &GrBackendFormat::asVkFormat, py::arg("format"))
+#ifdef SK_VULKAN
+    .def("asVkFormat", &GrBackendFormats::AsVkFormat, py::arg("format"))
     .def("getVkYcbcrConversionInfo",
-        &GrBackendFormat::getVkYcbcrConversionInfo)
-*/
+        &GrBackendFormats::GetVkYcbcrConversionInfo)
+#endif
     .def("asMockColorType", &GrBackendFormat::asMockColorType)
     .def("asMockCompressionType", &GrBackendFormat::asMockCompressionType)
     .def("makeTexture2D", &GrBackendFormat::makeTexture2D)
@@ -303,7 +310,10 @@ py::class_<GrBackendTexture>(m, "GrBackendTexture")
         py::arg("width"), py::arg("height"), py::arg("mipMapped"),
         py::arg("glInfo"))
 #ifdef SK_VULKAN
-    .def(py::init<int, int, const GrVkImageInfo&>(),
+    .def(py::init(
+        [] (int width, int height, const GrVkImageInfo& vkInfo) {
+            return GrBackendTextures::MakeVk(width, height, vkInfo);
+        }),
         py::arg("width"), py::arg("height"), py::arg("vkInfo"))
 #endif
     .def(py::init<int, int, GrMipmapped, const GrMockTextureInfo&>(),
@@ -319,12 +329,12 @@ py::class_<GrBackendTexture>(m, "GrBackendTexture")
         py::arg("info"))
     .def("glTextureParametersModified",
         &GrBackendTextures::GLTextureParametersModified)
-/*
-    .def("getVkImageInfo", &GrBackendTexture::getVkImageInfo,
+#ifdef SK_VULKAN
+    .def("getVkImageInfo", &GrBackendTextures::GetVkImageInfo,
         py::arg("info"))
-    .def("setVkImageLayout", &GrBackendTexture::setVkImageLayout,
+    .def("setVkImageLayout", &GrBackendTextures::SetVkImageLayout,
         py::arg("layout"))
-*/
+#endif
     .def("getBackendFormat", &GrBackendTexture::getBackendFormat)
     .def("getMockTextureInfo", &GrBackendTexture::getMockTextureInfo,
         py::arg("info"))
@@ -389,9 +399,22 @@ py::class_<GrBackendRenderTarget>(m, "GrBackendRenderTarget")
         py::arg("width"), py::arg("height"), py::arg("sampleCnt"),
         py::arg("stencilBits"), py::arg("glInfo"))
 #ifdef SK_VULKAN
-    .def(py::init<int, int, int, const GrVkImageInfo&>(),
+    .def(py::init(
+        [] (int width, int height, const GrVkImageInfo& vkInfo) {
+            return GrBackendRenderTargets::MakeVk(width, height, vkInfo);
+        }),
         py::arg("width"), py::arg("height"), py::arg("vkInfo"))
-    .def(py::init<int, int, int, int, const GrVkImageInfo&>(),
+    .def(py::init(
+        [] (int width, int height, int sampleCnt, const GrVkImageInfo& vkInfo) {
+            /*
+             * m87's include/gpu/GrBackendSurface.h has this line:
+             * "Deprecated. Samplecount is now part of GrVkImageInfo."
+             * up to m117, until this was moved.
+             *
+             * So it is appropriate to ignore sampleCnt in this emulation.
+             */
+            return GrBackendRenderTargets::MakeVk(width, height, vkInfo);
+        }),
         py::arg("width"), py::arg("height"), py::arg("sampleCnt"),
         py::arg("vkInfo"))
 #endif
@@ -412,8 +435,8 @@ py::class_<GrBackendRenderTarget>(m, "GrBackendRenderTarget")
         false if the backend API is not GL.
         )docstring",
         py::arg("info"))
-/*
-    .def("getVkImageInfo", &GrBackendRenderTarget::getVkImageInfo,
+#ifdef SK_VULKAN
+    .def("getVkImageInfo", &GrBackendRenderTargets::GetVkImageInfo,
         R"docstring(
         If the backend API is Vulkan, copies a snapshot of the GrVkImageInfo
         struct into the passed in pointer and returns true. This snapshot will
@@ -421,14 +444,14 @@ py::class_<GrBackendRenderTarget>(m, "GrBackendRenderTarget")
         false if the backend API is not Vulkan.
         )docstring",
         py::arg("info"))
-    .def("setVkImageLayout", &GrBackendRenderTarget::setVkImageLayout,
+    .def("setVkImageLayout", &GrBackendRenderTargets::SetVkImageLayout,
         R"docstring(
         Anytime the client changes the VkImageLayout of the VkImage captured by
         this GrBackendRenderTarget, they must call this function to notify Skia
         of the changed layout.
         )docstring",
         py::arg("layout"))
-*/
+#endif
     .def("getBackendFormat", &GrBackendRenderTarget::getBackendFormat,
         R"docstring(
         Get the GrBackendFormat for this render target (or an invalid format if
@@ -1132,7 +1155,7 @@ py::class_<GrDirectContext, sk_sp<GrDirectContext>, GrRecordingContext>(m, "GrDi
 #ifdef SK_GL
     .def_static("MakeGL",
         py::overload_cast<sk_sp<const GrGLInterface>, const GrContextOptions&>(
-            &GrDirectContext::MakeGL),
+            &GrDirectContexts::MakeGL),
         R"docstring(
         Creates a :py:class:`GrDirectContext` for a backend context. If no
         GrGLInterface is provided then the result of GrGLMakeNativeInterface()
@@ -1140,18 +1163,18 @@ py::class_<GrDirectContext, sk_sp<GrDirectContext>, GrRecordingContext>(m, "GrDi
         )docstring",
         py::arg("interface"), py::arg("options"))
     .def_static("MakeGL",
-        py::overload_cast<sk_sp<const GrGLInterface>>(&GrDirectContext::MakeGL),
+        py::overload_cast<sk_sp<const GrGLInterface>>(&GrDirectContexts::MakeGL),
         py::arg("interface"))
     .def_static("MakeGL",
-        py::overload_cast<const GrContextOptions&>(&GrDirectContext::MakeGL),
+        py::overload_cast<const GrContextOptions&>(&GrDirectContexts::MakeGL),
         py::arg("options"))
-    .def_static("MakeGL", py::overload_cast<>(&GrDirectContext::MakeGL))
+    .def_static("MakeGL", py::overload_cast<>(&GrDirectContexts::MakeGL))
 #endif
 
 #ifdef SK_VULKAN
     .def_static("MakeVulkan",
         py::overload_cast<const GrVkBackendContext&, const GrContextOptions&>(
-            &GrDirectContext::MakeVulkan),
+            &GrDirectContexts::MakeVulkan),
         R"docstring(
         The Vulkan context (VkQueue, VkDevice, VkInstance) must be kept alive
         until the returned GrDirectContext is destroyed. This also means that
@@ -1163,7 +1186,7 @@ py::class_<GrDirectContext, sk_sp<GrDirectContext>, GrRecordingContext>(m, "GrDi
         py::arg("backendContext"), py::arg("options"))
     .def_static("MakeVulkan",
         py::overload_cast<const GrVkBackendContext&>(
-            &GrDirectContext::MakeVulkan),
+            &GrDirectContexts::MakeVulkan),
         py::arg("backendContext"))
 #endif
 

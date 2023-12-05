@@ -1,4 +1,6 @@
 #include "common.h"
+#include "include/core/SkGraphics.h"
+#include "modules/svg/include/SkSVGOpenTypeSVGDecoder.h"
 
 #define XSTRING(s) STRING(s)
 #define STRING(s) #s
@@ -76,6 +78,8 @@ PYBIND11_MODULE(skia, m) {
     initCanvas(m);
     initSurface(m);
     initSVGDOM(m);
+
+    SkGraphics::SetOpenTypeSVGDecoderFactory(SkSVGOpenTypeSVGDecoder::Make);
 
 #ifdef VERSION_INFO
     m.attr("__version__") = XSTRING(VERSION_INFO);

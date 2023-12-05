@@ -230,7 +230,7 @@ py::class_<SkMipmapBuilder>(m, "MipmapBuilder")
     .def("countLevels", &SkMipmapBuilder::countLevels)
     .def("level", &SkMipmapBuilder::level)
     .def("attachTo",
-        py::overload_cast<sk_sp<const SkImage>>(&SkMipmapBuilder::attachTo),
+        py::overload_cast<const sk_sp<const SkImage>&>(&SkMipmapBuilder::attachTo),
         R"docstring(
         If these levels are compatible with src, return a new Image that
         combines src's base level with these levels as mip levels.
@@ -633,7 +633,6 @@ image
         :return: created :py:class:`Image`, or nullptr
         )docstring",
         py::arg("encoded"), py::arg("alphaType") = std::nullopt)
-/*
     .def_static("MakeTextureFromCompressed",
         &SkImages::TextureFromCompressedTextureData,
         R"docstring(
@@ -676,7 +675,6 @@ image
         :return: created :py:class:`Image`, or nullptr
         )docstring",
         py::arg("data"), py::arg("width"), py::arg("height"), py::arg("type"))
-*/
     .def_static("MakeFromTexture",
         [] (GrRecordingContext* context, const GrBackendTexture& texture,
             GrSurfaceOrigin origin, SkColorType colorType,
@@ -701,7 +699,6 @@ image
         py::arg("context"), py::arg("texture"), py::arg("origin"),
         py::arg("colorType"), py::arg("alphaType"),
         py::arg("colorSpace") = nullptr)
-/*
     .def_static("MakeFromCompressedTexture",
         [] (GrRecordingContext* context, const GrBackendTexture& texture,
             GrSurfaceOrigin origin, SkAlphaType alphaType,
@@ -795,6 +792,7 @@ image
         py::arg("colorType"),
         py::arg("alphaType") = SkAlphaType::kPremul_SkAlphaType,
         py::arg("colorSpace") = nullptr)
+/*
     .def_static("MakeFromYUVATexturesCopy",
         [] (GrRecordingContext* context,
             SkYUVColorSpace yuvColorSpace,
@@ -955,6 +953,7 @@ image
         py::arg("yuvaIndices"), py::arg("imageSize"), py::arg("imageOrigin"),
         py::arg("buildMips"), py::arg("limitToMaxTextureSize") = false,
         py::arg("imageColorSpace") = nullptr)
+*/
     .def_static("MakeFromYUVAPixmaps",
         [] (GrRecordingContext* context,
             const SkYUVAPixmaps& pixmaps,
@@ -1001,6 +1000,7 @@ image
         py::arg("buildMips") = GrMipmapped::kNo,
         py::arg("limitToMaxTextureSize") = false,
         py::arg("imageColorSpace") = nullptr)
+/*
     .def_static("MakeFromNV12TexturesCopy",
         [] (GrDirectContext* context,
             SkYUVColorSpace yuvColorSpace,

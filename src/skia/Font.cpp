@@ -1,5 +1,6 @@
 #include "common.h"
 #include <include/core/SkFontMetrics.h>
+#include <include/ports/SkFontMgr_empty.h>
 #include <pybind11/stl.h>
 #include <pybind11/stl_bind.h>
 #include <pybind11/iostream.h>
@@ -538,6 +539,7 @@ typeface
         )docstring")
     // .def("filterRec", &SkTypeface::filterRec)
     // .def("getFontDescriptor", &SkTypeface::getFontDescriptor)
+/*
     .def_static("UniqueID", &SkTypeface::UniqueID,
         R"docstring(
         Return the uniqueID for the specified typeface.
@@ -546,6 +548,7 @@ typeface
         uniqueID. Will never return 0.
         )docstring",
         py::arg("typeface"))
+*/
     .def_static("Equal", &SkTypeface::Equal,
         R"docstring(
         Returns true if the two typefaces reference the same underlying font,
@@ -638,6 +641,7 @@ py::class_<SkFontMgr, sk_sp<SkFontMgr>, SkRefCnt>(m, "FontMgr",
 
     )docstring")
     .def(py::init([] () { return SkFontMgr::RefDefault(); }))
+    .def_static("New_Custom_Empty", &SkFontMgr_New_Custom_Empty)
     .def("__getitem__", &SkFontMgr_getFamilyName, py::arg("index"))
     .def("__len__", &SkFontMgr::countFamilies)
     .def("countFamilies", &SkFontMgr::countFamilies)
@@ -775,12 +779,14 @@ py::enum_<SkFont::Edging>(font, "Edging", R"docstring(
     .export_values();
 
 font
+/*
     .def("__repr__",
         [] (const SkFont& self) {
             return py::str("Font({}, {}, {}, {})").format(
                 self.getTypefaceOrDefault(), self.getSize(), self.getScaleX(),
                 self.getSkewX());
         })
+*/
     .def(py::init<>(),
         R"docstring(
         Constructs :py:class:`Font` with default values.
@@ -990,6 +996,7 @@ font
         :return: :py:class:`Typeface` if previously set, nullptr otherwise
         )docstring",
         py::return_value_policy::reference)
+/*
     .def("getTypefaceOrDefault", &SkFont::getTypefaceOrDefault,
         R"docstring(
         Returns :py:class:`Typeface` if set, or the default typeface.
@@ -998,6 +1005,7 @@ font
             default typeface if not previously set.
         )docstring",
         py::return_value_policy::reference)
+*/
     .def("getSize", &SkFont::getSize,
         R"docstring(
         Returns text size in points.
@@ -1026,6 +1034,7 @@ font
 
         :return: :py:class:`Typeface` if previously set, nullptr otherwise
         )docstring")
+/*
     .def("refTypefaceOrDefault", &SkFont::refTypefaceOrDefault,
         R"docstring(
         Increases :py:class:`Typeface` :py:class:`RefCnt` by one.
@@ -1033,6 +1042,7 @@ font
         :return: :py:class:`Typeface` if previously set or, a pointer to the
             default typeface if not previously set.
         )docstring")
+*/
     .def("setTypeface", &SkFont::setTypeface,
         R"docstring(
         Sets :py:class:`Typeface` to typeface, decreasing :py:class:`RefCnt` of

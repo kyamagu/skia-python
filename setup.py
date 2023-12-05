@@ -12,7 +12,7 @@ except ImportError:
     pass
 
 NAME = 'skia-python'
-__version__ = '119.0b4'
+__version__ = '120.0b5'
 
 SKIA_PATH = os.getenv('SKIA_PATH', 'skia')
 SKIA_OUT_PATH = os.getenv(
@@ -32,12 +32,13 @@ if sys.platform == 'win32':
         'Advapi32',
     ]
     EXTRA_OBJECTS = list(
-    ) + [os.path.join(SKIA_OUT_PATH, 'svg.lib'), os.path.join(SKIA_OUT_PATH, 'skia.lib'),
+    ) + [os.path.join(SKIA_OUT_PATH, 'svg.lib'), os.path.join(SKIA_OUT_PATH, 'skresources.lib'), os.path.join(SKIA_OUT_PATH, 'skia.lib'),
          os.path.join(SKIA_OUT_PATH, 'skshaper.lib'), os.path.join(SKIA_OUT_PATH, 'skunicode.lib')]
     EXTRA_COMPILE_ARGS = [
         '/std:c++17',  # c++20 fails.
         '/DVERSION_INFO=%s' % __version__,
         '/DSK_GL',
+        '/DSK_VULKAN',
         '/DSK_GANESH=1',
         '/Zc:inline',
         # Disable a bunch of warnings.
@@ -72,7 +73,7 @@ elif sys.platform == 'darwin':
     ]
     EXTRA_LINK_ARGS = [
         '-stdlib=libc++',
-        '-mmacosx-version-min=10.9',
+        '-mmacosx-version-min=10.13',
         '-dead_strip',
         '-framework',
         'AppKit',
@@ -85,6 +86,7 @@ else:
     DEFINE_MACROS = [
         ('VERSION_INFO', __version__),
         ('SK_GL', ''),
+        ('SK_VULKAN', ''),
         ('SK_GANESH', '1'),
     ]
     LIBRARIES = [
@@ -94,7 +96,7 @@ else:
         'expat',
     ]
     EXTRA_OBJECTS = list(
-    ) + [os.path.join(SKIA_OUT_PATH, 'libsvg.a'), os.path.join(SKIA_OUT_PATH, 'libskia.a'),
+    ) + [os.path.join(SKIA_OUT_PATH, 'libsvg.a'), os.path.join(SKIA_OUT_PATH, 'libskresources.a'), os.path.join(SKIA_OUT_PATH, 'libskia.a'),
          os.path.join(SKIA_OUT_PATH, 'libskshaper.a'), os.path.join(SKIA_OUT_PATH, 'libskunicode.a')]
     EXTRA_COMPILE_ARGS = [
         '-std=c++17',
@@ -144,6 +146,7 @@ extension = Extension(
         get_pybind_include(user=True),
         SKIA_PATH,
         os.path.join(SKIA_PATH, "third_party/externals/freetype/include"),
+        os.path.join(SKIA_PATH, "third_party/externals/vulkan-headers/include"),
         os.path.join(SKIA_OUT_PATH, 'gen'),
     ],
     define_macros=DEFINE_MACROS,

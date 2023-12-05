@@ -22,12 +22,15 @@ function apply_patch {
 }
 
 cd skia && \
-    patch -p1 < ../patch/skia-m119-minimize-download.patch && \
+    patch -p1 < ../patch/skia-m120-minimize-download.patch && \
     patch -p1 < ../patch/skia-m116-colrv1-freetype.diff && \
     python3 tools/git-sync-deps && \
     bin/gn gen out/Release --args="
 is_official_build=true
 skia_enable_svg=true
+skia_use_freetype=true
+skia_use_system_freetype2=false
+skia_enable_fontmgr_custom_empty=true
 skia_use_system_libjpeg_turbo=false
 skia_use_system_libwebp=false
 skia_use_system_libpng=false
