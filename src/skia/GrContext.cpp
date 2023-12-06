@@ -58,13 +58,13 @@ py::enum_<skgpu::BackendApi>(m, "gpuBackendApi",
     .value("kMock", skgpu::BackendApi::kMock)
     .export_values();
 
-py::enum_<GrMipmapped>(m, "GrMipmapped",
+py::enum_<skgpu::Mipmapped>(m, "skgpu::Mipmapped",
     R"docstring(
     Used to say whether a texture has mip levels allocated or not.
     )docstring",
     py::arithmetic())
-    .value("kNo", GrMipmapped::kNo)
-    .value("kYes", GrMipmapped::kYes)
+    .value("kNo", skgpu::Mipmapped::kNo)
+    .value("kYes", skgpu::Mipmapped::kYes)
     .export_values();
 
 py::enum_<GrRenderable>(m, "GrRenderable", py::arithmetic())
@@ -316,7 +316,7 @@ py::class_<GrBackendTexture>(m, "GrBackendTexture")
         }),
         py::arg("width"), py::arg("height"), py::arg("vkInfo"))
 #endif
-    .def(py::init<int, int, GrMipmapped, const GrMockTextureInfo&>(),
+    .def(py::init<int, int, skgpu::Mipmapped, const GrMockTextureInfo&>(),
         py::arg("width"), py::arg("height"), py::arg("mipMapped"),
         py::arg("mockInfo"))
     .def(py::init<const GrBackendTexture&>(), py::arg("that"))
@@ -867,8 +867,8 @@ py::class_<GrDirectContext, sk_sp<GrDirectContext>, GrRecordingContext>(m, "GrDi
     .def("supportsDistanceFieldText", &GrDirectContext::supportsDistanceFieldText)
     .def("storeVkPipelineCacheData", &GrDirectContext::storeVkPipelineCacheData)
     .def_static("ComputeImageSize",
-        [] (sk_sp<SkImage> image, GrMipmapped mapped, bool useNextPow2) {
-            // REVISIT: process GrMipmapped and useNextPow2 = true
+        [] (sk_sp<SkImage> image, skgpu::Mipmapped mapped, bool useNextPow2) {
+            // REVISIT: process skgpu::Mipmapped and useNextPow2 = true
             return image->textureSize();
         },
         py::arg("image"), py::arg("mipMapped"), py::arg("useNextPow2") = false)
@@ -885,7 +885,7 @@ py::class_<GrDirectContext, sk_sp<GrDirectContext>, GrRecordingContext>(m, "GrDi
         )docstring",
         py::arg("colorType"), py::arg("renderable") = GrRenderable::kNo)
     .def("createBackendTexture",
-        py::overload_cast<int, int, const GrBackendFormat&, GrMipmapped,
+        py::overload_cast<int, int, const GrBackendFormat&, skgpu::Mipmapped,
             GrRenderable, GrProtected, std::string_view>(&GrDirectContext::createBackendTexture),
         R"docstring(
         If possible, create an uninitialized backend texture.
@@ -898,7 +898,7 @@ py::class_<GrDirectContext, sk_sp<GrDirectContext>, GrRecordingContext>(m, "GrDi
         py::arg("mipMapped"), py::arg("renderable"),
         py::arg("isProtected") = GrProtected::kNo, py::arg("view") = std::string_view{})
     .def("createBackendTexture",
-        py::overload_cast<int, int, SkColorType, GrMipmapped,
+        py::overload_cast<int, int, SkColorType, skgpu::Mipmapped,
             GrRenderable, GrProtected, std::string_view>(&GrDirectContext::createBackendTexture),
         R"docstring(
         If possible, create an uninitialized backend texture.
@@ -914,7 +914,7 @@ py::class_<GrDirectContext, sk_sp<GrDirectContext>, GrRecordingContext>(m, "GrDi
     .def("createBackendTexture",
         [] (GrDirectContext& context, int width, int height,
             const GrBackendFormat& backendFormat, const SkColor4f& color,
-            GrMipmapped mipMapped, GrRenderable renderable,
+            skgpu::Mipmapped mipMapped, GrRenderable renderable,
             GrProtected isProtected) {
             return context.createBackendTexture(
                 width, height, backendFormat, color, mipMapped, renderable,
@@ -938,7 +938,7 @@ py::class_<GrDirectContext, sk_sp<GrDirectContext>, GrRecordingContext>(m, "GrDi
     .def("createBackendTexture",
         [] (GrDirectContext& context, int width, int height,
             SkColorType colorType, const SkColor4f& color,
-            GrMipmapped mipMapped, GrRenderable renderable,
+            skgpu::Mipmapped mipMapped, GrRenderable renderable,
             GrProtected isProtected) {
             return context.createBackendTexture(
                 width, height, colorType, color, mipMapped, renderable,
@@ -1058,7 +1058,7 @@ py::class_<GrDirectContext, sk_sp<GrDirectContext>, GrRecordingContext>(m, "GrDi
     .def("createCompressedBackendTexture",
         [] (GrDirectContext& context, int width, int height,
             const GrBackendFormat& backendFormat, const SkColor4f& color,
-            GrMipmapped mipMapped, GrProtected isProtected) {
+            skgpu::Mipmapped mipMapped, GrProtected isProtected) {
             return context.createCompressedBackendTexture(
                 width, height, backendFormat, color, mipMapped, isProtected);
         },
@@ -1076,7 +1076,7 @@ py::class_<GrDirectContext, sk_sp<GrDirectContext>, GrRecordingContext>(m, "GrDi
     .def("createCompressedBackendTexture",
         [] (GrDirectContext& context, int width, int height,
             SkTextureCompressionType type, const SkColor4f& color,
-            GrMipmapped mipMapped, GrProtected isProtected) {
+            skgpu::Mipmapped mipMapped, GrProtected isProtected) {
             return context.createCompressedBackendTexture(
                 width, height, type, color, mipMapped, isProtected);
         },
@@ -1085,7 +1085,7 @@ py::class_<GrDirectContext, sk_sp<GrDirectContext>, GrRecordingContext>(m, "GrDi
     .def("createCompressedBackendTexture",
         [] (GrDirectContext& context, int width, int height,
             const GrBackendFormat& backendFormat, py::buffer b,
-            GrMipmapped mipMapped, GrProtected isProtected) {
+            skgpu::Mipmapped mipMapped, GrProtected isProtected) {
             auto info = b.request();
             size_t size = (info.ndim) ? info.strides[0] * info.shape[0] : 0;
             return context.createCompressedBackendTexture(
@@ -1098,7 +1098,7 @@ py::class_<GrDirectContext, sk_sp<GrDirectContext>, GrRecordingContext>(m, "GrDi
     .def("createCompressedBackendTexture",
         [] (GrDirectContext& context, int width, int height,
             SkTextureCompressionType type, py::buffer b,
-            GrMipmapped mipMapped, GrProtected isProtected) {
+            skgpu::Mipmapped mipMapped, GrProtected isProtected) {
             auto info = b.request();
             size_t size = (info.ndim) ? info.strides[0] * info.shape[0] : 0;
             return context.createCompressedBackendTexture(
