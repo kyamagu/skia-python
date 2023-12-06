@@ -24,7 +24,9 @@ void PyReadPixelsCallback (
 }  // namespace
 
 
+/*
 const SkSurfaceProps::Flags SkSurfaceProps::kUseDistanceFieldFonts_Flag;
+*/
 
 void initSurface(py::module &m) {
 
@@ -84,6 +86,7 @@ surfaceprops
         &SkSurfaceProps::isUseDeviceIndependentFonts)
     .def(py::self == py::self)
     .def(py::self != py::self)
+/*
     .def_readonly_static("kUseDistanceFieldFonts_Flag",
         &SkSurfaceProps::kUseDistanceFieldFonts_Flag,
         R"docstring(
@@ -91,6 +94,7 @@ surfaceprops
 
         Will be removed.
         )docstring")
+*/
     ;
 
 py::class_<GrSurfaceCharacterization>(m, "SurfaceCharacterization")
