@@ -58,7 +58,7 @@ py::enum_<skgpu::BackendApi>(m, "gpuBackendApi",
     .value("kMock", skgpu::BackendApi::kMock)
     .export_values();
 
-py::enum_<skgpu::Mipmapped>(m, "skgpu::Mipmapped",
+py::enum_<skgpu::Mipmapped>(m, "GrMipmapped",
     R"docstring(
     Used to say whether a texture has mip levels allocated or not.
     )docstring",
