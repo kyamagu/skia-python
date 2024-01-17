@@ -298,7 +298,6 @@ py::class_<std::unique_ptr<uint8_t>>(
         applied, and then the result is remultiplied.
         )docstring",
         py::arg("table"))
-/*
     .def_static("MakeARGB",
         [] (py::object tableA, py::object tableR, py::object tableG,
             py::object tableB) {
@@ -307,7 +306,7 @@ py::class_<std::unique_ptr<uint8_t>>(
             CopyTableIfValid(tableR, &tableR_);
             CopyTableIfValid(tableG, &tableG_);
             CopyTableIfValid(tableB, &tableB_);
-            return SkTableColorFilter::MakeARGB(
+            return SkColorFilters::TableARGB(
                 (tableA_.empty()) ? nullptr : &tableA_[0],
                 (tableR_.empty()) ? nullptr : &tableR_[0],
                 (tableG_.empty()) ? nullptr : &tableG_[0],
@@ -323,7 +322,6 @@ py::class_<std::unique_ptr<uint8_t>>(
         )docstring",
         py::arg("tableA"), py::arg("tableR"), py::arg("tableG"),
         py::arg("tableB"))
-*/
     ;
 
 }
