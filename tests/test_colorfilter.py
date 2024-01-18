@@ -112,6 +112,5 @@ def test_TableColorFilter_Make():
     (range(256), range(256), range(256), range(256)),
     (range(256), None, None, None),
 ])
-@pytest.mark.xfail(reason='TableColorFilter class removed in m116')
 def test_TableColorFilter_MakeARGB(args):
     assert isinstance(skia.TableColorFilter.MakeARGB(*args), skia.ColorFilter)
