@@ -558,6 +558,11 @@ typeface
     .def("__eq__", &SkTypeface::Equal, py::is_operator())
     .def_static("MakeDefault",
         [] (void) {
+            auto warnings = pybind11::module::import("warnings");
+            auto builtins = pybind11::module::import("builtins");
+            warnings.attr("warn")(
+                "\"Default typeface\" is deprecated upstream. Please specify name/file/style choices.",
+                builtins.attr("DeprecationWarning"));
             return SkFontMgr::RefDefault()->legacyMakeTypeface("", SkFontStyle());
         },
         R"docstring(
