@@ -259,9 +259,9 @@ py::enum_<SkTypeface::SerializeBehavior>(typeface, "SerializeBehavior",
     .export_values();
 
 typeface
-    .def(py::init([] () { return SkTypeface::MakeEmpty(); }),
+    .def(py::init([] () { return SkFontMgr::RefDefault()->legacyMakeTypeface("", SkFontStyle()); }),
         R"docstring(
-        Returns a non-null typeface which contains no glyphs.
+        Returns the default normal typeface.
         )docstring")
     .def(py::init(&SkTypeface_MakeFromName),
         R"docstring(
@@ -556,7 +556,14 @@ typeface
         )docstring",
         py::arg("self"), py::arg("other"))
     .def("__eq__", &SkTypeface::Equal, py::is_operator())
-    .def_static("MakeDefault", &SkTypeface::MakeEmpty,
+    .def_static("MakeDefault",
+        [] (void) {
+            return SkFontMgr::RefDefault()->legacyMakeTypeface("", SkFontStyle());
+        },
+        R"docstring(
+        Returns the default normal typeface, which is never nullptr.
+        )docstring")
+    .def_static("MakeEmpty", &SkTypeface::MakeEmpty,
         R"docstring(
         Returns a non-null typeface which contains no glyphs.
         )docstring")
