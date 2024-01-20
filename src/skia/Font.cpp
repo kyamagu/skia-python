@@ -259,7 +259,15 @@ py::enum_<SkTypeface::SerializeBehavior>(typeface, "SerializeBehavior",
     .export_values();
 
 typeface
-    .def(py::init([] () { return SkFontMgr::RefDefault()->legacyMakeTypeface("", SkFontStyle()); }),
+    .def(py::init(
+        [] (void) {
+            auto warnings = pybind11::module::import("warnings");
+            auto builtins = pybind11::module::import("builtins");
+            warnings.attr("warn")(
+                "\"Default typeface\" is deprecated upstream. Please specify name/file/style choices.",
+                builtins.attr("DeprecationWarning"));
+            return SkFontMgr::RefDefault()->legacyMakeTypeface("", SkFontStyle());
+        }),
         R"docstring(
         Returns the default normal typeface.
         )docstring")
