@@ -15,3 +15,5 @@ Since m120:
   should switch to use 'Typeface("")' to suppress the warning. Both Typeface() and
   Typeface.MakeDefault(), the no-argument forms, are likely to be removed in the future.
 
+  Also avoid skia.Font(); e.g. skia.Font(skia.Typeface('Roman')) should be used.
+
