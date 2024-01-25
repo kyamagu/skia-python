@@ -389,7 +389,7 @@ def test_FontMgr_ref_unref(fontmgr):
 
 @pytest.fixture(scope='session')
 def font():
-    return skia.Font(skia.Typeface('Roman'))
+    return skia.Font(skia.Typeface(""))
 
 
 @pytest.mark.parametrize('args', [
