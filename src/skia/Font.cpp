@@ -259,7 +259,15 @@ py::enum_<SkTypeface::SerializeBehavior>(typeface, "SerializeBehavior",
     .export_values();
 
 typeface
-    .def(py::init([] () { return SkTypeface::MakeDefault(); }),
+    .def(py::init(
+        [] (void) {
+            auto warnings = pybind11::module::import("warnings");
+            auto builtins = pybind11::module::import("builtins");
+            warnings.attr("warn")(
+                "\"Default typeface\" is deprecated upstream. Please specify name/file/style choices.",
+                builtins.attr("DeprecationWarning"));
+            return SkFontMgr::RefDefault()->legacyMakeTypeface("", SkFontStyle());
+        }),
         R"docstring(
         Returns the default normal typeface.
         )docstring")
@@ -556,9 +564,21 @@ typeface
         )docstring",
         py::arg("self"), py::arg("other"))
     .def("__eq__", &SkTypeface::Equal, py::is_operator())
-    .def_static("MakeDefault", &SkTypeface::MakeDefault,
+    .def_static("MakeDefault",
+        [] (void) {
+            auto warnings = pybind11::module::import("warnings");
+            auto builtins = pybind11::module::import("builtins");
+            warnings.attr("warn")(
+                "\"Default typeface\" is deprecated upstream. Please specify name/file/style choices.",
+                builtins.attr("DeprecationWarning"));
+            return SkFontMgr::RefDefault()->legacyMakeTypeface("", SkFontStyle());
+        },
         R"docstring(
         Returns the default normal typeface, which is never nullptr.
+        )docstring")
+    .def_static("MakeEmpty", &SkTypeface::MakeEmpty,
+        R"docstring(
+        Returns a non-null typeface which contains no glyphs.
         )docstring")
     .def_static("MakeFromName", &SkTypeface_MakeFromName,
         R"docstring(
@@ -787,11 +807,31 @@ font
                 self.getSkewX());
         })
 */
-    .def(py::init<>(),
+    .def(py::init(
+        [] (void) {
+            auto warnings = pybind11::module::import("warnings");
+            auto builtins = pybind11::module::import("builtins");
+            warnings.attr("warn")(
+                "\"Default font\" is deprecated upstream. Please specify name/file/style choices.",
+                builtins.attr("DeprecationWarning"));
+            return SkFont(SkFontMgr::RefDefault()->legacyMakeTypeface("", SkFontStyle()));
+        }),
         R"docstring(
         Constructs :py:class:`Font` with default values.
         )docstring")
-    .def(py::init<sk_sp<SkTypeface>, SkScalar>(),
+    .def(py::init(
+        [] (py::object typeface, SkScalar size) {
+            if (typeface.is_none()) {
+                auto warnings = pybind11::module::import("warnings");
+                auto builtins = pybind11::module::import("builtins");
+                warnings.attr("warn")(
+                    "\"Default font\" is deprecated upstream. Please specify name/file/style choices.",
+                    builtins.attr("DeprecationWarning"));
+                return SkFont(SkFontMgr::RefDefault()->legacyMakeTypeface("", SkFontStyle()), size);
+            } else {
+                return SkFont(typeface.cast<sk_sp<SkTypeface>>(), size);
+            }
+        }),
         R"docstring(
         Constructs :py:class:`Font` with default values with
         :py:class:`Typeface` and size in points.
@@ -801,7 +841,19 @@ font
         :size: typographic height of text
         )docstring",
         py::arg("typeface"), py::arg("size"))
-    .def(py::init<sk_sp<SkTypeface>>(),
+    .def(py::init(
+        [] (py::object typeface) {
+            if (typeface.is_none()) {
+                auto warnings = pybind11::module::import("warnings");
+                auto builtins = pybind11::module::import("builtins");
+                warnings.attr("warn")(
+                    "\"Default font\" is deprecated upstream. Please specify name/file/style choices.",
+                    builtins.attr("DeprecationWarning"));
+                return SkFont(SkFontMgr::RefDefault()->legacyMakeTypeface("", SkFontStyle()));
+            } else {
+                return SkFont(typeface.cast<sk_sp<SkTypeface>>());
+            }
+        }),
         R"docstring(
         Constructs :py:class:`Font` with default values with
         :py:class:`Typeface`.
@@ -810,7 +862,21 @@ font
             text
         )docstring",
         py::arg("typeface"))
-    .def(py::init<sk_sp<SkTypeface>, SkScalar, SkScalar, SkScalar>(),
+    .def(py::init(
+        [] (py::object typeface, SkScalar size, SkScalar scaleX, SkScalar skewX) {
+            if (typeface.is_none()) {
+                auto warnings = pybind11::module::import("warnings");
+                auto builtins = pybind11::module::import("builtins");
+                warnings.attr("warn")(
+                    "\"Default font\" is deprecated upstream. Please specify name/file/style choices.",
+                    builtins.attr("DeprecationWarning"));
+                return SkFont(SkFontMgr::RefDefault()->legacyMakeTypeface("", SkFontStyle()),
+                                      size, scaleX, skewX);
+            } else {
+                return SkFont(typeface.cast<sk_sp<SkTypeface>>(),
+                                      size, scaleX, skewX);
+            }
+        }),
         R"docstring(
         Constructs :py:class:`Font` with default values with
         :py:class:`Typeface` and size in points, horizontal scale, and

@@ -60,8 +60,8 @@ git clone https://gn.googlesource.com/gn && \
 
 # Build skia
 cd skia && \
-    patch -p1 < ../patch/skia-m120-minimize-download.patch && \
-    patch -p1 < ../patch/skia-m116-colrv1-freetype.diff && \
+    patch -p1 < ../patch/skia-m121-minimize-download.patch && \
+    patch -p1 < ../patch/skia-m121-colrv1-freetype.diff && \
     python3 tools/git-sync-deps && \
     cp -f ../gn/out/gn bin/gn && \
     bin/gn gen out/Release --args="

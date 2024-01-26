@@ -10,12 +10,9 @@ def shader():
 
 
 def test_Shader_isOpaque(shader):
-    if (shader == None):
-        pytest.skip("segfault:m116:REVISIT")
     assert isinstance(shader.isOpaque(), bool)
 
 
-@pytest.mark.skip(reason='m116:REVISIT')
 @pytest.mark.parametrize('args', [
     (skia.Matrix(), [skia.TileMode.kClamp, skia.TileMode.kClamp]),
     tuple(),
@@ -24,18 +21,20 @@ def test_Shader_isAImage(shader, args):
     assert isinstance(shader.isAImage(*args), (bool, type(None), skia.Image))
 
 
-@pytest.mark.skip(reason='m116:REVISIT')
+@pytest.mark.skip(reason='m87->m116:DEPRECATED. skbug.com/8941')
+# DEPRECATED at m87.
+# "asAGradient(GradientInfo* info)" was used only by on Android and
+# moved to include/android/SkAndroidFrameworkUtils.h as
+# "ShaderAsALinearGradient(SkShader* shader, LinearGradientInfo*)".
 def test_Shader_asAGradient(shader):
     info = skia.Shader.GradientInfo()
     assert isinstance(shader.asAGradient(info), skia.Shader.GradientType)
 
 
-@pytest.mark.skip(reason='m116:REVISIT')
 def test_Shader_makeWithLocalMatrix(shader):
     assert isinstance(shader.makeWithLocalMatrix(skia.Matrix()), skia.Shader)
 
 
-@pytest.mark.skip(reason='m116:REVISIT')
 def test_Shader_makeWithColorFilter(shader):
     assert isinstance(
         shader.makeWithColorFilter(skia.LumaColorFilter.Make()), skia.Shader)
@@ -64,7 +63,6 @@ def test_Shaders_Lerp(shader):
         skia.Shaders.Lerp(0.5, shader, shader), skia.Shader)
 
 
-@pytest.mark.skip(reason='m116:REVISIT')
 @pytest.mark.parametrize('args', [
     ([skia.Point(0, 0), skia.Point(1, 1)], [0xFFFF00FF, 0xFFFFFF00]),
     ([skia.Point(0, 0), skia.Point(1, 1)], [0xFFFF00FF, 0xFFFFFF00], [0, 1],

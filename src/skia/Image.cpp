@@ -650,7 +650,7 @@ image
         :param int width: width of full :py:class:`Image`
         :param int height: height of full :py:class:`Image`
         :param skia.CompressionType type: type of compression used
-        :param skia.GrMipmapped mipMapped: does 'data' contain data for all the
+        :param skia.skgpu::Mipmapped mipMapped: does 'data' contain data for all the
             mipmap levels?
         :param skia.GrProtected isProtected: do the contents of 'data' require
             DRM protection (on Vulkan)?
@@ -658,7 +658,7 @@ image
         )docstring",
         py::arg("context"), py::arg("data"), py::arg("width"),
         py::arg("height"), py::arg("type"),
-        py::arg("mipMapped") = GrMipmapped::kNo,
+        py::arg("mipMapped") = skgpu::Mipmapped::kNo,
         py::arg("isProtected") = GrProtected::kNo)
     .def_static("MakeRasterFromCompressed", &SkImages::RasterFromCompressedTextureData,
         R"docstring(
@@ -957,7 +957,7 @@ image
     .def_static("MakeFromYUVAPixmaps",
         [] (GrRecordingContext* context,
             const SkYUVAPixmaps& pixmaps,
-            GrMipMapped buildMips,
+            skgpu::Mipmapped buildMips,
             bool limitToMaxTextureSize,
             const SkColorSpace* imageColorSpace) {
             return SkImages::TextureFromYUVAPixmaps(
@@ -997,7 +997,7 @@ image
         :return:                      created :py:class:`Image`, or nullptr
         )docstring",
         py::arg("context"), py::arg("pixmaps"),
-        py::arg("buildMips") = GrMipmapped::kNo,
+        py::arg("buildMips") = skgpu::Mipmapped::kNo,
         py::arg("limitToMaxTextureSize") = false,
         py::arg("imageColorSpace") = nullptr)
 /*
@@ -1626,7 +1626,7 @@ image
 
         Returned :py:class:`Image` is compatible with :py:class:`Surface`
         created with dstColorSpace. The returned :py:class:`Image` respects
-        mipMapped setting; if mipMapped equals :py:attr:`GrMipmapped.kYes`, the
+        mipMapped setting; if mipMapped equals :py:attr:`skgpu::Mipmapped.kYes`, the
         backing texture allocates mip map levels.
 
         The mipMapped parameter is effectively treated as kNo if MIP maps are
@@ -1641,13 +1641,13 @@ image
 
         :param GrDirectContext context: the GrDirectContext in play, if it
             exists
-        :param GrMipmapped mipMapped: whether created :py:class:`Image` texture
+        :param skgpu::Mipmapped mipMapped: whether created :py:class:`Image` texture
             must allocate mip map levels
         :param skia.Budgeted budgeted: whether to count a newly created texture
             for the returned image counts against the GrDirectContext's budget.
         :return: created :py:class:`Image`, or nullptr
         )docstring",
-        py::arg("context").none(false), py::arg("mipMapped") = GrMipmapped::kNo,
+        py::arg("context").none(false), py::arg("mipMapped") = skgpu::Mipmapped::kNo,
         py::arg("budgeted") = skgpu::Budgeted::kYes)
     .def("makeNonTextureImage", &SkImage::makeNonTextureImage,
         R"docstring(
