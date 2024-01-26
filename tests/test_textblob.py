@@ -4,7 +4,7 @@ import pytest
 
 @pytest.fixture
 def textblob():
-    return skia.TextBlob('foo', skia.Font())
+    return skia.TextBlob('foo', skia.Font(skia.Typeface("")))
 
 
 @pytest.mark.parametrize('args', [
