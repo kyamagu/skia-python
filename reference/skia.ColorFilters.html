@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>ColorFilters &mdash; skia-python 120.0b5 documentation</title>
+  <title>ColorFilters &mdash; skia-python 121.0b6 documentation</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
       <link rel="stylesheet" type="text/css" href="../_static/css/theme.css" />
 
@@ -37,7 +37,7 @@
             skia-python
           </a>
               <div class="version">
-                120.0b5
+                121.0b6
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
@@ -265,22 +265,25 @@
 <tr class="row-odd"><td><p><a class="reference internal" href="#skia.ColorFilters.Blend" title="skia.ColorFilters.Blend"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Blend</span></code></a></p></td>
 <td><p>Overloaded function.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#skia.ColorFilters.HSLAMatrix" title="skia.ColorFilters.HSLAMatrix"><code class="xref py py-obj docutils literal notranslate"><span class="pre">HSLAMatrix</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.ColorFilters.Compose" title="skia.ColorFilters.Compose"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Compose</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.ColorFilters.HSLAMatrix" title="skia.ColorFilters.HSLAMatrix"><code class="xref py py-obj docutils literal notranslate"><span class="pre">HSLAMatrix</span></code></a></p></td>
 <td><p>Overloaded function.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#skia.ColorFilters.Lerp" title="skia.ColorFilters.Lerp"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Lerp</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.ColorFilters.Lerp" title="skia.ColorFilters.Lerp"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Lerp</span></code></a></p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#skia.ColorFilters.LinearToSRGBGamma" title="skia.ColorFilters.LinearToSRGBGamma"><code class="xref py py-obj docutils literal notranslate"><span class="pre">LinearToSRGBGamma</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.ColorFilters.LinearToSRGBGamma" title="skia.ColorFilters.LinearToSRGBGamma"><code class="xref py py-obj docutils literal notranslate"><span class="pre">LinearToSRGBGamma</span></code></a></p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#skia.ColorFilters.Matrix" title="skia.ColorFilters.Matrix"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Matrix</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.ColorFilters.Matrix" title="skia.ColorFilters.Matrix"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Matrix</span></code></a></p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#skia.ColorFilters.SRGBToLinearGamma" title="skia.ColorFilters.SRGBToLinearGamma"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SRGBToLinearGamma</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.ColorFilters.SRGBToLinearGamma" title="skia.ColorFilters.SRGBToLinearGamma"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SRGBToLinearGamma</span></code></a></p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#skia.ColorFilters.__init__" title="skia.ColorFilters.__init__"><code class="xref py py-obj docutils literal notranslate"><span class="pre">__init__</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.ColorFilters.__init__" title="skia.ColorFilters.__init__"><code class="xref py py-obj docutils literal notranslate"><span class="pre">__init__</span></code></a></p></td>
 <td><p></p></td>
 </tr>
 </tbody>
@@ -298,6 +301,11 @@
 <li><p>Blend(c: int, mode: skia.BlendMode) -&gt; skia.ColorFilter</p></li>
 </ol>
 </dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="skia.ColorFilters.Compose">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">ColorFilters.</span></span><span class="sig-name descname"><span class="pre">Compose</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">outer</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="skia.ColorFilter.html#skia.ColorFilter" title="skia.ColorFilter"><span class="pre">skia.ColorFilter</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">inner</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="skia.ColorFilter.html#skia.ColorFilter" title="skia.ColorFilter"><span class="pre">skia.ColorFilter</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="skia.ColorFilter.html#skia.ColorFilter" title="skia.ColorFilter"><span class="pre">skia.ColorFilter</span></a></span></span><a class="headerlink" href="#skia.ColorFilters.Compose" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="skia.ColorFilters.HSLAMatrix">
