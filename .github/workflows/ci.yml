@@ -134,8 +134,9 @@ jobs:
             xvfb-run -s "-screen 0 640x480x24" python -m pytest {project}/tests
           CIBW_TEST_SKIP: "*-macosx_arm64"
 
-      - uses: actions/upload-artifact@v3
+      - uses: actions/upload-artifact@v4
         with:
+          name: wheel-${{ matrix.os }}-${{ matrix.arch }}-${{ matrix.cp }}
           path: ./wheelhouse/*.whl
 
   build_docs:
@@ -150,9 +151,9 @@ jobs:
         with:
           python-version: '3.8'
 
-      - uses: actions/download-artifact@v3
+      - uses: actions/download-artifact@v4
         with:
-          name: artifact
+          merge-multiple: true
           path: dist
 
       - name: Build docs
@@ -173,13 +174,12 @@ jobs:
     needs: [build_wheels]
     runs-on: ubuntu-latest
     if: github.event_name == 'release' && github.event.action == 'published'
+    permissions:
+      id-token: write
     steps:
-      - uses: actions/download-artifact@v3
+      - uses: actions/download-artifact@v4
         with:
-          name: artifact
+          merge-multiple: true
           path: dist
 
-      - uses: pypa/gh-action-pypi-publish@v1.4.2
-        with:
-          user: ${{ secrets.PYPI_USERNAME }}
-          password: ${{ secrets.PYPI_PASSWORD }}
+      - uses: pypa/gh-action-pypi-publish@release/v1
