@@ -119,7 +119,7 @@ jobs:
           platforms: ${{ matrix.arch }}
 
       - name: Build wheels
-        uses: pypa/cibuildwheel@v2.16.2
+        uses: pypa/cibuildwheel@v2.16.5
         env:
           CIBW_BUILD: "${{ matrix.cp }}-*"
           CIBW_SKIP: "*musllinux*"
