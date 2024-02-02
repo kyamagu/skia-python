@@ -577,7 +577,7 @@ def test_Font_getPath(font, glyphs):
 
 def test_Font_getPaths(font, glyphs):
     paths = font.getPaths(glyphs)
-    assert isinstance(paths, (list, type(None))
+    assert isinstance(paths, (list, type(None)))
     assert paths[0] == font.getPath(glyphs[0])
 
 
