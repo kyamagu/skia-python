@@ -13,10 +13,10 @@ jobs:
     name: Build skia on linux/aarch64
     runs-on: ubuntu-22.04
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           submodules: true
-      - uses: actions/cache@v3
+      - uses: actions/cache@v4
         id: cache-skia
         with:
           path: |
@@ -26,7 +26,7 @@ jobs:
       - name: Pre-fetch skia deps
         run: git config --global core.compression 0 && cd skia && python tools/git-sync-deps
       - name: Set up QEMU
-        uses: docker/setup-qemu-action@v2
+        uses: docker/setup-qemu-action@v3
       - name: Build skia
         # Taken from https://github.com/pypa/cibuildwheel/blob/v2.16.2/cibuildwheel/resources/pinned_docker_images.cfg
         uses: docker://quay.io/pypa/manylinux2014_aarch64:2023-10-03-72cdc42
@@ -71,11 +71,11 @@ jobs:
             cp: cp312
 
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           submodules: true
 
-      - uses: actions/cache/restore@v3
+      - uses: actions/cache/restore@v4
         if: runner.os == 'Linux' && matrix.arch == 'aarch64'
         with:
           path: |
@@ -85,7 +85,7 @@ jobs:
 
       - name: Set up QEMU
         if: runner.os == 'Linux' && matrix.arch == 'aarch64'
-        uses: docker/setup-qemu-action@v2
+        uses: docker/setup-qemu-action@v3
         with:
           platforms: ${{ matrix.arch }}
 
@@ -116,7 +116,7 @@ jobs:
     needs: [build_wheels]
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
       - uses: actions/setup-python@v4
         name: Install Python
