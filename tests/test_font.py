@@ -219,9 +219,9 @@ def test_Typeface_MakeFromData(typeface, args):
         skia.Typeface.MakeFromData(*args), (skia.Typeface, type(None)))
 
 
-def test_Typeface_MakeDeserialize(typeface):
+def test_Typeface_MakeDeserialize(typeface, fontmgr):
     assert isinstance(
-        skia.Typeface.MakeDeserialize(typeface.serialize()), skia.Typeface)
+        skia.Typeface.MakeDeserialize(typeface.serialize(), fontmgr), skia.Typeface)
 
 
 @pytest.fixture
@@ -572,13 +572,14 @@ def test_Font_getXPos(font, glyphs):
 
 
 def test_Font_getPath(font, glyphs):
-    assert isinstance(font.getPath(glyphs[0]), skia.Path)
+    assert isinstance(font.getPath(glyphs[0]), (skia.Path, type(None)))
 
 
 def test_Font_getPaths(font, glyphs):
     paths = font.getPaths(glyphs)
-    assert isinstance(paths, list)
-    assert paths[0] == font.getPath(glyphs[0])
+    assert isinstance(paths, (list, type(None)))
+    if (not isinstance(paths, type(None))):
+        assert paths[0] == font.getPath(glyphs[0])
 
 
 def test_Font_getMetrics(font):

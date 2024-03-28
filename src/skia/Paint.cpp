@@ -543,8 +543,10 @@ paint
             subsequent draw
         )docstring",
         py::arg("colorFilter"))
-/*
-    .def("getBlendMode", &SkPaint::getBlendMode,
+    .def("getBlendMode",
+        [] (SkPaint& paint) {
+            return paint.getBlendMode_or(SkBlendMode::kSrcOver);
+        },
         R"docstring(
         Returns :py:class:`BlendMode`.
 
@@ -552,7 +554,6 @@ paint
 
         :return: mode used to combine source color with destination color
         )docstring")
-*/
     .def("isSrcOver", &SkPaint::isSrcOver,
         R"docstring(
         Returns true if :py:class:`BlendMode` is :py:attr:`BlendMode.kSrcOver`,
