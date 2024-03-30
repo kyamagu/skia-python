@@ -147,6 +147,7 @@ extension = Extension(
         SKIA_PATH,
         os.path.join(SKIA_PATH, "third_party/externals/freetype/include"),
         os.path.join(SKIA_PATH, "third_party/externals/vulkan-headers/include"),
+        os.path.join(SKIA_PATH, "include/third_party/vulkan"),
         os.path.join(SKIA_OUT_PATH, 'gen'),
     ],
     define_macros=DEFINE_MACROS,
