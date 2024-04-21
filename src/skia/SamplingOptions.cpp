@@ -32,8 +32,11 @@ void initSamplingOptions(py::module& m) {
             py::arg("SamplingOptions"))
         .def(py::init<SkCubicResampler>(),
             py::arg("CubicResampler"))
+        .def(py::init<SkFilterMode>(),
+            py::arg("FilterMode"))
         .def(py::init<SkFilterMode, SkMipmapMode>(),
             py::arg("FilterMode"), py::arg("MipmapMode"))
+        .def("isAniso", &SkSamplingOptions::isAniso)
         .def_readonly("maxAniso", &SkSamplingOptions::maxAniso)
         .def_readonly("useCubic", &SkSamplingOptions::useCubic)
         .def_readonly("cubic", &SkSamplingOptions::cubic)
