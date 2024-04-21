@@ -1,6 +1,21 @@
 #include "common.h"
 #include <include/core/SkSamplingOptions.h>
 
+/*
+  Reference:
+
+  https://github.com/google/skia/commit/95cc53bafd5fcd94b55a22450457cfde1dd0fd37
+  "Hide filterquality enum entirely"
+
+  The last of SkFilterQuality emulation is:
+
+  FilterQuality.kHigh_SkFilterQuality   -> SamplingOptions(CubicResampler.Mitchell())
+  FilterQuality.kMedium_SkFilterQuality -> SamplingOptions(FilterMode.kLinear, MipmapMode.kNearest)    // cpu
+                                           or SamplingOptions(FilterMode.kLinear, MipmapMode.kLinear)  // gpu
+  FilterQuality.kLow_SkFilterQuality    -> SamplingOptions(FilterMode.kLinear, SkMipmapMode.kNone)
+  FilterQuality.kNone_SkFilterQuality   -> SamplingOptions(SkFilterMode.kNearest, SkMipmapMode.kNone)
+*/
+
 void initSamplingOptions(py::module& m) {
     py::class_<SkSamplingOptions> samplingoptions(m, "SamplingOptions");
 
