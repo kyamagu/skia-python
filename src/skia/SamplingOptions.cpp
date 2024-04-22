@@ -9,11 +9,11 @@
 
   The last of SkFilterQuality emulation is:
 
-  FilterQuality.kHigh_SkFilterQuality   -> SamplingOptions(CubicResampler.Mitchell())
-  FilterQuality.kMedium_SkFilterQuality -> SamplingOptions(FilterMode.kLinear, MipmapMode.kNearest)    // cpu
+  FilterQuality.kHigh_FilterQuality   -> SamplingOptions(CubicResampler.Mitchell())
+  FilterQuality.kMedium_FilterQuality -> SamplingOptions(FilterMode.kLinear, MipmapMode.kNearest)    // cpu
                                            or SamplingOptions(FilterMode.kLinear, MipmapMode.kLinear)  // gpu
-  FilterQuality.kLow_SkFilterQuality    -> SamplingOptions(FilterMode.kLinear, SkMipmapMode.kNone)
-  FilterQuality.kNone_SkFilterQuality   -> SamplingOptions(SkFilterMode.kNearest, SkMipmapMode.kNone)
+  FilterQuality.kLow_FilterQuality    -> SamplingOptions(FilterMode.kLinear, MipmapMode.kNone)
+  FilterQuality.kNone_FilterQuality   -> SamplingOptions(FilterMode.kNearest, MipmapMode.kNone)
 */
 
 void initSamplingOptions(py::module& m) {
