@@ -17,3 +17,4 @@ Since m120:
 
   Also avoid skia.Font() and skia.Font(None, ...) ; e.g. skia.Font(skia.Typeface('')) should be used.
 
+  Addendum: in m122 or later, skia.Font(skia.Typeface('')) is known to not work on Mac OS X.
