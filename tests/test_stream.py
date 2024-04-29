@@ -273,6 +273,7 @@ def test_MemoryStream_setData(memory_stream):
     memory_stream.setData(data)
 
 
+@pytest.mark.skip(reason='m125:REVISIT; Apparently replaced by SkRBuffer::skipToAlign4')
 def test_MemoryStream_skipToAlign4(memory_stream):
     memory_stream.skipToAlign4()
 
