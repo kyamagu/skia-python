@@ -841,7 +841,7 @@ path
         py::arg("rect"))
     .def("incReserve", &SkPath::incReserve,
         R"docstring(
-        Grows :py:class:`Path` verb array and :py:class:`Point` array to contain
+        Grows :py:class:`Path` verb array, :py:class:`Point` array and comics to contain
         extraPtCount additional :py:class:`Point`.
 
         May improve performance and use less memory by reducing the number and
@@ -849,8 +849,10 @@ path
 
         :param int extraPtCount: number of additional :py:class:`Point` to
             allocate
+        :param int extraVerbCount: number of additional verbs
+        :param int extraConicCount: number of additional conics
         )docstring",
-        py::arg("extraPtCount"))
+        py::arg("extraPtCount"), py::arg("extraVerbCount") = 0, py::arg("extraConicCount") = 0)
 /* TODO: This was removed in m88
     .def("shrinkToFit", &SkPath::shrinkToFit,
         R"docstring(
