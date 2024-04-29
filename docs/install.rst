@@ -116,22 +116,20 @@ macOS
 
 Prerequisites:
 
-- Python 2.7 (build time only)
 - Xcode Command Line Tools
 
-Set up ``PATH`` to the ``depot_tools``, and build skia library. At this point,
-``python`` executable should be python 2.
+Set up ``PATH`` to the ``depot_tools``, and build skia library.
 
 .. code-block:: bash
 
     export PATH="$PWD/depot_tools:$PATH"
     cd skia
-    python2 tools/git-sync-deps
+    python tools/git-sync-deps
     bin/gn gen out/Release --args='is_official_build=true skia_enable_tools=true skia_use_system_libjpeg_turbo=false skia_use_system_libwebp=false skia_use_system_libpng=false skia_use_system_icu=false skia_use_system_harfbuzz=false extra_cflags_cc=["-frtti"]'
     ninja -C out/Release skia skia.h
     cd ..
 
-Then, build the skia python binding. At this point, ``python`` should be set to
+Then, build the skia-python binding. Here, ``python`` should be set to
 the desired version.
 
 .. code-block:: bash
