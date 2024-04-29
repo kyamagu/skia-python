@@ -676,9 +676,13 @@ py::class_<SkMemoryStream, PyMemoryStream<>, SkStreamMemory>(m, "MemoryStream")
             stream.setMemory(info.ptr, size, copyData);
         },
         py::arg("data"), py::arg("copyData") = false)
+/*
     .def("asData", &SkMemoryStream::asData)
+*/
     .def("setData", &SkMemoryStream::setData, py::arg("data"))
+/*
     .def("skipToAlign4", &SkMemoryStream::skipToAlign4)
+*/
     .def("getAtPos", &SkMemoryStream::getAtPos)
     ;
 
