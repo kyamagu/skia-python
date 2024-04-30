@@ -2,7 +2,7 @@ New to m124:
 
 * The skia.SamplingOptions class has been fleshed out.
 
-  To migrate from m87 SkFilterQuality-based code:
+  To migrate from m87 FilterQuality-based code:
 
   FilterQuality.kHigh_FilterQuality   -> SamplingOptions(CubicResampler.Mitchell())
   FilterQuality.kMedium_FilterQuality -> SamplingOptions(FilterMode.kLinear, MipmapMode.kNearest)    // cpu
