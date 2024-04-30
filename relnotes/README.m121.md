@@ -16,4 +16,3 @@ Since m120:
   Typeface.MakeDefault(), the no-argument forms, are likely to be removed in the future.
 
   Also avoid skia.Font() and skia.Font(None, ...) ; e.g. skia.Font(skia.Typeface('')) should be used.
-

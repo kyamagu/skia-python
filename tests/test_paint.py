@@ -181,7 +181,6 @@ def test_Paint_setColorFilter(paint):
     paint.setColorFilter(skia.LumaColorFilter.Make())
 
 
-@pytest.mark.skip(reason='m116:REVISIT')
 def test_Paint_getBlendMode(paint):
     assert isinstance(paint.getBlendMode(), skia.BlendMode)
 

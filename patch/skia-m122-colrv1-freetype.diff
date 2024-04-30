@@ -1,0 +1,119 @@
+diff --git a/src/ports/SkFontHost_FreeType.cpp b/src/ports/SkFontHost_FreeType.cpp
+index 7e096a6..46fe7a0 100644
+--- a/src/ports/SkFontHost_FreeType.cpp
++++ b/src/ports/SkFontHost_FreeType.cpp
+@@ -33,7 +33,6 @@
+ #include "src/core/SkMask.h"
+ #include "src/core/SkMaskGamma.h"
+ #include "src/core/SkScalerContext.h"
+-#include "src/ports/SkFontHost_FreeType_common.h"
+ #include "src/ports/SkTypeface_FreeType.h"
+ #include "src/sfnt/SkOTUtils.h"
+ #include "src/sfnt/SkSFNTHeader.h"
+@@ -52,6 +51,7 @@
+ #ifdef FT_COLOR_H  // 2.10.0
+ #   include <freetype/ftcolor.h>
+ #endif
++#include "src/ports/SkFontHost_FreeType_common.h"
+ #include <freetype/freetype.h>
+ #include <freetype/ftlcdfil.h>
+ #include <freetype/ftmodapi.h>
+diff --git a/src/ports/SkFontHost_FreeType_common.cpp b/src/ports/SkFontHost_FreeType_common.cpp
+index 14b2adb..f041583 100644
+--- a/src/ports/SkFontHost_FreeType_common.cpp
++++ b/src/ports/SkFontHost_FreeType_common.cpp
+@@ -6,7 +6,6 @@
+  * found in the LICENSE file.
+  */
+ 
+-#include "src/ports/SkFontHost_FreeType_common.h"
+ 
+ #include "include/core/SkBitmap.h"
+ #include "include/core/SkCanvas.h"
+@@ -32,6 +31,7 @@
+ #ifdef FT_COLOR_H
+ #   include <freetype/ftcolor.h>
+ #endif
++#include "src/ports/SkFontHost_FreeType_common.h"
+ #include <freetype/ftimage.h>
+ #include <freetype/ftoutln.h>
+ #include <freetype/ftsizes.h>
+@@ -1574,6 +1574,41 @@ bool SkScalerContext_FreeType_Base::drawCOLRv1Glyph(FT_Face face,
+     SkASSERTF(haveLayers, "Could not get COLRv1 layers from '%s'.", face->family_name);
+     return haveLayers;
+ }
++/*
++ * This content is mostly just
++ *       SkTypeface_FreeType::FaceRec::setupPalette()
++ +     + SkScalerContext_FreeType_Base::drawCOLRv1Glyph()
++ +*/
++bool SkScalerContext_FreeType_Base::skia_colrv1_start_glyph(SkCanvas* canvas,
++                                    FT_Face face,
++                                    uint16_t glyphId,
++                                    FT_UShort palette_index,
++                                    FT_Color_Root_Transform rootTransform
++                                    ) {
++    uint32_t fForegroundColor{SK_ColorBLACK};
++    FT_Palette_Data paletteData;
++    FT_Palette_Data_Get(face, &paletteData);
++
++    FT_Color* ftPalette = nullptr;
++    FT_Palette_Select(face, palette_index, &ftPalette);
++    std::unique_ptr<SkColor[]> ptr_palette(new SkColor[paletteData.num_palette_entries]);
++    for (int i = 0; i < paletteData.num_palette_entries; ++i) {
++      ptr_palette[i] = SkColorSetARGB(ftPalette[i].alpha,
++                                  ftPalette[i].red,
++                                  ftPalette[i].green,
++                                  ftPalette[i].blue);
++    }
++    SkSpan<SkColor> palette(ptr_palette.get(), paletteData.num_palette_entries);
++
++    VisitedSet activePaints;
++    bool haveLayers =  colrv1_start_glyph(canvas, palette,
++                                          fForegroundColor, // FT_Palette_Get_Foreground_Color?
++                                          face, glyphId,
++                                          FT_COLOR_INCLUDE_ROOT_TRANSFORM,
++                                          &activePaints);
++    SkASSERTF(haveLayers, "Could not get COLRv1 layers from '%s'.", face->family_name);
++    return haveLayers;
++}
+ #endif  // TT_SUPPORT_COLRV1
+ 
+ #ifdef FT_COLOR_H
+diff --git a/src/ports/SkFontHost_FreeType_common.h b/src/ports/SkFontHost_FreeType_common.h
+index d649784..1100b0e 100644
+--- a/src/ports/SkFontHost_FreeType_common.h
++++ b/src/ports/SkFontHost_FreeType_common.h
+@@ -19,6 +19,7 @@
+ typedef struct FT_FaceRec_* FT_Face;
+ typedef struct FT_StreamRec_* FT_Stream;
+ typedef signed long FT_Pos;
++typedef unsigned short  FT_UShort; /* freetype/fttypes.h */
+ 
+ 
+ #ifdef SK_DEBUG
+@@ -31,7 +32,15 @@ const char* SkTraceFtrGetError(int);
+ #endif
+ 
+ 
+-class SkScalerContext_FreeType_Base : public SkScalerContext {
++class SK_SPI SkScalerContext_FreeType_Base : public SkScalerContext {
++public:
++    static bool computeColrV1GlyphBoundingBox(FT_Face, SkGlyphID, SkRect* bounds);
++    static bool skia_colrv1_start_glyph(SkCanvas* canvas,
++                                        FT_Face face,
++                                        uint16_t glyphId,
++                                        FT_UShort palette_index,
++                                        FT_Color_Root_Transform rootTransform
++                                        );
+ protected:
+     // See http://freetype.sourceforge.net/freetype2/docs/reference/ft2-bitmap_handling.html#FT_Bitmap_Embolden
+     // This value was chosen by eyeballing the result in Firefox and trying to match it.
+@@ -57,7 +66,6 @@ protected:
+      *  configure size, matrix and load glyphs as needed after using this function to restore the
+      *  state of FT_Face.
+      */
+-    static bool computeColrV1GlyphBoundingBox(FT_Face, SkGlyphID, SkRect* bounds);
+ 
+     struct ScalerContextBits {
+         static const constexpr uint32_t COLRv0 = 1;

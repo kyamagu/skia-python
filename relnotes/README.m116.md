@@ -69,11 +69,18 @@ of this update had taken from.
   internally, use `GrContext` as it is shorter. In the long term,
   people should use `GrDirectContext`, to align with upstream documentation.
 
-* New `SamplingOptions` class; there is only a default constructor for now.
+* New `SamplingOptions` class; there is only a default constructor in m116 for now.
   Many APIs changes from `m87` to `m116` concern adding new options with it, or
-  changing from `FilterQuality` enum to `SamplingOptions`. If you use any
-  value other than the default `FilterQuality.kMedium_SkFilterQuality`
-  enum, you'll need to request addition to the `SamplingOptions` class.
+  changing from `FilterQuality` enum to `SamplingOptions`.
+
+  m124 Addendum: m124 completed `SamplingOptions` class. In m124 or later,
+  to migrate from m87 FilterQuality-based code:
+
+  FilterQuality.kHigh_FilterQuality   -> SamplingOptions(CubicResampler.Mitchell())
+  FilterQuality.kMedium_FilterQuality -> SamplingOptions(FilterMode.kLinear, MipmapMode.kNearest)    // cpu
+                                         or SamplingOptions(FilterMode.kLinear, MipmapMode.kLinear)  // gpu
+  FilterQuality.kLow_FilterQuality    -> SamplingOptions(FilterMode.kLinear, MipmapMode.kNone)
+  FilterQuality.kNone_FilterQuality   -> SamplingOptions(FilterMode.kNearest, MipmapMode.kNone)
 
 * `yuvainfo.PlanarConfig` enums were splitted into a combination of
   `yuvainfo.PlaneConfig` and `yuvainfo.Subsampling` enums. Where the former

@@ -10,6 +10,48 @@
 #include <src/ports/SkFontHost_FreeType_common.h>
 #endif
 
+#ifdef __APPLE__
+#include "include/ports/SkFontMgr_mac_ct.h"
+#endif
+
+#ifdef __linux__
+#include "include/ports/SkFontMgr_fontconfig.h"
+#endif
+
+#ifdef _WIN32
+#include "include/ports/SkTypeface_win.h"
+#endif
+
+#include <mutex>
+
+namespace {
+
+bool g_factory_called = false;
+
+}  // namespace
+
+static sk_sp<SkFontMgr> fontmgr_factory() {
+#if defined(__APPLE__)
+  return SkFontMgr_New_CoreText(nullptr);
+#elif defined(__linux__)
+  return SkFontMgr_New_FontConfig(nullptr);
+#elif defined(_WIN32)
+  return SkFontMgr_New_DirectWrite();
+#else
+  return SkFontMgr_New_Custom_Empty(); /* last resort: SkFontMgr::RefEmpty(); */
+#endif
+}
+
+sk_sp<SkFontMgr> SkFontMgr_RefDefault() {
+  static std::once_flag flag;
+  static sk_sp<SkFontMgr> mgr;
+  std::call_once(flag, [] {
+    mgr = fontmgr_factory();
+    g_factory_called = true;
+  });
+  return mgr;
+}
+
 using Axis = SkFontParameters::Variation::Axis;
 using Coordinate = SkFontArguments::VariationPosition::Coordinate;
 PYBIND11_MAKE_OPAQUE(std::vector<Coordinate>);
@@ -44,7 +86,7 @@ py::str SkFontMgr_getFamilyName(const SkFontMgr& fontmgr, int index) {
 sk_sp<SkTypeface> SkTypeface_MakeFromName(
     py::object familyName,
     const SkFontStyle* fontStyle) {
-    return SkTypeface::MakeFromName(
+    return SkFontMgr_RefDefault()->legacyMakeTypeface(
         (familyName.is_none()) ?
             nullptr : familyName.cast<std::string>().c_str(),
         (fontStyle) ? *fontStyle : SkFontStyle());
@@ -266,7 +308,7 @@ typeface
             warnings.attr("warn")(
                 "\"Default typeface\" is deprecated upstream. Please specify name/file/style choices.",
                 builtins.attr("DeprecationWarning"));
-            return SkFontMgr::RefDefault()->legacyMakeTypeface("", SkFontStyle());
+            return SkFontMgr_RefDefault()->legacyMakeTypeface("", SkFontStyle());
         }),
         R"docstring(
         Returns the default normal typeface.
@@ -571,7 +613,7 @@ typeface
             warnings.attr("warn")(
                 "\"Default typeface\" is deprecated upstream. Please specify name/file/style choices.",
                 builtins.attr("DeprecationWarning"));
-            return SkFontMgr::RefDefault()->legacyMakeTypeface("", SkFontStyle());
+            return SkFontMgr_RefDefault()->legacyMakeTypeface("", SkFontStyle());
         },
         R"docstring(
         Returns the default normal typeface, which is never nullptr.
@@ -595,7 +637,7 @@ typeface
         py::arg("familyName"), py::arg("fontStyle") = nullptr)
     .def_static("MakeFromFile",
         [] (const std::string& path, int index) {
-            return SkTypeface::MakeFromFile(&path[0], index);
+            return SkFontMgr_RefDefault()->makeFromFile(&path[0], index);
         },
         R"docstring(
         Return a new typeface given a file.
@@ -606,7 +648,10 @@ typeface
         py::arg("path"), py::arg("index") = 0)
     // .def_static("MakeFromStream", &SkTypeface::MakeFromStream,
     //     "Return a new typeface given a stream.")
-    .def_static("MakeFromData", &SkTypeface::MakeFromData,
+    .def_static("MakeFromData",
+        [] (sk_sp<SkData> data, int index) {
+            return SkFontMgr_RefDefault()->makeFromData(data, index);
+        },
         R"docstring(
         Return a new typeface given a :py:class:`Data`.
 
@@ -618,9 +663,9 @@ typeface
     // .def_static("MakeFromFontData", &SkTypeface::MakeFromFontData,
     //     "Return a new typeface given font data and configuration.")
     .def_static("MakeDeserialize",
-        [] (const sk_sp<SkData>& data) {
+        [] (const sk_sp<SkData>& data, sk_sp<SkFontMgr> lastResortMgr) {
             SkMemoryStream stream(data);
-            return SkTypeface::MakeDeserialize(&stream);
+            return SkTypeface::MakeDeserialize(&stream, lastResortMgr);
         },
         R"docstring(
         Given the data previously written by :py:meth:`serialize`, return a new
@@ -628,7 +673,7 @@ typeface
 
         If that font is not available, return nullptr.
         )docstring",
-        py::arg("dats"))
+        py::arg("dats"), py::arg("lastResortMgr"))
     ;
 
 // FontMgr
@@ -660,7 +705,7 @@ py::class_<SkFontMgr, sk_sp<SkFontMgr>, SkRefCnt>(m, "FontMgr",
         assert typeface is not None
 
     )docstring")
-    .def(py::init([] () { return SkFontMgr::RefDefault(); }))
+    .def(py::init([] () { return SkFontMgr_RefDefault(); }))
     .def_static("New_Custom_Empty", &SkFontMgr_New_Custom_Empty)
     .def("__getitem__", &SkFontMgr_getFamilyName, py::arg("index"))
     .def("__len__", &SkFontMgr::countFamilies)
@@ -765,7 +810,7 @@ py::class_<SkFontMgr, sk_sp<SkFontMgr>, SkRefCnt>(m, "FontMgr",
             return fontmgr.legacyMakeTypeface(familyName.c_str(), style);
         },
         py::arg("familyName"), py::arg("style"))
-    .def_static("RefDefault", &SkFontMgr::RefDefault,
+    .def_static("RefDefault", &SkFontMgr_RefDefault,
         R"docstring(
         Return the default fontmgr.
         )docstring")
@@ -814,7 +859,7 @@ font
             warnings.attr("warn")(
                 "\"Default font\" is deprecated upstream. Please specify name/file/style choices.",
                 builtins.attr("DeprecationWarning"));
-            return SkFont(SkFontMgr::RefDefault()->legacyMakeTypeface("", SkFontStyle()));
+            return SkFont(SkFontMgr_RefDefault()->legacyMakeTypeface("", SkFontStyle()));
         }),
         R"docstring(
         Constructs :py:class:`Font` with default values.
@@ -827,7 +872,7 @@ font
                 warnings.attr("warn")(
                     "\"Default font\" is deprecated upstream. Please specify name/file/style choices.",
                     builtins.attr("DeprecationWarning"));
-                return SkFont(SkFontMgr::RefDefault()->legacyMakeTypeface("", SkFontStyle()), size);
+                return SkFont(SkFontMgr_RefDefault()->legacyMakeTypeface("", SkFontStyle()), size);
             } else {
                 return SkFont(typeface.cast<sk_sp<SkTypeface>>(), size);
             }
@@ -849,7 +894,7 @@ font
                 warnings.attr("warn")(
                     "\"Default font\" is deprecated upstream. Please specify name/file/style choices.",
                     builtins.attr("DeprecationWarning"));
-                return SkFont(SkFontMgr::RefDefault()->legacyMakeTypeface("", SkFontStyle()));
+                return SkFont(SkFontMgr_RefDefault()->legacyMakeTypeface("", SkFontStyle()));
             } else {
                 return SkFont(typeface.cast<sk_sp<SkTypeface>>());
             }
@@ -870,7 +915,7 @@ font
                 warnings.attr("warn")(
                     "\"Default font\" is deprecated upstream. Please specify name/file/style choices.",
                     builtins.attr("DeprecationWarning"));
-                return SkFont(SkFontMgr::RefDefault()->legacyMakeTypeface("", SkFontStyle()),
+                return SkFont(SkFontMgr_RefDefault()->legacyMakeTypeface("", SkFontStyle()),
                                       size, scaleX, skewX);
             } else {
                 return SkFont(typeface.cast<sk_sp<SkTypeface>>(),

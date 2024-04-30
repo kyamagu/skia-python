@@ -8,8 +8,10 @@
 #include <include/gpu/gl/GrGLInterface.h>
 #include <include/gpu/ganesh/gl/GrGLBackendSurface.h>
 #include <include/gpu/ganesh/gl/GrGLDirectContext.h>
+#include <include/gpu/ganesh/vk/GrVkBackendSemaphore.h>
 #include <include/gpu/ganesh/vk/GrVkBackendSurface.h>
 #include <include/gpu/ganesh/vk/GrVkDirectContext.h>
+#include <include/gpu/vk/VulkanTypes.h>
 #include <include/gpu/vk/GrVkBackendContext.h>
 #include <include/gpu/MutableTextureState.h>
 #include <pybind11/chrono.h>
@@ -242,11 +244,18 @@ py::class_<GrBackendSemaphore>(m, "GrBackendSemaphore")
         py::arg("glsync"))
 */
 #ifdef SK_VULKAN
+    .def_static("MakeVk",
+        [] (void* vksemaphore) {
+            return GrBackendSemaphores::MakeVk(reinterpret_cast<VkSemaphore>(vksemaphore));
+        },
+        py::arg("semaphore"))
+/*
     .def("initVulkan",
         [] (GrBackendSemaphore& semaphore, void* vksemaphore) {
             semaphore.initVulkan(reinterpret_cast<VkSemaphore>(vksemaphore));
         },
         py::arg("semaphore"))
+*/
 #endif
     // .def("initMetal", &GrBackendSemaphore::initMetal)
     .def("isInitialized", &GrBackendSemaphore::isInitialized)
@@ -259,7 +268,7 @@ py::class_<GrBackendSemaphore>(m, "GrBackendSemaphore")
 #ifdef SK_VULKAN
     .def("vkSemaphore",
         [] (GrBackendSemaphore& semaphore) {
-            return reinterpret_cast<void*>(semaphore.vkSemaphore());
+            return reinterpret_cast<void*>(GrBackendSemaphores::GetVkSemaphore(semaphore));
         })
 #endif
     // .def("mtlSemaphore", &GrBackendSemaphore::mtlSemaphore)

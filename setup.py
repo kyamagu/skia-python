@@ -12,7 +12,7 @@ except ImportError:
     pass
 
 NAME = 'skia-python'
-__version__ = '121.0b6'
+__version__ = '124.0b7'
 
 SKIA_PATH = os.getenv('SKIA_PATH', 'skia')
 SKIA_OUT_PATH = os.getenv(
@@ -147,6 +147,7 @@ extension = Extension(
         SKIA_PATH,
         os.path.join(SKIA_PATH, "third_party/externals/freetype/include"),
         os.path.join(SKIA_PATH, "third_party/externals/vulkan-headers/include"),
+        os.path.join(SKIA_PATH, "include/third_party/vulkan"),
         os.path.join(SKIA_OUT_PATH, 'gen'),
     ],
     define_macros=DEFINE_MACROS,

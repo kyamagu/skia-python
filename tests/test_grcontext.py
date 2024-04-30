@@ -14,6 +14,13 @@ def test_GrBackendSemaphore_initGL(backend_semaphore):
     backend_semaphore.initGL(None)
 
 
+@pytest.fixture
+def backend_semaphore_vk():
+    if sys.platform.startswith("darwin"):
+        pytest.skip("Known not to work")
+    return skia.GrBackendSemaphore.MakeVk(None)
+
+@pytest.mark.skip(reason='m124:GrBackendSemaphore::initVulkan replaced by GrBackendSemaphores::MakeVk')
 def test_GrBackendSemaphore_initVulkan(backend_semaphore):
     if sys.platform.startswith("darwin"):
         pytest.skip("Known not to work")
@@ -33,6 +40,12 @@ def test_GrBackendSemaphore_vkSemaphore(backend_semaphore):
     if sys.platform.startswith("darwin"):
         pytest.skip("Known not to work")
     backend_semaphore.vkSemaphore()
+
+
+def test_GrBackendSemaphore_vkSemaphore_vk(backend_semaphore_vk):
+    if sys.platform.startswith("darwin"):
+        pytest.skip("Known not to work")
+    backend_semaphore_vk.vkSemaphore()
 
 
 @pytest.fixture(scope='module')

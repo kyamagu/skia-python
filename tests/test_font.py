@@ -219,9 +219,9 @@ def test_Typeface_MakeFromData(typeface, args):
         skia.Typeface.MakeFromData(*args), (skia.Typeface, type(None)))
 
 
-def test_Typeface_MakeDeserialize(typeface):
+def test_Typeface_MakeDeserialize(typeface, fontmgr):
     assert isinstance(
-        skia.Typeface.MakeDeserialize(typeface.serialize()), skia.Typeface)
+        skia.Typeface.MakeDeserialize(typeface.serialize(), fontmgr), skia.Typeface)
 
 
 @pytest.fixture
