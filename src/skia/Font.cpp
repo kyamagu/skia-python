@@ -10,7 +10,7 @@
 #include <src/ports/SkFontHost_FreeType_common.h>
 #endif
 
-#ifdef __apple__
+#ifdef __APPLE__
 #include "include/ports/SkFontMgr_mac_ct.h"
 #endif
 
@@ -31,7 +31,7 @@ bool g_factory_called = false;
 }  // namespace
 
 static sk_sp<SkFontMgr> fontmgr_factory() {
-#if defined(__apple__)
+#if defined(__APPLE__)
   return SkFontMgr_New_CoreText(nullptr);
 #elif defined(__linux__)
   return SkFontMgr_New_FontConfig(nullptr);
