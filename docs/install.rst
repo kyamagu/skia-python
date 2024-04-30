@@ -69,7 +69,7 @@ Linux
 
 Prerequisites:
 
-- Python 2.7 (build time only)
+- Python 3 (build time only)
 - GLIBC >= 2.17
 - fontconfig >= 2.10.93
 - OpenGL
@@ -89,14 +89,14 @@ or:
 
 
 Set up ``PATH`` to the ``depot_tools``. build skia library. At this point,
-``python`` executable should be python 2. Note the build tools require
-relatively new glibc and python 2.7.
+``python`` executable should be python 3. Note the build tools require
+relatively new glibc and python 3.
 
 .. code-block:: bash
 
     export PATH="$PWD/depot_tools:$PATH"
     cd skia
-    python2 tools/git-sync-deps
+    python tools/git-sync-deps
     bin/gn gen out/Release --args='is_official_build=true skia_enable_tools=true skia_use_system_libjpeg_turbo=false skia_use_system_libwebp=false skia_use_system_libpng=false skia_use_system_icu=false skia_use_system_harfbuzz=false extra_cflags_cc=["-frtti"] extra_ldflags=["-lrt"]'
     ninja -C out/Release skia skia.h
     cd ..
@@ -124,7 +124,7 @@ Set up ``PATH`` to the ``depot_tools``, and build skia library.
 
     export PATH="$PWD/depot_tools:$PATH"
     cd skia
-    python tools/git-sync-deps
+    python3 tools/git-sync-deps
     bin/gn gen out/Release --args='is_official_build=true skia_enable_tools=true skia_use_system_libjpeg_turbo=false skia_use_system_libwebp=false skia_use_system_libpng=false skia_use_system_icu=false skia_use_system_harfbuzz=false extra_cflags_cc=["-frtti"]'
     ninja -C out/Release skia skia.h
     cd ..
@@ -144,8 +144,8 @@ Windows
 
 Prerequisites:
 
-- Python 2.7 (build time only)
-- Visual C++ version that supports C++14
+- Python 3 (build time only)
+- Visual C++ version that supports C++17
 
 Windows binary can be built using the generic steps above.
 
@@ -154,7 +154,7 @@ Windows binary can be built using the generic steps above.
     $env:Path += ";$pwd\depot_tools"
 
     cd skia
-    python2 tools\git-sync-deps
+    python tools\git-sync-deps
     bin\gn gen out\Release --args="is_official_build=true skia_enable_tools=true skia_use_system_libjpeg_turbo=false skia_use_system_libwebp=false skia_use_system_libpng=false skia_use_system_icu=false skia_use_system_harfbuzz=false skia_use_system_expat=false skia_use_system_zlib=false extra_cflags_cc=[\"/GR\", \"/EHsc\", \"/MD\"] target_cpu=\"x86_64\""
     ninja -C out\Release skia skia.h
     cd ..
