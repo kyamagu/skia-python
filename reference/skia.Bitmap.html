@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Bitmap &mdash; skia-python 121.0b6 documentation</title>
+  <title>Bitmap &mdash; skia-python 124.0b7 documentation</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
       <link rel="stylesheet" type="text/css" href="../_static/css/theme.css" />
 
@@ -37,7 +37,7 @@
             skia-python
           </a>
               <div class="version">
-                121.0b6
+                124.0b7
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
@@ -85,6 +85,7 @@
 <li class="toctree-l3"><a class="reference internal" href="skia.ColorType.html">ColorType</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.ConvergeMode.html">ConvergeMode</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.CornerPathEffect.html">CornerPathEffect</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.CubicResampler.html">CubicResampler</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.DashPathEffect.html">DashPathEffect</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.Data.html">Data</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.DiscretePathEffect.html">DiscretePathEffect</a></li>
@@ -158,6 +159,7 @@
 <li class="toctree-l3"><a class="reference internal" href="skia.Matrix.html">Matrix</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.MemoryStream.html">MemoryStream</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.MipmapBuilder.html">MipmapBuilder</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.MipmapMode.html">MipmapMode</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.NullWStream.html">NullWStream</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.OpBuilder.html">OpBuilder</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.OverdrawColorFilter.html">OverdrawColorFilter</a></li>
@@ -1023,7 +1025,7 @@ value has transparency.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="skia.Bitmap.makeShader">
-<span class="sig-prename descclassname"><span class="pre">Bitmap.</span></span><span class="sig-name descname"><span class="pre">makeShader</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self:</span> <span class="pre">skia.Bitmap</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tmx:</span> <span class="pre">skia.TileMode</span> <span class="pre">=</span> <span class="pre">&lt;TileMode.kClamp:</span> <span class="pre">0&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tmy:</span> <span class="pre">skia.TileMode</span> <span class="pre">=</span> <span class="pre">&lt;TileMode.kClamp:</span> <span class="pre">0&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sampling:</span> <span class="pre">skia.SamplingOptions</span> <span class="pre">=</span> <span class="pre">&lt;skia.SamplingOptions</span> <span class="pre">object</span> <span class="pre">at</span> <span class="pre">0x7f87aed24930&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">localMatrix:</span> <span class="pre">skia.Matrix</span> <span class="pre">=</span> <span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">SkShader</span></span></span><a class="headerlink" href="#skia.Bitmap.makeShader" title="Permalink to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">Bitmap.</span></span><span class="sig-name descname"><span class="pre">makeShader</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self:</span> <span class="pre">skia.Bitmap</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tmx:</span> <span class="pre">skia.TileMode</span> <span class="pre">=</span> <span class="pre">&lt;TileMode.kClamp:</span> <span class="pre">0&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tmy:</span> <span class="pre">skia.TileMode</span> <span class="pre">=</span> <span class="pre">&lt;TileMode.kClamp:</span> <span class="pre">0&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sampling:</span> <span class="pre">skia.SamplingOptions</span> <span class="pre">=</span> <span class="pre">&lt;skia.SamplingOptions</span> <span class="pre">object</span> <span class="pre">at</span> <span class="pre">0x7fb286924530&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">localMatrix:</span> <span class="pre">skia.Matrix</span> <span class="pre">=</span> <span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">SkShader</span></span></span><a class="headerlink" href="#skia.Bitmap.makeShader" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
@@ -1072,7 +1074,7 @@ readable; otherwise, ignored</p>
 <span class="sig-prename descclassname"><span class="pre">Bitmap.</span></span><span class="sig-name descname"><span class="pre">readPixels</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#skia.Bitmap.readPixels" title="Permalink to this definition"></a></dt>
 <dd><p>Overloaded function.</p>
 <ol class="arabic">
-<li><p>readPixels(self: skia.Bitmap, dstInfo: SkImageInfo, dstPixels: buffer, dstRowBytes: int = 0, srcX: int = 0, srcY: int = 0) -&gt; bool</p>
+<li><p>readPixels(self: skia.Bitmap, dstInfo: SkImageInfo, dstPixels: Buffer, dstRowBytes: int = 0, srcX: int = 0, srcY: int = 0) -&gt; bool</p>
 <blockquote>
 <div><p>Copies a <a class="reference internal" href="skia.Rect.html#skia.Rect" title="skia.Rect"><code class="xref py py-class docutils literal notranslate"><span class="pre">Rect</span></code></a> of pixels from <a class="reference internal" href="#skia.Bitmap" title="skia.Bitmap"><code class="xref py py-class docutils literal notranslate"><span class="pre">Bitmap</span></code></a> to
 dstPixels.</p>
@@ -1343,7 +1345,7 @@ imageInfo.minRowBytes().</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="skia.Bitmap.setPixels">
-<span class="sig-prename descclassname"><span class="pre">Bitmap.</span></span><span class="sig-name descname"><span class="pre">setPixels</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#skia.Bitmap" title="skia.Bitmap"><span class="pre">skia.Bitmap</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">pixels</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">buffer</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#skia.Bitmap.setPixels" title="Permalink to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">Bitmap.</span></span><span class="sig-name descname"><span class="pre">setPixels</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#skia.Bitmap" title="skia.Bitmap"><span class="pre">skia.Bitmap</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">pixels</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Buffer</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#skia.Bitmap.setPixels" title="Permalink to this definition"></a></dt>
 <dd><p>Replaces <a class="reference internal" href="skia.PixelRef.html#skia.PixelRef" title="skia.PixelRef"><code class="xref py py-class docutils literal notranslate"><span class="pre">PixelRef</span></code></a> with pixels, preserving
 <a class="reference internal" href="skia.ImageInfo.html#skia.ImageInfo" title="skia.ImageInfo"><code class="xref py py-class docutils literal notranslate"><span class="pre">ImageInfo</span></code></a> and rowBytes().</p>
 <p>Sets <a class="reference internal" href="skia.PixelRef.html#skia.PixelRef" title="skia.PixelRef"><code class="xref py py-class docutils literal notranslate"><span class="pre">PixelRef</span></code></a> origin to (0, 0).</p>

@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>GrDirectContext &mdash; skia-python 121.0b6 documentation</title>
+  <title>GrDirectContext &mdash; skia-python 124.0b7 documentation</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
       <link rel="stylesheet" type="text/css" href="../_static/css/theme.css" />
 
@@ -37,7 +37,7 @@
             skia-python
           </a>
               <div class="version">
-                121.0b6
+                124.0b7
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
@@ -79,6 +79,7 @@
 <li class="toctree-l3"><a class="reference internal" href="skia.ColorType.html">ColorType</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.ConvergeMode.html">ConvergeMode</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.CornerPathEffect.html">CornerPathEffect</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.CubicResampler.html">CubicResampler</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.DashPathEffect.html">DashPathEffect</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.Data.html">Data</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.DiscretePathEffect.html">DiscretePathEffect</a></li>
@@ -156,6 +157,7 @@
 <li class="toctree-l3"><a class="reference internal" href="skia.Matrix.html">Matrix</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.MemoryStream.html">MemoryStream</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.MipmapBuilder.html">MipmapBuilder</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.MipmapMode.html">MipmapMode</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.NullWStream.html">NullWStream</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.OpBuilder.html">OpBuilder</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.OverdrawColorFilter.html">OverdrawColorFilter</a></li>
@@ -603,7 +605,7 @@ provided <a class="reference internal" href="skia.ColorType.html#skia.ColorType"
 of the created VkImage will be: VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL</p>
 </div></blockquote>
 </li>
-<li><p>createBackendTexture(self: skia.GrDirectContext, srcData: List[SkPixmap], renderable: skia.GrRenderable, isProtected: skia.GrProtected = &lt;GrProtected.kNo: 0&gt;) -&gt; skia.GrBackendTexture</p>
+<li><p>createBackendTexture(self: skia.GrDirectContext, srcData: list[SkPixmap], renderable: skia.GrRenderable, isProtected: skia.GrProtected = &lt;GrProtected.kNo: 0&gt;) -&gt; skia.GrBackendTexture</p>
 <blockquote>
 <div><p>If possible, create a backend texture initialized with the provided
 pixmap data. The client should ensure that the returned backend texture
@@ -645,8 +647,8 @@ VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL</p>
 </div></blockquote>
 </li>
 <li><p>createCompressedBackendTexture(self: skia.GrDirectContext, width: int, height: int, type: SkTextureCompressionType, color: skia.Color4f, mipMapped: skia.GrMipmapped, isProtected: skia.GrProtected = &lt;GrProtected.kNo: 0&gt;) -&gt; skia.GrBackendTexture</p></li>
-<li><p>createCompressedBackendTexture(self: skia.GrDirectContext, width: int, height: int, backendFormat: skia.GrBackendFormat, data: buffer, mipMapped: skia.GrMipmapped, isProtected: skia.GrProtected = &lt;GrProtected.kNo: 0&gt;) -&gt; skia.GrBackendTexture</p></li>
-<li><p>createCompressedBackendTexture(self: skia.GrDirectContext, width: int, height: int, type: SkTextureCompressionType, data: buffer, mipMapped: skia.GrMipmapped, isProtected: skia.GrProtected = &lt;GrProtected.kNo: 0&gt;) -&gt; skia.GrBackendTexture</p></li>
+<li><p>createCompressedBackendTexture(self: skia.GrDirectContext, width: int, height: int, backendFormat: skia.GrBackendFormat, data: Buffer, mipMapped: skia.GrMipmapped, isProtected: skia.GrProtected = &lt;GrProtected.kNo: 0&gt;) -&gt; skia.GrBackendTexture</p></li>
+<li><p>createCompressedBackendTexture(self: skia.GrDirectContext, width: int, height: int, type: SkTextureCompressionType, data: Buffer, mipMapped: skia.GrMipmapped, isProtected: skia.GrProtected = &lt;GrProtected.kNo: 0&gt;) -&gt; skia.GrBackendTexture</p></li>
 </ol>
 </dd></dl>
 
@@ -1039,7 +1041,7 @@ backend after a successful update the layout of the created VkImage will
 be: VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL</p>
 </div></blockquote>
 </li>
-<li><p>updateBackendTexture(self: skia.GrDirectContext, backendTexture: skia.GrBackendTexture, srcData: List[SkPixmap]) -&gt; bool</p>
+<li><p>updateBackendTexture(self: skia.GrDirectContext, backendTexture: skia.GrBackendTexture, srcData: list[SkPixmap]) -&gt; bool</p>
 <blockquote>
 <div><p>If possible, updates a backend texture to be filled to a particular
 color.</p>
@@ -1066,7 +1068,7 @@ the created VkImage will be: VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="skia.GrDirectContext.wait">
-<span class="sig-prename descclassname"><span class="pre">GrDirectContext.</span></span><span class="sig-name descname"><span class="pre">wait</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#skia.GrDirectContext" title="skia.GrDirectContext"><span class="pre">skia.GrDirectContext</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">semaphores</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="skia.GrBackendSemaphore.html#skia.GrBackendSemaphore" title="skia.GrBackendSemaphore"><span class="pre">skia.GrBackendSemaphore</span></a><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">deleteSemaphoresAfterWait</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#skia.GrDirectContext.wait" title="Permalink to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">GrDirectContext.</span></span><span class="sig-name descname"><span class="pre">wait</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#skia.GrDirectContext" title="skia.GrDirectContext"><span class="pre">skia.GrDirectContext</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">semaphores</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="skia.GrBackendSemaphore.html#skia.GrBackendSemaphore" title="skia.GrBackendSemaphore"><span class="pre">skia.GrBackendSemaphore</span></a><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">deleteSemaphoresAfterWait</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#skia.GrDirectContext.wait" title="Permalink to this definition"></a></dt>
 <dd><p>Inserts a list of GPU semaphores that the current GPU-backed API must
 wait on before executing any more commands on the GPU.</p>
 <p>Skia will take ownership of the underlying semaphores and delete them

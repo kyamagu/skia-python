@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>FontMgr &mdash; skia-python 121.0b6 documentation</title>
+  <title>FontMgr &mdash; skia-python 124.0b7 documentation</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
       <link rel="stylesheet" type="text/css" href="../_static/css/theme.css" />
 
@@ -37,7 +37,7 @@
             skia-python
           </a>
               <div class="version">
-                121.0b6
+                124.0b7
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
@@ -79,6 +79,7 @@
 <li class="toctree-l3"><a class="reference internal" href="skia.ColorType.html">ColorType</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.ConvergeMode.html">ConvergeMode</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.CornerPathEffect.html">CornerPathEffect</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.CubicResampler.html">CubicResampler</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.DashPathEffect.html">DashPathEffect</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.Data.html">Data</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.DiscretePathEffect.html">DiscretePathEffect</a></li>
@@ -156,6 +157,7 @@
 <li class="toctree-l3"><a class="reference internal" href="skia.Matrix.html">Matrix</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.MemoryStream.html">MemoryStream</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.MipmapBuilder.html">MipmapBuilder</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.MipmapMode.html">MipmapMode</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.NullWStream.html">NullWStream</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.OpBuilder.html">OpBuilder</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.OverdrawColorFilter.html">OverdrawColorFilter</a></li>
@@ -400,7 +402,7 @@ auto-activated fonts.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="skia.FontMgr.matchFamilyStyleCharacter">
-<span class="sig-prename descclassname"><span class="pre">FontMgr.</span></span><span class="sig-name descname"><span class="pre">matchFamilyStyleCharacter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#skia.FontMgr" title="skia.FontMgr"><span class="pre">skia.FontMgr</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">familyName</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">style</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="skia.FontStyle.html#skia.FontStyle" title="skia.FontStyle"><span class="pre">skia.FontStyle</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">bcp47</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">character</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="skia.Typeface.html#skia.Typeface" title="skia.Typeface"><span class="pre">skia.Typeface</span></a></span></span><a class="headerlink" href="#skia.FontMgr.matchFamilyStyleCharacter" title="Permalink to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">FontMgr.</span></span><span class="sig-name descname"><span class="pre">matchFamilyStyleCharacter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#skia.FontMgr" title="skia.FontMgr"><span class="pre">skia.FontMgr</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">familyName</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">style</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="skia.FontStyle.html#skia.FontStyle" title="skia.FontStyle"><span class="pre">skia.FontStyle</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">bcp47</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">character</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="skia.Typeface.html#skia.Typeface" title="skia.Typeface"><span class="pre">skia.Typeface</span></a></span></span><a class="headerlink" href="#skia.FontMgr.matchFamilyStyleCharacter" title="Permalink to this definition"></a></dt>
 <dd><p>Use the system fallback to find a typeface for the given character.</p>
 <p>Note that bcp47 is a combination of ISO 639, 15924, and 3166-1 codes, so
 it is fine to just pass a ISO 639 here.</p>

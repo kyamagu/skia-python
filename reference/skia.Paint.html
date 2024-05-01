@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Paint &mdash; skia-python 121.0b6 documentation</title>
+  <title>Paint &mdash; skia-python 124.0b7 documentation</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
       <link rel="stylesheet" type="text/css" href="../_static/css/theme.css" />
 
@@ -37,7 +37,7 @@
             skia-python
           </a>
               <div class="version">
-                121.0b6
+                124.0b7
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
@@ -79,6 +79,7 @@
 <li class="toctree-l3"><a class="reference internal" href="skia.ColorType.html">ColorType</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.ConvergeMode.html">ConvergeMode</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.CornerPathEffect.html">CornerPathEffect</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.CubicResampler.html">CubicResampler</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.DashPathEffect.html">DashPathEffect</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.Data.html">Data</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.DiscretePathEffect.html">DiscretePathEffect</a></li>
@@ -152,6 +153,7 @@
 <li class="toctree-l3"><a class="reference internal" href="skia.Matrix.html">Matrix</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.MemoryStream.html">MemoryStream</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.MipmapBuilder.html">MipmapBuilder</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.MipmapMode.html">MipmapMode</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.NullWStream.html">NullWStream</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.OpBuilder.html">OpBuilder</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.OverdrawColorFilter.html">OverdrawColorFilter</a></li>
@@ -325,127 +327,130 @@ possible to replace <a class="reference internal" href="#skia.Paint" title="skia
 <tr class="row-odd"><td><p><a class="reference internal" href="#skia.Paint.getAlphaf" title="skia.Paint.getAlphaf"><code class="xref py py-obj docutils literal notranslate"><span class="pre">getAlphaf</span></code></a></p></td>
 <td><p>Retrieves alpha from the color used when stroking and filling.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#skia.Paint.getColor" title="skia.Paint.getColor"><code class="xref py py-obj docutils literal notranslate"><span class="pre">getColor</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.Paint.getBlendMode" title="skia.Paint.getBlendMode"><code class="xref py py-obj docutils literal notranslate"><span class="pre">getBlendMode</span></code></a></p></td>
+<td><p>Returns <a class="reference internal" href="skia.BlendMode.html#skia.BlendMode" title="skia.BlendMode"><code class="xref py py-class docutils literal notranslate"><span class="pre">BlendMode</span></code></a>.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Paint.getColor" title="skia.Paint.getColor"><code class="xref py py-obj docutils literal notranslate"><span class="pre">getColor</span></code></a></p></td>
 <td><p>Retrieves alpha and RGB, unpremultiplied, packed into 32 bits.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Paint.getColor4f" title="skia.Paint.getColor4f"><code class="xref py py-obj docutils literal notranslate"><span class="pre">getColor4f</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.Paint.getColor4f" title="skia.Paint.getColor4f"><code class="xref py py-obj docutils literal notranslate"><span class="pre">getColor4f</span></code></a></p></td>
 <td><p>Retrieves alpha and RGB, unpremultiplied, as four floating point values.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#skia.Paint.getColorFilter" title="skia.Paint.getColorFilter"><code class="xref py py-obj docutils literal notranslate"><span class="pre">getColorFilter</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Paint.getColorFilter" title="skia.Paint.getColorFilter"><code class="xref py py-obj docutils literal notranslate"><span class="pre">getColorFilter</span></code></a></p></td>
 <td><p>Returns <a class="reference internal" href="skia.ColorFilter.html#skia.ColorFilter" title="skia.ColorFilter"><code class="xref py py-class docutils literal notranslate"><span class="pre">ColorFilter</span></code></a> if set, or nullptr.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Paint.getFillPath" title="skia.Paint.getFillPath"><code class="xref py py-obj docutils literal notranslate"><span class="pre">getFillPath</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.Paint.getFillPath" title="skia.Paint.getFillPath"><code class="xref py py-obj docutils literal notranslate"><span class="pre">getFillPath</span></code></a></p></td>
 <td><p>Returns the filled equivalent of the stroked path.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#skia.Paint.getImageFilter" title="skia.Paint.getImageFilter"><code class="xref py py-obj docutils literal notranslate"><span class="pre">getImageFilter</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Paint.getImageFilter" title="skia.Paint.getImageFilter"><code class="xref py py-obj docutils literal notranslate"><span class="pre">getImageFilter</span></code></a></p></td>
 <td><p>Returns <a class="reference internal" href="skia.ImageFilter.html#skia.ImageFilter" title="skia.ImageFilter"><code class="xref py py-class docutils literal notranslate"><span class="pre">ImageFilter</span></code></a> if set, or nullptr.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Paint.getMaskFilter" title="skia.Paint.getMaskFilter"><code class="xref py py-obj docutils literal notranslate"><span class="pre">getMaskFilter</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.Paint.getMaskFilter" title="skia.Paint.getMaskFilter"><code class="xref py py-obj docutils literal notranslate"><span class="pre">getMaskFilter</span></code></a></p></td>
 <td><p>Returns <a class="reference internal" href="skia.MaskFilter.html#skia.MaskFilter" title="skia.MaskFilter"><code class="xref py py-class docutils literal notranslate"><span class="pre">MaskFilter</span></code></a> if set, or nullptr.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#skia.Paint.getPathEffect" title="skia.Paint.getPathEffect"><code class="xref py py-obj docutils literal notranslate"><span class="pre">getPathEffect</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Paint.getPathEffect" title="skia.Paint.getPathEffect"><code class="xref py py-obj docutils literal notranslate"><span class="pre">getPathEffect</span></code></a></p></td>
 <td><p>Returns <a class="reference internal" href="skia.PathEffect.html#skia.PathEffect" title="skia.PathEffect"><code class="xref py py-class docutils literal notranslate"><span class="pre">PathEffect</span></code></a> if set, or nullptr.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Paint.getShader" title="skia.Paint.getShader"><code class="xref py py-obj docutils literal notranslate"><span class="pre">getShader</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.Paint.getShader" title="skia.Paint.getShader"><code class="xref py py-obj docutils literal notranslate"><span class="pre">getShader</span></code></a></p></td>
 <td><p>Returns optional colors used when filling a path, such as a gradient.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#skia.Paint.getStrokeCap" title="skia.Paint.getStrokeCap"><code class="xref py py-obj docutils literal notranslate"><span class="pre">getStrokeCap</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Paint.getStrokeCap" title="skia.Paint.getStrokeCap"><code class="xref py py-obj docutils literal notranslate"><span class="pre">getStrokeCap</span></code></a></p></td>
 <td><p>Returns the geometry drawn at the beginning and end of strokes.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Paint.getStrokeJoin" title="skia.Paint.getStrokeJoin"><code class="xref py py-obj docutils literal notranslate"><span class="pre">getStrokeJoin</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.Paint.getStrokeJoin" title="skia.Paint.getStrokeJoin"><code class="xref py py-obj docutils literal notranslate"><span class="pre">getStrokeJoin</span></code></a></p></td>
 <td><p>Returns the geometry drawn at the corners of strokes.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#skia.Paint.getStrokeMiter" title="skia.Paint.getStrokeMiter"><code class="xref py py-obj docutils literal notranslate"><span class="pre">getStrokeMiter</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Paint.getStrokeMiter" title="skia.Paint.getStrokeMiter"><code class="xref py py-obj docutils literal notranslate"><span class="pre">getStrokeMiter</span></code></a></p></td>
 <td><p>Returns the limit at which a sharp corner is drawn beveled.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Paint.getStrokeWidth" title="skia.Paint.getStrokeWidth"><code class="xref py py-obj docutils literal notranslate"><span class="pre">getStrokeWidth</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.Paint.getStrokeWidth" title="skia.Paint.getStrokeWidth"><code class="xref py py-obj docutils literal notranslate"><span class="pre">getStrokeWidth</span></code></a></p></td>
 <td><p>Returns the thickness of the pen used by SkPaint to outline the shape.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#skia.Paint.getStyle" title="skia.Paint.getStyle"><code class="xref py py-obj docutils literal notranslate"><span class="pre">getStyle</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Paint.getStyle" title="skia.Paint.getStyle"><code class="xref py py-obj docutils literal notranslate"><span class="pre">getStyle</span></code></a></p></td>
 <td><p>Returns whether the geometry is filled, stroked, or filled and stroked.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Paint.isAntiAlias" title="skia.Paint.isAntiAlias"><code class="xref py py-obj docutils literal notranslate"><span class="pre">isAntiAlias</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.Paint.isAntiAlias" title="skia.Paint.isAntiAlias"><code class="xref py py-obj docutils literal notranslate"><span class="pre">isAntiAlias</span></code></a></p></td>
 <td><p>Returns true if pixels on the active edges of <a class="reference internal" href="skia.Path.html#skia.Path" title="skia.Path"><code class="xref py py-class docutils literal notranslate"><span class="pre">Path</span></code></a> may be drawn with partial transparency.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#skia.Paint.isDither" title="skia.Paint.isDither"><code class="xref py py-obj docutils literal notranslate"><span class="pre">isDither</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Paint.isDither" title="skia.Paint.isDither"><code class="xref py py-obj docutils literal notranslate"><span class="pre">isDither</span></code></a></p></td>
 <td><p>Returns true if color error may be distributed to smooth color transition.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Paint.isSrcOver" title="skia.Paint.isSrcOver"><code class="xref py py-obj docutils literal notranslate"><span class="pre">isSrcOver</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.Paint.isSrcOver" title="skia.Paint.isSrcOver"><code class="xref py py-obj docutils literal notranslate"><span class="pre">isSrcOver</span></code></a></p></td>
 <td><p>Returns true if <a class="reference internal" href="skia.BlendMode.html#skia.BlendMode" title="skia.BlendMode"><code class="xref py py-class docutils literal notranslate"><span class="pre">BlendMode</span></code></a> is <a class="reference internal" href="skia.BlendMode.html#skia.BlendMode.kSrcOver" title="skia.BlendMode.kSrcOver"><code class="xref py py-attr docutils literal notranslate"><span class="pre">BlendMode.kSrcOver</span></code></a>, the default.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#skia.Paint.nothingToDraw" title="skia.Paint.nothingToDraw"><code class="xref py py-obj docutils literal notranslate"><span class="pre">nothingToDraw</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Paint.nothingToDraw" title="skia.Paint.nothingToDraw"><code class="xref py py-obj docutils literal notranslate"><span class="pre">nothingToDraw</span></code></a></p></td>
 <td><p>Returns true if <a class="reference internal" href="#skia.Paint" title="skia.Paint"><code class="xref py py-class docutils literal notranslate"><span class="pre">Paint</span></code></a> prevents all drawing; otherwise, the <a class="reference internal" href="#skia.Paint" title="skia.Paint"><code class="xref py py-class docutils literal notranslate"><span class="pre">Paint</span></code></a> may or may not allow drawing.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Paint.refColorFilter" title="skia.Paint.refColorFilter"><code class="xref py py-obj docutils literal notranslate"><span class="pre">refColorFilter</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.Paint.refColorFilter" title="skia.Paint.refColorFilter"><code class="xref py py-obj docutils literal notranslate"><span class="pre">refColorFilter</span></code></a></p></td>
 <td><p>Returns <a class="reference internal" href="skia.ColorFilter.html#skia.ColorFilter" title="skia.ColorFilter"><code class="xref py py-class docutils literal notranslate"><span class="pre">ColorFilter</span></code></a> if set, or nullptr.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#skia.Paint.refImageFilter" title="skia.Paint.refImageFilter"><code class="xref py py-obj docutils literal notranslate"><span class="pre">refImageFilter</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Paint.refImageFilter" title="skia.Paint.refImageFilter"><code class="xref py py-obj docutils literal notranslate"><span class="pre">refImageFilter</span></code></a></p></td>
 <td><p>Returns <a class="reference internal" href="skia.ImageFilter.html#skia.ImageFilter" title="skia.ImageFilter"><code class="xref py py-class docutils literal notranslate"><span class="pre">ImageFilter</span></code></a> if set, or nullptr.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Paint.refMaskFilter" title="skia.Paint.refMaskFilter"><code class="xref py py-obj docutils literal notranslate"><span class="pre">refMaskFilter</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.Paint.refMaskFilter" title="skia.Paint.refMaskFilter"><code class="xref py py-obj docutils literal notranslate"><span class="pre">refMaskFilter</span></code></a></p></td>
 <td><p>Returns <a class="reference internal" href="skia.MaskFilter.html#skia.MaskFilter" title="skia.MaskFilter"><code class="xref py py-class docutils literal notranslate"><span class="pre">MaskFilter</span></code></a> if set, or nullptr.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#skia.Paint.refPathEffect" title="skia.Paint.refPathEffect"><code class="xref py py-obj docutils literal notranslate"><span class="pre">refPathEffect</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Paint.refPathEffect" title="skia.Paint.refPathEffect"><code class="xref py py-obj docutils literal notranslate"><span class="pre">refPathEffect</span></code></a></p></td>
 <td><p>Returns <a class="reference internal" href="skia.PathEffect.html#skia.PathEffect" title="skia.PathEffect"><code class="xref py py-class docutils literal notranslate"><span class="pre">PathEffect</span></code></a> if set, or nullptr.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Paint.refShader" title="skia.Paint.refShader"><code class="xref py py-obj docutils literal notranslate"><span class="pre">refShader</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.Paint.refShader" title="skia.Paint.refShader"><code class="xref py py-obj docutils literal notranslate"><span class="pre">refShader</span></code></a></p></td>
 <td><p>Returns optional colors used when filling a path, such as a gradient.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#skia.Paint.reset" title="skia.Paint.reset"><code class="xref py py-obj docutils literal notranslate"><span class="pre">reset</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Paint.reset" title="skia.Paint.reset"><code class="xref py py-obj docutils literal notranslate"><span class="pre">reset</span></code></a></p></td>
 <td><p>Sets all <a class="reference internal" href="#skia.Paint" title="skia.Paint"><code class="xref py py-class docutils literal notranslate"><span class="pre">Paint</span></code></a> contents to their initial values.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Paint.setARGB" title="skia.Paint.setARGB"><code class="xref py py-obj docutils literal notranslate"><span class="pre">setARGB</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.Paint.setARGB" title="skia.Paint.setARGB"><code class="xref py py-obj docutils literal notranslate"><span class="pre">setARGB</span></code></a></p></td>
 <td><p>Sets color used when drawing solid fills.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#skia.Paint.setAlpha" title="skia.Paint.setAlpha"><code class="xref py py-obj docutils literal notranslate"><span class="pre">setAlpha</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Paint.setAlpha" title="skia.Paint.setAlpha"><code class="xref py py-obj docutils literal notranslate"><span class="pre">setAlpha</span></code></a></p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Paint.setAlphaf" title="skia.Paint.setAlphaf"><code class="xref py py-obj docutils literal notranslate"><span class="pre">setAlphaf</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.Paint.setAlphaf" title="skia.Paint.setAlphaf"><code class="xref py py-obj docutils literal notranslate"><span class="pre">setAlphaf</span></code></a></p></td>
 <td><p>Replaces alpha, leaving RGB unchanged.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#skia.Paint.setAntiAlias" title="skia.Paint.setAntiAlias"><code class="xref py py-obj docutils literal notranslate"><span class="pre">setAntiAlias</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Paint.setAntiAlias" title="skia.Paint.setAntiAlias"><code class="xref py py-obj docutils literal notranslate"><span class="pre">setAntiAlias</span></code></a></p></td>
 <td><p>Requests, but does not require, that edge pixels draw opaque or with partial transparency.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Paint.setBlendMode" title="skia.Paint.setBlendMode"><code class="xref py py-obj docutils literal notranslate"><span class="pre">setBlendMode</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.Paint.setBlendMode" title="skia.Paint.setBlendMode"><code class="xref py py-obj docutils literal notranslate"><span class="pre">setBlendMode</span></code></a></p></td>
 <td><p>Sets <a class="reference internal" href="skia.BlendMode.html#skia.BlendMode" title="skia.BlendMode"><code class="xref py py-class docutils literal notranslate"><span class="pre">BlendMode</span></code></a> to mode.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#skia.Paint.setColor" title="skia.Paint.setColor"><code class="xref py py-obj docutils literal notranslate"><span class="pre">setColor</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Paint.setColor" title="skia.Paint.setColor"><code class="xref py py-obj docutils literal notranslate"><span class="pre">setColor</span></code></a></p></td>
 <td><p>Sets alpha and RGB used when stroking and filling.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Paint.setColor4f" title="skia.Paint.setColor4f"><code class="xref py py-obj docutils literal notranslate"><span class="pre">setColor4f</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.Paint.setColor4f" title="skia.Paint.setColor4f"><code class="xref py py-obj docutils literal notranslate"><span class="pre">setColor4f</span></code></a></p></td>
 <td><p>Sets alpha and RGB used when stroking and filling.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#skia.Paint.setColorFilter" title="skia.Paint.setColorFilter"><code class="xref py py-obj docutils literal notranslate"><span class="pre">setColorFilter</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Paint.setColorFilter" title="skia.Paint.setColorFilter"><code class="xref py py-obj docutils literal notranslate"><span class="pre">setColorFilter</span></code></a></p></td>
 <td><p>Sets <a class="reference internal" href="skia.ColorFilter.html#skia.ColorFilter" title="skia.ColorFilter"><code class="xref py py-class docutils literal notranslate"><span class="pre">ColorFilter</span></code></a> to filter, decreasing <a class="reference internal" href="skia.RefCnt.html#skia.RefCnt" title="skia.RefCnt"><code class="xref py py-class docutils literal notranslate"><span class="pre">RefCnt</span></code></a> of the previous <a class="reference internal" href="skia.ColorFilter.html#skia.ColorFilter" title="skia.ColorFilter"><code class="xref py py-class docutils literal notranslate"><span class="pre">ColorFilter</span></code></a>.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Paint.setDither" title="skia.Paint.setDither"><code class="xref py py-obj docutils literal notranslate"><span class="pre">setDither</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.Paint.setDither" title="skia.Paint.setDither"><code class="xref py py-obj docutils literal notranslate"><span class="pre">setDither</span></code></a></p></td>
 <td><p>Requests, but does not require, to distribute color error.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#skia.Paint.setImageFilter" title="skia.Paint.setImageFilter"><code class="xref py py-obj docutils literal notranslate"><span class="pre">setImageFilter</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Paint.setImageFilter" title="skia.Paint.setImageFilter"><code class="xref py py-obj docutils literal notranslate"><span class="pre">setImageFilter</span></code></a></p></td>
 <td><p>Sets <a class="reference internal" href="skia.ImageFilter.html#skia.ImageFilter" title="skia.ImageFilter"><code class="xref py py-class docutils literal notranslate"><span class="pre">ImageFilter</span></code></a> to imageFilter, decreasing <a class="reference internal" href="skia.RefCnt.html#skia.RefCnt" title="skia.RefCnt"><code class="xref py py-class docutils literal notranslate"><span class="pre">RefCnt</span></code></a> of the previous <a class="reference internal" href="skia.ImageFilter.html#skia.ImageFilter" title="skia.ImageFilter"><code class="xref py py-class docutils literal notranslate"><span class="pre">ImageFilter</span></code></a>.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Paint.setMaskFilter" title="skia.Paint.setMaskFilter"><code class="xref py py-obj docutils literal notranslate"><span class="pre">setMaskFilter</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.Paint.setMaskFilter" title="skia.Paint.setMaskFilter"><code class="xref py py-obj docutils literal notranslate"><span class="pre">setMaskFilter</span></code></a></p></td>
 <td><p>Sets <a class="reference internal" href="skia.MaskFilter.html#skia.MaskFilter" title="skia.MaskFilter"><code class="xref py py-class docutils literal notranslate"><span class="pre">MaskFilter</span></code></a> to maskFilter, decreasing <a class="reference internal" href="skia.RefCnt.html#skia.RefCnt" title="skia.RefCnt"><code class="xref py py-class docutils literal notranslate"><span class="pre">RefCnt</span></code></a> of the previous <a class="reference internal" href="skia.MaskFilter.html#skia.MaskFilter" title="skia.MaskFilter"><code class="xref py py-class docutils literal notranslate"><span class="pre">MaskFilter</span></code></a>.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#skia.Paint.setPathEffect" title="skia.Paint.setPathEffect"><code class="xref py py-obj docutils literal notranslate"><span class="pre">setPathEffect</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Paint.setPathEffect" title="skia.Paint.setPathEffect"><code class="xref py py-obj docutils literal notranslate"><span class="pre">setPathEffect</span></code></a></p></td>
 <td><p>Sets <a class="reference internal" href="skia.PathEffect.html#skia.PathEffect" title="skia.PathEffect"><code class="xref py py-class docutils literal notranslate"><span class="pre">PathEffect</span></code></a> to pathEffect, decreasing <a class="reference internal" href="skia.RefCnt.html#skia.RefCnt" title="skia.RefCnt"><code class="xref py py-class docutils literal notranslate"><span class="pre">RefCnt</span></code></a> of the previous <a class="reference internal" href="skia.PathEffect.html#skia.PathEffect" title="skia.PathEffect"><code class="xref py py-class docutils literal notranslate"><span class="pre">PathEffect</span></code></a>.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Paint.setShader" title="skia.Paint.setShader"><code class="xref py py-obj docutils literal notranslate"><span class="pre">setShader</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.Paint.setShader" title="skia.Paint.setShader"><code class="xref py py-obj docutils literal notranslate"><span class="pre">setShader</span></code></a></p></td>
 <td><p>Sets optional colors used when filling a path, such as a gradient.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#skia.Paint.setStrokeCap" title="skia.Paint.setStrokeCap"><code class="xref py py-obj docutils literal notranslate"><span class="pre">setStrokeCap</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Paint.setStrokeCap" title="skia.Paint.setStrokeCap"><code class="xref py py-obj docutils literal notranslate"><span class="pre">setStrokeCap</span></code></a></p></td>
 <td><p>Sets the geometry drawn at the beginning and end of strokes.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Paint.setStrokeJoin" title="skia.Paint.setStrokeJoin"><code class="xref py py-obj docutils literal notranslate"><span class="pre">setStrokeJoin</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.Paint.setStrokeJoin" title="skia.Paint.setStrokeJoin"><code class="xref py py-obj docutils literal notranslate"><span class="pre">setStrokeJoin</span></code></a></p></td>
 <td><p>Sets the geometry drawn at the corners of strokes.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#skia.Paint.setStrokeMiter" title="skia.Paint.setStrokeMiter"><code class="xref py py-obj docutils literal notranslate"><span class="pre">setStrokeMiter</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Paint.setStrokeMiter" title="skia.Paint.setStrokeMiter"><code class="xref py py-obj docutils literal notranslate"><span class="pre">setStrokeMiter</span></code></a></p></td>
 <td><p>Sets the limit at which a sharp corner is drawn beveled.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Paint.setStrokeWidth" title="skia.Paint.setStrokeWidth"><code class="xref py py-obj docutils literal notranslate"><span class="pre">setStrokeWidth</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.Paint.setStrokeWidth" title="skia.Paint.setStrokeWidth"><code class="xref py py-obj docutils literal notranslate"><span class="pre">setStrokeWidth</span></code></a></p></td>
 <td><p>Sets the thickness of the pen used by the paint to outline the shape.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#skia.Paint.setStyle" title="skia.Paint.setStyle"><code class="xref py py-obj docutils literal notranslate"><span class="pre">setStyle</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Paint.setStyle" title="skia.Paint.setStyle"><code class="xref py py-obj docutils literal notranslate"><span class="pre">setStyle</span></code></a></p></td>
 <td><p>Sets whether the geometry is filled, stroked, or filled and stroked.</p></td>
 </tr>
 </tbody>
@@ -693,6 +698,18 @@ orig, without altering <a class="reference internal" href="skia.Paint.Style.html
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
 <dd class="field-odd"><p>alpha ranging from zero, fully transparent, to 255, fully
 opaque</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="skia.Paint.getBlendMode">
+<span class="sig-prename descclassname"><span class="pre">Paint.</span></span><span class="sig-name descname"><span class="pre">getBlendMode</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#skia.Paint" title="skia.Paint"><span class="pre">skia.Paint</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="skia.BlendMode.html#skia.BlendMode" title="skia.BlendMode"><span class="pre">skia.BlendMode</span></a></span></span><a class="headerlink" href="#skia.Paint.getBlendMode" title="Permalink to this definition"></a></dt>
+<dd><p>Returns <a class="reference internal" href="skia.BlendMode.html#skia.BlendMode" title="skia.BlendMode"><code class="xref py py-class docutils literal notranslate"><span class="pre">BlendMode</span></code></a>.</p>
+<p>By default, returns <a class="reference internal" href="skia.BlendMode.html#skia.BlendMode.kSrcOver" title="skia.BlendMode.kSrcOver"><code class="xref py py-attr docutils literal notranslate"><span class="pre">BlendMode.kSrcOver</span></code></a>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>mode used to combine source color with destination color</p>
 </dd>
 </dl>
 </dd></dl>

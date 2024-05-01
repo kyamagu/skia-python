@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>YUVAPixmapInfo &mdash; skia-python 121.0b6 documentation</title>
+  <title>YUVAPixmapInfo &mdash; skia-python 124.0b7 documentation</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
       <link rel="stylesheet" type="text/css" href="../_static/css/theme.css" />
 
@@ -37,7 +37,7 @@
             skia-python
           </a>
               <div class="version">
-                121.0b6
+                124.0b7
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
@@ -79,6 +79,7 @@
 <li class="toctree-l3"><a class="reference internal" href="skia.ColorType.html">ColorType</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.ConvergeMode.html">ConvergeMode</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.CornerPathEffect.html">CornerPathEffect</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.CubicResampler.html">CubicResampler</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.DashPathEffect.html">DashPathEffect</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.Data.html">Data</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.DiscretePathEffect.html">DiscretePathEffect</a></li>
@@ -152,6 +153,7 @@
 <li class="toctree-l3"><a class="reference internal" href="skia.Matrix.html">Matrix</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.MemoryStream.html">MemoryStream</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.MipmapBuilder.html">MipmapBuilder</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.MipmapMode.html">MipmapMode</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.NullWStream.html">NullWStream</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.OpBuilder.html">OpBuilder</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.OverdrawColorFilter.html">OverdrawColorFilter</a></li>
@@ -358,7 +360,7 @@ type.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="skia.YUVAPixmapInfo.NumChannelsAndDataType">
-<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">YUVAPixmapInfo.</span></span><span class="sig-name descname"><span class="pre">NumChannelsAndDataType</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">colorType</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="skia.ColorType.html#skia.ColorType" title="skia.ColorType"><span class="pre">skia.ColorType</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="skia.YUVAPixmapInfo.DataType.html#skia.YUVAPixmapInfo.DataType" title="skia.YUVAPixmapInfo.DataType"><span class="pre">skia.YUVAPixmapInfo.DataType</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#skia.YUVAPixmapInfo.NumChannelsAndDataType" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">YUVAPixmapInfo.</span></span><span class="sig-name descname"><span class="pre">NumChannelsAndDataType</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">colorType</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="skia.ColorType.html#skia.ColorType" title="skia.ColorType"><span class="pre">skia.ColorType</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="skia.YUVAPixmapInfo.DataType.html#skia.YUVAPixmapInfo.DataType" title="skia.YUVAPixmapInfo.DataType"><span class="pre">skia.YUVAPixmapInfo.DataType</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#skia.YUVAPixmapInfo.NumChannelsAndDataType" title="Permalink to this definition"></a></dt>
 <dd><p>If the <a class="reference internal" href="skia.ColorType.html#skia.ColorType" title="skia.ColorType"><code class="xref py py-class docutils literal notranslate"><span class="pre">ColorType</span></code></a> is supported for YUVA pixmaps this will
 return the number of YUVA channels that can be stored in a plane of
 this color type and what the DataType is of those channels. If the
@@ -377,7 +379,7 @@ ignored.</p>
 <div><p>Default SkYUVAPixmapInfo is invalid.</p>
 </div></blockquote>
 </li>
-<li><p>__init__(self: skia.YUVAPixmapInfo, info: skia.YUVAInfo, colorType: List[skia.ColorType], rowBytes: object = None) -&gt; None</p>
+<li><p>__init__(self: skia.YUVAPixmapInfo, info: skia.YUVAInfo, colorType: list[skia.ColorType], rowBytes: object = None) -&gt; None</p>
 <blockquote>
 <div><p>Initializes the <a class="reference internal" href="#skia.YUVAPixmapInfo" title="skia.YUVAPixmapInfo"><code class="xref py py-class docutils literal notranslate"><span class="pre">YUVAPixmapInfo</span></code></a> from a <a class="reference internal" href="skia.YUVAInfo.html#skia.YUVAInfo" title="skia.YUVAInfo"><code class="xref py py-class docutils literal notranslate"><span class="pre">YUVAInfo</span></code></a>
 with per-plane color types and row bytes. This will be invalid if the
@@ -417,7 +419,7 @@ valid.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="skia.YUVAPixmapInfo.initPixmapsFromSingleAllocation">
-<span class="sig-prename descclassname"><span class="pre">YUVAPixmapInfo.</span></span><span class="sig-name descname"><span class="pre">initPixmapsFromSingleAllocation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#skia.YUVAPixmapInfo" title="skia.YUVAPixmapInfo"><span class="pre">skia.YUVAPixmapInfo</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">memory</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">buffer</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="skia.Pixmap.html#skia.Pixmap" title="skia.Pixmap"><span class="pre">skia.Pixmap</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#skia.YUVAPixmapInfo.initPixmapsFromSingleAllocation" title="Permalink to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">YUVAPixmapInfo.</span></span><span class="sig-name descname"><span class="pre">initPixmapsFromSingleAllocation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#skia.YUVAPixmapInfo" title="skia.YUVAPixmapInfo"><span class="pre">skia.YUVAPixmapInfo</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">memory</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Buffer</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="skia.Pixmap.html#skia.Pixmap" title="skia.Pixmap"><span class="pre">skia.Pixmap</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#skia.YUVAPixmapInfo.initPixmapsFromSingleAllocation" title="Permalink to this definition"></a></dt>
 <dd><p>Takes an allocation that is assumed to be at least
 <a class="reference internal" href="#skia.YUVAPixmapInfo.computeTotalBytes" title="skia.YUVAPixmapInfo.computeTotalBytes"><code class="xref py py-meth docutils literal notranslate"><span class="pre">computeTotalBytes()</span></code></a> in size and configures the first
 <a class="reference internal" href="#skia.YUVAPixmapInfo.numPlanes" title="skia.YUVAPixmapInfo.numPlanes"><code class="xref py py-meth docutils literal notranslate"><span class="pre">numPlanes()</span></code></a> entries in pixmaps array to point into that

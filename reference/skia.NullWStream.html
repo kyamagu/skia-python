@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>NullWStream &mdash; skia-python 121.0b6 documentation</title>
+  <title>NullWStream &mdash; skia-python 124.0b7 documentation</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
       <link rel="stylesheet" type="text/css" href="../_static/css/theme.css" />
 
@@ -22,7 +22,7 @@
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="OpBuilder" href="skia.OpBuilder.html" />
-    <link rel="prev" title="MipmapBuilder" href="skia.MipmapBuilder.html" /> 
+    <link rel="prev" title="MipmapMode" href="skia.MipmapMode.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -37,7 +37,7 @@
             skia-python
           </a>
               <div class="version">
-                121.0b6
+                124.0b7
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
@@ -79,6 +79,7 @@
 <li class="toctree-l3"><a class="reference internal" href="skia.ColorType.html">ColorType</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.ConvergeMode.html">ConvergeMode</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.CornerPathEffect.html">CornerPathEffect</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.CubicResampler.html">CubicResampler</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.DashPathEffect.html">DashPathEffect</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.Data.html">Data</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.DiscretePathEffect.html">DiscretePathEffect</a></li>
@@ -152,6 +153,7 @@
 <li class="toctree-l3"><a class="reference internal" href="skia.Matrix.html">Matrix</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.MemoryStream.html">MemoryStream</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.MipmapBuilder.html">MipmapBuilder</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.MipmapMode.html">MipmapMode</a></li>
 <li class="toctree-l3 current"><a class="current reference internal" href="#">NullWStream</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#skia.NullWStream"><code class="docutils literal notranslate"><span class="pre">NullWStream</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#methods">Methods</a></li>
@@ -350,7 +352,7 @@
 
 <dl class="py method">
 <dt class="sig sig-object py" id="skia.NullWStream.write">
-<span class="sig-prename descclassname"><span class="pre">NullWStream.</span></span><span class="sig-name descname"><span class="pre">write</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="skia.WStream.html#skia.WStream" title="skia.WStream"><span class="pre">skia.WStream</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">buffer</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">buffer</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#skia.NullWStream.write" title="Permalink to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">NullWStream.</span></span><span class="sig-name descname"><span class="pre">write</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="skia.WStream.html#skia.WStream" title="skia.WStream"><span class="pre">skia.WStream</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">buffer</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Buffer</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#skia.NullWStream.write" title="Permalink to this definition"></a></dt>
 <dd><p>Called to write bytes to a <a class="reference internal" href="skia.WStream.html#skia.WStream" title="skia.WStream"><code class="xref py py-class docutils literal notranslate"><span class="pre">WStream</span></code></a>.</p>
 <p>Returns true on success</p>
 <dl class="field-list simple">
@@ -443,7 +445,7 @@ stream</p></li>
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="skia.MipmapBuilder.html" class="btn btn-neutral float-left" title="MipmapBuilder" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="skia.MipmapMode.html" class="btn btn-neutral float-left" title="MipmapMode" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
         <a href="skia.OpBuilder.html" class="btn btn-neutral float-right" title="OpBuilder" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 

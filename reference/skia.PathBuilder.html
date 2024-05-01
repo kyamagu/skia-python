@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>PathBuilder &mdash; skia-python 121.0b6 documentation</title>
+  <title>PathBuilder &mdash; skia-python 124.0b7 documentation</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
       <link rel="stylesheet" type="text/css" href="../_static/css/theme.css" />
 
@@ -37,7 +37,7 @@
             skia-python
           </a>
               <div class="version">
-                121.0b6
+                124.0b7
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
@@ -79,6 +79,7 @@
 <li class="toctree-l3"><a class="reference internal" href="skia.ColorType.html">ColorType</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.ConvergeMode.html">ConvergeMode</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.CornerPathEffect.html">CornerPathEffect</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.CubicResampler.html">CubicResampler</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.DashPathEffect.html">DashPathEffect</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.Data.html">Data</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.DiscretePathEffect.html">DiscretePathEffect</a></li>
@@ -152,6 +153,7 @@
 <li class="toctree-l3"><a class="reference internal" href="skia.Matrix.html">Matrix</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.MemoryStream.html">MemoryStream</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.MipmapBuilder.html">MipmapBuilder</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.MipmapMode.html">MipmapMode</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.NullWStream.html">NullWStream</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.OpBuilder.html">OpBuilder</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.OverdrawColorFilter.html">OverdrawColorFilter</a></li>
@@ -430,7 +432,7 @@ modulo 360</p></li>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="skia.PathBuilder.addPolygon">
-<span class="sig-prename descclassname"><span class="pre">PathBuilder.</span></span><span class="sig-name descname"><span class="pre">addPolygon</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#skia.PathBuilder" title="skia.PathBuilder"><span class="pre">skia.PathBuilder</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">points</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="skia.Point.html#skia.Point" title="skia.Point"><span class="pre">skia.Point</span></a><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">isClosed</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#skia.PathBuilder" title="skia.PathBuilder"><span class="pre">skia.PathBuilder</span></a></span></span><a class="headerlink" href="#skia.PathBuilder.addPolygon" title="Permalink to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">PathBuilder.</span></span><span class="sig-name descname"><span class="pre">addPolygon</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#skia.PathBuilder" title="skia.PathBuilder"><span class="pre">skia.PathBuilder</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">points</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="skia.Point.html#skia.Point" title="skia.Point"><span class="pre">skia.Point</span></a><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">isClosed</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#skia.PathBuilder" title="skia.PathBuilder"><span class="pre">skia.PathBuilder</span></a></span></span><a class="headerlink" href="#skia.PathBuilder.addPolygon" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
@@ -578,7 +580,7 @@ clockwise</p>
 <ol class="arabic simple">
 <li><p>conicTo(self: skia.PathBuilder, pt1: skia.Point, pt2: skia.Point, w: float) -&gt; skia.PathBuilder</p></li>
 <li><p>conicTo(self: skia.PathBuilder, x1: float, y1: float, x2: float, y2: float, w: float) -&gt; skia.PathBuilder</p></li>
-<li><p>conicTo(self: skia.PathBuilder, pts: List[skia.Point], w: float) -&gt; skia.PathBuilder</p></li>
+<li><p>conicTo(self: skia.PathBuilder, pts: list[skia.Point], w: float) -&gt; skia.PathBuilder</p></li>
 </ol>
 </dd></dl>
 
@@ -589,7 +591,7 @@ clockwise</p>
 <ol class="arabic simple">
 <li><p>cubicTo(self: skia.PathBuilder, pt1: skia.Point, pt2: skia.Point, pt3: skia.Point) -&gt; skia.PathBuilder</p></li>
 <li><p>cubicTo(self: skia.PathBuilder, x1: float, y1: float, x2: float, y2: float, x3: float, y3: float) -&gt; skia.PathBuilder</p></li>
-<li><p>cubicTo(self: skia.PathBuilder, pts: List[skia.Point]) -&gt; skia.PathBuilder</p></li>
+<li><p>cubicTo(self: skia.PathBuilder, pts: list[skia.Point]) -&gt; skia.PathBuilder</p></li>
 </ol>
 </dd></dl>
 
@@ -646,7 +648,7 @@ lineTo, quadTo, etc.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="skia.PathBuilder.polylineTo">
-<span class="sig-prename descclassname"><span class="pre">PathBuilder.</span></span><span class="sig-name descname"><span class="pre">polylineTo</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#skia.PathBuilder" title="skia.PathBuilder"><span class="pre">skia.PathBuilder</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">points</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="skia.Point.html#skia.Point" title="skia.Point"><span class="pre">skia.Point</span></a><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#skia.PathBuilder" title="skia.PathBuilder"><span class="pre">skia.PathBuilder</span></a></span></span><a class="headerlink" href="#skia.PathBuilder.polylineTo" title="Permalink to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">PathBuilder.</span></span><span class="sig-name descname"><span class="pre">polylineTo</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#skia.PathBuilder" title="skia.PathBuilder"><span class="pre">skia.PathBuilder</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">points</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="skia.Point.html#skia.Point" title="skia.Point"><span class="pre">skia.Point</span></a><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#skia.PathBuilder" title="skia.PathBuilder"><span class="pre">skia.PathBuilder</span></a></span></span><a class="headerlink" href="#skia.PathBuilder.polylineTo" title="Permalink to this definition"></a></dt>
 <dd><p>Append a series of lineTo(…)</p>
 </dd></dl>
 
@@ -657,7 +659,7 @@ lineTo, quadTo, etc.</p>
 <ol class="arabic simple">
 <li><p>quadTo(self: skia.PathBuilder, pt1: skia.Point, pt2: skia.Point) -&gt; skia.PathBuilder</p></li>
 <li><p>quadTo(self: skia.PathBuilder, x1: float, y1: float, x2: float, y2: float) -&gt; skia.PathBuilder</p></li>
-<li><p>quadTo(self: skia.PathBuilder, pts: List[skia.Point]) -&gt; skia.PathBuilder</p></li>
+<li><p>quadTo(self: skia.PathBuilder, pts: list[skia.Point]) -&gt; skia.PathBuilder</p></li>
 </ol>
 </dd></dl>
 

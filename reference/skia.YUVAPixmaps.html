@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>YUVAPixmaps &mdash; skia-python 121.0b6 documentation</title>
+  <title>YUVAPixmaps &mdash; skia-python 124.0b7 documentation</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
       <link rel="stylesheet" type="text/css" href="../_static/css/theme.css" />
 
@@ -37,7 +37,7 @@
             skia-python
           </a>
               <div class="version">
-                121.0b6
+                124.0b7
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
@@ -79,6 +79,7 @@
 <li class="toctree-l3"><a class="reference internal" href="skia.ColorType.html">ColorType</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.ConvergeMode.html">ConvergeMode</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.CornerPathEffect.html">CornerPathEffect</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.CubicResampler.html">CubicResampler</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.DashPathEffect.html">DashPathEffect</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.Data.html">Data</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.DiscretePathEffect.html">DiscretePathEffect</a></li>
@@ -152,6 +153,7 @@
 <li class="toctree-l3"><a class="reference internal" href="skia.Matrix.html">Matrix</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.MemoryStream.html">MemoryStream</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.MipmapBuilder.html">MipmapBuilder</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.MipmapMode.html">MipmapMode</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.NullWStream.html">NullWStream</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.OpBuilder.html">OpBuilder</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.OverdrawColorFilter.html">OverdrawColorFilter</a></li>
@@ -316,7 +318,7 @@ allocating/freeing memory for pixmaps or use external memory.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="skia.YUVAPixmaps.FromExternalMemory">
-<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">YUVAPixmaps.</span></span><span class="sig-name descname"><span class="pre">FromExternalMemory</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">yuvaPixmapInfo</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="skia.YUVAPixmapInfo.html#skia.YUVAPixmapInfo" title="skia.YUVAPixmapInfo"><span class="pre">skia.YUVAPixmapInfo</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">memory</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">buffer</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#skia.YUVAPixmaps" title="skia.YUVAPixmaps"><span class="pre">skia.YUVAPixmaps</span></a></span></span><a class="headerlink" href="#skia.YUVAPixmaps.FromExternalMemory" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">YUVAPixmaps.</span></span><span class="sig-name descname"><span class="pre">FromExternalMemory</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">yuvaPixmapInfo</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="skia.YUVAPixmapInfo.html#skia.YUVAPixmapInfo" title="skia.YUVAPixmapInfo"><span class="pre">skia.YUVAPixmapInfo</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">memory</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Buffer</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#skia.YUVAPixmaps" title="skia.YUVAPixmaps"><span class="pre">skia.YUVAPixmaps</span></a></span></span><a class="headerlink" href="#skia.YUVAPixmaps.FromExternalMemory" title="Permalink to this definition"></a></dt>
 <dd><p>Use passed in memory as backing store for pixmaps’ pixels. Caller must
 ensure memory remains allocated while pixmaps are in use. There must be
 at least <a class="reference internal" href="skia.YUVAPixmapInfo.html#skia.YUVAPixmapInfo.computeTotalBytes" title="skia.YUVAPixmapInfo.computeTotalBytes"><code class="xref py py-meth docutils literal notranslate"><span class="pre">YUVAPixmapInfo.computeTotalBytes()</span></code></a> allocated starting
@@ -325,7 +327,7 @@ at memory.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="skia.YUVAPixmaps.FromExternalPixmaps">
-<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">YUVAPixmaps.</span></span><span class="sig-name descname"><span class="pre">FromExternalPixmaps</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">yuvaInfo</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="skia.YUVAInfo.html#skia.YUVAInfo" title="skia.YUVAInfo"><span class="pre">skia.YUVAInfo</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">pixmaps</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="skia.Pixmap.html#skia.Pixmap" title="skia.Pixmap"><span class="pre">skia.Pixmap</span></a><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#skia.YUVAPixmaps" title="skia.YUVAPixmaps"><span class="pre">skia.YUVAPixmaps</span></a></span></span><a class="headerlink" href="#skia.YUVAPixmaps.FromExternalPixmaps" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">YUVAPixmaps.</span></span><span class="sig-name descname"><span class="pre">FromExternalPixmaps</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">yuvaInfo</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="skia.YUVAInfo.html#skia.YUVAInfo" title="skia.YUVAInfo"><span class="pre">skia.YUVAInfo</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">pixmaps</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="skia.Pixmap.html#skia.Pixmap" title="skia.Pixmap"><span class="pre">skia.Pixmap</span></a><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#skia.YUVAPixmaps" title="skia.YUVAPixmaps"><span class="pre">skia.YUVAPixmaps</span></a></span></span><a class="headerlink" href="#skia.YUVAPixmaps.FromExternalPixmaps" title="Permalink to this definition"></a></dt>
 <dd><p>Wraps existing <a class="reference internal" href="skia.Pixmap.html#skia.Pixmap" title="skia.Pixmap"><code class="xref py py-class docutils literal notranslate"><span class="pre">Pixmap</span></code></a>. The <a class="reference internal" href="#skia.YUVAPixmaps" title="skia.YUVAPixmaps"><code class="xref py py-class docutils literal notranslate"><span class="pre">YUVAPixmaps</span></code></a> will
 have no ownership of the <a class="reference internal" href="skia.Pixmap.html#skia.Pixmap" title="skia.Pixmap"><code class="xref py py-class docutils literal notranslate"><span class="pre">Pixmap</span></code></a>’ pixel memory so the
 caller must ensure it remains valid. Will return an invalid
@@ -361,7 +363,7 @@ invalid.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="skia.YUVAPixmaps.planes">
-<span class="sig-prename descclassname"><span class="pre">YUVAPixmaps.</span></span><span class="sig-name descname"><span class="pre">planes</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#skia.YUVAPixmaps" title="skia.YUVAPixmaps"><span class="pre">skia.YUVAPixmaps</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Annotated[List[skia.Pixmap],</span> <span class="pre">FixedSize(4)]</span></span></span><a class="headerlink" href="#skia.YUVAPixmaps.planes" title="Permalink to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">YUVAPixmaps.</span></span><span class="sig-name descname"><span class="pre">planes</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#skia.YUVAPixmaps" title="skia.YUVAPixmaps"><span class="pre">skia.YUVAPixmaps</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Annotated[list[skia.Pixmap],</span> <span class="pre">FixedSize(4)]</span></span></span><a class="headerlink" href="#skia.YUVAPixmaps.planes" title="Permalink to this definition"></a></dt>
 <dd><p>Access the <a class="reference internal" href="skia.Pixmap.html#skia.Pixmap" title="skia.Pixmap"><code class="xref py py-class docutils literal notranslate"><span class="pre">Pixmap</span></code></a> planes. They are default initialized if
 this is not a valid <a class="reference internal" href="#skia.YUVAPixmaps" title="skia.YUVAPixmaps"><code class="xref py py-class docutils literal notranslate"><span class="pre">YUVAPixmaps</span></code></a>.</p>
 </dd></dl>

@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>TextBlob &mdash; skia-python 121.0b6 documentation</title>
+  <title>TextBlob &mdash; skia-python 124.0b7 documentation</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
       <link rel="stylesheet" type="text/css" href="../_static/css/theme.css" />
 
@@ -37,7 +37,7 @@
             skia-python
           </a>
               <div class="version">
-                121.0b6
+                124.0b7
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
@@ -79,6 +79,7 @@
 <li class="toctree-l3"><a class="reference internal" href="skia.ColorType.html">ColorType</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.ConvergeMode.html">ConvergeMode</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.CornerPathEffect.html">CornerPathEffect</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.CubicResampler.html">CubicResampler</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.DashPathEffect.html">DashPathEffect</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.Data.html">Data</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.DiscretePathEffect.html">DiscretePathEffect</a></li>
@@ -152,6 +153,7 @@
 <li class="toctree-l3"><a class="reference internal" href="skia.Matrix.html">Matrix</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.MemoryStream.html">MemoryStream</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.MipmapBuilder.html">MipmapBuilder</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.MipmapMode.html">MipmapMode</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.NullWStream.html">NullWStream</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.OpBuilder.html">OpBuilder</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.OverdrawColorFilter.html">OverdrawColorFilter</a></li>
@@ -341,7 +343,7 @@ run.</p>
 <h2>Methods<a class="headerlink" href="#methods" title="Permalink to this heading"></a></h2>
 <dl class="py method">
 <dt class="sig sig-object py" id="skia.TextBlob.Deserialize">
-<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">TextBlob.</span></span><span class="sig-name descname"><span class="pre">Deserialize</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">buffer</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#skia.TextBlob" title="skia.TextBlob"><span class="pre">skia.TextBlob</span></a></span></span><a class="headerlink" href="#skia.TextBlob.Deserialize" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">TextBlob.</span></span><span class="sig-name descname"><span class="pre">Deserialize</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Buffer</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#skia.TextBlob" title="skia.TextBlob"><span class="pre">skia.TextBlob</span></a></span></span><a class="headerlink" href="#skia.TextBlob.Deserialize" title="Permalink to this definition"></a></dt>
 <dd><p>Recreates <a class="reference internal" href="#skia.TextBlob" title="skia.TextBlob"><code class="xref py py-class docutils literal notranslate"><span class="pre">TextBlob</span></code></a> that was serialized into data.</p>
 <p>Returns constructed <a class="reference internal" href="#skia.TextBlob" title="skia.TextBlob"><code class="xref py py-class docutils literal notranslate"><span class="pre">TextBlob</span></code></a> if successful; otherwise,
 returns nullptr. Fails if size is smaller than required data length, or
@@ -363,7 +365,7 @@ to procs.fTypefaceProc; procs.fTypefaceProc is called with a pointer to
 
 <dl class="py method">
 <dt class="sig sig-object py" id="skia.TextBlob.MakeFromPosText">
-<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">TextBlob.</span></span><span class="sig-name descname"><span class="pre">MakeFromPosText</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">text:</span> <span class="pre">str,</span> <span class="pre">pos:</span> <span class="pre">List[skia.Point],</span> <span class="pre">font:</span> <span class="pre">skia.Font,</span> <span class="pre">encoding:</span> <span class="pre">skia.TextEncoding</span> <span class="pre">=</span> <span class="pre">&lt;TextEncoding.kUTF8:</span> <span class="pre">0&gt;</span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#skia.TextBlob" title="skia.TextBlob"><span class="pre">skia.TextBlob</span></a></span></span><a class="headerlink" href="#skia.TextBlob.MakeFromPosText" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">TextBlob.</span></span><span class="sig-name descname"><span class="pre">MakeFromPosText</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">text:</span> <span class="pre">str,</span> <span class="pre">pos:</span> <span class="pre">list[skia.Point],</span> <span class="pre">font:</span> <span class="pre">skia.Font,</span> <span class="pre">encoding:</span> <span class="pre">skia.TextEncoding</span> <span class="pre">=</span> <span class="pre">&lt;TextEncoding.kUTF8:</span> <span class="pre">0&gt;</span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#skia.TextBlob" title="skia.TextBlob"><span class="pre">skia.TextBlob</span></a></span></span><a class="headerlink" href="#skia.TextBlob.MakeFromPosText" title="Permalink to this definition"></a></dt>
 <dd><p>Returns a textblob built from a single run of text with x-positions and
 a single y value.</p>
 <p>This is equivalent to using <a class="reference internal" href="skia.TextBlobBuilder.html#skia.TextBlobBuilder" title="skia.TextBlobBuilder"><code class="xref py py-class docutils literal notranslate"><span class="pre">TextBlobBuilder</span></code></a> and calling
@@ -415,7 +417,7 @@ array.</p></li>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="skia.TextBlob.MakeFromRSXform">
-<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">TextBlob.</span></span><span class="sig-name descname"><span class="pre">MakeFromRSXform</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">text:</span> <span class="pre">str,</span> <span class="pre">xform:</span> <span class="pre">List[skia.RSXform],</span> <span class="pre">font:</span> <span class="pre">skia.Font,</span> <span class="pre">encoding:</span> <span class="pre">skia.TextEncoding</span> <span class="pre">=</span> <span class="pre">&lt;TextEncoding.kUTF8:</span> <span class="pre">0&gt;</span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#skia.TextBlob" title="skia.TextBlob"><span class="pre">skia.TextBlob</span></a></span></span><a class="headerlink" href="#skia.TextBlob.MakeFromRSXform" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">TextBlob.</span></span><span class="sig-name descname"><span class="pre">MakeFromRSXform</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">text:</span> <span class="pre">str,</span> <span class="pre">xform:</span> <span class="pre">list[skia.RSXform],</span> <span class="pre">font:</span> <span class="pre">skia.Font,</span> <span class="pre">encoding:</span> <span class="pre">skia.TextEncoding</span> <span class="pre">=</span> <span class="pre">&lt;TextEncoding.kUTF8:</span> <span class="pre">0&gt;</span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#skia.TextBlob" title="skia.TextBlob"><span class="pre">skia.TextBlob</span></a></span></span><a class="headerlink" href="#skia.TextBlob.MakeFromRSXform" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
@@ -538,7 +540,7 @@ bounds of all glyphs in runs.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="skia.TextBlob.getIntercepts">
-<span class="sig-prename descclassname"><span class="pre">TextBlob.</span></span><span class="sig-name descname"><span class="pre">getIntercepts</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#skia.TextBlob" title="skia.TextBlob"><span class="pre">skia.TextBlob</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">bounds</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Iterable</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">paint</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="skia.Paint.html#skia.Paint" title="skia.Paint"><span class="pre">skia.Paint</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#skia.TextBlob.getIntercepts" title="Permalink to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">TextBlob.</span></span><span class="sig-name descname"><span class="pre">getIntercepts</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#skia.TextBlob" title="skia.TextBlob"><span class="pre">skia.TextBlob</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">bounds</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Iterable</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">paint</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="skia.Paint.html#skia.Paint" title="skia.Paint"><span class="pre">skia.Paint</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#skia.TextBlob.getIntercepts" title="Permalink to this definition"></a></dt>
 <dd><p>Returns the number of intervals that intersect bounds.</p>
 <p>bounds describes a pair of lines parallel to the text advance. The
 return count is zero or a multiple of two, and is at most twice the

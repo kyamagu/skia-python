@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>GrBackendSemaphore &mdash; skia-python 121.0b6 documentation</title>
+  <title>GrBackendSemaphore &mdash; skia-python 124.0b7 documentation</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
       <link rel="stylesheet" type="text/css" href="../_static/css/theme.css" />
 
@@ -37,7 +37,7 @@
             skia-python
           </a>
               <div class="version">
-                121.0b6
+                124.0b7
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
@@ -79,6 +79,7 @@
 <li class="toctree-l3"><a class="reference internal" href="skia.ColorType.html">ColorType</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.ConvergeMode.html">ConvergeMode</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.CornerPathEffect.html">CornerPathEffect</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.CubicResampler.html">CubicResampler</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.DashPathEffect.html">DashPathEffect</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.Data.html">Data</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.DiscretePathEffect.html">DiscretePathEffect</a></li>
@@ -156,6 +157,7 @@
 <li class="toctree-l3"><a class="reference internal" href="skia.Matrix.html">Matrix</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.MemoryStream.html">MemoryStream</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.MipmapBuilder.html">MipmapBuilder</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.MipmapMode.html">MipmapMode</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.NullWStream.html">NullWStream</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.OpBuilder.html">OpBuilder</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.OverdrawColorFilter.html">OverdrawColorFilter</a></li>
@@ -262,10 +264,10 @@
 <dd><p class="rubric">Methods</p>
 <table class="autosummary longtable docutils align-default">
 <tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="#skia.GrBackendSemaphore.__init__" title="skia.GrBackendSemaphore.__init__"><code class="xref py py-obj docutils literal notranslate"><span class="pre">__init__</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.GrBackendSemaphore.MakeVk" title="skia.GrBackendSemaphore.MakeVk"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MakeVk</span></code></a></p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#skia.GrBackendSemaphore.initVulkan" title="skia.GrBackendSemaphore.initVulkan"><code class="xref py py-obj docutils literal notranslate"><span class="pre">initVulkan</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.GrBackendSemaphore.__init__" title="skia.GrBackendSemaphore.__init__"><code class="xref py py-obj docutils literal notranslate"><span class="pre">__init__</span></code></a></p></td>
 <td><p></p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#skia.GrBackendSemaphore.isInitialized" title="skia.GrBackendSemaphore.isInitialized"><code class="xref py py-obj docutils literal notranslate"><span class="pre">isInitialized</span></code></a></p></td>
@@ -281,13 +283,13 @@
 <section id="methods">
 <h2>Methods<a class="headerlink" href="#methods" title="Permalink to this heading"></a></h2>
 <dl class="py method">
-<dt class="sig sig-object py" id="skia.GrBackendSemaphore.__init__">
-<span class="sig-prename descclassname"><span class="pre">GrBackendSemaphore.</span></span><span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#skia.GrBackendSemaphore" title="skia.GrBackendSemaphore"><span class="pre">skia.GrBackendSemaphore</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#skia.GrBackendSemaphore.__init__" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="skia.GrBackendSemaphore.MakeVk">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">GrBackendSemaphore.</span></span><span class="sig-name descname"><span class="pre">MakeVk</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">semaphore</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">capsule</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#skia.GrBackendSemaphore" title="skia.GrBackendSemaphore"><span class="pre">skia.GrBackendSemaphore</span></a></span></span><a class="headerlink" href="#skia.GrBackendSemaphore.MakeVk" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="skia.GrBackendSemaphore.initVulkan">
-<span class="sig-prename descclassname"><span class="pre">GrBackendSemaphore.</span></span><span class="sig-name descname"><span class="pre">initVulkan</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#skia.GrBackendSemaphore" title="skia.GrBackendSemaphore"><span class="pre">skia.GrBackendSemaphore</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">semaphore</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">capsule</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#skia.GrBackendSemaphore.initVulkan" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="skia.GrBackendSemaphore.__init__">
+<span class="sig-prename descclassname"><span class="pre">GrBackendSemaphore.</span></span><span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#skia.GrBackendSemaphore" title="skia.GrBackendSemaphore"><span class="pre">skia.GrBackendSemaphore</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#skia.GrBackendSemaphore.__init__" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
