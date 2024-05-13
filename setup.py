@@ -59,6 +59,7 @@ elif sys.platform == 'darwin':
         ('VERSION_INFO', __version__),
         ('SK_GL', ''),
         ('SK_GANESH', '1'),
+        ('SK_METAL', ''),
     ]
     LIBRARIES = [
         'dl',
