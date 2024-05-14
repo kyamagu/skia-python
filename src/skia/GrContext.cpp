@@ -540,7 +540,6 @@ py::class_<GrContext_Base, sk_sp<GrContext_Base>, SkRefCnt>(m, "GrContext_Base")
         R"docstring(
         The 3D API backing this context.
         )docstring")
-/*
     .def("defaultBackendFormat", &GrContext_Base::defaultBackendFormat,
         R"docstring(
         Retrieve the default :py:class:`GrBackendFormat` for a given
@@ -552,7 +551,6 @@ py::class_<GrContext_Base, sk_sp<GrContext_Base>, SkRefCnt>(m, "GrContext_Base")
         The caller should check that the returned format is valid.
         )docstring")
     .def("compressedBackendFormat", &GrContext_Base::compressedBackendFormat)
-*/
     .def("threadSafeProxy", &GrContext_Base::threadSafeProxy)
     // .def("priv", py::overload_cast<>(&GrContext_Base::priv))
     // .def("priv", py::overload_cast<>(&GrContext_Base::priv, py::const_))
