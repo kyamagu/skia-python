@@ -11,6 +11,12 @@
 #include <include/gpu/ganesh/vk/GrVkBackendSemaphore.h>
 #include <include/gpu/ganesh/vk/GrVkBackendSurface.h>
 #include <include/gpu/ganesh/vk/GrVkDirectContext.h>
+#ifdef SK_METAL
+#include <include/gpu/ganesh/mtl/GrMtlBackendContext.h>
+#include <include/gpu/ganesh/mtl/GrMtlBackendSemaphore.h>
+#include <include/gpu/ganesh/mtl/GrMtlBackendSurface.h>
+#include <include/gpu/ganesh/mtl/GrMtlDirectContext.h>
+#endif
 #include <include/gpu/vk/VulkanTypes.h>
 #include <include/gpu/vk/GrVkBackendContext.h>
 #include <include/gpu/MutableTextureState.h>
@@ -257,7 +263,14 @@ py::class_<GrBackendSemaphore>(m, "GrBackendSemaphore")
         py::arg("semaphore"))
 */
 #endif
+#ifdef SK_METAL
+    .def_static("MakeMtl",
+        [] (GrMTLHandle event, uint64_t value) {
+            return GrBackendSemaphores::MakeMtl(event, value);
+        },
+        py::arg("event"), py::arg("value"))
     // .def("initMetal", &GrBackendSemaphore::initMetal)
+#endif
     .def("isInitialized", &GrBackendSemaphore::isInitialized)
 /*
     .def("glSync",
@@ -271,8 +284,18 @@ py::class_<GrBackendSemaphore>(m, "GrBackendSemaphore")
             return reinterpret_cast<void*>(GrBackendSemaphores::GetVkSemaphore(semaphore));
         })
 #endif
+#ifdef SK_METAL
+    .def("mtlSemaphore",
+        [] (GrBackendSemaphore& semaphore) {
+            return GrBackendSemaphores::GetMtlHandle(semaphore);
+        })
+    .def("mtlValue",
+        [] (GrBackendSemaphore& semaphore) {
+            return GrBackendSemaphores::GetMtlValue(semaphore);
+        })
     // .def("mtlSemaphore", &GrBackendSemaphore::mtlSemaphore)
     // .def("mtlValue", &GrBackendSemaphore::mtlValue)
+#endif
     ;
 
 py::class_<GrBackendFormat>(m, "GrBackendFormat")
@@ -288,6 +311,10 @@ py::class_<GrBackendFormat>(m, "GrBackendFormat")
             &GrBackendFormats::MakeVk),
         py::arg("ycbcrInfo"), py::arg("willUseDRMFormatModifiers") = false)
 #endif
+#ifdef SK_METAL
+    .def_static("MakeMtl", &GrBackendFormats::MakeMtl,
+        py::arg("format"))
+#endif
     .def_static("MakeMock", &GrBackendFormat::MakeMock,
         py::arg("colorType"), py::arg("compression"), py::arg("isStencilFormat") = false)
     .def("__eq__", &GrBackendFormat::operator==, py::arg("other"),
@@ -302,6 +329,9 @@ py::class_<GrBackendFormat>(m, "GrBackendFormat")
     .def("asVkFormat", &GrBackendFormats::AsVkFormat, py::arg("format"))
     .def("getVkYcbcrConversionInfo",
         &GrBackendFormats::GetVkYcbcrConversionInfo)
+#endif
+#ifdef SK_METAL
+    .def("asMtlFormat", &GrBackendFormats::AsMtlFormat)
 #endif
     .def("asMockColorType", &GrBackendFormat::asMockColorType)
     .def("asMockCompressionType", &GrBackendFormat::asMockCompressionType)
@@ -325,6 +355,13 @@ py::class_<GrBackendTexture>(m, "GrBackendTexture")
         }),
         py::arg("width"), py::arg("height"), py::arg("vkInfo"))
 #endif
+#ifdef SK_METAL
+    .def(py::init(
+            [] (int width, int height, skgpu::Mipmapped mipmapped, const GrMtlTextureInfo& mtlInfo, std::string_view label) {
+            return GrBackendTextures::MakeMtl(width, height, mipmapped, mtlInfo, label);
+        }),
+        py::arg("width"), py::arg("height"), py::arg("mipmapped"), py::arg("mtlInfo"), py::arg("label") = std::string_view{})
+#endif
     .def(py::init<int, int, skgpu::Mipmapped, const GrMockTextureInfo&>(),
         py::arg("width"), py::arg("height"), py::arg("mipMapped"),
         py::arg("mockInfo"))
@@ -343,6 +380,10 @@ py::class_<GrBackendTexture>(m, "GrBackendTexture")
         py::arg("info"))
     .def("setVkImageLayout", &GrBackendTextures::SetVkImageLayout,
         py::arg("layout"))
+#endif
+#ifdef SK_METAL
+    .def("getMtlTextureInfo", &GrBackendTextures::GetMtlTextureInfo,
+        py::arg("info"))
 #endif
     .def("getBackendFormat", &GrBackendTexture::getBackendFormat)
     .def("getMockTextureInfo", &GrBackendTexture::getMockTextureInfo,
@@ -427,6 +468,13 @@ py::class_<GrBackendRenderTarget>(m, "GrBackendRenderTarget")
         py::arg("width"), py::arg("height"), py::arg("sampleCnt"),
         py::arg("vkInfo"))
 #endif
+#ifdef SK_METAL
+    .def(py::init(
+        [] (int width, int height, const GrMtlTextureInfo& mtlInfo) {
+            return GrBackendRenderTargets::MakeMtl(width, height, mtlInfo);
+        }),
+        py::arg("width"), py::arg("height"), py::arg("mtlInfo"))
+#endif
     .def(py::init<int, int, int, int, const GrMockRenderTargetInfo&>(),
         py::arg("width"), py::arg("height"), py::arg("sampleCnt"),
         py::arg("stencilBits"), py::arg("mockInfo"))
@@ -460,6 +508,10 @@ py::class_<GrBackendRenderTarget>(m, "GrBackendRenderTarget")
         of the changed layout.
         )docstring",
         py::arg("layout"))
+#endif
+#ifdef SK_METAL
+    .def("getMtlTextureInfo", &GrBackendRenderTargets::GetMtlTextureInfo,
+        py::arg("info"))
 #endif
     .def("getBackendFormat", &GrBackendRenderTarget::getBackendFormat,
         R"docstring(
@@ -905,7 +957,7 @@ py::class_<GrDirectContext, sk_sp<GrDirectContext>, GrRecordingContext>(m, "GrDi
         )docstring",
         py::arg("width"), py::arg("height"), py::arg("backendFormat"),
         py::arg("mipMapped"), py::arg("renderable"),
-        py::arg("isProtected") = GrProtected::kNo, py::arg("view") = std::string_view{})
+        py::arg("isProtected") = GrProtected::kNo, py::arg("label") = std::string_view{})
     .def("createBackendTexture",
         py::overload_cast<int, int, SkColorType, skgpu::Mipmapped,
             GrRenderable, GrProtected, std::string_view>(&GrDirectContext::createBackendTexture),
@@ -919,7 +971,7 @@ py::class_<GrDirectContext, sk_sp<GrDirectContext>, GrRecordingContext>(m, "GrDi
         )docstring",
         py::arg("width"), py::arg("height"), py::arg("colorType"),
         py::arg("mipMapped"), py::arg("renderable"),
-        py::arg("isProtected") = GrProtected::kNo, py::arg("view") = std::string_view{})
+        py::arg("isProtected") = GrProtected::kNo, py::arg("label") = std::string_view{})
     .def("createBackendTexture",
         [] (GrDirectContext& context, int width, int height,
             const GrBackendFormat& backendFormat, const SkColor4f& color,
@@ -1196,6 +1248,24 @@ py::class_<GrDirectContext, sk_sp<GrDirectContext>, GrRecordingContext>(m, "GrDi
     .def_static("MakeVulkan",
         py::overload_cast<const GrVkBackendContext&>(
             &GrDirectContexts::MakeVulkan),
+        py::arg("backendContext"))
+#endif
+
+#ifdef SK_METAL
+    .def_static("MakeMetal",
+        py::overload_cast<const GrMtlBackendContext&, const GrContextOptions&>(
+            &GrDirectContexts::MakeMetal),
+        R"docstring(
+        Makes a GrDirectContext which uses Metal as the backend. The GrMtlBackendContext contains a
+        MTLDevice and MTLCommandQueue which should be used by the backend. These objects must
+        have their own ref which will be released when the GrMtlBackendContext is destroyed.
+        Ganesh will take its own ref on the objects which will be released when the GrDirectContext
+        is destroyed.
+        )docstring",
+        py::arg("backendContext"), py::arg("options"))
+    .def_static("MakeMetal",
+        py::overload_cast<const GrMtlBackendContext&>(
+            &GrDirectContexts::MakeMetal),
         py::arg("backendContext"))
 #endif
 
