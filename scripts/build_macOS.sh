@@ -35,6 +35,7 @@ skia_use_system_libjpeg_turbo=false
 skia_use_system_libwebp=false
 skia_use_system_libpng=false
 skia_use_system_icu=false
+skia_use_metal=true
 skia_use_system_harfbuzz=false
 skia_use_system_expat=false
 extra_cflags_cc=[\"-frtti\"]
