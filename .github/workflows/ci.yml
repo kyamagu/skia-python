@@ -45,15 +45,12 @@ jobs:
       matrix:
         os: [ubuntu-22.04, windows-2022, macos-12]
         arch: [auto64]
-        cp: ["cp3{7,8,9,10,11,12}"]
+        cp: ["cp3{8,9,10,11,12}"]
         include:
           - os: macos-12
             arch: arm64
-            cp: "cp3{7,8,9,10,11,12}"
+            cp: "cp3{8,9,10,11,12}"
           # aarch64 is emulated and takes longer, build one wheel per job
-          - os: ubuntu-22.04
-            arch: aarch64
-            cp: cp37
           - os: ubuntu-22.04
             arch: aarch64
             cp: cp38
