@@ -1586,7 +1586,7 @@ canvas
             to draw
         )docstring",
         py::arg("center"), py::arg("radius"), py::arg("paint"))
-    .def("drawArc", &SkCanvas::drawArc,
+    .def("drawArc", py::overload_cast<const SkRect&, SkScalar, SkScalar, bool, const SkPaint&>(&SkCanvas::drawArc),
         R"docstring(
         Draws arc using clip, :py:class:`Matrix`, and :py:class:`Paint` paint.
 
