@@ -678,9 +678,12 @@ py::class_<SkMemoryStream, PyMemoryStream<>, SkStreamMemory>(m, "MemoryStream")
         py::arg("data"), py::arg("copyData") = false)
     .def("asData", &SkMemoryStream::getData)
     .def("setData", &SkMemoryStream::setData, py::arg("data"))
-/*
-    .def("skipToAlign4", &SkMemoryStream::skipToAlign4)
-*/
+    .def("skipToAlign4",
+        [] (SkMemoryStream& stream) {
+            // cast to remove unary-minus warning
+            stream.fOffset += -(int)stream.fOffset & 0x03;
+        }
+        )
     .def("getAtPos", &SkMemoryStream::getAtPos)
     ;
 
