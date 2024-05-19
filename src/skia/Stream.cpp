@@ -680,8 +680,10 @@ py::class_<SkMemoryStream, PyMemoryStream<>, SkStreamMemory>(m, "MemoryStream")
     .def("setData", &SkMemoryStream::setData, py::arg("data"))
     .def("skipToAlign4",
         [] (SkMemoryStream& stream) {
+            size_t fOffset = stream.getPosition();
             // cast to remove unary-minus warning
-            stream.fOffset += -(int)stream.fOffset & 0x03;
+            fOffset += -(int)fOffset & 0x03;
+            stream.seek(fOffset);
         }
         )
     .def("getAtPos", &SkMemoryStream::getAtPos)
