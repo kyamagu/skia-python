@@ -1613,6 +1613,7 @@ canvas
         )docstring",
         py::arg("oval"), py::arg("startAngle"), py::arg("sweepAngle"),
         py::arg("useCenter"), py::arg("paint"))
+    // New in m126: drawArc(const SkArc& arc, const SkPaint& paint)
     .def("drawRoundRect", &SkCanvas::drawRoundRect,
         R"docstring(
         Draws :py:class:`RRect` bounded by :py:class:`Rect` rect, with corner
