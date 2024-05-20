@@ -24,7 +24,7 @@ jobs:
             skia
           key: linux-aarch64-skia-${{ github.sha }}-3rd-party
       - name: Pre-fetch skia deps
-        run: git config --global core.compression 0 && cd skia && patch -p1 -i ../patch/skia-m124-minimize-download.patch && python tools/git-sync-deps && patch -p1 -R -i ../patch/skia-m124-minimize-download.patch
+        run: git config --global core.compression 0 && cd skia && patch -p1 -i ../patch/skia-m126-minimize-download.patch && python tools/git-sync-deps && patch -p1 -R -i ../patch/skia-m126-minimize-download.patch
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v3
       - name: Build skia 3rd-Party
@@ -74,15 +74,12 @@ jobs:
       matrix:
         os: [ubuntu-22.04, windows-2022, macos-12]
         arch: [auto64]
-        cp: ["cp3{7,8,9,10,11,12}"]
+        cp: ["cp3{8,9,10,11,12}"]
         include:
           - os: macos-12
             arch: arm64
-            cp: "cp3{7,8,9,10,11,12}"
+            cp: "cp3{8,9,10,11,12}"
           # aarch64 is emulated and takes longer, build one wheel per job
-          - os: ubuntu-22.04
-            arch: aarch64
-            cp: cp37
           - os: ubuntu-22.04
             arch: aarch64
             cp: cp38
@@ -146,7 +143,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - uses: actions/setup-python@v4
+      - uses: actions/setup-python@v5
         name: Install Python
         with:
           python-version: '3.8'

@@ -15,7 +15,7 @@ Binary package is available on PyPI:
 pip install skia-python
 ```
 
-Supported platforms: Python 3.7-3.12 (CPython) on
+Supported platforms: Python 3.8-3.12 (CPython) on
 
 - Linux x86_64, aarch64
 - macOS x86_64, arm64
@@ -55,7 +55,8 @@ https://kyamagu.github.io/skia-python
 - For information about changes after `m116`, and tips on migration from `m87`: [README.m116](relnotes/README.m116.md),
   [README.m117](relnotes/README.m117.md), [README.m118](relnotes/README.m118.md), [README.m119](relnotes/README.m119.md),
   [README.m120](relnotes/README.m120.md), [README.m121](relnotes/README.m121.md), [README.m122](relnotes/README.m122.md),
-  [README.m123](relnotes/README.m123.md), [README.m124](relnotes/README.m124.md).
+  [README.m123](relnotes/README.m123.md), [README.m124](relnotes/README.m124.md), [README.m125](relnotes/README.m125.md),
+  [README.m126](relnotes/README.m126.md).
 
 ## Contributing
 

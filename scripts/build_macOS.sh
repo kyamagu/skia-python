@@ -22,7 +22,7 @@ function apply_patch {
 }
 
 cd skia && \
-    patch -p1 < ../patch/skia-m124-minimize-download.patch && \
+    patch -p1 < ../patch/skia-m126-minimize-download.patch && \
     patch -p1 < ../patch/skia-m123-colrv1-freetype.diff && \
     python3 tools/git-sync-deps && \
     bin/gn gen out/Release --args="
@@ -35,6 +35,7 @@ skia_use_system_libjpeg_turbo=false
 skia_use_system_libwebp=false
 skia_use_system_libpng=false
 skia_use_system_icu=false
+skia_use_metal=true
 skia_use_system_harfbuzz=false
 skia_use_system_expat=false
 extra_cflags_cc=[\"-frtti\"]
