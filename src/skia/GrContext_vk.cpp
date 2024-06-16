@@ -70,6 +70,8 @@ py::class_<GrVkDrawableInfo>(m, "GrVkDrawableInfo")
     ;
 
 // GrVkBackendContext.h
+/* GrVkExtensionFlags & GrVkFeatureFlags removed in m127 */
+/*
 py::enum_<GrVkExtensionFlags>(m, "GrVkExtensionFlags", py::arithmetic())
     .value("kEXT_debug_report_GrVkExtensionFlag",
         GrVkExtensionFlags::kEXT_debug_report_GrVkExtensionFlag)
@@ -95,6 +97,7 @@ py::enum_<GrVkFeatureFlags>(m, "GrVkFeatureFlags", py::arithmetic())
     .value("kSampleRateShading_GrVkFeatureFlag",
         GrVkFeatureFlags::kSampleRateShading_GrVkFeatureFlag)
     .export_values();
+*/
 
 py::class_<skgpu::VulkanBackendContext>(m, "GrVkBackendContext",
     R"docstring(
