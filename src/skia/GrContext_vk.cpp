@@ -96,7 +96,7 @@ py::enum_<GrVkFeatureFlags>(m, "GrVkFeatureFlags", py::arithmetic())
         GrVkFeatureFlags::kSampleRateShading_GrVkFeatureFlag)
     .export_values();
 
-py::class_<GrVkBackendContext>(m, "GrVkBackendContext",
+py::class_<skgpu::VulkanBackendContext>(m, "GrVkBackendContext",
     R"docstring(
     The BackendContext contains all of the base Vulkan objects needed by the
     GrVkGpu. The assumption is that the client will set these up and pass them
