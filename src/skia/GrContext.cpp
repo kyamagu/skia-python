@@ -1231,7 +1231,7 @@ py::class_<GrDirectContext, sk_sp<GrDirectContext>, GrRecordingContext>(m, "GrDi
 
 #ifdef SK_VULKAN
     .def_static("MakeVulkan",
-        py::overload_cast<const GrVkBackendContext&, const GrContextOptions&>(
+        py::overload_cast<const skgpu::VulkanBackendContext&, const GrContextOptions&>(
             &GrDirectContexts::MakeVulkan),
         R"docstring(
         The Vulkan context (VkQueue, VkDevice, VkInstance) must be kept alive
@@ -1243,7 +1243,7 @@ py::class_<GrDirectContext, sk_sp<GrDirectContext>, GrRecordingContext>(m, "GrDi
         )docstring",
         py::arg("backendContext"), py::arg("options"))
     .def_static("MakeVulkan",
-        py::overload_cast<const GrVkBackendContext&>(
+        py::overload_cast<const skgpu::VulkanBackendContext&>(
             &GrDirectContexts::MakeVulkan),
         py::arg("backendContext"))
 #endif

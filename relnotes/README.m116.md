@@ -21,6 +21,9 @@ of this update had taken from.
 * TL;DR - `m87` users would likely find most existing python scripts work. Some
   routines need a new `skia.SamplingOptions()` argument, or
   switch from `skia.FilterQuality` to `skia.SamplingOptions()`.
+  OpenGL users, especially on Apple Mac OS, may now need to specify
+  a compatible OpenGL profile for their GPU hardware/software combination
+  to avoid shader-compilation related errors (See more about this below).
   Please report `AttributeError: 'skia.AAA' object has no attribute 'BBB'` errors,
   to prioritize fixing remaining differences between `m87` and `m116`.
 
@@ -37,6 +40,33 @@ of this update had taken from.
 * Be **WARN**'ed: some `m87` APIs (about 5% in total, many in the `ImageFilter` namespace)
   are removed/disabled when there are no obvious new-equivalents, or not-too-troblesome
   emulations with `m116`. The "AttributeError" error mentioned above.
+
+* Be **WARN**'ed on OpenGL usage: Google folks added subtantial GPU/driver
+  detection code in upsteam Skia between m87 and m116, to optimize for speed and
+  work-around driver bugs. If you use a non-open-source GPU driver, i.e.
+  everybody except Mesa on Linux, and especially Apple Mac users,
+  you may need to request compatible OpenGL profile to match the your
+  GPU/driver's capability. For Apple Mac users, with `glfw`, adds the following:
+
+```
+# see https://www.glfw.org/faq#macos
+glfw.window_hint(glfw.CONTEXT_VERSION_MAJOR, 3)
+glfw.window_hint(glfw.CONTEXT_VERSION_MINOR, 2)
+glfw.window_hint(glfw.OPENGL_FORWARD_COMPAT, True)
+glfw.window_hint(glfw.OPENGL_PROFILE, glfw.OPENGL_CORE_PROFILE)
+```
+
+  OSX OpenGL users may need to add `GLUT_3_2_CORE_PROFILE` to their `glutInitDisplayMode()`
+  invocation e.g. `glutInitDisplayMode(... | GLUT_3_2_CORE_PROFILE)`. `pysdl2` users
+  need:
+
+```
+sdl2.SDL_GL_SetAttribute(sdl2.SDL_GL_CONTEXT_MAJOR_VERSION, 3)
+sdl2.SDL_GL_SetAttribute(sdl2.SDL_GL_CONTEXT_MINOR_VERSION, 2)
+sdl2.SDL_GL_SetAttribute(sdl2.SDL_GL_CONTEXT_FORWARD_COMPATIBLE_FLAG, True)
+sdl2.SDL_GL_SetAttribute(sdl2.SDL_GL_CONTEXT_PROFILE_MASK,
+                         sdl2.SDL_GL_CONTEXT_PROFILE_CORE)
+```
 
 * Where it is possible, when `m87` APIs disappear, emulations with `m116`
   is done. So these are "new emulations of old APIs". While they work,

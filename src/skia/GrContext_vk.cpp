@@ -70,6 +70,8 @@ py::class_<GrVkDrawableInfo>(m, "GrVkDrawableInfo")
     ;
 
 // GrVkBackendContext.h
+/* GrVkExtensionFlags & GrVkFeatureFlags removed in m127 */
+/*
 py::enum_<GrVkExtensionFlags>(m, "GrVkExtensionFlags", py::arithmetic())
     .value("kEXT_debug_report_GrVkExtensionFlag",
         GrVkExtensionFlags::kEXT_debug_report_GrVkExtensionFlag)
@@ -95,8 +97,9 @@ py::enum_<GrVkFeatureFlags>(m, "GrVkFeatureFlags", py::arithmetic())
     .value("kSampleRateShading_GrVkFeatureFlag",
         GrVkFeatureFlags::kSampleRateShading_GrVkFeatureFlag)
     .export_values();
+*/
 
-py::class_<GrVkBackendContext>(m, "GrVkBackendContext",
+py::class_<skgpu::VulkanBackendContext>(m, "GrVkBackendContext",
     R"docstring(
     The BackendContext contains all of the base Vulkan objects needed by the
     GrVkGpu. The assumption is that the client will set these up and pass them

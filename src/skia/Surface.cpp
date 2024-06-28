@@ -70,6 +70,7 @@ py::enum_<SkSurfaceProps::Flags>(surfaceprops, "Flags", py::arithmetic())
 /* SkSurfaceProps::kLegacyFontHost_InitType was removed in m88 */
 
 surfaceprops
+    .def(py::init<>())
     .def(py::init<uint32_t, SkPixelGeometry>(),
         py::arg("flags"), py::arg("geometry"))
 /*
