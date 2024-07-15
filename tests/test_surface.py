@@ -176,6 +176,10 @@ def test_Surface_ref_unref(surface):
 @pytest.mark.parametrize('args', [
     (skia.ImageInfo.MakeN32Premul(16, 16), bytearray(16 * 16 * 4)),
     (skia.ImageInfo.MakeN32Premul(16, 16), bytearray(16 * 16 * 4), 16 * 4),
+    (
+        skia.ImageInfo.MakeN32Premul(16, 16), bytearray(16 * 16 * 4),
+        16 * 4,
+        skia.SurfaceProps(skia.SurfaceProps.kLegacyFontHost_InitType),),
 ])
 def test_Surface_MakeRasterDirect(args):
     check_surface(skia.Surface.MakeRasterDirect(*args))
@@ -184,6 +188,10 @@ def test_Surface_MakeRasterDirect(args):
 @pytest.mark.parametrize('args', [
     (skia.ImageInfo.MakeN32Premul(16, 16),),
     (skia.ImageInfo.MakeN32Premul(16, 16), 16 * 4),
+    (
+        skia.ImageInfo.MakeN32Premul(16, 16),
+        16 * 4,
+        skia.SurfaceProps(skia.SurfaceProps.kLegacyFontHost_InitType),),
 ])
 def test_Surface_MakeRaster(args):
     check_surface(skia.Surface.MakeRaster(*args))
@@ -191,6 +199,7 @@ def test_Surface_MakeRaster(args):
 
 @pytest.mark.parametrize('args', [
     (320, 240),
+    (320, 240, skia.SurfaceProps(skia.SurfaceProps.kLegacyFontHost_InitType)),
 ])
 def test_Surface_MakeRasterN32Premul(args):
     check_surface(skia.Surface.MakeRasterN32Premul(*args))
