@@ -71,7 +71,15 @@ py::enum_<SkSurfaceProps::Flags>(surfaceprops, "Flags", py::arithmetic())
         SkSurfaceProps::Flags::kAlwaysDither_Flag)
     .export_values();
 
-/* SkSurfaceProps::kLegacyFontHost_InitType was removed in m88 */
+/* SkSurfaceProps::kLegacyFontHost_InitType was removed in m88.
+   Its usage was replaced by:
+       SkSurfaceProps(SkSurfaceProps::kLegacyFontHost_InitType)
+           -> SkSurfaceProps() - private in m87 to public in m88
+       SkSurfaceProps(SkSurfaceProps::kUseDeviceIndependentFonts_Flag,
+                      SkSurfaceProps::kLegacyFontHost_InitType)
+           -> SkSurfaceProps(SkSurfaceProps::kUseDeviceIndependentFonts_Flag,
+                             SkSurfaceProps::kUnknown_SkPixelGeometry) - different constructor
+ */
 
 surfaceprops
     .def(py::init<>())
