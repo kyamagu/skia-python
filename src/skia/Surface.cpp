@@ -65,6 +65,10 @@ py::class_<SkSurfaceProps> surfaceprops(m, "SurfaceProps", R"docstring(
 py::enum_<SkSurfaceProps::Flags>(surfaceprops, "Flags", py::arithmetic())
     .value("kUseDeviceIndependentFonts_Flag",
         SkSurfaceProps::Flags::kUseDeviceIndependentFonts_Flag)
+    .value("kDynamicMSAA_Flag",
+        SkSurfaceProps::Flags::kDynamicMSAA_Flag)
+    .value("kAlwaysDither_Flag",
+        SkSurfaceProps::Flags::kAlwaysDither_Flag)
     .export_values();
 
 /* SkSurfaceProps::kLegacyFontHost_InitType was removed in m88 */
