@@ -447,6 +447,9 @@ py::class_<GrBackendRenderTarget>(m, "GrBackendRenderTarget")
         }),
         py::arg("width"), py::arg("height"), py::arg("sampleCnt"),
         py::arg("stencilBits"), py::arg("glInfo"))
+    .def_static("MakeGL", &GrBackendRenderTargets::MakeGL,
+        py::arg("width"), py::arg("height"), py::arg("sampleCnt"),
+        py::arg("stencilBits"), py::arg("glInfo"))
 #ifdef SK_VULKAN
     .def(py::init(
         [] (int width, int height, const GrVkImageInfo& vkInfo) {
@@ -1320,6 +1323,10 @@ py::class_<GrDirectContext, sk_sp<GrDirectContext>, GrRecordingContext>(m, "GrDi
     ;
 
 m.attr("GrContext") = m.attr("GrDirectContext");
+
+// GrDirectContexts and GrBackendRenderTargets are namespaces
+m.attr("GrDirectContexts")       = m.attr("GrDirectContext");
+m.attr("GrBackendRenderTargets") = m.attr("GrBackendRenderTarget");
 
 initGrContext_gl(m);
 initGrContext_vk(m);
