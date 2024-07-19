@@ -29,7 +29,7 @@ jobs:
         uses: docker/setup-qemu-action@v3
       - name: Build skia
         # Taken from https://github.com/pypa/cibuildwheel/blob/v2.16.2/cibuildwheel/resources/pinned_docker_images.cfg
-        uses: docker://quay.io/pypa/manylinux2014_aarch64:2023-10-03-72cdc42
+        uses: docker://quay.io/pypa/manylinux2014_aarch64:2024.07.02-0
         if: ${{ steps.cache-skia.outputs.cache-hit != 'true' }}
         with:
           args: bash -c "git config --global --add safe.directory '*' &&
