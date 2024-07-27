@@ -17,7 +17,7 @@
 #include <include/gpu/ganesh/mtl/GrMtlBackendSurface.h>
 #include <include/gpu/ganesh/mtl/GrMtlDirectContext.h>
 #endif
-#include <include/gpu/vk/GrVkBackendContext.h>
+#include <include/gpu/vk/VulkanBackendContext.h>
 #include <include/gpu/MutableTextureState.h>
 #include <pybind11/chrono.h>
 #include <pybind11/stl.h>
@@ -306,7 +306,7 @@ py::class_<GrBackendFormat>(m, "GrBackendFormat")
     .def_static("MakeVk", py::overload_cast<VkFormat, bool>(&GrBackendFormats::MakeVk),
         py::arg("format"), py::arg("willUseDRMFormatModifiers") = false)
     .def_static("MakeVk",
-        py::overload_cast<const GrVkYcbcrConversionInfo&, bool>(
+        py::overload_cast<const skgpu::VulkanYcbcrConversionInfo&, bool>(
             &GrBackendFormats::MakeVk),
         py::arg("ycbcrInfo"), py::arg("willUseDRMFormatModifiers") = false)
 #endif

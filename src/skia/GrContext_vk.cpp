@@ -1,5 +1,6 @@
 #include "common.h"
-#include <include/gpu/vk/GrVkBackendContext.h>
+#include <include/gpu/vk/VulkanBackendContext.h>
+#include <include/gpu/vk/GrVkTypes.h>
 
 void initGrContext_vk(py::module &m) {
 
@@ -13,12 +14,12 @@ py::enum_<VkImageLayout>(m, "VkImageLayout", py::arithmetic())
 
 py::implicitly_convertible<int, VkImageLayout>();
 
-py::class_<GrVkAlloc>(m, "GrVkAlloc")
+py::class_<skgpu::VulkanAlloc>(m, "GrVkAlloc")
     .def(py::init<>())
     // TODO: Implement me!
     ;
 
-py::class_<GrVkYcbcrConversionInfo>(m, "GrVkYcbcrConversionInfo")
+py::class_<skgpu::VulkanYcbcrConversionInfo>(m, "GrVkYcbcrConversionInfo")
     .def(py::init<>())
     // TODO: Implement me!
     ;
@@ -34,19 +35,19 @@ py::class_<GrVkImageInfo>(m, "GrVkImageInfo",
     .def(py::init<>())
     // .def(py::init(
     //     [] (VkImage image,
-    //         GrVkAlloc alloc,
+    //         skgpu::VulkanAlloc alloc,
     //         VkImageTiling imageTiling,
     //         VkImageLayout layout,
     //         VkFormat format,
     //         uint32_t levelCount,
     //         uint32_t currentQueueFamily,
     //         GrProtected isProtected,
-    //         const GrVkYcbcrConversionInfo* ycbcrConversionInfo) {
+    //         const skgpu::VulkanYcbcrConversionInfo* ycbcrConversionInfo) {
     //         return GrVkImageInfo(
     //             image, alloc, imageTiling, layout, format, levelCount,
     //             currentQueueFamily, isProtected,
     //             (ycbcrConversionInfo) ?
-    //                 *ycbcrConversionInfo : GrVkYcbcrConversionInfo());
+    //                 *ycbcrConversionInfo : skgpu::VulkanYcbcrConversionInfo());
     //     }),
     //     py::arg("image"), py::arg("alloc"), py::arg("imageTiling"),
     //     py::arg("layout"), py::arg("format"), py::arg("levelCount"),
