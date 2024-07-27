@@ -1665,7 +1665,7 @@ rrect
 
         :return: bounding box
         )docstring")
-    .def("radii", &SkRRect::radii,
+    .def("radii",  py::overload_cast<SkRRect::Corner>(&SkRRect::radii, py::const_),
         R"docstring(
         Returns scalar pair for radius of curve on x-axis and y-axis for one
         corner.
