@@ -115,4 +115,8 @@ py::class_<skgpu::VulkanBackendContext>(m, "GrVkBackendContext",
     .def(py::init<>())
     // TODO: Implement me!
     ;
+
+m.attr("skgpu").attr("VulkanBackendContext") = m.attr("GrVkBackendContext");
+m.attr("skgpu").attr("VulkanAlloc") = m.attr("GrVkAlloc");
+m.attr("skgpu").attr("VulkanYcbcrConversionInfo") = m.attr("GrVkYcbcrConversionInfo");
 }
