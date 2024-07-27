@@ -116,6 +116,8 @@ py::class_<skgpu::VulkanBackendContext>(m, "GrVkBackendContext",
     // TODO: Implement me!
     ;
 
+py::object SimpleNamespace = py::module_::import("types").attr("SimpleNamespace");
+m.attr("skgpu") = SimpleNamespace();
 m.attr("skgpu").attr("VulkanBackendContext") = m.attr("GrVkBackendContext");
 m.attr("skgpu").attr("VulkanAlloc") = m.attr("GrVkAlloc");
 m.attr("skgpu").attr("VulkanYcbcrConversionInfo") = m.attr("GrVkYcbcrConversionInfo");
