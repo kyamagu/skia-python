@@ -65,11 +65,24 @@ py::class_<SkSurfaceProps> surfaceprops(m, "SurfaceProps", R"docstring(
 py::enum_<SkSurfaceProps::Flags>(surfaceprops, "Flags", py::arithmetic())
     .value("kUseDeviceIndependentFonts_Flag",
         SkSurfaceProps::Flags::kUseDeviceIndependentFonts_Flag)
+    .value("kDynamicMSAA_Flag",
+        SkSurfaceProps::Flags::kDynamicMSAA_Flag)
+    .value("kAlwaysDither_Flag",
+        SkSurfaceProps::Flags::kAlwaysDither_Flag)
     .export_values();
 
-/* SkSurfaceProps::kLegacyFontHost_InitType was removed in m88 */
+/* SkSurfaceProps::kLegacyFontHost_InitType was removed in m88.
+   Its usage was replaced by:
+       SkSurfaceProps(SkSurfaceProps::kLegacyFontHost_InitType)
+           -> SkSurfaceProps() - private in m87 to public in m88
+       SkSurfaceProps(SkSurfaceProps::kUseDeviceIndependentFonts_Flag,
+                      SkSurfaceProps::kLegacyFontHost_InitType)
+           -> SkSurfaceProps(SkSurfaceProps::kUseDeviceIndependentFonts_Flag,
+                             SkSurfaceProps::kUnknown_SkPixelGeometry) - different constructor
+ */
 
 surfaceprops
+    .def(py::init<>())
     .def(py::init<uint32_t, SkPixelGeometry>(),
         py::arg("flags"), py::arg("geometry"))
 /*
@@ -1093,6 +1106,39 @@ surface
         py::arg("context"), py::arg("backendRenderTarget"), py::arg("origin"),
         py::arg("colorType"), py::arg("colorSpace"),
         py::arg("surfaceProps") = nullptr)
+    .def_static("WrapBackendRenderTarget", &SkSurfaces::WrapBackendRenderTarget,
+        R"docstring(
+        Wraps a GPU-backed buffer into :py:class:`Surface`.
+
+        Caller must ensure backendRenderTarget is valid for the lifetime of
+        returned :py:class:`Surface`.
+
+        :py:class:`Surface` is returned if all parameters are valid.
+        backendRenderTarget is valid if its pixel configuration agrees with
+        colorSpace and context; for instance, if backendRenderTarget has an sRGB
+        configuration, then context must support sRGB, and colorSpace must be
+        present. Further, backendRenderTarget width and height must not exceed
+        context capabilities, and the context must be able to support back-end
+        render targets.
+
+        Upon success releaseProc is called when it is safe to delete the render
+        target in the backend API (accounting only for use of the render target
+        by this surface). If :py:class:`Surface` creation fails releaseProc is
+        called before this function returns.
+
+        If SK_SUPPORT_GPU is defined as zero, has no effect and returns nullptr.
+
+        :param context: GPU context
+        :param backendRenderTarget: GPU intermediate memory buffer
+        :param colorSpace:  range of colors
+        :param surfaceProps:    LCD striping orientation and setting for device
+            independent fonts; may be nullptr
+        :return: :py:class:`Surface` if all parameters are valid; otherwise,
+            nullptr
+        )docstring",
+        py::arg("context"), py::arg("backendRenderTarget"), py::arg("origin"),
+        py::arg("colorType"), py::arg("colorSpace"),
+        py::arg("surfaceProps") = nullptr, py::arg("releaseProc") = nullptr, py::arg("releaseContext") = nullptr)
     .def_static("MakeRenderTarget",
         py::overload_cast<GrRecordingContext*, skgpu::Budgeted, const SkImageInfo&, int,
         GrSurfaceOrigin, const SkSurfaceProps*, bool, bool>(
@@ -1224,4 +1270,8 @@ surface
         )docstring",
         py::arg("width"), py::arg("height"))
     ;
+
+// Surfaces is a namespace
+m.attr("Surfaces") = m.attr("Surface");
+m.attr("Surface").attr("Raster") = m.attr("Surface").attr("MakeRaster");
 }

@@ -17,7 +17,7 @@
 #include <include/gpu/ganesh/mtl/GrMtlBackendSurface.h>
 #include <include/gpu/ganesh/mtl/GrMtlDirectContext.h>
 #endif
-#include <include/gpu/vk/GrVkBackendContext.h>
+#include <include/gpu/vk/VulkanBackendContext.h>
 #include <include/gpu/MutableTextureState.h>
 #include <pybind11/chrono.h>
 #include <pybind11/stl.h>
@@ -306,7 +306,7 @@ py::class_<GrBackendFormat>(m, "GrBackendFormat")
     .def_static("MakeVk", py::overload_cast<VkFormat, bool>(&GrBackendFormats::MakeVk),
         py::arg("format"), py::arg("willUseDRMFormatModifiers") = false)
     .def_static("MakeVk",
-        py::overload_cast<const GrVkYcbcrConversionInfo&, bool>(
+        py::overload_cast<const skgpu::VulkanYcbcrConversionInfo&, bool>(
             &GrBackendFormats::MakeVk),
         py::arg("ycbcrInfo"), py::arg("willUseDRMFormatModifiers") = false)
 #endif
@@ -445,6 +445,9 @@ py::class_<GrBackendRenderTarget>(m, "GrBackendRenderTarget")
             return GrBackendRenderTargets::MakeGL(width, height,
                 sampleCnt, stencilBits, glInfo);
         }),
+        py::arg("width"), py::arg("height"), py::arg("sampleCnt"),
+        py::arg("stencilBits"), py::arg("glInfo"))
+    .def_static("MakeGL", &GrBackendRenderTargets::MakeGL,
         py::arg("width"), py::arg("height"), py::arg("sampleCnt"),
         py::arg("stencilBits"), py::arg("glInfo"))
 #ifdef SK_VULKAN
@@ -1231,7 +1234,7 @@ py::class_<GrDirectContext, sk_sp<GrDirectContext>, GrRecordingContext>(m, "GrDi
 
 #ifdef SK_VULKAN
     .def_static("MakeVulkan",
-        py::overload_cast<const GrVkBackendContext&, const GrContextOptions&>(
+        py::overload_cast<const skgpu::VulkanBackendContext&, const GrContextOptions&>(
             &GrDirectContexts::MakeVulkan),
         R"docstring(
         The Vulkan context (VkQueue, VkDevice, VkInstance) must be kept alive
@@ -1243,7 +1246,7 @@ py::class_<GrDirectContext, sk_sp<GrDirectContext>, GrRecordingContext>(m, "GrDi
         )docstring",
         py::arg("backendContext"), py::arg("options"))
     .def_static("MakeVulkan",
-        py::overload_cast<const GrVkBackendContext&>(
+        py::overload_cast<const skgpu::VulkanBackendContext&>(
             &GrDirectContexts::MakeVulkan),
         py::arg("backendContext"))
 #endif
@@ -1320,6 +1323,10 @@ py::class_<GrDirectContext, sk_sp<GrDirectContext>, GrRecordingContext>(m, "GrDi
     ;
 
 m.attr("GrContext") = m.attr("GrDirectContext");
+
+// GrDirectContexts and GrBackendRenderTargets are namespaces
+m.attr("GrDirectContexts")       = m.attr("GrDirectContext");
+m.attr("GrBackendRenderTargets") = m.attr("GrBackendRenderTarget");
 
 initGrContext_gl(m);
 initGrContext_vk(m);

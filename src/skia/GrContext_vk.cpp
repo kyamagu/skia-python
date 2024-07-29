@@ -1,5 +1,6 @@
 #include "common.h"
-#include <include/gpu/vk/GrVkBackendContext.h>
+#include <include/gpu/vk/VulkanBackendContext.h>
+#include <include/gpu/vk/GrVkTypes.h>
 
 void initGrContext_vk(py::module &m) {
 
@@ -13,12 +14,12 @@ py::enum_<VkImageLayout>(m, "VkImageLayout", py::arithmetic())
 
 py::implicitly_convertible<int, VkImageLayout>();
 
-py::class_<GrVkAlloc>(m, "GrVkAlloc")
+py::class_<skgpu::VulkanAlloc>(m, "GrVkAlloc")
     .def(py::init<>())
     // TODO: Implement me!
     ;
 
-py::class_<GrVkYcbcrConversionInfo>(m, "GrVkYcbcrConversionInfo")
+py::class_<skgpu::VulkanYcbcrConversionInfo>(m, "GrVkYcbcrConversionInfo")
     .def(py::init<>())
     // TODO: Implement me!
     ;
@@ -34,19 +35,19 @@ py::class_<GrVkImageInfo>(m, "GrVkImageInfo",
     .def(py::init<>())
     // .def(py::init(
     //     [] (VkImage image,
-    //         GrVkAlloc alloc,
+    //         skgpu::VulkanAlloc alloc,
     //         VkImageTiling imageTiling,
     //         VkImageLayout layout,
     //         VkFormat format,
     //         uint32_t levelCount,
     //         uint32_t currentQueueFamily,
     //         GrProtected isProtected,
-    //         const GrVkYcbcrConversionInfo* ycbcrConversionInfo) {
+    //         const skgpu::VulkanYcbcrConversionInfo* ycbcrConversionInfo) {
     //         return GrVkImageInfo(
     //             image, alloc, imageTiling, layout, format, levelCount,
     //             currentQueueFamily, isProtected,
     //             (ycbcrConversionInfo) ?
-    //                 *ycbcrConversionInfo : GrVkYcbcrConversionInfo());
+    //                 *ycbcrConversionInfo : skgpu::VulkanYcbcrConversionInfo());
     //     }),
     //     py::arg("image"), py::arg("alloc"), py::arg("imageTiling"),
     //     py::arg("layout"), py::arg("format"), py::arg("levelCount"),
@@ -70,6 +71,8 @@ py::class_<GrVkDrawableInfo>(m, "GrVkDrawableInfo")
     ;
 
 // GrVkBackendContext.h
+/* GrVkExtensionFlags & GrVkFeatureFlags removed in m127 */
+/*
 py::enum_<GrVkExtensionFlags>(m, "GrVkExtensionFlags", py::arithmetic())
     .value("kEXT_debug_report_GrVkExtensionFlag",
         GrVkExtensionFlags::kEXT_debug_report_GrVkExtensionFlag)
@@ -95,8 +98,9 @@ py::enum_<GrVkFeatureFlags>(m, "GrVkFeatureFlags", py::arithmetic())
     .value("kSampleRateShading_GrVkFeatureFlag",
         GrVkFeatureFlags::kSampleRateShading_GrVkFeatureFlag)
     .export_values();
+*/
 
-py::class_<GrVkBackendContext>(m, "GrVkBackendContext",
+py::class_<skgpu::VulkanBackendContext>(m, "GrVkBackendContext",
     R"docstring(
     The BackendContext contains all of the base Vulkan objects needed by the
     GrVkGpu. The assumption is that the client will set these up and pass them
@@ -111,4 +115,10 @@ py::class_<GrVkBackendContext>(m, "GrVkBackendContext",
     .def(py::init<>())
     // TODO: Implement me!
     ;
+
+py::object SimpleNamespace = py::module_::import("types").attr("SimpleNamespace");
+m.attr("skgpu") = SimpleNamespace();
+m.attr("skgpu").attr("VulkanBackendContext") = m.attr("GrVkBackendContext");
+m.attr("skgpu").attr("VulkanAlloc") = m.attr("GrVkAlloc");
+m.attr("skgpu").attr("VulkanYcbcrConversionInfo") = m.attr("GrVkYcbcrConversionInfo");
 }
