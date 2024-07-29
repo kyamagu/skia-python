@@ -24,6 +24,7 @@ jobs:
             skia
           key: linux-aarch64-skia-${{ github.sha }}-3rd-party
       - name: Pre-fetch skia deps
+        if: ${{ steps.cache-skia.outputs.cache-hit != 'true' }}
         run: git config --global core.compression 0 && cd skia && patch -p1 -i ../patch/skia-m128-minimize-download.patch && python tools/git-sync-deps && patch -p1 -R -i ../patch/skia-m128-minimize-download.patch
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v3
