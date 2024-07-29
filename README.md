@@ -56,7 +56,7 @@ https://kyamagu.github.io/skia-python
   [README.m117](relnotes/README.m117.md), [README.m118](relnotes/README.m118.md), [README.m119](relnotes/README.m119.md),
   [README.m120](relnotes/README.m120.md), [README.m121](relnotes/README.m121.md), [README.m122](relnotes/README.m122.md),
   [README.m123](relnotes/README.m123.md), [README.m124](relnotes/README.m124.md), [README.m125](relnotes/README.m125.md),
-  [README.m126](relnotes/README.m126.md), [README.m124](relnotes/README.m127.md), [README.m125](relnotes/README.m128.md).
+  [README.m126](relnotes/README.m126.md), [README.m127](relnotes/README.m127.md), [README.m128](relnotes/README.m128.md).
 
 ## Contributing
 
