@@ -1,6 +1,6 @@
 #include "common.h"
-#include "include/core/SkGraphics.h"
-#include "modules/svg/include/SkSVGOpenTypeSVGDecoder.h"
+#include <include/core/SkGraphics.h>
+#include <modules/svg/include/SkSVGOpenTypeSVGDecoder.h>
 
 #define XSTRING(s) STRING(s)
 #define STRING(s) #s
