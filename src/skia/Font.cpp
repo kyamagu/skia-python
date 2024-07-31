@@ -11,15 +11,15 @@
 #endif
 
 #ifdef __APPLE__
-#include "include/ports/SkFontMgr_mac_ct.h"
+#include <include/ports/SkFontMgr_mac_ct.h>
 #endif
 
 #ifdef __linux__
-#include "include/ports/SkFontMgr_fontconfig.h"
+#include <include/ports/SkFontMgr_fontconfig.h>
 #endif
 
 #ifdef _WIN32
-#include "include/ports/SkTypeface_win.h"
+#include <include/ports/SkTypeface_win.h>
 #endif
 
 #include <mutex>

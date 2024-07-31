@@ -15,9 +15,8 @@ NAME = 'skia-python'
 __version__ = '128.0b9'
 
 SKIA_PATH = os.getenv('SKIA_PATH', 'skia')
-SKIA_OUT_PATH = os.getenv(
-    'SKIA_OUT_PATH', os.path.join(SKIA_PATH, 'out', 'Release')
-)
+SKIA_OUT_PATH = os.getenv('SKIA_OUT_PATH', os.path.join(SKIA_PATH, 'out', 'Release'))
+USE_SYSTEM_LIBS = os.getenv('USE_SYSTEM_LIBS', '0') == '1'
 
 if sys.platform == 'win32':
     DEFINE_MACROS = []  # doesn't work for cl.exe
@@ -31,10 +30,19 @@ if sys.platform == 'win32':
         'Gdi32',
         'Advapi32',
     ]
-    EXTRA_OBJECTS = list(
-    ) + [os.path.join(SKIA_OUT_PATH, 'svg.lib'), os.path.join(SKIA_OUT_PATH, 'skresources.lib'), os.path.join(SKIA_OUT_PATH, 'skia.lib'),
-         os.path.join(SKIA_OUT_PATH, 'skshaper.lib'),
-         os.path.join(SKIA_OUT_PATH, 'skunicode_icu.lib'), os.path.join(SKIA_OUT_PATH, 'skunicode_core.lib')]
+    EXTRA_OBJECTS = [
+        'svg',
+        'skresources',
+        'skia',
+        'skshaper',
+        'skunicode_icu',
+        'skunicode_core',
+    ]
+    if USE_SYSTEM_LIBS:
+        LIBRARIES.extend(EXTRA_OBJECTS)
+        EXTRA_OBJECTS = []
+    else:
+        EXTRA_OBJECTS = [os.path.join(SKIA_OUT_PATH, f'{lib}.lib') for lib in EXTRA_OBJECTS]
     EXTRA_COMPILE_ARGS = [
         '/std:c++17',  # c++20 fails.
         '/DVERSION_INFO=%s' % __version__,
@@ -64,10 +72,18 @@ elif sys.platform == 'darwin':
     LIBRARIES = [
         'dl',
     ]
-    EXTRA_OBJECTS = list(
-    ) + [os.path.join(SKIA_OUT_PATH, 'libsvg.a'), os.path.join(SKIA_OUT_PATH, 'libskia.a'),
-         os.path.join(SKIA_OUT_PATH, 'libskshaper.a'),
-         os.path.join(SKIA_OUT_PATH, 'libskunicode_icu.a'), os.path.join(SKIA_OUT_PATH, 'libskunicode_core.a')]
+    EXTRA_OBJECTS = [
+        'svg',
+        'skia',
+        'skshaper',
+        'skunicode_icu',
+        'skunicode_core',
+    ]
+    if USE_SYSTEM_LIBS:
+        LIBRARIES.extend(EXTRA_OBJECTS)
+        EXTRA_OBJECTS = []
+    else:
+        EXTRA_OBJECTS = [os.path.join(SKIA_OUT_PATH, f'lib{lib}.a') for lib in EXTRA_OBJECTS]
     EXTRA_COMPILE_ARGS = [
         '-std=c++17',
         '-stdlib=libc++',
@@ -98,10 +114,19 @@ else:
         'GL',
         'expat',
     ]
-    EXTRA_OBJECTS = list(
-    ) + [os.path.join(SKIA_OUT_PATH, 'libsvg.a'), os.path.join(SKIA_OUT_PATH, 'libskresources.a'), os.path.join(SKIA_OUT_PATH, 'libskia.a'),
-         os.path.join(SKIA_OUT_PATH, 'libskshaper.a'),
-         os.path.join(SKIA_OUT_PATH, 'libskunicode_icu.a'), os.path.join(SKIA_OUT_PATH, 'libskunicode_core.a')]
+    EXTRA_OBJECTS = [
+        'svg',
+        'skresources',
+        'skia',
+        'skshaper',
+        'skunicode_icu',
+        'skunicode_core',
+    ]
+    if USE_SYSTEM_LIBS:
+        LIBRARIES.extend(EXTRA_OBJECTS)
+        EXTRA_OBJECTS = []
+    else:
+        EXTRA_OBJECTS = [os.path.join(SKIA_OUT_PATH, f'lib{lib}.a') for lib in EXTRA_OBJECTS]
     EXTRA_COMPILE_ARGS = [
         '-std=c++17',
         '-fvisibility=hidden',
