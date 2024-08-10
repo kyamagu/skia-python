@@ -12,6 +12,23 @@ py::class_<skia::textlayout::ParagraphBuilder> paragraph_builder(m, "textlayout.
 py::class_<skia::textlayout::ParagraphStyle> paragraph_style(m, "textlayout.ParagraphStyle");
 py::class_<skia::textlayout::TextStyle> text_style(m, "textlayout.TextStyle");
 
+paragraph_builder
+    .def(py::init(
+        [] (const skia::textlayout::ParagraphStyle& style,
+            sk_sp<skia::textlayout::FontCollection> fontCollection,
+            sk_sp<SkUnicode> unicode) {
+                return skia::textlayout::ParagraphBuilder::make(style, fontCollection, unicode);
+        }),
+        R"docstring(
+        )docstring",
+        py::arg("style"), py::arg("fontCollection"), py::arg("unicode"))
+    .def_static("make",
+        py::overload_cast<skia::textlayout::ParagraphStyle const&, sk_sp<skia::textlayout::FontCollection>, sk_sp<SkUnicode>>(&skia::textlayout::ParagraphBuilder::make),
+        R"docstring(
+        )docstring",
+        py::arg("style"), py::arg("fontCollection"), py::arg("unicode"))
+    ;
+
 paragraph_style
     .def(py::init())
     ;
