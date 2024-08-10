@@ -12,6 +12,10 @@ py::class_<skia::textlayout::ParagraphBuilder> paragraph_builder(m, "textlayout.
 py::class_<skia::textlayout::ParagraphStyle> paragraph_style(m, "textlayout.ParagraphStyle");
 py::class_<skia::textlayout::TextStyle> text_style(m, "textlayout.TextStyle");
 
+paragraph_style
+    .def(py::init())
+    ;
+
 font_collection
     .def(py::init())
     .def("setDefaultFontManager",
