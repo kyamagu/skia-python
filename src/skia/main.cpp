@@ -20,6 +20,7 @@ void initImage(py::module &);
 void initImageInfo(py::module &);
 void initMatrix(py::module &);
 void initPaint(py::module &);
+void initParagraph(py::module &);
 void initPath(py::module &);
 void initPathMeasure(py::module &);
 void initPicture(py::module &);
@@ -68,6 +69,7 @@ PYBIND11_MODULE(skia, m) {
     initImageInfo(m);
     initImage(m);
     initPaint(m);
+    initParagraph(m);
     initPath(m);
     initPathMeasure(m);
     initPicture(m);
