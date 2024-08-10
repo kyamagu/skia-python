@@ -12,4 +12,12 @@ py::class_<skia::textlayout::ParagraphBuilder> paragraph_builder(m, "textlayout.
 py::class_<skia::textlayout::ParagraphStyle> paragraph_style(m, "textlayout.ParagraphStyle");
 py::class_<skia::textlayout::TextStyle> text_style(m, "textlayout.TextStyle");
 
+font_collection
+    .def(py::init())
+    .def("setDefaultFontManager",
+        py::overload_cast<sk_sp<SkFontMgr>>(&skia::textlayout::FontCollection::setDefaultFontManager),
+        R"docstring(
+        )docstring",
+        py::arg("fontManager"))
+    ;
 }
