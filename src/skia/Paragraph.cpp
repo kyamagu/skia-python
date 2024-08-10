@@ -12,6 +12,16 @@ py::class_<skia::textlayout::ParagraphBuilder> paragraph_builder(m, "textlayout.
 py::class_<skia::textlayout::ParagraphStyle> paragraph_style(m, "textlayout.ParagraphStyle");
 py::class_<skia::textlayout::TextStyle> text_style(m, "textlayout.TextStyle");
 
+py::enum_<skia::textlayout::TextAlign>(m, "textlayout.TextAlign", R"docstring(
+    )docstring")
+    .value("kLeft", skia::textlayout::TextAlign::kLeft)
+    .value("kRight", skia::textlayout::TextAlign::kRight)
+    .value("kCenter", skia::textlayout::TextAlign::kCenter)
+    .value("kJustify", skia::textlayout::TextAlign::kJustify)
+    .value("kStart", skia::textlayout::TextAlign::kStart)
+    .value("kEnd", skia::textlayout::TextAlign::kEnd)
+    .export_values();
+
 paragraph_builder
     .def(py::init(
         [] (const skia::textlayout::ParagraphStyle& style,
