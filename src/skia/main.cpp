@@ -35,6 +35,7 @@ void initStream(py::module &);
 void initString(py::module &);
 void initSurface(py::module &);
 void initTextBlob(py::module &);
+void initUnicode(py::module &);
 void initVertices(py::module &);
 void initSVGDOM(py::module &);
 
@@ -74,6 +75,7 @@ PYBIND11_MODULE(skia, m) {
     initScalar(m);
     initTextBlob(m);
     initVertices(m);
+    initUnicode(m);
 
     initCanvas(m);
     initSurface(m);
