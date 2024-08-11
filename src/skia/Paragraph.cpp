@@ -4,6 +4,7 @@
 #include "modules/skparagraph/include/Paragraph.h"
 #include "modules/skparagraph/include/ParagraphBuilder.h"
 #include "modules/skparagraph/include/ParagraphStyle.h"
+#include <pybind11/stl.h>
 
 void initParagraph(py::module &m) {
 
