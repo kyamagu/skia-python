@@ -7,12 +7,12 @@
 
 void initParagraph(py::module &m) {
 
-py::class_<skia::textlayout::FontCollection, sk_sp<skia::textlayout::FontCollection>, SkRefCnt> font_collection(m, "textlayout.FontCollection");
-py::class_<skia::textlayout::ParagraphBuilder> paragraph_builder(m, "textlayout.ParagraphBuilder");
-py::class_<skia::textlayout::ParagraphStyle> paragraph_style(m, "textlayout.ParagraphStyle");
-py::class_<skia::textlayout::TextStyle> text_style(m, "textlayout.TextStyle");
+py::class_<skia::textlayout::FontCollection, sk_sp<skia::textlayout::FontCollection>, SkRefCnt> font_collection(m, "textlayout_FontCollection");
+py::class_<skia::textlayout::ParagraphBuilder> paragraph_builder(m, "textlayout_ParagraphBuilder");
+py::class_<skia::textlayout::ParagraphStyle> paragraph_style(m, "textlayout_ParagraphStyle");
+py::class_<skia::textlayout::TextStyle> text_style(m, "textlayout_TextStyle");
 
-py::enum_<skia::textlayout::TextAlign>(m, "textlayout.TextAlign", R"docstring(
+py::enum_<skia::textlayout::TextAlign>(m, "textlayout_TextAlign", R"docstring(
     )docstring")
     .value("kLeft", skia::textlayout::TextAlign::kLeft)
     .value("kRight", skia::textlayout::TextAlign::kRight)
@@ -51,4 +51,12 @@ font_collection
         )docstring",
         py::arg("fontManager"))
     ;
+
+py::object SimpleNamespace = py::module_::import("types").attr("SimpleNamespace");
+m.attr("textlayout") = SimpleNamespace();
+m.attr("textlayout").attr("FontCollection") = m.attr("textlayout_FontCollection");
+m.attr("textlayout").attr("ParagraphBuilder") = m.attr("textlayout_ParagraphBuilder");
+m.attr("textlayout").attr("ParagraphStyle") = m.attr("textlayout_ParagraphStyle");
+m.attr("textlayout").attr("TextStyle") = m.attr("textlayout_TextStyle");
+m.attr("textlayout").attr("TextAlign") = m.attr("textlayout_TextAlign");
 }
