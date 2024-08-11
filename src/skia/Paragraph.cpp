@@ -68,6 +68,16 @@ font_collection
         R"docstring(
         )docstring",
         py::arg("fontManager"))
+    .def("setDefaultFontManager",
+        py::overload_cast<sk_sp<SkFontMgr>, const char[]>(&skia::textlayout::FontCollection::setDefaultFontManager),
+        R"docstring(
+        )docstring",
+        py::arg("fontManager"), py::arg("defaultFamilyName"))
+    .def("setDefaultFontManager",
+        py::overload_cast<sk_sp<SkFontMgr>, const std::vector<SkString>&>(&skia::textlayout::FontCollection::setDefaultFontManager),
+        R"docstring(
+        )docstring",
+        py::arg("fontManager"), py::arg("defaultFamilyNames"))
     ;
 
 text_style
