@@ -38,6 +38,12 @@ paragraph_builder
         R"docstring(
         )docstring",
         py::arg("style"), py::arg("fontCollection"), py::arg("unicode"))
+    .def("addText",
+        py::overload_cast<const char*>(&skia::textlayout::ParagraphBuilder::addText),
+        R"docstring(
+        )docstring",
+        py::arg("text"))
+    .def("Build", &skia::textlayout::ParagraphBuilder::Build)
     ;
 
 paragraph_style
