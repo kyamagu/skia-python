@@ -42,6 +42,16 @@ paragraph_builder
 
 paragraph_style
     .def(py::init())
+    .def("setTextStyle",
+        py::overload_cast<const skia::textlayout::TextStyle&>(&skia::textlayout::ParagraphStyle::setTextStyle),
+        R"docstring(
+        )docstring",
+        py::arg("textstyle"))
+    .def("setTextAlign",
+        py::overload_cast<skia::textlayout::TextAlign>(&skia::textlayout::ParagraphStyle::setTextAlign),
+        R"docstring(
+        )docstring",
+        py::arg("align"))
     ;
 
 font_collection
