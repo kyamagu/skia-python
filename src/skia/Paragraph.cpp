@@ -30,6 +30,10 @@ py::enum_<skia::textlayout::TextDecoration>(m, "textlayout_TextDecoration", R"do
     .value("kUnderline", skia::textlayout::TextDecoration::kUnderline)
     .value("kOverline", skia::textlayout::TextDecoration::kOverline)
     .value("kLineThrough", skia::textlayout::TextDecoration::kLineThrough)
+    .value("kUnderlineOverline", skia::textlayout::TextDecoration::kUnderline | skia::textlayout::TextDecoration::kOverline)
+    .value("kUnderlineLineThrough", skia::textlayout::TextDecoration::kUnderline | skia::textlayout::TextDecoration::kLineThrough)
+    .value("kOverlineLineThrough", skia::textlayout::TextDecoration::kOverline | skia::textlayout::TextDecoration::kLineThrough)
+    .value("kUnderlineOverlineLineThrough", skia::textlayout::TextDecoration::kUnderline | skia::textlayout::TextDecoration::kOverline | skia::textlayout::TextDecoration::kLineThrough)
     .export_values();
 
 py::enum_<skia::textlayout::TextDecorationStyle>(m, "textlayout_TextDecorationStyle", R"docstring(
