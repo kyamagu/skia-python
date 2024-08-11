@@ -52,6 +52,25 @@ font_collection
         py::arg("fontManager"))
     ;
 
+text_style
+    .def(py::init())
+    .def("setForegroundColor",
+        py::overload_cast<SkPaint>(&skia::textlayout::TextStyle::setForegroundColor),
+        R"docstring(
+        )docstring",
+        py::arg("paint"))
+    .def("setFontFamilies",
+        py::overload_cast<std::vector<SkString>>(&skia::textlayout::TextStyle::setFontFamilies),
+        R"docstring(
+        )docstring",
+        py::arg("families"))
+    .def("setFontSize",
+        py::overload_cast<SkScalar>(&skia::textlayout::TextStyle::setFontSize),
+        R"docstring(
+        )docstring",
+        py::arg("size"))
+    ;
+
 py::object SimpleNamespace = py::module_::import("types").attr("SimpleNamespace");
 m.attr("textlayout") = SimpleNamespace();
 m.attr("textlayout").attr("FontCollection") = m.attr("textlayout_FontCollection");
