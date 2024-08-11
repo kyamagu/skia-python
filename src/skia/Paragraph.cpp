@@ -12,6 +12,7 @@ py::class_<skia::textlayout::FontCollection, sk_sp<skia::textlayout::FontCollect
 py::class_<skia::textlayout::ParagraphBuilder> paragraph_builder(m, "textlayout_ParagraphBuilder");
 py::class_<skia::textlayout::ParagraphStyle> paragraph_style(m, "textlayout_ParagraphStyle");
 py::class_<skia::textlayout::TextStyle> text_style(m, "textlayout_TextStyle");
+py::class_<skia::textlayout::Paragraph> paragraph(m, "textlayout_Paragraph");
 
 py::enum_<skia::textlayout::TextAlign>(m, "textlayout_TextAlign", R"docstring(
     )docstring")
@@ -88,11 +89,25 @@ text_style
         py::arg("size"))
     ;
 
+paragraph
+    .def("layout",
+        py::overload_cast<SkScalar>(&skia::textlayout::Paragraph::layout),
+        R"docstring(
+        )docstring",
+        py::arg("width"))
+    .def("paint",
+        py::overload_cast<SkCanvas*, SkScalar, SkScalar>(&skia::textlayout::Paragraph::paint),
+        R"docstring(
+        )docstring",
+        py::arg("canvas"), py::arg("x"), py::arg("y"))
+    ;
+
 py::object SimpleNamespace = py::module_::import("types").attr("SimpleNamespace");
 m.attr("textlayout") = SimpleNamespace();
 m.attr("textlayout").attr("FontCollection") = m.attr("textlayout_FontCollection");
 m.attr("textlayout").attr("ParagraphBuilder") = m.attr("textlayout_ParagraphBuilder");
 m.attr("textlayout").attr("ParagraphStyle") = m.attr("textlayout_ParagraphStyle");
+m.attr("textlayout").attr("Paragraph") = m.attr("textlayout_Paragraph");
 m.attr("textlayout").attr("TextStyle") = m.attr("textlayout_TextStyle");
 m.attr("textlayout").attr("TextAlign") = m.attr("textlayout_TextAlign");
 }
