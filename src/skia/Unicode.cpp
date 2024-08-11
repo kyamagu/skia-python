@@ -10,9 +10,12 @@ unicode
         [] (void) {
             return SkUnicodes::ICU::Make();
         }))
-    .def_static("ICU.Make", &SkUnicodes::ICU::Make)
+    .def_static("ICU_Make", &SkUnicodes::ICU::Make)
     ;
 
 // SkUnicodes::ICU is a namespace
-m.attr("Unicodes") = m.attr("Unicode");
+py::object SimpleNamespace = py::module_::import("types").attr("SimpleNamespace");
+m.attr("Unicodes") = SimpleNamespace();
+m.attr("Unicodes").attr("ICU") = SimpleNamespace();
+m.attr("Unicodes").attr("ICU").attr("Make") = m.attr("Unicode").attr("ICU_Make");
 }
