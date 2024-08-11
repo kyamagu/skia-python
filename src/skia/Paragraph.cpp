@@ -97,6 +97,11 @@ text_style
         R"docstring(
         )docstring",
         py::arg("size"))
+    .def("setFontStyle",
+        py::overload_cast<SkFontStyle>(&skia::textlayout::TextStyle::setFontStyle),
+        R"docstring(
+        )docstring",
+        py::arg("fontStyle"))
     ;
 
 paragraph
