@@ -125,6 +125,31 @@ text_style
         R"docstring(
         )docstring",
         py::arg("fontStyle"))
+    .def("setDecoration",
+        py::overload_cast<skia::textlayout::TextDecoration>(&skia::textlayout::TextStyle::setDecoration),
+        R"docstring(
+        )docstring",
+        py::arg("decoration"))
+    .def("setDecorationMode",
+        py::overload_cast<skia::textlayout::TextDecorationMode>(&skia::textlayout::TextStyle::setDecorationMode),
+        R"docstring(
+        )docstring",
+        py::arg("mode"))
+    .def("setDecorationStyle",
+        py::overload_cast<skia::textlayout::TextDecorationStyle>(&skia::textlayout::TextStyle::setDecorationStyle),
+        R"docstring(
+        )docstring",
+        py::arg("style"))
+    .def("setDecorationColor",
+        py::overload_cast<SkColor>(&skia::textlayout::TextStyle::setDecorationColor),
+        R"docstring(
+        )docstring",
+        py::arg("color"))
+    .def("setDecorationThicknessMultiplier",
+        py::overload_cast<SkScalar>(&skia::textlayout::TextStyle::setDecorationThicknessMultiplier),
+        R"docstring(
+        )docstring",
+        py::arg("m"))
     ;
 
 paragraph
