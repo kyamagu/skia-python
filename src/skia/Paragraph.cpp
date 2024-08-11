@@ -24,6 +24,29 @@ py::enum_<skia::textlayout::TextAlign>(m, "textlayout_TextAlign", R"docstring(
     .value("kEnd", skia::textlayout::TextAlign::kEnd)
     .export_values();
 
+py::enum_<skia::textlayout::TextDecoration>(m, "textlayout_TextDecoration", R"docstring(
+    )docstring")
+    .value("kNoDecoration", skia::textlayout::TextDecoration::kNoDecoration)
+    .value("kUnderline", skia::textlayout::TextDecoration::kUnderline)
+    .value("kOverline", skia::textlayout::TextDecoration::kOverline)
+    .value("kLineThrough", skia::textlayout::TextDecoration::kLineThrough)
+    .export_values();
+
+py::enum_<skia::textlayout::TextDecorationStyle>(m, "textlayout_TextDecorationStyle", R"docstring(
+    )docstring")
+    .value("kSolid", skia::textlayout::TextDecorationStyle::kSolid)
+    .value("kDouble", skia::textlayout::TextDecorationStyle::kDouble)
+    .value("kDotted", skia::textlayout::TextDecorationStyle::kDotted)
+    .value("kDashed", skia::textlayout::TextDecorationStyle::kDashed)
+    .value("kWavy", skia::textlayout::TextDecorationStyle::kWavy)
+    .export_values();
+
+py::enum_<skia::textlayout::TextDecorationMode>(m, "textlayout_TextDecorationMode", R"docstring(
+    )docstring")
+    .value("kGaps", skia::textlayout::TextDecorationMode::kGaps)
+    .value("kThrough", skia::textlayout::TextDecorationMode::kThrough)
+    .export_values();
+
 paragraph_builder
     .def(py::init(
         [] (const skia::textlayout::ParagraphStyle& style,
@@ -125,4 +148,7 @@ m.attr("textlayout").attr("ParagraphStyle") = m.attr("textlayout_ParagraphStyle"
 m.attr("textlayout").attr("Paragraph") = m.attr("textlayout_Paragraph");
 m.attr("textlayout").attr("TextStyle") = m.attr("textlayout_TextStyle");
 m.attr("textlayout").attr("TextAlign") = m.attr("textlayout_TextAlign");
+m.attr("textlayout").attr("TextDecoration") = m.attr("textlayout_TextDecoration");
+m.attr("textlayout").attr("TextDecorationStyle") = m.attr("textlayout_TextDecorationStyle");
+m.attr("textlayout").attr("TextDecorationMode") = m.attr("textlayout_TextDecorationMode");
 }
