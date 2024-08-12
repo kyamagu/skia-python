@@ -170,6 +170,31 @@ class OneFontMgr : public SkFontMgr {
   sk_sp<SkFontStyleSet> style_set_;
 };
 
+/* Adapted from skia's chrome/m128:example/external_client/src/shape_text.cpp */
+
+/* Forward declaration */
+sk_sp<SkFontMgr> OneFontMgr_New_Custom_Empty(sk_sp<SkData> font_data);
+
+sk_sp<SkFontMgr> OneFontMgr_New_Custom_Empty(char* argv1) {
+  SkFILEStream input(argv1);
+  if (!input.isValid()) {
+    printf("Cannot open input file %s\n", argv1);
+    return nullptr;
+  }
+  sk_sp<SkData> font_data = SkData::MakeFromStream(&input, input.getLength());
+  return OneFontMgr_New_Custom_Empty(font_data);
+}
+
+sk_sp<SkFontMgr> OneFontMgr_New_Custom_Empty(sk_sp<SkData> font_data) {
+  sk_sp<SkFontMgr> mgr = SkFontMgr_New_Custom_Empty();
+  sk_sp<SkTypeface> face = mgr->makeFromData(font_data);
+  if (!face) {
+    printf("input font stream was not parsable by Freetype\n");
+    return nullptr;
+  }
+  return sk_make_sp<OneFontMgr>(face);
+}
+
 }  // namespace
 
 void initFont(py::module &m) {
