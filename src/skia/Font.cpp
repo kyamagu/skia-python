@@ -809,6 +809,10 @@ py::class_<SkFontMgr, sk_sp<SkFontMgr>, SkRefCnt>(m, "FontMgr",
     )docstring")
     .def(py::init([] () { return SkFontMgr_RefDefault(); }))
     .def_static("New_Custom_Empty", &SkFontMgr_New_Custom_Empty)
+    .def_static("New_Custom_Empty", py::overload_cast<char*>(&OneFontMgr_New_Custom_Empty),
+        py::arg("filename"))
+    .def_static("New_Custom_Empty", py::overload_cast<sk_sp<SkData>>(&OneFontMgr_New_Custom_Empty),
+        py::arg("data"))
     .def("__getitem__", &SkFontMgr_getFamilyName, py::arg("index"))
     .def("__len__", &SkFontMgr::countFamilies)
     .def("countFamilies", &SkFontMgr::countFamilies)
@@ -917,6 +921,9 @@ py::class_<SkFontMgr, sk_sp<SkFontMgr>, SkRefCnt>(m, "FontMgr",
         Return the default fontmgr.
         )docstring")
     ;
+
+// This has the side-effect of letting "skia.FontMgr.OneFontMgr()" work.
+m.attr("FontMgr").attr("OneFontMgr") = m.attr("FontMgr").attr("New_Custom_Empty");
 
 // Font
 py::enum_<SkFontHinting>(m, "FontHinting")
