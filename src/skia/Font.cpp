@@ -94,6 +94,83 @@ sk_sp<SkTypeface> SkTypeface_MakeFromName(
 
 }  // namespace
 
+namespace {
+
+/* class OneFontStyleSet and OneFontMgr verbatim from
+   skia's chrome/m128:example/external_client/src/shape_text.cpp
+ */
+class OneFontStyleSet : public SkFontStyleSet {
+ public:
+  explicit OneFontStyleSet(sk_sp<SkTypeface> face) : face_(face) {}
+
+ protected:
+  int count() override { return 1; }
+  void getStyle(int, SkFontStyle* out_style, SkString*) override {
+    *out_style = SkFontStyle();
+  }
+  sk_sp<SkTypeface> createTypeface(int index) override { return face_; }
+  sk_sp<SkTypeface> matchStyle(const SkFontStyle&) override { return face_; }
+
+ private:
+  sk_sp<SkTypeface> face_;
+};
+
+class OneFontMgr : public SkFontMgr {
+ public:
+  explicit OneFontMgr(sk_sp<SkTypeface> face)
+      : face_(face), style_set_(sk_make_sp<OneFontStyleSet>(face)) {}
+
+ protected:
+  int onCountFamilies() const override { return 1; }
+  void onGetFamilyName(int index, SkString* familyName) const override {
+    *familyName = SkString("the-only-font-I-have");
+  }
+  sk_sp<SkFontStyleSet> onCreateStyleSet(int index) const override {
+    return style_set_;
+  }
+  sk_sp<SkFontStyleSet> onMatchFamily(const char[]) const override {
+    return style_set_;
+  }
+
+  sk_sp<SkTypeface> onMatchFamilyStyle(const char[],
+                                       const SkFontStyle&) const override {
+    return face_;
+  }
+  sk_sp<SkTypeface> onMatchFamilyStyleCharacter(
+      const char familyName[], const SkFontStyle& style, const char* bcp47[],
+      int bcp47Count, SkUnichar character) const override {
+    return face_;
+  }
+  sk_sp<SkTypeface> onLegacyMakeTypeface(const char[],
+                                         SkFontStyle) const override {
+    return face_;
+  }
+
+  sk_sp<SkTypeface> onMakeFromData(sk_sp<SkData>, int) const override {
+    std::abort();
+    return nullptr;
+  }
+  sk_sp<SkTypeface> onMakeFromStreamIndex(std::unique_ptr<SkStreamAsset>,
+                                          int) const override {
+    std::abort();
+    return nullptr;
+  }
+  sk_sp<SkTypeface> onMakeFromStreamArgs(
+      std::unique_ptr<SkStreamAsset>, const SkFontArguments&) const override {
+    std::abort();
+    return nullptr;
+  }
+  sk_sp<SkTypeface> onMakeFromFile(const char[], int) const override {
+    std::abort();
+    return nullptr;
+  }
+
+ private:
+  sk_sp<SkTypeface> face_;
+  sk_sp<SkFontStyleSet> style_set_;
+};
+
+}  // namespace
 
 void initFont(py::module &m) {
 // FontStyle
