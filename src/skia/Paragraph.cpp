@@ -163,6 +163,14 @@ text_style
     ;
 
 paragraph
+    .def_property_readonly("Width", &skia::textlayout::Paragraph::getMaxWidth)
+    .def_property_readonly("Height", &skia::textlayout::Paragraph::getHeight)
+    .def_property_readonly("MinIntrinsicWidth", &skia::textlayout::Paragraph::getMinIntrinsicWidth)
+    .def_property_readonly("MaxIntrinsicWidth", &skia::textlayout::Paragraph::getMaxIntrinsicWidth)
+    .def_property_readonly("AlphabeticBaseline", &skia::textlayout::Paragraph::getAlphabeticBaseline)
+    .def_property_readonly("IdeographicBaseline", &skia::textlayout::Paragraph::getIdeographicBaseline)
+    .def_property_readonly("LongestLine", &skia::textlayout::Paragraph::getLongestLine)
+    .def_property_readonly("ExceedMaxLines", &skia::textlayout::Paragraph::didExceedMaxLines)
     .def("layout",
         py::overload_cast<SkScalar>(&skia::textlayout::Paragraph::layout),
         R"docstring(
