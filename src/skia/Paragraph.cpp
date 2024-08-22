@@ -71,6 +71,12 @@ paragraph_builder
         R"docstring(
         )docstring",
         py::arg("text"))
+    .def("pop", &skia::textlayout::ParagraphBuilder::pop)
+    .def("pushStyle",
+        py::overload_cast<const skia::textlayout::TextStyle&>(&skia::textlayout::ParagraphBuilder::pushStyle),
+        R"docstring(
+        )docstring",
+        py::arg("style"))
     .def("Build", &skia::textlayout::ParagraphBuilder::Build)
     ;
 
