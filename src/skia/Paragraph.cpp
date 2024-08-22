@@ -118,6 +118,12 @@ text_style
     .def("setForegroundColor",
         py::overload_cast<SkPaint>(&skia::textlayout::TextStyle::setForegroundColor),
         R"docstring(
+        DEPRECATED: prefer `setForegroundPaint`
+        )docstring",
+        py::arg("paint"))
+    .def("setForegroundPaint",
+        py::overload_cast<SkPaint>(&skia::textlayout::TextStyle::setForegroundPaint),
+        R"docstring(
         )docstring",
         py::arg("paint"))
     .def("setFontFamilies",
