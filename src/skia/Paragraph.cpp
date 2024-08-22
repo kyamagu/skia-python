@@ -116,6 +116,11 @@ font_collection
 text_style
     .def(py::init())
     .def("cloneForPlaceholder", &skia::textlayout::TextStyle::cloneForPlaceholder)
+    .def("setColor",
+        py::overload_cast<SkColor>(&skia::textlayout::TextStyle::setColor),
+        R"docstring(
+        )docstring",
+        py::arg("color"))
     .def("setForegroundColor",
         py::overload_cast<SkPaint>(&skia::textlayout::TextStyle::setForegroundColor),
         R"docstring(
