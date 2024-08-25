@@ -147,6 +147,11 @@ text_style
         R"docstring(
         )docstring",
         py::arg("fontStyle"))
+    .def("setLocale",
+        py::overload_cast<const SkString&>(&skia::textlayout::TextStyle::setLocale),
+        R"docstring(
+        )docstring",
+        py::arg("locale"))
     .def("setDecoration",
         py::overload_cast<skia::textlayout::TextDecoration>(&skia::textlayout::TextStyle::setDecoration),
         R"docstring(
