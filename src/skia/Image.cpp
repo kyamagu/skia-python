@@ -364,8 +364,8 @@ image
             :py:class:`Image` shares the pixel buffer without copy.
         )docstring",
         py::arg("array"), py::arg("dimensions"),
-        py::arg("colorType") = kN32_SkColorType,
-        py::arg("alphaType") = kUnpremul_SkAlphaType,
+        py::arg_v("colorType", kN32_SkColorType, "skia.ColorType.kN32_ColorType"),
+        py::arg_v("alphaType", kUnpremul_SkAlphaType, "skia.AlphaType.kUnpremul_AlphaType"),
         py::arg("colorSpace") = nullptr, py::arg("copy") = true)
     .def_static("fromarray", &ImageFromArray,
         R"docstring(
@@ -380,8 +380,9 @@ image
         :param skia.ColorSpace colorSpace: range of colors; may be nullptr
         :param bool copy: Whether to copy pixels.
         )docstring",
-        py::arg("array"), py::arg("colorType") = kN32_SkColorType,
-        py::arg("alphaType") = kUnpremul_SkAlphaType,
+        py::arg("array"),
+        py::arg_v("colorType", kN32_SkColorType, "skia.ColorType.kN32_ColorType"),
+        py::arg_v("alphaType", kUnpremul_SkAlphaType, "skia.AlphaType.kUnpremul_AlphaType"),
         py::arg("colorSpace") = nullptr, py::arg("copy") = true)
     .def("toarray", &ReadToNumpy<SkImage>,
         R"docstring(
@@ -395,8 +396,8 @@ image
         :return: numpy.ndarray
         )docstring",
         py::arg("srcX") = 0, py::arg("srcY") = 0,
-        py::arg("colorType") = kUnknown_SkColorType,
-        py::arg("alphaType") = kUnpremul_SkAlphaType,
+        py::arg_v("colorType", kUnknown_SkColorType, "skia.ColorType.kUnknown_ColorType"),
+        py::arg_v("alphaType", kUnpremul_SkAlphaType, "skia.AlphaType.kUnpremul_AlphaType"),
         py::arg("colorSpace") = nullptr)
     .def_static("open", &ImageOpen,
         R"docstring(
@@ -437,7 +438,7 @@ image
         :param int quality: encoder specific metric with 100 equaling best
         )docstring",
         py::arg("fp"),
-        py::arg("encodedImageFormat") = SkEncodedImageFormat::kPNG,
+        py::arg_v("encodedImageFormat", SkEncodedImageFormat::kPNG, "skia.EncodedImageFormat.kPNG"),
         py::arg("quality") = 100)
     .def("bitmap", &ImageToBitmap,
         R"docstring(
@@ -454,8 +455,8 @@ image
         :param colorSpace: color space of :py:class:`Bitmap`.
         :return: :py:class:`Bitmap`
         )docstring",
-        py::arg("colorType") = kUnknown_SkColorType,
-        py::arg("alphaType") = kUnknown_SkAlphaType,
+        py::arg_v("colorType", kUnknown_SkColorType, "skia.ColorType.kUnknown_ColorType"),
+        py::arg_v("alphaType", kUnknown_SkAlphaType, "skia.AlphaType.kUnknown_AlphaType"),
         py::arg("colorSpace") = nullptr)
     .def("convert", &ImageConvert,
         R"docstring(
@@ -484,8 +485,8 @@ image
         :param colorSpace: target color space.
         :return: :py:class:`Image`
         )docstring",
-        py::arg("colorType") = kUnknown_SkColorType,
-        py::arg("alphaType") = kUnknown_SkAlphaType,
+        py::arg_v("colorType", kUnknown_SkColorType, "skia.ColorType.kUnknown_ColorType"),
+        py::arg_v("alphaType", kUnknown_SkAlphaType, "skia.AlphaType.kUnknown_AlphaType"),
         py::arg("colorSpace") = nullptr)
     .def("resize", &ImageResize,
         R"docstring(
@@ -513,8 +514,9 @@ image
         :return: :py:class:`Image`
         )docstring",
         py::arg("width"), py::arg("height"),
-        py::arg("options") = SkSamplingOptions(),
-        py::arg("cachingHint") = SkImage::kAllow_CachingHint)
+        py::arg_v("options", SkSamplingOptions(), "skia.SamplingOptions()"),
+        py::arg_v("cachingHint", SkImage::kAllow_CachingHint,
+                  "skia.Image.CachingHint.kAllow_CachingHint"))
     .def("__repr__",
         [] (const SkImage& image) {
             return py::str("Image({}, {}, {}, {})").format(
@@ -658,8 +660,8 @@ image
         )docstring",
         py::arg("context"), py::arg("data"), py::arg("width"),
         py::arg("height"), py::arg("type"),
-        py::arg("mipMapped") = skgpu::Mipmapped::kNo,
-        py::arg("isProtected") = GrProtected::kNo)
+        py::arg_v("mipMapped", skgpu::Mipmapped::kNo, "skia.GrMipmapped.kNo"),
+        py::arg_v("isProtected", GrProtected::kNo, "skia.GrProtected.kNo"))
     .def_static("MakeRasterFromCompressed", &SkImages::RasterFromCompressedTextureData,
         R"docstring(
         Creates a CPU-backed :py:class:`Image` from compressed data.
@@ -790,7 +792,7 @@ image
         )docstring",
         py::arg("context"), py::arg("backendTexture"), py::arg("origin"),
         py::arg("colorType"),
-        py::arg("alphaType") = SkAlphaType::kPremul_SkAlphaType,
+        py::arg_v("alphaType", SkAlphaType::kPremul_SkAlphaType, "skia.AlphaType.kPremul_AlphaType"),
         py::arg("colorSpace") = nullptr)
 /*
     .def_static("MakeFromYUVATexturesCopy",
@@ -997,7 +999,7 @@ image
         :return:                      created :py:class:`Image`, or nullptr
         )docstring",
         py::arg("context"), py::arg("pixmaps"),
-        py::arg("buildMips") = skgpu::Mipmapped::kNo,
+        py::arg_v("buildMips", skgpu::Mipmapped::kNo, "skia.GrMipmapped.kNo"),
         py::arg("limitToMaxTextureSize") = false,
         py::arg("imageColorSpace") = nullptr)
 /*
@@ -1095,7 +1097,7 @@ image
         )docstring",
         py::arg("picture"), py::arg("dimensions"), py::arg("matrix") = nullptr,
         py::arg("paint") = nullptr,
-        py::arg("bitDepth") = SkImages::BitDepth::kU8,
+        py::arg_v("bitDepth", SkImages::BitDepth::kU8, "skia.Image.BitDepth.kU8"),
         py::arg("colorSpace") = nullptr)
     .def("imageInfo", &SkImage::imageInfo,
         R"docstring(
@@ -1224,8 +1226,10 @@ image
             nullptr
         :return: :py:class:`Shader` containing :py:class:`Image`
         )docstring",
-        py::arg("tmx") = SkTileMode::kClamp,
-        py::arg("tmy") = SkTileMode::kClamp, py::arg("samplingOptions") = SkSamplingOptions(), py::arg("localMatrix") = nullptr)
+        py::arg_v("tmx", SkTileMode::kClamp, "skia.TileMode.kClamp"),
+        py::arg_v("tmy", SkTileMode::kClamp, "skia.TileMode.kClamp"),
+        py::arg_v("samplingOptions", SkSamplingOptions(), "skia.SamplingOptions()"),
+        py::arg("localMatrix") = nullptr)
     // TODO: Other makeShader overloads.
     .def("peekPixels", &SkImage::peekPixels,
         R"docstring(
@@ -1368,7 +1372,8 @@ image
         )docstring",
         py::arg("context"), py::arg("dstInfo"), py::arg("dstPixels"),
         py::arg("dstRowBytes"), py::arg("srcX") = 0, py::arg("srcY") = 0,
-        py::arg("cachingHint") = SkImage::CachingHint::kAllow_CachingHint)
+        py::arg_v("cachingHint", SkImage::CachingHint::kAllow_CachingHint,
+                  "skia.Image.CachingHint.kAllow_CachingHint"))
     .def("readPixels",
         py::overload_cast<GrDirectContext*, const SkPixmap&, int, int,
             SkImage::CachingHint>(&SkImage::readPixels, py::const_),
@@ -1416,7 +1421,8 @@ image
         :return:             true if pixels are copied to dst
         )docstring",
         py::arg("context"), py::arg("dst"), py::arg("srcX"), py::arg("srcY"),
-        py::arg("cachingHint") = SkImage::CachingHint::kAllow_CachingHint)
+        py::arg_v("cachingHint", SkImage::CachingHint::kAllow_CachingHint,
+                  "skia.Image.CachingHint.kAllow_CachingHint"))
     .def("readPixels",
         [] (const SkImage& image, const SkImageInfo& dstInfo,
             py::buffer dstPixels, size_t dstRowBytes, int srcX, int srcY,
@@ -1430,7 +1436,8 @@ image
         )docstring",
         py::arg("dstInfo"), py::arg("dstPixels"), py::arg("dstRowBytes"),
         py::arg("srcX") = 0, py::arg("srcY") = 0,
-        py::arg("cachingHint") = SkImage::kAllow_CachingHint)
+        py::arg_v("cachingHint", SkImage::kAllow_CachingHint,
+                  "skia.Image.CachingHint.kAllow_CachingHint"))
     .def("readPixels",
         py::overload_cast<const SkPixmap&, int, int, SkImage::CachingHint>(
             &SkImage::readPixels, py::const_),
@@ -1438,7 +1445,8 @@ image
         Deprecated. Use the variants that accept a `GrDirectContext`.
         )docstring",
         py::arg("dst"), py::arg("srcX"), py::arg("srcY"),
-        py::arg("cachingHint") = SkImage::CachingHint::kAllow_CachingHint)
+        py::arg_v("cachingHint", SkImage::CachingHint::kAllow_CachingHint,
+                  "skia.Image.CachingHint.kAllow_CachingHint"))
     // .def("asyncRescaleAndReadPixels", &SkImage::asyncRescaleAndReadPixels)
     // .def("asyncRescaleAndReadPixelsYUV420",
     //      &SkImage::asyncRescaleAndReadPixelsYUV420)
@@ -1486,8 +1494,9 @@ image
         :return: true if pixels are scaled to fit dst
         )docstring",
         py::arg("dst"),
-        py::arg("samplingOptions") = SkSamplingOptions(),
-        py::arg("cachingHint") = SkImage::kAllow_CachingHint)
+        py::arg_v("samplingOptions", SkSamplingOptions(), "skia.SamplingOptions()"),
+        py::arg_v("cachingHint", SkImage::kAllow_CachingHint,
+                  "skia.Image.CachingHint.kAllow_CachingHint"))
     .def("encodeToData",
         [] (SkImage& image, SkEncodedImageFormat format, int quality) {
             sk_sp<SkData> data;
@@ -1647,8 +1656,9 @@ image
             for the returned image counts against the GrDirectContext's budget.
         :return: created :py:class:`Image`, or nullptr
         )docstring",
-        py::arg("context").none(false), py::arg("mipMapped") = skgpu::Mipmapped::kNo,
-        py::arg("budgeted") = skgpu::Budgeted::kYes)
+        py::arg("context").none(false),
+        py::arg_v("mipMapped", skgpu::Mipmapped::kNo, "skia.GrMipmapped.kNo"),
+        py::arg_v("budgeted", skgpu::Budgeted::kYes, "skia.Budgeted.kYes"))
     .def("makeNonTextureImage", &SkImage::makeNonTextureImage,
         R"docstring(
         Returns raster image or lazy image.
@@ -1680,7 +1690,7 @@ image
         :param skia.Image.CachingHint cachingHint: Caching hint
         :return: raster image, or nullptr
         )docstring",
-        py::arg("cachingHint") = SkImage::kAllow_CachingHint)
+        py::arg_v("cachingHint", SkImage::kAllow_CachingHint, "skia.Image.CachingHint.kAllow_CachingHint"))
     .def("makeWithFilter",
         [] (SkImage& image, GrRecordingContext* rContext,
             const SkImageFilter* filter,
@@ -1776,7 +1786,7 @@ image
         :return: true if :py:class:`Bitmap` was created
         )docstring",
         py::arg("bitmap").none(false),
-        py::arg("legacyBitmapMode") = SkImage::kRO_LegacyBitmapMode)
+        py::arg_v("legacyBitmapMode", SkImage::kRO_LegacyBitmapMode, "skia.Image.kRO_LegacyBitmapMode"))
     .def("isLazyGenerated", &SkImage::isLazyGenerated,
         R"docstring(
         Returns true if :py:class:`Image` is backed by an image-generator or

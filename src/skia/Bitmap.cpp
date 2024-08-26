@@ -1028,8 +1028,10 @@ bitmap
     .def("makeShader",
         py::overload_cast<SkTileMode, SkTileMode, const SkSamplingOptions&, const SkMatrix*>(
             &SkBitmap::makeShader, py::const_),
-        py::arg("tmx") = SkTileMode::kClamp,
-        py::arg("tmy") = SkTileMode::kClamp, py::arg("sampling") = SkSamplingOptions(),  py::arg("localMatrix") = nullptr)
+        py::arg_v("tmx", SkTileMode::kClamp, "skia.TileMode.kClamp"),
+        py::arg_v("tmy", SkTileMode::kClamp, "skia.TileMode.kClamp"),
+        py::arg_v("sampling", SkSamplingOptions(), "skia.SamplingOptions()"),
+        py::arg("localMatrix") = nullptr)
     ;
 
 

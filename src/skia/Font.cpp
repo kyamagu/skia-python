@@ -517,8 +517,8 @@ typeface
         Returns a unique signature to a stream, sufficient to reconstruct a
         typeface referencing the same font when Deserialize is called.
         )docstring",
-        py::arg("behavior") =
-            SkTypeface::SerializeBehavior::kIncludeDataIfLocal)
+        py::arg_v("behavior", SkTypeface::SerializeBehavior::kIncludeDataIfLocal,
+                  "skia.Typeface.SerializeBehavior.kIncludeDataIfLocal"))
     .def("unicharsToGlyphs",
         [] (const SkTypeface& typeface, const std::vector<SkUnichar>& chars) {
             std::vector<SkGlyphID> glyphs(chars.size());
@@ -1332,7 +1332,8 @@ font
         :param skia.TextEncoding encoding: text encoding
         :return: glyphs represented by text
         )docstring",
-        py::arg("text"), py::arg("encoding") = SkTextEncoding::kUTF8)
+        py::arg("text"),
+        py::arg_v("encoding", SkTextEncoding::kUTF8, "skia.TextEncoding.kUTF8"))
     .def("unicharToGlyph", &SkFont::unicharToGlyph,
         R"docstring(
         Returns glyph index for Unicode character.
@@ -1365,7 +1366,8 @@ font
         :param str text: character storage encoded with :py:class:`TextEncoding`
         :param skia.TextEncoding encoding: text encoding
         )docstring",
-        py::arg("text"), py::arg("encoding") = SkTextEncoding::kUTF8)
+        py::arg("text"),
+        py::arg_v("encoding", SkTextEncoding::kUTF8, "skia.TextEncoding.kUTF8"))
     .def("measureText",
         [] (const SkFont& font, const std::string& text,
             SkTextEncoding encoding, SkRect* bounds, const SkPaint* paint) {
@@ -1386,7 +1388,8 @@ font
         :param skia.Paint paint: optional; may be nullptr
         :return: the advance width of text
         )docstring",
-        py::arg("text"), py::arg("encoding") = SkTextEncoding::kUTF8,
+        py::arg("text"),
+        py::arg_v("encoding", SkTextEncoding::kUTF8, "skia.TextEncoding.kUTF8"),
         py::arg("bounds") = nullptr, py::arg("paint") = nullptr)
     .def("getWidths",
         [] (const SkFont& font, const std::vector<SkGlyphID>& glyphs) {

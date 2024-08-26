@@ -575,7 +575,8 @@ py::class_<GrRecordingContext, sk_sp<GrRecordingContext>, GrImageContext>(
 
         The caller should check that the returned format is valid.
         )docstring",
-        py::arg("colorType"), py::arg("renderable") = GrRenderable::kNo)
+        py::arg("colorType"),
+        py::arg_v("renderable", GrRenderable::kNo, "skia.GrRenderable.kNo"))
     .def("abandoned", &GrRecordingContext::abandoned,
         R"docstring(
         Reports whether the :py:class:`GrDirectContext` associated with this
@@ -858,7 +859,7 @@ py::class_<GrDirectContext, sk_sp<GrDirectContext>, GrRecordingContext>(m, "GrDi
         to the underlying 3D API. This is equivalent to calling :py:meth:`flush`
         with a default :py:class:`GrFlushInfo` followed by :py:meth:`submit`.
         )docstring",
-        py::arg("sync") = GrSyncCpu::kNo)
+        py::arg_v("sync", GrSyncCpu::kNo, "skia.GrSyncCpu.kNo"))
     .def("flush", py::overload_cast<const GrFlushInfo&>(&GrDirectContext::flush),
         R"docstring(
         Call to ensure all drawing to the context has been flushed to underlying
@@ -914,7 +915,7 @@ py::class_<GrDirectContext, sk_sp<GrDirectContext>, GrRecordingContext>(m, "GrDi
         If the syncCpu flag is true this function will return once the gpu has
         finished with all submitted work.
         )docstring",
-        py::arg("sync") = GrSyncCpu::kNo)
+        py::arg_v("sync", GrSyncCpu::kNo, "skia.GrSyncCpu.kNo"))
     .def("checkAsyncWorkCompletion", &GrDirectContext::checkAsyncWorkCompletion,
         R"docstring(
         Checks whether any asynchronous work is complete and if so calls related
@@ -944,7 +945,8 @@ py::class_<GrDirectContext, sk_sp<GrDirectContext>, GrRecordingContext>(m, "GrDi
 
         The caller should check that the returned format is valid.
         )docstring",
-        py::arg("colorType"), py::arg("renderable") = GrRenderable::kNo)
+        py::arg("colorType"),
+        py::arg_v("renderable", GrRenderable::kNo, "skia.GrRenderable.kNo"))
     .def("createBackendTexture",
         py::overload_cast<int, int, const GrBackendFormat&, skgpu::Mipmapped,
             GrRenderable, GrProtected, std::string_view>(&GrDirectContext::createBackendTexture),
@@ -957,7 +959,8 @@ py::class_<GrDirectContext, sk_sp<GrDirectContext>, GrRecordingContext>(m, "GrDi
         )docstring",
         py::arg("width"), py::arg("height"), py::arg("backendFormat"),
         py::arg("mipMapped"), py::arg("renderable"),
-        py::arg("isProtected") = GrProtected::kNo, py::arg("label") = std::string_view{})
+        py::arg_v("isProtected", GrProtected::kNo, "skia.GrProtected.kNo"),
+        py::arg("label") = std::string_view{})
     .def("createBackendTexture",
         py::overload_cast<int, int, SkColorType, skgpu::Mipmapped,
             GrRenderable, GrProtected, std::string_view>(&GrDirectContext::createBackendTexture),
@@ -971,7 +974,8 @@ py::class_<GrDirectContext, sk_sp<GrDirectContext>, GrRecordingContext>(m, "GrDi
         )docstring",
         py::arg("width"), py::arg("height"), py::arg("colorType"),
         py::arg("mipMapped"), py::arg("renderable"),
-        py::arg("isProtected") = GrProtected::kNo, py::arg("label") = std::string_view{})
+        py::arg_v("isProtected", GrProtected::kNo, "skia.GrProtected.kNo"),
+        py::arg("label") = std::string_view{})
     .def("createBackendTexture",
         [] (GrDirectContext& context, int width, int height,
             const GrBackendFormat& backendFormat, const SkColor4f& color,
@@ -995,7 +999,7 @@ py::class_<GrDirectContext, sk_sp<GrDirectContext>, GrRecordingContext>(m, "GrDi
         )docstring",
         py::arg("width"), py::arg("height"), py::arg("backendFormat"),
         py::arg("color"), py::arg("mipMapped"), py::arg("renderable"),
-        py::arg("isProtected") = GrProtected::kNo)
+        py::arg_v("isProtected", GrProtected::kNo, "skia.GrProtected.kNo"))
     .def("createBackendTexture",
         [] (GrDirectContext& context, int width, int height,
             SkColorType colorType, const SkColor4f& color,
@@ -1015,7 +1019,7 @@ py::class_<GrDirectContext, sk_sp<GrDirectContext>, GrRecordingContext>(m, "GrDi
         )docstring",
         py::arg("width"), py::arg("height"), py::arg("colorType"),
         py::arg("color"), py::arg("mipMapped"), py::arg("renderable"),
-        py::arg("isProtected") = GrProtected::kNo)
+        py::arg_v("isProtected", GrProtected::kNo, "skia.GrProtected.kNo"))
     .def("createBackendTexture",
         [] (GrDirectContext& context, const std::vector<SkPixmap>& srcData,
             GrRenderable renderable, GrProtected isProtected) {
@@ -1048,7 +1052,7 @@ py::class_<GrDirectContext, sk_sp<GrDirectContext>, GrRecordingContext>(m, "GrDi
         be: VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL
         )docstring",
         py::arg("srcData"),  py::arg("renderable"),
-        py::arg("isProtected") = GrProtected::kNo)
+        py::arg_v("isProtected", GrProtected::kNo, "skia.GrProtected.kNo"))
     .def("createBackendTexture",
         [] (GrDirectContext& context, const SkPixmap& pixmap, GrRenderable renderable,
             GrProtected isProtected) {
@@ -1056,7 +1060,7 @@ py::class_<GrDirectContext, sk_sp<GrDirectContext>, GrRecordingContext>(m, "GrDi
                 pixmap, renderable, isProtected);
         },
         py::arg("pixmap"), py::arg("renderable"),
-        py::arg("isProtected") = GrProtected::kNo)
+        py::arg_v("isProtected", GrProtected::kNo, "skia.GrProtected.kNo"))
     .def("updateBackendTexture",
         [] (GrDirectContext& context, const GrBackendTexture& texture,
             const SkColor4f& color) {
@@ -1133,7 +1137,7 @@ py::class_<GrDirectContext, sk_sp<GrDirectContext>, GrRecordingContext>(m, "GrDi
         )docstring",
         py::arg("width"), py::arg("height"), py::arg("backendFormat"),
         py::arg("color"), py::arg("mipMapped"),
-        py::arg("isProtected") = GrProtected::kNo)
+        py::arg_v("isProtected", GrProtected::kNo, "skia.GrProtected.kNo"))
     .def("createCompressedBackendTexture",
         [] (GrDirectContext& context, int width, int height,
             SkTextureCompressionType type, const SkColor4f& color,
@@ -1142,7 +1146,8 @@ py::class_<GrDirectContext, sk_sp<GrDirectContext>, GrRecordingContext>(m, "GrDi
                 width, height, type, color, mipMapped, isProtected);
         },
         py::arg("width"), py::arg("height"), py::arg("type"), py::arg("color"),
-        py::arg("mipMapped"), py::arg("isProtected") = GrProtected::kNo)
+        py::arg("mipMapped"),
+        py::arg_v("isProtected", GrProtected::kNo, "skia.GrProtected.kNo"))
     .def("createCompressedBackendTexture",
         [] (GrDirectContext& context, int width, int height,
             const GrBackendFormat& backendFormat, py::buffer b,
@@ -1155,7 +1160,7 @@ py::class_<GrDirectContext, sk_sp<GrDirectContext>, GrRecordingContext>(m, "GrDi
         },
         py::arg("width"), py::arg("height"), py::arg("backendFormat"),
         py::arg("data"), py::arg("mipMapped"),
-        py::arg("isProtected") = GrProtected::kNo)
+        py::arg_v("isProtected", GrProtected::kNo, "skia.GrProtected.kNo"))
     .def("createCompressedBackendTexture",
         [] (GrDirectContext& context, int width, int height,
             SkTextureCompressionType type, py::buffer b,
@@ -1166,7 +1171,8 @@ py::class_<GrDirectContext, sk_sp<GrDirectContext>, GrRecordingContext>(m, "GrDi
                 width, height, type, info.ptr, size, mipMapped, isProtected);
         },
         py::arg("width"), py::arg("height"), py::arg("type"), py::arg("data"),
-        py::arg("mipMapped"), py::arg("isProtected") = GrProtected::kNo)
+        py::arg("mipMapped"),
+        py::arg_v("isProtected", GrProtected::kNo, "skia.GrProtected.kNo"))
     .def("setBackendTextureState",
         [] (GrDirectContext& context, const GrBackendTexture& texture,
             const skgpu::MutableTextureState& mutableState,

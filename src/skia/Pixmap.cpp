@@ -173,8 +173,9 @@ py::class_<SkPixmap>(m, "Pixmap",
         :alphaType: alpha type of the array
         :colorSpace: range of colors; may be nullptr
         )docstring",
-        py::arg("array"), py::arg("colorType") = kN32_SkColorType,
-        py::arg("alphaType") = kUnpremul_SkAlphaType,
+        py::arg("array"),
+        py::arg_v("colorType", kN32_SkColorType, "skia.ColorType.kN32_ColorType"),
+        py::arg_v("alphaType", kUnpremul_SkAlphaType, "skia.AlphaType.kUnpremul_AlphaType"),
         py::arg("colorSpace") = nullptr)
     .def("reset",
         py::overload_cast<>(&SkPixmap::reset),
@@ -618,7 +619,7 @@ py::class_<SkPixmap>(m, "Pixmap",
         :return: true if pixels are scaled to fit dst
         )docstring",
         py::arg("dst"),
-        py::arg("samplingOptions") = SkSamplingOptions())
+        py::arg_v("samplingOptions", SkSamplingOptions(), "skia.SamplingOptions()"))
     .def("erase",
         py::overload_cast<const SkColor4f&, const SkIRect*>(
             &SkPixmap::erase, py::const_),

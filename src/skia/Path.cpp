@@ -407,26 +407,29 @@ path
         py::arg("points"), py::arg("verbs"), py::arg("conicWeights"),
         py::arg("fillType"), py::arg("isVolatile") = false)
     .def_static("Rect", &SkPath::Rect,
-        py::arg("rect"), py::arg("pathDirection") = SkPathDirection::kCW,
+        py::arg("rect"),
+        py::arg_v("pathDirection", SkPathDirection::kCW, "skia.PathDirection.kCW"),
         py::arg("startIndex") = 0)
     .def_static("Oval",
         py::overload_cast<const SkRect&, SkPathDirection, unsigned>(
             &SkPath::Oval),
-        py::arg("rect"), py::arg("pathDirection") = SkPathDirection::kCW,
+        py::arg("rect"),
+        py::arg_v("pathDirection", SkPathDirection::kCW, "skia.PathDirection.kCW"),
         py::arg("startIndex") = 0)
     .def_static("Circle", &SkPath::Circle,
         py::arg("center_x"), py::arg("center_y"), py::arg("radius"),
-        py::arg("pathDirection") = SkPathDirection::kCW)
+        py::arg_v("pathDirection", SkPathDirection::kCW, "skia.PathDirection.kCW"))
     .def_static("RRect",
         py::overload_cast<const SkRRect&, SkPathDirection, unsigned>(
             &SkPath::RRect),
-        py::arg("rrect"), py::arg("pathDirection") = SkPathDirection::kCW,
+        py::arg("rrect"),
+        py::arg_v("pathDirection", SkPathDirection::kCW, "skia.PathDirection.kCW"),
         py::arg("startIndex") = 0)
     .def_static("RRect",
         py::overload_cast<const SkRect&, SkScalar, SkScalar, SkPathDirection>(
             &SkPath::RRect),
         py::arg("bounds"), py::arg("rx"), py::arg("ry"),
-        py::arg("pathDirection") = SkPathDirection::kCW)
+        py::arg_v("pathDirection", SkPathDirection::kCW, "skia.PathDirection.kCW"))
     .def_static("Polygon",
         [] (const std::vector<SkPoint>& points, bool isClosed,
             SkPathFillType fillType, bool isVolatile) {
@@ -434,7 +437,7 @@ path
                 points.data(), points.size(), isClosed, fillType, isVolatile);
         },
         py::arg("points"), py::arg("isClosed"),
-        py::arg("fillType") = SkPathFillType::kWinding,
+        py::arg_v("fillType", SkPathFillType::kWinding, "skia.PathFillType.kWinding"),
         py::arg("isVolatile") = false)
     .def_static("Line", &SkPath::Line, py::arg("a"), py::arg("b"))
     .def(py::init<>(), R"docstring(
@@ -1434,7 +1437,8 @@ path
         :dir: :py:class:`Path`::Direction to wind added contour
         :return: reference to :py:class:`Path`
         )docstring",
-        py::arg("rect"), py::arg("dir") = SkPathDirection::kCW)
+        py::arg("rect"),
+        py::arg_v("dir", SkPathDirection::kCW, "skia.PathDirection.kCW"))
     .def("addRect",
         py::overload_cast<const SkRect&, SkPathDirection, unsigned>(
             &SkPath::addRect),
@@ -1477,7 +1481,7 @@ path
         :return: reference to :py:class:`Path`
         )docstring",
         py::arg("left"), py::arg("top"), py::arg("right"), py::arg("bottom"),
-        py::arg("dir") = SkPathDirection::kCW)
+        py::arg_v("dir", SkPathDirection::kCW, "skia.PathDirection.kCW"))
     .def("addOval",
         py::overload_cast<const SkRect&, SkPathDirection>(&SkPath::addOval),
         R"docstring(
@@ -1495,7 +1499,8 @@ path
         :dir: :py:class:`~skia.PathDirection` to wind ellipse
         :return: reference to :py:class:`Path`
         )docstring",
-        py::arg("oval"), py::arg("dir") = SkPathDirection::kCW)
+        py::arg("oval"),
+        py::arg_v("dir", SkPathDirection::kCW, "skia.PathDirection.kCW"))
     .def("addOval",
         py::overload_cast<const SkRect&, SkPathDirection, unsigned>(
             &SkPath::addOval),
@@ -1535,7 +1540,7 @@ path
         :rtype: :py:class:`Path`
         )docstring",
         py::arg("x"), py::arg("y"), py::arg("radius"),
-        py::arg("dir") = SkPathDirection::kCW)
+        py::arg_v("dir", SkPathDirection::kCW, "skia.PathDirection.kCW"))
     .def("addArc", &SkPath::addArc,
         R"docstring(
         Appends arc to :py:class:`Path`, as the start of new contour.
@@ -1586,7 +1591,7 @@ path
         :return: reference to :py:class:`Path`
         )docstring",
         py::arg("rect"), py::arg("rx"), py::arg("ry"),
-        py::arg("dir") = SkPathDirection::kCW)
+        py::arg_v("dir", SkPathDirection::kCW, "skia.PathDirection.kCW"))
     .def("addRoundRect",
         // py::overload_cast<const SkRect&, const SkScalar[], SkPathDirection>(
         //     &SkPath::addRoundRect),
@@ -1615,7 +1620,7 @@ path
         :Returns: reference to :py:class:`Path`
         )docstring",
         py::arg("rect"), py::arg("radii"),
-        py::arg("dir") = SkPathDirection::kCW)
+        py::arg_v("dir", SkPathDirection::kCW, "skia.PathDirection.kCW"))
     .def("addRRect",
         py::overload_cast<const SkRRect&, SkPathDirection>(&SkPath::addRRect),
         R"docstring(
@@ -1633,7 +1638,8 @@ path
         :dir: :py:class:`Path`::Direction to wind :py:class:`RRect`
         :return: reference to :py:class:`Path`
         )docstring",
-        py::arg("rrect"), py::arg("dir") = SkPathDirection::kCW)
+        py::arg("rrect"),
+        py::arg_v("dir", SkPathDirection::kCW, "skia.PathDirection.kCW"))
     .def("addRRect",
         py::overload_cast<const SkRRect&, SkPathDirection, unsigned>(
             &SkPath::addRRect),
@@ -1690,7 +1696,8 @@ path
         refe:return: rence to :py:class:`Path`
         )docstring",
         py::arg("src"), py::arg("dx"), py::arg("dy"),
-        py::arg("mode") = SkPath::kAppend_AddPathMode)
+        py::arg_v("mode", SkPath::kAppend_AddPathMode,
+                  "skia.Path.AddPathMode.kAppend_AddPathMode"))
     .def("addPath",
         py::overload_cast<const SkPath&, SkPath::AddPathMode>(&SkPath::addPath),
         R"docstring(
@@ -1708,7 +1715,9 @@ path
 
         :return: reference to :py:class:`Path`
         )docstring",
-        py::arg("src"), py::arg("mode") = SkPath::kAppend_AddPathMode)
+        py::arg("src"),
+        py::arg_v("mode", SkPath::kAppend_AddPathMode,
+                  "skia.Path.AddPathMode.kAppend_AddPathMode"))
     .def("addPath",
         py::overload_cast<const SkPath&, const SkMatrix&, SkPath::AddPathMode>(
             &SkPath::addPath),
@@ -1732,7 +1741,8 @@ path
         :return: reference to :py:class:`Path`
         )docstring",
         py::arg("src"), py::arg("matrix"),
-        py::arg("mode") = SkPath::kAppend_AddPathMode)
+        py::arg_v("mode", SkPath::kAppend_AddPathMode,
+                  "skia.Path.AddPathMode.kAppend_AddPathMode"))
     .def("reverseAddPath", &SkPath::reverseAddPath,
         R"docstring(
         Appends src to :py:class:`Path`, from back to front.
@@ -1782,7 +1792,7 @@ path
             clipping
         )docstring",
         py::arg("matrix"), py::arg("dst") = nullptr,
-        py::arg("pc") = SkApplyPerspectiveClip::kYes)
+        py::arg_v("pc", SkApplyPerspectiveClip::kYes, "skia.ApplyPerspectiveClip.kYes"))
     // .def("transform",
     //     py::overload_cast<const SkMatrix&, SkApplyPerspectiveClip>(
     //         &SkPath::transform),
@@ -2429,18 +2439,21 @@ PathBuilder
     .def("addRect",
         py::overload_cast<const SkRect&, SkPathDirection>(
             &SkPathBuilder::addRect),
-        py::arg("rect"), py::arg("pathDirection") = SkPathDirection::kCW)
+        py::arg("rect"),
+        py::arg_v("pathDirection", SkPathDirection::kCW, "skia.PathDirection.kCW"))
     .def("addOval",
         py::overload_cast<const SkRect&, SkPathDirection>(
             &SkPathBuilder::addOval),
-        py::arg("rect"), py::arg("pathDirection") = SkPathDirection::kCW)
+        py::arg("rect"),
+        py::arg_v("pathDirection", SkPathDirection::kCW, "skia.PathDirection.kCW"))
     .def("addRRect",
         py::overload_cast<const SkRRect&, SkPathDirection>(
             &SkPathBuilder::addRRect),
-        py::arg("rrect"), py::arg("pathDirection") = SkPathDirection::kCW)
+        py::arg("rrect"),
+        py::arg_v("pathDirection", SkPathDirection::kCW, "skia.PathDirection.kCW"))
     .def("addCircle", &SkPathBuilder::addCircle,
         py::arg("center_x"), py::arg("center_y"), py::arg("radius"),
-        py::arg("pathDirection") = SkPathDirection::kCW)
+        py::arg_v("pathDirection", SkPathDirection::kCW, "skia.PathDirection.kCW"))
     .def("addPolygon",
         [] (SkPathBuilder& self, const std::vector<SkPoint>& points,
             bool isClosed) {
