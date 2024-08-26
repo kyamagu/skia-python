@@ -6,89 +6,91 @@
 #include "modules/skparagraph/include/ParagraphStyle.h"
 #include <pybind11/stl.h>
 
+using namespace skia::textlayout;
+
 void initParagraph(py::module &m) {
 
-py::class_<skia::textlayout::FontCollection, sk_sp<skia::textlayout::FontCollection>, SkRefCnt> font_collection(m, "textlayout_FontCollection");
-py::class_<skia::textlayout::ParagraphBuilder> paragraph_builder(m, "textlayout_ParagraphBuilder");
-py::class_<skia::textlayout::ParagraphStyle> paragraph_style(m, "textlayout_ParagraphStyle");
-py::class_<skia::textlayout::TextStyle> text_style(m, "textlayout_TextStyle");
-py::class_<skia::textlayout::Paragraph> paragraph(m, "textlayout_Paragraph");
+py::class_<FontCollection, sk_sp<FontCollection>, SkRefCnt> font_collection(m, "textlayout_FontCollection");
+py::class_<ParagraphBuilder> paragraph_builder(m, "textlayout_ParagraphBuilder");
+py::class_<ParagraphStyle> paragraph_style(m, "textlayout_ParagraphStyle");
+py::class_<TextStyle> text_style(m, "textlayout_TextStyle");
+py::class_<Paragraph> paragraph(m, "textlayout_Paragraph");
 
-py::enum_<skia::textlayout::TextAlign>(m, "textlayout_TextAlign", R"docstring(
+py::enum_<TextAlign>(m, "textlayout_TextAlign", R"docstring(
     )docstring")
-    .value("kLeft", skia::textlayout::TextAlign::kLeft)
-    .value("kRight", skia::textlayout::TextAlign::kRight)
-    .value("kCenter", skia::textlayout::TextAlign::kCenter)
-    .value("kJustify", skia::textlayout::TextAlign::kJustify)
-    .value("kStart", skia::textlayout::TextAlign::kStart)
-    .value("kEnd", skia::textlayout::TextAlign::kEnd)
+    .value("kLeft", TextAlign::kLeft)
+    .value("kRight", TextAlign::kRight)
+    .value("kCenter", TextAlign::kCenter)
+    .value("kJustify", TextAlign::kJustify)
+    .value("kStart", TextAlign::kStart)
+    .value("kEnd", TextAlign::kEnd)
     .export_values();
 
-py::enum_<skia::textlayout::TextDecoration>(m, "textlayout_TextDecoration", R"docstring(
+py::enum_<TextDecoration>(m, "textlayout_TextDecoration", R"docstring(
     )docstring")
-    .value("kNoDecoration", skia::textlayout::TextDecoration::kNoDecoration)
-    .value("kUnderline", skia::textlayout::TextDecoration::kUnderline)
-    .value("kOverline", skia::textlayout::TextDecoration::kOverline)
-    .value("kLineThrough", skia::textlayout::TextDecoration::kLineThrough)
-    .value("kUnderlineOverline", skia::textlayout::TextDecoration(skia::textlayout::TextDecoration::kUnderline | skia::textlayout::TextDecoration::kOverline))
-    .value("kUnderlineLineThrough", skia::textlayout::TextDecoration(skia::textlayout::TextDecoration::kUnderline | skia::textlayout::TextDecoration::kLineThrough))
-    .value("kOverlineLineThrough", skia::textlayout::TextDecoration(skia::textlayout::TextDecoration::kOverline | skia::textlayout::TextDecoration::kLineThrough))
-    .value("kUnderlineOverlineLineThrough", skia::textlayout::TextDecoration(skia::textlayout::TextDecoration::kUnderline | skia::textlayout::TextDecoration::kOverline | skia::textlayout::TextDecoration::kLineThrough))
+    .value("kNoDecoration", TextDecoration::kNoDecoration)
+    .value("kUnderline", TextDecoration::kUnderline)
+    .value("kOverline", TextDecoration::kOverline)
+    .value("kLineThrough", TextDecoration::kLineThrough)
+    .value("kUnderlineOverline", TextDecoration(TextDecoration::kUnderline | TextDecoration::kOverline))
+    .value("kUnderlineLineThrough", TextDecoration(TextDecoration::kUnderline | TextDecoration::kLineThrough))
+    .value("kOverlineLineThrough", TextDecoration(TextDecoration::kOverline | TextDecoration::kLineThrough))
+    .value("kUnderlineOverlineLineThrough", TextDecoration(TextDecoration::kUnderline | TextDecoration::kOverline | TextDecoration::kLineThrough))
     .export_values();
 
-py::enum_<skia::textlayout::TextDecorationStyle>(m, "textlayout_TextDecorationStyle", R"docstring(
+py::enum_<TextDecorationStyle>(m, "textlayout_TextDecorationStyle", R"docstring(
     )docstring")
-    .value("kSolid", skia::textlayout::TextDecorationStyle::kSolid)
-    .value("kDouble", skia::textlayout::TextDecorationStyle::kDouble)
-    .value("kDotted", skia::textlayout::TextDecorationStyle::kDotted)
-    .value("kDashed", skia::textlayout::TextDecorationStyle::kDashed)
-    .value("kWavy", skia::textlayout::TextDecorationStyle::kWavy)
+    .value("kSolid", TextDecorationStyle::kSolid)
+    .value("kDouble", TextDecorationStyle::kDouble)
+    .value("kDotted", TextDecorationStyle::kDotted)
+    .value("kDashed", TextDecorationStyle::kDashed)
+    .value("kWavy", TextDecorationStyle::kWavy)
     .export_values();
 
-py::enum_<skia::textlayout::TextDecorationMode>(m, "textlayout_TextDecorationMode", R"docstring(
+py::enum_<TextDecorationMode>(m, "textlayout_TextDecorationMode", R"docstring(
     )docstring")
-    .value("kGaps", skia::textlayout::TextDecorationMode::kGaps)
-    .value("kThrough", skia::textlayout::TextDecorationMode::kThrough)
+    .value("kGaps", TextDecorationMode::kGaps)
+    .value("kThrough", TextDecorationMode::kThrough)
     .export_values();
 
 paragraph_builder
     .def(py::init(
-        [] (const skia::textlayout::ParagraphStyle& style,
-            sk_sp<skia::textlayout::FontCollection> fontCollection,
+        [] (const ParagraphStyle& style,
+            sk_sp<FontCollection> fontCollection,
             sk_sp<SkUnicode> unicode) {
-                return skia::textlayout::ParagraphBuilder::make(style, fontCollection, unicode);
+                return ParagraphBuilder::make(style, fontCollection, unicode);
         }),
         R"docstring(
         )docstring",
         py::arg("style"), py::arg("fontCollection"), py::arg("unicode"))
     .def_static("make",
-        py::overload_cast<skia::textlayout::ParagraphStyle const&, sk_sp<skia::textlayout::FontCollection>, sk_sp<SkUnicode>>(&skia::textlayout::ParagraphBuilder::make),
+        py::overload_cast<ParagraphStyle const&, sk_sp<FontCollection>, sk_sp<SkUnicode>>(&ParagraphBuilder::make),
         R"docstring(
         )docstring",
         py::arg("style"), py::arg("fontCollection"), py::arg("unicode"))
     .def("addText",
-        py::overload_cast<const char*>(&skia::textlayout::ParagraphBuilder::addText),
+        py::overload_cast<const char*>(&ParagraphBuilder::addText),
         R"docstring(
         )docstring",
         py::arg("text"))
-    .def("pop", &skia::textlayout::ParagraphBuilder::pop)
+    .def("pop", &ParagraphBuilder::pop)
     .def("pushStyle",
-        py::overload_cast<const skia::textlayout::TextStyle&>(&skia::textlayout::ParagraphBuilder::pushStyle),
+        py::overload_cast<const TextStyle&>(&ParagraphBuilder::pushStyle),
         R"docstring(
         )docstring",
         py::arg("style"))
-    .def("Build", &skia::textlayout::ParagraphBuilder::Build)
+    .def("Build", &ParagraphBuilder::Build)
     ;
 
 paragraph_style
     .def(py::init())
     .def("setTextStyle",
-        py::overload_cast<const skia::textlayout::TextStyle&>(&skia::textlayout::ParagraphStyle::setTextStyle),
+        py::overload_cast<const TextStyle&>(&ParagraphStyle::setTextStyle),
         R"docstring(
         )docstring",
         py::arg("textstyle"))
     .def("setTextAlign",
-        py::overload_cast<skia::textlayout::TextAlign>(&skia::textlayout::ParagraphStyle::setTextAlign),
+        py::overload_cast<TextAlign>(&ParagraphStyle::setTextAlign),
         R"docstring(
         )docstring",
         py::arg("align"))
@@ -97,17 +99,17 @@ paragraph_style
 font_collection
     .def(py::init())
     .def("setDefaultFontManager",
-        py::overload_cast<sk_sp<SkFontMgr>>(&skia::textlayout::FontCollection::setDefaultFontManager),
+        py::overload_cast<sk_sp<SkFontMgr>>(&FontCollection::setDefaultFontManager),
         R"docstring(
         )docstring",
         py::arg("fontManager"))
     .def("setDefaultFontManager",
-        py::overload_cast<sk_sp<SkFontMgr>, const char[]>(&skia::textlayout::FontCollection::setDefaultFontManager),
+        py::overload_cast<sk_sp<SkFontMgr>, const char[]>(&FontCollection::setDefaultFontManager),
         R"docstring(
         )docstring",
         py::arg("fontManager"), py::arg("defaultFamilyName"))
     .def("setDefaultFontManager",
-        py::overload_cast<sk_sp<SkFontMgr>, const std::vector<SkString>&>(&skia::textlayout::FontCollection::setDefaultFontManager),
+        py::overload_cast<sk_sp<SkFontMgr>, const std::vector<SkString>&>(&FontCollection::setDefaultFontManager),
         R"docstring(
         )docstring",
         py::arg("fontManager"), py::arg("defaultFamilyNames"))
@@ -115,86 +117,86 @@ font_collection
 
 text_style
     .def(py::init())
-    .def("cloneForPlaceholder", &skia::textlayout::TextStyle::cloneForPlaceholder)
+    .def("cloneForPlaceholder", &TextStyle::cloneForPlaceholder)
     .def("setColor",
-        py::overload_cast<SkColor>(&skia::textlayout::TextStyle::setColor),
+        py::overload_cast<SkColor>(&TextStyle::setColor),
         R"docstring(
         )docstring",
         py::arg("color"))
     .def("setForegroundColor",
-        py::overload_cast<SkPaint>(&skia::textlayout::TextStyle::setForegroundColor),
+        py::overload_cast<SkPaint>(&TextStyle::setForegroundColor),
         R"docstring(
         DEPRECATED: prefer `setForegroundPaint`
         )docstring",
         py::arg("paint"))
     .def("setForegroundPaint",
-        py::overload_cast<SkPaint>(&skia::textlayout::TextStyle::setForegroundPaint),
+        py::overload_cast<SkPaint>(&TextStyle::setForegroundPaint),
         R"docstring(
         )docstring",
         py::arg("paint"))
     .def("setFontFamilies",
-        py::overload_cast<std::vector<SkString>>(&skia::textlayout::TextStyle::setFontFamilies),
+        py::overload_cast<std::vector<SkString>>(&TextStyle::setFontFamilies),
         R"docstring(
         )docstring",
         py::arg("families"))
     .def("setFontSize",
-        py::overload_cast<SkScalar>(&skia::textlayout::TextStyle::setFontSize),
+        py::overload_cast<SkScalar>(&TextStyle::setFontSize),
         R"docstring(
         )docstring",
         py::arg("size"))
     .def("setFontStyle",
-        py::overload_cast<SkFontStyle>(&skia::textlayout::TextStyle::setFontStyle),
+        py::overload_cast<SkFontStyle>(&TextStyle::setFontStyle),
         R"docstring(
         )docstring",
         py::arg("fontStyle"))
     .def("setLocale",
-        py::overload_cast<const SkString&>(&skia::textlayout::TextStyle::setLocale),
+        py::overload_cast<const SkString&>(&TextStyle::setLocale),
         R"docstring(
         )docstring",
         py::arg("locale"))
     .def("setDecoration",
-        py::overload_cast<skia::textlayout::TextDecoration>(&skia::textlayout::TextStyle::setDecoration),
+        py::overload_cast<TextDecoration>(&TextStyle::setDecoration),
         R"docstring(
         )docstring",
         py::arg("decoration"))
     .def("setDecorationMode",
-        py::overload_cast<skia::textlayout::TextDecorationMode>(&skia::textlayout::TextStyle::setDecorationMode),
+        py::overload_cast<TextDecorationMode>(&TextStyle::setDecorationMode),
         R"docstring(
         )docstring",
         py::arg("mode"))
     .def("setDecorationStyle",
-        py::overload_cast<skia::textlayout::TextDecorationStyle>(&skia::textlayout::TextStyle::setDecorationStyle),
+        py::overload_cast<TextDecorationStyle>(&TextStyle::setDecorationStyle),
         R"docstring(
         )docstring",
         py::arg("style"))
     .def("setDecorationColor",
-        py::overload_cast<SkColor>(&skia::textlayout::TextStyle::setDecorationColor),
+        py::overload_cast<SkColor>(&TextStyle::setDecorationColor),
         R"docstring(
         )docstring",
         py::arg("color"))
     .def("setDecorationThicknessMultiplier",
-        py::overload_cast<SkScalar>(&skia::textlayout::TextStyle::setDecorationThicknessMultiplier),
+        py::overload_cast<SkScalar>(&TextStyle::setDecorationThicknessMultiplier),
         R"docstring(
         )docstring",
         py::arg("m"))
     ;
 
 paragraph
-    .def_property_readonly("Width", &skia::textlayout::Paragraph::getMaxWidth)
-    .def_property_readonly("Height", &skia::textlayout::Paragraph::getHeight)
-    .def_property_readonly("MinIntrinsicWidth", &skia::textlayout::Paragraph::getMinIntrinsicWidth)
-    .def_property_readonly("MaxIntrinsicWidth", &skia::textlayout::Paragraph::getMaxIntrinsicWidth)
-    .def_property_readonly("AlphabeticBaseline", &skia::textlayout::Paragraph::getAlphabeticBaseline)
-    .def_property_readonly("IdeographicBaseline", &skia::textlayout::Paragraph::getIdeographicBaseline)
-    .def_property_readonly("LongestLine", &skia::textlayout::Paragraph::getLongestLine)
-    .def_property_readonly("ExceedMaxLines", &skia::textlayout::Paragraph::didExceedMaxLines)
+    .def_property_readonly("Width", &Paragraph::getMaxWidth)
+    .def_property_readonly("Height", &Paragraph::getHeight)
+    .def_property_readonly("MinIntrinsicWidth", &Paragraph::getMinIntrinsicWidth)
+    .def_property_readonly("MaxIntrinsicWidth", &Paragraph::getMaxIntrinsicWidth)
+    .def_property_readonly("AlphabeticBaseline", &Paragraph::getAlphabeticBaseline)
+    .def_property_readonly("IdeographicBaseline", &Paragraph::getIdeographicBaseline)
+    .def_property_readonly("LongestLine", &Paragraph::getLongestLine)
+    .def_property_readonly("ExceedMaxLines", &Paragraph::didExceedMaxLines)
     .def("layout",
-        py::overload_cast<SkScalar>(&skia::textlayout::Paragraph::layout),
+        py::overload_cast<SkScalar>(&Paragraph::layout),
         R"docstring(
         )docstring",
         py::arg("width"))
     .def("paint",
-        py::overload_cast<SkCanvas*, SkScalar, SkScalar>(&skia::textlayout::Paragraph::paint),
+        py::overload_cast<SkCanvas*, SkScalar, SkScalar>(&Paragraph::paint),
         R"docstring(
         )docstring",
         py::arg("canvas"), py::arg("x"), py::arg("y"))
