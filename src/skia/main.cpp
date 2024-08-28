@@ -69,6 +69,7 @@ PYBIND11_MODULE(skia, m) {
     initImageInfo(m);
     initImage(m);
     initPaint(m);
+    initUnicode(m); // Before Paragraph
     initParagraph(m);
     initPath(m);
     initPathMeasure(m);
@@ -77,7 +78,6 @@ PYBIND11_MODULE(skia, m) {
     initScalar(m);
     initTextBlob(m);
     initVertices(m);
-    initUnicode(m);
 
     initCanvas(m);
     initSurface(m);
