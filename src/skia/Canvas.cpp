@@ -1437,7 +1437,7 @@ canvas
         :y1: end of line segment on y-axis
         :paint: stroke, blend, color, and so on, used to draw
         )docstring",
-        py::arg("x0"), py::arg("y0"), py::arg("x1"), py::arg("y1`"),
+        py::arg("x0"), py::arg("y0"), py::arg("x1"), py::arg("y1"),
         py::arg("paint"))
     .def("drawLine",
         py::overload_cast<SkPoint, SkPoint, const SkPaint&>(
