@@ -62,8 +62,30 @@ def test_Picture_MakePlaceholder():
         skia.Picture.MakePlaceholder(skia.Rect(100, 100)), skia.Picture)
 
 
-def test_PictureRecorder_init():
-    assert isinstance(skia.PictureRecorder(), skia.PictureRecorder)
+def test_RTreeFactory_init():
+    assert isinstance(skia.RTreeFactory(), skia.RTreeFactory)
+
+
+def test_RTreeFactory_call():
+    rtree = skia.RTreeFactory()()
+    assert isinstance(rtree, skia.BBoxHierarchy)
+
+
+@pytest.fixture
+def rtree():
+    return skia.RTreeFactory()()
+
+
+def test_BBoxHierarchy_init():
+    assert isinstance(skia.BBoxHierarchy(), skia.BBoxHierarchy)
+
+
+def test_BBoxHierarchy_insert(rtree):
+    rtree.insert(skia.Rect(100, 100), 1)
+
+
+def test_BBoxHierarchy_search(rtree):
+    rtree.search(skia.Rect(100, 100), [])
 
 
 @pytest.mark.parametrize('args', [

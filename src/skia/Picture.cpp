@@ -3,6 +3,7 @@
 #include <include/core/SkBBHFactory.h>
 #include <include/core/SkPictureRecorder.h>
 #include <pybind11/operators.h>
+#include <pybind11/stl.h>
 
 namespace {
 
