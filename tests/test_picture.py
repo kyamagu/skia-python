@@ -66,31 +66,36 @@ def test_RTreeFactory_init():
     assert isinstance(skia.RTreeFactory(), skia.RTreeFactory)
 
 
-def test_RTreeFactory_call():
-    rtree = skia.RTreeFactory()()
-    assert isinstance(rtree, skia.BBoxHierarchy)
-
-
 @pytest.fixture
-def rtree():
-    return skia.RTreeFactory()()
+def factory():
+    return skia.RTreeFactory()
+
+
+def test_RTreeFactory_call(factory):
+    bbh = factory()
+    assert isinstance(bbh, skia.BBoxHierarchy)
 
 
 def test_BBoxHierarchy_init():
     assert isinstance(skia.BBoxHierarchy(), skia.BBoxHierarchy)
 
 
-def test_BBoxHierarchy_insert(rtree):
-    rtree.insert(skia.Rect(100, 100), 1)
+def test_BBoxHierarchy_insert(factory):
+    bbh = factory()
+    bbh.insert([skia.Rect(100, 100)])
 
 
-def test_BBoxHierarchy_search(rtree):
-    rtree.search(skia.Rect(100, 100), [])
+def test_BBoxHierarchy_search(factory):
+    bbh = factory()
+    bbh.insert([skia.Rect(100, 100)])
+    results = bbh.search(skia.Rect(100, 100))
+    assert results[0] == 0
 
 
 @pytest.mark.parametrize('args', [
     (skia.Rect(100, 100),),
     (100, 100),
+    (skia.Rect(100, 100), skia.RTreeFactory()()),
 ])
 def test_PictureRecorder_beginRecording(recorder, args):
     canvas = recorder.beginRecording(*args)
