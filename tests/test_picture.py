@@ -92,6 +92,28 @@ def test_BBoxHierarchy_search(factory):
     assert results[0] == 0
 
 
+def test_inherit_BBoxHierarchy():
+    class TestBBH(skia.BBoxHierarchy):
+        def __init__(self):
+            self.rects = []
+            super().__init__()
+
+        def search(self, query):
+            return [i for i, rect in enumerate(self.rects) if rect.intersects(query)]
+
+        def insert(self, rects, metadata=[]):
+            self.rects.extend(rects)
+
+        def bytesUsed(self):
+            return 0
+
+    bbh = TestBBH()
+    bbh.insert([skia.Rect(100, 100)])
+    assert len(bbh.rects) == 1
+    results = bbh.search(skia.Rect(100, 100))
+    assert results[0] == 0
+
+
 @pytest.mark.parametrize('args', [
     (skia.Rect(100, 100),),
     (100, 100),
