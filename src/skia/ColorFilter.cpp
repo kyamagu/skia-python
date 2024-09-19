@@ -100,7 +100,13 @@ colorfilter
         Override in subclasses to return custom flags.
         )docstring")
 */
-    .def("filterColor", &SkColorFilter::filterColor, py::arg("color"))
+    .def("filterColor",
+        [] (const SkColorFilter& colorFilter, SkColor c) -> SkColor const {
+            // This is mostly meaningless. We should phase-out this call entirely.
+            SkColorSpace* cs = nullptr;
+            return colorFilter.filterColor4f(SkColor4f::FromColor(c), cs, cs).toSkColor();
+        },
+        py::arg("color"))
     .def("filterColor4f", &SkColorFilter::filterColor4f,
         R"docstring(
         Converts the src color (in src colorspace), into the dst colorspace,
