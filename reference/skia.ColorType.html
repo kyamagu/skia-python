@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>ColorType &mdash; skia-python 128.0b9 documentation</title>
+  <title>ColorType &mdash; skia-python 130.0b10 documentation</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
       <link rel="stylesheet" type="text/css" href="../_static/css/theme.css" />
 
@@ -37,7 +37,7 @@
             skia-python
           </a>
               <div class="version">
-                128.0b9
+                130.0b10
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
@@ -216,6 +216,7 @@
 <li class="toctree-l3"><a class="reference internal" href="skia.TileMode.html">TileMode</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.TrimPathEffect.html">TrimPathEffect</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.Typeface.html">Typeface</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.Unicode.html">Unicode</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.Vertices.html">Vertices</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.VkFormat.html">VkFormat</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.VkImageLayout.html">VkImageLayout</a></li>
@@ -225,6 +226,15 @@
 <li class="toctree-l3"><a class="reference internal" href="skia.YUVAPixmaps.html">YUVAPixmaps</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.YUVColorSpace.html">YUVColorSpace</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.gpuBackendApi.html">gpuBackendApi</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.textlayout_FontCollection.html">textlayout_FontCollection</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.textlayout_Paragraph.html">textlayout_Paragraph</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.textlayout_ParagraphBuilder.html">textlayout_ParagraphBuilder</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.textlayout_ParagraphStyle.html">textlayout_ParagraphStyle</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.textlayout_TextAlign.html">textlayout_TextAlign</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.textlayout_TextDecoration.html">textlayout_TextDecoration</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.textlayout_TextDecorationMode.html">textlayout_TextDecorationMode</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.textlayout_TextDecorationStyle.html">textlayout_TextDecorationStyle</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.textlayout_TextStyle.html">textlayout_TextStyle</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.html#functions">Functions</a></li>
 </ul>
 </li>
@@ -385,12 +395,12 @@
 <h2>Attributes<a class="headerlink" href="#attributes" title="Permalink to this heading"></a></h2>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="skia.ColorType.kA16_float_ColorType">
-<span class="sig-prename descclassname"><span class="pre">ColorType.</span></span><span class="sig-name descname"><span class="pre">kA16_float_ColorType</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;ColorType.kA16_float_ColorType:</span> <span class="pre">19&gt;</span></em><a class="headerlink" href="#skia.ColorType.kA16_float_ColorType" title="Permalink to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">ColorType.</span></span><span class="sig-name descname"><span class="pre">kA16_float_ColorType</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;ColorType.kA16_float_ColorType:</span> <span class="pre">20&gt;</span></em><a class="headerlink" href="#skia.ColorType.kA16_float_ColorType" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="skia.ColorType.kA16_unorm_ColorType">
-<span class="sig-prename descclassname"><span class="pre">ColorType.</span></span><span class="sig-name descname"><span class="pre">kA16_unorm_ColorType</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;ColorType.kA16_unorm_ColorType:</span> <span class="pre">21&gt;</span></em><a class="headerlink" href="#skia.ColorType.kA16_unorm_ColorType" title="Permalink to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">ColorType.</span></span><span class="sig-name descname"><span class="pre">kA16_unorm_ColorType</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;ColorType.kA16_unorm_ColorType:</span> <span class="pre">22&gt;</span></em><a class="headerlink" href="#skia.ColorType.kA16_unorm_ColorType" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
@@ -430,22 +440,22 @@
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="skia.ColorType.kR16G16B16A16_unorm_ColorType">
-<span class="sig-prename descclassname"><span class="pre">ColorType.</span></span><span class="sig-name descname"><span class="pre">kR16G16B16A16_unorm_ColorType</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;ColorType.kR16G16B16A16_unorm_ColorType:</span> <span class="pre">23&gt;</span></em><a class="headerlink" href="#skia.ColorType.kR16G16B16A16_unorm_ColorType" title="Permalink to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">ColorType.</span></span><span class="sig-name descname"><span class="pre">kR16G16B16A16_unorm_ColorType</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;ColorType.kR16G16B16A16_unorm_ColorType:</span> <span class="pre">24&gt;</span></em><a class="headerlink" href="#skia.ColorType.kR16G16B16A16_unorm_ColorType" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="skia.ColorType.kR16G16_float_ColorType">
-<span class="sig-prename descclassname"><span class="pre">ColorType.</span></span><span class="sig-name descname"><span class="pre">kR16G16_float_ColorType</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;ColorType.kR16G16_float_ColorType:</span> <span class="pre">20&gt;</span></em><a class="headerlink" href="#skia.ColorType.kR16G16_float_ColorType" title="Permalink to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">ColorType.</span></span><span class="sig-name descname"><span class="pre">kR16G16_float_ColorType</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;ColorType.kR16G16_float_ColorType:</span> <span class="pre">21&gt;</span></em><a class="headerlink" href="#skia.ColorType.kR16G16_float_ColorType" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="skia.ColorType.kR16G16_unorm_ColorType">
-<span class="sig-prename descclassname"><span class="pre">ColorType.</span></span><span class="sig-name descname"><span class="pre">kR16G16_unorm_ColorType</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;ColorType.kR16G16_unorm_ColorType:</span> <span class="pre">22&gt;</span></em><a class="headerlink" href="#skia.ColorType.kR16G16_unorm_ColorType" title="Permalink to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">ColorType.</span></span><span class="sig-name descname"><span class="pre">kR16G16_unorm_ColorType</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;ColorType.kR16G16_unorm_ColorType:</span> <span class="pre">23&gt;</span></em><a class="headerlink" href="#skia.ColorType.kR16G16_unorm_ColorType" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="skia.ColorType.kR8G8_unorm_ColorType">
-<span class="sig-prename descclassname"><span class="pre">ColorType.</span></span><span class="sig-name descname"><span class="pre">kR8G8_unorm_ColorType</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;ColorType.kR8G8_unorm_ColorType:</span> <span class="pre">18&gt;</span></em><a class="headerlink" href="#skia.ColorType.kR8G8_unorm_ColorType" title="Permalink to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">ColorType.</span></span><span class="sig-name descname"><span class="pre">kR8G8_unorm_ColorType</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;ColorType.kR8G8_unorm_ColorType:</span> <span class="pre">19&gt;</span></em><a class="headerlink" href="#skia.ColorType.kR8G8_unorm_ColorType" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
@@ -470,7 +480,7 @@
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="skia.ColorType.kRGBA_F32_ColorType">
-<span class="sig-prename descclassname"><span class="pre">ColorType.</span></span><span class="sig-name descname"><span class="pre">kRGBA_F32_ColorType</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;ColorType.kRGBA_F32_ColorType:</span> <span class="pre">17&gt;</span></em><a class="headerlink" href="#skia.ColorType.kRGBA_F32_ColorType" title="Permalink to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">ColorType.</span></span><span class="sig-name descname"><span class="pre">kRGBA_F32_ColorType</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;ColorType.kRGBA_F32_ColorType:</span> <span class="pre">18&gt;</span></em><a class="headerlink" href="#skia.ColorType.kRGBA_F32_ColorType" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">

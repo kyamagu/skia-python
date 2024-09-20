@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>GrDirectContexts &mdash; skia-python 128.0b9 documentation</title>
+  <title>GrDirectContexts &mdash; skia-python 130.0b10 documentation</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
       <link rel="stylesheet" type="text/css" href="../_static/css/theme.css" />
 
@@ -37,7 +37,7 @@
             skia-python
           </a>
               <div class="version">
-                128.0b9
+                130.0b10
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
@@ -215,6 +215,7 @@
 <li class="toctree-l3"><a class="reference internal" href="skia.TileMode.html">TileMode</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.TrimPathEffect.html">TrimPathEffect</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.Typeface.html">Typeface</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.Unicode.html">Unicode</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.Vertices.html">Vertices</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.VkFormat.html">VkFormat</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.VkImageLayout.html">VkImageLayout</a></li>
@@ -224,6 +225,15 @@
 <li class="toctree-l3"><a class="reference internal" href="skia.YUVAPixmaps.html">YUVAPixmaps</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.YUVColorSpace.html">YUVColorSpace</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.gpuBackendApi.html">gpuBackendApi</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.textlayout_FontCollection.html">textlayout_FontCollection</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.textlayout_Paragraph.html">textlayout_Paragraph</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.textlayout_ParagraphBuilder.html">textlayout_ParagraphBuilder</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.textlayout_ParagraphStyle.html">textlayout_ParagraphStyle</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.textlayout_TextAlign.html">textlayout_TextAlign</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.textlayout_TextDecoration.html">textlayout_TextDecoration</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.textlayout_TextDecorationMode.html">textlayout_TextDecorationMode</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.textlayout_TextDecorationStyle.html">textlayout_TextDecorationStyle</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.textlayout_TextStyle.html">textlayout_TextStyle</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.html#functions">Functions</a></li>
 </ul>
 </li>
@@ -424,7 +434,7 @@ valid.</p>
 <span class="sig-prename descclassname"><span class="pre">GrDirectContexts.</span></span><span class="sig-name descname"><span class="pre">createBackendTexture</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#skia.GrDirectContexts.createBackendTexture" title="Permalink to this definition"></a></dt>
 <dd><p>Overloaded function.</p>
 <ol class="arabic">
-<li><p>createBackendTexture(self: skia.GrDirectContext, width: int, height: int, backendFormat: skia.GrBackendFormat, mipMapped: skia.GrMipmapped, renderable: skia.GrRenderable, isProtected: skia.GrProtected = &lt;GrProtected.kNo: 0&gt;, label: str = ‘’) -&gt; skia.GrBackendTexture</p>
+<li><p>createBackendTexture(self: skia.GrDirectContext, width: int, height: int, backendFormat: skia.GrBackendFormat, mipMapped: skia.GrMipmapped, renderable: skia.GrRenderable, isProtected: skia.GrProtected = skia.GrProtected.kNo, label: str = ‘’) -&gt; skia.GrBackendTexture</p>
 <blockquote>
 <div><p>If possible, create an uninitialized backend texture.</p>
 <p>The client should ensure that the returned backend texture is valid.
@@ -434,7 +444,7 @@ For the Vulkan backend the layout of the created VkImage will be:</p>
 </div></blockquote>
 </div></blockquote>
 </li>
-<li><p>createBackendTexture(self: skia.GrDirectContext, width: int, height: int, colorType: SkColorType, mipMapped: skia.GrMipmapped, renderable: skia.GrRenderable, isProtected: skia.GrProtected = &lt;GrProtected.kNo: 0&gt;, label: str = ‘’) -&gt; skia.GrBackendTexture</p>
+<li><p>createBackendTexture(self: skia.GrDirectContext, width: int, height: int, colorType: SkColorType, mipMapped: skia.GrMipmapped, renderable: skia.GrRenderable, isProtected: skia.GrProtected = skia.GrProtected.kNo, label: str = ‘’) -&gt; skia.GrBackendTexture</p>
 <blockquote>
 <div><p>If possible, create an uninitialized backend texture.</p>
 <p>The client should ensure that the returned backend texture is valid. If
@@ -443,7 +453,7 @@ provided <a class="reference internal" href="skia.ColorType.html#skia.ColorType"
 created VkImage will be: VK_IMAGE_LAYOUT_UNDEFINED.</p>
 </div></blockquote>
 </li>
-<li><p>createBackendTexture(self: skia.GrDirectContext, width: int, height: int, backendFormat: skia.GrBackendFormat, color: skia.Color4f, mipMapped: skia.GrMipmapped, renderable: skia.GrRenderable, isProtected: skia.GrProtected = &lt;GrProtected.kNo: 0&gt;) -&gt; skia.GrBackendTexture</p>
+<li><p>createBackendTexture(self: skia.GrDirectContext, width: int, height: int, backendFormat: skia.GrBackendFormat, color: skia.Color4f, mipMapped: skia.GrMipmapped, renderable: skia.GrRenderable, isProtected: skia.GrProtected = skia.GrProtected.kNo) -&gt; skia.GrBackendTexture</p>
 <blockquote>
 <div><p>If possible, create a backend texture initialized to a particular color.</p>
 <p>The client should ensure that the returned backend texture is valid. The
@@ -458,7 +468,7 @@ For the Vulkan backend the layout of the created VkImage will be:</p>
 </div></blockquote>
 </div></blockquote>
 </li>
-<li><p>createBackendTexture(self: skia.GrDirectContext, width: int, height: int, colorType: SkColorType, color: skia.Color4f, mipMapped: skia.GrMipmapped, renderable: skia.GrRenderable, isProtected: skia.GrProtected = &lt;GrProtected.kNo: 0&gt;) -&gt; skia.GrBackendTexture</p>
+<li><p>createBackendTexture(self: skia.GrDirectContext, width: int, height: int, colorType: SkColorType, color: skia.Color4f, mipMapped: skia.GrMipmapped, renderable: skia.GrRenderable, isProtected: skia.GrProtected = skia.GrProtected.kNo) -&gt; skia.GrBackendTexture</p>
 <blockquote>
 <div><p>If possible, create a backend texture initialized to a particular color.</p>
 <p>The client should ensure that the returned backend texture is valid.
@@ -467,7 +477,7 @@ provided <a class="reference internal" href="skia.ColorType.html#skia.ColorType"
 of the created VkImage will be: VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL</p>
 </div></blockquote>
 </li>
-<li><p>createBackendTexture(self: skia.GrDirectContext, srcData: list[SkPixmap], renderable: skia.GrRenderable, isProtected: skia.GrProtected = &lt;GrProtected.kNo: 0&gt;) -&gt; skia.GrBackendTexture</p>
+<li><p>createBackendTexture(self: skia.GrDirectContext, srcData: list[SkPixmap], renderable: skia.GrRenderable, isProtected: skia.GrProtected = skia.GrProtected.kNo) -&gt; skia.GrBackendTexture</p>
 <blockquote>
 <div><p>If possible, create a backend texture initialized with the provided
 pixmap data. The client should ensure that the returned backend texture
@@ -490,7 +500,7 @@ ignored. For the Vulkan backend the layout of the created VkImage will
 be: VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL</p>
 </div></blockquote>
 </li>
-<li><p>createBackendTexture(self: skia.GrDirectContext, pixmap: SkPixmap, renderable: skia.GrRenderable, isProtected: skia.GrProtected = &lt;GrProtected.kNo: 0&gt;) -&gt; skia.GrBackendTexture</p></li>
+<li><p>createBackendTexture(self: skia.GrDirectContext, pixmap: SkPixmap, renderable: skia.GrRenderable, isProtected: skia.GrProtected = skia.GrProtected.kNo) -&gt; skia.GrBackendTexture</p></li>
 </ol>
 </dd></dl>
 
@@ -499,7 +509,7 @@ be: VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL</p>
 <span class="sig-prename descclassname"><span class="pre">GrDirectContexts.</span></span><span class="sig-name descname"><span class="pre">createCompressedBackendTexture</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#skia.GrDirectContexts.createCompressedBackendTexture" title="Permalink to this definition"></a></dt>
 <dd><p>Overloaded function.</p>
 <ol class="arabic">
-<li><p>createCompressedBackendTexture(self: skia.GrDirectContext, width: int, height: int, backendFormat: skia.GrBackendFormat, color: skia.Color4f, mipMapped: skia.GrMipmapped, isProtected: skia.GrProtected = &lt;GrProtected.kNo: 0&gt;) -&gt; skia.GrBackendTexture</p>
+<li><p>createCompressedBackendTexture(self: skia.GrDirectContext, width: int, height: int, backendFormat: skia.GrBackendFormat, color: skia.Color4f, mipMapped: skia.GrMipmapped, isProtected: skia.GrProtected = skia.GrProtected.kNo) -&gt; skia.GrBackendTexture</p>
 <blockquote>
 <div><p>If possible, create a compressed backend texture initialized to a
 particular color.</p>
@@ -508,15 +518,15 @@ For the Vulkan backend the layout of the created VkImage will be:
 VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL</p>
 </div></blockquote>
 </li>
-<li><p>createCompressedBackendTexture(self: skia.GrDirectContext, width: int, height: int, type: SkTextureCompressionType, color: skia.Color4f, mipMapped: skia.GrMipmapped, isProtected: skia.GrProtected = &lt;GrProtected.kNo: 0&gt;) -&gt; skia.GrBackendTexture</p></li>
-<li><p>createCompressedBackendTexture(self: skia.GrDirectContext, width: int, height: int, backendFormat: skia.GrBackendFormat, data: Buffer, mipMapped: skia.GrMipmapped, isProtected: skia.GrProtected = &lt;GrProtected.kNo: 0&gt;) -&gt; skia.GrBackendTexture</p></li>
-<li><p>createCompressedBackendTexture(self: skia.GrDirectContext, width: int, height: int, type: SkTextureCompressionType, data: Buffer, mipMapped: skia.GrMipmapped, isProtected: skia.GrProtected = &lt;GrProtected.kNo: 0&gt;) -&gt; skia.GrBackendTexture</p></li>
+<li><p>createCompressedBackendTexture(self: skia.GrDirectContext, width: int, height: int, type: SkTextureCompressionType, color: skia.Color4f, mipMapped: skia.GrMipmapped, isProtected: skia.GrProtected = skia.GrProtected.kNo) -&gt; skia.GrBackendTexture</p></li>
+<li><p>createCompressedBackendTexture(self: skia.GrDirectContext, width: int, height: int, backendFormat: skia.GrBackendFormat, data: Buffer, mipMapped: skia.GrMipmapped, isProtected: skia.GrProtected = skia.GrProtected.kNo) -&gt; skia.GrBackendTexture</p></li>
+<li><p>createCompressedBackendTexture(self: skia.GrDirectContext, width: int, height: int, type: SkTextureCompressionType, data: Buffer, mipMapped: skia.GrMipmapped, isProtected: skia.GrProtected = skia.GrProtected.kNo) -&gt; skia.GrBackendTexture</p></li>
 </ol>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="skia.GrDirectContexts.defaultBackendFormat">
-<span class="sig-prename descclassname"><span class="pre">GrDirectContexts.</span></span><span class="sig-name descname"><span class="pre">defaultBackendFormat</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self:</span> <span class="pre">skia.GrDirectContext</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">colorType:</span> <span class="pre">SkColorType</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">renderable:</span> <span class="pre">skia.GrRenderable</span> <span class="pre">=</span> <span class="pre">&lt;GrRenderable.kNo:</span> <span class="pre">0&gt;</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="skia.GrBackendFormat.html#skia.GrBackendFormat" title="skia.GrBackendFormat"><span class="pre">skia.GrBackendFormat</span></a></span></span><a class="headerlink" href="#skia.GrDirectContexts.defaultBackendFormat" title="Permalink to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">GrDirectContexts.</span></span><span class="sig-name descname"><span class="pre">defaultBackendFormat</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="skia.GrDirectContext.html#skia.GrDirectContext" title="skia.GrDirectContext"><span class="pre">skia.GrDirectContext</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">colorType</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">SkColorType</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">renderable</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="skia.GrRenderable.html#skia.GrRenderable" title="skia.GrRenderable"><span class="pre">skia.GrRenderable</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">skia.GrRenderable.kNo</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="skia.GrBackendFormat.html#skia.GrBackendFormat" title="skia.GrBackendFormat"><span class="pre">skia.GrBackendFormat</span></a></span></span><a class="headerlink" href="#skia.GrDirectContexts.defaultBackendFormat" title="Permalink to this definition"></a></dt>
 <dd><p>Retrieve the default <a class="reference internal" href="skia.GrBackendFormat.html#skia.GrBackendFormat" title="skia.GrBackendFormat"><code class="xref py py-class docutils literal notranslate"><span class="pre">GrBackendFormat</span></code></a> for a given
 <a class="reference internal" href="skia.ColorType.html#skia.ColorType" title="skia.ColorType"><code class="xref py py-class docutils literal notranslate"><span class="pre">ColorType</span></code></a> and renderability.</p>
 <p>It is guaranteed that this backend format will be the one used by the
@@ -579,7 +589,7 @@ submitted.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="skia.GrDirectContexts.flushAndSubmit">
-<span class="sig-prename descclassname"><span class="pre">GrDirectContexts.</span></span><span class="sig-name descname"><span class="pre">flushAndSubmit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self:</span> <span class="pre">skia.GrDirectContext</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sync:</span> <span class="pre">skia.GrSyncCpu</span> <span class="pre">=</span> <span class="pre">&lt;GrSyncCpu.kNo:</span> <span class="pre">0&gt;</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#skia.GrDirectContexts.flushAndSubmit" title="Permalink to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">GrDirectContexts.</span></span><span class="sig-name descname"><span class="pre">flushAndSubmit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="skia.GrDirectContext.html#skia.GrDirectContext" title="skia.GrDirectContext"><span class="pre">skia.GrDirectContext</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">sync</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="skia.GrSyncCpu.html#skia.GrSyncCpu" title="skia.GrSyncCpu"><span class="pre">skia.GrSyncCpu</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">skia.GrSyncCpu.kNo</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#skia.GrDirectContexts.flushAndSubmit" title="Permalink to this definition"></a></dt>
 <dd><p>Call to ensure all drawing to the context has been flushed and submitted
 to the underlying 3D API. This is equivalent to calling <a class="reference internal" href="#skia.GrDirectContexts.flush" title="skia.GrDirectContexts.flush"><code class="xref py py-meth docutils literal notranslate"><span class="pre">flush()</span></code></a>
 with a default <a class="reference internal" href="skia.GrFlushInfo.html#skia.GrFlushInfo" title="skia.GrFlushInfo"><code class="xref py py-class docutils literal notranslate"><span class="pre">GrFlushInfo</span></code></a> followed by <a class="reference internal" href="#skia.GrDirectContexts.submit" title="skia.GrDirectContexts.submit"><code class="xref py py-meth docutils literal notranslate"><span class="pre">submit()</span></code></a>.</p>
@@ -843,7 +853,7 @@ that can be held in the cache.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="skia.GrDirectContexts.submit">
-<span class="sig-prename descclassname"><span class="pre">GrDirectContexts.</span></span><span class="sig-name descname"><span class="pre">submit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self:</span> <span class="pre">skia.GrDirectContext</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sync:</span> <span class="pre">skia.GrSyncCpu</span> <span class="pre">=</span> <span class="pre">&lt;GrSyncCpu.kNo:</span> <span class="pre">0&gt;</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#skia.GrDirectContexts.submit" title="Permalink to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">GrDirectContexts.</span></span><span class="sig-name descname"><span class="pre">submit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="skia.GrDirectContext.html#skia.GrDirectContext" title="skia.GrDirectContext"><span class="pre">skia.GrDirectContext</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">sync</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="skia.GrSyncCpu.html#skia.GrSyncCpu" title="skia.GrSyncCpu"><span class="pre">skia.GrSyncCpu</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">skia.GrSyncCpu.kNo</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#skia.GrDirectContexts.submit" title="Permalink to this definition"></a></dt>
 <dd><p>Submit outstanding work to the gpu from all previously un-submitted
 flushes. The return value of the submit will indicate whether or not the
 submission to the GPU was successful.</p>

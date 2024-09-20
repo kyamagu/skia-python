@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>PathBuilder &mdash; skia-python 128.0b9 documentation</title>
+  <title>PathBuilder &mdash; skia-python 130.0b10 documentation</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
       <link rel="stylesheet" type="text/css" href="../_static/css/theme.css" />
 
@@ -37,7 +37,7 @@
             skia-python
           </a>
               <div class="version">
-                128.0b9
+                130.0b10
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
@@ -217,6 +217,7 @@
 <li class="toctree-l3"><a class="reference internal" href="skia.TileMode.html">TileMode</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.TrimPathEffect.html">TrimPathEffect</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.Typeface.html">Typeface</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.Unicode.html">Unicode</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.Vertices.html">Vertices</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.VkFormat.html">VkFormat</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.VkImageLayout.html">VkImageLayout</a></li>
@@ -226,6 +227,15 @@
 <li class="toctree-l3"><a class="reference internal" href="skia.YUVAPixmaps.html">YUVAPixmaps</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.YUVColorSpace.html">YUVColorSpace</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.gpuBackendApi.html">gpuBackendApi</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.textlayout_FontCollection.html">textlayout_FontCollection</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.textlayout_Paragraph.html">textlayout_Paragraph</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.textlayout_ParagraphBuilder.html">textlayout_ParagraphBuilder</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.textlayout_ParagraphStyle.html">textlayout_ParagraphStyle</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.textlayout_TextAlign.html">textlayout_TextAlign</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.textlayout_TextDecoration.html">textlayout_TextDecoration</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.textlayout_TextDecorationMode.html">textlayout_TextDecorationMode</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.textlayout_TextDecorationStyle.html">textlayout_TextDecorationStyle</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.textlayout_TextStyle.html">textlayout_TextStyle</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.html#functions">Functions</a></li>
 </ul>
 </li>
@@ -418,7 +428,7 @@ modulo 360</p></li>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="skia.PathBuilder.addCircle">
-<span class="sig-prename descclassname"><span class="pre">PathBuilder.</span></span><span class="sig-name descname"><span class="pre">addCircle</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self:</span> <span class="pre">skia.PathBuilder</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">center_x:</span> <span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">center_y:</span> <span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">radius:</span> <span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pathDirection:</span> <span class="pre">skia.PathDirection</span> <span class="pre">=</span> <span class="pre">&lt;PathDirection.kCW:</span> <span class="pre">0&gt;</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#skia.PathBuilder" title="skia.PathBuilder"><span class="pre">skia.PathBuilder</span></a></span></span><a class="headerlink" href="#skia.PathBuilder.addCircle" title="Permalink to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">PathBuilder.</span></span><span class="sig-name descname"><span class="pre">addCircle</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#skia.PathBuilder" title="skia.PathBuilder"><span class="pre">skia.PathBuilder</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">center_x</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">center_y</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">radius</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pathDirection</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="skia.PathDirection.html#skia.PathDirection" title="skia.PathDirection"><span class="pre">skia.PathDirection</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">skia.PathDirection.kCW</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#skia.PathBuilder" title="skia.PathBuilder"><span class="pre">skia.PathBuilder</span></a></span></span><a class="headerlink" href="#skia.PathBuilder.addCircle" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
@@ -427,7 +437,7 @@ modulo 360</p></li>
 <dd><p>Overloaded function.</p>
 <ol class="arabic simple">
 <li><p>addOval(self: skia.PathBuilder, rect: skia.Rect, pathDirection: skia.PathDirection, startIndex: int) -&gt; skia.PathBuilder</p></li>
-<li><p>addOval(self: skia.PathBuilder, rect: skia.Rect, pathDirection: skia.PathDirection = &lt;PathDirection.kCW: 0&gt;) -&gt; skia.PathBuilder</p></li>
+<li><p>addOval(self: skia.PathBuilder, rect: skia.Rect, pathDirection: skia.PathDirection = skia.PathDirection.kCW) -&gt; skia.PathBuilder</p></li>
 </ol>
 </dd></dl>
 
@@ -442,7 +452,7 @@ modulo 360</p></li>
 <dd><p>Overloaded function.</p>
 <ol class="arabic simple">
 <li><p>addRRect(self: skia.PathBuilder, rrect: skia.RRect, pathDirection: skia.PathDirection, startIndex: int) -&gt; skia.PathBuilder</p></li>
-<li><p>addRRect(self: skia.PathBuilder, rrect: skia.RRect, pathDirection: skia.PathDirection = &lt;PathDirection.kCW: 0&gt;) -&gt; skia.PathBuilder</p></li>
+<li><p>addRRect(self: skia.PathBuilder, rrect: skia.RRect, pathDirection: skia.PathDirection = skia.PathDirection.kCW) -&gt; skia.PathBuilder</p></li>
 </ol>
 </dd></dl>
 
@@ -452,7 +462,7 @@ modulo 360</p></li>
 <dd><p>Overloaded function.</p>
 <ol class="arabic simple">
 <li><p>addRect(self: skia.PathBuilder, rect: skia.Rect, pathDirection: skia.PathDirection, startIndex: int) -&gt; skia.PathBuilder</p></li>
-<li><p>addRect(self: skia.PathBuilder, rect: skia.Rect, pathDirection: skia.PathDirection = &lt;PathDirection.kCW: 0&gt;) -&gt; skia.PathBuilder</p></li>
+<li><p>addRect(self: skia.PathBuilder, rect: skia.Rect, pathDirection: skia.PathDirection = skia.PathDirection.kCW) -&gt; skia.PathBuilder</p></li>
 </ol>
 </dd></dl>
 

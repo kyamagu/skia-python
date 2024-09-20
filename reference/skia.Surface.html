@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Surface &mdash; skia-python 128.0b9 documentation</title>
+  <title>Surface &mdash; skia-python 130.0b10 documentation</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
       <link rel="stylesheet" type="text/css" href="../_static/css/theme.css" />
 
@@ -37,7 +37,7 @@
             skia-python
           </a>
               <div class="version">
-                128.0b9
+                130.0b10
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
@@ -221,6 +221,7 @@
 <li class="toctree-l3"><a class="reference internal" href="skia.TileMode.html">TileMode</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.TrimPathEffect.html">TrimPathEffect</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.Typeface.html">Typeface</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.Unicode.html">Unicode</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.Vertices.html">Vertices</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.VkFormat.html">VkFormat</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.VkImageLayout.html">VkImageLayout</a></li>
@@ -230,6 +231,15 @@
 <li class="toctree-l3"><a class="reference internal" href="skia.YUVAPixmaps.html">YUVAPixmaps</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.YUVColorSpace.html">YUVColorSpace</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.gpuBackendApi.html">gpuBackendApi</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.textlayout_FontCollection.html">textlayout_FontCollection</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.textlayout_Paragraph.html">textlayout_Paragraph</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.textlayout_ParagraphBuilder.html">textlayout_ParagraphBuilder</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.textlayout_ParagraphStyle.html">textlayout_ParagraphStyle</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.textlayout_TextAlign.html">textlayout_TextAlign</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.textlayout_TextDecoration.html">textlayout_TextDecoration</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.textlayout_TextDecorationMode.html">textlayout_TextDecorationMode</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.textlayout_TextDecorationStyle.html">textlayout_TextDecorationStyle</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.textlayout_TextStyle.html">textlayout_TextStyle</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.html#functions">Functions</a></li>
 </ul>
 </li>
@@ -659,7 +669,7 @@ nullptr</p>
 <em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">Surface.</span></span><span class="sig-name descname"><span class="pre">MakeRenderTarget</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#skia.Surface.MakeRenderTarget" title="Permalink to this definition"></a></dt>
 <dd><p>Overloaded function.</p>
 <ol class="arabic">
-<li><p>MakeRenderTarget(context: skia.GrRecordingContext, budgeted: skia.Budgeted, imageInfo: skia.ImageInfo, sampleCount: int = 0, surfaceOrigin: skia.GrSurfaceOrigin = &lt;GrSurfaceOrigin.kBottomLeft_GrSurfaceOrigin: 1&gt;, surfaceProps: skia.SurfaceProps = None, shouldCreateWithMips: bool = False, isProtected: bool = False) -&gt; skia.Surface</p>
+<li><p>MakeRenderTarget(context: skia.GrRecordingContext, budgeted: skia.Budgeted, imageInfo: skia.ImageInfo, sampleCount: int = 0, surfaceOrigin: skia.GrSurfaceOrigin = skia.GrSurfaceOrigin.kBottomLeft_GrSurfaceOrigin, surfaceProps: skia.SurfaceProps = None, shouldCreateWithMips: bool = False, isProtected: bool = False) -&gt; skia.Surface</p>
 <blockquote>
 <div><p>Returns <a class="reference internal" href="#skia.Surface" title="skia.Surface"><code class="xref py py-class docutils literal notranslate"><span class="pre">Surface</span></code></a> on GPU indicated by context.</p>
 <p>Allocates memory for pixels, based on the width, height, and
@@ -872,7 +882,7 @@ nullptr</p>
 <div><p>See <a class="reference internal" href="#skia.Surface.MakeRasterN32Premul" title="skia.Surface.MakeRasterN32Premul"><code class="xref py py-meth docutils literal notranslate"><span class="pre">MakeRasterN32Premul()</span></code></a></p>
 </div></blockquote>
 </li>
-<li><p>__init__(self: skia.Surface, array: numpy.ndarray, colorType: skia.ColorType = &lt;ColorType.kRGBA_8888_ColorType: 4&gt;, alphaType: skia.AlphaType = &lt;AlphaType.kUnpremul_AlphaType: 3&gt;, colorSpace: skia.ColorSpace = None, surfaceProps: skia.SurfaceProps = None) -&gt; None</p>
+<li><p>__init__(self: skia.Surface, array: numpy.ndarray, colorType: skia.ColorType = skia.ColorType.kN32_ColorType, alphaType: skia.AlphaType = skia.AlphaType.kUnpremul_AlphaType, colorSpace: skia.ColorSpace = None, surfaceProps: skia.SurfaceProps = None) -&gt; None</p>
 <blockquote>
 <div><p>Create a raster surface on numpy array.</p>
 <p>Input array must have compatible shape with the given color type.</p>
@@ -1113,7 +1123,7 @@ submitted.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="skia.Surface.flushAndSubmit">
-<span class="sig-prename descclassname"><span class="pre">Surface.</span></span><span class="sig-name descname"><span class="pre">flushAndSubmit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self:</span> <span class="pre">skia.Surface</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sync:</span> <span class="pre">skia.GrSyncCpu</span> <span class="pre">=</span> <span class="pre">&lt;GrSyncCpu.kNo:</span> <span class="pre">0&gt;</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#skia.Surface.flushAndSubmit" title="Permalink to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">Surface.</span></span><span class="sig-name descname"><span class="pre">flushAndSubmit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#skia.Surface" title="skia.Surface"><span class="pre">skia.Surface</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">sync</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="skia.GrSyncCpu.html#skia.GrSyncCpu" title="skia.GrSyncCpu"><span class="pre">skia.GrSyncCpu</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">skia.GrSyncCpu.kNo</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#skia.Surface.flushAndSubmit" title="Permalink to this definition"></a></dt>
 <dd><p>Call to ensure all reads/writes of the surface have been issued to the
 underlying 3D API.</p>
 <p>Skia will correctly order its own draws and pixel operations. This must
@@ -1500,7 +1510,7 @@ destination.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="skia.Surface.replaceBackendTexture">
-<span class="sig-prename descclassname"><span class="pre">Surface.</span></span><span class="sig-name descname"><span class="pre">replaceBackendTexture</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self:</span> <span class="pre">skia.Surface</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">backendTexture:</span> <span class="pre">skia.GrBackendTexture</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">origin:</span> <span class="pre">skia.GrSurfaceOrigin</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mode:</span> <span class="pre">skia.Surface.ContentChangeMode</span> <span class="pre">=</span> <span class="pre">&lt;ContentChangeMode.kRetain_ContentChangeMode:</span> <span class="pre">1&gt;</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#skia.Surface.replaceBackendTexture" title="Permalink to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">Surface.</span></span><span class="sig-name descname"><span class="pre">replaceBackendTexture</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#skia.Surface" title="skia.Surface"><span class="pre">skia.Surface</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">backendTexture</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="skia.GrBackendTexture.html#skia.GrBackendTexture" title="skia.GrBackendTexture"><span class="pre">skia.GrBackendTexture</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">origin</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="skia.GrSurfaceOrigin.html#skia.GrSurfaceOrigin" title="skia.GrSurfaceOrigin"><span class="pre">skia.GrSurfaceOrigin</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">mode</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="skia.Surface.ContentChangeMode.html#skia.Surface.ContentChangeMode" title="skia.Surface.ContentChangeMode"><span class="pre">skia.Surface.ContentChangeMode</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">skia.Surface.ContentChangeMode.kRetain_ContentChangeMode</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#skia.Surface.replaceBackendTexture" title="Permalink to this definition"></a></dt>
 <dd><p>If the surface was made via <a class="reference internal" href="#skia.Surface.MakeFromBackendTexture" title="skia.Surface.MakeFromBackendTexture"><code class="xref py py-meth docutils literal notranslate"><span class="pre">MakeFromBackendTexture()</span></code></a> then it’s
 backing texture may be substituted with a different texture.</p>
 <p>The contents of the previous backing texture are copied into the new
@@ -1519,7 +1529,7 @@ replacement texture must match that of the original.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="skia.Surface.toarray">
-<span class="sig-prename descclassname"><span class="pre">Surface.</span></span><span class="sig-name descname"><span class="pre">toarray</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self:</span> <span class="pre">skia.Surface</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">srcX:</span> <span class="pre">int</span> <span class="pre">=</span> <span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">srcY:</span> <span class="pre">int</span> <span class="pre">=</span> <span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">colorType:</span> <span class="pre">skia.ColorType</span> <span class="pre">=</span> <span class="pre">&lt;ColorType.kUnknown_ColorType:</span> <span class="pre">0&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">alphaType:</span> <span class="pre">skia.AlphaType</span> <span class="pre">=</span> <span class="pre">&lt;AlphaType.kUnpremul_AlphaType:</span> <span class="pre">3&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">colorSpace:</span> <span class="pre">skia.ColorSpace</span> <span class="pre">=</span> <span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">numpy.ndarray</span></span></span><a class="headerlink" href="#skia.Surface.toarray" title="Permalink to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">Surface.</span></span><span class="sig-name descname"><span class="pre">toarray</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#skia.Surface" title="skia.Surface"><span class="pre">skia.Surface</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">srcX</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">srcY</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">colorType</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="skia.ColorType.html#skia.ColorType" title="skia.ColorType"><span class="pre">skia.ColorType</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">skia.ColorType.kUnknown_ColorType</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">alphaType</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="skia.AlphaType.html#skia.AlphaType" title="skia.AlphaType"><span class="pre">skia.AlphaType</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">skia.AlphaType.kUnpremul_AlphaType</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">colorSpace</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="skia.ColorSpace.html#skia.ColorSpace" title="skia.ColorSpace"><span class="pre">skia.ColorSpace</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">numpy.ndarray</span></span></span><a class="headerlink" href="#skia.Surface.toarray" title="Permalink to this definition"></a></dt>
 <dd><p>Exports a <code class="docutils literal notranslate"><span class="pre">numpy.ndarray</span></code>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
