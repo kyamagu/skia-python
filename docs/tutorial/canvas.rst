@@ -91,10 +91,11 @@ The following example uses glfw package to create an OpenGL context. Install
         glfw.window_hint(glfw.VISIBLE, glfw.FALSE)
         glfw.window_hint(glfw.STENCIL_BITS, 8)
         # see https://www.glfw.org/faq#macos
-        glfw.window_hint(glfw.CONTEXT_VERSION_MAJOR, 3)
-        glfw.window_hint(glfw.CONTEXT_VERSION_MINOR, 2)
-        glfw.window_hint(glfw.OPENGL_FORWARD_COMPAT, True)
-        glfw.window_hint(glfw.OPENGL_PROFILE, glfw.OPENGL_CORE_PROFILE)
+        if sys.platform.startswith("darwin"):
+            glfw.window_hint(glfw.CONTEXT_VERSION_MAJOR, 3)
+            glfw.window_hint(glfw.CONTEXT_VERSION_MINOR, 2)
+            glfw.window_hint(glfw.OPENGL_FORWARD_COMPAT, True)
+            glfw.window_hint(glfw.OPENGL_PROFILE, glfw.OPENGL_CORE_PROFILE)
         window = glfw.create_window(640, 480, '', None, None)
         glfw.make_context_current(window)
         yield window
@@ -144,10 +145,11 @@ Here's a complete example:
             raise RuntimeError('glfw.init() failed')
         glfw.window_hint(glfw.STENCIL_BITS, 8)
         # see https://www.glfw.org/faq#macos
-        glfw.window_hint(glfw.CONTEXT_VERSION_MAJOR, 3)
-        glfw.window_hint(glfw.CONTEXT_VERSION_MINOR, 2)
-        glfw.window_hint(glfw.OPENGL_FORWARD_COMPAT, True)
-        glfw.window_hint(glfw.OPENGL_PROFILE, glfw.OPENGL_CORE_PROFILE)
+        if sys.platform.startswith("darwin"):
+            glfw.window_hint(glfw.CONTEXT_VERSION_MAJOR, 3)
+            glfw.window_hint(glfw.CONTEXT_VERSION_MINOR, 2)
+            glfw.window_hint(glfw.OPENGL_FORWARD_COMPAT, True)
+            glfw.window_hint(glfw.OPENGL_PROFILE, glfw.OPENGL_CORE_PROFILE)
         window = glfw.create_window(WIDTH, HEIGHT, '', None, None)
         glfw.make_context_current(window)
         yield window
