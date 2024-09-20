@@ -1453,7 +1453,8 @@ matrix
             clipping
         :return: mapped bounds
         )docstring",
-        py::arg("src"), py::arg("pc") = SkApplyPerspectiveClip::kYes)
+        py::arg("src"),
+        py::arg_v("pc", SkApplyPerspectiveClip::kYes, "skia.ApplyPerspectiveClip.kYes"))
     .def("mapRectToQuad",
         [] (const SkMatrix& matrix, const SkRect& rect) {
             std::vector<SkPoint> dst(4);

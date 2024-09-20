@@ -20,6 +20,7 @@ void initImage(py::module &);
 void initImageInfo(py::module &);
 void initMatrix(py::module &);
 void initPaint(py::module &);
+void initParagraph(py::module &);
 void initPath(py::module &);
 void initPathMeasure(py::module &);
 void initPicture(py::module &);
@@ -35,6 +36,7 @@ void initStream(py::module &);
 void initString(py::module &);
 void initSurface(py::module &);
 void initTextBlob(py::module &);
+void initUnicode(py::module &);
 void initVertices(py::module &);
 void initSVGDOM(py::module &);
 
@@ -67,6 +69,8 @@ PYBIND11_MODULE(skia, m) {
     initImageInfo(m);
     initImage(m);
     initPaint(m);
+    initUnicode(m); // Before Paragraph
+    initParagraph(m);
     initPath(m);
     initPathMeasure(m);
     initPicture(m);

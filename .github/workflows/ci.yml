@@ -24,7 +24,8 @@ jobs:
             skia
           key: linux-aarch64-skia-${{ github.sha }}-3rd-party
       - name: Pre-fetch skia deps
-        run: git config --global core.compression 0 && cd skia && patch -p1 -i ../patch/skia-m128-minimize-download.patch && python tools/git-sync-deps && patch -p1 -R -i ../patch/skia-m128-minimize-download.patch
+        if: ${{ steps.cache-skia.outputs.cache-hit != 'true' }}
+        run: git config --global core.compression 0 && cd skia && patch -p1 -i ../patch/skia-m130-minimize-download.patch && python tools/git-sync-deps && patch -p1 -R -i ../patch/skia-m130-minimize-download.patch
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v3
       - name: Build skia 3rd-Party
@@ -121,7 +122,7 @@ jobs:
           CIBW_BUILD: "${{ matrix.cp }}-*"
           CIBW_SKIP: "*musllinux*"
           CIBW_ARCHS: ${{ matrix.arch }}
-          CIBW_ENVIRONMENT_MACOS: TARGET_ARCH=${{ matrix.arch }} MACOSX_DEPLOYMENT_TARGET=10.13
+          CIBW_ENVIRONMENT_MACOS: TARGET_ARCH=${{ matrix.arch }} MACOSX_DEPLOYMENT_TARGET=11.0
           CIBW_BEFORE_ALL: bash scripts/build_${{ runner.os }}.sh
           CIBW_BEFORE_BUILD: pip install pybind11 numpy
           CIBW_TEST_REQUIRES: pytest pillow glfw

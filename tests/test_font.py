@@ -323,6 +323,33 @@ def fontmgr():
     return skia.FontMgr()
 
 
+def test_FontMgr_New_Custom_Empty0():
+    assert isinstance(skia.FontMgr.New_Custom_Empty(), skia.FontMgr)
+
+
+def test_FontMgr_New_Custom_Empty1(ttf_path):
+    assert isinstance(skia.FontMgr.New_Custom_Empty(ttf_path), skia.FontMgr)
+
+
+def test_FontMgr_New_Custom_Empty2(ttf_path):
+    font_data = skia.Data.MakeFromFileName(ttf_path)
+    assert isinstance(skia.FontMgr.New_Custom_Empty(font_data), skia.FontMgr)
+
+
+# Strickly speaking, we do not need/want this no-arg one.
+def test_FontMgr_OneFontMgr0():
+    assert isinstance(skia.FontMgr.OneFontMgr(), skia.FontMgr)
+
+
+def test_FontMgr_OneFontMgr1(ttf_path):
+    assert isinstance(skia.FontMgr.OneFontMgr(ttf_path), skia.FontMgr)
+
+
+def test_FontMgr_OneFontMgr2(ttf_path):
+    font_data = skia.Data.MakeFromFileName(ttf_path)
+    assert isinstance(skia.FontMgr.OneFontMgr(font_data), skia.FontMgr)
+
+
 def test_FontMgr_getitem(fontmgr):
     assert isinstance(fontmgr[0], str)
 

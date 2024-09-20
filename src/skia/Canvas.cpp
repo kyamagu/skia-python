@@ -294,8 +294,9 @@ canvas
         :alphaType: alpha type of the array
         :colorSpace: range of colors; may be nullptr
         )docstring",
-        py::arg("array"), py::arg("colorType") = kN32_SkColorType,
-        py::arg("alphaType") = kUnpremul_SkAlphaType,
+        py::arg("array"),
+        py::arg_v("colorType", kN32_SkColorType, "skia.ColorType.kN32_ColorType"),
+        py::arg_v("alphaType", kUnpremul_SkAlphaType, "skia.AlphaType.kUnpremul_AlphaType"),
         py::arg("colorSpace") = nullptr, py::arg("surfaceProps") = nullptr)
     .def(py::init<int, int, const SkSurfaceProps*>(),
         R"docstring(
@@ -361,8 +362,8 @@ canvas
         :return: numpy.ndarray
         )docstring",
         py::arg("srcX") = 0, py::arg("srcY") = 0,
-        py::arg("colorType") = kUnknown_SkColorType,
-        py::arg("alphaType") = kUnpremul_SkAlphaType,
+        py::arg_v("colorType", kUnknown_SkColorType, "skia.ColorType.kUnknown_ColorType"),
+        py::arg_v("alphaType", kUnpremul_SkAlphaType, "skia.AlphaType.kUnpremul_AlphaType"),
         py::arg("colorSpace") = nullptr)
     .def("imageInfo", &SkCanvas::imageInfo,
         R"docstring(
@@ -1169,7 +1170,8 @@ canvas
         :param skia.Region deviceRgn: :py:class:`Region` to combine with clip
         :param skia.ClipOp op: :py:class:`ClipOp` to apply to clip
         )docstring",
-        py::arg("deviceRgn"), py::arg("op") = SkClipOp::kIntersect)
+        py::arg("deviceRgn"),
+        py::arg_v("op", SkClipOp::kIntersect, "skia.ClipOp.kIntersect"))
     .def("quickReject",
         py::overload_cast<const SkRect&>(&SkCanvas::quickReject, py::const_),
         R"docstring(
@@ -1271,7 +1273,8 @@ canvas
         :param skia.BlendMode mode: :py:class:`BlendMode` used to combine source
             color and destination
         )docstring",
-        py::arg("color"), py::arg("mode") = SkBlendMode::kSrcOver)
+        py::arg("color"),
+        py::arg_v("mode", SkBlendMode::kSrcOver, "skia.BlendMode.kSrcOver"))
     .def("drawColor",
         py::overload_cast<const SkColor4f&, SkBlendMode>(&SkCanvas::drawColor),
         R"docstring(
@@ -1283,7 +1286,8 @@ canvas
         :param skia.BlendMode mode: :py:class:`BlendMode` used to combine source
             color and destination
         )docstring",
-        py::arg("color"), py::arg("mode") = SkBlendMode::kSrcOver)
+        py::arg("color"),
+        py::arg_v("mode", SkBlendMode::kSrcOver, "skia.BlendMode.kSrcOver"))
     .def("clear",
         py::overload_cast<SkColor>(&SkCanvas::clear),
         R"docstring(
@@ -1433,7 +1437,7 @@ canvas
         :y1: end of line segment on y-axis
         :paint: stroke, blend, color, and so on, used to draw
         )docstring",
-        py::arg("x0"), py::arg("y0"), py::arg("x1"), py::arg("y1`"),
+        py::arg("x0"), py::arg("y0"), py::arg("x1"), py::arg("y1"),
         py::arg("paint"))
     .def("drawLine",
         py::overload_cast<SkPoint, SkPoint, const SkPaint&>(
@@ -1673,7 +1677,7 @@ canvas
             nullptr
         )docstring",
         py::arg("image"), py::arg("left"), py::arg("top"),
-        py::arg("options") = SkSamplingOptions(),
+        py::arg_v("options", SkSamplingOptions(), "skia.SamplingOptions()"),
         py::arg("paint") = nullptr)
     // .def("drawImage",
     //     py::overload_cast<const sk_sp<SkImage>&, SkScalar, SkScalar,
@@ -1722,9 +1726,10 @@ canvas
         :constraint: filter strictly within src or draw faster
         )docstring",
         py::arg("image"), py::arg("src"), py::arg("dst"),
-        py::arg("options") = SkSamplingOptions(),
-        py::arg("paint") = nullptr, py::arg("constraint") =
-            SkCanvas::SrcRectConstraint::kStrict_SrcRectConstraint)
+        py::arg_v("options", SkSamplingOptions(), "skia.SamplingOptions()"),
+        py::arg("paint") = nullptr,
+        py::arg_v("constraint", SkCanvas::SrcRectConstraint::kStrict_SrcRectConstraint,
+            "skia.Canvas.SrcRectConstraint.kStrict_SrcRectConstraint"))
     .def("drawImageRect",
         py::overload_cast<const SkImage*, const SkRect&, const SkRect&, const SkSamplingOptions&,
             const SkPaint*, SkCanvas::SrcRectConstraint>(
@@ -1767,9 +1772,10 @@ canvas
         :constraint: filter strictly within isrc or draw faster
         )docstring",
         py::arg("image"), py::arg("isrc"), py::arg("dst"),
-        py::arg("options") = SkSamplingOptions(),
-        py::arg("paint") = nullptr, py::arg("constraint") =
-            SkCanvas::SrcRectConstraint::kStrict_SrcRectConstraint)
+        py::arg_v("options", SkSamplingOptions(), "skia.SamplingOptions()"),
+        py::arg("paint") = nullptr,
+        py::arg_v("constraint", SkCanvas::SrcRectConstraint::kStrict_SrcRectConstraint,
+            "skia.Canvas.SrcRectConstraint.kStrict_SrcRectConstraint"))
     .def("drawImageRect",
         py::overload_cast<const SkImage*, const SkRect&, const SkSamplingOptions&, const SkPaint*>(
             &SkCanvas::drawImageRect),
@@ -1801,7 +1807,9 @@ canvas
             nullptr
         :constraint: filter strictly within src or draw faster
         )docstring",
-        py::arg("image"), py::arg("dst"), py::arg("options") = SkSamplingOptions(), py::arg("paint") = nullptr)
+        py::arg("image"), py::arg("dst"),
+        py::arg_v("options", SkSamplingOptions(), "skia.SamplingOptions()"),
+        py::arg("paint") = nullptr)
     // .def("drawImageRect",
     //     py::overload_cast<const sk_sp<SkImage>&, const SkRect&, const SkRect&,
     //         const SkPaint*, SkCanvas::SrcRectConstraint>(
@@ -1942,8 +1950,9 @@ canvas
         :constraint: filter strictly within src or draw faster
         )docstring",
         py::arg("bitmap"), py::arg("src"), py::arg("dst"),
-        py::arg("paint") = nullptr, py::arg("constraint") =
-            SkCanvas::SrcRectConstraint::kStrict_SrcRectConstraint)
+        py::arg("paint") = nullptr,
+        py::arg_v("constraint", SkCanvas::SrcRectConstraint::kStrict_SrcRectConstraint,
+            "skia.Canvas.SrcRectConstraint.kStrict_SrcRectConstraint"))
     .def("drawBitmapRect",
         [] (SkCanvas &self, const SkBitmap& bitmap, const SkRect& src, const SkRect& dst,
             const SkPaint* paint,
@@ -1982,8 +1991,9 @@ canvas
         :constraint: filter strictly within isrc or draw faster
         )docstring",
         py::arg("bitmap"), py::arg("isrc"), py::arg("dst"),
-        py::arg("paint") = nullptr, py::arg("constraint") =
-            SkCanvas::SrcRectConstraint::kStrict_SrcRectConstraint)
+        py::arg("paint") = nullptr,
+        py::arg_v("constraint", SkCanvas::SrcRectConstraint::kStrict_SrcRectConstraint,
+            "skia.Canvas.SrcRectConstraint.kStrict_SrcRectConstraint"))
     .def("drawBitmapRect",
         [] (SkCanvas &self, const SkBitmap& bitmap, const SkRect& dst, const SkPaint* paint,
             SkCanvas::SrcRectConstraint constraint) {
@@ -2021,8 +2031,8 @@ canvas
         :constraint: filter strictly within bitmap or draw faster
         )docstring",
         py::arg("bitmap"), py::arg("dst"), py::arg("paint") = nullptr,
-        py::arg("constraint") =
-            SkCanvas::SrcRectConstraint::kStrict_SrcRectConstraint)
+        py::arg_v("constraint", SkCanvas::SrcRectConstraint::kStrict_SrcRectConstraint,
+            "skia.Canvas.SrcRectConstraint.kStrict_SrcRectConstraint"))
     // .def("drawImageLattice", &SkCanvas::drawImageLattice,
     //     "Draws SkImage image stretched proportionally to fit into SkRect dst.")
     // .def("experimental_DrawEdgeAAQuad",
@@ -2207,7 +2217,7 @@ canvas
             :py:class:`Vertices` texture
         )docstring",
         py::arg("vertices"), py::arg("paint"),
-        py::arg("mode") = SkBlendMode::kModulate)
+        py::arg_v("mode", SkBlendMode::kModulate, "skia.BlendMode.kModulate"))
     // .def("drawVertices",
     //     py::overload_cast<const SkVertices*, const SkPaint&>(
     //         &SkCanvas::drawVertices),
@@ -2337,7 +2347,9 @@ canvas
             `None`
         )docstring",
         py::arg("atlas"), py::arg("xform"), py::arg("tex"), py::arg("colors"),
-        py::arg("mode"), py::arg("options") = SkSamplingOptions(), py::arg("cullRect") = nullptr,
+        py::arg("mode"),
+        py::arg_v("options", SkSamplingOptions(), "skia.SamplingOptions()"),
+        py::arg("cullRect") = nullptr,
         py::arg("paint") = nullptr)
     // .def("drawAtlas",
     //     py::overload_cast<const sk_sp<SkImage>&, const SkRSXform[],

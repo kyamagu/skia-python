@@ -853,9 +853,9 @@ yuvainfo
         'origin').
         )docstring",
         py::arg("dimensions"), py::arg("config"), py::arg("sampling"), py::arg("yuvColorSpace"),
-        py::arg("origin") = kTopLeft_SkEncodedOrigin,
-        py::arg("sittingX") = SkYUVAInfo::Siting::kCentered,
-        py::arg("sittingY") = SkYUVAInfo::Siting::kCentered)
+        py::arg_v("origin", kTopLeft_SkEncodedOrigin, "skia.EncodedOrigin.kTopLeft_EncodedOrigin"),
+        py::arg_v("sittingX", SkYUVAInfo::Siting::kCentered, "skia.SkYUVAInfo.Siting.kCentered"),
+        py::arg_v("sittingY", SkYUVAInfo::Siting::kCentered, "skia.SkYUVAInfo.Siting.kCentered"))
     .def("planeConfig", &SkYUVAInfo::planeConfig)
     .def("subSampling", &SkYUVAInfo::subsampling)
     .def("dimensions", &SkYUVAInfo::dimensions,

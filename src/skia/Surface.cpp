@@ -235,8 +235,8 @@ surface
         :return: numpy.ndarray
         )docstring",
         py::arg("srcX") = 0, py::arg("srcY") = 0,
-        py::arg("colorType") = kUnknown_SkColorType,
-        py::arg("alphaType") = kUnpremul_SkAlphaType,
+        py::arg_v("colorType", kUnknown_SkColorType, "skia.ColorType.kUnknown_ColorType"),
+        py::arg_v("alphaType", kUnpremul_SkAlphaType, "skia.AlphaType.kUnpremul_AlphaType"),
         py::arg("colorSpace") = nullptr)
     .def(py::init(
         [] (int width, int height, const SkSurfaceProps* surfaceProps) {
@@ -271,8 +271,9 @@ surface
         :alphaType: alpha type of the array
         :colorSpace: range of colors; may be nullptr
         )docstring",
-        py::arg("array"), py::arg("colorType") = kN32_SkColorType,
-        py::arg("alphaType") = kUnpremul_SkAlphaType,
+        py::arg("array"),
+        py::arg_v("colorType", kN32_SkColorType, "skia.ColorType.kN32_ColorType"),
+        py::arg_v("alphaType", kUnpremul_SkAlphaType, "skia.AlphaType.kUnpremul_AlphaType"),
         py::arg("colorSpace") = nullptr, py::arg("surfaceProps") = nullptr)
     .def("isCompatible", &SkSurface::isCompatible,
         R"docstring(
@@ -373,7 +374,8 @@ surface
         :param mode:    Retain or discard current Content
         )docstring",
         py::arg("backendTexture"), py::arg("origin"),
-        py::arg("mode") = SkSurface::kRetain_ContentChangeMode)
+        py::arg_v("mode", SkSurface::kRetain_ContentChangeMode,
+                  "skia.Surface.ContentChangeMode.kRetain_ContentChangeMode"))
     .def("getCanvas", &SkSurface::getCanvas,
         R"docstring(
         Returns :py:class:`Canvas` that draws into :py:class:`Surface`.
@@ -757,7 +759,7 @@ surface
         with a default :py:class:`GrFlushInfo` followed by
         :py:meth:`GrContext.submit`.
         )docstring",
-        py::arg("sync") = GrSyncCpu::kNo)
+        py::arg_v("sync", GrSyncCpu::kNo, "skia.GrSyncCpu.kNo"))
     .def("flush",
         [] (SkSurface& surface, SkSurfaces::BackendSurfaceAccess access, const GrFlushInfo& info) {
             auto dContext = GrAsDirectContext(surface.recordingContext());
@@ -1182,7 +1184,8 @@ surface
         )docstring",
         py::arg("context"), py::arg("budgeted"), py::arg("imageInfo"),
         py::arg("sampleCount") = 0,
-        py::arg("surfaceOrigin") = GrSurfaceOrigin::kBottomLeft_GrSurfaceOrigin,
+        py::arg_v("surfaceOrigin", GrSurfaceOrigin::kBottomLeft_GrSurfaceOrigin,
+                  "skia.GrSurfaceOrigin.kBottomLeft_GrSurfaceOrigin"),
         py::arg("surfaceProps") = nullptr,
         py::arg("shouldCreateWithMips") = false,
         py::arg("isProtected") = false)

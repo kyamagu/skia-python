@@ -62,7 +62,8 @@ path_measure
         the result.
         )docstring",
         py::arg("distance"),
-        py::arg("flags") = SkPathMeasure::MatrixFlags::kGetPosAndTan_MatrixFlag)
+        py::arg_v("flags", SkPathMeasure::MatrixFlags::kGetPosAndTan_MatrixFlag,
+                  "skia.PathMeasure.GetPosAndTan.kGetPosAndTan_MatrixFlag"))
     .def("getPosTan",
         []  (SkPathMeasure& measure, SkScalar distance) -> py::object {
             SkPoint position;

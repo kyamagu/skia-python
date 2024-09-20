@@ -452,6 +452,6 @@ trimpatheffect
         return 2 logical segments: stopT..1 and 0...startT, in this order.
         )docstring",
         py::arg("startT"), py::arg("stopT"),
-        py::arg("mode") = SkTrimPathEffect::Mode::kNormal)
+        py::arg_v("mode", SkTrimPathEffect::Mode::kNormal, "skia.TrimPathEffect.Mode.kNormal"))
     ;
 }

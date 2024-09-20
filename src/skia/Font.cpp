@@ -94,6 +94,108 @@ sk_sp<SkTypeface> SkTypeface_MakeFromName(
 
 }  // namespace
 
+namespace {
+
+/* class OneFontStyleSet and OneFontMgr verbatim from
+   skia's chrome/m128:example/external_client/src/shape_text.cpp
+ */
+class OneFontStyleSet : public SkFontStyleSet {
+ public:
+  explicit OneFontStyleSet(sk_sp<SkTypeface> face) : face_(face) {}
+
+ protected:
+  int count() override { return 1; }
+  void getStyle(int, SkFontStyle* out_style, SkString*) override {
+    *out_style = SkFontStyle();
+  }
+  sk_sp<SkTypeface> createTypeface(int index) override { return face_; }
+  sk_sp<SkTypeface> matchStyle(const SkFontStyle&) override { return face_; }
+
+ private:
+  sk_sp<SkTypeface> face_;
+};
+
+class OneFontMgr : public SkFontMgr {
+ public:
+  explicit OneFontMgr(sk_sp<SkTypeface> face)
+      : face_(face), style_set_(sk_make_sp<OneFontStyleSet>(face)) {}
+
+ protected:
+  int onCountFamilies() const override { return 1; }
+  void onGetFamilyName(int index, SkString* familyName) const override {
+    *familyName = SkString("the-only-font-I-have");
+  }
+  sk_sp<SkFontStyleSet> onCreateStyleSet(int index) const override {
+    return style_set_;
+  }
+  sk_sp<SkFontStyleSet> onMatchFamily(const char[]) const override {
+    return style_set_;
+  }
+
+  sk_sp<SkTypeface> onMatchFamilyStyle(const char[],
+                                       const SkFontStyle&) const override {
+    return face_;
+  }
+  sk_sp<SkTypeface> onMatchFamilyStyleCharacter(
+      const char familyName[], const SkFontStyle& style, const char* bcp47[],
+      int bcp47Count, SkUnichar character) const override {
+    return face_;
+  }
+  sk_sp<SkTypeface> onLegacyMakeTypeface(const char[],
+                                         SkFontStyle) const override {
+    return face_;
+  }
+
+  sk_sp<SkTypeface> onMakeFromData(sk_sp<SkData>, int) const override {
+    std::abort();
+    return nullptr;
+  }
+  sk_sp<SkTypeface> onMakeFromStreamIndex(std::unique_ptr<SkStreamAsset>,
+                                          int) const override {
+    std::abort();
+    return nullptr;
+  }
+  sk_sp<SkTypeface> onMakeFromStreamArgs(
+      std::unique_ptr<SkStreamAsset>, const SkFontArguments&) const override {
+    std::abort();
+    return nullptr;
+  }
+  sk_sp<SkTypeface> onMakeFromFile(const char[], int) const override {
+    std::abort();
+    return nullptr;
+  }
+
+ private:
+  sk_sp<SkTypeface> face_;
+  sk_sp<SkFontStyleSet> style_set_;
+};
+
+/* Adapted from skia's chrome/m128:example/external_client/src/shape_text.cpp */
+
+/* Forward declaration */
+sk_sp<SkFontMgr> OneFontMgr_New_Custom_Empty(sk_sp<SkData> font_data);
+
+sk_sp<SkFontMgr> OneFontMgr_New_Custom_Empty(char* argv1) {
+  SkFILEStream input(argv1);
+  if (!input.isValid()) {
+    printf("Cannot open input file %s\n", argv1);
+    return nullptr;
+  }
+  sk_sp<SkData> font_data = SkData::MakeFromStream(&input, input.getLength());
+  return OneFontMgr_New_Custom_Empty(font_data);
+}
+
+sk_sp<SkFontMgr> OneFontMgr_New_Custom_Empty(sk_sp<SkData> font_data) {
+  sk_sp<SkFontMgr> mgr = SkFontMgr_New_Custom_Empty();
+  sk_sp<SkTypeface> face = mgr->makeFromData(font_data);
+  if (!face) {
+    printf("input font stream was not parsable by Freetype\n");
+    return nullptr;
+  }
+  return sk_make_sp<OneFontMgr>(face);
+}
+
+}  // namespace
 
 void initFont(py::module &m) {
 // FontStyle
@@ -415,8 +517,8 @@ typeface
         Returns a unique signature to a stream, sufficient to reconstruct a
         typeface referencing the same font when Deserialize is called.
         )docstring",
-        py::arg("behavior") =
-            SkTypeface::SerializeBehavior::kIncludeDataIfLocal)
+        py::arg_v("behavior", SkTypeface::SerializeBehavior::kIncludeDataIfLocal,
+                  "skia.Typeface.SerializeBehavior.kIncludeDataIfLocal"))
     .def("unicharsToGlyphs",
         [] (const SkTypeface& typeface, const std::vector<SkUnichar>& chars) {
             std::vector<SkGlyphID> glyphs(chars.size());
@@ -707,6 +809,10 @@ py::class_<SkFontMgr, sk_sp<SkFontMgr>, SkRefCnt>(m, "FontMgr",
     )docstring")
     .def(py::init([] () { return SkFontMgr_RefDefault(); }))
     .def_static("New_Custom_Empty", &SkFontMgr_New_Custom_Empty)
+    .def_static("New_Custom_Empty", py::overload_cast<char*>(&OneFontMgr_New_Custom_Empty),
+        py::arg("filename"))
+    .def_static("New_Custom_Empty", py::overload_cast<sk_sp<SkData>>(&OneFontMgr_New_Custom_Empty),
+        py::arg("data"))
     .def("__getitem__", &SkFontMgr_getFamilyName, py::arg("index"))
     .def("__len__", &SkFontMgr::countFamilies)
     .def("countFamilies", &SkFontMgr::countFamilies)
@@ -815,6 +921,9 @@ py::class_<SkFontMgr, sk_sp<SkFontMgr>, SkRefCnt>(m, "FontMgr",
         Return the default fontmgr.
         )docstring")
     ;
+
+// This has the side-effect of letting "skia.FontMgr.OneFontMgr()" work.
+m.attr("FontMgr").attr("OneFontMgr") = m.attr("FontMgr").attr("New_Custom_Empty");
 
 // Font
 py::enum_<SkFontHinting>(m, "FontHinting")
@@ -1223,7 +1332,8 @@ font
         :param skia.TextEncoding encoding: text encoding
         :return: glyphs represented by text
         )docstring",
-        py::arg("text"), py::arg("encoding") = SkTextEncoding::kUTF8)
+        py::arg("text"),
+        py::arg_v("encoding", SkTextEncoding::kUTF8, "skia.TextEncoding.kUTF8"))
     .def("unicharToGlyph", &SkFont::unicharToGlyph,
         R"docstring(
         Returns glyph index for Unicode character.
@@ -1256,7 +1366,8 @@ font
         :param str text: character storage encoded with :py:class:`TextEncoding`
         :param skia.TextEncoding encoding: text encoding
         )docstring",
-        py::arg("text"), py::arg("encoding") = SkTextEncoding::kUTF8)
+        py::arg("text"),
+        py::arg_v("encoding", SkTextEncoding::kUTF8, "skia.TextEncoding.kUTF8"))
     .def("measureText",
         [] (const SkFont& font, const std::string& text,
             SkTextEncoding encoding, SkRect* bounds, const SkPaint* paint) {
@@ -1277,7 +1388,8 @@ font
         :param skia.Paint paint: optional; may be nullptr
         :return: the advance width of text
         )docstring",
-        py::arg("text"), py::arg("encoding") = SkTextEncoding::kUTF8,
+        py::arg("text"),
+        py::arg_v("encoding", SkTextEncoding::kUTF8, "skia.TextEncoding.kUTF8"),
         py::arg("bounds") = nullptr, py::arg("paint") = nullptr)
     .def("getWidths",
         [] (const SkFont& font, const std::vector<SkGlyphID>& glyphs) {
