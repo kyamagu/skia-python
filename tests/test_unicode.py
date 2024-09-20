@@ -1,5 +1,6 @@
 import skia
 import pytest
+import sys
 
 def test_Unicodes_init0():
     if sys.platform.startswith("win"):
