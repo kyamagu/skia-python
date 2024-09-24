@@ -179,3 +179,82 @@ def test_Drawable_getBounds(drawable):
 
 def test_Drawable_notifyDrawingChanged(drawable):
     drawable.notifyDrawingChanged()
+
+
+# https://github.com/google/skia/blob/ad08229fd0163a784c60a8bac2c0c5a6a13877c9/tests/PictureTest.cpp#L869-L893
+def test_Picture_fillsBBH(factory, recorder):
+    rects = [
+        skia.Rect(0, 0, 20, 20),
+        skia.Rect(20, 20, 40, 40),
+    ]
+
+    for n in range(len(rects) + 1):
+        bbh = factory()
+
+        canvas = recorder.beginRecording(skia.Rect(0, 0, 100, 100), bbh)
+        for i in range(n):
+            canvas.drawRect(rects[i], skia.Paint())
+        recorder.finishRecordingAsPicture()
+
+        results = bbh.search(skia.Rect(0, 0, 100, 100))
+        assert len(results) == n
+
+
+# https://github.com/google/skia/blob/64148dd7cfe0a3f104d93f58ec42592a0252d378/tests/PictureBBHTest.cpp#L99-L127
+def test_PictureNegativeSpace(factory, recorder):
+    cull = skia.Rect(-200, -200, 200, 200)
+
+    bbh = factory()
+    canvas = recorder.beginRecording(cull, bbh)
+    canvas.save()
+    canvas.clipRect(cull)
+    canvas.drawRect(skia.Rect(-20, -20, -10, -10), skia.Paint())
+    canvas.drawRect(skia.Rect(-20, -20, -10, -10), skia.Paint())
+    canvas.restore()
+    picture = recorder.finishRecordingAsPicture()
+    assert picture.approximateOpCount() == 5
+    assert picture.cullRect() == skia.Rect(-20, -20, -10, -10)
+
+    bbh = factory()
+    canvas = recorder.beginRecording(cull, bbh)
+    canvas.clipRect(cull)
+    canvas.drawRect(skia.Rect(-20, -20, -10, -10), skia.Paint())
+    canvas.drawRect(skia.Rect(-20, -20, -10, -10), skia.Paint())
+    picture = recorder.finishRecordingAsPicture()
+    assert picture.approximateOpCount() == 3
+    assert picture.cullRect() == skia.Rect(-20, -20, -10, -10)
+
+
+# https://github.com/google/skia/blob/64148dd7cfe0a3f104d93f58ec42592a0252d378/tests/PictureTest.cpp#L613-L657
+def test_Picture_SkipBBH(recorder):
+    class CountingBBH(skia.BBoxHierarchy):
+        def __init__(self):
+            self.search_calls: int = 0
+            super().__init__()
+
+        def search(self, query):
+            self.search_calls += 1
+
+        def insert(self, rects, metadata=[]):
+            pass
+
+        def bytesUsed(self):
+            return 0
+
+    bound = skia.Rect(320, 240)
+
+    bbh = CountingBBH()
+
+    canvas = recorder.beginRecording(bound, bbh)
+    canvas.drawRect(bound, skia.Paint())
+    canvas.drawRect(bound, skia.Paint())
+    picture = recorder.finishRecordingAsPicture()
+
+    big = skia.Canvas(640, 480)
+    small = skia.Canvas(300, 200)
+
+    picture.playback(big)
+    assert bbh.search_calls == 0
+
+    picture.playback(small)
+    assert bbh.search_calls == 1
