@@ -114,6 +114,10 @@ def test_inherit_BBoxHierarchy():
     assert results[0] == 0
 
 
+def test_PictureRecorder_init():
+    assert isinstance(skia.PictureRecorder(), skia.PictureRecorder)
+
+
 @pytest.mark.parametrize('args', [
     (skia.Rect(100, 100),),
     (100, 100),
