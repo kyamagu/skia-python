@@ -1,6 +1,5 @@
 import skia
 import pytest
-import sys
 
 def test_FontCollection_init0():
     assert isinstance(skia.textlayout.FontCollection(), skia.textlayout_FontCollection)
@@ -21,8 +20,6 @@ def test_ParagraphBuilder_init0(paragraph_builder):
     assert isinstance(paragraph_builder, skia.textlayout_ParagraphBuilder)
 
 def test_Paragraph_init0(paragraph_builder):
-    if sys.platform.startswith("win"):
-        pytest.skip("Known not to work; To be investigated.")
     paragraph_builder.addText("")
     paragraph = paragraph_builder.Build()
     assert isinstance(paragraph, skia.textlayout_Paragraph)
