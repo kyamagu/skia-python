@@ -127,6 +127,8 @@ jobs:
           CIBW_BEFORE_BUILD: pip install pybind11 numpy
           CIBW_TEST_REQUIRES: pytest pillow glfw
           CIBW_TEST_REQUIRES_MACOS: pytest pillow pyopengl
+          # download, unpack and copy with renaming "icudtl.dat" to the right place on windows, for SkUnicode
+          CIBW_BEFORE_TEST_WINDOWS: bash {project}/scripts/install-icudtl.sh
           CIBW_TEST_COMMAND: python -m pytest {project}/tests
           CIBW_TEST_COMMAND_LINUX: >
             xvfb-run -s "-screen 0 640x480x24" python -m pytest {project}/tests

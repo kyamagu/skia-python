@@ -16,10 +16,14 @@ Since m128 (last beta release):
     overloaded as an alias to this, too.
 
   * The `SkUnicode` class is now available under python as `skia.Unicode`.
-    The constructor is known to fail on windows - It is likely that downloading
-    a `icudtl.dat` file, renaming from the versioned data-bin-{l,b}.zip in
-    https://github.com/unicode-org/icu/releases, is needed. Windows users please report
-    success/failure on this.
+    On windows, the functionality requires a "icudtl.dat" on the load path.
+    This can be programmatically done as follows (download, unzip and copy with renaming):
+
+    python -c 'import urllib.request; urllib.request.urlretrieve("https://github.com/unicode-org/icu/releases/download/release-75-1/icu4c-75_1-data-bin-l.zip", "icudatal.zip")'
+    unzip icudatal.zip
+    python -c 'import os, shutil, site; shutil.copy2("icudt75l.dat", os.path.join(site.getsitepackages()[0], "icudtl.dat"))'
+
+    Linux and mac users are not required to take any action.
 
   * There are two examples `shape_text.py` (a python port of upstream's example), and
     `skparagraph-example.py` hosted [elsewhere](https://github.com/HinTak/skia-python-examples/).
