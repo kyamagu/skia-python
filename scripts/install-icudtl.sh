@@ -3,4 +3,5 @@ python -c 'import urllib.request; urllib.request.urlretrieve("https://github.com
 unzip icudatal.zip
 python -c 'import sys; print(sys.path)'
 python -c 'import site; print(site.getsitepackages())'
-python -c 'import os, shutil, site; shutil.copy2("icudt75l.dat", os.path.join(site.getsitepackages()[0], "icudtl.dat"))'
+# site.getsitepackages()[0] does not seem to work for venv
+python -c 'import os, shutil, site; shutil.copy2("icudt75l.dat", os.path.join(site.getsitepackages()[1], "icudtl.dat"))'
