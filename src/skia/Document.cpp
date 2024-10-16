@@ -216,8 +216,11 @@ py::class_<SkPDF::StructureElementNode>(pdf, "StructureElementNode",
     //     &SkPDF::StructureElementNode::fChildVector)
     .def_readwrite("fNodeId",
         &SkPDF::StructureElementNode::fNodeId)
+/* Removed in m131 */
+/*
     .def_readonly("fAdditionalNodeIds",
         &SkPDF::StructureElementNode::fAdditionalNodeIds)
+*/
     .def_readonly("fAttributes",
         &SkPDF::StructureElementNode::fAttributes)
     .def_readwrite("fAlt",
