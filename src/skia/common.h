@@ -12,7 +12,7 @@
 #include <include/core/SkData.h>
 #include <include/core/SkDocument.h>
 #include <include/core/SkFont.h>
-#include <include/gpu/GrDirectContext.h>
+#include <include/gpu/ganesh/GrDirectContext.h>
 #include <include/core/SkImage.h>
 #include <include/core/SkImageFilter.h>
 #include <include/core/SkImageInfo.h>

@@ -1,6 +1,6 @@
 #include "common.h"
 #include <include/gpu/vk/VulkanBackendContext.h>
-#include <include/gpu/vk/GrVkTypes.h>
+#include <include/gpu/ganesh/vk/GrVkTypes.h>
 
 void initGrContext_vk(py::module &m) {
 

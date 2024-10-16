@@ -1,7 +1,7 @@
 #include "common.h"
 #include <include/codec/SkEncodedImageFormat.h>
 #include <include/core/SkSamplingOptions.h>
-#include <include/gpu/GrBackendSurface.h>
+#include <include/gpu/ganesh/GrBackendSurface.h>
 #include <include/gpu/GpuTypes.h>
 #include <include/gpu/ganesh/SkImageGanesh.h>
 #include <include/encode/SkJpegEncoder.h>

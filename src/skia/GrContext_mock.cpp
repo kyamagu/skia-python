@@ -1,6 +1,6 @@
 #include "common.h"
-#include <include/gpu/mock/GrMockTypes.h>
-#include <include/gpu/GrBackendSurface.h>
+#include <include/gpu/ganesh/mock/GrMockTypes.h>
+#include <include/gpu/ganesh/GrBackendSurface.h>
 #include <include/core/SkTextureCompressionType.h>
 
 void initGrContext_mock(py::module &m) {
