@@ -898,7 +898,7 @@ py::class_<GrDirectContext, sk_sp<GrDirectContext>, GrRecordingContext>(m, "GrDi
         )docstring",
         py::arg("info"))
     .def("flush", py::overload_cast<>(&GrDirectContext::flush))
-    .def("submit", &GrDirectContext::submit,
+    .def("submit", py::overload_cast<GrSyncCpu>(&GrDirectContext::submit),
         R"docstring(
         Submit outstanding work to the gpu from all previously un-submitted
         flushes. The return value of the submit will indicate whether or not the
