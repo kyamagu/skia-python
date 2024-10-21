@@ -75,11 +75,11 @@ jobs:
       matrix:
         os: [ubuntu-22.04, windows-2022, macos-12]
         arch: [auto64]
-        cp: ["cp3{8,9,10,11,12}"]
+        cp: ["cp3{8,9,10,11,12,13}"]
         include:
           - os: macos-12
             arch: arm64
-            cp: "cp3{8,9,10,11,12}"
+            cp: "cp3{8,9,10,11,12,13}"
           # aarch64 is emulated and takes longer, build one wheel per job
           - os: ubuntu-22.04
             arch: aarch64
@@ -96,6 +96,9 @@ jobs:
           - os: ubuntu-22.04
             arch: aarch64
             cp: cp312
+          - os: ubuntu-22.04
+            arch: aarch64
+            cp: cp313
 
     steps:
       - uses: actions/checkout@v4
