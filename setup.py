@@ -11,6 +11,8 @@ try:
         distutils.ccompiler.CCompiler.compile = CCompiler_compile
 except ImportError:
     pass
+except ModuleNotFoundError:
+    pass
 
 NAME = 'skia-python'
 __version__ = '131.0b10'
