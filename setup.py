@@ -5,13 +5,10 @@ import sys
 import glob
 
 try:
-    if (sys.version_info.minor <= 12):
-        from numpy.distutils.ccompiler import CCompiler_compile
-        import distutils.ccompiler
-        distutils.ccompiler.CCompiler.compile = CCompiler_compile
-except ImportError:
-    pass
-except ModuleNotFoundError:
+    from numpy.distutils.ccompiler import CCompiler_compile
+    import distutils.ccompiler
+    distutils.ccompiler.CCompiler.compile = CCompiler_compile
+except:
     pass
 
 NAME = 'skia-python'
