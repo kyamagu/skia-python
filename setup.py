@@ -5,9 +5,10 @@ import sys
 import glob
 
 try:
-    from numpy.distutils.ccompiler import CCompiler_compile
-    import distutils.ccompiler
-    distutils.ccompiler.CCompiler.compile = CCompiler_compile
+    if (sys.version_info.minor <= 12):
+        from numpy.distutils.ccompiler import CCompiler_compile
+        import distutils.ccompiler
+        distutils.ccompiler.CCompiler.compile = CCompiler_compile
 except ImportError:
     pass
 
