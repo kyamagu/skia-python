@@ -8,7 +8,7 @@ try:
     from numpy.distutils.ccompiler import CCompiler_compile
     import distutils.ccompiler
     distutils.ccompiler.CCompiler.compile = CCompiler_compile
-except:
+except ImportError:
     pass
 
 NAME = 'skia-python'
