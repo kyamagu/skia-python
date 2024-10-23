@@ -30,6 +30,11 @@ runtime_effect
                 py::arg("sksl"))
     // missing overloaded methods involving "SkSpan<const ChildPtr>..."
     .def("makeShader",
+         [] (SkRuntimeEffect& runtime_effect, sk_sp<const SkData> uniforms) {
+             return runtime_effect.makeShader(uniforms, {});
+         },
+         py::arg("uniforms"))
+    .def("makeShader",
          py::overload_cast<sk_sp<const SkData>, sk_sp<SkShader>[], size_t, const SkMatrix*>(&SkRuntimeEffect::makeShader, py::const_),
          py::arg("uniforms"), py::arg("children"),
          py::arg("childCount"), py::arg("localMatrix") = nullptr)
