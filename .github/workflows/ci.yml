@@ -229,7 +229,7 @@ jobs:
 
   publish:
     name: Upload packages to PyPI
-    needs: [build_wheels]
+    needs: [build_wheels, build_wheels_old]
     runs-on: ubuntu-latest
     if: github.event_name == 'release' && github.event.action == 'published'
     permissions:
