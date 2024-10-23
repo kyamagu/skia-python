@@ -122,7 +122,6 @@ jobs:
       - name: Build wheels
         uses: pypa/cibuildwheel@v2.21.3
         env:
-          SETUPTOOLS_USE_DISTUTILS: "stdlib"
           CIBW_BUILD: "${{ matrix.cp }}-*"
           CIBW_SKIP: "*musllinux*"
           CIBW_ARCHS: ${{ matrix.arch }}
