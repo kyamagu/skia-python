@@ -9,6 +9,11 @@ py::class_<SkRuntimeEffect::ChildPtr> runtime_effect_childptr(m, "RuntimeEffectC
 
 py::class_<SkRuntimeEffectBuilder> runtime_effect_builder(m, "RuntimeEffectBuilder");
 
+runtime_effect_result
+    .def_readwrite("effect", &SkRuntimeEffect::Result::effect)
+    .def_readwrite("errorText", &SkRuntimeEffect::Result::errorText)
+    ;
+
 /* Should all of these static methods just check Result.effect being non-null, throw with errorText if null? */
 runtime_effect
     .def_static("MakeForColorFilter", py::overload_cast<SkString, const SkRuntimeEffect::Options&>(&SkRuntimeEffect::MakeForColorFilter),
