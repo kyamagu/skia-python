@@ -240,6 +240,17 @@ def svg_blob(svgface):
     blob = skia.TextBlob.MakeFromShapedText(text, font)
     return blob
 
+def test_svg_blob_1(svgface):
+    text = "abcdefgh"
+    font = skia.Font(svgface,109)
+    blob = skia.TextBlob.MakeFromText(text, font)
+    assert blob is not None
+
+def test_svg_blob_2(svgface):
+    text = "abcdefgh"
+    font = skia.Font(svgface,109)
+    blob = skia.TextBlob.MakeFromShapedText(text, font)
+    assert blob is not None
 
 # This test doesn't really test that the SVG table loads correctly -
 # Rather, it depends on the fact that, for this particular font,
@@ -418,6 +429,8 @@ def test_FontMgr_ref_unref(fontmgr):
 def font():
     return skia.Font(skia.Typeface(""))
 
+def test_font():
+    assert skia.Font(skia.Typeface("")) is not None
 
 @pytest.mark.parametrize('args', [
     tuple(),
