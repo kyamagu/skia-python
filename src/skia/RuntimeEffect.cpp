@@ -30,8 +30,16 @@ py::class_<SkRuntimeEffect::Result>(m, "RuntimeEffectResult")
     .def_readwrite("errorText", &SkRuntimeEffect::Result::errorText)
     ;
 
+runtime_effect_childptr
+    .def(py::init<>())
+    .def(py::init<sk_sp<SkShader>>())
+    .def(py::init<sk_sp<SkColorFilter>>())
+    .def(py::init<sk_sp<SkBlender>>())
+    ;
+
 span_runtime_effect_childptr
     .def(py::init<>())
+    .def(py::init<const SkRuntimeEffect::ChildPtr*, size_t>())
     .def(py::init<const SkSpan<const SkRuntimeEffect::ChildPtr>&>())
     ;
 
