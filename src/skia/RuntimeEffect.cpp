@@ -57,7 +57,6 @@ runtime_effect
                 py::arg("sksl"), py::arg("options"))
     .def_static("MakeForBlender", py::overload_cast<SkString>(&SkRuntimeEffect::MakeForBlender),
                 py::arg("sksl"))
-    // missing overloaded methods involving "SkSpan<const ChildPtr>..."
     .def("makeShader",
          [] (SkRuntimeEffect& runtime_effect, sk_sp<const SkData> uniforms) {
              return runtime_effect.makeShader(uniforms, {});
@@ -67,6 +66,10 @@ runtime_effect
          py::overload_cast<sk_sp<const SkData>, sk_sp<SkShader>[], size_t, const SkMatrix*>(&SkRuntimeEffect::makeShader, py::const_),
          py::arg("uniforms"), py::arg("children"),
          py::arg("childCount"), py::arg("localMatrix") = nullptr)
+    .def("makeShader",
+         py::overload_cast<sk_sp<const SkData>, SkSpan<const SkRuntimeEffect::ChildPtr>, const SkMatrix*>(&SkRuntimeEffect::makeShader, py::const_),
+         py::arg("uniforms"), py::arg("children"),
+         py::arg("localMatrix") = nullptr)
     .def("makeColorFilter",
          py::overload_cast<sk_sp<const SkData>>(&SkRuntimeEffect::makeColorFilter, py::const_),
          py::arg("uniforms"))
@@ -74,16 +77,17 @@ runtime_effect
          py::overload_cast<sk_sp<const SkData>, sk_sp<SkColorFilter>[], size_t>(&SkRuntimeEffect::makeColorFilter, py::const_),
          py::arg("uniforms"), py::arg("children"),
          py::arg("childCount"))
+    .def("makeColorFilter",
+         py::overload_cast<sk_sp<const SkData>, SkSpan<const SkRuntimeEffect::ChildPtr>>(&SkRuntimeEffect::makeColorFilter, py::const_),
+         py::arg("uniforms"), py::arg("children"))
     .def("makeBlender",
          [] (SkRuntimeEffect& runtime_effect, sk_sp<const SkData> uniforms) {
              return runtime_effect.makeColorFilter(uniforms, {});
          },
          py::arg("uniforms"))
-/*
     .def("makeBlender",
          py::overload_cast<sk_sp<const SkData>, SkSpan<const SkRuntimeEffect::ChildPtr>>(&SkRuntimeEffect::makeColorFilter, py::const_),
          py::arg("uniforms"), py::arg("children") = SkSpan<const SkRuntimeEffect::ChildPtr>{})
-*/
     ;
 
 runtime_effect_builder
