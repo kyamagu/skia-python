@@ -7,6 +7,8 @@ py::class_<SkRuntimeEffect, sk_sp<SkRuntimeEffect>, SkRefCnt> runtime_effect(m, 
 
 py::class_<SkRuntimeEffect::ChildPtr> runtime_effect_childptr(m, "RuntimeEffectChildPtr");
 
+py::class_<SkSpan<const SkRuntimeEffect::ChildPtr>> span_runtime_effect_childptr(m, "SpanRuntimeEffectChildPtr");
+
 py::class_<SkRuntimeEffectBuilder> runtime_effect_builder(m, "RuntimeEffectBuilder");
 
 py::class_<SkV3>(m, "V3")
@@ -26,6 +28,11 @@ py::class_<SkV4>(m, "V4")
 py::class_<SkRuntimeEffect::Result>(m, "RuntimeEffectResult")
     .def_readwrite("effect", &SkRuntimeEffect::Result::effect)
     .def_readwrite("errorText", &SkRuntimeEffect::Result::errorText)
+    ;
+
+span_runtime_effect_childptr
+    .def(py::init<>())
+    .def(py::init<const SkSpan<const SkRuntimeEffect::ChildPtr>&>())
     ;
 
 /* Should all of these static methods just check Result.effect being non-null, throw with errorText if null? */
