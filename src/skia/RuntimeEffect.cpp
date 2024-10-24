@@ -5,7 +5,6 @@
 void initRuntimeEffect(py::module &m) {
 py::class_<SkRuntimeEffect, sk_sp<SkRuntimeEffect>, SkRefCnt> runtime_effect(m, "RuntimeEffect");
 
-py::class_<SkRuntimeEffect::Result> runtime_effect_result(m, "RuntimeEffectResult");
 py::class_<SkRuntimeEffect::ChildPtr> runtime_effect_childptr(m, "RuntimeEffectChildPtr");
 
 py::class_<SkRuntimeEffectBuilder> runtime_effect_builder(m, "RuntimeEffectBuilder");
@@ -24,7 +23,7 @@ py::class_<SkV4>(m, "V4")
         }))
     ;
 
-runtime_effect_result
+py::class_<SkRuntimeEffect::Result>(m, "RuntimeEffectResult")
     .def_readwrite("effect", &SkRuntimeEffect::Result::effect)
     .def_readwrite("errorText", &SkRuntimeEffect::Result::errorText)
     ;
