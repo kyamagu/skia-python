@@ -1,5 +1,6 @@
 #include "common.h"
 #include <include/effects/SkRuntimeEffect.h>
+//#include <include/core/SkM44.h> // defines SkV3, SkV4 ; M44 used in Matrix/Canvas ; Revisit.
 
 void initRuntimeEffect(py::module &m) {
 py::class_<SkRuntimeEffect, sk_sp<SkRuntimeEffect>, SkRefCnt> runtime_effect(m, "RuntimeEffect");
@@ -8,6 +9,20 @@ py::class_<SkRuntimeEffect::Result> runtime_effect_result(m, "RuntimeEffectResul
 py::class_<SkRuntimeEffect::ChildPtr> runtime_effect_childptr(m, "RuntimeEffectChildPtr");
 
 py::class_<SkRuntimeEffectBuilder> runtime_effect_builder(m, "RuntimeEffectBuilder");
+
+py::class_<SkV3>(m, "V3")
+    .def(py::init(
+        [] (float x, float y, float z) {
+            return SkV3{x, y, z};
+        }))
+    ;
+
+py::class_<SkV4>(m, "V4")
+    .def(py::init(
+        [] (float x, float y, float z, float w) {
+            return SkV4{x, y, z, w};
+        }))
+    ;
 
 runtime_effect_result
     .def_readwrite("effect", &SkRuntimeEffect::Result::effect)
