@@ -15,7 +15,7 @@ Binary package is available on PyPI:
 pip install skia-python
 ```
 
-Supported platforms: Python 3.8-3.12 (CPython) on
+Supported platforms: Python 3.8-3.13 (CPython) on
 
 - Linux x86_64, aarch64
 - macOS x86_64, arm64
