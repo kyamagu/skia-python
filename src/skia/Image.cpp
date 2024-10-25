@@ -1230,7 +1230,59 @@ image
         py::arg_v("tmy", SkTileMode::kClamp, "skia.TileMode.kClamp"),
         py::arg_v("samplingOptions", SkSamplingOptions(), "skia.SamplingOptions()"),
         py::arg("localMatrix") = nullptr)
-    // TODO: Other makeShader overloads.
+    .def("makeShader",
+        py::overload_cast<SkTileMode, SkTileMode, const SkSamplingOptions&, const SkMatrix&>(
+            &SkImage::makeShader, py::const_),
+        R"docstring(
+        Creates :py:class:`Shader` from :py:class:`Image`.
+
+        :py:class:`Shader` dimensions are taken from :py:class:`Image`.
+        :py:class:`Shader` uses :py:class:`TileMode` rules to fill drawn area
+        outside :py:class:`Image`. localMatrix permits transforming
+        :py:class:`Image` before :py:class:`Canvas` matrix is applied.
+
+        :param skia.TileMode tmx: tiling in the x direction
+        :param skia.TileMode tmy: tiling in the y direction
+        :param skia.Matrix localMatrix: :py:class:`Image` transformation, or
+            nullptr
+        :return: :py:class:`Shader` containing :py:class:`Image`
+        )docstring",
+        py::arg_v("tmx", SkTileMode::kClamp, "skia.TileMode.kClamp"),
+        py::arg_v("tmy", SkTileMode::kClamp, "skia.TileMode.kClamp"),
+        py::arg_v("samplingOptions", SkSamplingOptions(), "skia.SamplingOptions()"),
+        py::arg("localMatrix"))
+    .def("makeShader",
+        py::overload_cast<const SkSamplingOptions&, const SkMatrix&>(
+            &SkImage::makeShader, py::const_),
+        R"docstring(
+        Creates :py:class:`Shader` from :py:class:`Image`.
+
+        :py:class:`Shader` dimensions are taken from :py:class:`Image`.
+        localMatrix permits transforming
+        :py:class:`Image` before :py:class:`Canvas` matrix is applied.
+
+        :param skia.Matrix localMatrix: :py:class:`Image` transformation, or
+            nullptr
+        :return: :py:class:`Shader` containing :py:class:`Image`
+        )docstring",
+        py::arg_v("samplingOptions", SkSamplingOptions(), "skia.SamplingOptions()"),
+        py::arg("localMatrix"))
+    .def("makeShader",
+        py::overload_cast<const SkSamplingOptions&, const SkMatrix*>(
+            &SkImage::makeShader, py::const_),
+        R"docstring(
+        Creates :py:class:`Shader` from :py:class:`Image`.
+
+        :py:class:`Shader` dimensions are taken from :py:class:`Image`.
+        localMatrix permits transforming
+        :py:class:`Image` before :py:class:`Canvas` matrix is applied.
+
+        :param skia.Matrix localMatrix: :py:class:`Image` transformation, or
+            nullptr
+        :return: :py:class:`Shader` containing :py:class:`Image`
+        )docstring",
+        py::arg_v("samplingOptions", SkSamplingOptions(), "skia.SamplingOptions()"),
+        py::arg("localMatrix") = nullptr)
     .def("peekPixels", &SkImage::peekPixels,
         R"docstring(
         Copies :py:class:`Image` pixel address, row bytes, and
