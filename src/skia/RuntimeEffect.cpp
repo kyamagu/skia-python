@@ -1,12 +1,16 @@
 #include "common.h"
 #include <include/effects/SkRuntimeEffect.h>
 //#include <include/core/SkM44.h> // defines SkV3, SkV4 ; M44 used in Matrix/Canvas ; Revisit.
+#include <pybind11/stl_bind.h>
+
+PYBIND11_MAKE_OPAQUE(std::vector<SkRuntimeEffect::ChildPtr>)
 
 void initRuntimeEffect(py::module &m) {
 py::class_<SkRuntimeEffect, sk_sp<SkRuntimeEffect>, SkRefCnt> runtime_effect(m, "RuntimeEffect");
 
 py::class_<SkRuntimeEffect::ChildPtr> runtime_effect_childptr(m, "RuntimeEffectChildPtr");
 
+py::bind_vector<std::vector<SkRuntimeEffect::ChildPtr>>(m, "VectorSkRuntimeEffectChildPtr");
 py::class_<SkSpan<const SkRuntimeEffect::ChildPtr>> span_runtime_effect_childptr(m, "SpanRuntimeEffectChildPtr");
 
 py::class_<SkRuntimeEffectBuilder> runtime_effect_builder(m, "RuntimeEffectBuilder");
@@ -41,6 +45,11 @@ span_runtime_effect_childptr
     .def(py::init<>())
     .def(py::init<const SkRuntimeEffect::ChildPtr*, size_t>())
     .def(py::init<const SkSpan<const SkRuntimeEffect::ChildPtr>&>())
+    .def(py::init(
+        [] (std::vector<SkRuntimeEffect::ChildPtr>& v) {
+            return SkSpan<SkRuntimeEffect::ChildPtr>(&v[0], v.size());
+        }))
+    .def(py::init<const SkSpan<SkRuntimeEffect::ChildPtr>&>())
     ;
 
 /* Should all of these static methods just check Result.effect being non-null, throw with errorText if null? */
