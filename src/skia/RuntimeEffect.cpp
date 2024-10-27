@@ -104,6 +104,14 @@ runtime_effect
          py::arg("uniforms"), py::arg("children") = SkSpan<const SkRuntimeEffect::ChildPtr>{})
     ;
 
+py::class_<SkRuntimeEffectBuilder::BuilderUniform>(m, "RuntimeEffectBuilderUniform")
+    .def(py::init<>())
+    ;
+
+py::class_<SkRuntimeEffectBuilder::BuilderChild>(m, "RuntimeEffectBuilderChild")
+    .def(py::init<>())
+    ;
+
 runtime_effect_builder
     .def(py::init<sk_sp<SkRuntimeEffect>>())
     .def(py::init<sk_sp<SkRuntimeEffect>, sk_sp<SkData>>())
@@ -118,4 +126,8 @@ runtime_effect_builder
     .def("makeColorFilter", &SkRuntimeEffectBuilder::makeColorFilter)
     .def("makeBlender", &SkRuntimeEffectBuilder::makeBlender)
     ;
+
+m.attr("RuntimeShaderBuilder") = m.attr("RuntimeEffectBuilder");
+m.attr("RuntimeColorFilterBuilder") = m.attr("RuntimeEffectBuilder");
+m.attr("RuntimeBlendBuilder") = m.attr("RuntimeEffectBuilder");
 }
