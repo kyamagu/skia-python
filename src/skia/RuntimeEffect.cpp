@@ -52,6 +52,9 @@ span_runtime_effect_childptr
     .def(py::init<const SkSpan<SkRuntimeEffect::ChildPtr>&>())
     ;
 
+py::implicitly_convertible<sk_sp<SkShader>, SkRuntimeEffect::ChildPtr>();
+py::implicitly_convertible<sk_sp<SkColorFilter>, SkRuntimeEffect::ChildPtr>();
+py::implicitly_convertible<sk_sp<SkBlender>, SkRuntimeEffect::ChildPtr>();
 py::implicitly_convertible<std::vector<SkRuntimeEffect::ChildPtr>, SkSpan<const SkRuntimeEffect::ChildPtr>>();
 
 /* Should all of these static methods just check Result.effect being non-null, throw with errorText if null? */
