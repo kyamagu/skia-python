@@ -119,6 +119,30 @@ runtime_effect_builder
         py::arg("name"))
     .def("child", &SkRuntimeEffectBuilder::child,
         py::arg("name"))
+    .def("setUniform",
+         [] (SkRuntimeEffectBuilder& builder, std::string_view name, int uniform) {
+             auto v = builder.uniform(name);
+             v = uniform;
+         },
+         py::arg("name"), py::arg("uniform"))
+    .def("setUniform",
+         [] (SkRuntimeEffectBuilder& builder, std::string_view name, const SkV3& uniform) {
+             auto v = builder.uniform(name);
+             v = uniform;
+         },
+         py::arg("name"), py::arg("uniform"))
+    .def("setUniform",
+         [] (SkRuntimeEffectBuilder& builder, std::string_view name, const SkV4& uniform) {
+             auto v = builder.uniform(name);
+             v = uniform;
+         },
+         py::arg("name"), py::arg("uniform"))
+    .def("setChild",
+         [] (SkRuntimeEffectBuilder& builder, std::string_view name, sk_sp<SkShader> child) {
+             auto v = builder.child(name);
+             v = child;
+         },
+         py::arg("name"), py::arg("child"))
     .def("uniforms", &SkRuntimeEffectBuilder::uniforms)
     .def("children", &SkRuntimeEffectBuilder::children)
     .def("makeShader", &SkRuntimeEffectBuilder::makeShader,
