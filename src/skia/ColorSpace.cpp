@@ -37,6 +37,10 @@ py::class_<skcms_TransferFunction>(skcms, "TransferFunction",
             };
         }), py::arg("v"));
 
+m.attr("cms").attr("NamedTransferFn") = m.attr("cms").attr("TransferFunction");
+m.attr("cms").attr("TransferFunction").attr("kLinear") = SkNamedTransferFn::kLinear;
+m.attr("cms").attr("TransferFunction").attr("kSRGB")   = SkNamedTransferFn::kSRGB;
+
 py::class_<skcms_Matrix3x3>(skcms, "Matrix3x3",
     R"docstring(
     A row-major 3x3 matrix (ie vals[row][col])
@@ -51,6 +55,9 @@ py::class_<skcms_Matrix3x3>(skcms, "Matrix3x3",
                 {v[6], v[7], v[8]}
             }};
         }), py::arg("v"));
+
+m.attr("cms").attr("NamedGamut") = m.attr("cms").attr("Matrix3x3");
+m.attr("cms").attr("Matrix3x3").attr("kRec2020") = SkNamedGamut::kRec2020;
 
 py::class_<SkColorSpace, sk_sp<SkColorSpace>>(m, "ColorSpace")
     .def("toProfile",
