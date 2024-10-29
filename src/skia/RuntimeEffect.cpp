@@ -1,3 +1,4 @@
+#include <stdexcept>
 #include "common.h"
 #include <include/effects/SkRuntimeEffect.h>
 //#include <include/core/SkM44.h> // defines SkV3, SkV4 ; M44 used in Matrix/Canvas ; Revisit.
@@ -59,17 +60,53 @@ py::implicitly_convertible<std::vector<SkRuntimeEffect::ChildPtr>, SkSpan<const 
 
 /* Should all of these static methods just check Result.effect being non-null, throw with errorText if null? */
 runtime_effect
-    .def_static("MakeForColorFilter", py::overload_cast<SkString, const SkRuntimeEffect::Options&>(&SkRuntimeEffect::MakeForColorFilter),
+    .def_static("MakeForColorFilter",
+                [] (SkString sksl, const SkRuntimeEffect::Options& options) {
+                    auto [effect, err] = SkRuntimeEffect::MakeForColorFilter(sksl, options);
+                    if (!effect)
+                        throw std::runtime_error(err.data());
+                    return effect;
+                },
                 py::arg("sksl"), py::arg("options"))
-    .def_static("MakeForColorFilter", py::overload_cast<SkString>(&SkRuntimeEffect::MakeForColorFilter),
+    .def_static("MakeForColorFilter",
+                [] (SkString sksl) {
+                    auto [effect, err] = SkRuntimeEffect::MakeForColorFilter(sksl);
+                    if (!effect)
+                        throw std::runtime_error(err.data());
+                    return effect;
+                },
                 py::arg("sksl"))
-    .def_static("MakeForShader", py::overload_cast<SkString, const SkRuntimeEffect::Options&>(&SkRuntimeEffect::MakeForShader),
+    .def_static("MakeForShader",
+                [] (SkString sksl, const SkRuntimeEffect::Options& options) {
+                    auto [effect, err] = SkRuntimeEffect::MakeForShader(sksl, options);
+                    if (!effect)
+                        throw std::runtime_error(err.data());
+                    return effect;
+                },
                 py::arg("sksl"), py::arg("options"))
-    .def_static("MakeForShader", py::overload_cast<SkString>(&SkRuntimeEffect::MakeForShader),
+    .def_static("MakeForShader",
+                [] (SkString sksl) {
+                    auto [effect, err] = SkRuntimeEffect::MakeForShader(sksl);
+                    if (!effect)
+                        throw std::runtime_error(err.data());
+                    return effect;
+                },
                 py::arg("sksl"))
-    .def_static("MakeForBlender", py::overload_cast<SkString, const SkRuntimeEffect::Options&>(&SkRuntimeEffect::MakeForBlender),
+    .def_static("MakeForBlender",
+                [] (SkString sksl, const SkRuntimeEffect::Options& options) {
+                    auto [effect, err] = SkRuntimeEffect::MakeForBlender(sksl, options);
+                    if (!effect)
+                        throw std::runtime_error(err.data());
+                    return effect;
+                },
                 py::arg("sksl"), py::arg("options"))
-    .def_static("MakeForBlender", py::overload_cast<SkString>(&SkRuntimeEffect::MakeForBlender),
+    .def_static("MakeForBlender",
+                [] (SkString sksl) {
+                    auto [effect, err] = SkRuntimeEffect::MakeForBlender(sksl);
+                    if (!effect)
+                        throw std::runtime_error(err.data());
+                    return effect;
+                },
                 py::arg("sksl"))
     .def("makeShader",
          [] (SkRuntimeEffect& runtime_effect, sk_sp<const SkData> uniforms) {
