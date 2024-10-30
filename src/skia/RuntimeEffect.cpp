@@ -61,84 +61,84 @@ py::implicitly_convertible<std::vector<SkRuntimeEffect::ChildPtr>, SkSpan<const 
 /* Should all of these static methods just check Result.effect being non-null, throw with errorText if null? */
 runtime_effect
     .def_static("MakeForColorFilter",
-                [] (SkString sksl, const SkRuntimeEffect::Options& options) {
-                    auto [effect, err] = SkRuntimeEffect::MakeForColorFilter(sksl, options);
-                    if (!effect)
-                        throw std::runtime_error(err.data());
-                    return effect;
-                },
-                py::arg("sksl"), py::arg("options"))
+        [] (SkString sksl, const SkRuntimeEffect::Options& options) {
+            auto [effect, err] = SkRuntimeEffect::MakeForColorFilter(sksl, options);
+            if (!effect)
+                throw std::runtime_error(err.data());
+            return effect;
+        },
+        py::arg("sksl"), py::arg("options"))
     .def_static("MakeForColorFilter",
-                [] (SkString sksl) {
-                    auto [effect, err] = SkRuntimeEffect::MakeForColorFilter(sksl);
-                    if (!effect)
-                        throw std::runtime_error(err.data());
-                    return effect;
-                },
-                py::arg("sksl"))
+        [] (SkString sksl) {
+            auto [effect, err] = SkRuntimeEffect::MakeForColorFilter(sksl);
+            if (!effect)
+                throw std::runtime_error(err.data());
+            return effect;
+        },
+        py::arg("sksl"))
     .def_static("MakeForShader",
-                [] (SkString sksl, const SkRuntimeEffect::Options& options) {
-                    auto [effect, err] = SkRuntimeEffect::MakeForShader(sksl, options);
-                    if (!effect)
-                        throw std::runtime_error(err.data());
-                    return effect;
-                },
-                py::arg("sksl"), py::arg("options"))
+        [] (SkString sksl, const SkRuntimeEffect::Options& options) {
+            auto [effect, err] = SkRuntimeEffect::MakeForShader(sksl, options);
+            if (!effect)
+                throw std::runtime_error(err.data());
+            return effect;
+        },
+        py::arg("sksl"), py::arg("options"))
     .def_static("MakeForShader",
-                [] (SkString sksl) {
-                    auto [effect, err] = SkRuntimeEffect::MakeForShader(sksl);
-                    if (!effect)
-                        throw std::runtime_error(err.data());
-                    return effect;
-                },
-                py::arg("sksl"))
+        [] (SkString sksl) {
+            auto [effect, err] = SkRuntimeEffect::MakeForShader(sksl);
+            if (!effect)
+                throw std::runtime_error(err.data());
+            return effect;
+        },
+        py::arg("sksl"))
     .def_static("MakeForBlender",
-                [] (SkString sksl, const SkRuntimeEffect::Options& options) {
-                    auto [effect, err] = SkRuntimeEffect::MakeForBlender(sksl, options);
-                    if (!effect)
-                        throw std::runtime_error(err.data());
-                    return effect;
-                },
-                py::arg("sksl"), py::arg("options"))
+        [] (SkString sksl, const SkRuntimeEffect::Options& options) {
+            auto [effect, err] = SkRuntimeEffect::MakeForBlender(sksl, options);
+            if (!effect)
+                throw std::runtime_error(err.data());
+            return effect;
+        },
+        py::arg("sksl"), py::arg("options"))
     .def_static("MakeForBlender",
-                [] (SkString sksl) {
-                    auto [effect, err] = SkRuntimeEffect::MakeForBlender(sksl);
-                    if (!effect)
-                        throw std::runtime_error(err.data());
-                    return effect;
-                },
-                py::arg("sksl"))
+        [] (SkString sksl) {
+            auto [effect, err] = SkRuntimeEffect::MakeForBlender(sksl);
+            if (!effect)
+                throw std::runtime_error(err.data());
+            return effect;
+        },
+        py::arg("sksl"))
     .def("makeShader",
-         [] (SkRuntimeEffect& runtime_effect, sk_sp<const SkData> uniforms) {
-             return runtime_effect.makeShader(uniforms, {});
-         },
+        [] (SkRuntimeEffect& runtime_effect, sk_sp<const SkData> uniforms) {
+            return runtime_effect.makeShader(uniforms, {});
+        },
          py::arg("uniforms"))
     .def("makeShader",
-         py::overload_cast<sk_sp<const SkData>, sk_sp<SkShader>[], size_t, const SkMatrix*>(&SkRuntimeEffect::makeShader, py::const_),
-         py::arg("uniforms"), py::arg("children"),
-         py::arg("childCount"), py::arg("localMatrix") = nullptr)
+        py::overload_cast<sk_sp<const SkData>, sk_sp<SkShader>[], size_t, const SkMatrix*>(&SkRuntimeEffect::makeShader, py::const_),
+        py::arg("uniforms"), py::arg("children"),
+        py::arg("childCount"), py::arg("localMatrix") = nullptr)
     .def("makeShader",
-         py::overload_cast<sk_sp<const SkData>, SkSpan<const SkRuntimeEffect::ChildPtr>, const SkMatrix*>(&SkRuntimeEffect::makeShader, py::const_),
-         py::arg("uniforms"), py::arg("children"),
-         py::arg("localMatrix") = nullptr)
+        py::overload_cast<sk_sp<const SkData>, SkSpan<const SkRuntimeEffect::ChildPtr>, const SkMatrix*>(&SkRuntimeEffect::makeShader, py::const_),
+        py::arg("uniforms"), py::arg("children"),
+        py::arg("localMatrix") = nullptr)
     .def("makeColorFilter",
-         py::overload_cast<sk_sp<const SkData>>(&SkRuntimeEffect::makeColorFilter, py::const_),
-         py::arg("uniforms"))
+        py::overload_cast<sk_sp<const SkData>>(&SkRuntimeEffect::makeColorFilter, py::const_),
+        py::arg("uniforms"))
     .def("makeColorFilter",
-         py::overload_cast<sk_sp<const SkData>, sk_sp<SkColorFilter>[], size_t>(&SkRuntimeEffect::makeColorFilter, py::const_),
-         py::arg("uniforms"), py::arg("children"),
-         py::arg("childCount"))
+        py::overload_cast<sk_sp<const SkData>, sk_sp<SkColorFilter>[], size_t>(&SkRuntimeEffect::makeColorFilter, py::const_),
+        py::arg("uniforms"), py::arg("children"),
+        py::arg("childCount"))
     .def("makeColorFilter",
-         py::overload_cast<sk_sp<const SkData>, SkSpan<const SkRuntimeEffect::ChildPtr>>(&SkRuntimeEffect::makeColorFilter, py::const_),
-         py::arg("uniforms"), py::arg("children"))
+        py::overload_cast<sk_sp<const SkData>, SkSpan<const SkRuntimeEffect::ChildPtr>>(&SkRuntimeEffect::makeColorFilter, py::const_),
+        py::arg("uniforms"), py::arg("children"))
     .def("makeBlender",
-         [] (SkRuntimeEffect& runtime_effect, sk_sp<const SkData> uniforms) {
-             return runtime_effect.makeColorFilter(uniforms, {});
-         },
-         py::arg("uniforms"))
+        [] (SkRuntimeEffect& runtime_effect, sk_sp<const SkData> uniforms) {
+            return runtime_effect.makeColorFilter(uniforms, {});
+        },
+        py::arg("uniforms"))
     .def("makeBlender",
-         py::overload_cast<sk_sp<const SkData>, SkSpan<const SkRuntimeEffect::ChildPtr>>(&SkRuntimeEffect::makeColorFilter, py::const_),
-         py::arg("uniforms"), py::arg("children") = SkSpan<const SkRuntimeEffect::ChildPtr>{})
+        py::overload_cast<sk_sp<const SkData>, SkSpan<const SkRuntimeEffect::ChildPtr>>(&SkRuntimeEffect::makeColorFilter, py::const_),
+        py::arg("uniforms"), py::arg("children") = SkSpan<const SkRuntimeEffect::ChildPtr>{})
     ;
 
 py::class_<SkRuntimeEffectBuilder::BuilderUniform>(m, "RuntimeEffectBuilderUniform")
@@ -157,29 +157,29 @@ runtime_effect_builder
     .def("child", &SkRuntimeEffectBuilder::child,
         py::arg("name"))
     .def("setUniform",
-         [] (SkRuntimeEffectBuilder& builder, std::string_view name, int uniform) {
-             auto v = builder.uniform(name);
-             v = uniform;
-         },
-         py::arg("name"), py::arg("uniform"))
+        [] (SkRuntimeEffectBuilder& builder, std::string_view name, int uniform) {
+            auto v = builder.uniform(name);
+            v = uniform;
+        },
+        py::arg("name"), py::arg("uniform"))
     .def("setUniform",
-         [] (SkRuntimeEffectBuilder& builder, std::string_view name, const SkV3& uniform) {
-             auto v = builder.uniform(name);
-             v = uniform;
-         },
-         py::arg("name"), py::arg("uniform"))
+        [] (SkRuntimeEffectBuilder& builder, std::string_view name, const SkV3& uniform) {
+            auto v = builder.uniform(name);
+            v = uniform;
+        },
+        py::arg("name"), py::arg("uniform"))
     .def("setUniform",
-         [] (SkRuntimeEffectBuilder& builder, std::string_view name, const SkV4& uniform) {
-             auto v = builder.uniform(name);
-             v = uniform;
-         },
-         py::arg("name"), py::arg("uniform"))
+        [] (SkRuntimeEffectBuilder& builder, std::string_view name, const SkV4& uniform) {
+            auto v = builder.uniform(name);
+            v = uniform;
+        },
+        py::arg("name"), py::arg("uniform"))
     .def("setChild",
-         [] (SkRuntimeEffectBuilder& builder, std::string_view name, sk_sp<SkShader> child) {
-             auto v = builder.child(name);
-             v = child;
-         },
-         py::arg("name"), py::arg("child"))
+        [] (SkRuntimeEffectBuilder& builder, std::string_view name, sk_sp<SkShader> child) {
+            auto v = builder.child(name);
+            v = child;
+        },
+        py::arg("name"), py::arg("child"))
     .def("uniforms", &SkRuntimeEffectBuilder::uniforms)
     .def("children", &SkRuntimeEffectBuilder::children)
     .def("makeShader", &SkRuntimeEffectBuilder::makeShader,
