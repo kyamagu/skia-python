@@ -17,6 +17,8 @@ Since m128 (last beta release):
 
   * The `SkUnicode` class is now available under python as `skia.Unicode`.
     On windows, the functionality requires a "icudtl.dat" on the load path.
+    For skia m126 to m130, you need v74; m116 to m125, v69.
+    See comments in `scripts/install-icudtl.sh` for latest info.
     This can be programmatically done as follows (download, unzip and copy with renaming):
 
     python -c 'import urllib.request; urllib.request.urlretrieve("https://github.com/unicode-org/icu/releases/download/release-74-2/icu4c-74_2-data-bin-l.zip", "icudatal.zip")'
