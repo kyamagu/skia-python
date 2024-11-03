@@ -19,7 +19,7 @@ Since m128 (last beta release):
     On windows, the functionality requires a "icudtl.dat" on the load path.
     This can be programmatically done as follows (download, unzip and copy with renaming):
 
-    python -c 'import urllib.request; urllib.request.urlretrieve("https://github.com/unicode-org/icu/releases/download/release-75-1/icu4c-75_1-data-bin-l.zip", "icudatal.zip")'
+    python -c 'import urllib.request; urllib.request.urlretrieve("https://github.com/unicode-org/icu/releases/download/release-74-2/icu4c-74_2-data-bin-l.zip", "icudatal.zip")'
     unzip icudatal.zip
     python -c 'import os, shutil, site; shutil.copy2("icudt75l.dat", os.path.join(site.getsitepackages()[0], "icudtl.dat"))'
 
