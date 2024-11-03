@@ -23,7 +23,7 @@ Since m128 (last beta release):
 
     python -c 'import urllib.request; urllib.request.urlretrieve("https://github.com/unicode-org/icu/releases/download/release-74-2/icu4c-74_2-data-bin-l.zip", "icudatal.zip")'
     unzip icudatal.zip
-    python -c 'import os, shutil, site; shutil.copy2("icudt75l.dat", os.path.join(site.getsitepackages()[0], "icudtl.dat"))'
+    python -c 'import os, shutil, site; shutil.copy2("icudt74l.dat", os.path.join(site.getsitepackages()[0], "icudtl.dat"))'
 
     Linux and mac users are not required to take any action.
 

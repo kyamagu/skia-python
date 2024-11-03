@@ -18,4 +18,4 @@ unzip icudatal.zip
 python -c 'import sys; print(sys.path)'
 python -c 'import site; print(site.getsitepackages())'
 # site.getsitepackages()[0] does not seem to work for venv
-python -c 'import os, shutil, site; shutil.copy2("icudt75l.dat", os.path.join(site.getsitepackages()[1], "icudtl.dat"))'
+python -c 'import os, shutil, site; shutil.copy2("icudt74l.dat", os.path.join(site.getsitepackages()[1], "icudtl.dat"))'
