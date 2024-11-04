@@ -1,3 +1,5 @@
+import os
+import sys
 import skia
 import pytest
 
@@ -643,3 +645,42 @@ def test_FontMetrics_hasStrikeoutThickness(fontmetrics):
 def test_FontMetrics_hasStrikeoutPosition(fontmetrics):
     position = 0.
     assert isinstance(fontmetrics.hasStrikeoutPosition(position), bool)
+
+
+@pytest.fixture
+def color_emoji_run():
+    if sys.platform.startswith("linux"):
+        typeface = skia.Typeface("Noto Color Emoji")
+    if sys.platform.startswith("darwin"):
+        typeface = skia.Typeface("Apple Color Emoji")
+    if sys.platform.startswith("win"):
+        typeface = skia.Typeface("Segoe UI Emoji") # COLRv0
+    text = "✌✌🏻"
+    font = skia.Font(typeface,109)
+    blob = skia.TextBlob.MakeFromShapedText(text, font)
+    run = [x for x in blob]
+    return run[0]
+
+def test_emoji_count(color_emoji_run):
+    assert (color_emoji_run.fGlyphCount == 2)
+
+def test_emoji_typeface(color_emoji_run):
+    assert ((color_emoji_run.fTypeface.getFamilyName() == "Noto Color Emoji")
+            or (color_emoji_run.fTypeface.getFamilyName() == "Apple Color Emoji")
+            or (color_emoji_run.fTypeface.getFamilyName() == "Segoe UI Emoji"))
+
+# The numbers are hardcoded for three specific version of fonts,
+# and will change if the hosts are upgraded.
+def test_emoji_glyph1(color_emoji_run):
+    if (os.getenv("GITHUB_ACTION") == True):
+        assert ((color_emoji_run.fGlyphIndices[0] == 148)
+                or (color_emoji_run.fGlyphIndices[0] == 247)
+                or (color_emoji_run.fGlyphIndices[0] == 1567))
+
+# The numbers are hardcoded for three specific version of fonts,
+# and will change if the hosts are upgraded.
+def test_emoji_glyph2(color_emoji_run):
+    if (os.getenv("GITHUB_ACTION") == True):
+        assert ((color_emoji_run.fGlyphIndices[1] == 1512)
+                or (color_emoji_run.fGlyphIndices[1] == 248)
+                or (color_emoji_run.fGlyphIndices[1] == 1571))
