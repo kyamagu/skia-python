@@ -19,6 +19,7 @@ SKIA_OUT_PATH = os.getenv(
     'SKIA_OUT_PATH', os.path.join(SKIA_PATH, 'out', 'Release')
 )
 
+data_files = []
 if sys.platform == 'win32':
     DEFINE_MACROS = []  # doesn't work for cl.exe
     LIBRARIES = [
@@ -54,6 +55,7 @@ if sys.platform == 'win32':
         '/OPT:ICF',
         '/OPT:REF',
     ]
+    data_files = [('Lib/site-packages', [os.path.join(SKIA_OUT_PATH, 'icudtl.dat')])]
 elif sys.platform == 'darwin':
     DEFINE_MACROS = [
         ('VERSION_INFO', __version__),
@@ -173,6 +175,7 @@ setup(
     long_description=open('README.md', 'r').read(),
     long_description_content_type='text/markdown',
     ext_modules=[extension],
+    data_files=data_files,
     install_requires=[
         'numpy',
         'pybind11>=2.6'
