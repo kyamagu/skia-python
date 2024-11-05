@@ -43,11 +43,11 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [ubuntu-22.04, windows-2022, macos-12]
+        os: [ubuntu-22.04, windows-2022, macos-13]
         arch: [auto64]
         cp: ["cp3{10,11,12,13}"]
         include:
-          - os: macos-12
+          - os: macos-13
             arch: arm64
             cp: "cp3{10,11,12,13}"
           # aarch64 is emulated and takes longer, build one wheel per job
@@ -112,11 +112,11 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [ubuntu-22.04, windows-2022, macos-12]
+        os: [ubuntu-22.04, windows-2022, macos-13]
         arch: [auto64]
         cp: ["cp3{8,9}"]
         include:
-          - os: macos-12
+          - os: macos-13
             arch: arm64
             cp: "cp3{8,9}"
           # aarch64 is emulated and takes longer, build one wheel per job
