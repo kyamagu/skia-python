@@ -37,6 +37,8 @@ py::class_<skcms_TransferFunction>(skcms, "TransferFunction",
             };
         }), py::arg("v"));
 
+/* Upstream static constexpr's, which function like enum's,
+   but cannot be bound that way. */
 m.attr("cms").attr("NamedTransferFn") = m.attr("cms").attr("TransferFunction");
 m.attr("cms").attr("TransferFunction").attr("kSRGB")    = SkNamedTransferFn::kSRGB;
 m.attr("cms").attr("TransferFunction").attr("k2Dot2")   = SkNamedTransferFn::k2Dot2;
@@ -60,6 +62,8 @@ py::class_<skcms_Matrix3x3>(skcms, "Matrix3x3",
             }};
         }), py::arg("v"));
 
+/* Upstream static constexpr's, which function like enum's,
+   but cannot be bound that way. */
 m.attr("cms").attr("NamedGamut") = m.attr("cms").attr("Matrix3x3");
 m.attr("cms").attr("Matrix3x3").attr("kSRGB")      = SkNamedGamut::kSRGB;
 m.attr("cms").attr("Matrix3x3").attr("kAdobeRGB")  = SkNamedGamut::kAdobeRGB;
