@@ -161,9 +161,25 @@ def test_Image_isOpaque(image):
     (skia.TileMode.kRepeat, skia.TileMode.kRepeat),
     (skia.TileMode.kRepeat, skia.TileMode.kRepeat, skia.SamplingOptions()),
     (skia.TileMode.kRepeat, skia.TileMode.kRepeat, skia.SamplingOptions(), None),
+    (skia.TileMode.kRepeat, skia.TileMode.kRepeat, skia.SamplingOptions(), skia.Matrix()),
+    (skia.SamplingOptions(), None),
+    (skia.SamplingOptions(), skia.Matrix()),
 ])
 def test_Image_makeShader(image, args):
     assert isinstance(image.makeShader(*args), skia.Shader)
+
+
+@pytest.mark.parametrize('args', [
+    tuple(),
+    (skia.TileMode.kRepeat, skia.TileMode.kRepeat),
+    (skia.TileMode.kRepeat, skia.TileMode.kRepeat, skia.SamplingOptions()),
+    (skia.TileMode.kRepeat, skia.TileMode.kRepeat, skia.SamplingOptions(), None),
+    (skia.TileMode.kRepeat, skia.TileMode.kRepeat, skia.SamplingOptions(), skia.Matrix()),
+    (skia.SamplingOptions(), None),
+    (skia.SamplingOptions(), skia.Matrix()),
+])
+def test_Image_makeRawShader(image, args):
+    assert isinstance(image.makeRawShader(*args), skia.Shader)
 
 
 def test_Image_peekPixels(image):
