@@ -58,7 +58,10 @@ py::implicitly_convertible<sk_sp<SkColorFilter>, SkRuntimeEffect::ChildPtr>();
 py::implicitly_convertible<sk_sp<SkBlender>, SkRuntimeEffect::ChildPtr>();
 py::implicitly_convertible<std::vector<SkRuntimeEffect::ChildPtr>, SkSpan<const SkRuntimeEffect::ChildPtr>>();
 
-/* Should all of these static methods just check Result.effect being non-null, throw with errorText if null? */
+/*
+  All of these static methods check Result.effect being non-null, throw with errorText if null;
+  they differ from upsteam c++ APIs, which asks clients to check.
+*/
 runtime_effect
     .def_static("MakeForColorFilter",
         [] (SkString sksl, const SkRuntimeEffect::Options& options) {
