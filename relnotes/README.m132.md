@@ -12,8 +12,8 @@ Since m131:
   as `Image.makeRawShader`.
 
 - We binds `SkRuntimeEffect` as `skia.RuntimeEffect`. Added some helper classes:
-  `SkV3` as `skia.V3`, `SkV4` as `skia.V4`, 
-  `SkRuntimeEffect::Result` as `RuntimeEffectResult`, 
+  `SkV3` as `skia.V3`, `SkV4` as `skia.V4`,
+  `SkRuntimeEffect::Result` as `RuntimeEffectResult`,
   `SkRuntimeEffect::ChildPtr` as `RuntimeEffectChildPtr`,
   `SkRuntimeEffectBuilder` as `RuntimeEffectBuilder',
   `std::vector<SkRuntimeEffect::ChildPtr>` as `VectorRuntimeEffectChildPtr`,
