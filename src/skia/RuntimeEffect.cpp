@@ -133,11 +133,11 @@ runtime_effect
         py::arg("uniforms"), py::arg("children"))
     .def("makeBlender",
         [] (SkRuntimeEffect& runtime_effect, sk_sp<const SkData> uniforms) {
-            return runtime_effect.makeColorFilter(uniforms, {});
+            return runtime_effect.makeBlender(uniforms, {});
         },
         py::arg("uniforms"))
     .def("makeBlender",
-        py::overload_cast<sk_sp<const SkData>, SkSpan<const SkRuntimeEffect::ChildPtr>>(&SkRuntimeEffect::makeColorFilter, py::const_),
+        py::overload_cast<sk_sp<const SkData>, SkSpan<const SkRuntimeEffect::ChildPtr>>(&SkRuntimeEffect::makeBlender, py::const_),
         py::arg("uniforms"), py::arg("children") = SkSpan<const SkRuntimeEffect::ChildPtr>{})
     ;
 
