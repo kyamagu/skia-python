@@ -3,11 +3,24 @@ import pytest
 
 @pytest.fixture(scope='session')
 def runtime_effect():
-    return skia.RuntimeEffect.MakeForShader("half4 main(float2 coord){return half4(0,0,0,0);}")
+    return skia.RuntimeEffect.MakeForShader("vec4 main(vec2 inCoords){return vec4(0,0,0,0);}")
+
+@pytest.fixture(scope='session')
+def runtime_effect_color():
+    return skia.RuntimeEffect.MakeForColorFilter("vec4 main(vec4 inColor){return vec4(0,0,0,0);}")
+
+@pytest.fixture(scope='session')
+def runtime_effect_blender():
+    return skia.RuntimeEffect.MakeForBlender("vec4 main(vec4 srcColor, vec4 dstColor){return vec4(0,0,0,0);}")
 
 def test_RuntimeEffect_init0(runtime_effect):
     assert isinstance(runtime_effect, skia.RuntimeEffect)
 
+def test_RuntimeEffect_init1(runtime_effect_color):
+    assert isinstance(runtime_effect_color, skia.RuntimeEffect)
+
+def test_RuntimeEffect_init2(runtime_effect_blender):
+    assert isinstance(runtime_effect_blender, skia.RuntimeEffect)
 
 def test_V3_init0():
     assert isinstance(skia.V3(0,0,0), skia.V3)
