@@ -49,25 +49,24 @@ def test_RuntimeEffectBuilder_setUniform(runtime_effect_builder, arg):
 def test_RuntimeEffect_make_type1(runtime_effect):
     assert isinstance(runtime_effect.makeShader(None), skia.Shader)
 
-@pytest.mark.xfail(reason="Current SkSL snipplet returns None as ColorFilter; TODO: Find useful SkSL snipplet for construction")
-def test_RuntimeEffect_make_type2(runtime_effect):
-    assert isinstance(runtime_effect.makeColorFilter(None), skia.ColorFilter)
+def test_RuntimeEffect_make_type2(runtime_effect_color):
+    assert isinstance(runtime_effect_color.makeColorFilter(None), skia.ColorFilter)
 
 @pytest.mark.xfail(reason="We don't bind SkBlender yet. TODO")
-def test_RuntimeEffect_make_type3(runtime_effect):
-    assert isinstance(runtime_effect.makeBlender(None), skia.Blender)
+def test_RuntimeEffect_make_type3(runtime_effect_blender):
+    assert isinstance(runtime_effect_blender.makeBlender(None), skia.Blender)
 
 
 # These test implicit conversion to RuntimeEffectChildPtr
 def test_RuntimeEffectBuilder_setChild1(runtime_effect_builder, runtime_effect):
     runtime_effect_builder.setChild("bogus", runtime_effect.makeShader(None))
 
-def test_RuntimeEffectBuilder_setChild2(runtime_effect_builder, runtime_effect):
-    runtime_effect_builder.setChild("bogus", runtime_effect.makeColorFilter(None))
+def test_RuntimeEffectBuilder_setChild2(runtime_effect_builder, runtime_effect_color):
+    runtime_effect_builder.setChild("bogus", runtime_effect_color.makeColorFilter(None))
 
 @pytest.mark.xfail(reason="We don't bind SkBlender yet. TODO")
-def test_RuntimeEffectBuilder_setChild3(runtime_effect_builder, runtime_effect):
-    runtime_effect_builder.setChild("bogus", runtime_effect.makeBlender(None))
+def test_RuntimeEffectBuilder_setChild3(runtime_effect_builder, runtime_effect_blender):
+    runtime_effect_builder.setChild("bogus", runtime_effect_blender.makeBlender(None))
 
 
 @pytest.mark.xfail(reason="We throw on invalid struct and don't use the whole struct anymore / at the moment.")
