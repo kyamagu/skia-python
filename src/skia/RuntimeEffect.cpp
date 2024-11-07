@@ -21,14 +21,32 @@ py::class_<SkV3>(m, "V3")
         [] (float x, float y, float z) {
             return SkV3{x, y, z};
         }))
+    .def(py::init(
+        [] (py::tuple v3) {
+            if (v3.size() != 3)
+                throw py::value_error("V3 must have exactly three elements.");
+            return SkV3{v3[0].cast<float>(), v3[1].cast<float>(), v3[2].cast<float>()};
+        }),
+        py::arg("v3"))
     ;
+
+py::implicitly_convertible<py::tuple, SkV3>();
 
 py::class_<SkV4>(m, "V4")
     .def(py::init(
         [] (float x, float y, float z, float w) {
             return SkV4{x, y, z, w};
         }))
+    .def(py::init(
+        [] (py::tuple v4) {
+            if (v4.size() != 4)
+                throw py::value_error("V4 must have exactly four elements.");
+            return SkV4{v4[0].cast<float>(), v4[1].cast<float>(), v4[2].cast<float>(), v4[3].cast<float>()};
+        }),
+        py::arg("v4"))
     ;
+
+py::implicitly_convertible<py::tuple, SkV4>();
 
 py::class_<SkRuntimeEffect::Result>(m, "RuntimeEffectResult")
     .def_readwrite("effect", &SkRuntimeEffect::Result::effect)
@@ -175,6 +193,17 @@ runtime_effect_builder
         [] (SkRuntimeEffectBuilder& builder, std::string_view name, const SkV4& uniform) {
             auto v = builder.uniform(name);
             v = uniform;
+        },
+        py::arg("name"), py::arg("uniform"))
+    .def("setUniform",
+        [] (SkRuntimeEffectBuilder& builder, std::string_view name, py::list vN) {
+          if (vN.size() != 3 && vN.size() != 4)
+                throw py::value_error("Input must have exactly three or four elements.");
+            auto v = builder.uniform(name);
+            if (vN.size() == 3)
+                v = SkV3{vN[0].cast<float>(), vN[1].cast<float>(), vN[2].cast<float>()};
+            if (vN.size() == 4)
+                v = SkV4{vN[0].cast<float>(), vN[1].cast<float>(), vN[2].cast<float>(), vN[3].cast<float>()};
         },
         py::arg("name"), py::arg("uniform"))
     .def("setChild",
