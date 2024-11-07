@@ -44,6 +44,8 @@ def test_RuntimeEffectBuilder_init0(runtime_effect_builder):
     (skia.V4(0,0,0,0)),
     ([0,0,0]),
     ([0,0,0,0]),
+    ((0,0,0)),
+    ((0,0,0,0)),
 ])
 def test_RuntimeEffectBuilder_setUniform(runtime_effect_builder, arg):
     runtime_effect_builder.setUniform("bogus", arg)
