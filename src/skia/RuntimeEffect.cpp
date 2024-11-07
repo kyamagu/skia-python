@@ -183,6 +183,18 @@ runtime_effect_builder
             v = child;
         },
         py::arg("name"), py::arg("child"))
+    .def("setChild",
+        [] (SkRuntimeEffectBuilder& builder, std::string_view name, sk_sp<SkColorFilter> child) {
+            auto v = builder.child(name);
+            v = child;
+        },
+        py::arg("name"), py::arg("child"))
+    .def("setChild",
+        [] (SkRuntimeEffectBuilder& builder, std::string_view name, sk_sp<SkBlender> child) {
+            auto v = builder.child(name);
+            v = child;
+        },
+        py::arg("name"), py::arg("child"))
     .def("uniforms", &SkRuntimeEffectBuilder::uniforms)
     .def("children", &SkRuntimeEffectBuilder::children)
     .def("makeShader", &SkRuntimeEffectBuilder::makeShader,
