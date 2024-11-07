@@ -76,8 +76,8 @@ def test_RuntimeEffectResult_init0():
 def test_RuntimeEffectChildPtr_init0():
     assert isinstance(skia.RuntimeEffectChildPtr(), skia.RuntimeEffectChildPtr)
 
-def test_VectorSkRuntimeEffectChildPtr_init0():
-    assert isinstance(skia.VectorSkRuntimeEffectChildPtr(), skia.VectorSkRuntimeEffectChildPtr)
+def test_VectorRuntimeEffectChildPtr_init0():
+    assert isinstance(skia.VectorRuntimeEffectChildPtr(), skia.VectorRuntimeEffectChildPtr)
 
 def test_SpanRuntimeEffectChildPtr_init0():
     assert isinstance(skia.SpanRuntimeEffectChildPtr(), skia.SpanRuntimeEffectChildPtr)

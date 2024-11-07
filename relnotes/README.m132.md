@@ -16,7 +16,7 @@ Since m131:
   `SkRuntimeEffect::Result` as `RuntimeEffectResult`, 
   `SkRuntimeEffect::ChildPtr` as `RuntimeEffectChildPtr`,
   `SkRuntimeEffectBuilder` as `RuntimeEffectBuilder',
-  `std::vector<SkRuntimeEffect::ChildPtr>` as `VectorSkRuntimeEffectChildPtr`,
+  `std::vector<SkRuntimeEffect::ChildPtr>` as `VectorRuntimeEffectChildPtr`,
   `SkSpan<const SkRuntimeEffect::ChildPtr>` as `SpanRuntimeEffectChildPtr`,
   `SkRuntimeEffectBuilder::BuilderUniform` as `RuntimeEffectBuilderUniform`,
   `SkRuntimeEffectBuilder::BuilderChild` as `RuntimeEffectBuilderChild`.

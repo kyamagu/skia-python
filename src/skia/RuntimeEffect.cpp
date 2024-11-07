@@ -11,7 +11,7 @@ py::class_<SkRuntimeEffect, sk_sp<SkRuntimeEffect>, SkRefCnt> runtime_effect(m, 
 
 py::class_<SkRuntimeEffect::ChildPtr> runtime_effect_childptr(m, "RuntimeEffectChildPtr");
 
-py::bind_vector<std::vector<SkRuntimeEffect::ChildPtr>>(m, "VectorSkRuntimeEffectChildPtr");
+py::bind_vector<std::vector<SkRuntimeEffect::ChildPtr>>(m, "VectorRuntimeEffectChildPtr");
 py::class_<SkSpan<const SkRuntimeEffect::ChildPtr>> span_runtime_effect_childptr(m, "SpanRuntimeEffectChildPtr");
 
 py::class_<SkRuntimeEffectBuilder> runtime_effect_builder(m, "RuntimeEffectBuilder");
