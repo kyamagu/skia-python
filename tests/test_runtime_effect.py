@@ -39,8 +39,11 @@ def test_RuntimeEffectBuilder_init0(runtime_effect_builder):
 # setUniform is polymorphic, so we are just testing that the
 # accepted object types do not throw errors.
 @pytest.mark.parametrize('arg', [
+    (0),
     (skia.V3(0,0,0)),
     (skia.V4(0,0,0,0)),
+    ([0,0,0]),
+    ([0,0,0,0]),
 ])
 def test_RuntimeEffectBuilder_setUniform(runtime_effect_builder, arg):
     runtime_effect_builder.setUniform("bogus", arg)
