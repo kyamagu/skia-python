@@ -663,10 +663,12 @@ def test_FontMetrics_hasStrikeoutPosition(fontmetrics):
 @pytest.fixture
 def color_emoji_run():
     if sys.platform.startswith("linux"):
-        if (os.getenv("GITHUB_ACTION") == True):
+        if os.path.exists("/usr/share/fonts/truetype/noto/NotoColorEmoji.ttf"): # Ubuntu CI
             # Ubuntu is weird - the font is on disk but not accessible to fontconfig
             # - Possibly https://bugs.launchpad.net/bugs/2054924
             typeface = skia.Typeface.MakeFromFile("/usr/share/fonts/truetype/noto/NotoColorEmoji.ttf")
+        elif os.path.exists("/usr/share/fonts/google-noto-color-emoji-fonts/NotoColorEmoji.ttf"): # Fedora
+            typeface = skia.Typeface.MakeFromFile("/usr/share/fonts/google-noto-color-emoji-fonts/NotoColorEmoji.ttf")
         else:
             pytest.skip("Not in Ubuntu CI")
     if sys.platform.startswith("darwin"):
@@ -679,6 +681,7 @@ def color_emoji_run():
     run = [x for x in blob]
     return run[0]
 
+# We want this exactly two (and not three) on all platforms, under all circumstances; no conditionals.
 def test_emoji_count(color_emoji_run):
     assert (color_emoji_run.fGlyphCount == 2)
 
