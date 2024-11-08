@@ -15,7 +15,7 @@ Since m131:
   `SkV3` as `skia.V3`, `SkV4` as `skia.V4`,
   `SkRuntimeEffect::Result` as `RuntimeEffectResult`,
   `SkRuntimeEffect::ChildPtr` as `RuntimeEffectChildPtr`,
-  `SkRuntimeEffectBuilder` as `RuntimeEffectBuilder',
+  `SkRuntimeEffectBuilder` as `RuntimeEffectBuilder`,
   `std::vector<SkRuntimeEffect::ChildPtr>` as `VectorRuntimeEffectChildPtr`,
   `SkSpan<const SkRuntimeEffect::ChildPtr>` as `SpanRuntimeEffectChildPtr`,
   `SkRuntimeEffectBuilder::BuilderUniform` as `RuntimeEffectBuilderUniform`,
