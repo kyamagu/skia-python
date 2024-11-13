@@ -5,7 +5,7 @@ export PATH="${PWD}/depot_tools:$PATH"
 # Build skia
 cd skia && \
     patch -p1 < ../patch/skia-m131-minimize-download.patch && \
-    patch -p1 < ../patch/skia-m123-colrv1-freetype.diff && \
+    patch -p1 < ../patch/skia-m132-colrv1-freetype.diff && \
     python tools/git-sync-deps && \
     bin/gn gen out/Release --args='
 is_official_build=true
