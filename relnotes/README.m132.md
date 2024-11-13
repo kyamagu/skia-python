@@ -1,4 +1,6 @@
 Since m131:
+- `PathEffect.{DashType, DashInfo, asADash}` withdrawn.
+   Upstream removed them from public API in m132.
 
 - We now bundle a `icudtl.dat` for windows. This fixes windows-specific problems
   with SkUnicode, libSkShaper, and SkParagraph. Thanks @meetwq for the change.
