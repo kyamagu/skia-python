@@ -1,23 +1,21 @@
+
+
 <!DOCTYPE html>
 <html class="writer-html5" lang="en">
 <head>
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>skia &mdash; skia-python 130.0b10 documentation</title>
+  <title>skia &mdash; skia-python 132.0b11 documentation</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
       <link rel="stylesheet" type="text/css" href="../_static/css/theme.css" />
 
   
-  <!--[if lt IE 9]>
-    <script src="../_static/js/html5shiv.min.js"></script>
-  <![endif]-->
-  
-        <script src="../_static/jquery.js"></script>
-        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
-        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
-        <script src="../_static/doctools.js"></script>
-        <script src="../_static/sphinx_highlight.js"></script>
+      <script src="../_static/jquery.js"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+      <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+      <script src="../_static/doctools.js"></script>
+      <script src="../_static/sphinx_highlight.js"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -36,9 +34,6 @@
           <a href="../index.html" class="icon icon-home">
             skia-python
           </a>
-              <div class="version">
-                130.0b10
-              </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
     <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
@@ -185,6 +180,15 @@
 <li class="toctree-l3"><a class="reference internal" href="skia.RefCnt.html">RefCnt</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.RefCntBase.html">RefCntBase</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.Region.html">Region</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.RuntimeBlendBuilder.html">RuntimeBlendBuilder</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.RuntimeColorFilterBuilder.html">RuntimeColorFilterBuilder</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.RuntimeEffect.html">RuntimeEffect</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.RuntimeEffectBuilder.html">RuntimeEffectBuilder</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.RuntimeEffectBuilderChild.html">RuntimeEffectBuilderChild</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.RuntimeEffectBuilderUniform.html">RuntimeEffectBuilderUniform</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.RuntimeEffectChildPtr.html">RuntimeEffectChildPtr</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.RuntimeEffectResult.html">RuntimeEffectResult</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.RuntimeShaderBuilder.html">RuntimeShaderBuilder</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.SVGCanvas.html">SVGCanvas</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.SVGDOM.html">SVGDOM</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.SamplingOptions.html">SamplingOptions</a></li>
@@ -192,6 +196,7 @@
 <li class="toctree-l3"><a class="reference internal" href="skia.ShaderMaskFilter.html">ShaderMaskFilter</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.Shaders.html">Shaders</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.Size.html">Size</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.SpanRuntimeEffectChildPtr.html">SpanRuntimeEffectChildPtr</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.Stream.html">Stream</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.StreamAsset.html">StreamAsset</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.StreamMemory.html">StreamMemory</a></li>
@@ -212,6 +217,9 @@
 <li class="toctree-l3"><a class="reference internal" href="skia.TrimPathEffect.html">TrimPathEffect</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.Typeface.html">Typeface</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.Unicode.html">Unicode</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.V3.html">V3</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.V4.html">V4</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.VectorRuntimeEffectChildPtr.html">VectorRuntimeEffectChildPtr</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.Vertices.html">Vertices</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.VkFormat.html">VkFormat</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.VkImageLayout.html">VkImageLayout</a></li>
@@ -787,25 +795,55 @@
 <tr class="row-even"><td><p><a class="reference internal" href="skia.Region.html#skia.Region" title="skia.Region"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Region</span></code></a></p></td>
 <td><p><a class="reference internal" href="skia.Region.html#skia.Region" title="skia.Region"><code class="xref py py-class docutils literal notranslate"><span class="pre">Region</span></code></a> describes the set of pixels used to clip <a class="reference internal" href="skia.Canvas.html#skia.Canvas" title="skia.Canvas"><code class="xref py py-class docutils literal notranslate"><span class="pre">Canvas</span></code></a>.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="skia.SVGCanvas.html#skia.SVGCanvas" title="skia.SVGCanvas"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SVGCanvas</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="skia.RuntimeBlendBuilder.html#skia.RuntimeBlendBuilder" title="skia.RuntimeBlendBuilder"><code class="xref py py-obj docutils literal notranslate"><span class="pre">RuntimeBlendBuilder</span></code></a></p></td>
+<td><p>alias of <a class="reference internal" href="skia.RuntimeEffectBuilder.html#skia.RuntimeEffectBuilder" title="skia.RuntimeEffectBuilder"><code class="xref py py-class docutils literal notranslate"><span class="pre">RuntimeEffectBuilder</span></code></a></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="skia.RuntimeColorFilterBuilder.html#skia.RuntimeColorFilterBuilder" title="skia.RuntimeColorFilterBuilder"><code class="xref py py-obj docutils literal notranslate"><span class="pre">RuntimeColorFilterBuilder</span></code></a></p></td>
+<td><p>alias of <a class="reference internal" href="skia.RuntimeEffectBuilder.html#skia.RuntimeEffectBuilder" title="skia.RuntimeEffectBuilder"><code class="xref py py-class docutils literal notranslate"><span class="pre">RuntimeEffectBuilder</span></code></a></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="skia.RuntimeEffect.html#skia.RuntimeEffect" title="skia.RuntimeEffect"><code class="xref py py-obj docutils literal notranslate"><span class="pre">RuntimeEffect</span></code></a></p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="skia.SVGDOM.html#skia.SVGDOM" title="skia.SVGDOM"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SVGDOM</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="skia.RuntimeEffectBuilder.html#skia.RuntimeEffectBuilder" title="skia.RuntimeEffectBuilder"><code class="xref py py-obj docutils literal notranslate"><span class="pre">RuntimeEffectBuilder</span></code></a></p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="skia.SamplingOptions.html#skia.SamplingOptions" title="skia.SamplingOptions"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SamplingOptions</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="skia.RuntimeEffectBuilderChild.html#skia.RuntimeEffectBuilderChild" title="skia.RuntimeEffectBuilderChild"><code class="xref py py-obj docutils literal notranslate"><span class="pre">RuntimeEffectBuilderChild</span></code></a></p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="skia.Shader.html#skia.Shader" title="skia.Shader"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Shader</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="skia.RuntimeEffectBuilderUniform.html#skia.RuntimeEffectBuilderUniform" title="skia.RuntimeEffectBuilderUniform"><code class="xref py py-obj docutils literal notranslate"><span class="pre">RuntimeEffectBuilderUniform</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="skia.RuntimeEffectChildPtr.html#skia.RuntimeEffectChildPtr" title="skia.RuntimeEffectChildPtr"><code class="xref py py-obj docutils literal notranslate"><span class="pre">RuntimeEffectChildPtr</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="skia.RuntimeEffectResult.html#skia.RuntimeEffectResult" title="skia.RuntimeEffectResult"><code class="xref py py-obj docutils literal notranslate"><span class="pre">RuntimeEffectResult</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="skia.RuntimeShaderBuilder.html#skia.RuntimeShaderBuilder" title="skia.RuntimeShaderBuilder"><code class="xref py py-obj docutils literal notranslate"><span class="pre">RuntimeShaderBuilder</span></code></a></p></td>
+<td><p>alias of <a class="reference internal" href="skia.RuntimeEffectBuilder.html#skia.RuntimeEffectBuilder" title="skia.RuntimeEffectBuilder"><code class="xref py py-class docutils literal notranslate"><span class="pre">RuntimeEffectBuilder</span></code></a></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="skia.SVGCanvas.html#skia.SVGCanvas" title="skia.SVGCanvas"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SVGCanvas</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="skia.SVGDOM.html#skia.SVGDOM" title="skia.SVGDOM"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SVGDOM</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="skia.SamplingOptions.html#skia.SamplingOptions" title="skia.SamplingOptions"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SamplingOptions</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="skia.Shader.html#skia.Shader" title="skia.Shader"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Shader</span></code></a></p></td>
 <td><p>Shaders specify the source color(s) for what is being drawn.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="skia.ShaderMaskFilter.html#skia.ShaderMaskFilter" title="skia.ShaderMaskFilter"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ShaderMaskFilter</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="skia.ShaderMaskFilter.html#skia.ShaderMaskFilter" title="skia.ShaderMaskFilter"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ShaderMaskFilter</span></code></a></p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="skia.Shaders.html#skia.Shaders" title="skia.Shaders"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Shaders</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="skia.Shaders.html#skia.Shaders" title="skia.Shaders"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Shaders</span></code></a></p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="skia.Size.html#skia.Size" title="skia.Size"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Size</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="skia.Size.html#skia.Size" title="skia.Size"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Size</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="skia.SpanRuntimeEffectChildPtr.html#skia.SpanRuntimeEffectChildPtr" title="skia.SpanRuntimeEffectChildPtr"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SpanRuntimeEffectChildPtr</span></code></a></p></td>
 <td><p></p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="skia.Stream.html#skia.Stream" title="skia.Stream"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Stream</span></code></a></p></td>
@@ -868,59 +906,68 @@
 <tr class="row-odd"><td><p><a class="reference internal" href="skia.Unicode.html#skia.Unicode" title="skia.Unicode"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Unicode</span></code></a></p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="skia.Vertices.html#skia.Vertices" title="skia.Vertices"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Vertices</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="skia.V3.html#skia.V3" title="skia.V3"><code class="xref py py-obj docutils literal notranslate"><span class="pre">V3</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="skia.V4.html#skia.V4" title="skia.V4"><code class="xref py py-obj docutils literal notranslate"><span class="pre">V4</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="skia.VectorRuntimeEffectChildPtr.html#skia.VectorRuntimeEffectChildPtr" title="skia.VectorRuntimeEffectChildPtr"><code class="xref py py-obj docutils literal notranslate"><span class="pre">VectorRuntimeEffectChildPtr</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="skia.Vertices.html#skia.Vertices" title="skia.Vertices"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Vertices</span></code></a></p></td>
 <td><p>An immutable set of vertex data that can be used with <a class="reference internal" href="skia.Canvas.html#skia.Canvas.drawVertices" title="skia.Canvas.drawVertices"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Canvas.drawVertices()</span></code></a>.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="skia.VkFormat.html#skia.VkFormat" title="skia.VkFormat"><code class="xref py py-obj docutils literal notranslate"><span class="pre">VkFormat</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="skia.VkFormat.html#skia.VkFormat" title="skia.VkFormat"><code class="xref py py-obj docutils literal notranslate"><span class="pre">VkFormat</span></code></a></p></td>
 <td><p>Members:</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="skia.VkImageLayout.html#skia.VkImageLayout" title="skia.VkImageLayout"><code class="xref py py-obj docutils literal notranslate"><span class="pre">VkImageLayout</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="skia.VkImageLayout.html#skia.VkImageLayout" title="skia.VkImageLayout"><code class="xref py py-obj docutils literal notranslate"><span class="pre">VkImageLayout</span></code></a></p></td>
 <td><p>Members:</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="skia.WStream.html#skia.WStream" title="skia.WStream"><code class="xref py py-obj docutils literal notranslate"><span class="pre">WStream</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="skia.WStream.html#skia.WStream" title="skia.WStream"><code class="xref py py-obj docutils literal notranslate"><span class="pre">WStream</span></code></a></p></td>
 <td><p><p class="rubric">Subclasses</p>
 </p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="skia.YUVAInfo.html#skia.YUVAInfo" title="skia.YUVAInfo"><code class="xref py py-obj docutils literal notranslate"><span class="pre">YUVAInfo</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="skia.YUVAInfo.html#skia.YUVAInfo" title="skia.YUVAInfo"><code class="xref py py-obj docutils literal notranslate"><span class="pre">YUVAInfo</span></code></a></p></td>
 <td><p>Specifies the structure of planes for a YUV image with optional alpha.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="skia.YUVAPixmapInfo.html#skia.YUVAPixmapInfo" title="skia.YUVAPixmapInfo"><code class="xref py py-obj docutils literal notranslate"><span class="pre">YUVAPixmapInfo</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="skia.YUVAPixmapInfo.html#skia.YUVAPixmapInfo" title="skia.YUVAPixmapInfo"><code class="xref py py-obj docutils literal notranslate"><span class="pre">YUVAPixmapInfo</span></code></a></p></td>
 <td><p><a class="reference internal" href="skia.YUVAInfo.html#skia.YUVAInfo" title="skia.YUVAInfo"><code class="xref py py-class docutils literal notranslate"><span class="pre">YUVAInfo</span></code></a> combined with per-plane <a class="reference internal" href="skia.ColorType.html#skia.ColorType" title="skia.ColorType"><code class="xref py py-class docutils literal notranslate"><span class="pre">ColorType</span></code></a> and row bytes.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="skia.YUVAPixmaps.html#skia.YUVAPixmaps" title="skia.YUVAPixmaps"><code class="xref py py-obj docutils literal notranslate"><span class="pre">YUVAPixmaps</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="skia.YUVAPixmaps.html#skia.YUVAPixmaps" title="skia.YUVAPixmaps"><code class="xref py py-obj docutils literal notranslate"><span class="pre">YUVAPixmaps</span></code></a></p></td>
 <td><p>Helper to store <a class="reference internal" href="skia.Pixmap.html#skia.Pixmap" title="skia.Pixmap"><code class="xref py py-class docutils literal notranslate"><span class="pre">Pixmap</span></code></a> planes as described by a <a class="reference internal" href="skia.YUVAPixmapInfo.html#skia.YUVAPixmapInfo" title="skia.YUVAPixmapInfo"><code class="xref py py-class docutils literal notranslate"><span class="pre">YUVAPixmapInfo</span></code></a>.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="skia.YUVColorSpace.html#skia.YUVColorSpace" title="skia.YUVColorSpace"><code class="xref py py-obj docutils literal notranslate"><span class="pre">YUVColorSpace</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="skia.YUVColorSpace.html#skia.YUVColorSpace" title="skia.YUVColorSpace"><code class="xref py py-obj docutils literal notranslate"><span class="pre">YUVColorSpace</span></code></a></p></td>
 <td><p>Members:</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="skia.gpuBackendApi.html#skia.gpuBackendApi" title="skia.gpuBackendApi"><code class="xref py py-obj docutils literal notranslate"><span class="pre">gpuBackendApi</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="skia.gpuBackendApi.html#skia.gpuBackendApi" title="skia.gpuBackendApi"><code class="xref py py-obj docutils literal notranslate"><span class="pre">gpuBackendApi</span></code></a></p></td>
 <td><p>Possible 3D APIs that may be used by Graphite.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="skia.textlayout_FontCollection.html#skia.textlayout_FontCollection" title="skia.textlayout_FontCollection"><code class="xref py py-obj docutils literal notranslate"><span class="pre">textlayout_FontCollection</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="skia.textlayout_FontCollection.html#skia.textlayout_FontCollection" title="skia.textlayout_FontCollection"><code class="xref py py-obj docutils literal notranslate"><span class="pre">textlayout_FontCollection</span></code></a></p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="skia.textlayout_Paragraph.html#skia.textlayout_Paragraph" title="skia.textlayout_Paragraph"><code class="xref py py-obj docutils literal notranslate"><span class="pre">textlayout_Paragraph</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="skia.textlayout_Paragraph.html#skia.textlayout_Paragraph" title="skia.textlayout_Paragraph"><code class="xref py py-obj docutils literal notranslate"><span class="pre">textlayout_Paragraph</span></code></a></p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="skia.textlayout_ParagraphBuilder.html#skia.textlayout_ParagraphBuilder" title="skia.textlayout_ParagraphBuilder"><code class="xref py py-obj docutils literal notranslate"><span class="pre">textlayout_ParagraphBuilder</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="skia.textlayout_ParagraphBuilder.html#skia.textlayout_ParagraphBuilder" title="skia.textlayout_ParagraphBuilder"><code class="xref py py-obj docutils literal notranslate"><span class="pre">textlayout_ParagraphBuilder</span></code></a></p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="skia.textlayout_ParagraphStyle.html#skia.textlayout_ParagraphStyle" title="skia.textlayout_ParagraphStyle"><code class="xref py py-obj docutils literal notranslate"><span class="pre">textlayout_ParagraphStyle</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="skia.textlayout_ParagraphStyle.html#skia.textlayout_ParagraphStyle" title="skia.textlayout_ParagraphStyle"><code class="xref py py-obj docutils literal notranslate"><span class="pre">textlayout_ParagraphStyle</span></code></a></p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="skia.textlayout_TextAlign.html#skia.textlayout_TextAlign" title="skia.textlayout_TextAlign"><code class="xref py py-obj docutils literal notranslate"><span class="pre">textlayout_TextAlign</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="skia.textlayout_TextAlign.html#skia.textlayout_TextAlign" title="skia.textlayout_TextAlign"><code class="xref py py-obj docutils literal notranslate"><span class="pre">textlayout_TextAlign</span></code></a></p></td>
 <td><p>Members:</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="skia.textlayout_TextDecoration.html#skia.textlayout_TextDecoration" title="skia.textlayout_TextDecoration"><code class="xref py py-obj docutils literal notranslate"><span class="pre">textlayout_TextDecoration</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="skia.textlayout_TextDecoration.html#skia.textlayout_TextDecoration" title="skia.textlayout_TextDecoration"><code class="xref py py-obj docutils literal notranslate"><span class="pre">textlayout_TextDecoration</span></code></a></p></td>
 <td><p>Members:</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="skia.textlayout_TextDecorationMode.html#skia.textlayout_TextDecorationMode" title="skia.textlayout_TextDecorationMode"><code class="xref py py-obj docutils literal notranslate"><span class="pre">textlayout_TextDecorationMode</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="skia.textlayout_TextDecorationMode.html#skia.textlayout_TextDecorationMode" title="skia.textlayout_TextDecorationMode"><code class="xref py py-obj docutils literal notranslate"><span class="pre">textlayout_TextDecorationMode</span></code></a></p></td>
 <td><p>Members:</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="skia.textlayout_TextDecorationStyle.html#skia.textlayout_TextDecorationStyle" title="skia.textlayout_TextDecorationStyle"><code class="xref py py-obj docutils literal notranslate"><span class="pre">textlayout_TextDecorationStyle</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="skia.textlayout_TextDecorationStyle.html#skia.textlayout_TextDecorationStyle" title="skia.textlayout_TextDecorationStyle"><code class="xref py py-obj docutils literal notranslate"><span class="pre">textlayout_TextDecorationStyle</span></code></a></p></td>
 <td><p>Members:</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="skia.textlayout_TextStyle.html#skia.textlayout_TextStyle" title="skia.textlayout_TextStyle"><code class="xref py py-obj docutils literal notranslate"><span class="pre">textlayout_TextStyle</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="skia.textlayout_TextStyle.html#skia.textlayout_TextStyle" title="skia.textlayout_TextStyle"><code class="xref py py-obj docutils literal notranslate"><span class="pre">textlayout_TextStyle</span></code></a></p></td>
 <td><p></p></td>
 </tr>
 </tbody>
