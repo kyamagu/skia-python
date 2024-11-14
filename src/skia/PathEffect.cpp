@@ -138,6 +138,8 @@ py::class_<SkPathEffect, sk_sp<SkPathEffect>, SkFlattenable>
         ~skia.TrimPathEffect
     )docstring");
 
+/* SkPathEffect::DashInfo withdrawn from public API in m132 */
+/*
 py::class_<SkPathEffect::DashInfo>(patheffect, "DashInfo")
     .def(py::init<>())
     .def_property_readonly("fIntervals",
@@ -160,6 +162,7 @@ py::class_<SkPathEffect::DashInfo>(patheffect, "DashInfo")
         Offset into the dashed interval pattern.
         )docstring")
     ;
+*/
 
 /*
 py::class_<SkPathEffect::PointData> pointdata(patheffect, "PointData",
@@ -195,6 +198,8 @@ pointdata
     ;
 */
 
+/* SkPathEffect::DashType withdrawn from public API in m132 */
+/*
 py::enum_<SkPathEffect::DashType>(patheffect, "DashType",
     R"docstring(
     If the :py:class:`PathEffect` can be represented as a dash pattern, asADash
@@ -215,6 +220,7 @@ py::enum_<SkPathEffect::DashType>(patheffect, "DashType",
     .value("kDash_DashType", SkPathEffect::DashType::kDash_DashType,
         "fills in all of the info parameter")
     .export_values();
+*/
 
 patheffect
     .def("filterPath", py::overload_cast<SkPath*, const SkPath&, SkStrokeRec*, const SkRect*>(&SkPathEffect::filterPath, py::const_),
@@ -251,7 +257,10 @@ patheffect
         py::arg("results"), py::arg("src"), py::arg("stroke_rec"),
         py::arg("matrix"), py::arg("cullR"))
 */
+/* SkPathEffect::asADash withdrawn from public API in m132 */
+/*
     .def("asADash", &SkPathEffect::asADash, py::arg("info"))
+*/
     .def_static("MakeSum",
         [] (const SkPathEffect& first, const SkPathEffect& second) {
             auto first_ = first.serialize();
