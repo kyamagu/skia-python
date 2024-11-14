@@ -37,6 +37,16 @@ py::class_<skcms_TransferFunction>(skcms, "TransferFunction",
             };
         }), py::arg("v"));
 
+/* Upstream static constexpr's, which function like enum's,
+   but cannot be bound that way. */
+m.attr("cms").attr("NamedTransferFn") = m.attr("cms").attr("TransferFunction");
+m.attr("cms").attr("TransferFunction").attr("kSRGB")    = SkNamedTransferFn::kSRGB;
+m.attr("cms").attr("TransferFunction").attr("k2Dot2")   = SkNamedTransferFn::k2Dot2;
+m.attr("cms").attr("TransferFunction").attr("kLinear")  = SkNamedTransferFn::kLinear;
+m.attr("cms").attr("TransferFunction").attr("kRec2020") = SkNamedTransferFn::kRec2020;
+m.attr("cms").attr("TransferFunction").attr("kPQ")      = SkNamedTransferFn::kPQ;
+m.attr("cms").attr("TransferFunction").attr("kHLG")     = SkNamedTransferFn::kHLG;
+
 py::class_<skcms_Matrix3x3>(skcms, "Matrix3x3",
     R"docstring(
     A row-major 3x3 matrix (ie vals[row][col])
@@ -51,6 +61,15 @@ py::class_<skcms_Matrix3x3>(skcms, "Matrix3x3",
                 {v[6], v[7], v[8]}
             }};
         }), py::arg("v"));
+
+/* Upstream static constexpr's, which function like enum's,
+   but cannot be bound that way. */
+m.attr("cms").attr("NamedGamut") = m.attr("cms").attr("Matrix3x3");
+m.attr("cms").attr("Matrix3x3").attr("kSRGB")      = SkNamedGamut::kSRGB;
+m.attr("cms").attr("Matrix3x3").attr("kAdobeRGB")  = SkNamedGamut::kAdobeRGB;
+m.attr("cms").attr("Matrix3x3").attr("kDisplayP3") = SkNamedGamut::kDisplayP3;
+m.attr("cms").attr("Matrix3x3").attr("kRec2020")   = SkNamedGamut::kRec2020;
+m.attr("cms").attr("Matrix3x3").attr("kXYZ")       = SkNamedGamut::kXYZ;
 
 py::class_<SkColorSpace, sk_sp<SkColorSpace>>(m, "ColorSpace")
     .def("toProfile",

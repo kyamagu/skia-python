@@ -3,7 +3,7 @@
 #include <include/gpu/ganesh/gl/GrGLBackendSurface.h>
 #include <include/private/chromium/GrSurfaceCharacterization.h>
 #include <include/gpu/GpuTypes.h>
-#include <include/gpu/GrTypes.h>
+#include <include/gpu/ganesh/GrTypes.h>
 #include <include/gpu/ganesh/SkSurfaceGanesh.h>
 #include <include/gpu/MutableTextureState.h>
 #include <pybind11/operators.h>

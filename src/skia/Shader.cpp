@@ -1,5 +1,4 @@
 #include "common.h"
-#include <include/effects/SkRuntimeEffect.h>
 #include <include/effects/SkGradientShader.h>
 #include <include/effects/SkPerlinNoiseShader.h>
 #include <include/effects/SkBlenders.h>

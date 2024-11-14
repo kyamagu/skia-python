@@ -1,3 +1,5 @@
+import os
+import sys
 import skia
 import pytest
 
@@ -240,6 +242,17 @@ def svg_blob(svgface):
     blob = skia.TextBlob.MakeFromShapedText(text, font)
     return blob
 
+def test_svg_blob_1(svgface):
+    text = "abcdefgh"
+    font = skia.Font(svgface,109)
+    blob = skia.TextBlob.MakeFromText(text, font)
+    assert blob is not None
+
+def test_svg_blob_2(svgface):
+    text = "abcdefgh"
+    font = skia.Font(svgface,109)
+    blob = skia.TextBlob.MakeFromShapedText(text, font)
+    assert blob is not None
 
 # This test doesn't really test that the SVG table loads correctly -
 # Rather, it depends on the fact that, for this particular font,
@@ -418,6 +431,8 @@ def test_FontMgr_ref_unref(fontmgr):
 def font():
     return skia.Font(skia.Typeface(""))
 
+def test_font():
+    assert skia.Font(skia.Typeface("")) is not None
 
 @pytest.mark.parametrize('args', [
     tuple(),
@@ -643,3 +658,50 @@ def test_FontMetrics_hasStrikeoutThickness(fontmetrics):
 def test_FontMetrics_hasStrikeoutPosition(fontmetrics):
     position = 0.
     assert isinstance(fontmetrics.hasStrikeoutPosition(position), bool)
+
+
+@pytest.fixture
+def color_emoji_run():
+    if sys.platform.startswith("linux"):
+        if os.path.exists("/usr/share/fonts/truetype/noto/NotoColorEmoji.ttf"): # Ubuntu CI
+            # Ubuntu is weird - the font is on disk but not accessible to fontconfig
+            # - Possibly https://bugs.launchpad.net/bugs/2054924
+            typeface = skia.Typeface.MakeFromFile("/usr/share/fonts/truetype/noto/NotoColorEmoji.ttf")
+        elif os.path.exists("/usr/share/fonts/google-noto-color-emoji-fonts/NotoColorEmoji.ttf"): # Fedora
+            typeface = skia.Typeface.MakeFromFile("/usr/share/fonts/google-noto-color-emoji-fonts/NotoColorEmoji.ttf")
+        else:
+            pytest.skip("Not in Ubuntu CI")
+    if sys.platform.startswith("darwin"):
+        typeface = skia.Typeface("Apple Color Emoji")
+    if sys.platform.startswith("win"):
+        typeface = skia.Typeface("Segoe UI Emoji") # COLRv0
+    text = "✌✌🏻"
+    font = skia.Font(typeface,109)
+    blob = skia.TextBlob.MakeFromShapedText(text, font)
+    run = [x for x in blob]
+    return run[0]
+
+# We want this exactly two (and not three) on all platforms, under all circumstances; no conditionals.
+def test_emoji_count(color_emoji_run):
+    assert (color_emoji_run.fGlyphCount == 2)
+
+def test_emoji_typeface(color_emoji_run):
+    assert ((color_emoji_run.fTypeface.getFamilyName() == "Noto Color Emoji")
+            or (color_emoji_run.fTypeface.getFamilyName() == "Apple Color Emoji")
+            or (color_emoji_run.fTypeface.getFamilyName() == "Segoe UI Emoji"))
+
+# The numbers are hardcoded for three specific version of fonts,
+# and will change if the hosts are upgraded.
+def test_emoji_glyph1(color_emoji_run):
+    if (os.getenv("GITHUB_ACTION") == True):
+        assert ((color_emoji_run.fGlyphIndices[0] == 148)
+                or (color_emoji_run.fGlyphIndices[0] == 247)
+                or (color_emoji_run.fGlyphIndices[0] == 1567))
+
+# The numbers are hardcoded for three specific version of fonts,
+# and will change if the hosts are upgraded.
+def test_emoji_glyph2(color_emoji_run):
+    if (os.getenv("GITHUB_ACTION") == True):
+        assert ((color_emoji_run.fGlyphIndices[1] == 1512)
+                or (color_emoji_run.fGlyphIndices[1] == 248)
+                or (color_emoji_run.fGlyphIndices[1] == 1571))

@@ -1,14 +1,14 @@
 #include "common.h"
 #include <include/core/SkTextureCompressionType.h>
-#include <include/gpu/GrBackendSemaphore.h>
-#include <include/gpu/GrBackendSurface.h>
-#include <include/gpu/GrContextThreadSafeProxy.h>
+#include <include/gpu/ganesh/GrBackendSemaphore.h>
+#include <include/gpu/ganesh/GrBackendSurface.h>
+#include <include/gpu/ganesh/GrContextThreadSafeProxy.h>
 #include <include/gpu/GpuTypes.h>
-#include <include/gpu/mock/GrMockTypes.h>
-#include <include/gpu/gl/GrGLInterface.h>
+#include <include/gpu/ganesh/mock/GrMockTypes.h>
+#include <include/gpu/ganesh/gl/GrGLInterface.h>
 #include <include/gpu/ganesh/gl/GrGLBackendSurface.h>
 #include <include/gpu/ganesh/gl/GrGLDirectContext.h>
-#include <include/gpu/vk/GrVkTypes.h>
+#include <include/gpu/ganesh/vk/GrVkTypes.h>
 #include <include/gpu/ganesh/vk/GrVkBackendSemaphore.h>
 #include <include/gpu/ganesh/vk/GrVkBackendSurface.h>
 #include <include/gpu/ganesh/vk/GrVkDirectContext.h>
@@ -898,7 +898,7 @@ py::class_<GrDirectContext, sk_sp<GrDirectContext>, GrRecordingContext>(m, "GrDi
         )docstring",
         py::arg("info"))
     .def("flush", py::overload_cast<>(&GrDirectContext::flush))
-    .def("submit", &GrDirectContext::submit,
+    .def("submit", py::overload_cast<GrSyncCpu>(&GrDirectContext::submit),
         R"docstring(
         Submit outstanding work to the gpu from all previously un-submitted
         flushes. The return value of the submit will indicate whether or not the

@@ -104,14 +104,17 @@ def patheffect_dashinfo():
     return skia.PathEffect.DashInfo()
 
 
+@pytest.mark.xfail(reason='Withdrawn from public API in m132')
 def test_PathEffect_DashInfo_fIntervals(patheffect_dashinfo):
     assert isinstance(patheffect_dashinfo.fIntervals, list)
 
 
+@pytest.mark.xfail(reason='Withdrawn from public API in m132')
 def test_PathEffect_DashInfo_fCount(patheffect_dashinfo):
     assert isinstance(patheffect_dashinfo.fCount, int)
 
 
+@pytest.mark.xfail(reason='Withdrawn from public API in m132')
 def test_PathEffect_DashInfo_fPhase(patheffect_dashinfo):
     assert isinstance(patheffect_dashinfo.fPhase, float)
 
@@ -191,6 +194,7 @@ def test_PathEffect_asPoints(patheffect):
         patheffect.asPoints(results, path, rec, matrix, None), bool)
 
 
+@pytest.mark.xfail(reason='Withdrawn from public API in m132')
 def test_PathEffect_asADash(patheffect):
     dashinfo = skia.PathEffect.DashInfo()
     assert isinstance(patheffect.asADash(dashinfo), skia.PathEffect.DashType)
