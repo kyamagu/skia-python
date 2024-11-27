@@ -9,7 +9,6 @@ if [[ $(uname -m) == "aarch64" ]]; then
     yum -y install epel-release && \
         yum repolist && \
         yum install -y ninja-build && \
-        ln -s ninja-build /usr/bin/ninja &&
         mv depot_tools/ninja depot_tools/ninja.bak
 fi
 
@@ -36,7 +35,7 @@ export LDFLAGS="-lrt"
 git clone https://gn.googlesource.com/gn && \
     cd gn && \
     git checkout 981f46c64d1456d2083b1a2fa1367e753e0cdc1b && \
-    python build/gen.py && \
+    python3 build/gen.py && \
     ninja -C out gn && \
     cd ..
 
