@@ -1,5 +1,6 @@
 #include "common.h"
 #include <include/core/SkFontMetrics.h>
+#include <include/ports/SkFontMgr_directory.h>
 #include <include/ports/SkFontMgr_empty.h>
 #include <pybind11/stl.h>
 #include <pybind11/stl_bind.h>
@@ -808,6 +809,12 @@ py::class_<SkFontMgr, sk_sp<SkFontMgr>, SkRefCnt>(m, "FontMgr",
 
     )docstring")
     .def(py::init([] () { return SkFontMgr_RefDefault(); }))
+    .def_static("New_Custom_Directory", &SkFontMgr_New_Custom_Directory,
+        R"docstring(
+        Create a custom font manager which scans a given directory for font files.
+        This font manager uses FreeType for rendering.
+        )docstring",
+        py::arg("dir"))
     .def_static("New_Custom_Empty", &SkFontMgr_New_Custom_Empty)
     .def_static("New_Custom_Empty", py::overload_cast<char*>(&OneFontMgr_New_Custom_Empty),
         py::arg("filename"))
