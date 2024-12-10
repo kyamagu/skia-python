@@ -1,6 +1,7 @@
 #include "common.h"
 #include <include/gpu/ganesh/gl/GrGLTypes.h>
 #include <include/gpu/ganesh/gl/GrGLInterface.h>
+#include <include/gpu/ganesh/gl/egl/GrGLMakeEGLInterface.h>
 
 void initGrContext_gl(py::module &m) {
 
@@ -58,6 +59,8 @@ py::class_<GrGLInterface, sk_sp<GrGLInterface>, SkRefCnt>(
             throw std::runtime_error("null pointer exception.");
         const GrGLInterface* ptr = interface.release();
         return const_cast<GrGLInterface*>(ptr);
-    }));
+    }))
+    .def_static("MakeEGL", &GrGLInterfaces::MakeEGL)
+    ;
 
 }
