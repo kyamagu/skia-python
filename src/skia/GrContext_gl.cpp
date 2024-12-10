@@ -2,6 +2,7 @@
 #include <include/gpu/ganesh/gl/GrGLTypes.h>
 #include <include/gpu/ganesh/gl/GrGLInterface.h>
 #include <include/gpu/ganesh/gl/egl/GrGLMakeEGLInterface.h>
+#include <include/gpu/ganesh/gl/glx/GrGLMakeGLXInterface.h>
 
 void initGrContext_gl(py::module &m) {
 
@@ -61,6 +62,7 @@ py::class_<GrGLInterface, sk_sp<GrGLInterface>, SkRefCnt>(
         return const_cast<GrGLInterface*>(ptr);
     }))
     .def_static("MakeEGL", &GrGLInterfaces::MakeEGL)
+    .def_static("MakeGLX", &GrGLInterfaces::MakeGLX)
     ;
 
 }
