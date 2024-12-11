@@ -105,6 +105,7 @@ else:
         'dl',
         'fontconfig',
         'freetype',
+        'EGL',
         'GL',
     ]
     EXTRA_OBJECTS = list(
