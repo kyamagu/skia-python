@@ -612,7 +612,7 @@ typeface
             const std::vector<SkGlyphID>& glyphs) -> py::object {
             std::vector<int32_t> adjustments(glyphs.size() - 1);
             auto result = typeface.getKerningPairAdjustments(
-                &glyphs[0], glyphs.size(), &adjustments[0]);
+                &glyphs[0], glyphs.size(), (glyphs.size() > 1) ? &adjustments[0] : nullptr);
             if (!result) {
                 // Kerning is not supported for this typeface.
                 return py::none();
