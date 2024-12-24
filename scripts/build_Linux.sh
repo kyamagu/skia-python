@@ -40,6 +40,7 @@ git clone https://gn.googlesource.com/gn && \
 # Build skia
 cd skia && \
     patch -p1 < ../patch/git-sync-deps.patch && \
+    patch -p1 < ../patch/skia-m87-egl-runtime.diff && \
     python tools/git-sync-deps && \
     patch -p1 < ../patch/make_data_assembly.patch && \
     patch -p1 < ../patch/libjpeg-arm.patch && \
