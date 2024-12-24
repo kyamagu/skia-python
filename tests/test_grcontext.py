@@ -544,6 +544,18 @@ def test_GrDirectContext_MakeGL(context):
     assert isinstance(context, skia.GrContext)
 
 
+def test_GrDirectContext_MakeGL_EGL():
+    if not sys.platform.startswith("linux"):
+        pytest.skip("API on Linux only")
+    assert isinstance(skia.GrDirectContext.MakeGL(skia.GrGLInterface.MakeEGL()), skia.GrContext)
+
+
+def test_GrDirectContext_MakeGL_GLX():
+    if not sys.platform.startswith("linux"):
+        pytest.skip("API on Linux only")
+    assert isinstance(skia.GrDirectContext.MakeGL(skia.GrGLInterface.MakeGLX()), skia.GrContext)
+
+
 def test_GrDirectContext_MakeVulkan():
     context = skia.GrVkBackendContext()
     options = skia.GrContextOptions()
