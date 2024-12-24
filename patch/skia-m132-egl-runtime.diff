@@ -1,0 +1,17 @@
+diff --git a/BUILD.gn b/BUILD.gn
+index 20f308b..ceac00c 100644
+--- a/BUILD.gn
++++ b/BUILD.gn
+@@ -1003,10 +1003,11 @@ optional("gpu") {
+       sources += [ "src/gpu/ganesh/gl/webgl/GrGLMakeNativeInterface_webgl.cpp" ]
+     } else if (is_linux && skia_use_x11) {
+       sources += [
++        "src/gpu/ganesh/gl/egl/GrGLMakeEGLInterface.cpp",
+         "src/gpu/ganesh/gl/glx/GrGLMakeGLXInterface.cpp",
+         "src/gpu/ganesh/gl/glx/GrGLMakeNativeInterface_glx.cpp",
+       ]
+-      libs += [ "GL" ]
++      libs += [ "EGL", "GL" ]
+     } else if (is_mac) {
+       sources += [ "src/gpu/ganesh/gl/mac/GrGLMakeNativeInterface_mac.cpp" ]
+     } else if (is_ios) {
