@@ -1,8 +1,10 @@
 #include "common.h"
 #include <include/gpu/ganesh/gl/GrGLTypes.h>
 #include <include/gpu/ganesh/gl/GrGLInterface.h>
+#ifdef __linux__
 #include <include/gpu/ganesh/gl/egl/GrGLMakeEGLInterface.h>
 #include <include/gpu/ganesh/gl/glx/GrGLMakeGLXInterface.h>
+#endif
 
 void initGrContext_gl(py::module &m) {
 
@@ -61,8 +63,10 @@ py::class_<GrGLInterface, sk_sp<GrGLInterface>, SkRefCnt>(
         const GrGLInterface* ptr = interface.release();
         return const_cast<GrGLInterface*>(ptr);
     }))
+#ifdef __linux__
     .def_static("MakeEGL", &GrGLInterfaces::MakeEGL)
     .def_static("MakeGLX", &GrGLInterfaces::MakeGLX)
+#end
     ;
 
 }
