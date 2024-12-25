@@ -16,7 +16,7 @@ if [[ $EUID -eq 0 ]]; then
         python3 \
         fontconfig-devel \
         mesa-libGL-devel \
-        mesa-libEGL-devel libglvnd-devel \
+        mesa-libEGL-devel libglvnd-devel mesa-libGLES-devel \
         xorg-x11-server-Xvfb \
         mesa-dri-drivers && \
         yum clean all && \
