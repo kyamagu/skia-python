@@ -1,6 +1,26 @@
 import skia
 import pytest
 
+
+@pytest.fixture(scope='module')
+def non_text_typeface():
+    import sys
+    import os
+    if sys.platform.startswith("linux"):
+        if os.path.exists("/usr/share/fonts/truetype/noto/NotoColorEmoji.ttf"): # Ubuntu CI
+            # Ubuntu is weird - the font is on disk but not accessible to fontconfig
+            # - Possibly https://bugs.launchpad.net/bugs/2054924
+            return skia.Typeface.MakeFromFile("/usr/share/fonts/truetype/noto/NotoColorEmoji.ttf")
+        elif os.path.exists("/usr/share/fonts/google-noto-color-emoji-fonts/NotoColorEmoji.ttf"): # Fedora
+            return skia.Typeface.MakeFromFile("/usr/share/fonts/google-noto-color-emoji-fonts/NotoColorEmoji.ttf")
+        else:
+            pytest.skip("Not in Ubuntu CI")
+    if sys.platform.startswith("darwin"):
+        return skia.Typeface("Apple Color Emoji")
+    if sys.platform.startswith("win"):
+        return skia.Typeface("Segoe UI Emoji") # COLRv0
+
+
 @pytest.fixture(scope='session')
 def textlayout_font_collection():
     return skia.textlayout.FontCollection()
@@ -71,22 +91,20 @@ def test_textlayout_TypefaceFontProvider_init(typeface_font_provider):
     assert isinstance(typeface_font_provider, skia.textlayout_TypefaceFontProvider)
     assert typeface_font_provider.countFamilies() == 0
 
-def test_textlayout_TypefaceFontProvider_registerTypeface0(typeface_font_provider):
+def test_textlayout_TypefaceFontProvider_registerTypeface0(typeface_font_provider, non_text_typeface):
     typeface_any = skia.Typeface("Text")
     assert typeface_font_provider.registerTypeface(typeface_any) == 1
     assert typeface_font_provider.countFamilies() == 1
-    typeface_any = skia.Typeface("Emoji")
-    assert typeface_font_provider.registerTypeface(typeface_any) == 1
+    assert typeface_font_provider.registerTypeface(non_text_typeface) == 1
     assert typeface_font_provider.countFamilies() == 2
     # TypefaceFontProvider can detect duplicates.
     typeface_any_two = skia.Typeface("Text")
     assert typeface_font_provider.registerTypeface(typeface_any_two) == 1
     assert typeface_font_provider.countFamilies() == 2
 
-def test_textlayout_TypefaceFontProvider_registerTypeface1(typeface_font_provider):
+def test_textlayout_TypefaceFontProvider_registerTypeface1(typeface_font_provider, non_text_typeface):
     typeface_any = skia.Typeface("Text")
     assert typeface_font_provider.registerTypeface(typeface_any, "Not Text") == 1
     assert typeface_font_provider.countFamilies() == 3
-    typeface_any = skia.Typeface("Emoji")
-    assert typeface_font_provider.registerTypeface(typeface_any, "Not Emoji") == 1
+    assert typeface_font_provider.registerTypeface(non_text_typeface, "Not Emoji") == 1
     assert typeface_font_provider.countFamilies() == 4
