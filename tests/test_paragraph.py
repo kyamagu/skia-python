@@ -61,3 +61,32 @@ def test_Paragraph_linebreak(paragraph_builder, textlayout_text_style, textlayou
     paragraph = builder.Build()
     paragraph.layout(300)
     assert (paragraph.Height > 0) and (paragraph.Height > paragraph.LongestLine * 2)
+
+
+@pytest.fixture(scope='session')
+def typeface_font_provider():
+    return skia.textlayout.TypefaceFontProvider()
+
+def test_textlayout_TypefaceFontProvider_init(typeface_font_provider):
+    assert isinstance(typeface_font_provider, skia.textlayout_TypefaceFontProvider)
+    assert typeface_font_provider.countFamilies() == 0
+
+def test_textlayout_TypefaceFontProvider_registerTypeface0(typeface_font_provider):
+    typeface_any = skia.Typeface("Text")
+    assert typeface_font_provider.registerTypeface(typeface_any) == 1
+    assert typeface_font_provider.countFamilies() == 1
+    typeface_any = skia.Typeface("Emoji")
+    assert typeface_font_provider.registerTypeface(typeface_any) == 1
+    assert typeface_font_provider.countFamilies() == 2
+    # TypefaceFontProvider can detect duplicates.
+    typeface_any_two = skia.Typeface("Text")
+    assert typeface_font_provider.registerTypeface(typeface_any_two) == 1
+    assert typeface_font_provider.countFamilies() == 2
+
+def test_textlayout_TypefaceFontProvider_registerTypeface1(typeface_font_provider):
+    typeface_any = skia.Typeface("Text")
+    assert typeface_font_provider.registerTypeface(typeface_any, "Not Text") == 1
+    assert typeface_font_provider.countFamilies() == 3
+    typeface_any = skia.Typeface("Emoji")
+    assert typeface_font_provider.registerTypeface(typeface_any, "Not Emoji") == 1
+    assert typeface_font_provider.countFamilies() == 4
