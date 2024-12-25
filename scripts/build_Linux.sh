@@ -16,6 +16,7 @@ fi
 yum install -y \
     fontconfig-devel \
     mesa-libGL-devel \
+    mesa-libEGL-devel libglvnd-devel mesa-libGLES-devel libglvnd mesa-libGLES mesa-libEGL libglvnd-egl \
     xorg-x11-server-Xvfb \
     mesa-dri-drivers && \
     yum clean all && \
