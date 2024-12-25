@@ -66,7 +66,7 @@ py::class_<GrGLInterface, sk_sp<GrGLInterface>, SkRefCnt>(
 #ifdef __linux__
     .def_static("MakeEGL", &GrGLInterfaces::MakeEGL)
     .def_static("MakeGLX", &GrGLInterfaces::MakeGLX)
-#end
+#endif
     ;
 
 }
