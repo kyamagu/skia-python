@@ -114,7 +114,7 @@ jobs:
           platforms: ${{ matrix.arch }}
 
       - name: Build wheels
-        uses: pypa/cibuildwheel@v2.21.3
+        uses: pypa/cibuildwheel@main
         env:
           CIBW_MANYLINUX_X86_64_IMAGE: manylinux_2_34
           CIBW_MANYLINUX_AARCH64_IMAGE: manylinux_2_34
@@ -181,8 +181,8 @@ jobs:
       - name: Build wheels
         uses: pypa/cibuildwheel@v2.19.2
         env:
-          CIBW_MANYLINUX_X86_64_IMAGE: manylinux_2_34
-          CIBW_MANYLINUX_AARCH64_IMAGE: manylinux_2_34
+          CIBW_MANYLINUX_X86_64_IMAGE: manylinux_2_28
+          CIBW_MANYLINUX_AARCH64_IMAGE: manylinux_2_28
           CIBW_BUILD: "${{ matrix.cp }}-*"
           CIBW_SKIP: "*musllinux*"
           CIBW_ARCHS: ${{ matrix.arch }}
