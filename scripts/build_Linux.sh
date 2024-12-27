@@ -54,6 +54,7 @@ fi
 git clone https://gn.googlesource.com/gn && \
     cd gn && \
     git checkout fe330c0ae1ec29db30b6f830e50771a335e071fb && \
+    patch -p1 < ../patch/0001-Fix-for-Werror-redundant-move-for-newer-g.patch && \
     python3 build/gen.py && \
     ninja -C out gn && \
     cd ..
