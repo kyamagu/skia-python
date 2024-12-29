@@ -65,6 +65,10 @@ py::class_<SkTextBlob::Iter::Run>(iter, "Run")
 
 iter
     .def(py::init<const SkTextBlob&>())
+    .def("__iter__",
+        [] (SkTextBlob::Iter& it) {
+            return it;
+        })
     .def("__next__",
         [] (SkTextBlob::Iter& it) {
             SkTextBlob::Iter::Run run;
