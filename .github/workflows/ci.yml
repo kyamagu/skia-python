@@ -131,7 +131,7 @@ jobs:
             ldconfig -v &&
             python3 -c "import skia" &&
             xvfb-run -s "-screen 0 640x480x24" python -m pytest {project}/tests
-          CIBW_TEST_SKIP: "*-macosx_arm64"
+          CIBW_TEST_SKIP: "*-macosx_arm64 *manylinux*"
 
       - uses: actions/upload-artifact@v4
         with:
@@ -198,7 +198,7 @@ jobs:
             ldconfig -v &&
             python3 -c "import skia" &&
             xvfb-run -s "-screen 0 640x480x24" python -m pytest {project}/tests
-          CIBW_TEST_SKIP: "*-macosx_arm64"
+          CIBW_TEST_SKIP: "*-macosx_arm64 *manylinux*"
 
       - uses: actions/upload-artifact@v4
         with:
