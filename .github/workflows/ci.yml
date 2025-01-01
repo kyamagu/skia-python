@@ -128,8 +128,6 @@ jobs:
           CIBW_TEST_REQUIRES_MACOS: pytest pillow pyopengl
           CIBW_TEST_COMMAND: python -m pytest {project}/tests
           CIBW_TEST_COMMAND_LINUX: >
-            ldconfig -v &&
-            python3 -c "import skia" &&
             xvfb-run -s "-screen 0 640x480x24" python -m pytest {project}/tests
           CIBW_TEST_SKIP: "*-macosx_arm64 *manylinux*"
 
@@ -195,8 +193,6 @@ jobs:
           CIBW_TEST_REQUIRES_MACOS: pytest pillow pyopengl
           CIBW_TEST_COMMAND: python -m pytest {project}/tests
           CIBW_TEST_COMMAND_LINUX: >
-            ldconfig -v &&
-            python3 -c "import skia" &&
             xvfb-run -s "-screen 0 640x480x24" python -m pytest {project}/tests
           CIBW_TEST_SKIP: "*-macosx_arm64 *manylinux*"
 
