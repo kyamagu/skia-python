@@ -190,3 +190,27 @@ jobs:
           path: dist
 
       - uses: pypa/gh-action-pypi-publish@release/v1
+
+  build_and_test_on_Fedora:
+    runs-on: ubuntu-24.04
+    container: fedora:41
+    permissions: write-all
+    steps:
+       - run: dnf install -y dnf-utils git gcc-c++ libstdc++-devel libstdc++-static
+       - run: dnf install -y python3-build python3-devel python3-pytest python3-pillow python3-glfw
+       - run: dnf install -y egl-utils glx-utils
+       - run: dnf install -y patch
+       - run: dnf install -y expat-devel fontconfig-devel
+       - run: dnf install -y libxml2-devel vulkan-headers
+       - uses: actions/checkout@v4
+         with:
+          submodules: recursive
+       - run: bash scripts/build_Linux.sh
+       - run: python -m build --wheel
+       - run: python -m pip install dist/*.whl
+       - run: python -m pip install moderngl
+       - run: python -c 'import moderngl; moderngl_context = moderngl.create_standalone_context(backend="egl"); import skia; interface = skia.GrGLInterface.MakeEGL() ; assert isinstance(skia.GrDirectContext.MakeGL(interface), skia.GrContext) ; print("Success3")'
+       - run: eglinfo || /bin/true
+       - run: xvfb-run -s "-screen 0 640x480x24" glxinfo
+       # The below also run that 3 lines above but under X, but allows it to fail there.
+       - run: xvfb-run -s "-screen 0 640x480x24" pytest
