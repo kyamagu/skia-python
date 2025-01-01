@@ -43,10 +43,12 @@ jobs:
           CIBW_BEFORE_ALL: bash scripts/build_${{ runner.os }}.sh
           CIBW_BEFORE_BUILD: pip install pybind11 numpy
           CIBW_TEST_REQUIRES: pytest pillow glfw
+          CIBW_TEST_REQUIRES_LINUX: pytest pillow glfw moderngl
           CIBW_TEST_REQUIRES_MACOS: pytest pillow pyopengl
           CIBW_TEST_COMMAND: python -m pytest {project}/tests
           CIBW_TEST_COMMAND_LINUX: >
             xvfb-run -s "-screen 0 640x480x24" python -m pytest {project}/tests
+          CIBW_REPAIR_WHEEL_COMMAND_LINUX: "auditwheel repair --exclude libEGL.so.1 -w {dest_dir} {wheel}"
           CIBW_TEST_SKIP: "*-macosx_arm64"
 
       - uses: actions/upload-artifact@v4
@@ -128,10 +130,12 @@ jobs:
           CIBW_BEFORE_ALL: bash scripts/build_${{ runner.os }}.sh
           CIBW_BEFORE_BUILD: pip install pybind11 numpy
           CIBW_TEST_REQUIRES: pytest pillow glfw
+          CIBW_TEST_REQUIRES_LINUX: pytest pillow glfw moderngl
           CIBW_TEST_REQUIRES_MACOS: pytest pillow pyopengl
           CIBW_TEST_COMMAND: python -m pytest {project}/tests
           CIBW_TEST_COMMAND_LINUX: >
             xvfb-run -s "-screen 0 640x480x24" python -m pytest {project}/tests
+          CIBW_REPAIR_WHEEL_COMMAND_LINUX: "auditwheel repair --exclude libEGL.so.1 -w {dest_dir} {wheel}"
           CIBW_TEST_SKIP: "*-macosx_arm64"
 
       - uses: actions/upload-artifact@v4
