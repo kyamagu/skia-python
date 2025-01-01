@@ -53,7 +53,7 @@ fi
 # Build gn
 git clone https://gn.googlesource.com/gn && \
     cd gn && \
-    git checkout c97a86a72105f3328a540f5a5ab17d11989ab7dd && \
+    git checkout fe330c0ae1ec29db30b6f830e50771a335e071fb && \
     python3 build/gen.py && \
     ninja -C out gn && \
     cd ..
