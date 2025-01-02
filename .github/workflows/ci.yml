@@ -129,7 +129,8 @@ jobs:
           CIBW_TEST_COMMAND: python -m pytest {project}/tests
           CIBW_TEST_COMMAND_LINUX: >
             xvfb-run -s "-screen 0 640x480x24" python -m pytest {project}/tests
-          CIBW_TEST_SKIP: "*-macosx_arm64 *manylinux*"
+          CIBW_REPAIR_WHEEL_COMMAND_LINUX: "auditwheel repair --exclude libEGL.so -w {dest_dir} {wheel}"
+          CIBW_TEST_SKIP: "*-macosx_arm64"
 
       - uses: actions/upload-artifact@v4
         with:
@@ -194,7 +195,8 @@ jobs:
           CIBW_TEST_COMMAND: python -m pytest {project}/tests
           CIBW_TEST_COMMAND_LINUX: >
             xvfb-run -s "-screen 0 640x480x24" python -m pytest {project}/tests
-          CIBW_TEST_SKIP: "*-macosx_arm64 *manylinux*"
+          CIBW_REPAIR_WHEEL_COMMAND_LINUX: "auditwheel repair --exclude libEGL.so -w {dest_dir} {wheel}"
+          CIBW_TEST_SKIP: "*-macosx_arm64"
 
       - uses: actions/upload-artifact@v4
         with:
