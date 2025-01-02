@@ -54,7 +54,9 @@ sk_sp<SkFontMgr> SkFontMgr_RefDefault() {
 
 using Axis = SkFontParameters::Variation::Axis;
 using Coordinate = SkFontArguments::VariationPosition::Coordinate;
+using Override = SkFontArguments::Palette::Override;
 PYBIND11_MAKE_OPAQUE(std::vector<Coordinate>);
+PYBIND11_MAKE_OPAQUE(std::vector<Override>);
 
 namespace {
 
@@ -65,6 +67,12 @@ void SetVariationPositionCoordinates(
     vp.coordinateCount = coords.size();
 }
 
+void SetPaletteOverrides(
+    SkFontArguments::Palette& palette,
+    const std::vector<Override>& overrides) {
+    palette.overrides = overrides.empty() ? nullptr : &overrides[0];
+    palette.overrideCount = overrides.size();
+}
 
 py::tuple SkFontStyleSet_getStyle(SkFontStyleSet* self, int index) {
     SkFontStyle style;
@@ -342,6 +350,59 @@ variationposition
         &SkFontArguments::VariationPosition::coordinateCount)
     ;
 
+py::class_<SkFontArguments::Palette> palette(
+    fontarguments, "Palette",
+    R"docstring(
+    A a palette to use and overrides for palette entries.
+    )docstring");
+
+py::class_<Override>(palette, "Override")
+    .def(py::init(
+        [] (uint16_t index, SkColor color) {
+            return Override({index, color});
+        }),
+        py::arg("index"), py::arg("color"))
+    .def("__repr__",
+        [] (const Override& self) {
+            return py::str("Override(index={}, color={})").format(
+                self.index, self.color);
+        })
+    .def_readwrite("index", &Override::index)
+    .def_readwrite("color", &Override::color)
+    ;
+
+py::bind_vector<std::vector<Override>>(palette, "Overrides");
+
+palette
+    .def(py::init(
+        [] (int index, const std::vector<Override>& overrides) {
+            SkFontArguments::Palette palette;
+            palette.index = index;
+            SetPaletteOverrides(palette, overrides);
+            return palette;
+        }),
+        py::keep_alive<1, 3>(),
+        py::arg("index"), py::arg("overrides"))
+    .def(py::init(
+        [] (int index) {
+            return SkFontArguments::Palette({index, nullptr, 0});
+        }),
+        py::arg("index"))
+    .def("__repr__",
+        [] (const SkFontArguments::Palette& self) {
+            return py::str("Palette(index={}, overrideCount={})").format(
+                self.index, self.overrideCount);
+        })
+    .def_property("overrides",
+        [] (const SkFontArguments::Palette& self) {
+            return std::vector<Override>(
+                self.overrides, self.overrides + self.overrideCount);
+        },
+        &SetPaletteOverrides)
+    .def_readwrite("index", &SkFontArguments::Palette::index)
+    .def_readonly("overrideCount", &SkFontArguments::Palette::overrideCount)
+    ;
+
 fontarguments
     .def(py::init<>())
     .def("setCollectionIndex", &SkFontArguments::setCollectionIndex,
@@ -352,6 +413,19 @@ fontarguments
         actually be indexed collections of fonts.
         )docstring",
         py::arg("collectionIndex"))
+    .def("setPalette", &SkFontArguments::setPalette,
+        R"docstring(
+        Specify a palette to use and overrides for palette entries.
+        )docstring",
+        py::arg("palette"))
+    .def("setPalette",
+        [](SkFontArguments& self, int index) {
+            return self.setPalette(SkFontArguments::Palette({index, nullptr, 0}));
+        },
+        R"docstring(
+        Specify a palette index to use.
+        )docstring",
+        py::arg("index"))
     .def("setVariationDesignPosition",
         &SkFontArguments::setVariationDesignPosition,
         R"docstring(
@@ -365,6 +439,7 @@ fontarguments
         )docstring",
         py::arg("position"))
     .def("getCollectionIndex", &SkFontArguments::getCollectionIndex)
+    .def("getPalette", &SkFontArguments::getPalette)
     .def("getVariationDesignPosition",
         &SkFontArguments::getVariationDesignPosition)
     ;

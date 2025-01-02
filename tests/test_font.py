@@ -46,6 +46,44 @@ def test_FontArguments_setCollectionIndex(fontarguments):
     fontarguments.setCollectionIndex(0)
 
 
+@pytest.mark.parametrize(
+    "index, overrides",
+    [
+        (0, [(0, skia.ColorBLACK), (1, skia.ColorRED), (5, skia.ColorBLUE)]),
+        (1, []),
+        (2, None),
+    ],
+)
+def test_FontArguments_setPalette(fontarguments, index, overrides):
+    if overrides is None:
+        palette = skia.FontArguments.Palette(index)
+    else:
+        palette = skia.FontArguments.Palette(
+            index,
+            skia.FontArguments.Palette.Overrides(
+                [
+                    skia.FontArguments.Palette.Override(*override)
+                    for override in overrides
+                ]
+            ),
+        )
+
+    len_overrides = len(overrides) if overrides is not None else 0
+    assert palette.index == index
+    assert len(palette.overrides) == len_overrides
+    assert palette.overrideCount == len_overrides
+    assert repr(palette) == f"Palette(index={index}, overrideCount={len_overrides})"
+    for i, override in enumerate(palette.overrides):
+        assert repr(override) == f"Override(index={override.index}, color={override.color})"
+        assert override.index == overrides[i][0]
+        assert override.color == overrides[i][1]
+    fontarguments.setPalette(palette)
+
+
+def test_FontArguments_setPalette_Index(fontarguments):
+    fontarguments.setPalette(1)
+
+
 def test_FontArguments_setVariationDesignPosition(fontarguments):
     coordinates = skia.FontArguments.VariationPosition.Coordinates([
         skia.FontArguments.VariationPosition.Coordinate(0x00, 0.),
@@ -56,6 +94,10 @@ def test_FontArguments_setVariationDesignPosition(fontarguments):
 
 def test_FontArguments_getCollectionIndex(fontarguments):
     assert isinstance(fontarguments.getCollectionIndex(), int)
+
+
+def test_FontArguments_getPalette(fontarguments):
+    assert isinstance(fontarguments.getPalette(), skia.FontArguments.Palette)
 
 
 def test_FontArguments_getVariationDesignPosition(fontarguments):
