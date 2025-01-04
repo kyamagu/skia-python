@@ -174,6 +174,16 @@ text_style
         R"docstring(
         )docstring",
         py::arg("locale"))
+    .def("setLetterSpacing",
+        py::overload_cast<SkScalar>(&TextStyle::setLetterSpacing),
+        R"docstring(
+        )docstring",
+        py::arg("letterspacing"))
+    .def("setWordSpacing",
+        py::overload_cast<SkScalar>(&TextStyle::setWordSpacing),
+        R"docstring(
+        )docstring",
+        py::arg("wordspacing"))
     .def("setDecoration",
         py::overload_cast<TextDecoration>(&TextStyle::setDecoration),
         R"docstring(
