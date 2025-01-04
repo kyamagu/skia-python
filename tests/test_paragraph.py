@@ -18,6 +18,14 @@ def test_ParagraphStyle_init0(paragraph_style):
 
 
 @pytest.fixture(scope='session')
+def strut_style():
+    return skia.textlayout.StrutStyle()
+
+def test_StrutStyle_init0(strut_style):
+    assert isinstance(strut_style, skia.textlayout_StrutStyle)
+
+
+@pytest.fixture(scope='session')
 def textlayout_text_style():
     return skia.textlayout.TextStyle()
 
@@ -61,3 +69,44 @@ def test_Paragraph_linebreak(paragraph_builder, textlayout_text_style, textlayou
     paragraph = builder.Build()
     paragraph.layout(300)
     assert (paragraph.Height > 0) and (paragraph.Height > paragraph.LongestLine * 2)
+
+
+def test_Paragraph_strutHeightDifference(paragraph_builder, textlayout_text_style, textlayout_font_collection, paragraph_style, strut_style):
+    paint = skia.Paint()
+    paint.setColor(skia.ColorBLACK)
+    paint.setAntiAlias(True)
+
+    textlayout_text_style.setFontSize(50)
+    textlayout_text_style.setForegroundPaint(paint)
+
+    textlayout_font_collection.setDefaultFontManager(skia.FontMgr())
+
+    strut_style.setStrutEnabled(False)
+    paragraph_style.setStrutStyle(strut_style)
+
+    builder = skia.textlayout.ParagraphBuilder.make(
+        paragraph_style, textlayout_font_collection, skia.Unicodes.ICU.Make()
+    )
+    builder.pushStyle(textlayout_text_style)
+
+    builder.addText("o\no")
+    paragraph = builder.Build()
+    paragraph.layout(300)
+    assert paragraph.Height > 0
+
+    nostrut_paragraph_height = paragraph.Height
+
+    strut_style.setStrutEnabled(True)
+    strut_style.setLeading(2.0)
+    
+    paragraph_style.setStrutStyle(strut_style)
+
+    builder = skia.textlayout.ParagraphBuilder.make(
+        paragraph_style, textlayout_font_collection, skia.Unicodes.ICU.Make()
+    )
+    builder.pushStyle(textlayout_text_style)
+
+    builder.addText("o\no")
+    paragraph = builder.Build()
+    paragraph.layout(300)
+    assert paragraph.Height > nostrut_paragraph_height
