@@ -71,7 +71,7 @@ def test_Paragraph_linebreak(paragraph_builder, textlayout_text_style, textlayou
     assert (paragraph.Height > 0) and (paragraph.Height > paragraph.LongestLine * 2)
 
 
-def test_Paragraph_strutHeightDifference(paragraph_builder, textlayout_text_style, textlayout_font_collection, paragraph_style, strut_style):
+def test_Paragraph_strutHeight(paragraph_builder, textlayout_text_style, textlayout_font_collection, paragraph_style, strut_style):
     paint = skia.Paint()
     paint.setColor(skia.ColorBLACK)
     paint.setAntiAlias(True)
@@ -81,32 +81,36 @@ def test_Paragraph_strutHeightDifference(paragraph_builder, textlayout_text_styl
 
     textlayout_font_collection.setDefaultFontManager(skia.FontMgr())
 
-    strut_style.setStrutEnabled(False)
-    paragraph_style.setStrutStyle(strut_style)
+    def graf_with_strut(enabled, leading_factor):
+        strut_style.setStrutEnabled(enabled)
+        strut_style.setLeading(leading_factor)
+        paragraph_style.setStrutStyle(strut_style)
 
-    builder = skia.textlayout.ParagraphBuilder.make(
-        paragraph_style, textlayout_font_collection, skia.Unicodes.ICU.Make()
-    )
-    builder.pushStyle(textlayout_text_style)
+        builder = skia.textlayout.ParagraphBuilder.make(
+            paragraph_style, textlayout_font_collection, skia.Unicodes.ICU.Make()
+        )
+        builder.pushStyle(textlayout_text_style)
 
-    builder.addText("o\no")
-    paragraph = builder.Build()
-    paragraph.layout(300)
-    assert paragraph.Height > 0
+        builder.addText("o\no")
+        paragraph = builder.Build()
+        paragraph.layout(300)
 
-    nostrut_paragraph_height = paragraph.Height
-
-    strut_style.setStrutEnabled(True)
-    strut_style.setLeading(2.0)
+        return paragraph
     
-    paragraph_style.setStrutStyle(strut_style)
+    nostrut_height = graf_with_strut(False, 1.0).Height
+    assert nostrut_height > 0
 
-    builder = skia.textlayout.ParagraphBuilder.make(
-        paragraph_style, textlayout_font_collection, skia.Unicodes.ICU.Make()
-    )
-    builder.pushStyle(textlayout_text_style)
+    two_x_strut_height = graf_with_strut(True, 2.0).Height
+    assert two_x_strut_height > nostrut_height
 
-    builder.addText("o\no")
-    paragraph = builder.Build()
-    paragraph.layout(300)
-    assert paragraph.Height > nostrut_paragraph_height
+    three_x_strut_height = graf_with_strut(True, 3.0).Height
+    assert three_x_strut_height > two_x_strut_height
+
+    # Anything < 1 seems to have no effect
+
+    half_strut_height = graf_with_strut(True, 0.5).Height
+    assert half_strut_height == nostrut_height
+
+    zero_x_strut_height = graf_with_strut(True, 0).Height
+    assert zero_x_strut_height == nostrut_height
+
