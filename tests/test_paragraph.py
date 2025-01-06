@@ -114,3 +114,72 @@ def test_Paragraph_strutHeight(paragraph_builder, textlayout_text_style, textlay
     zero_x_strut_height = graf_with_strut(True, 0).Height
     assert zero_x_strut_height == nostrut_height
 
+
+def test_Paragraph_letterSpacing(paragraph_builder, textlayout_text_style, textlayout_font_collection, paragraph_style, strut_style):
+    paint = skia.Paint()
+    paint.setColor(skia.ColorBLACK)
+    paint.setAntiAlias(True)
+
+    textlayout_font_collection.setDefaultFontManager(skia.FontMgr())
+
+    def graf_with_letterspacing(letterspacing):
+        textlayout_text_style.setFontSize(50)
+        textlayout_text_style.setForegroundPaint(paint)
+        textlayout_text_style.setLetterSpacing(letterspacing)
+
+        builder = skia.textlayout.ParagraphBuilder.make(
+            paragraph_style, textlayout_font_collection, skia.Unicodes.ICU.Make()
+        )
+        builder.pushStyle(textlayout_text_style)
+
+        builder.addText("ooo")
+        paragraph = builder.Build()
+        paragraph.layout(300)
+
+        return paragraph
+    
+    negative_one_x_letter_spacing = graf_with_letterspacing(-1.0).LongestLine
+    zero_x_letter_spacing = graf_with_letterspacing(0.0).LongestLine
+    one_x_letter_spacing = graf_with_letterspacing(1.0).LongestLine
+    two_x_letter_spacing = graf_with_letterspacing(2.0).LongestLine
+    three_x_letter_spacing = graf_with_letterspacing(3.0).LongestLine
+
+    assert zero_x_letter_spacing > negative_one_x_letter_spacing
+    assert one_x_letter_spacing > zero_x_letter_spacing
+    assert two_x_letter_spacing > one_x_letter_spacing
+    assert three_x_letter_spacing > two_x_letter_spacing
+
+
+def test_Paragraph_wordSpacing(paragraph_builder, textlayout_text_style, textlayout_font_collection, paragraph_style, strut_style):
+    paint = skia.Paint()
+    paint.setColor(skia.ColorBLACK)
+    paint.setAntiAlias(True)
+
+    textlayout_font_collection.setDefaultFontManager(skia.FontMgr())
+
+    def graf_with_word_spacing(letterspacing):
+        textlayout_text_style.setFontSize(50)
+        textlayout_text_style.setForegroundPaint(paint)
+        textlayout_text_style.setWordSpacing(letterspacing)
+
+        builder = skia.textlayout.ParagraphBuilder.make(
+            paragraph_style, textlayout_font_collection, skia.Unicodes.ICU.Make()
+        )
+        builder.pushStyle(textlayout_text_style)
+
+        builder.addText("word word word")
+        paragraph = builder.Build()
+        paragraph.layout(300)
+
+        return paragraph
+    
+    negative_one_x_word_spacing = graf_with_word_spacing(-1.0).LongestLine
+    zero_x_word_spacing = graf_with_word_spacing(0.0).LongestLine
+    one_x_word_spacing = graf_with_word_spacing(1.0).LongestLine
+    two_x_word_spacing = graf_with_word_spacing(2.0).LongestLine
+    three_x_word_spacing = graf_with_word_spacing(3.0).LongestLine
+
+    assert zero_x_word_spacing > negative_one_x_word_spacing
+    assert one_x_word_spacing > zero_x_word_spacing
+    assert two_x_word_spacing > one_x_word_spacing
+    assert three_x_word_spacing > two_x_word_spacing
