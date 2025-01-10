@@ -1,5 +1,6 @@
 import skia
 import pytest
+import operator
 
 @pytest.fixture(scope='session')
 def textlayout_font_collection():
@@ -71,7 +72,14 @@ def test_Paragraph_linebreak(paragraph_builder, textlayout_text_style, textlayou
     assert (paragraph.Height > 0) and (paragraph.Height > paragraph.LongestLine * 2)
 
 
-def test_Paragraph_strutHeight(paragraph_builder, textlayout_text_style, textlayout_font_collection, paragraph_style, strut_style):
+@pytest.mark.parametrize('test_operator, spec_a, spec_b', [
+    (operator.eq, (False, 1.0), (True, 1.0)),
+    (operator.eq, (True, 0), (True, 1.0)),
+    (operator.eq, (True, 0.5), (True, 1.0)),
+    (operator.lt, (True, 1.0), (True, 2.0)),
+    (operator.lt, (True, 2.0), (True, 3.0)),
+])
+def test_Paragraph_strutHeight(paragraph_builder, textlayout_text_style, textlayout_font_collection, paragraph_style, test_operator, strut_style, spec_a, spec_b):
     paint = skia.Paint()
     paint.setColor(skia.ColorBLACK)
     paint.setAntiAlias(True)
@@ -97,25 +105,20 @@ def test_Paragraph_strutHeight(paragraph_builder, textlayout_text_style, textlay
 
         return paragraph
     
-    nostrut_height = graf_with_strut(False, 1.0).Height
-    assert nostrut_height > 0
+    paragraph_a_height = graf_with_strut(*spec_a).Height
+    paragraph_b_height = graf_with_strut(*spec_b).Height
 
-    two_x_strut_height = graf_with_strut(True, 2.0).Height
-    assert two_x_strut_height > nostrut_height
-
-    three_x_strut_height = graf_with_strut(True, 3.0).Height
-    assert three_x_strut_height > two_x_strut_height
-
-    # Anything < 1 seems to have no effect
-
-    half_strut_height = graf_with_strut(True, 0.5).Height
-    assert half_strut_height == nostrut_height
-
-    zero_x_strut_height = graf_with_strut(True, 0).Height
-    assert zero_x_strut_height == nostrut_height
+    assert test_operator(paragraph_a_height, paragraph_b_height)
 
 
-def test_Paragraph_letterSpacing(paragraph_builder, textlayout_text_style, textlayout_font_collection, paragraph_style, strut_style):
+@pytest.mark.parametrize('spacing_a, spacing_b', [
+    (-1, 0),
+    (0, 1),
+    (1, 2),
+    (2, 3),
+    (-1, 1),
+])
+def test_Paragraph_letterSpacing(paragraph_builder, textlayout_text_style, textlayout_font_collection, paragraph_style, strut_style, spacing_a, spacing_b):
     paint = skia.Paint()
     paint.setColor(skia.ColorBLACK)
     paint.setAntiAlias(True)
@@ -138,19 +141,17 @@ def test_Paragraph_letterSpacing(paragraph_builder, textlayout_text_style, textl
 
         return paragraph
     
-    negative_one_x_letter_spacing = graf_with_letterspacing(-1.0).LongestLine
-    zero_x_letter_spacing = graf_with_letterspacing(0.0).LongestLine
-    one_x_letter_spacing = graf_with_letterspacing(1.0).LongestLine
-    two_x_letter_spacing = graf_with_letterspacing(2.0).LongestLine
-    three_x_letter_spacing = graf_with_letterspacing(3.0).LongestLine
-
-    assert zero_x_letter_spacing > negative_one_x_letter_spacing
-    assert one_x_letter_spacing > zero_x_letter_spacing
-    assert two_x_letter_spacing > one_x_letter_spacing
-    assert three_x_letter_spacing > two_x_letter_spacing
+    assert graf_with_letterspacing(spacing_a).LongestLine < graf_with_letterspacing(spacing_b).LongestLine
 
 
-def test_Paragraph_wordSpacing(paragraph_builder, textlayout_text_style, textlayout_font_collection, paragraph_style, strut_style):
+@pytest.mark.parametrize('spacing_a, spacing_b', [
+    (-1, 0),
+    (0, 1),
+    (1, 2),
+    (2, 3),
+    (-1, 1),
+])
+def test_Paragraph_wordSpacing(paragraph_builder, textlayout_text_style, textlayout_font_collection, paragraph_style, strut_style, spacing_a, spacing_b):
     paint = skia.Paint()
     paint.setColor(skia.ColorBLACK)
     paint.setAntiAlias(True)
@@ -173,13 +174,4 @@ def test_Paragraph_wordSpacing(paragraph_builder, textlayout_text_style, textlay
 
         return paragraph
     
-    negative_one_x_word_spacing = graf_with_word_spacing(-1.0).LongestLine
-    zero_x_word_spacing = graf_with_word_spacing(0.0).LongestLine
-    one_x_word_spacing = graf_with_word_spacing(1.0).LongestLine
-    two_x_word_spacing = graf_with_word_spacing(2.0).LongestLine
-    three_x_word_spacing = graf_with_word_spacing(3.0).LongestLine
-
-    assert zero_x_word_spacing > negative_one_x_word_spacing
-    assert one_x_word_spacing > zero_x_word_spacing
-    assert two_x_word_spacing > one_x_word_spacing
-    assert three_x_word_spacing > two_x_word_spacing
+    assert graf_with_word_spacing(spacing_a).LongestLine < graf_with_word_spacing(spacing_b).LongestLine
