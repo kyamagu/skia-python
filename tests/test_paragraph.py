@@ -151,7 +151,7 @@ def test_Paragraph_strutHeight(paragraph_builder, textlayout_text_style, textlay
         paragraph.layout(300)
 
         return paragraph
-    
+
     paragraph_a_height = graf_with_strut(*spec_a).Height
     paragraph_b_height = graf_with_strut(*spec_b).Height
 
@@ -187,7 +187,7 @@ def test_Paragraph_letterSpacing(paragraph_builder, textlayout_text_style, textl
         paragraph.layout(300)
 
         return paragraph
-    
+
     assert graf_with_letterspacing(spacing_a).LongestLine < graf_with_letterspacing(spacing_b).LongestLine
 
 
@@ -220,5 +220,5 @@ def test_Paragraph_wordSpacing(paragraph_builder, textlayout_text_style, textlay
         paragraph.layout(300)
 
         return paragraph
-    
+
     assert graf_with_word_spacing(spacing_a).LongestLine < graf_with_word_spacing(spacing_b).LongestLine
