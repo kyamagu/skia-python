@@ -4,6 +4,7 @@
 #include "modules/skparagraph/include/Paragraph.h"
 #include "modules/skparagraph/include/ParagraphBuilder.h"
 #include "modules/skparagraph/include/ParagraphStyle.h"
+#include "modules/skparagraph/include/TypefaceFontProvider.h"
 #include <pybind11/stl.h>
 
 using namespace skia::textlayout;
@@ -15,6 +16,7 @@ py::class_<ParagraphBuilder> paragraph_builder(m, "textlayout_ParagraphBuilder")
 py::class_<ParagraphStyle> paragraph_style(m, "textlayout_ParagraphStyle");
 py::class_<TextStyle> text_style(m, "textlayout_TextStyle");
 py::class_<Paragraph> paragraph(m, "textlayout_Paragraph");
+py::class_<TypefaceFontProvider, sk_sp<TypefaceFontProvider>, SkFontMgr> typeface_font_provider(m, "textlayout_TypefaceFontProvider");
 
 py::enum_<TextAlign>(m, "textlayout_TextAlign", R"docstring(
     )docstring")
@@ -202,12 +204,23 @@ paragraph
         py::arg("canvas"), py::arg("x"), py::arg("y"))
     ;
 
+typeface_font_provider
+    .def(py::init())
+    .def("registerTypeface",
+        py::overload_cast<sk_sp<SkTypeface>>(&TypefaceFontProvider::registerTypeface),
+        py::arg("typeface"))
+    .def("registerTypeface",
+        py::overload_cast<sk_sp<SkTypeface>, const SkString&>(&TypefaceFontProvider::registerTypeface),
+        py::arg("typeface"), py::arg("alias"))
+    ;
+
 py::object SimpleNamespace = py::module_::import("types").attr("SimpleNamespace");
 m.attr("textlayout") = SimpleNamespace();
 m.attr("textlayout").attr("FontCollection") = m.attr("textlayout_FontCollection");
 m.attr("textlayout").attr("ParagraphBuilder") = m.attr("textlayout_ParagraphBuilder");
 m.attr("textlayout").attr("ParagraphStyle") = m.attr("textlayout_ParagraphStyle");
 m.attr("textlayout").attr("Paragraph") = m.attr("textlayout_Paragraph");
+m.attr("textlayout").attr("TypefaceFontProvider") = m.attr("textlayout_TypefaceFontProvider");
 m.attr("textlayout").attr("TextStyle") = m.attr("textlayout_TextStyle");
 m.attr("textlayout").attr("TextAlign") = m.attr("textlayout_TextAlign");
 m.attr("textlayout").attr("TextDecoration") = m.attr("textlayout_TextDecoration");
