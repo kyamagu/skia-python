@@ -359,8 +359,8 @@ def test_FontMgr_new_custom_directory_init(fontmgr_new_custom_directory):
 
 
 def test_FontMgr_new_custom_directory_countFamilies(fontmgr_new_custom_directory):
-    # Recursive valid font count in skia/resources/fonts/ as of skia m132
-    assert fontmgr_new_custom_directory.countFamilies() == 33
+    # Recursive valid font count in skia/resources/fonts/ as of skia m134
+    assert fontmgr_new_custom_directory.countFamilies() == 34
 
 
 # Strickly speaking, we do not need/want this no-arg one.
