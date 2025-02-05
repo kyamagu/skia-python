@@ -6,7 +6,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Overview &mdash; skia-python 132.0b11 documentation</title>
+  <title>Overview &mdash; skia-python 134.0b12 documentation</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
       <link rel="stylesheet" type="text/css" href="../_static/css/theme.css" />
 
@@ -96,7 +96,7 @@ Each of these has two components: the primitive being drawn
 (<a class="reference internal" href="../reference/skia.Rect.html#skia.Rect" title="skia.Rect"><code class="xref py py-class docutils literal notranslate"><span class="pre">Rect</span></code></a>, <a class="reference internal" href="../reference/skia.Path.html#skia.Path" title="skia.Path"><code class="xref py py-class docutils literal notranslate"><span class="pre">Path</span></code></a>, etc.) and color/style
 attributes (<a class="reference internal" href="../reference/skia.Paint.html#skia.Paint" title="skia.Paint"><code class="xref py py-class docutils literal notranslate"><span class="pre">Paint</span></code></a>). The following example creates a canvas,
 draws a rectangle with specified paint, and writes the result to an image file:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">skia</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">skia</span>
 
 <span class="n">surface</span> <span class="o">=</span> <span class="n">skia</span><span class="o">.</span><span class="n">Surface</span><span class="p">(</span><span class="mi">128</span><span class="p">,</span> <span class="mi">128</span><span class="p">)</span>
 
@@ -132,7 +132,7 @@ maintains a stack of matrices and clips. Note however, that unlike similar
 contexts in other APIs like postscript, cairo, or awt, Skia does not store any
 other drawing attributes in the context (e.g. color, pen size). Rather, these
 are specified explicitly in each draw call, via a <a class="reference internal" href="../reference/skia.Paint.html#skia.Paint" title="skia.Paint"><code class="xref py py-class docutils literal notranslate"><span class="pre">Paint</span></code></a>:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">skia</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">skia</span>
 
 <span class="n">surface</span> <span class="o">=</span> <span class="n">skia</span><span class="o">.</span><span class="n">Surface</span><span class="p">(</span><span class="mi">256</span><span class="p">,</span> <span class="mi">256</span><span class="p">)</span>
 
@@ -174,7 +174,7 @@ save yourself having to allocate a paint:</p>
 The following example demonstrates drawing of shape primitives,
 <a class="reference internal" href="../reference/skia.Path.html#skia.Path" title="skia.Path"><code class="xref py py-class docutils literal notranslate"><span class="pre">Path</span></code></a>, external <a class="reference internal" href="../reference/skia.Image.html#skia.Image" title="skia.Image"><code class="xref py py-class docutils literal notranslate"><span class="pre">Image</span></code></a>, or
 <a class="reference internal" href="../reference/skia.TextBlob.html#skia.TextBlob" title="skia.TextBlob"><code class="xref py py-class docutils literal notranslate"><span class="pre">TextBlob</span></code></a> objects onto the canvas:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">skia</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">skia</span>
 
 <span class="n">surface</span> <span class="o">=</span> <span class="n">skia</span><span class="o">.</span><span class="n">Surface</span><span class="p">(</span><span class="mi">256</span><span class="p">,</span> <span class="mi">256</span><span class="p">)</span>
 
@@ -227,7 +227,7 @@ The following example demonstrates drawing of shape primitives,
 <h2>Python interoperability<a class="headerlink" href="#python-interoperability" title="Permalink to this heading"></a></h2>
 <p><cite>skia-python</cite> supports numpy array in several methods. The following directly
 draws into numpy array:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 
 <span class="n">array</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">320</span><span class="p">,</span> <span class="mi">240</span><span class="p">,</span> <span class="mi">4</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">uint8</span><span class="p">)</span>
 <span class="n">canvas</span> <span class="o">=</span> <span class="n">skia</span><span class="o">.</span><span class="n">Canvas</span><span class="p">(</span><span class="n">array</span><span class="p">)</span>

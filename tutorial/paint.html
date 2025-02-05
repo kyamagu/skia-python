@@ -6,7 +6,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Paint Overview &mdash; skia-python 132.0b11 documentation</title>
+  <title>Paint Overview &mdash; skia-python 134.0b12 documentation</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
       <link rel="stylesheet" type="text/css" href="../_static/css/theme.css" />
 
@@ -222,7 +222,7 @@ are used not only for drawing text, but also for measuring it:</p>
 this example the source is a solid magenta color with a horizontal alpha
 gradient and the destination is a solid cyan color with a vertical alpha
 gradient.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">draw_utf8_string</span><span class="p">(</span><span class="n">canvas</span><span class="p">,</span> <span class="n">text</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">font</span><span class="p">,</span> <span class="n">paint</span><span class="p">):</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">draw_utf8_string</span><span class="p">(</span><span class="n">canvas</span><span class="p">,</span> <span class="n">text</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">font</span><span class="p">,</span> <span class="n">paint</span><span class="p">):</span>
     <span class="n">canvas</span><span class="o">.</span><span class="n">drawTextBlob</span><span class="p">(</span><span class="n">skia</span><span class="o">.</span><span class="n">TextBlob</span><span class="p">(</span><span class="n">text</span><span class="p">,</span> <span class="n">font</span><span class="p">),</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">paint</span><span class="p">)</span>
 
 
@@ -451,7 +451,7 @@ gradient.</p>
     <span class="n">skia</span><span class="o">.</span><span class="n">Data</span><span class="o">.</span><span class="n">MakeFromFileName</span><span class="p">(</span>
         <span class="s1">&#39;../skia/resources/images/mandrill_512_q075.jpg&#39;</span><span class="p">))</span>
 
-<span class="k">def</span> <span class="nf">f</span><span class="p">(</span><span class="n">canvas</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">colorMatrix</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">f</span><span class="p">(</span><span class="n">canvas</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">colorMatrix</span><span class="p">):</span>
     <span class="n">canvas</span><span class="o">.</span><span class="n">drawImage</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">skia</span><span class="o">.</span><span class="n">Paint</span><span class="p">(</span>
         <span class="n">ColorFilter</span><span class="o">=</span><span class="n">skia</span><span class="o">.</span><span class="n">ColorFilters</span><span class="o">.</span><span class="n">Matrix</span><span class="p">(</span><span class="n">colorMatrix</span><span class="p">),</span>
     <span class="p">))</span>
@@ -558,8 +558,8 @@ stroked, not a path to be filled.</p>
 <h3>Corner Path Effect<a class="headerlink" href="#corner-path-effect" title="Permalink to this heading"></a></h3>
 <p>A path effect that can turn sharp corners into various treatments (e.g. rounded
 corners).</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">star</span><span class="p">():</span>
-    <span class="kn">from</span> <span class="nn">math</span> <span class="kn">import</span> <span class="n">cos</span><span class="p">,</span> <span class="n">sin</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">star</span><span class="p">():</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">math</span><span class="w"> </span><span class="kn">import</span> <span class="n">cos</span><span class="p">,</span> <span class="n">sin</span>
     <span class="n">R</span><span class="p">,</span> <span class="n">C</span> <span class="o">=</span> <span class="mf">115.2</span><span class="p">,</span> <span class="mf">128.0</span>
     <span class="n">path</span> <span class="o">=</span> <span class="n">skia</span><span class="o">.</span><span class="n">Path</span><span class="p">()</span>
     <span class="n">path</span><span class="o">.</span><span class="n">moveTo</span><span class="p">(</span><span class="n">C</span> <span class="o">+</span> <span class="n">R</span><span class="p">,</span> <span class="n">C</span><span class="p">)</span>

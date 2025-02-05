@@ -6,7 +6,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>FontMgr &mdash; skia-python 132.0b11 documentation</title>
+  <title>FontMgr &mdash; skia-python 134.0b12 documentation</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
       <link rel="stylesheet" type="text/css" href="../_static/css/theme.css" />
 
@@ -237,11 +237,13 @@
 <li class="toctree-l3"><a class="reference internal" href="skia.textlayout_Paragraph.html">textlayout_Paragraph</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.textlayout_ParagraphBuilder.html">textlayout_ParagraphBuilder</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.textlayout_ParagraphStyle.html">textlayout_ParagraphStyle</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.textlayout_StrutStyle.html">textlayout_StrutStyle</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.textlayout_TextAlign.html">textlayout_TextAlign</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.textlayout_TextDecoration.html">textlayout_TextDecoration</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.textlayout_TextDecorationMode.html">textlayout_TextDecorationMode</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.textlayout_TextDecorationStyle.html">textlayout_TextDecorationStyle</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.textlayout_TextStyle.html">textlayout_TextStyle</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.textlayout_TypefaceFontProvider.html">textlayout_TypefaceFontProvider</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.html#functions">Functions</a></li>
 </ul>
 </li>
@@ -293,52 +295,55 @@
 <p class="rubric">Methods</p>
 <table class="autosummary longtable docutils align-default">
 <tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="#skia.FontMgr.New_Custom_Empty" title="skia.FontMgr.New_Custom_Empty"><code class="xref py py-obj docutils literal notranslate"><span class="pre">New_Custom_Empty</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.FontMgr.New_Custom_Directory" title="skia.FontMgr.New_Custom_Directory"><code class="xref py py-obj docutils literal notranslate"><span class="pre">New_Custom_Directory</span></code></a></p></td>
+<td><p>Create a custom font manager which scans a given directory for font files.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.FontMgr.New_Custom_Empty" title="skia.FontMgr.New_Custom_Empty"><code class="xref py py-obj docutils literal notranslate"><span class="pre">New_Custom_Empty</span></code></a></p></td>
 <td><p>Overloaded function.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#skia.FontMgr.OneFontMgr" title="skia.FontMgr.OneFontMgr"><code class="xref py py-obj docutils literal notranslate"><span class="pre">OneFontMgr</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.FontMgr.OneFontMgr" title="skia.FontMgr.OneFontMgr"><code class="xref py py-obj docutils literal notranslate"><span class="pre">OneFontMgr</span></code></a></p></td>
 <td><p>New_Custom_Empty(<a href="#id1"><span class="problematic" id="id2">*</span></a>args, <a href="#id3"><span class="problematic" id="id4">**</span></a>kwargs) Overloaded function.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#skia.FontMgr.RefDefault" title="skia.FontMgr.RefDefault"><code class="xref py py-obj docutils literal notranslate"><span class="pre">RefDefault</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.FontMgr.RefDefault" title="skia.FontMgr.RefDefault"><code class="xref py py-obj docutils literal notranslate"><span class="pre">RefDefault</span></code></a></p></td>
 <td><p>Return the default fontmgr.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#skia.FontMgr.__init__" title="skia.FontMgr.__init__"><code class="xref py py-obj docutils literal notranslate"><span class="pre">__init__</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.FontMgr.__init__" title="skia.FontMgr.__init__"><code class="xref py py-obj docutils literal notranslate"><span class="pre">__init__</span></code></a></p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#skia.FontMgr.countFamilies" title="skia.FontMgr.countFamilies"><code class="xref py py-obj docutils literal notranslate"><span class="pre">countFamilies</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.FontMgr.countFamilies" title="skia.FontMgr.countFamilies"><code class="xref py py-obj docutils literal notranslate"><span class="pre">countFamilies</span></code></a></p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#skia.FontMgr.createStyleSet" title="skia.FontMgr.createStyleSet"><code class="xref py py-obj docutils literal notranslate"><span class="pre">createStyleSet</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.FontMgr.createStyleSet" title="skia.FontMgr.createStyleSet"><code class="xref py py-obj docutils literal notranslate"><span class="pre">createStyleSet</span></code></a></p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#skia.FontMgr.getFamilyName" title="skia.FontMgr.getFamilyName"><code class="xref py py-obj docutils literal notranslate"><span class="pre">getFamilyName</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.FontMgr.getFamilyName" title="skia.FontMgr.getFamilyName"><code class="xref py py-obj docutils literal notranslate"><span class="pre">getFamilyName</span></code></a></p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#skia.FontMgr.legacyMakeTypeface" title="skia.FontMgr.legacyMakeTypeface"><code class="xref py py-obj docutils literal notranslate"><span class="pre">legacyMakeTypeface</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.FontMgr.legacyMakeTypeface" title="skia.FontMgr.legacyMakeTypeface"><code class="xref py py-obj docutils literal notranslate"><span class="pre">legacyMakeTypeface</span></code></a></p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#skia.FontMgr.makeFromData" title="skia.FontMgr.makeFromData"><code class="xref py py-obj docutils literal notranslate"><span class="pre">makeFromData</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.FontMgr.makeFromData" title="skia.FontMgr.makeFromData"><code class="xref py py-obj docutils literal notranslate"><span class="pre">makeFromData</span></code></a></p></td>
 <td><p>Create a typeface for the specified data and TTC index (pass 0 for none) or NULL if the data is not recognized.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#skia.FontMgr.makeFromFile" title="skia.FontMgr.makeFromFile"><code class="xref py py-obj docutils literal notranslate"><span class="pre">makeFromFile</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.FontMgr.makeFromFile" title="skia.FontMgr.makeFromFile"><code class="xref py py-obj docutils literal notranslate"><span class="pre">makeFromFile</span></code></a></p></td>
 <td><p>Create a typeface for the specified fileName and TTC index (pass 0 for none) or NULL if the file is not found, or its contents are not recognized.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#skia.FontMgr.matchFamily" title="skia.FontMgr.matchFamily"><code class="xref py py-obj docutils literal notranslate"><span class="pre">matchFamily</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.FontMgr.matchFamily" title="skia.FontMgr.matchFamily"><code class="xref py py-obj docutils literal notranslate"><span class="pre">matchFamily</span></code></a></p></td>
 <td><p>Never returns NULL; will return an empty set if the name is not found.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#skia.FontMgr.matchFamilyStyle" title="skia.FontMgr.matchFamilyStyle"><code class="xref py py-obj docutils literal notranslate"><span class="pre">matchFamilyStyle</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.FontMgr.matchFamilyStyle" title="skia.FontMgr.matchFamilyStyle"><code class="xref py py-obj docutils literal notranslate"><span class="pre">matchFamilyStyle</span></code></a></p></td>
 <td><p>Find the closest matching typeface to the specified familyName and style and return a ref to it.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#skia.FontMgr.matchFamilyStyleCharacter" title="skia.FontMgr.matchFamilyStyleCharacter"><code class="xref py py-obj docutils literal notranslate"><span class="pre">matchFamilyStyleCharacter</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.FontMgr.matchFamilyStyleCharacter" title="skia.FontMgr.matchFamilyStyleCharacter"><code class="xref py py-obj docutils literal notranslate"><span class="pre">matchFamilyStyleCharacter</span></code></a></p></td>
 <td><p>Use the system fallback to find a typeface for the given character.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#skia.FontMgr.ref" title="skia.FontMgr.ref"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ref</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.FontMgr.ref" title="skia.FontMgr.ref"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ref</span></code></a></p></td>
 <td><p>Increment the reference count.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#skia.FontMgr.unique" title="skia.FontMgr.unique"><code class="xref py py-obj docutils literal notranslate"><span class="pre">unique</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.FontMgr.unique" title="skia.FontMgr.unique"><code class="xref py py-obj docutils literal notranslate"><span class="pre">unique</span></code></a></p></td>
 <td><p>May return true if the caller is the only owner.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#skia.FontMgr.unref" title="skia.FontMgr.unref"><code class="xref py py-obj docutils literal notranslate"><span class="pre">unref</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.FontMgr.unref" title="skia.FontMgr.unref"><code class="xref py py-obj docutils literal notranslate"><span class="pre">unref</span></code></a></p></td>
 <td><p>Decrement the reference count.</p></td>
 </tr>
 </tbody>
@@ -347,6 +352,13 @@
 
 <section id="methods">
 <h2>Methods<a class="headerlink" href="#methods" title="Permalink to this heading"></a></h2>
+<dl class="py method">
+<dt class="sig sig-object py" id="skia.FontMgr.New_Custom_Directory">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">FontMgr.</span></span><span class="sig-name descname"><span class="pre">New_Custom_Directory</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dir</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#skia.FontMgr" title="skia.FontMgr"><span class="pre">skia.FontMgr</span></a></span></span><a class="headerlink" href="#skia.FontMgr.New_Custom_Directory" title="Permalink to this definition"></a></dt>
+<dd><p>Create a custom font manager which scans a given directory for font files.
+This font manager uses FreeType for rendering.</p>
+</dd></dl>
+
 <dl class="py method">
 <dt class="sig sig-object py" id="skia.FontMgr.New_Custom_Empty">
 <em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">FontMgr.</span></span><span class="sig-name descname"><span class="pre">New_Custom_Empty</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#skia.FontMgr.New_Custom_Empty" title="Permalink to this definition"></a></dt>
