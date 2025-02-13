@@ -4,6 +4,7 @@
 #include "modules/skparagraph/include/Paragraph.h"
 #include "modules/skparagraph/include/ParagraphBuilder.h"
 #include "modules/skparagraph/include/ParagraphStyle.h"
+#include "modules/skparagraph/include/TypefaceFontProvider.h"
 #include <pybind11/stl.h>
 
 using namespace skia::textlayout;
@@ -13,8 +14,10 @@ void initParagraph(py::module &m) {
 py::class_<FontCollection, sk_sp<FontCollection>, SkRefCnt> font_collection(m, "textlayout_FontCollection");
 py::class_<ParagraphBuilder> paragraph_builder(m, "textlayout_ParagraphBuilder");
 py::class_<ParagraphStyle> paragraph_style(m, "textlayout_ParagraphStyle");
+py::class_<StrutStyle> strut_style(m, "textlayout_StrutStyle");
 py::class_<TextStyle> text_style(m, "textlayout_TextStyle");
 py::class_<Paragraph> paragraph(m, "textlayout_Paragraph");
+py::class_<TypefaceFontProvider, sk_sp<TypefaceFontProvider>, SkFontMgr> typeface_font_provider(m, "textlayout_TypefaceFontProvider");
 
 py::enum_<TextAlign>(m, "textlayout_TextAlign", R"docstring(
     )docstring")
@@ -82,6 +85,20 @@ paragraph_builder
     .def("Build", &ParagraphBuilder::Build)
     ;
 
+strut_style
+    .def(py::init())
+    .def("setStrutEnabled",
+        py::overload_cast<const bool>(&StrutStyle::setStrutEnabled),
+        R"docstring(
+        )docstring",
+        py::arg("strutenabled"))
+    .def("setLeading",
+        py::overload_cast<const SkScalar>(&StrutStyle::setLeading),
+        R"docstring(
+        )docstring",
+        py::arg("leading"))
+    ;
+
 paragraph_style
     .def(py::init())
     .def("setTextStyle",
@@ -94,6 +111,11 @@ paragraph_style
         R"docstring(
         )docstring",
         py::arg("align"))
+    .def("setStrutStyle",
+        py::overload_cast<StrutStyle>(&ParagraphStyle::setStrutStyle),
+        R"docstring(
+        )docstring",
+        py::arg("strutstyle"))
     ;
 
 font_collection
@@ -154,6 +176,16 @@ text_style
         R"docstring(
         )docstring",
         py::arg("locale"))
+    .def("setLetterSpacing",
+        py::overload_cast<SkScalar>(&TextStyle::setLetterSpacing),
+        R"docstring(
+        )docstring",
+        py::arg("letterspacing"))
+    .def("setWordSpacing",
+        py::overload_cast<SkScalar>(&TextStyle::setWordSpacing),
+        R"docstring(
+        )docstring",
+        py::arg("wordspacing"))
     .def("setDecoration",
         py::overload_cast<TextDecoration>(&TextStyle::setDecoration),
         R"docstring(
@@ -202,12 +234,24 @@ paragraph
         py::arg("canvas"), py::arg("x"), py::arg("y"))
     ;
 
+typeface_font_provider
+    .def(py::init())
+    .def("registerTypeface",
+        py::overload_cast<sk_sp<SkTypeface>>(&TypefaceFontProvider::registerTypeface),
+        py::arg("typeface"))
+    .def("registerTypeface",
+        py::overload_cast<sk_sp<SkTypeface>, const SkString&>(&TypefaceFontProvider::registerTypeface),
+        py::arg("typeface"), py::arg("alias"))
+    ;
+
 py::object SimpleNamespace = py::module_::import("types").attr("SimpleNamespace");
 m.attr("textlayout") = SimpleNamespace();
 m.attr("textlayout").attr("FontCollection") = m.attr("textlayout_FontCollection");
 m.attr("textlayout").attr("ParagraphBuilder") = m.attr("textlayout_ParagraphBuilder");
 m.attr("textlayout").attr("ParagraphStyle") = m.attr("textlayout_ParagraphStyle");
 m.attr("textlayout").attr("Paragraph") = m.attr("textlayout_Paragraph");
+m.attr("textlayout").attr("TypefaceFontProvider") = m.attr("textlayout_TypefaceFontProvider");
+m.attr("textlayout").attr("StrutStyle") = m.attr("textlayout_StrutStyle");
 m.attr("textlayout").attr("TextStyle") = m.attr("textlayout_TextStyle");
 m.attr("textlayout").attr("TextAlign") = m.attr("textlayout_TextAlign");
 m.attr("textlayout").attr("TextDecoration") = m.attr("textlayout_TextDecoration");

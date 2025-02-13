@@ -349,6 +349,20 @@ def test_FontMgr_New_Custom_Empty2(ttf_path):
     assert isinstance(skia.FontMgr.New_Custom_Empty(font_data), skia.FontMgr)
 
 
+@pytest.fixture(scope='module')
+def fontmgr_new_custom_directory(resource_path):
+    return skia.FontMgr.New_Custom_Directory(os.path.join(resource_path, 'fonts'))
+
+
+def test_FontMgr_new_custom_directory_init(fontmgr_new_custom_directory):
+    assert isinstance(fontmgr_new_custom_directory, skia.FontMgr)
+
+
+def test_FontMgr_new_custom_directory_countFamilies(fontmgr_new_custom_directory):
+    # Recursive valid font count in skia/resources/fonts/ as of skia m134
+    assert fontmgr_new_custom_directory.countFamilies() == 34
+
+
 # Strickly speaking, we do not need/want this no-arg one.
 def test_FontMgr_OneFontMgr0():
     assert isinstance(skia.FontMgr.OneFontMgr(), skia.FontMgr)
