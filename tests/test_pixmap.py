@@ -357,7 +357,6 @@ def test_YUVAPixmaps_toLegacy(yuva_pixmaps):
     assert isinstance(indices, list)
 
 
-@pytest.mark.skip(reason='"toLegacy()" method. Gone in m116. May not need REVISIT')
 @pytest.fixture
 def yuva_index(yuva_pixmaps):
     _, indices = yuva_pixmaps.toLegacy()
@@ -404,7 +403,6 @@ def test_SkYUVAIndex_AreValidIndices(yuva_index):
         tuple)
 
 
-@pytest.mark.skip(reason='"toLegacy()" method. Gone in m116. May not need REVISIT')
 @pytest.fixture
 def yuva_size_info(yuva_pixmaps):
     info, _ = yuva_pixmaps.toLegacy()
