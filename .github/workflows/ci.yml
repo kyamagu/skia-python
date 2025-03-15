@@ -90,6 +90,7 @@ jobs:
           CIBW_SKIP: "*musllinux*"
           CIBW_ARCHS: ${{ matrix.arch }}
           CIBW_ENVIRONMENT_MACOS: TARGET_ARCH=${{ matrix.arch }} MACOSX_DEPLOYMENT_TARGET=11.0
+          CIBW_ENVIRONMENT_LINUX: CI_SKIP_BUILD=true
           CIBW_BEFORE_ALL: bash scripts/build_${{ runner.os }}.sh
           CIBW_BEFORE_BUILD: pip install pybind11 numpy
           CIBW_TEST_REQUIRES: pytest pillow glfw
