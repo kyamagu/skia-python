@@ -20,6 +20,7 @@ fi
 function apply_patch {
     patch -p1 < ../patch/find_xcode_sysroot.patch;
     patch -p1 < ../patch/make_data_assembly.patch;
+    patch -p1 < ../patch/skia-m87-c++-code.diff;
 }
 
 cd skia && \

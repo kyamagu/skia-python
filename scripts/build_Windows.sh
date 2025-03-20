@@ -6,6 +6,7 @@ export PATH="${PWD}/depot_tools:$PATH"
 cd skia && \
     python tools/git-sync-deps && \
     patch -p1 < ../patch/make_data_assembly.patch && \
+    patch -p1 < ../patch/skia-m87-c++-code.diff && \
     bin/gn gen out/Release --args='
 is_official_build=true
 skia_enable_tools=true
