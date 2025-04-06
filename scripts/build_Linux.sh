@@ -59,7 +59,7 @@ git clone https://gn.googlesource.com/gn && \
 
 # Build skia
 cd skia && \
-    patch -p1 < ../patch/skia-m134-minimize-download.patch && \
+    patch -p1 < ../patch/skia-m136-minimize-download.patch && \
     patch -p1 < ../patch/skia-m132-colrv1-freetype.diff && \
     python3 tools/git-sync-deps && \
     cp -f ../gn/out/gn bin/gn && \
