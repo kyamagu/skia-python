@@ -6,7 +6,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Install &mdash; skia-python 136.0b13 documentation</title>
+  <title>Install &mdash; skia-python 87.7 documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
       <link rel="stylesheet" type="text/css" href="_static/css/theme.css" />
 
@@ -139,7 +139,7 @@
 <h3>Linux<a class="headerlink" href="#linux" title="Permalink to this heading"></a></h3>
 <p>Prerequisites:</p>
 <ul class="simple">
-<li><p>Python 3 (build time only)</p></li>
+<li><p>Python 2.7 (build time only)</p></li>
 <li><p>GLIBC &gt;= 2.17</p></li>
 <li><p>fontconfig &gt;= 2.10.93</p></li>
 <li><p>OpenGL</p></li>
@@ -153,11 +153,11 @@
 </pre></div>
 </div>
 <p>Set up <code class="docutils literal notranslate"><span class="pre">PATH</span></code> to the <code class="docutils literal notranslate"><span class="pre">depot_tools</span></code>. build skia library. At this point,
-<code class="docutils literal notranslate"><span class="pre">python</span></code> executable should be python 3. Note the build tools require
-relatively new glibc and python 3.</p>
+<code class="docutils literal notranslate"><span class="pre">python</span></code> executable should be python 2. Note the build tools require
+relatively new glibc and python 2.7.</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">export</span><span class="w"> </span><span class="nv">PATH</span><span class="o">=</span><span class="s2">&quot;</span><span class="nv">$PWD</span><span class="s2">/depot_tools:</span><span class="nv">$PATH</span><span class="s2">&quot;</span>
 <span class="nb">cd</span><span class="w"> </span>skia
-python<span class="w"> </span>tools/git-sync-deps
+python2<span class="w"> </span>tools/git-sync-deps
 bin/gn<span class="w"> </span>gen<span class="w"> </span>out/Release<span class="w"> </span>--args<span class="o">=</span><span class="s1">&#39;is_official_build=true skia_enable_tools=true skia_use_system_libjpeg_turbo=false skia_use_system_libwebp=false skia_use_system_libpng=false skia_use_system_icu=false skia_use_system_harfbuzz=false extra_cflags_cc=[&quot;-frtti&quot;] extra_ldflags=[&quot;-lrt&quot;]&#39;</span>
 ninja<span class="w"> </span>-C<span class="w"> </span>out/Release<span class="w"> </span>skia<span class="w"> </span>skia.h
 <span class="nb">cd</span><span class="w"> </span>..
@@ -176,18 +176,20 @@ python<span class="w"> </span>setup.py<span class="w"> </span>bdist_wheel
 <h3>macOS<a class="headerlink" href="#macos" title="Permalink to this heading"></a></h3>
 <p>Prerequisites:</p>
 <ul class="simple">
+<li><p>Python 2.7 (build time only)</p></li>
 <li><p>Xcode Command Line Tools</p></li>
 </ul>
-<p>Set up <code class="docutils literal notranslate"><span class="pre">PATH</span></code> to the <code class="docutils literal notranslate"><span class="pre">depot_tools</span></code>, and build skia library.</p>
+<p>Set up <code class="docutils literal notranslate"><span class="pre">PATH</span></code> to the <code class="docutils literal notranslate"><span class="pre">depot_tools</span></code>, and build skia library. At this point,
+<code class="docutils literal notranslate"><span class="pre">python</span></code> executable should be python 2.</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">export</span><span class="w"> </span><span class="nv">PATH</span><span class="o">=</span><span class="s2">&quot;</span><span class="nv">$PWD</span><span class="s2">/depot_tools:</span><span class="nv">$PATH</span><span class="s2">&quot;</span>
 <span class="nb">cd</span><span class="w"> </span>skia
-python3<span class="w"> </span>tools/git-sync-deps
+python2<span class="w"> </span>tools/git-sync-deps
 bin/gn<span class="w"> </span>gen<span class="w"> </span>out/Release<span class="w"> </span>--args<span class="o">=</span><span class="s1">&#39;is_official_build=true skia_enable_tools=true skia_use_system_libjpeg_turbo=false skia_use_system_libwebp=false skia_use_system_libpng=false skia_use_system_icu=false skia_use_system_harfbuzz=false extra_cflags_cc=[&quot;-frtti&quot;]&#39;</span>
 ninja<span class="w"> </span>-C<span class="w"> </span>out/Release<span class="w"> </span>skia<span class="w"> </span>skia.h
 <span class="nb">cd</span><span class="w"> </span>..
 </pre></div>
 </div>
-<p>Then, build the skia-python binding. Here, <code class="docutils literal notranslate"><span class="pre">python</span></code> should be set to
+<p>Then, build the skia python binding. At this point, <code class="docutils literal notranslate"><span class="pre">python</span></code> should be set to
 the desired version.</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">export</span><span class="w"> </span><span class="nv">SKIA_PATH</span><span class="o">=</span><span class="nv">$PWD</span>/skia
 <span class="nb">export</span><span class="w"> </span><span class="nv">SKIA_OUT_PATH</span><span class="o">=</span><span class="nv">$SKIA_PATH</span>/out/Release
@@ -200,14 +202,14 @@ python<span class="w"> </span>setup.py<span class="w"> </span>bdist_wheel
 <h3>Windows<a class="headerlink" href="#windows" title="Permalink to this heading"></a></h3>
 <p>Prerequisites:</p>
 <ul class="simple">
-<li><p>Python 3 (build time only)</p></li>
-<li><p>Visual C++ version that supports C++17</p></li>
+<li><p>Python 2.7 (build time only)</p></li>
+<li><p>Visual C++ version that supports C++14</p></li>
 </ul>
 <p>Windows binary can be built using the generic steps above.</p>
 <div class="highlight-powershell notranslate"><div class="highlight"><pre><span></span><span class="nv">$env:Path</span> <span class="p">+=</span> <span class="s2">&quot;;$pwd\depot_tools&quot;</span>
 
 <span class="nb">cd </span><span class="n">skia</span>
-<span class="n">python</span> <span class="n">tools</span><span class="p">\</span><span class="n">git-sync-deps</span>
+<span class="n">python2</span> <span class="n">tools</span><span class="p">\</span><span class="n">git-sync-deps</span>
 <span class="n">bin</span><span class="p">\</span><span class="n">gn</span> <span class="n">gen</span> <span class="n">out</span><span class="p">\</span><span class="n">Release</span> <span class="p">-</span><span class="n">-args</span><span class="p">=</span><span class="s2">&quot;is_official_build=true skia_enable_tools=true skia_use_system_libjpeg_turbo=false skia_use_system_libwebp=false skia_use_system_libpng=false skia_use_system_icu=false skia_use_system_harfbuzz=false skia_use_system_expat=false skia_use_system_zlib=false extra_cflags_cc=[\&quot;</span><span class="p">/</span><span class="n">GR</span><span class="p">\</span><span class="s2">&quot;, \&quot;</span><span class="p">/</span><span class="n">EHsc</span><span class="p">\</span><span class="s2">&quot;, \&quot;</span><span class="p">/</span><span class="n">MD</span><span class="p">\</span><span class="s2">&quot;] target_cpu=\&quot;</span><span class="n">x86_64</span><span class="p">\</span><span class="s2">&quot;&quot;</span>
 <span class="n">ninja</span> <span class="n">-C</span> <span class="n">out</span><span class="p">\</span><span class="n">Release</span> <span class="n">skia</span> <span class="n">skia</span><span class="p">.</span><span class="nb">h</span>
 <span class="nb">cd </span><span class="p">..</span>
