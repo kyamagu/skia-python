@@ -4,12 +4,6 @@ export PATH=${PWD}/depot_tools:$PATH
 
 EXTRA_CFLAGS=""
 
-export CC=gcc
-export CXX=g++
-export AR=ar
-export CFLAGS="-Wno-deprecated-copy"
-export LDFLAGS="-lrt"
-
 # Install system dependencies
 if [[ $EUID -eq 0 ]]; then
     yum -y install epel-release && \
