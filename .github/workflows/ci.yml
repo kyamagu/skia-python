@@ -9,36 +9,8 @@ on:
     types: [published]
 
 jobs:
-  prebuild_linux_aarch64:
-    name: Build skia on linux/aarch64
-    runs-on: ubuntu-22.04-arm
-    steps:
-      - uses: actions/checkout@v4
-        with:
-          submodules: true
-      - uses: actions/cache@v4
-        id: cache-skia
-        with:
-          path: |
-            gn
-            skia
-          key: linux-aarch64-skia-${{ github.sha }}
-      - name: Pre-fetch skia deps
-        run: git config --global core.compression 0 && cd skia && python tools/git-sync-deps
-      - name: Set up QEMU
-        uses: docker/setup-qemu-action@v3
-      - name: Build skia
-        # Taken from https://github.com/pypa/cibuildwheel/blob/v2.19.2/cibuildwheel/resources/pinned_docker_images.cfg
-        uses: docker://quay.io/pypa/manylinux_2_28_aarch64:2024.07.02-0
-        if: ${{ steps.cache-skia.outputs.cache-hit != 'true' }}
-        with:
-          args: bash -c "git config --global --add safe.directory '*' &&
-                         bash scripts/build_Linux.sh &&
-                         chmod a+rwx -R skia"
-
   build_wheels:
     name: Build wheels on ${{ matrix.os }} (${{ matrix.arch }}) for ${{ matrix.cp }}
-    needs: prebuild_linux_aarch64
     runs-on: ${{ matrix.os }}
     strategy:
       fail-fast: false
@@ -59,20 +31,6 @@ jobs:
         with:
           submodules: true
 
-      - uses: actions/cache/restore@v4
-        if: runner.os == 'Linux' && matrix.arch == 'aarch64'
-        with:
-          path: |
-            gn
-            skia
-          key: linux-aarch64-skia-${{ github.sha }}
-
-      - name: Set up QEMU
-        if: runner.os == 'Linux' && matrix.arch == 'aarch64'
-        uses: docker/setup-qemu-action@v3
-        with:
-          platforms: ${{ matrix.arch }}
-
       - name: Build wheels
         uses: pypa/cibuildwheel@v2.21.3
         env:
@@ -82,7 +40,6 @@ jobs:
           CIBW_SKIP: "*musllinux*"
           CIBW_ARCHS: ${{ matrix.arch }}
           CIBW_ENVIRONMENT_MACOS: TARGET_ARCH=${{ matrix.arch }} MACOSX_DEPLOYMENT_TARGET=11.0
-          CIBW_ENVIRONMENT_LINUX: CI_SKIP_BUILD=true
           CIBW_BEFORE_ALL: bash scripts/build_${{ runner.os }}.sh
           CIBW_BEFORE_BUILD: pip install pybind11 numpy
           CIBW_TEST_REQUIRES: pytest pillow glfw
@@ -100,7 +57,6 @@ jobs:
   # identical to "build_wheels", except with the older pypa/cibuildwheel@v2.19.2
   build_wheels_old:
     name: Build wheels on ${{ matrix.os }} (${{ matrix.arch }}) for ${{ matrix.cp }}
-    needs: prebuild_linux_aarch64
     runs-on: ${{ matrix.os }}
     strategy:
       fail-fast: false
@@ -121,20 +77,6 @@ jobs:
         with:
           submodules: true
 
-      - uses: actions/cache/restore@v4
-        if: runner.os == 'Linux' && matrix.arch == 'aarch64'
-        with:
-          path: |
-            gn
-            skia
-          key: linux-aarch64-skia-${{ github.sha }}
-
-      - name: Set up QEMU
-        if: runner.os == 'Linux' && matrix.arch == 'aarch64'
-        uses: docker/setup-qemu-action@v3
-        with:
-          platforms: ${{ matrix.arch }}
-
       - name: Build wheels
         uses: pypa/cibuildwheel@v2.19.2
         env:
@@ -144,7 +86,6 @@ jobs:
           CIBW_SKIP: "*musllinux*"
           CIBW_ARCHS: ${{ matrix.arch }}
           CIBW_ENVIRONMENT_MACOS: TARGET_ARCH=${{ matrix.arch }} MACOSX_DEPLOYMENT_TARGET=11.0
-          CIBW_ENVIRONMENT_LINUX: CI_SKIP_BUILD=true
           CIBW_BEFORE_ALL: bash scripts/build_${{ runner.os }}.sh
           CIBW_BEFORE_BUILD: pip install pybind11 numpy
           CIBW_TEST_REQUIRES: pytest pillow glfw

@@ -24,11 +24,6 @@ yum install -y \
 # EL8 anomaly: EL7 is python 2 and EL9 is python 3
 [[ -f /usr/bin/python ]] || ln -s /usr/bin/python3 /usr/bin/python
 
-if [[ $(uname -m) == "aarch64" ]] && [[ $CI_SKIP_BUILD == "true" ]]; then
-    # gn and skia already built in a previous job
-    exit 0
-fi
-
 # Build gn
 export CC=gcc
 export CXX=g++
