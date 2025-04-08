@@ -12,39 +12,26 @@ export LDFLAGS="-lrt"
 
 # Install system dependencies
 if [[ $EUID -eq 0 ]]; then
+    yum -y install epel-release && \
     yum install -y \
         python3 \
+        ninja-build gn \
         fontconfig-devel \
         mesa-libGL-devel \
         xorg-x11-server-Xvfb \
         mesa-dri-drivers && \
         yum clean all && \
+        mv depot_tools/ninja depot_tools/ninja.bak && \
+        mv depot_tools/gn depot_tools/gn.bak && \
         rm -rf /var/cache/yum
 fi
-
-if [[ $(uname -m) == "aarch64" ]]; then
-    # Install ninja for aarch64
-    yum -y install epel-release && \
-        yum repolist && \
-        yum install -y ninja-build && \
-        mv depot_tools/ninja depot_tools/ninja.bak
-fi
-
-# Build gn
-git clone https://gn.googlesource.com/gn && \
-    cd gn && \
-    git checkout fe330c0ae1ec29db30b6f830e50771a335e071fb && \
-    python3 build/gen.py && \
-    ninja -C out gn && \
-    cd ..
 
 # Build skia
 cd skia && \
     patch -p1 < ../patch/skia-m136-minimize-download.patch && \
     patch -p1 < ../patch/skia-m132-colrv1-freetype.diff && \
     python3 tools/git-sync-deps && \
-    cp -f ../gn/out/gn bin/gn && \
-    bin/gn gen out/Release --args="
+    gn gen out/Release --args="
 is_official_build=true
 skia_enable_svg=true
 skia_use_vulkan=true
