@@ -16,6 +16,7 @@ if [[ $EUID -eq 0 ]]; then
         python3 \
         fontconfig-devel \
         mesa-libGL-devel \
+        mesa-libEGL-devel libglvnd-devel mesa-libGLES-devel libglvnd mesa-libGLES mesa-libEGL libglvnd-egl \
         xorg-x11-server-Xvfb \
         mesa-dri-drivers && \
         yum clean all && \
@@ -53,6 +54,7 @@ fi
 git clone https://gn.googlesource.com/gn && \
     cd gn && \
     git checkout fe330c0ae1ec29db30b6f830e50771a335e071fb && \
+    if [[ -e "/etc/fedora-release" ]] ; then patch -p1 -i ../patch/0001-Fix-for-Werror-redundant-move-for-newer-g.patch ; fi && \
     python3 build/gen.py && \
     ninja -C out gn && \
     cd ..
@@ -61,6 +63,7 @@ git clone https://gn.googlesource.com/gn && \
 cd skia && \
     patch -p1 < ../patch/skia-m136-minimize-download.patch && \
     patch -p1 < ../patch/skia-m132-colrv1-freetype.diff && \
+    patch -p1 < ../patch/skia-m132-egl-runtime.diff && \
     python3 tools/git-sync-deps && \
     cp -f ../gn/out/gn bin/gn && \
     bin/gn gen out/Release --args="
