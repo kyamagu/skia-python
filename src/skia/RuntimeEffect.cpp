@@ -1,7 +1,7 @@
 #include <stdexcept>
 #include "common.h"
 #include <include/effects/SkRuntimeEffect.h>
-//#include <include/core/SkM44.h> // defines SkV3, SkV4 ; M44 used in Matrix/Canvas ; Revisit.
+//#include <include/core/SkM44.h> // defines SkV2, SkV3, SkV4 ; M44 used in Matrix/Canvas ; Revisit.
 #include <pybind11/stl_bind.h>
 
 PYBIND11_MAKE_OPAQUE(std::vector<SkRuntimeEffect::ChildPtr>)
@@ -15,6 +15,22 @@ py::bind_vector<std::vector<SkRuntimeEffect::ChildPtr>>(m, "VectorRuntimeEffectC
 py::class_<SkSpan<const SkRuntimeEffect::ChildPtr>> span_runtime_effect_childptr(m, "SpanRuntimeEffectChildPtr");
 
 py::class_<SkRuntimeEffectBuilder> runtime_effect_builder(m, "RuntimeEffectBuilder");
+
+py::class_<SkV2>(m, "V2")
+    .def(py::init(
+        [] (float x, float y) {
+            return SkV2{x, y};
+        }))
+    .def(py::init(
+        [] (py::tuple v2) {
+            if (v2.size() != 2)
+                throw py::value_error("V2 must have exactly two elements.");
+            return SkV2{v2[0].cast<float>(), v2[1].cast<float>()};
+        }),
+        py::arg("v2"))
+    ;
+
+py::implicitly_convertible<py::tuple, SkV2>();
 
 py::class_<SkV3>(m, "V3")
     .def(py::init(
@@ -197,9 +213,11 @@ runtime_effect_builder
         py::arg("name"), py::arg("uniform"))
     .def("setUniform",
         [] (SkRuntimeEffectBuilder& builder, std::string_view name, py::list vN) {
-          if (vN.size() != 3 && vN.size() != 4)
-                throw py::value_error("Input must have exactly three or four elements.");
+          if (vN.size() != 2 && vN.size() != 3 && vN.size() != 4)
+                throw py::value_error("Input must have exactly two, three or four elements.");
             auto v = builder.uniform(name);
+            if (vN.size() == 2)
+                v = SkV2{vN[0].cast<float>(), vN[1].cast<float>()};
             if (vN.size() == 3)
                 v = SkV3{vN[0].cast<float>(), vN[1].cast<float>(), vN[2].cast<float>()};
             if (vN.size() == 4)
