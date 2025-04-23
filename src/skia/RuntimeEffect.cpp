@@ -206,6 +206,12 @@ runtime_effect_builder
         },
         py::arg("name"), py::arg("uniform"))
     .def("setUniform",
+        [] (SkRuntimeEffectBuilder& builder, std::string_view name, const SkV2& uniform) {
+            auto v = builder.uniform(name);
+            v = uniform;
+        },
+        py::arg("name"), py::arg("uniform"))
+    .def("setUniform",
         [] (SkRuntimeEffectBuilder& builder, std::string_view name, const SkV3& uniform) {
             auto v = builder.uniform(name);
             v = uniform;
