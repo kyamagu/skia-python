@@ -247,6 +247,15 @@ surface
         )docstring",
         py::arg("width"), py::arg("height"), py::arg("surfaceProps") = nullptr)
     .def(py::init(
+        [] (const SkImageInfo& imageinfo, size_t rowBytes, const SkSurfaceProps* surfaceProps) {
+            return SkSurfaces::Raster(imageinfo, rowBytes, surfaceProps);
+        }),
+        R"docstring(
+        See :py:meth:`~MakeRaster`
+        )docstring",
+        py::arg("imageInfo"), py::arg("rowBytes") = 0,
+        py::arg("surfaceProps") = nullptr)
+    .def(py::init(
         [] (py::array array, SkColorType ct, SkAlphaType at,
             const SkColorSpace* cs, const SkSurfaceProps *surfaceProps) {
             auto imageInfo = NumPyToImageInfo(array, ct, at, cs);
