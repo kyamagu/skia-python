@@ -1010,6 +1010,15 @@ surface
         Internally, sets :py:class:`ImageInfo` to width, height, native color
         type, and :py:attr:`AlphaType.kPremul`.
 
+        Note that the :py:class:`ImageInfo` native color type might not be what
+        you desire, if you intent to interact with other software expecting
+        specific color type order. e.g. package `wx`'s `wx.Bitmap.FromBufferRGBA`.
+        For that purpose, you need one of the other :py:class:`Surface`
+        constructors which takes an explicit appropriate matching
+        :py:class:`ImageInfo` input, or one that an explicit :py:class:`ColorType`
+        input. You should check the output of `surface.imageInfo().colorType()`
+        afterwards, in that usage.
+
         :py:class:`Surface` is returned if width and height are greater than
         zero.
 
