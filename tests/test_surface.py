@@ -25,6 +25,14 @@ def test_Surface_init(args):
     check_surface(skia.Surface(*args))
 
 
+@pytest.mark.parametrize('width, height, colortype', [
+    (240, 320, skia.ColorType.kRGBA_8888_ColorType),
+    (240, 320, skia.ColorType.kBGRA_8888_ColorType),
+])
+def test_Surface_color_init(width, height, colortype):
+    assert skia.Surface(width, height, colortype).imageInfo().colorType() == colortype
+
+
 def test_Surface_enter_exit(surface):
     with surface as canvas:
         assert isinstance(canvas, skia.Canvas)
