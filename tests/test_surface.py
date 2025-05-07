@@ -10,6 +10,15 @@ def check_surface(x):
 
 @pytest.mark.parametrize('args', [
     (240, 320),
+    (240, 320, skia.SurfaceProps()),
+    (240, 320, skia.ColorType.kRGBA_8888_ColorType),
+    (240, 320, skia.ColorType.kBGRA_8888_ColorType, skia.SurfaceProps()),
+    (skia.ImageInfo.MakeN32Premul(240, 320),),
+    (skia.ImageInfo.MakeN32Premul(240, 320).makeColorType(skia.ColorType.kRGBA_8888_ColorType),),
+    (skia.ImageInfo.MakeN32Premul(240, 320).makeColorType(skia.ColorType.kBGRA_8888_ColorType), 0),
+    (skia.ImageInfo.MakeN32Premul(240, 320).makeColorType(skia.ColorType.kBGRA_8888_ColorType), 0, skia.SurfaceProps()),
+    (skia.ImageInfo.MakeN32Premul(240, 320), 0),
+    (skia.ImageInfo.MakeN32Premul(240, 320), 0, skia.SurfaceProps()),
     (np.zeros((240, 320, 4), dtype=np.uint8),),
 ])
 def test_Surface_init(args):
