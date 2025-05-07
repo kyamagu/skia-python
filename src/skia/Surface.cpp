@@ -1035,7 +1035,7 @@ surface
         specific color type order. e.g. package `wx`'s `wx.Bitmap.FromBufferRGBA`.
         For that purpose, you need one of the other :py:class:`Surface`
         constructors which takes an explicit appropriate matching
-        :py:class:`ImageInfo` input, or one that an explicit :py:class:`ColorType`
+        :py:class:`ImageInfo` input, or one that takes an explicit :py:class:`ColorType`
         input. You should check the output of `surface.imageInfo().colorType()`
         afterwards, in that usage.
 
