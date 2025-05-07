@@ -63,6 +63,8 @@ py::class_<SkSurfaceProps> surfaceprops(m, "SurfaceProps", R"docstring(
     )docstring");
 
 py::enum_<SkSurfaceProps::Flags>(surfaceprops, "Flags", py::arithmetic())
+    .value("kDefault_Flag",
+        SkSurfaceProps::Flags::kDefault_Flag)
     .value("kUseDeviceIndependentFonts_Flag",
         SkSurfaceProps::Flags::kUseDeviceIndependentFonts_Flag)
     .value("kDynamicMSAA_Flag",
