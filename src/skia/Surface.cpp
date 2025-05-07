@@ -247,6 +247,15 @@ surface
         )docstring",
         py::arg("width"), py::arg("height"), py::arg("surfaceProps") = nullptr)
     .def(py::init(
+        [] (int width, int height, SkColorType colortype, const SkSurfaceProps* surfaceProps) {
+            auto info = SkImageInfo::MakeN32Premul(width, height).makeColorType(colortype);
+            return SkSurfaces::Raster(info, surfaceProps);
+        }),
+        R"docstring(
+        See :py:meth:`~MakeRasterN32Premul` plus :py:class:`ImageInfo`'s :py:meth:`~makeColorType`
+        )docstring",
+        py::arg("width"), py::arg("height"), py::arg("colortype"), py::arg("surfaceProps") = nullptr)
+    .def(py::init(
         [] (const SkImageInfo& imageinfo, size_t rowBytes, const SkSurfaceProps* surfaceProps) {
             return SkSurfaces::Raster(imageinfo, rowBytes, surfaceProps);
         }),
