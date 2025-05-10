@@ -253,9 +253,11 @@ runtime_effect_builder
     .def(py::init<sk_sp<SkRuntimeEffect>>())
     .def(py::init<sk_sp<SkRuntimeEffect>, sk_sp<SkData>>())
     .def("uniform", &SkRuntimeEffectBuilder::uniform,
-        py::arg("name"))
+        py::arg("name"),
+        py::return_value_policy::reference_internal)
     .def("child", &SkRuntimeEffectBuilder::child,
-        py::arg("name"))
+        py::arg("name"),
+        py::return_value_policy::reference_internal)
     .def("setUniform",
         [] (SkRuntimeEffectBuilder& builder, std::string_view name, int uniform) {
             auto v = builder.uniform(name);
@@ -317,9 +319,12 @@ runtime_effect_builder
             v = child;
         },
         py::arg("name"), py::arg("child"))
-    .def("effect", &SkRuntimeEffectBuilder::effect)
-    .def("uniforms", &SkRuntimeEffectBuilder::uniforms)
-    .def("children", &SkRuntimeEffectBuilder::children)
+    .def("effect", &SkRuntimeEffectBuilder::effect,
+        py::return_value_policy::reference_internal) // return self.fEffect.get()
+    .def("uniforms", &SkRuntimeEffectBuilder::uniforms,
+        py::return_value_policy::reference_internal) // return self.fUniforms
+    .def("children", &SkRuntimeEffectBuilder::children,
+        py::return_value_policy::reference_internal) // return self.fChildren
     .def("makeShader", &SkRuntimeEffectBuilder::makeShader,
         py::arg("localMatrix") = nullptr)
     .def("makeColorFilter", &SkRuntimeEffectBuilder::makeColorFilter)
