@@ -268,6 +268,7 @@ runtime_effect_builder
             v = child;
         },
         py::arg("name"), py::arg("child"))
+    .def("effect", &SkRuntimeEffectBuilder::effect)
     .def("uniforms", &SkRuntimeEffectBuilder::uniforms)
     .def("children", &SkRuntimeEffectBuilder::children)
     .def("makeShader", &SkRuntimeEffectBuilder::makeShader,
