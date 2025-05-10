@@ -16,6 +16,20 @@ py::class_<SkSpan<const SkRuntimeEffect::ChildPtr>> span_runtime_effect_childptr
 
 py::class_<SkRuntimeEffectBuilder> runtime_effect_builder(m, "RuntimeEffectBuilder");
 
+py::enum_<SkRuntimeEffect::Uniform::Type>(runtime_effect, "UniformType")
+    .value("kFloat",    SkRuntimeEffect::Uniform::Type::kFloat)
+    .value("kFloat2",   SkRuntimeEffect::Uniform::Type::kFloat2)
+    .value("kFloat3",   SkRuntimeEffect::Uniform::Type::kFloat3)
+    .value("kFloat4",   SkRuntimeEffect::Uniform::Type::kFloat4)
+    .value("kFloat2x2", SkRuntimeEffect::Uniform::Type::kFloat2x2)
+    .value("kFloat3x3", SkRuntimeEffect::Uniform::Type::kFloat3x3)
+    .value("kFloat4x4", SkRuntimeEffect::Uniform::Type::kFloat4x4)
+    .value("kInt",      SkRuntimeEffect::Uniform::Type::kInt)
+    .value("kInt2",     SkRuntimeEffect::Uniform::Type::kInt2)
+    .value("kInt3",     SkRuntimeEffect::Uniform::Type::kInt3)
+    .value("kInt4",     SkRuntimeEffect::Uniform::Type::kInt4)
+    .export_values();
+
 py::class_<SkV2>(m, "V2")
     .def(py::init(
         [] (float x, float y) {
