@@ -10,6 +10,7 @@ void initRuntimeEffect(py::module &m) {
 py::class_<SkRuntimeEffect, sk_sp<SkRuntimeEffect>, SkRefCnt> runtime_effect(m, "RuntimeEffect");
 
 py::class_<SkRuntimeEffect::ChildPtr> runtime_effect_childptr(m, "RuntimeEffectChildPtr");
+py::class_<SkRuntimeEffect::Uniform> runtime_effect_uniform(m, "RuntimeEffectUniform");
 
 py::bind_vector<std::vector<SkRuntimeEffect::ChildPtr>>(m, "VectorRuntimeEffectChildPtr");
 py::class_<SkSpan<const SkRuntimeEffect::ChildPtr>> span_runtime_effect_childptr(m, "SpanRuntimeEffectChildPtr");
@@ -106,6 +107,18 @@ py::implicitly_convertible<sk_sp<SkShader>, SkRuntimeEffect::ChildPtr>();
 py::implicitly_convertible<sk_sp<SkColorFilter>, SkRuntimeEffect::ChildPtr>();
 py::implicitly_convertible<sk_sp<SkBlender>, SkRuntimeEffect::ChildPtr>();
 py::implicitly_convertible<std::vector<SkRuntimeEffect::ChildPtr>, SkSpan<const SkRuntimeEffect::ChildPtr>>();
+
+runtime_effect_uniform
+    .def(py::init<>())
+    .def_property_readonly("name",
+        [] (const SkRuntimeEffect::Uniform& uniform) {
+            return uniform.name;
+        })
+    .def_property_readonly("type",
+        [] (const SkRuntimeEffect::Uniform& uniform) {
+            return uniform.type;
+        })
+    ;
 
 span_runtime_effect_uniform
     .def("__getitem__",
