@@ -124,7 +124,7 @@ span_runtime_effect_uniform
     .def("__getitem__",
         [] (const SkSpan<SkRuntimeEffect::Uniform const>& self, size_t index) {
             return self[index];
-        })
+        }, py::return_value_policy::reference_internal) // SkSpan<> holds a reference but does not own
     .def("__len__",
         [] (const SkSpan<SkRuntimeEffect::Uniform const>& self) {
             return self.size();
@@ -215,7 +215,7 @@ runtime_effect
     .def("makeBlender",
         py::overload_cast<sk_sp<const SkData>, SkSpan<const SkRuntimeEffect::ChildPtr>>(&SkRuntimeEffect::makeBlender, py::const_),
         py::arg("uniforms"), py::arg("children") = SkSpan<const SkRuntimeEffect::ChildPtr>{})
-    .def("uniforms", &SkRuntimeEffect::uniforms)
+    .def("uniforms", &SkRuntimeEffect::uniforms, py::return_value_policy::reference_internal) // returns SkSpan(self.fUniforms)
     ;
 
 py::class_<SkRuntimeEffectBuilder::BuilderUniform>(m, "RuntimeEffectBuilderUniform")
