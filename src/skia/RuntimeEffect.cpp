@@ -194,6 +194,10 @@ runtime_effect
 
 py::class_<SkRuntimeEffectBuilder::BuilderUniform>(m, "RuntimeEffectBuilderUniform")
     .def(py::init<>())
+    .def_property_readonly("type",
+        [] (const SkRuntimeEffectBuilder::BuilderUniform& uniform) {
+            return uniform.fVar->type;
+        })
     ;
 
 py::class_<SkRuntimeEffectBuilder::BuilderChild>(m, "RuntimeEffectBuilderChild")
