@@ -13,6 +13,7 @@ py::class_<SkRuntimeEffect::ChildPtr> runtime_effect_childptr(m, "RuntimeEffectC
 
 py::bind_vector<std::vector<SkRuntimeEffect::ChildPtr>>(m, "VectorRuntimeEffectChildPtr");
 py::class_<SkSpan<const SkRuntimeEffect::ChildPtr>> span_runtime_effect_childptr(m, "SpanRuntimeEffectChildPtr");
+py::class_<SkSpan<SkRuntimeEffect::Uniform const>> span_runtime_effect_uniform(m, "SpanRuntimeEffectUniform");
 
 py::class_<SkRuntimeEffectBuilder> runtime_effect_builder(m, "RuntimeEffectBuilder");
 
