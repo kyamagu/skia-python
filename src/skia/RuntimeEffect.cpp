@@ -107,6 +107,17 @@ py::implicitly_convertible<sk_sp<SkColorFilter>, SkRuntimeEffect::ChildPtr>();
 py::implicitly_convertible<sk_sp<SkBlender>, SkRuntimeEffect::ChildPtr>();
 py::implicitly_convertible<std::vector<SkRuntimeEffect::ChildPtr>, SkSpan<const SkRuntimeEffect::ChildPtr>>();
 
+span_runtime_effect_uniform
+    .def("__getitem__",
+        [] (const SkSpan<SkRuntimeEffect::Uniform const>& self, size_t index) {
+            return self[index];
+        })
+    .def("__len__",
+        [] (const SkSpan<SkRuntimeEffect::Uniform const>& self) {
+            return self.size();
+        })
+    ;
+
 /*
   All of these static methods check Result.effect being non-null, throw with errorText if null;
   they differ from upsteam c++ APIs, which asks clients to check.
