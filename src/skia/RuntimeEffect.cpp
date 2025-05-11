@@ -242,24 +242,24 @@ runtime_effect
 py::class_<SkRuntimeEffectBuilder::BuilderUniform>(m, "RuntimeEffectBuilderUniform")
     .def(py::init<>())
     .def_property_readonly("name",
-        [] (const SkRuntimeEffectBuilder::BuilderUniform& uniform) {
-            return (uniform.fVar ? uniform.fVar->name : nullptr);
+        [] (const SkRuntimeEffectBuilder::BuilderUniform& uniform) -> py::object {
+            return (uniform.fVar) ? py::cast(uniform.fVar->name) : py::none();
         })
     .def_property_readonly("type",
-        [] (const SkRuntimeEffectBuilder::BuilderUniform& uniform) {
-            return (uniform.fVar ? uniform.fVar->type : nullptr);
+        [] (const SkRuntimeEffectBuilder::BuilderUniform& uniform) -> py::object {
+            return (uniform.fVar) ? py::cast(uniform.fVar->type) : py::none();
         })
     ;
 
 py::class_<SkRuntimeEffectBuilder::BuilderChild>(m, "RuntimeEffectBuilderChild")
     .def(py::init<>())
     .def_property_readonly("name",
-        [] (const SkRuntimeEffectBuilder::BuilderChild& child) {
-           return (child.fChild ? child.fChild->name : nullptr);
+        [] (const SkRuntimeEffectBuilder::BuilderChild& child) -> py::object {
+            return (child.fChild) ? py::cast(child.fChild->name) : py::none();
         })
     .def_property_readonly("type",
-        [] (const SkRuntimeEffectBuilder::BuilderChild& child) {
-            return (child.fChild ? uniform.fVar->type : nullptr);
+        [] (const SkRuntimeEffectBuilder::BuilderChild& child) -> py::object {
+            return (child.fChild) ? py::cast(child.fChild->type) : py::none();
         })
     ;
 
