@@ -3,15 +3,19 @@
 #include <include/effects/SkRuntimeEffect.h>
 //#include <include/core/SkM44.h> // defines SkV2, SkV3, SkV4 ; M44 used in Matrix/Canvas ; Revisit.
 #include <pybind11/stl_bind.h>
+#include <pybind11/stl.h> // for std::optional<>
 
 PYBIND11_MAKE_OPAQUE(std::vector<SkRuntimeEffect::ChildPtr>)
 
 void initRuntimeEffect(py::module &m) {
 py::class_<SkRuntimeEffect, sk_sp<SkRuntimeEffect>, SkRefCnt> runtime_effect(m, "RuntimeEffect");
 
+py::class_<SkRuntimeEffect::Child> runtime_effect_child(m, "RuntimeEffectChild");
 py::class_<SkRuntimeEffect::ChildPtr> runtime_effect_childptr(m, "RuntimeEffectChildPtr");
 py::class_<SkRuntimeEffect::Uniform> runtime_effect_uniform(m, "RuntimeEffectUniform");
 
+py::bind_vector<std::vector<SkRuntimeEffect::Child>>(m, "VectorRuntimeEffectChild");
+py::class_<SkSpan<SkRuntimeEffect::Child const>> span_runtime_effect_child(m, "SpanRuntimeEffectChild");
 py::bind_vector<std::vector<SkRuntimeEffect::ChildPtr>>(m, "VectorRuntimeEffectChildPtr");
 py::class_<SkSpan<const SkRuntimeEffect::ChildPtr>> span_runtime_effect_childptr(m, "SpanRuntimeEffectChildPtr");
 py::class_<SkSpan<SkRuntimeEffect::Uniform const>> span_runtime_effect_uniform(m, "SpanRuntimeEffectUniform");
@@ -91,12 +95,39 @@ py::class_<SkRuntimeEffect::Result>(m, "RuntimeEffectResult")
     .def_readwrite("errorText", &SkRuntimeEffect::Result::errorText)
     ;
 
+runtime_effect_child
+    .def(py::init<>())
+    .def_property_readonly("name",
+        [] (const SkRuntimeEffect::Child& child) {
+            return child.name;
+        })
+    .def_property_readonly("type",
+        [] (const SkRuntimeEffect::Child& child) {
+            return child.type;
+        })
+    ;
+
+span_runtime_effect_child
+    .def("__getitem__",
+        [] (const SkSpan<SkRuntimeEffect::Child const>& self, size_t index) {
+            if (index >= self.size()) {
+                throw py::index_error();
+            }
+            return self[index];
+        }, py::return_value_policy::reference_internal) // SkSpan<> holds a reference but does not own
+    .def("__len__",
+        [] (const SkSpan<SkRuntimeEffect::Child const>& self) {
+            return self.size();
+        })
+    ;
+
+
 runtime_effect_childptr
     .def(py::init<>())
     .def(py::init<sk_sp<SkShader>>())
     .def(py::init<sk_sp<SkColorFilter>>())
     .def(py::init<sk_sp<SkBlender>>())
-    .def_property_readonly("type", &SkRuntimeEffect::ChildPtr::type)
+    .def_property_readonly("type", &SkRuntimeEffect::ChildPtr::type) // returns std::optional<ChildType>
     ;
 
 span_runtime_effect_childptr
@@ -244,6 +275,7 @@ py::class_<SkRuntimeEffectBuilder::BuilderUniform>(m, "RuntimeEffectBuilderUnifo
     .def(py::init<>())
     .def_property_readonly("name",
         [] (const SkRuntimeEffectBuilder::BuilderUniform& uniform) -> py::object {
+            // return std::optional<> to allow null? requires c++17
             return (uniform.fVar) ? py::cast(uniform.fVar->name) : py::none();
         })
     .def_property_readonly("type",
