@@ -249,6 +249,10 @@ py::class_<SkRuntimeEffectBuilder::BuilderChild>(m, "RuntimeEffectBuilderChild")
     .def(py::init<>())
     ;
 
+/*
+  uniform/child/uniforms/children are probably not useful,
+  as effect.uniform / effect.child are much nicer.
+*/
 runtime_effect_builder
     .def(py::init<sk_sp<SkRuntimeEffect>>())
     .def(py::init<sk_sp<SkRuntimeEffect>, sk_sp<SkData>>())
