@@ -96,6 +96,7 @@ runtime_effect_childptr
     .def(py::init<sk_sp<SkShader>>())
     .def(py::init<sk_sp<SkColorFilter>>())
     .def(py::init<sk_sp<SkBlender>>())
+    .def_property_readonly("type", &SkRuntimeEffect::ChildPtr::type)
     ;
 
 span_runtime_effect_childptr
