@@ -229,6 +229,7 @@ runtime_effect
     .def("makeBlender",
         py::overload_cast<sk_sp<const SkData>, SkSpan<const SkRuntimeEffect::ChildPtr>>(&SkRuntimeEffect::makeBlender, py::const_),
         py::arg("uniforms"), py::arg("children") = SkSpan<const SkRuntimeEffect::ChildPtr>{})
+    .def("children", &SkRuntimeEffect::children, py::return_value_policy::reference_internal) // returns SkSpan(self.fChildren)
     .def("uniforms", &SkRuntimeEffect::uniforms, py::return_value_policy::reference_internal) // returns SkSpan(self.fUniforms)
     ;
 
