@@ -123,6 +123,9 @@ runtime_effect_uniform
 span_runtime_effect_uniform
     .def("__getitem__",
         [] (const SkSpan<SkRuntimeEffect::Uniform const>& self, size_t index) {
+            if (index >= self.size()) {
+                throw py::index_error();
+            }
             return self[index];
         }, py::return_value_policy::reference_internal) // SkSpan<> holds a reference but does not own
     .def("__len__",
