@@ -247,6 +247,14 @@ py::class_<SkRuntimeEffectBuilder::BuilderUniform>(m, "RuntimeEffectBuilderUnifo
 
 py::class_<SkRuntimeEffectBuilder::BuilderChild>(m, "RuntimeEffectBuilderChild")
     .def(py::init<>())
+    .def_property_readonly("name",
+        [] (const SkRuntimeEffectBuilder::BuilderChild& child) {
+           return (child.fChild ? child.fChild->name : nullptr);
+        })
+    .def_property_readonly("type",
+        [] (const SkRuntimeEffectBuilder::BuilderChild& child) {
+            return (child.fChild ? uniform.fVar->type : nullptr);
+        })
     ;
 
 /*
