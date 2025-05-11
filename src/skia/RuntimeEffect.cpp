@@ -237,11 +237,11 @@ py::class_<SkRuntimeEffectBuilder::BuilderUniform>(m, "RuntimeEffectBuilderUnifo
     .def(py::init<>())
     .def_property_readonly("name",
         [] (const SkRuntimeEffectBuilder::BuilderUniform& uniform) {
-            return uniform.fVar->name;
+            return (uniform.fVar ? uniform.fVar->name : nullptr);
         })
     .def_property_readonly("type",
         [] (const SkRuntimeEffectBuilder::BuilderUniform& uniform) {
-            return uniform.fVar->type;
+            return (uniform.fVar ? uniform.fVar->type : nullptr);
         })
     ;
 
