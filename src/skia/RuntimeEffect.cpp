@@ -101,6 +101,17 @@ span_runtime_effect_childptr
             return SkSpan<SkRuntimeEffect::ChildPtr>(&v[0], v.size());
         }))
     .def(py::init<const SkSpan<SkRuntimeEffect::ChildPtr>&>())
+    .def("__getitem__",
+        [] (const SkSpan<const SkRuntimeEffect::ChildPtr>& self, size_t index) {
+            if (index >= self.size()) {
+                throw py::index_error();
+            }
+            return self[index];
+        }, py::return_value_policy::reference_internal) // SkSpan<> holds a reference but does not own
+    .def("__len__",
+        [] (const SkSpan<const SkRuntimeEffect::ChildPtr>& self) {
+            return self.size();
+        })
     ;
 
 py::implicitly_convertible<sk_sp<SkShader>, SkRuntimeEffect::ChildPtr>();
