@@ -18,6 +18,12 @@ py::class_<SkSpan<SkRuntimeEffect::Uniform const>> span_runtime_effect_uniform(m
 
 py::class_<SkRuntimeEffectBuilder> runtime_effect_builder(m, "RuntimeEffectBuilder");
 
+py::enum_<SkRuntimeEffect::ChildType>(runtime_effect, "ChildType")
+    .value("kShader",       SkRuntimeEffect::ChildType::kShader)
+    .value("kColorFilter,", SkRuntimeEffect::ChildType::kColorFilter)
+    .value("kBlender",      SkRuntimeEffect::ChildType::kBlender)
+    .export_values();
+
 py::enum_<SkRuntimeEffect::Uniform::Type>(runtime_effect, "UniformType")
     .value("kFloat",    SkRuntimeEffect::Uniform::Type::kFloat)
     .value("kFloat2",   SkRuntimeEffect::Uniform::Type::kFloat2)
