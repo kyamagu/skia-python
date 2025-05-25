@@ -51,6 +51,7 @@ jobs:
           CIBW_BEFORE_BUILD_WINDOWS: pip install pybind11 "numpy >= 2.3.0rc1"
           CIBW_TEST_REQUIRES: pytest pillow glfw
           CIBW_TEST_REQUIRES_MACOS: pytest pillow pyopengl
+          CIBW_TEST_REQUIRES_WINDOWS: pytest pillow glfw numpy==2.3.0rc1
           CIBW_TEST_COMMAND: python -m pytest {project}/tests
           CIBW_TEST_COMMAND_LINUX: >
             xvfb-run -s "-screen 0 640x480x24" python -m pytest {project}/tests
