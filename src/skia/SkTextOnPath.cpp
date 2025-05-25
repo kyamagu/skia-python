@@ -140,6 +140,6 @@ void SkDrawTextOnPath(const void* text, size_t byteLength, const SkPaint& paint,
 
 void SkDrawTextOnPathHV(const void* text, size_t byteLength, const SkPaint& paint,
                         const SkPath& follow, SkScalar h, SkScalar v, SkCanvas* canvas) {
-    SkMatrix matrix = SkMatrix::MakeTrans(h, v);
+    SkMatrix matrix = SkMatrix::Translate(h, v);
     SkDrawTextOnPath(text, byteLength, paint, follow, &matrix, canvas);
 }
