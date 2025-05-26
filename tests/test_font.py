@@ -1,5 +1,6 @@
 import os
 import sys
+import platform
 import skia
 import pytest
 
@@ -276,6 +277,8 @@ def test_svg_blob_bounds(svg_blob):
 
 
 def test_fontmgr_custom_svg_blob_bounds(svgfont_path):
+    if sys.platform.startswith("win") and platform.machine() == "ARM64":
+        pytest.skip("FontMgr.New_Custom_Empty is not available on ARM windows (known Skia bug)")
     svgface = skia.FontMgr.New_Custom_Empty().makeFromFile(svgfont_path)
     text = "abcdefgh"
     font = skia.Font(svgface,109)
@@ -337,42 +340,61 @@ def fontmgr():
 
 
 def test_FontMgr_New_Custom_Empty0():
+    if sys.platform.startswith("win") and platform.machine() == "ARM64":
+        pytest.skip("FontMgr.New_Custom_Empty is not available on ARM windows (known Skia bug)")
     assert isinstance(skia.FontMgr.New_Custom_Empty(), skia.FontMgr)
 
 
 def test_FontMgr_New_Custom_Empty1(ttf_path):
+    if sys.platform.startswith("win") and platform.machine() == "ARM64":
+        pytest.skip("FontMgr.New_Custom_Empty is not available on ARM windows (known Skia bug)")
     assert isinstance(skia.FontMgr.New_Custom_Empty(ttf_path), skia.FontMgr)
 
 
 def test_FontMgr_New_Custom_Empty2(ttf_path):
+    if sys.platform.startswith("win") and platform.machine() == "ARM64":
+        pytest.skip("FontMgr.New_Custom_Empty is not available on ARM windows (known Skia bug)")
     font_data = skia.Data.MakeFromFileName(ttf_path)
     assert isinstance(skia.FontMgr.New_Custom_Empty(font_data), skia.FontMgr)
 
 
 @pytest.fixture(scope='module')
 def fontmgr_new_custom_directory(resource_path):
+    if sys.platform.startswith("win") and platform.machine() == "ARM64":
+        # FontMgr.New_Custom_Empty is not available on ARM windows (known Skia bug)
+        return None
     return skia.FontMgr.New_Custom_Directory(os.path.join(resource_path, 'fonts'))
 
 
 def test_FontMgr_new_custom_directory_init(fontmgr_new_custom_directory):
+    if sys.platform.startswith("win") and platform.machine() == "ARM64":
+        pytest.skip("FontMgr.New_Custom_Empty is not available on ARM windows (known Skia bug)")
     assert isinstance(fontmgr_new_custom_directory, skia.FontMgr)
 
 
 def test_FontMgr_new_custom_directory_countFamilies(fontmgr_new_custom_directory):
+    if sys.platform.startswith("win") and platform.machine() == "ARM64":
+        pytest.skip("FontMgr.New_Custom_Empty is not available on ARM windows (known Skia bug)")
     # Recursive valid font count in skia/resources/fonts/ as of skia m134
     assert fontmgr_new_custom_directory.countFamilies() == 34
 
 
 # Strickly speaking, we do not need/want this no-arg one.
 def test_FontMgr_OneFontMgr0():
+    if sys.platform.startswith("win") and platform.machine() == "ARM64":
+        pytest.skip("FontMgr.New_Custom_Empty is not available on ARM windows (known Skia bug)")
     assert isinstance(skia.FontMgr.OneFontMgr(), skia.FontMgr)
 
 
 def test_FontMgr_OneFontMgr1(ttf_path):
+    if sys.platform.startswith("win") and platform.machine() == "ARM64":
+        pytest.skip("FontMgr.New_Custom_Empty is not available on ARM windows (known Skia bug)")
     assert isinstance(skia.FontMgr.OneFontMgr(ttf_path), skia.FontMgr)
 
 
 def test_FontMgr_OneFontMgr2(ttf_path):
+    if sys.platform.startswith("win") and platform.machine() == "ARM64":
+        pytest.skip("FontMgr.New_Custom_Empty is not available on ARM windows (known Skia bug)")
     font_data = skia.Data.MakeFromFileName(ttf_path)
     assert isinstance(skia.FontMgr.OneFontMgr(font_data), skia.FontMgr)
 
