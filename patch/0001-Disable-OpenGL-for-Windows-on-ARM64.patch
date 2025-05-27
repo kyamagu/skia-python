@@ -1,0 +1,146 @@
+From 0c75727f0148cafc6653d7d94b3633889ffde7db Mon Sep 17 00:00:00 2001
+From: Brian Osman <brianosman@google.com>
+Date: Mon, 10 Dec 2018 10:27:26 -0500
+Subject: [PATCH] Disable OpenGL for Windows-on-ARM64
+
+Bug: skia:8569
+Change-Id: I4f526c8918a9a4aae4b6cd6d7c803b12e90e82ed
+Reviewed-on: https://skia-review.googlesource.com/c/175984
+Reviewed-by: Mike Klein <mtklein@google.com>
+Reviewed-by: Brian Salomon <bsalomon@google.com>
+Commit-Queue: Brian Osman <brianosman@google.com>
+---
+ BUILD.gn                                           | 12 +++++++-----
+ src/gpu/gl/win/GrGLMakeNativeInterface_win.cpp     |  8 ++++++++
+ src/utils/win/SkWGL_win.cpp                        |  2 +-
+ .../gpu/gl/win/CreatePlatformGLTestContext_win.cpp | 11 +++++++++++
+ tools/sk_app/win/GLWindowContext_win.cpp           | 14 ++++++++++++++
+ 5 files changed, 41 insertions(+), 6 deletions(-)
+
+diff --git a/BUILD.gn b/BUILD.gn
+index 0fade345c4..6dafac60d4 100644
+--- a/BUILD.gn
++++ b/BUILD.gn
+@@ -625,7 +625,9 @@ optional("gpu_for_real") {
+     sources += [ "src/gpu/gl/iOS/GrGLMakeNativeInterface_iOS.cpp" ]
+   } else if (is_win) {
+     sources += [ "src/gpu/gl/win/GrGLMakeNativeInterface_win.cpp" ]
+-    libs += [ "OpenGL32.lib" ]
++    if (target_cpu != "arm64") {
++      libs += [ "OpenGL32.lib" ]
++    }
+   } else {
+     sources += [ "src/gpu/gl/GrGLMakeNativeInterface_none.cpp" ]
+   }
+@@ -1416,10 +1418,10 @@ if (skia_enable_tools) {
+       sources += [ "tools/gpu/gl/mac/CreatePlatformGLTestContext_mac.cpp" ]
+     } else if (is_win) {
+       sources += [ "tools/gpu/gl/win/CreatePlatformGLTestContext_win.cpp" ]
+-      libs += [
+-        "Gdi32.lib",
+-        "OpenGL32.lib",
+-      ]
++      libs += [ "Gdi32.lib" ]
++      if (target_cpu != "arm64") {
++        libs += [ "OpenGL32.lib" ]
++      }
+     }
+ 
+     cflags_objcc = [ "-fobjc-arc" ]
+diff --git a/src/gpu/gl/win/GrGLMakeNativeInterface_win.cpp b/src/gpu/gl/win/GrGLMakeNativeInterface_win.cpp
+index 3b5951f502..cb69244e3a 100644
+--- a/src/gpu/gl/win/GrGLMakeNativeInterface_win.cpp
++++ b/src/gpu/gl/win/GrGLMakeNativeInterface_win.cpp
+@@ -13,6 +13,12 @@
+ #include "gl/GrGLAssembleInterface.h"
+ #include "gl/GrGLUtil.h"
+ 
++#if defined(_M_ARM64)
++
++sk_sp<const GrGLInterface> GrGLMakeNativeInterface() { return nullptr; }
++
++#else
++
+ class AutoLibraryUnload {
+ public:
+     AutoLibraryUnload(const char* moduleName) {
+@@ -87,6 +93,8 @@ sk_sp<const GrGLInterface> GrGLMakeNativeInterface() {
+     return nullptr;
+ }
+ 
++#endif // ARM64
++
+ const GrGLInterface* GrGLCreateNativeInterface() { return GrGLMakeNativeInterface().release(); }
+ 
+ #endif//defined(SK_BUILD_FOR_WIN)
+diff --git a/src/utils/win/SkWGL_win.cpp b/src/utils/win/SkWGL_win.cpp
+index 1360a01eb7..1a42c8afa4 100644
+--- a/src/utils/win/SkWGL_win.cpp
++++ b/src/utils/win/SkWGL_win.cpp
+@@ -6,7 +6,7 @@
+  */
+ 
+ #include "SkTypes.h"
+-#if defined(SK_BUILD_FOR_WIN)
++#if defined(SK_BUILD_FOR_WIN) && !defined(_M_ARM64)
+ 
+ #include "SkWGL.h"
+ 
+diff --git a/tools/gpu/gl/win/CreatePlatformGLTestContext_win.cpp b/tools/gpu/gl/win/CreatePlatformGLTestContext_win.cpp
+index c09f0b3258..5d496e4d59 100644
+--- a/tools/gpu/gl/win/CreatePlatformGLTestContext_win.cpp
++++ b/tools/gpu/gl/win/CreatePlatformGLTestContext_win.cpp
+@@ -8,6 +8,16 @@
+ 
+ #include "gl/GLTestContext.h"
+ 
++#if defined(_M_ARM64)
++
++namespace sk_gpu_test {
++
++GLTestContext* CreatePlatformGLTestContext(GrGLStandard, GLTestContext*) { return nullptr; }
++
++}  // namespace sk_gpu_test
++
++#else
++
+ #include <windows.h>
+ #include <GL/GL.h>
+ #include "win/SkWGL.h"
+@@ -220,3 +230,4 @@ GLTestContext* CreatePlatformGLTestContext(GrGLStandard forcedGpuAPI,
+ }
+ }  // namespace sk_gpu_test
+ 
++#endif
+diff --git a/tools/sk_app/win/GLWindowContext_win.cpp b/tools/sk_app/win/GLWindowContext_win.cpp
+index 8e0eebabfc..2fcd0657b8 100644
+--- a/tools/sk_app/win/GLWindowContext_win.cpp
++++ b/tools/sk_app/win/GLWindowContext_win.cpp
+@@ -17,6 +17,18 @@
+ using sk_app::GLWindowContext;
+ using sk_app::DisplayParams;
+ 
++#if defined(_M_ARM64)
++
++namespace sk_app {
++namespace window_context_factory {
++
++WindowContext* NewGLForWin(HWND, const DisplayParams&) { return nullptr; }
++
++}  // namespace window_context_factory
++}  // namespace sk_app
++
++#else
++
+ namespace {
+ 
+ class GLWindowContext_win : public GLWindowContext {
+@@ -141,3 +153,5 @@ WindowContext* NewGLForWin(HWND wnd, const DisplayParams& params) {
+ 
+ }  // namespace window_context_factory
+ }  // namespace sk_app
++
++#endif
+-- 
+2.49.0
+
