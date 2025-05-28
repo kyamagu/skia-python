@@ -12,6 +12,7 @@ fi
 
 # Build skia
 cd skia && \
+    patch -p1 -R < ../patch/0001-Disable-OpenGL-for-Windows-on-ARM64.patch && \
     python tools/git-sync-deps && \
     patch -p1 < ../patch/make_data_assembly.patch && \
     patch -p1 < ../patch/skia-m87-c++-code.diff && \
