@@ -15,7 +15,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [ubuntu-22.04, macos-13]
+        os: [ubuntu-22.04, windows-2022, macos-13]
         arch: [auto64]
         cp: ["cp3{10,11,12,13}"]
         include:
@@ -25,12 +25,44 @@ jobs:
           - os: ubuntu-22.04-arm
             arch: aarch64
             cp: "cp3{10,11,12,13}"
-          - os: windows-11-arm
-            arch: ARM64
-            cp: "cp3{11,12,13}"
-          - os: windows-2022
-            arch: auto64
-            cp: "cp3{11,12,13}"
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: true
+
+      - name: Build wheels
+        uses: pypa/cibuildwheel@v2.21.3
+        env:
+          CIBW_MANYLINUX_X86_64_IMAGE: manylinux_2_28
+          CIBW_MANYLINUX_AARCH64_IMAGE: manylinux_2_28
+          CIBW_BUILD: "${{ matrix.cp }}-*"
+          CIBW_SKIP: "*musllinux*"
+          CIBW_ARCHS: ${{ matrix.arch }}
+          CIBW_ENVIRONMENT_MACOS: TARGET_ARCH=${{ matrix.arch }} MACOSX_DEPLOYMENT_TARGET=11.0
+          CIBW_BEFORE_ALL: bash scripts/build_${{ runner.os }}.sh
+          CIBW_BEFORE_BUILD: pip install pybind11 numpy
+          CIBW_TEST_REQUIRES: pytest pillow glfw
+          CIBW_TEST_REQUIRES_MACOS: pytest pillow pyopengl
+          CIBW_TEST_COMMAND: python -m pytest {project}/tests
+          CIBW_TEST_COMMAND_LINUX: >
+            xvfb-run -s "-screen 0 640x480x24" python -m pytest {project}/tests
+          CIBW_TEST_SKIP: "*-macosx_arm64"
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: wheel-${{ matrix.os }}-${{ matrix.arch }}-${{ matrix.cp }}
+          path: ./wheelhouse/*.whl
+
+  build_wheels_armwindows:
+    name: Build wheels on ${{ matrix.os }} (${{ matrix.arch }}) for ${{ matrix.cp }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [windows-11-arm]
+        arch: [ARM64]
+        cp: ["cp3{11,12,13}"]
 
     steps:
       - uses: actions/checkout@v4
