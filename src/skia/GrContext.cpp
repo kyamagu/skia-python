@@ -928,7 +928,7 @@ py::class_<GrDirectContext, sk_sp<GrDirectContext>, GrRecordingContext>(m, "GrDi
     //     "Enumerates all cached GPU resources and dumps their memory to "
     //     "traceMemoryDump.")
     .def("supportsDistanceFieldText", &GrDirectContext::supportsDistanceFieldText)
-    .def("storeVkPipelineCacheData", &GrDirectContext::storeVkPipelineCacheData)
+    .def("storeVkPipelineCacheData", py::overload_cast<>(&GrDirectContext::storeVkPipelineCacheData))
     .def_static("ComputeImageSize",
         [] (sk_sp<SkImage> image, skgpu::Mipmapped mapped, bool useNextPow2) {
             // REVISIT: process skgpu::Mipmapped and useNextPow2 = true
