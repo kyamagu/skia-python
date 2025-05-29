@@ -22,7 +22,7 @@ fi
 
 # Build skia
 cd skia && \
-    patch -p1 < ../patch/skia-m137-minimize-download.patch && \
+    patch -p1 < ../patch/skia-m138-minimize-download.patch && \
     patch -p1 < ../patch/skia-m132-colrv1-freetype.diff && \
     python3 tools/git-sync-deps && \
     gn gen out/Release --args="
