@@ -119,7 +119,6 @@ def test_PathEffect_DashInfo_fPhase(patheffect_dashinfo):
     assert isinstance(patheffect_dashinfo.fPhase, float)
 
 
-@pytest.mark.skip(reason='"PointData inner class in PathEffect. Gone in m116. May not need REVISIT')
 @pytest.fixture
 def patheffect_pointdata():
     return skia.PathEffect.PointData()

@@ -1,5 +1,6 @@
 #include "common.h"
 #include <include/docs/SkPDFDocument.h>
+#include <include/docs/SkPDFJpegHelpers.h>
 #include <pybind11/stl.h>
 
 namespace {
@@ -20,7 +21,7 @@ private:
 };
 
 SkPDF::Metadata DictToMetadata(py::dict dict) {
-    SkPDF::Metadata metadata;
+    SkPDF::Metadata metadata = SkPDF::JPEG::MetadataWithCallbacks();
     for (auto item : dict) {
         std::string key(item.first.cast<std::string>());
         if (key == "Title")
@@ -233,7 +234,7 @@ py::class_<SkPDF::Metadata>(pdf, "Metadata",
     R"docstring(
     Optional metadata to be passed into the PDF factory function.
     )docstring")
-    .def(py::init<>())
+    .def(py::init<>(&SkPDF::JPEG::MetadataWithCallbacks))
     .def(py::init(&DictToMetadata))
     .def_readwrite("fTitle", &SkPDF::Metadata::fTitle,
         R"docstring(
@@ -363,7 +364,9 @@ pdf
         )docstring",
         py::arg("stream"),  py::arg("metadata"))
     .def_static("MakeDocument",
-        py::overload_cast<SkWStream*>(&SkPDF::MakeDocument),
+        [] (SkWStream* stream) {
+            return SkPDF::MakeDocument(stream, SkPDF::JPEG::MetadataWithCallbacks());
+        },
         py::arg("stream"))
     .def_static("MakeDocument",
         [] (SkWStream* stream, py::kwargs kwargs) {
