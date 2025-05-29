@@ -5,8 +5,6 @@ export PATH="${PWD}/depot_tools:$PATH"
 if [[ ${RUNNER_ARCH} == "ARM64" ]]; then
     EXTRA_ARGS='
 target_cpu="arm64"
-skia_use_freetype=false
-skia_enable_fontmgr_custom_empty=false
 '
     echo "setting ARM64 Windows Skia build"
 fi

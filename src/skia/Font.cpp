@@ -174,7 +174,6 @@ class OneFontMgr : public SkFontMgr {
 /* Adapted from skia's chrome/m128:example/external_client/src/shape_text.cpp */
 
 /* Forward declaration */
-#if !defined(_WIN32) || !defined(__ARM_ARCH)
 sk_sp<SkFontMgr> OneFontMgr_New_Custom_Empty(sk_sp<SkData> font_data);
 
 sk_sp<SkFontMgr> OneFontMgr_New_Custom_Empty(char* argv1) {
@@ -196,7 +195,6 @@ sk_sp<SkFontMgr> OneFontMgr_New_Custom_Empty(sk_sp<SkData> font_data) {
   }
   return sk_make_sp<OneFontMgr>(face);
 }
-#endif // !arm-windows
 
 }  // namespace
 
@@ -811,7 +809,6 @@ py::class_<SkFontMgr, sk_sp<SkFontMgr>, SkRefCnt>(m, "FontMgr",
 
     )docstring")
     .def(py::init([] () { return SkFontMgr_RefDefault(); }))
-#if !defined(_WIN32) || !defined(__ARM_ARCH)
     .def_static("New_Custom_Directory", &SkFontMgr_New_Custom_Directory,
         R"docstring(
         Create a custom font manager which scans a given directory for font files.
@@ -823,7 +820,6 @@ py::class_<SkFontMgr, sk_sp<SkFontMgr>, SkRefCnt>(m, "FontMgr",
         py::arg("filename"))
     .def_static("New_Custom_Empty", py::overload_cast<sk_sp<SkData>>(&OneFontMgr_New_Custom_Empty),
         py::arg("data"))
-#endif // !arm-windows
     .def("__getitem__", &SkFontMgr_getFamilyName, py::arg("index"))
     .def("__len__", &SkFontMgr::countFamilies)
     .def("countFamilies", &SkFontMgr::countFamilies)
@@ -934,9 +930,7 @@ py::class_<SkFontMgr, sk_sp<SkFontMgr>, SkRefCnt>(m, "FontMgr",
     ;
 
 // This has the side-effect of letting "skia.FontMgr.OneFontMgr()" work.
-#if !defined(_WIN32) || !defined(__ARM_ARCH)
 m.attr("FontMgr").attr("OneFontMgr") = m.attr("FontMgr").attr("New_Custom_Empty");
-#endif // !arm-windows
 
 // Font
 py::enum_<SkFontHinting>(m, "FontHinting")
