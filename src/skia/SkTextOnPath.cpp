@@ -13,7 +13,6 @@
 #include "include/core/SkPaint.h"
 
 #include "SkTextOnPath.h"
-#include <functional>
 
 static void morphpoints(SkPoint dst[], const SkPoint src[], int count,
                         SkPathMeasure& meas, const SkMatrix& matrix) {

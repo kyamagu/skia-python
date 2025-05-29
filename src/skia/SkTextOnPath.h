@@ -7,6 +7,7 @@
 
 #ifndef SkTextOnPath_DEFINED
 #define SkTextOnPath_DEFINED
+#include <functional>
 
 #include "include/core/SkTypes.h"
 
