@@ -14,14 +14,14 @@ class SkCanvas;
 class SkMatrix;
 class SkPath;
 
-void SkVisitTextOnPath(const void* text, size_t byteLength, const SkPaint& paint,
+void SkVisitTextOnPath(const void* text, size_t byteLength, const SkPaint& paint, const SkFont& font,
                        const SkPath& follow, const SkMatrix* matrix,
                        const std::function<void(const SkPath&)>& visitor);
 
-void SkDrawTextOnPath(const void* text, size_t byteLength, const SkPaint& paint,
+void SkDrawTextOnPath(const void* text, size_t byteLength, const SkPaint& paint, const SkFont& font,
                       const SkPath& follow, const SkMatrix* matrix, SkCanvas* canvas);
 
-void SkDrawTextOnPathHV(const void* text, size_t byteLength, const SkPaint& paint,
+void SkDrawTextOnPathHV(const void* text, size_t byteLength, const SkPaint& paint, const SkFont& font,
                         const SkPath& follow, SkScalar hOffset, SkScalar vOffset, SkCanvas* canvas);
 
 #endif

@@ -7,10 +7,12 @@
 
 #include "include/core/SkPathMeasure.h"
 #include "include/core/SkCanvas.h"
+#include "include/core/SkFont.h"
 #include "include/core/SkMatrix.h"
+#include "include/core/SkPath.h"
 #include "include/core/SkPaint.h"
 
-#include "SkTextToPathIter.h"
+#include <functional>
 
 static void morphpoints(SkPoint dst[], const SkPoint src[], int count,
                         SkPathMeasure& meas, const SkMatrix& matrix) {
@@ -88,35 +90,38 @@ static void morphpath(SkPath* dst, const SkPath& src, SkPathMeasure& meas,
     }
 }
 
-void SkVisitTextOnPath(const void* text, size_t byteLength, const SkPaint& paint,
+void SkVisitTextOnPath(const void* text, size_t byteLength, const SkPaint& paint, const SkFont& font,
                        const SkPath& follow, const SkMatrix* matrix,
                        const std::function<void(const SkPath&)>& visitor) {
     if (byteLength == 0) {
         return;
     }
 
-    SkTextToPathIter    iter((const char*)text, byteLength, paint, false);
+    // Convert to glyph IDs and advances
+    int glyphCount = font.countText(text, byteLength, SkTextEncoding::kUTF8);
+    if (glyphCount <= 0) return;
+    std::vector<SkGlyphID> glyphs(glyphCount);
+    font.textToGlyphs(text, byteLength, SkTextEncoding::kUTF8, glyphs.data(), glyphCount);
+    std::vector<SkScalar> advances(glyphCount);
+    font.getWidths(glyphs.data(), glyphCount, advances.data());
+
+    // Prepare path measuring
     SkPathMeasure       meas(follow, false);
     SkScalar            hOffset = 0;
 
-    // need to measure first
-    if (paint.getTextAlign() != SkPaint::kLeft_Align) {
-        SkScalar pathLen = meas.getLength();
-        if (paint.getTextAlign() == SkPaint::kCenter_Align) {
-            pathLen = SkScalarHalf(pathLen);
-        }
-        hOffset += pathLen;
-    }
-
-    const SkPath*   iterPath;
+    SkPath          iterPath;
     SkScalar        xpos;
     SkMatrix        scaledMatrix;
-    SkScalar        scale = iter.getPathScale();
+    SkScalar        scale = 1.0;
 
     scaledMatrix.setScale(scale, scale);
 
-    while (iter.next(&iterPath, &xpos)) {
-        if (iterPath) {
+    SkScalar pathLength = meas.getLength();
+    for (int i = 0; i < glyphCount; ++i) {
+        if (xpos > pathLength)
+            break;
+
+        if (font.getPath(glyphs[i], &iterPath)) {
             SkPath      tmp;
             SkMatrix    m(scaledMatrix);
 
@@ -125,21 +130,22 @@ void SkVisitTextOnPath(const void* text, size_t byteLength, const SkPaint& paint
             if (matrix) {
                 m.postConcat(*matrix);
             }
-            morphpath(&tmp, *iterPath, meas, m);
+            morphpath(&tmp, iterPath, meas, m);
             visitor(tmp);
         }
+        xpos += advances[i];
     }
 }
 
-void SkDrawTextOnPath(const void* text, size_t byteLength, const SkPaint& paint,
+void SkDrawTextOnPath(const void* text, size_t byteLength, const SkPaint& paint, const SkFont& font,
                       const SkPath& follow, const SkMatrix* matrix, SkCanvas* canvas) {
-    SkVisitTextOnPath(text, byteLength, paint, follow, matrix, [canvas, paint](const SkPath& path) {
+    SkVisitTextOnPath(text, byteLength, paint, font, follow, matrix, [canvas, paint](const SkPath& path) {
         canvas->drawPath(path, paint);
     });
 }
 
-void SkDrawTextOnPathHV(const void* text, size_t byteLength, const SkPaint& paint,
+void SkDrawTextOnPathHV(const void* text, size_t byteLength, const SkPaint& paint, const SkFont& font,
                         const SkPath& follow, SkScalar h, SkScalar v, SkCanvas* canvas) {
     SkMatrix matrix = SkMatrix::Translate(h, v);
-    SkDrawTextOnPath(text, byteLength, paint, follow, &matrix, canvas);
+    SkDrawTextOnPath(text, byteLength, paint, font, follow, &matrix, canvas);
 }
