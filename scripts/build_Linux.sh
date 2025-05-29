@@ -1,9 +1,5 @@
 #!/usr/bin/env bash
 
-export PATH=${PWD}/depot_tools:$PATH
-
-EXTRA_CFLAGS=""
-
 # Install system dependencies
 if [[ $EUID -eq 0 ]]; then
     yum -y install epel-release && \
