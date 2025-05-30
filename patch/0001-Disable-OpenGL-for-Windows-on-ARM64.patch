@@ -1,0 +1,143 @@
+From 0c75727f0148cafc6653d7d94b3633889ffde7db Mon Sep 17 00:00:00 2001
+From: Brian Osman <brianosman@google.com>
+Date: Mon, 10 Dec 2018 10:27:26 -0500
+Subject: [PATCH] Disable OpenGL for Windows-on-ARM64
+
+Bug: skia:8569
+Change-Id: I4f526c8918a9a4aae4b6cd6d7c803b12e90e82ed
+Reviewed-on: https://skia-review.googlesource.com/c/175984
+Reviewed-by: Mike Klein <mtklein@google.com>
+Reviewed-by: Brian Salomon <bsalomon@google.com>
+Commit-Queue: Brian Osman <brianosman@google.com>
+---
+ BUILD.gn                                           | 12 +++++++-----
+ src/gpu/gl/win/GrGLMakeNativeInterface_win.cpp     |  8 ++++++++
+ src/utils/win/SkWGL_win.cpp                        |  2 +-
+ .../gpu/gl/win/CreatePlatformGLTestContext_win.cpp | 11 +++++++++++
+ tools/sk_app/win/GLWindowContext_win.cpp           | 14 ++++++++++++++
+ 5 files changed, 41 insertions(+), 6 deletions(-)
+
+diff --git b/BUILD.gn a/BUILD.gn
+index ef913e9..33f3208 100644
+--- b/BUILD.gn
++++ a/BUILD.gn
+@@ -1031,7 +1031,9 @@ optional("gpu") {
+         "src/gpu/ganesh/gl/win/GrGLMakeNativeInterface_win.cpp",
+         "src/gpu/ganesh/gl/win/GrGLMakeWinInterface.cpp",
+       ]
+-      libs += [ "OpenGL32.lib" ]
++      if (target_cpu != "arm64") {
++        libs += [ "OpenGL32.lib" ]
++      }
+     } else {
+       sources += [ "src/gpu/ganesh/gl/GrGLMakeNativeInterface_none.cpp" ]
+     }
+@@ -2185,10 +2187,10 @@ if (skia_enable_tools) {
+           "tools/gpu/gl/win/SkWGL.h",
+           "tools/gpu/gl/win/SkWGL_win.cpp",
+         ]
+-      libs += [
+-        "Gdi32.lib",
+-        "OpenGL32.lib",
+-        ]
++        libs += [ "Gdi32.lib" ]
++        if (target_cpu != "arm64") {
++          libs += [ "OpenGL32.lib" ]
++        }
+       }
+     }
+ 
+diff --git b/src/gpu/ganesh/gl/win/GrGLMakeNativeInterface_win.cpp a/src/gpu/ganesh/gl/win/GrGLMakeNativeInterface_win.cpp
+index f33f2e1..da3cbe2 100644
+--- b/src/gpu/ganesh/gl/win/GrGLMakeNativeInterface_win.cpp
++++ a/src/gpu/ganesh/gl/win/GrGLMakeNativeInterface_win.cpp
+@@ -11,6 +11,11 @@
+ #include "include/gpu/ganesh/gl/GrGLInterface.h"
+ #include "include/gpu/ganesh/gl/win/GrGLMakeWinInterface.h"
+ 
++#if defined(_M_ARM64)
++
++sk_sp<const GrGLInterface> GrGLMakeNativeInterface() { return nullptr; }
++
++#else
+ /*
+  * Windows makes the GL funcs all be __stdcall instead of __cdecl :(
+  * This implementation will only work if GR_GL_FUNCTION_TYPE is __stdcall.
+@@ -20,4 +25,6 @@ sk_sp<const GrGLInterface> GrGLMakeNativeInterface() {
+     return GrGLInterfaces::MakeWin();
+ }
+ 
++#endif // ARM64
++
+ #endif // SK_DISABLE_LEGACY_GL_MAKE_NATIVE_INTERFACE
+diff --git b/tools/gpu/gl/win/SkWGL_win.cpp a/tools/gpu/gl/win/SkWGL_win.cpp
+index 4cb462b..ac2d700 100644
+--- b/tools/gpu/gl/win/SkWGL_win.cpp
++++ a/tools/gpu/gl/win/SkWGL_win.cpp
+@@ -6,7 +6,7 @@
+  */
+ 
+ #include "include/core/SkTypes.h"
+-#if defined(SK_BUILD_FOR_WIN) && !defined(WINUWP)
++#if defined(SK_BUILD_FOR_WIN) && !defined(_M_ARM64) && !defined(WINUWP)
+ 
+ #include "tools/gpu/gl/win/SkWGL.h"
+ 
+diff --git b/tools/gpu/gl/win/CreatePlatformGLTestContext_win.cpp a/tools/gpu/gl/win/CreatePlatformGLTestContext_win.cpp
+index cb62daf..0d29da7 100644
+--- b/tools/gpu/gl/win/CreatePlatformGLTestContext_win.cpp
++++ a/tools/gpu/gl/win/CreatePlatformGLTestContext_win.cpp
+@@ -8,6 +8,16 @@
+ 
+ #include "tools/gpu/gl/GLTestContext.h"
+ 
++#if defined(_M_ARM64)
++
++namespace sk_gpu_test {
++
++GLTestContext* CreatePlatformGLTestContext(GrGLStandard, GLTestContext*) { return nullptr; }
++
++}  // namespace sk_gpu_test
++
++#else
++
+ #include <windows.h>
+ #include <GL/GL.h>
+ #include "tools/gpu/gl/win/SkWGL.h"
+@@ -221,3 +231,4 @@ GLTestContext* CreatePlatformGLTestContext(GrGLStandard forcedGpuAPI,
+ }
+ }  // namespace sk_gpu_test
+ 
++#endif
+diff --git b/tools/window/win/GLWindowContext_win.cpp a/tools/window/win/GLWindowContext_win.cpp
+index c018549..dca99ae 100644
+--- b/tools/window/win/GLWindowContext_win.cpp
++++ a/tools/window/win/GLWindowContext_win.cpp
+@@ -17,6 +17,18 @@
+ using skwindow::DisplayParams;
+ using skwindow::internal::GLWindowContext;
+ 
++#if defined(_M_ARM64)
++
++namespace skwindow {
++
++std::unique_ptr<WindowContext> MakeGLForWin(HWND, std::unique_ptr<const DisplayParams>) {
++    return nullptr;
++}
++
++}  // namespace skwindow
++
++#else
++
+ namespace {
+ 
+ class GLWindowContext_win : public GLWindowContext {
+@@ -141,3 +153,5 @@ std::unique_ptr<WindowContext> MakeGLForWin(HWND wnd, std::unique_ptr<const Disp
+ }
+ 
+ }  // namespace skwindow
++
++#endif
+-- 
+2.49.0
+

@@ -63,6 +63,8 @@ py::class_<SkSurfaceProps> surfaceprops(m, "SurfaceProps", R"docstring(
     )docstring");
 
 py::enum_<SkSurfaceProps::Flags>(surfaceprops, "Flags", py::arithmetic())
+    .value("kDefault_Flag",
+        SkSurfaceProps::Flags::kDefault_Flag)
     .value("kUseDeviceIndependentFonts_Flag",
         SkSurfaceProps::Flags::kUseDeviceIndependentFonts_Flag)
     .value("kDynamicMSAA_Flag",
@@ -246,6 +248,24 @@ surface
         See :py:meth:`~MakeRasterN32Premul`
         )docstring",
         py::arg("width"), py::arg("height"), py::arg("surfaceProps") = nullptr)
+    .def(py::init(
+        [] (int width, int height, SkColorType colortype, const SkSurfaceProps* surfaceProps) {
+            auto info = SkImageInfo::MakeN32Premul(width, height).makeColorType(colortype);
+            return SkSurfaces::Raster(info, surfaceProps);
+        }),
+        R"docstring(
+        See :py:meth:`~MakeRasterN32Premul` plus :py:class:`ImageInfo`'s :py:meth:`~makeColorType`
+        )docstring",
+        py::arg("width"), py::arg("height"), py::arg("colortype"), py::arg("surfaceProps") = nullptr)
+    .def(py::init(
+        [] (const SkImageInfo& imageinfo, size_t rowBytes, const SkSurfaceProps* surfaceProps) {
+            return SkSurfaces::Raster(imageinfo, rowBytes, surfaceProps);
+        }),
+        R"docstring(
+        See :py:meth:`~MakeRaster`
+        )docstring",
+        py::arg("imageInfo"), py::arg("rowBytes") = 0,
+        py::arg("surfaceProps") = nullptr)
     .def(py::init(
         [] (py::array array, SkColorType ct, SkAlphaType at,
             const SkColorSpace* cs, const SkSurfaceProps *surfaceProps) {
@@ -1009,6 +1029,15 @@ surface
 
         Internally, sets :py:class:`ImageInfo` to width, height, native color
         type, and :py:attr:`AlphaType.kPremul`.
+
+        Note that the :py:class:`ImageInfo` native color type might not be what
+        you desire, if you intent to interact with other software expecting
+        specific color type order. e.g. package `wx`'s `wx.Bitmap.FromBufferRGBA`.
+        For that purpose, you need one of the other :py:class:`Surface`
+        constructors which takes an explicit appropriate matching
+        :py:class:`ImageInfo` input, or one that takes an explicit :py:class:`ColorType`
+        input. You should check the output of `surface.imageInfo().colorType()`
+        afterwards, in that usage.
 
         :py:class:`Surface` is returned if width and height are greater than
         zero.
