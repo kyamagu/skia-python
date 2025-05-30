@@ -110,7 +110,7 @@ void SkVisitTextOnPath(const void* text, size_t byteLength, const SkPaint& paint
     SkScalar            hOffset = 0;
 
     SkPath          iterPath;
-    SkScalar        xpos;
+    SkScalar        xpos = 0.0;
     SkMatrix        scaledMatrix;
     SkScalar        scale = 1.0;
 
