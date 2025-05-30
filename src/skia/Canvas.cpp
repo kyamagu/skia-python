@@ -7,6 +7,8 @@
 #include <pybind11/stl.h>
 #include <pybind11/numpy.h>
 
+#include "SkTextOnPath.h"
+
 void initCanvas(py::module &m) {
 py::class_<SkAutoCanvasRestore>(m, "AutoCanvasRestore", R"docstring(
     Stack helper class calls :py:meth:`Canvas.restoreToCount` when
@@ -2155,6 +2157,13 @@ canvas
         :param skia.Paint paint: blend, color, stroking, and so on, used to draw
         )docstring",
         py::arg("blob"), py::arg("x"), py::arg("y"), py::arg("paint"))
+    .def("drawTextOnPath",
+        [] (SkCanvas& self, const std::string& text, const SkPath& path,
+            const SkMatrix* matrix, const SkFont& font, const SkPaint& paint) {
+            SkDrawTextOnPath(text.c_str(), text.size(), paint, font, path, matrix, &self);
+        },
+        py::arg("text"), py::arg("path"),
+        py::arg("matrix"), py::arg("font"), py::arg("paint"))
     // .def("drawTextBlob",
     //     py::overload_cast<const sk_sp<SkTextBlob>&, SkScalar, SkScalar,
     //         const SkPaint&>(&SkCanvas::drawTextBlob),
