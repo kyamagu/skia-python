@@ -177,7 +177,8 @@ setup(
     ext_modules=[extension],
     data_files=data_files,
     install_requires=[
-        'numpy',
+        'numpy; sys_platform != "win32" or python_version <= "3.10"',
+        'numpy>=2.3.0rc1; sys_platform == "win32" and python_version >= "3.11"',
         'pybind11>=2.6'
     ],
     setup_requires=['pybind11>=2.6'],
