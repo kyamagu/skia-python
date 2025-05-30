@@ -2,7 +2,7 @@
 
 # Install system dependencies
 if [[ $EUID -eq 0 ]]; then
-    yum -y install --skip-unavailable epel-release && \
+    if [[ ! -e "/etc/fedora-release" ]] ; then yum -y install epel-release ; fi
     yum install -y \
         python3 \
         ninja-build gn \
