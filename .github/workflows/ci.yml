@@ -141,7 +141,7 @@ jobs:
 
   build_docs:
     name: Build docs
-    needs: [build_wheels, build_wheels_old]
+    needs: [build_wheels, build_wheels_armwindows, build_wheels_old]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -171,7 +171,7 @@ jobs:
 
   publish:
     name: Upload packages to PyPI
-    needs: [build_wheels, build_wheels_old]
+    needs: [build_wheels, build_wheels_armwindows, build_wheels_old]
     runs-on: ubuntu-latest
     if: github.event_name == 'release' && github.event.action == 'published'
     permissions:
