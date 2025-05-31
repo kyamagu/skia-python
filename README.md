@@ -19,18 +19,18 @@ Supported platforms: Python 3.8-3.13 (CPython) on
 
 - Linux x86_64, aarch64
 - macOS x86_64, arm64
-- Windows x86_64
+- Windows x86_64, arm64 ; arm64 for the windows 11 and Python 3.11-3.13 combination only.
 
-For Linux platforms, there must be OpenGL and fontconfig installed:
+For Linux platforms, there must be OpenGL, libEGL and fontconfig installed:
 
 ```bash
-apt-get install libfontconfig1 libgl1-mesa-glx libgl1-mesa-dri
+apt-get install libfontconfig1 libgl1-mesa-glx libgl1-mesa-egl libegl1 libglvnd0 libgl1-mesa-dri
 ```
 
 Or:
 
 ```bash
-yum install fontconfig mesa-libGL mesa-dri-drivers
+yum install fontconfig mesa-libGL mesa-libEGL libglvnd-egl mesa-dri-drivers
 ```
 
 For unsupported environment, check the [build instruction](https://kyamagu.github.io/skia-python/install.html).
