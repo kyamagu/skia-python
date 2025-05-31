@@ -22,6 +22,9 @@ def test_RuntimeEffect_init1(runtime_effect_color):
 def test_RuntimeEffect_init2(runtime_effect_blender):
     assert isinstance(runtime_effect_blender, skia.RuntimeEffect)
 
+def test_V2_init0():
+    assert isinstance(skia.V2(0,0), skia.V2)
+
 def test_V3_init0():
     assert isinstance(skia.V3(0,0,0), skia.V3)
 
@@ -40,10 +43,14 @@ def test_RuntimeEffectBuilder_init0(runtime_effect_builder):
 # accepted object types do not throw errors.
 @pytest.mark.parametrize('arg', [
     (0),
+    (0.0),
+    (skia.V2(0,0)),
     (skia.V3(0,0,0)),
     (skia.V4(0,0,0,0)),
+    ([0,0]),
     ([0,0,0]),
     ([0,0,0,0]),
+    ((0,0)),
     ((0,0,0)),
     ((0,0,0,0)),
 ])
@@ -92,3 +99,57 @@ def test_RuntimeEffectBuilderUniform_init0():
 
 def test_RuntimeEffectBuilderChild_init0():
     assert isinstance(skia.RuntimeEffectBuilderChild(), skia.RuntimeEffectBuilderChild)
+
+
+@pytest.fixture(scope='session')
+def builder_with_uniforms():
+    effect = skia.RuntimeEffect.MakeForShader("""
+uniform int    iInteger;
+uniform float  iFloat;
+uniform float2 iFloat2;
+uniform float3 iFloat3;
+uniform float4 iFloat4;
+uniform shader iImage;
+vec4 main(vec2 inCoords){return vec4(0,0,0,0);}""")
+    return skia.RuntimeShaderBuilder(effect)
+
+def test_builder_uniform_count(builder_with_uniforms):
+    assert len(builder_with_uniforms.effect().uniforms()) == 5
+
+def test_builder_children_count(builder_with_uniforms):
+    assert len(builder_with_uniforms.children()) == 1
+
+def test_builder_effect_children_count(builder_with_uniforms):
+    assert len(builder_with_uniforms.effect().children()) == 1
+
+def test_builder_effect_children_name(builder_with_uniforms):
+    assert builder_with_uniforms.effect().children()[0].name == "iImage"
+
+def test_builder_nonexistent_uniform(builder_with_uniforms):
+    assert builder_with_uniforms.uniform("iDoesNotExist").type == None
+
+#Actually blindly setting non-existent uniform does not fail.
+#But we also test coercion here.
+def test_builder_uniform_int_set(builder_with_uniforms):
+    assert builder_with_uniforms.uniform("iInteger").type == skia.RuntimeEffect.UniformType.kInt
+    builder_with_uniforms.setUniform("iInteger", 0)
+
+def test_builder_uniform_float_set(builder_with_uniforms):
+    assert builder_with_uniforms.uniform("iFloat").type == skia.RuntimeEffect.UniformType.kFloat
+    builder_with_uniforms.setUniform("iFloat", 0.0)
+
+def test_builder_uniform_float2_set(builder_with_uniforms):
+    assert builder_with_uniforms.uniform("iFloat2").type == skia.RuntimeEffect.UniformType.kFloat2
+    builder_with_uniforms.setUniform("iFloat", (0.0, 0.0))
+
+def test_builder_uniform_float3_set(builder_with_uniforms):
+    assert builder_with_uniforms.uniform("iFloat3").type == skia.RuntimeEffect.UniformType.kFloat3
+    builder_with_uniforms.setUniform("iFloat", (0.0, 0.0, 0.0))
+
+def test_builder_uniform_float4_set(builder_with_uniforms):
+    assert builder_with_uniforms.uniform("iFloat4").type == skia.RuntimeEffect.UniformType.kFloat4
+    builder_with_uniforms.setUniform("iFloat", (0.0, 0.0, 0.0, 0.0))
+
+def test_builder_uniform_shader_set(builder_with_uniforms):
+    assert builder_with_uniforms.child("iImage").type == skia.RuntimeEffect.ChildType.kShader
+    builder_with_uniforms.setChild("iImage", skia.Bitmap().makeShader())

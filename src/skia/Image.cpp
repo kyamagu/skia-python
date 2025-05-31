@@ -1398,7 +1398,7 @@ image
 
         :return: true if :py:class:`Image` is a GPU texture
         )docstring")
-    .def("isValid", &SkImage::isValid,
+    .def("isValid", py::overload_cast<GrRecordingContext*>(&SkImage::isValid, py::const_),
         R"docstring(
         Returns true if :py:class:`Image` can be drawn on either raster surface
         or GPU surface.

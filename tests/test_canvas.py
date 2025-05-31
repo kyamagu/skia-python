@@ -392,6 +392,14 @@ def test_Canvas_drawString(canvas):
 
 
 @pytest.mark.parametrize('args', [
+    ('foo', skia.Path(), None, skia.Font(), skia.Paint()),
+    ('foo', skia.Path(), skia.Matrix(), skia.Font(), skia.Paint()),
+])
+def test_Canvas_drawTextOnPath(canvas, args):
+    canvas.drawTextOnPath(*args)
+
+
+@pytest.mark.parametrize('args', [
     (skia.TextBlob('foo', skia.Font()), 0, 0, skia.Paint(),),
     (skia.TextBlob('foo', skia.Font()), 0, 0, skia.Paint(),),
 ])

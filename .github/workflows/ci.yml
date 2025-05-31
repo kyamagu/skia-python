@@ -9,66 +9,8 @@ on:
     types: [published]
 
 jobs:
-  prebuild_linux_aarch64_3rd_party:
-    name: Build skia bundled 3rd-party on linux/aarch64
-    runs-on: ubuntu-22.04
-    steps:
-      - uses: actions/checkout@v4
-        with:
-          submodules: true
-      - uses: actions/cache@v4
-        id: cache-skia
-        with:
-          path: |
-            gn
-            skia
-          key: linux-aarch64-skia-${{ github.sha }}-3rd-party
-      - name: Pre-fetch skia deps
-        if: ${{ steps.cache-skia.outputs.cache-hit != 'true' }}
-        run: git config --global core.compression 0 && cd skia && patch -p1 -i ../patch/skia-m136-minimize-download.patch && python tools/git-sync-deps && patch -p1 -R -i ../patch/skia-m136-minimize-download.patch
-      - name: Set up QEMU
-        uses: docker/setup-qemu-action@v3
-      - name: Build skia 3rd-Party
-        # Taken from https://github.com/pypa/cibuildwheel/blob/v2.19.2/cibuildwheel/resources/pinned_docker_images.cfg
-        uses: docker://quay.io/pypa/manylinux_2_28_aarch64:2024.07.02-0
-        if: ${{ steps.cache-skia.outputs.cache-hit != 'true' }}
-        with:
-          args: bash -c "git config --global --add safe.directory '*' &&
-                         bash scripts/build_Linux.sh &&
-                         chmod a+rwx -R skia"
-
-  prebuild_linux_aarch64:
-    name: Build skia on linux/aarch64
-    needs: prebuild_linux_aarch64_3rd_party
-    runs-on: ubuntu-22.04
-    steps:
-      - uses: actions/checkout@v4
-        with:
-          submodules: true
-      - uses: actions/cache@v4
-        id: cache-skia
-        with:
-          path: |
-            gn
-            skia
-          key: linux-aarch64-skia-${{ github.sha }}
-      - uses: actions/cache/restore@v4
-        with:
-          path: |
-            gn
-            skia
-          key: linux-aarch64-skia-${{ github.sha }}-3rd-party
-      - name: Set up QEMU
-        uses: docker/setup-qemu-action@v3
-      - name: Build Skia Proper
-        uses: docker://quay.io/pypa/manylinux_2_28_aarch64:2024.07.02-0
-        with:
-          args: bash -c "git config --global --add safe.directory '*' &&
-                         bash scripts/build_Linux.sh
-
   build_wheels:
     name: Build wheels on ${{ matrix.os }} (${{ matrix.arch }}) for ${{ matrix.cp }}
-    needs: prebuild_linux_aarch64
     runs-on: ${{ matrix.os }}
     strategy:
       fail-fast: false
@@ -80,38 +22,14 @@ jobs:
           - os: macos-13
             arch: arm64
             cp: "cp3{10,11,12,13}"
-          # aarch64 is emulated and takes longer, build one wheel per job
-          - os: ubuntu-22.04
+          - os: ubuntu-22.04-arm
             arch: aarch64
-            cp: cp310
-          - os: ubuntu-22.04
-            arch: aarch64
-            cp: cp311
-          - os: ubuntu-22.04
-            arch: aarch64
-            cp: cp312
-          - os: ubuntu-22.04
-            arch: aarch64
-            cp: cp313
+            cp: "cp3{10,11,12,13}"
 
     steps:
       - uses: actions/checkout@v4
         with:
           submodules: true
-
-      - uses: actions/cache/restore@v4
-        if: runner.os == 'Linux' && matrix.arch == 'aarch64'
-        with:
-          path: |
-            gn
-            skia
-          key: linux-aarch64-skia-${{ github.sha }}
-
-      - name: Set up QEMU
-        if: runner.os == 'Linux' && matrix.arch == 'aarch64'
-        uses: docker/setup-qemu-action@v3
-        with:
-          platforms: ${{ matrix.arch }}
 
       - name: Build wheels
         uses: pypa/cibuildwheel@v2.21.3
@@ -124,6 +42,47 @@ jobs:
           CIBW_ENVIRONMENT_MACOS: TARGET_ARCH=${{ matrix.arch }} MACOSX_DEPLOYMENT_TARGET=11.0
           CIBW_BEFORE_ALL: bash scripts/build_${{ runner.os }}.sh
           CIBW_BEFORE_BUILD: pip install pybind11 numpy
+          CIBW_TEST_REQUIRES: pytest pillow glfw
+          CIBW_TEST_REQUIRES_LINUX: pytest pillow glfw moderngl
+          CIBW_TEST_REQUIRES_MACOS: pytest pillow pyopengl
+          CIBW_TEST_COMMAND: python -m pytest {project}/tests
+          CIBW_TEST_COMMAND_LINUX: >
+            xvfb-run -s "-screen 0 640x480x24" python -m pytest {project}/tests
+          CIBW_REPAIR_WHEEL_COMMAND_LINUX: "auditwheel repair --exclude libEGL.so.1 -w {dest_dir} {wheel}"
+          CIBW_TEST_SKIP: "*-macosx_arm64"
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: wheel-${{ matrix.os }}-${{ matrix.arch }}-${{ matrix.cp }}
+          path: ./wheelhouse/*.whl
+
+  build_wheels_armwindows:
+    name: Build wheels on ${{ matrix.os }} (${{ matrix.arch }}) for ${{ matrix.cp }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [windows-11-arm]
+        arch: [ARM64]
+        cp: ["cp3{11,12,13}"]
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: true
+
+      - name: Build wheels
+        uses: pypa/cibuildwheel@v2.21.3
+        env:
+          CIBW_MANYLINUX_X86_64_IMAGE: manylinux_2_28
+          CIBW_MANYLINUX_AARCH64_IMAGE: manylinux_2_28
+          CIBW_BUILD: "${{ matrix.cp }}-*"
+          CIBW_SKIP: "*musllinux*"
+          CIBW_ARCHS: ${{ matrix.arch }}
+          CIBW_ENVIRONMENT_MACOS: TARGET_ARCH=${{ matrix.arch }} MACOSX_DEPLOYMENT_TARGET=11.0
+          CIBW_BEFORE_ALL: bash scripts/build_${{ runner.os }}.sh
+          CIBW_BEFORE_BUILD: pip install pybind11 numpy
+          CIBW_BEFORE_BUILD_WINDOWS: pip install pybind11 "numpy >= 2.3.0rc1"
           CIBW_TEST_REQUIRES: pytest pillow glfw
           CIBW_TEST_REQUIRES_MACOS: pytest pillow pyopengl
           CIBW_TEST_COMMAND: python -m pytest {project}/tests
@@ -139,7 +98,6 @@ jobs:
   # identical to "build_wheels", except with the older pypa/cibuildwheel@v2.19.2
   build_wheels_old:
     name: Build wheels on ${{ matrix.os }} (${{ matrix.arch }}) for ${{ matrix.cp }}
-    needs: prebuild_linux_aarch64
     runs-on: ${{ matrix.os }}
     strategy:
       fail-fast: false
@@ -151,32 +109,14 @@ jobs:
           - os: macos-13
             arch: arm64
             cp: "cp3{8,9}"
-          # aarch64 is emulated and takes longer, build one wheel per job
-          - os: ubuntu-22.04
+          - os: ubuntu-22.04-arm
             arch: aarch64
-            cp: cp38
-          - os: ubuntu-22.04
-            arch: aarch64
-            cp: cp39
+            cp: "cp3{8,9}"
 
     steps:
       - uses: actions/checkout@v4
         with:
           submodules: true
-
-      - uses: actions/cache/restore@v4
-        if: runner.os == 'Linux' && matrix.arch == 'aarch64'
-        with:
-          path: |
-            gn
-            skia
-          key: linux-aarch64-skia-${{ github.sha }}
-
-      - name: Set up QEMU
-        if: runner.os == 'Linux' && matrix.arch == 'aarch64'
-        uses: docker/setup-qemu-action@v3
-        with:
-          platforms: ${{ matrix.arch }}
 
       - name: Build wheels
         uses: pypa/cibuildwheel@v2.19.2
@@ -190,10 +130,12 @@ jobs:
           CIBW_BEFORE_ALL: bash scripts/build_${{ runner.os }}.sh
           CIBW_BEFORE_BUILD: pip install pybind11 numpy
           CIBW_TEST_REQUIRES: pytest pillow glfw
+          CIBW_TEST_REQUIRES_LINUX: pytest pillow glfw moderngl
           CIBW_TEST_REQUIRES_MACOS: pytest pillow pyopengl
           CIBW_TEST_COMMAND: python -m pytest {project}/tests
           CIBW_TEST_COMMAND_LINUX: >
             xvfb-run -s "-screen 0 640x480x24" python -m pytest {project}/tests
+          CIBW_REPAIR_WHEEL_COMMAND_LINUX: "auditwheel repair --exclude libEGL.so.1 -w {dest_dir} {wheel}"
           CIBW_TEST_SKIP: "*-macosx_arm64"
 
       - uses: actions/upload-artifact@v4
@@ -203,7 +145,7 @@ jobs:
 
   build_docs:
     name: Build docs
-    needs: [build_wheels, build_wheels_old]
+    needs: [build_wheels, build_wheels_armwindows, build_wheels_old]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -233,7 +175,7 @@ jobs:
 
   publish:
     name: Upload packages to PyPI
-    needs: [build_wheels, build_wheels_old]
+    needs: [build_wheels, build_wheels_armwindows, build_wheels_old]
     runs-on: ubuntu-latest
     if: github.event_name == 'release' && github.event.action == 'published'
     permissions:
@@ -248,3 +190,28 @@ jobs:
           path: dist
 
       - uses: pypa/gh-action-pypi-publish@release/v1
+
+  build_and_test_on_Fedora:
+    runs-on: ubuntu-24.04
+    container: fedora:42
+    permissions: write-all
+    steps:
+       - run: dnf install -y dnf-utils git gcc-c++ libstdc++-devel libstdc++-static
+       - run: dnf install -y python3-build python3-devel python3-pytest python3-pillow python3-glfw
+       - run: dnf install -y egl-utils glx-utils
+       - run: dnf install -y patch
+       - run: dnf install -y expat-devel fontconfig-devel
+       - run: dnf install -y libxml2-devel vulkan-headers
+       - run: dnf install -y gn ninja-build
+       - uses: actions/checkout@v4
+         with:
+          submodules: recursive
+       - run: bash scripts/build_Linux.sh
+       - run: python -m build --wheel
+       - run: python -m pip install dist/*.whl
+       - run: python -m pip install moderngl
+       - run: python -c 'import moderngl; moderngl_context = moderngl.create_standalone_context(backend="egl"); import skia; interface = skia.GrGLInterface.MakeEGL() ; assert isinstance(skia.GrDirectContext.MakeGL(interface), skia.GrContext) ; print("Success3")'
+       - run: eglinfo || /bin/true
+       - run: xvfb-run -s "-screen 0 640x480x24" glxinfo
+       # The below also run that 3 lines above but under X, but allows it to fail there.
+       - run: xvfb-run -s "-screen 0 640x480x24" pytest
