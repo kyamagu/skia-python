@@ -29,6 +29,13 @@ New to m138:
   on your system, too. Many Linux users likely have this already,
   but please check.
 
+  There are examples of using OpenGL with skia-python in
+  GLFW, SDL2, SDL3, WX, GTK3, GTK4, QT5, QT6 at
+  https://github.com/HinTak/skia-python-examples/ . Besides the GTK4
+  EGL requirement, we also filed a QT6 regression:
+  https://bugreports.qt.io/browse/QTBUG-137158
+  [Regression] Qt6's QOpenGLWidget crashes when interacting with Skia's CPU raster
+
 - A lot of additions under `skia.RuntimeEffect*`. 
 
   This allows skia-python to run all the `shaders/*.sksl`
