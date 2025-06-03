@@ -1,6 +1,6 @@
 m138 includes a lot of changes in the CI build machinery, OpenGL,
 shader effects, and API coverage closer to other Skia bindings
-(Skia4Delphi and SkiaSharp). The presence of `libEGL.so` (part of
+(Skia4Delphi and SkiaSharp). **IMPORTANT:** The presence of `libEGL.so` (part of
 mesa-libEGL / libglvnd-egl) is now a requirement on Linux.
 
 New to m138:
