@@ -21,6 +21,13 @@ Supported platforms: Python 3.8-3.13 (CPython) on
 - macOS x86_64, arm64
 - Windows x86_64, arm64 ; arm64 for the windows 11 and Python 3.11-3.13 combination only.
 
+**IMPORTANT:** Starting v138rc1, `libEGL.so` (from mesa-libEGL, libglvnd, or your graphic
+card's vendor e.g. NVidia) is required to be present on Linux hosts. This is associated
+with the general change on Linux from X11 to Wayland, and from GTK3 to GTK4. Firefox started
+to use it in 2021 (instead of the older `libGLX.so`), so it is likely newer Linux systems
+already have it, but please check. skia-python v138.rc1+ supports hardware acceleration
+via both GLX (still the default under X11) and EGL (newly added).
+
 For Linux platforms, there must be OpenGL, libEGL and fontconfig installed:
 
 ```bash
