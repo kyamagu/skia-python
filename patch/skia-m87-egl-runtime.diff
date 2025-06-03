@@ -1,0 +1,92 @@
+If you use cibuildwheel (which uses auditwheel repair to bundle libraries) to build,
+you must NOT use the bundled "libEGL-xxxxxxxx.so.A.B.C". Look at ldd's output:
+
+    $ ldd skia.cpython-313-x86_64-linux-gnu.so | grep GL
+            libEGL-48f73270.so.1.1.0 => .../skia_python.libs/libEGL-48f73270.so.1.1.0 (0x00007fd03fd31000)
+            libGL.so.1 => /lib64/libGL.so.1 (0x00007fd03fc71000)
+            libGLdispatch-64b28464.so.0.0.0 => .../skia_python.libs/libGLdispatch-64b28464.so.0.0.0 (0x00007fd03fa69000)
+            libGLX.so.0 => /lib64/libGLX.so.0 (0x00007fd03f369000)
+            libGLdispatch.so.0 => /lib64/libGLdispatch.so.0 (0x00007fd03f189000)
+
+(The duplicate GLdispatch entry is indirect from libEGL)
+
+You need to undo the effect of "auditwheel repair ..." with something like this:
+
+    patchelf --replace-needed libEGL-e42ac8e3.so.1.1.0  libEGL.so.1.1.0  ~/.local/lib/python3.13/site-packages/skia.*.so
+
+Then check that libEGL.so (and libGLdispatch.so) is looked up from system locations,
+and not from python3.13/site-packages/skia_python.libs/ again:
+
+    $ ldd ~/.local/lib/python3.13/site-packages/skia.cpython-313-x86_64-linux-gnu.so | grep GL
+            libEGL.so.1.1.0 => /lib64/libEGL.so.1.1.0 (0x00007f8d1ea39000)
+            libGL.so.1 => /lib64/libGL.so.1 (0x00007f8d1e9c1000)
+            libGLdispatch.so.0 => /lib64/libGLdispatch.so.0 (0x00007f8d1ca69000)
+            libGLX.so.0 => /lib64/libGLX.so.0 (0x00007f8d1c369000)
+
+diff --git a/BUILD.gn b/BUILD.gn
+index e7a79b9..7bb8db6 100644
+--- a/BUILD.gn
++++ b/BUILD.gn
+@@ -800,7 +800,8 @@ optional("gpu") {
+       sources += [ "src/gpu/gl/webgl/GrGLMakeNativeInterface_webgl.cpp" ]
+     } else if (is_linux && skia_use_x11) {
+       sources += [ "src/gpu/gl/glx/GrGLMakeNativeInterface_glx.cpp" ]
+-      libs += [ "GL" ]
++      sources += [ "src/gpu/gl/egl/GrGLMakeNativeInterface_egl.cpp" ]
++      libs += [ "EGL", "GL" ]
+     } else if (is_mac) {
+       sources += [ "src/gpu/gl/mac/GrGLMakeNativeInterface_mac.cpp" ]
+     } else if (is_ios) {
+diff --git a/include/gpu/gl/GrGLInterface.h b/include/gpu/gl/GrGLInterface.h
+index 42a120d..8e574a5 100644
+--- a/include/gpu/gl/GrGLInterface.h
++++ b/include/gpu/gl/GrGLInterface.h
+@@ -31,6 +31,12 @@ struct GrGLInterface;
+  * appropriate one to build.
+  */
+ SK_API sk_sp<const GrGLInterface> GrGLMakeNativeInterface();
++
++namespace GrGLInterfaces {
++SK_API sk_sp<const GrGLInterface> MakeEGL();
++SK_API sk_sp<const GrGLInterface> MakeGLX();
++}
++
+ // Deprecated alternative to GrGLMakeNativeInterface().
+ SK_API const GrGLInterface* GrGLCreateNativeInterface();
+ 
+diff --git a/src/gpu/gl/egl/GrGLMakeNativeInterface_egl.cpp b/src/gpu/gl/egl/GrGLMakeNativeInterface_egl.cpp
+index 3af6d84..1424874 100644
+--- a/src/gpu/gl/egl/GrGLMakeNativeInterface_egl.cpp
++++ b/src/gpu/gl/egl/GrGLMakeNativeInterface_egl.cpp
+@@ -130,8 +130,14 @@ static GrGLFuncPtr egl_get_gl_proc(void* ctx, const char name[]) {
+     return eglGetProcAddress(name);
+ }
+ 
+-sk_sp<const GrGLInterface> GrGLMakeNativeInterface() {
++sk_sp<const GrGLInterface> GrGLMakeEGLInterface() {
+     return GrGLMakeAssembledInterface(nullptr, egl_get_gl_proc);
+ }
+ 
+-const GrGLInterface* GrGLCreateNativeInterface() { return GrGLMakeNativeInterface().release(); }
++namespace GrGLInterfaces {
++sk_sp<const GrGLInterface> MakeEGL() {
++    return GrGLMakeEGLInterface();
++}
++}  // namespace GrGLInterfaces
++
++const GrGLInterface* GrGLCreateEGLInterface() { return GrGLMakeEGLInterface().release(); }
+diff --git a/src/gpu/gl/glx/GrGLMakeNativeInterface_glx.cpp b/src/gpu/gl/glx/GrGLMakeNativeInterface_glx.cpp
+index 20187eb..4df03eb 100644
+--- a/src/gpu/gl/glx/GrGLMakeNativeInterface_glx.cpp
++++ b/src/gpu/gl/glx/GrGLMakeNativeInterface_glx.cpp
+@@ -34,4 +34,10 @@ sk_sp<const GrGLInterface> GrGLMakeNativeInterface() {
+     return GrGLMakeAssembledInterface(nullptr, glx_get);
+ }
+ 
++namespace GrGLInterfaces {
++sk_sp<const GrGLInterface> MakeGLX() {
++    return GrGLMakeNativeInterface();
++}
++}  // namespace GrGLInterfaces
++
+ const GrGLInterface* GrGLCreateNativeInterface() { return GrGLMakeNativeInterface().release(); }
