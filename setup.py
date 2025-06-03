@@ -107,6 +107,7 @@ else:
         'freetype',
         'EGL',
         'GL',
+        'expat',
     ]
     EXTRA_OBJECTS = list(
         glob.glob(
