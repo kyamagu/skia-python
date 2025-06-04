@@ -1,0 +1,42 @@
+If you use cibuildwheel (which uses auditwheel repair to bundle libraries) to build,
+you must NOT use the bundled "libEGL-xxxxxxxx.so.A.B.C". Look at ldd's output:
+
+    $ ldd skia.cpython-313-x86_64-linux-gnu.so | grep GL
+            libEGL-48f73270.so.1.1.0 => .../skia_python.libs/libEGL-48f73270.so.1.1.0 (0x00007fd03fd31000)
+            libGL.so.1 => /lib64/libGL.so.1 (0x00007fd03fc71000)
+            libGLdispatch-64b28464.so.0.0.0 => .../skia_python.libs/libGLdispatch-64b28464.so.0.0.0 (0x00007fd03fa69000)
+            libGLX.so.0 => /lib64/libGLX.so.0 (0x00007fd03f369000)
+            libGLdispatch.so.0 => /lib64/libGLdispatch.so.0 (0x00007fd03f189000)
+
+(The duplicate GLdispatch entry is indirect from libEGL)
+
+You need to undo the effect of "auditwheel repair ..." with something like this:
+
+    patchelf --replace-needed libEGL-e42ac8e3.so.1.1.0  libEGL.so.1.1.0  ~/.local/lib/python3.13/site-packages/skia.*.so
+
+Then check that libEGL.so (and libGLdispatch.so) is looked up from system locations,
+and not from python3.13/site-packages/skia_python.libs/ again:
+
+    $ ldd ~/.local/lib/python3.13/site-packages/skia.cpython-313-x86_64-linux-gnu.so | grep GL
+            libEGL.so.1.1.0 => /lib64/libEGL.so.1.1.0 (0x00007f8d1ea39000)
+            libGL.so.1 => /lib64/libGL.so.1 (0x00007f8d1e9c1000)
+            libGLdispatch.so.0 => /lib64/libGLdispatch.so.0 (0x00007f8d1ca69000)
+            libGLX.so.0 => /lib64/libGLX.so.0 (0x00007f8d1c369000)
+
+diff --git a/BUILD.gn b/BUILD.gn
+index 20f308b..ceac00c 100644
+--- a/BUILD.gn
++++ b/BUILD.gn
+@@ -1003,10 +1003,11 @@ optional("gpu") {
+       sources += [ "src/gpu/ganesh/gl/webgl/GrGLMakeNativeInterface_webgl.cpp" ]
+     } else if (is_linux && skia_use_x11) {
+       sources += [
++        "src/gpu/ganesh/gl/egl/GrGLMakeEGLInterface.cpp",
+         "src/gpu/ganesh/gl/glx/GrGLMakeGLXInterface.cpp",
+         "src/gpu/ganesh/gl/glx/GrGLMakeNativeInterface_glx.cpp",
+       ]
+-      libs += [ "GL" ]
++      libs += [ "EGL", "GL" ]
+     } else if (is_mac) {
+       sources += [ "src/gpu/ganesh/gl/mac/GrGLMakeNativeInterface_mac.cpp" ]
+     } else if (is_ios) {

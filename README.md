@@ -19,18 +19,25 @@ Supported platforms: Python 3.8-3.13 (CPython) on
 
 - Linux x86_64, aarch64
 - macOS x86_64, arm64
-- Windows x86_64
+- Windows x86_64, arm64 ; arm64 for the windows 11 and Python 3.11-3.13 combination only.
 
-For Linux platforms, there must be OpenGL and fontconfig installed:
+**IMPORTANT:** Starting v138rc1, `libEGL.so` (from mesa-libEGL, libglvnd, or your graphic
+card's vendor e.g. NVidia) is required to be present on Linux hosts. This is associated
+with the general change on Linux from X11 to Wayland, and from GTK3 to GTK4. Firefox started
+to use it in 2021 (instead of the older `libGLX.so`), so it is likely newer Linux systems
+already have it, but please check. skia-python v138.rc1+ supports hardware acceleration
+via both GLX (still the default under X11) and EGL (newly added).
+
+For Linux platforms, there must be OpenGL, libEGL and fontconfig installed:
 
 ```bash
-apt-get install libfontconfig1 libgl1-mesa-glx libgl1-mesa-dri
+apt-get install libfontconfig1 libgl1-mesa-glx libgl1-mesa-egl libegl1 libglvnd0 libgl1-mesa-dri
 ```
 
 Or:
 
 ```bash
-yum install fontconfig mesa-libGL mesa-dri-drivers
+yum install fontconfig mesa-libGL mesa-libEGL libglvnd-egl mesa-dri-drivers
 ```
 
 For unsupported environment, check the [build instruction](https://kyamagu.github.io/skia-python/install.html).
@@ -59,7 +66,8 @@ https://kyamagu.github.io/skia-python
   [README.m126](relnotes/README.m126.md), [README.m127](relnotes/README.m127.md), [README.m128](relnotes/README.m128.md),
   [README.m129](relnotes/README.m129.md), [README.m130](relnotes/README.m130.md), [README.m131](relnotes/README.m131.md),
   [README.m132](relnotes/README.m132.md), [README.m133](relnotes/README.m133.md), [README.m134](relnotes/README.m134.md),
-  [README.m135](relnotes/README.m135.md), [README.m136](relnotes/README.m136.md).
+  [README.m135](relnotes/README.m135.md), [README.m136](relnotes/README.m136.md), [README.m137](relnotes/README.m137.md),
+  [README.m138](relnotes/README.m138.md).
 
 ## Contributing
 
