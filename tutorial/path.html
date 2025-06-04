@@ -6,7 +6,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Path Overview &mdash; skia-python 87.9rc1 documentation</title>
+  <title>Path Overview &mdash; skia-python 138.0rc1 documentation</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
       <link rel="stylesheet" type="text/css" href="../_static/css/theme.css" />
 
@@ -83,20 +83,20 @@
              
   <section id="path-overview">
 <h1>Path Overview<a class="headerlink" href="#path-overview" title="Permalink to this heading"></a></h1>
-<p><a class="reference internal" href="../reference/skia.Path.html#skia.Path" title="skia.Path"><code class="xref py py-class docutils literal notranslate"><span class="pre">Path</span></code></a> contains Lines and Curves which can be stroked or filled.
-Contour is composed of a series of connected Lines and Curves. <a class="reference internal" href="../reference/skia.Path.html#skia.Path" title="skia.Path"><code class="xref py py-class docutils literal notranslate"><span class="pre">Path</span></code></a>
+<p><code class="xref py py-class docutils literal notranslate"><span class="pre">Path</span></code> contains Lines and Curves which can be stroked or filled.
+Contour is composed of a series of connected Lines and Curves. <code class="xref py py-class docutils literal notranslate"><span class="pre">Path</span></code>
 may contain zero, one, or more Contours. Each Line and Curve are described by
-<a class="reference internal" href="../reference/skia.Path.Verb.html#skia.Path.Verb" title="skia.Path.Verb"><code class="xref py py-class docutils literal notranslate"><span class="pre">Verb</span></code></a>, list of <a class="reference internal" href="../reference/skia.Point.html#skia.Point" title="skia.Point"><code class="xref py py-class docutils literal notranslate"><span class="pre">Point</span></code></a>, and optional
+<code class="xref py py-class docutils literal notranslate"><span class="pre">Verb</span></code>, list of <code class="xref py py-class docutils literal notranslate"><span class="pre">Point</span></code>, and optional
 Path_Conic_Weight.</p>
-<p>Each pair of connected Lines and Curves share common <a class="reference internal" href="../reference/skia.Point.html#skia.Point" title="skia.Point"><code class="xref py py-class docutils literal notranslate"><span class="pre">Point</span></code></a>; for
-instance, <a class="reference internal" href="../reference/skia.Path.html#skia.Path" title="skia.Path"><code class="xref py py-class docutils literal notranslate"><span class="pre">Path</span></code></a> containing two connected Lines are described the
+<p>Each pair of connected Lines and Curves share common <code class="xref py py-class docutils literal notranslate"><span class="pre">Point</span></code>; for
+instance, <code class="xref py py-class docutils literal notranslate"><span class="pre">Path</span></code> containing two connected Lines are described the
 Path_Verb sequence: <code class="xref py py-attr docutils literal notranslate"><span class="pre">Path.kMove</span></code>, <code class="xref py py-attr docutils literal notranslate"><span class="pre">Path.kLine</span></code>,
 <code class="xref py py-attr docutils literal notranslate"><span class="pre">Path.kLine</span></code>; and a Point sequence with three entries, sharing the
 middle entry as the end of the first Line and the start of the second Line.</p>
-<p><a class="reference internal" href="../reference/skia.Path.html#skia.Path" title="skia.Path"><code class="xref py py-class docutils literal notranslate"><span class="pre">Path</span></code></a> components Arc, Rect, Round_Rect, Circle, and Oval are
+<p><code class="xref py py-class docutils literal notranslate"><span class="pre">Path</span></code> components Arc, Rect, Round_Rect, Circle, and Oval are
 composed of Lines and Curves with as many Verbs and Points required for an exact
-description. Once added to <a class="reference internal" href="../reference/skia.Path.html#skia.Path" title="skia.Path"><code class="xref py py-class docutils literal notranslate"><span class="pre">Path</span></code></a>, these components may lose their
-identity; although <a class="reference internal" href="../reference/skia.Path.html#skia.Path" title="skia.Path"><code class="xref py py-class docutils literal notranslate"><span class="pre">Path</span></code></a> can be inspected to determine if it
+description. Once added to <code class="xref py py-class docutils literal notranslate"><span class="pre">Path</span></code>, these components may lose their
+identity; although <code class="xref py py-class docutils literal notranslate"><span class="pre">Path</span></code> can be inspected to determine if it
 describes a single Rect, Oval, Round_Rect, and so on.</p>
 <p><cite>Example</cite>:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">paint</span> <span class="o">=</span> <span class="n">skia</span><span class="o">.</span><span class="n">Paint</span><span class="p">(</span><span class="n">AntiAlias</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
@@ -141,14 +141,14 @@ outside Lines and Curves is filled:</p>
 </div>
 <p>Path is drawn filled, then stroked, then stroked and filled.</p>
 <img alt="Path 2" src="../_images/path-2.png" />
-<p><a class="reference internal" href="../reference/skia.Path.html#skia.Path" title="skia.Path"><code class="xref py py-class docutils literal notranslate"><span class="pre">Path</span></code></a> contents are never shared. Copying <a class="reference internal" href="../reference/skia.Path.html#skia.Path" title="skia.Path"><code class="xref py py-class docutils literal notranslate"><span class="pre">Path</span></code></a> by value
-effectively creates a new <a class="reference internal" href="../reference/skia.Path.html#skia.Path" title="skia.Path"><code class="xref py py-class docutils literal notranslate"><span class="pre">Path</span></code></a> independent of the original.
+<p><code class="xref py py-class docutils literal notranslate"><span class="pre">Path</span></code> contents are never shared. Copying <code class="xref py py-class docutils literal notranslate"><span class="pre">Path</span></code> by value
+effectively creates a new <code class="xref py py-class docutils literal notranslate"><span class="pre">Path</span></code> independent of the original.
 Internally, the copy does not duplicate its contents until it is edited, to
 reduce memory use and improve performance.</p>
 <hr class="docutils" />
 <p>Contour contains one or more Verbs, and as many Points as are required to
-satisfy Path_Verb_Array. First Path_Verb in <a class="reference internal" href="../reference/skia.Path.html#skia.Path" title="skia.Path"><code class="xref py py-class docutils literal notranslate"><span class="pre">Path</span></code></a> is always
-<a class="reference internal" href="../reference/skia.PathVerb.html#skia.PathVerb.kMove" title="skia.PathVerb.kMove"><code class="xref py py-attr docutils literal notranslate"><span class="pre">PathVerb.kMove</span></code></a>; each <a class="reference internal" href="../reference/skia.PathVerb.html#skia.PathVerb.kMove" title="skia.PathVerb.kMove"><code class="xref py py-attr docutils literal notranslate"><span class="pre">PathVerb.kMove</span></code></a> that follows starts a
+satisfy Path_Verb_Array. First Path_Verb in <code class="xref py py-class docutils literal notranslate"><span class="pre">Path</span></code> is always
+<code class="xref py py-attr docutils literal notranslate"><span class="pre">PathVerb.kMove</span></code>; each <code class="xref py py-attr docutils literal notranslate"><span class="pre">PathVerb.kMove</span></code> that follows starts a
 new Contour.</p>
 <p><cite>Example</cite>:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">font</span> <span class="o">=</span> <span class="n">skia</span><span class="o">.</span><span class="n">Font</span><span class="p">()</span>
@@ -167,15 +167,15 @@ new Contour.</p>
 <span class="n">canvas</span><span class="o">.</span><span class="n">drawPath</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">paint</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>Each <a class="reference internal" href="../reference/skia.Path.html#skia.Path.moveTo" title="skia.Path.moveTo"><code class="xref py py-meth docutils literal notranslate"><span class="pre">moveTo()</span></code></a> starts a new Contour, and content after
-<a class="reference internal" href="../reference/skia.Path.html#skia.Path.close" title="skia.Path.close"><code class="xref py py-meth docutils literal notranslate"><span class="pre">close()</span></code></a> also starts a new Contour. Since <a class="reference internal" href="../reference/skia.Path.html#skia.Path.conicTo" title="skia.Path.conicTo"><code class="xref py py-meth docutils literal notranslate"><span class="pre">conicTo()</span></code></a>
-is not preceded by <a class="reference internal" href="../reference/skia.Path.html#skia.Path.moveTo" title="skia.Path.moveTo"><code class="xref py py-meth docutils literal notranslate"><span class="pre">moveTo()</span></code></a>, the first Point of the third Contour
+<p>Each <code class="xref py py-meth docutils literal notranslate"><span class="pre">moveTo()</span></code> starts a new Contour, and content after
+<code class="xref py py-meth docutils literal notranslate"><span class="pre">close()</span></code> also starts a new Contour. Since <code class="xref py py-meth docutils literal notranslate"><span class="pre">conicTo()</span></code>
+is not preceded by <code class="xref py py-meth docutils literal notranslate"><span class="pre">moveTo()</span></code>, the first Point of the third Contour
 starts at the last Point of the second Contour.</p>
 <img alt="Path 3" src="../_images/path-3.png" />
-<p>If final <a class="reference internal" href="../reference/skia.PathVerb.html#skia.PathVerb" title="skia.PathVerb"><code class="xref py py-class docutils literal notranslate"><span class="pre">PathVerb</span></code></a> in Contour is <a class="reference internal" href="../reference/skia.PathVerb.html#skia.PathVerb.kClose" title="skia.PathVerb.kClose"><code class="xref py py-attr docutils literal notranslate"><span class="pre">kClose</span></code></a>, Line
+<p>If final <code class="xref py py-class docutils literal notranslate"><span class="pre">PathVerb</span></code> in Contour is <code class="xref py py-attr docutils literal notranslate"><span class="pre">kClose</span></code>, Line
 connects Path_Last_Point in Contour with first Point. A closed Contour, stroked,
 draws Paint_Stroke_Join at Path_Last_Point and first Point. Without
-<a class="reference internal" href="../reference/skia.PathVerb.html#skia.PathVerb.kClose" title="skia.PathVerb.kClose"><code class="xref py py-attr docutils literal notranslate"><span class="pre">kClose</span></code></a> as final Verb, Path_Last_Point and first Point are
+<code class="xref py py-attr docutils literal notranslate"><span class="pre">kClose</span></code> as final Verb, Path_Last_Point and first Point are
 not connected; Contour remains open. An open Contour, stroked, draws
 Paint_Stroke_Cap at Path_Last_Point and first Point.</p>
 <p><cite>Example</cite>:</p>

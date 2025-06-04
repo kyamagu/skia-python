@@ -6,7 +6,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Paint Overview &mdash; skia-python 87.9rc1 documentation</title>
+  <title>Paint Overview &mdash; skia-python 138.0rc1 documentation</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
       <link rel="stylesheet" type="text/css" href="../_static/css/theme.css" />
 
@@ -125,7 +125,7 @@
 <p>Anytime you draw something in Skia, and want to specify what color it is, or how
 it blends with the background, or what style or font to draw it in, you specify
 those attributes in a paint.</p>
-<p>Unlike <a class="reference internal" href="../reference/skia.Canvas.html#skia.Canvas" title="skia.Canvas"><code class="xref py py-class docutils literal notranslate"><span class="pre">Canvas</span></code></a>, paints do not maintain an internal stack of state
+<p>Unlike <code class="xref py py-class docutils literal notranslate"><span class="pre">Canvas</span></code>, paints do not maintain an internal stack of state
 (i.e. there is no save/restore on a paint). However, paints are relatively
 light-weight, so the client may create and maintain any number of paint objects,
 each set up for a particular use. Factoring all of these color and stylistic
@@ -187,7 +187,7 @@ effects. These are subclasses of different aspects of the drawing pipeline, that
 when referenced by a paint (each of them is reference-counted), are called to
 override some part of the drawing pipeline.</p>
 <p>For example, to draw using a gradient instead of a single color, assign a
-<a class="reference internal" href="../reference/skia.Shader.html#skia.Shader" title="skia.Shader"><code class="xref py py-class docutils literal notranslate"><span class="pre">Shader</span></code></a> to the paint.</p>
+<code class="xref py py-class docutils literal notranslate"><span class="pre">Shader</span></code> to the paint.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">paint</span> <span class="o">=</span> <span class="n">skia</span><span class="o">.</span><span class="n">Paint</span><span class="p">(</span>
     <span class="n">Shader</span><span class="o">=</span><span class="n">skia</span><span class="o">.</span><span class="n">GradientShader</span><span class="o">.</span><span class="n">MakeLinear</span><span class="p">(</span>
         <span class="n">points</span><span class="o">=</span><span class="p">[(</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">),</span> <span class="p">(</span><span class="mf">256.0</span><span class="p">,</span> <span class="mf">256.0</span><span class="p">)],</span>
@@ -197,7 +197,7 @@ override some part of the drawing pipeline.</p>
 </div>
 <img alt="Paint 3" src="../_images/paint-3.png" />
 <p>Now, anything drawn with that paint will be drawn with the gradient specified in
-the call to <a class="reference internal" href="../reference/skia.GradientShader.html#skia.GradientShader.MakeLinear" title="skia.GradientShader.MakeLinear"><code class="xref py py-meth docutils literal notranslate"><span class="pre">MakeLinear()</span></code></a>.</p>
+the call to <code class="xref py py-meth docutils literal notranslate"><span class="pre">MakeLinear()</span></code>.</p>
 <p>There are 6 types of effects that can be assigned to a paint:</p>
 <ul class="simple">
 <li><p><a class="reference internal" href="#patheffect"><span class="std std-ref">PathEffect</span></a> - modifications to the geometry (path) before it generates an alpha mask (e.g. dashing)</p></li>
@@ -390,7 +390,7 @@ gradient.</p>
 </section>
 <section id="imagefilter">
 <span id="id3"></span><h2>ImageFilter<a class="headerlink" href="#imagefilter" title="Permalink to this heading"></a></h2>
-<p>See <a class="reference internal" href="../reference/skia.ImageFilters.html#skia.ImageFilters" title="skia.ImageFilters"><code class="xref py py-class docutils literal notranslate"><span class="pre">ImageFilters</span></code></a> for a list of available filters.</p>
+<p>See <code class="xref py py-class docutils literal notranslate"><span class="pre">ImageFilters</span></code> for a list of available filters.</p>
 <section id="drop-shadow">
 <h3>Drop Shadow<a class="headerlink" href="#drop-shadow" title="Permalink to this heading"></a></h3>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">canvas</span><span class="o">.</span><span class="n">drawColor</span><span class="p">(</span><span class="n">skia</span><span class="o">.</span><span class="n">ColorWHITE</span><span class="p">)</span>
