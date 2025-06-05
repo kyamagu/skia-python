@@ -153,7 +153,7 @@ jobs:
       - uses: actions/setup-python@v5
         name: Install Python
         with:
-          python-version: '3.8'
+          python-version: '3.11'
 
       - uses: actions/download-artifact@v4
         with:
@@ -162,6 +162,8 @@ jobs:
 
       - name: Build docs
         run: |
+          # installing libegl1 will also install libegl-mesa0
+          sudo apt-get -y install libegl1
           python -m pip install -f dist skia-python
           python -m pip install sphinx==6.2.1 sphinx-rtd-theme
           python setup.py build_sphinx
