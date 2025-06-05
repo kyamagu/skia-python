@@ -28,7 +28,11 @@ to use it in 2021 (instead of the older `libGLX.so`), so it is likely newer Linu
 already have it, but please check. skia-python v138.rc1+ supports hardware acceleration
 via both GLX (still the default under X11) and EGL (newly added).
 
-For Linux platforms, there must be OpenGL, libEGL and fontconfig installed:
+For Linux platforms, there must be OpenGL, libEGL and fontconfig installed.
+Current Ubuntu needs `libegl1` (and `libegl-mesa0`); on older Ubuntu the package names are
+`libglvnd0` and `libgl1-mesa-egl`:
+
+
 
 ```bash
 apt-get install libfontconfig1 libgl1-mesa-glx libgl1-mesa-egl libegl1 libglvnd0 libgl1-mesa-dri
