@@ -104,14 +104,14 @@ jobs:
       matrix:
         os: [ubuntu-22.04, windows-2022, macos-13]
         arch: [auto64]
-        cp: ["cp3{8,9}"]
+        cp: ["cp39"]
         include:
           - os: macos-13
             arch: arm64
-            cp: "cp3{8,9}"
+            cp: "cp39"
           - os: ubuntu-22.04-arm
             arch: aarch64
-            cp: "cp3{8,9}"
+            cp: "cp39"
 
     steps:
       - uses: actions/checkout@v4
