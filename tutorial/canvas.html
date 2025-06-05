@@ -91,7 +91,7 @@
              
   <section id="canvas-creation">
 <h1>Canvas Creation<a class="headerlink" href="#canvas-creation" title="Permalink to this heading"></a></h1>
-<p>Skia has multiple backends which receive <code class="xref py py-class docutils literal notranslate"><span class="pre">Canvas</span></code> drawing
+<p>Skia has multiple backends which receive <a class="reference internal" href="../reference/skia.Canvas.html#skia.Canvas" title="skia.Canvas"><code class="xref py py-class docutils literal notranslate"><span class="pre">Canvas</span></code></a> drawing
 commands, including:</p>
 <ul class="simple">
 <li><p><a class="reference internal" href="#raster">Raster</a> - CPU-only.</p></li>
@@ -100,14 +100,14 @@ commands, including:</p>
 <li><p><a class="reference internal" href="#picture">Picture</a> - Skia’s display list format.</p></li>
 <li><p><a class="reference internal" href="#svg">SVG</a> - Experimental SVG backend.</p></li>
 </ul>
-<p>Each backend has a unique way of creating a <code class="xref py py-class docutils literal notranslate"><span class="pre">Canvas</span></code>. This page
+<p>Each backend has a unique way of creating a <a class="reference internal" href="../reference/skia.Canvas.html#skia.Canvas" title="skia.Canvas"><code class="xref py py-class docutils literal notranslate"><span class="pre">Canvas</span></code></a>. This page
 gives an example for each.</p>
 <section id="raster">
 <h2>Raster<a class="headerlink" href="#raster" title="Permalink to this heading"></a></h2>
 <p>The raster backend draws to a block of memory. This memory can be managed by
 Skia or by the client.</p>
 <p>The recommended way of creating a canvas for the Raster and Ganesh backends is
-to use a <code class="xref py py-class docutils literal notranslate"><span class="pre">Surface</span></code>, which is an object that manages the memory
+to use a <a class="reference internal" href="../reference/skia.Surface.html#skia.Surface" title="skia.Surface"><code class="xref py py-class docutils literal notranslate"><span class="pre">Surface</span></code></a>, which is an object that manages the memory
 into which the canvas commands are drawn.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">skia</span>
 
@@ -141,11 +141,11 @@ into numpy array.</p>
 </section>
 <section id="gpu">
 <h2>GPU<a class="headerlink" href="#gpu" title="Permalink to this heading"></a></h2>
-<p>GPU Surfaces must have a <code class="xref py py-class docutils literal notranslate"><span class="pre">GrDirectContext</span></code> object which manages the
+<p>GPU Surfaces must have a <a class="reference internal" href="../reference/skia.GrDirectContext.html#skia.GrDirectContext" title="skia.GrDirectContext"><code class="xref py py-class docutils literal notranslate"><span class="pre">GrDirectContext</span></code></a> object which manages the
 GPU context, and related caches for textures and fonts. GrDirectContexts are matched
 one to one with OpenGL contexts or Vulkan devices. That is, all
-<code class="xref py py-class docutils literal notranslate"><span class="pre">Surface</span></code> that will be rendered to using the same OpenGL context
-or Vulkan device should share a <code class="xref py py-class docutils literal notranslate"><span class="pre">GrDirectContext</span></code>. Skia does not
+<a class="reference internal" href="../reference/skia.Surface.html#skia.Surface" title="skia.Surface"><code class="xref py py-class docutils literal notranslate"><span class="pre">Surface</span></code></a> that will be rendered to using the same OpenGL context
+or Vulkan device should share a <a class="reference internal" href="../reference/skia.GrDirectContext.html#skia.GrDirectContext" title="skia.GrDirectContext"><code class="xref py py-class docutils literal notranslate"><span class="pre">GrDirectContext</span></code></a>. Skia does not
 create a OpenGL context or Vulkan device for you. In OpenGL mode it also assumes
 that the correct OpenGL context has been made current to the current thread when
 Skia calls are made.</p>
@@ -201,10 +201,10 @@ directly to a window on the screen. To do this:</p>
 <ol class="arabic simple">
 <li><p>You have to use GLFW or other similar library to create and manage
 the window.</p></li>
-<li><p><code class="xref py py-class docutils literal notranslate"><span class="pre">GrBackendRenderTarget</span></code> has to be created with a surface attached
+<li><p><a class="reference internal" href="../reference/skia.GrBackendRenderTarget.html#skia.GrBackendRenderTarget" title="skia.GrBackendRenderTarget"><code class="xref py py-class docutils literal notranslate"><span class="pre">GrBackendRenderTarget</span></code></a> has to be created with a surface attached
 to it.</p></li>
 <li><p>The rendered image has to be flushed to the screen by calling
-<code class="xref py py-meth docutils literal notranslate"><span class="pre">Surface.flushAndSubmit()</span></code>.</p></li>
+<a class="reference internal" href="../reference/skia.Surface.html#skia.Surface.flushAndSubmit" title="skia.Surface.flushAndSubmit"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Surface.flushAndSubmit()</span></code></a>.</p></li>
 </ol>
 <p>Here’s a complete example:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">contextlib</span><span class="o">,</span><span class="w"> </span><span class="nn">glfw</span><span class="o">,</span><span class="w"> </span><span class="nn">skia</span>
@@ -262,8 +262,8 @@ to it.</p></li>
 </section>
 <section id="pdf">
 <h2>PDF<a class="headerlink" href="#pdf" title="Permalink to this heading"></a></h2>
-<p>The <code class="xref py py-class docutils literal notranslate"><span class="pre">PDF</span></code> backend uses <code class="xref py py-class docutils literal notranslate"><span class="pre">Document</span></code> instead of
-<code class="xref py py-class docutils literal notranslate"><span class="pre">Surface</span></code>, since a document must include multiple pages. The
+<p>The <a class="reference internal" href="../reference/skia.PDF.html#skia.PDF" title="skia.PDF"><code class="xref py py-class docutils literal notranslate"><span class="pre">PDF</span></code></a> backend uses <a class="reference internal" href="../reference/skia.Document.html#skia.Document" title="skia.Document"><code class="xref py py-class docutils literal notranslate"><span class="pre">Document</span></code></a> instead of
+<a class="reference internal" href="../reference/skia.Surface.html#skia.Surface" title="skia.Surface"><code class="xref py py-class docutils literal notranslate"><span class="pre">Surface</span></code></a>, since a document must include multiple pages. The
 following demonstrates how to write a single-page PDF document to a file:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">skia</span>
 
@@ -277,8 +277,8 @@ following demonstrates how to write a single-page PDF document to a file:</p>
 </section>
 <section id="picture">
 <h2>Picture<a class="headerlink" href="#picture" title="Permalink to this heading"></a></h2>
-<p>The <code class="xref py py-class docutils literal notranslate"><span class="pre">Picture</span></code> backend uses <code class="xref py py-class docutils literal notranslate"><span class="pre">PictureRecorder</span></code>
-instead of <code class="xref py py-class docutils literal notranslate"><span class="pre">Surface</span></code>.</p>
+<p>The <a class="reference internal" href="../reference/skia.Picture.html#skia.Picture" title="skia.Picture"><code class="xref py py-class docutils literal notranslate"><span class="pre">Picture</span></code></a> backend uses <a class="reference internal" href="../reference/skia.PictureRecorder.html#skia.PictureRecorder" title="skia.PictureRecorder"><code class="xref py py-class docutils literal notranslate"><span class="pre">PictureRecorder</span></code></a>
+instead of <a class="reference internal" href="../reference/skia.Surface.html#skia.Surface" title="skia.Surface"><code class="xref py py-class docutils literal notranslate"><span class="pre">Surface</span></code></a>.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">skia</span>
 
 <span class="n">width</span><span class="p">,</span> <span class="n">height</span> <span class="o">=</span> <span class="mi">200</span><span class="p">,</span> <span class="mi">200</span>
@@ -296,7 +296,7 @@ instead of <code class="xref py py-class docutils literal notranslate"><span cla
 </section>
 <section id="svg">
 <h2>SVG<a class="headerlink" href="#svg" title="Permalink to this heading"></a></h2>
-<p>The (still experimental) <code class="xref py py-class docutils literal notranslate"><span class="pre">SVGCanvas</span></code> writes into an SVG document.</p>
+<p>The (still experimental) <a class="reference internal" href="../reference/skia.SVGCanvas.html#skia.SVGCanvas" title="skia.SVGCanvas"><code class="xref py py-class docutils literal notranslate"><span class="pre">SVGCanvas</span></code></a> writes into an SVG document.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">skia</span>
 
 <span class="n">width</span><span class="p">,</span> <span class="n">height</span> <span class="o">=</span> <span class="mi">200</span><span class="p">,</span> <span class="mi">200</span>

@@ -1,0 +1,1110 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en">
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Font &mdash; skia-python 138.0rc1 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css" />
+
+  
+      <script src="../_static/jquery.js"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+      <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+      <script src="../_static/doctools.js"></script>
+      <script src="../_static/sphinx_highlight.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Font.Edging" href="skia.Font.Edging.html" />
+    <link rel="prev" title="Flattanable.Type" href="skia.Flattanable.Type.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            skia-python
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../install.html">Install</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tutorial/index.html">Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../development.html">Development</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../reference.html">Reference</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="skia.html">skia</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="skia.AlphaType.html">AlphaType</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.ApplyPerspectiveClip.html">ApplyPerspectiveClip</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.AutoCanvasRestore.html">AutoCanvasRestore</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.BBHFactory.html">BBHFactory</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.BBoxHierarchy.html">BBoxHierarchy</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.Bitmap.html">Bitmap</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.BlendMode.html">BlendMode</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.BlendModeCoeff.html">BlendModeCoeff</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.BlurMaskFilter.html">BlurMaskFilter</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.BlurStyle.html">BlurStyle</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.Budgeted.html">Budgeted</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.Canvas.html">Canvas</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.ClipOp.html">ClipOp</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.Codec.html">Codec</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.Color4f.html">Color4f</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.ColorChannel.html">ColorChannel</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.ColorChannelFlag.html">ColorChannelFlag</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.ColorFilter.html">ColorFilter</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.ColorFilters.html">ColorFilters</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.ColorInfo.html">ColorInfo</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.ColorMatrix.html">ColorMatrix</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.ColorMatrixFilter.html">ColorMatrixFilter</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.ColorSpace.html">ColorSpace</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.ColorType.html">ColorType</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.ConvergeMode.html">ConvergeMode</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.CornerPathEffect.html">CornerPathEffect</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.CubicResampler.html">CubicResampler</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.DashPathEffect.html">DashPathEffect</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.Data.html">Data</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.DiscretePathEffect.html">DiscretePathEffect</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.Document.html">Document</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.Drawable.html">Drawable</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.DynamicMemoryWStream.html">DynamicMemoryWStream</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.EncodedImageFormat.html">EncodedImageFormat</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.EncodedOrigin.html">EncodedOrigin</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.FILEStream.html">FILEStream</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.FILEWStream.html">FILEWStream</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.FilterMode.html">FilterMode</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.Flattanable.html">Flattanable</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Font</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#skia.Font"><code class="docutils literal notranslate"><span class="pre">Font</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="skia.Font.Edging.html">Font.Edging</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#methods">Methods</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#attributes">Attributes</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="skia.FontArguments.html">FontArguments</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.FontHinting.html">FontHinting</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.FontMetrics.html">FontMetrics</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.FontMgr.html">FontMgr</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.FontParameters.html">FontParameters</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.FontStyle.html">FontStyle</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.FontStyleSet.html">FontStyleSet</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.GrBackendApi.html">GrBackendApi</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.GrBackendFormat.html">GrBackendFormat</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.GrBackendRenderTarget.html">GrBackendRenderTarget</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.GrBackendRenderTargets.html">GrBackendRenderTargets</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.GrBackendSemaphore.html">GrBackendSemaphore</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.GrBackendTexture.html">GrBackendTexture</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.GrColorType.html">GrColorType</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.GrContext.html">GrContext</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.GrContextOptions.html">GrContextOptions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.GrContext_Base.html">GrContext_Base</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.GrDirectContext.html">GrDirectContext</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.GrDirectContexts.html">GrDirectContexts</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.GrFlushInfo.html">GrFlushInfo</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.GrGLBackendState.html">GrGLBackendState</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.GrGLFormat.html">GrGLFormat</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.GrGLFramebufferInfo.html">GrGLFramebufferInfo</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.GrGLInterface.html">GrGLInterface</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.GrGLTextureInfo.html">GrGLTextureInfo</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.GrImageContext.html">GrImageContext</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.GrMipmapped.html">GrMipmapped</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.GrMockOptions.html">GrMockOptions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.GrMockRenderTargetInfo.html">GrMockRenderTargetInfo</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.GrMockTextureInfo.html">GrMockTextureInfo</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.GrProtected.html">GrProtected</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.GrPurgeResourceOptions.html">GrPurgeResourceOptions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.GrRecordingContext.html">GrRecordingContext</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.GrRenderable.html">GrRenderable</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.GrSemaphoresSubmitted.html">GrSemaphoresSubmitted</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.GrSurfaceOrigin.html">GrSurfaceOrigin</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.GrSyncCpu.html">GrSyncCpu</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.GrTextureType.html">GrTextureType</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.GrVkAlloc.html">GrVkAlloc</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.GrVkBackendContext.html">GrVkBackendContext</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.GrVkDrawableInfo.html">GrVkDrawableInfo</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.GrVkImageInfo.html">GrVkImageInfo</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.GrVkYcbcrConversionInfo.html">GrVkYcbcrConversionInfo</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.GradientShader.html">GradientShader</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.HighContrastConfig.html">HighContrastConfig</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.HighContrastFilter.html">HighContrastFilter</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.IPoint.html">IPoint</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.IRect.html">IRect</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.ISize.html">ISize</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.Image.html">Image</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.ImageFilter.html">ImageFilter</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.ImageFilters.html">ImageFilters</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.ImageInfo.html">ImageInfo</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.Line2DPathEffect.html">Line2DPathEffect</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.LumaColorFilter.html">LumaColorFilter</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.M44.html">M44</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.MaskFilter.html">MaskFilter</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.Matrix.html">Matrix</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.MemoryStream.html">MemoryStream</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.MipmapBuilder.html">MipmapBuilder</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.MipmapMode.html">MipmapMode</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.NullWStream.html">NullWStream</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.OpBuilder.html">OpBuilder</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.OverdrawColorFilter.html">OverdrawColorFilter</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.PDF.html">PDF</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.Paint.html">Paint</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.Path.html">Path</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.Path1DPathEffect.html">Path1DPathEffect</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.Path2DPathEffect.html">Path2DPathEffect</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.PathBuilder.html">PathBuilder</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.PathDirection.html">PathDirection</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.PathEffect.html">PathEffect</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.PathFillType.html">PathFillType</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.PathMeasure.html">PathMeasure</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.PathOp.html">PathOp</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.PathSegmentMask.html">PathSegmentMask</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.PathVerb.html">PathVerb</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.PerlinNoiseShader.html">PerlinNoiseShader</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.Picture.html">Picture</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.PictureRecorder.html">PictureRecorder</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.PixelGeometry.html">PixelGeometry</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.PixelRef.html">PixelRef</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.Pixmap.html">Pixmap</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.Point.html">Point</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.Point3.html">Point3</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.RRect.html">RRect</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.RSXform.html">RSXform</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.RTreeFactory.html">RTreeFactory</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.Rect.html">Rect</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.RefCnt.html">RefCnt</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.RefCntBase.html">RefCntBase</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.Region.html">Region</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.RuntimeBlendBuilder.html">RuntimeBlendBuilder</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.RuntimeColorFilterBuilder.html">RuntimeColorFilterBuilder</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.RuntimeEffect.html">RuntimeEffect</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.RuntimeEffectBuilder.html">RuntimeEffectBuilder</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.RuntimeEffectBuilderChild.html">RuntimeEffectBuilderChild</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.RuntimeEffectBuilderUniform.html">RuntimeEffectBuilderUniform</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.RuntimeEffectChild.html">RuntimeEffectChild</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.RuntimeEffectChildPtr.html">RuntimeEffectChildPtr</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.RuntimeEffectResult.html">RuntimeEffectResult</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.RuntimeEffectUniform.html">RuntimeEffectUniform</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.RuntimeShaderBuilder.html">RuntimeShaderBuilder</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.SVGCanvas.html">SVGCanvas</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.SVGDOM.html">SVGDOM</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.SamplingOptions.html">SamplingOptions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.Shader.html">Shader</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.ShaderMaskFilter.html">ShaderMaskFilter</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.Shaders.html">Shaders</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.Size.html">Size</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.SpanRuntimeEffectChild.html">SpanRuntimeEffectChild</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.SpanRuntimeEffectChildPtr.html">SpanRuntimeEffectChildPtr</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.SpanRuntimeEffectUniform.html">SpanRuntimeEffectUniform</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.Stream.html">Stream</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.StreamAsset.html">StreamAsset</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.StreamMemory.html">StreamMemory</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.StreamRewindable.html">StreamRewindable</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.StreamSeekable.html">StreamSeekable</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.String.html">String</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.StrokeRec.html">StrokeRec</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.Surface.html">Surface</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.SurfaceCharacterization.html">SurfaceCharacterization</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.SurfaceProps.html">SurfaceProps</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.Surfaces.html">Surfaces</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.TableColorFilter.html">TableColorFilter</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.TableMaskFilter.html">TableMaskFilter</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.TextBlob.html">TextBlob</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.TextBlobBuilder.html">TextBlobBuilder</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.TextEncoding.html">TextEncoding</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.TileMode.html">TileMode</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.TrimPathEffect.html">TrimPathEffect</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.Typeface.html">Typeface</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.Unicode.html">Unicode</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.V2.html">V2</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.V3.html">V3</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.V4.html">V4</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.VectorRuntimeEffectChild.html">VectorRuntimeEffectChild</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.VectorRuntimeEffectChildPtr.html">VectorRuntimeEffectChildPtr</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.Vertices.html">Vertices</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.VkFormat.html">VkFormat</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.VkImageLayout.html">VkImageLayout</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.WStream.html">WStream</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.YUVAInfo.html">YUVAInfo</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.YUVAPixmapInfo.html">YUVAPixmapInfo</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.YUVAPixmaps.html">YUVAPixmaps</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.YUVColorSpace.html">YUVColorSpace</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.gpuBackendApi.html">gpuBackendApi</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.textlayout_FontCollection.html">textlayout_FontCollection</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.textlayout_Paragraph.html">textlayout_Paragraph</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.textlayout_ParagraphBuilder.html">textlayout_ParagraphBuilder</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.textlayout_ParagraphStyle.html">textlayout_ParagraphStyle</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.textlayout_StrutStyle.html">textlayout_StrutStyle</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.textlayout_TextAlign.html">textlayout_TextAlign</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.textlayout_TextDecoration.html">textlayout_TextDecoration</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.textlayout_TextDecorationMode.html">textlayout_TextDecorationMode</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.textlayout_TextDecorationStyle.html">textlayout_TextDecorationStyle</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.textlayout_TextStyle.html">textlayout_TextStyle</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.textlayout_TypefaceFontProvider.html">textlayout_TypefaceFontProvider</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.html#functions">Functions</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">skia-python</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../reference.html">Reference</a></li>
+          <li class="breadcrumb-item"><a href="skia.html">skia</a></li>
+      <li class="breadcrumb-item active">Font</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/reference/skia.Font.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="font">
+<h1>Font<a class="headerlink" href="#font" title="Permalink to this heading"></a></h1>
+<dl class="py class">
+<dt class="sig sig-object py" id="skia.Font">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">Font</span></span><a class="headerlink" href="#skia.Font" title="Permalink to this definition"></a></dt>
+<dd><p><a class="reference internal" href="#skia.Font" title="skia.Font"><code class="xref py py-class docutils literal notranslate"><span class="pre">Font</span></code></a> controls options applied when drawing and measuring text.</p>
+<p class="rubric">Classes</p>
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="skia.Font.Edging.html#skia.Font.Edging" title="skia.Font.Edging"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Edging</span></code></a></p></td>
+<td><p>Whether edge pixels draw opaque or with partial transparency.</p></td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Methods</p>
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Font.__init__" title="skia.Font.__init__"><code class="xref py py-obj docutils literal notranslate"><span class="pre">__init__</span></code></a></p></td>
+<td><p>Overloaded function.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.Font.countText" title="skia.Font.countText"><code class="xref py py-obj docutils literal notranslate"><span class="pre">countText</span></code></a></p></td>
+<td><p>Returns number of glyphs represented by text.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Font.dump" title="skia.Font.dump"><code class="xref py py-obj docutils literal notranslate"><span class="pre">dump</span></code></a></p></td>
+<td><p>Dumps fields of the font to SkDebugf.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.Font.getBounds" title="skia.Font.getBounds"><code class="xref py py-obj docutils literal notranslate"><span class="pre">getBounds</span></code></a></p></td>
+<td><p>Retrieves the bounds for each glyph in glyphs.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Font.getEdging" title="skia.Font.getEdging"><code class="xref py py-obj docutils literal notranslate"><span class="pre">getEdging</span></code></a></p></td>
+<td><p>Whether edge pixels draw opaque or with partial transparency.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.Font.getHinting" title="skia.Font.getHinting"><code class="xref py py-obj docutils literal notranslate"><span class="pre">getHinting</span></code></a></p></td>
+<td><p>Returns level of glyph outline adjustment.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Font.getMetrics" title="skia.Font.getMetrics"><code class="xref py py-obj docutils literal notranslate"><span class="pre">getMetrics</span></code></a></p></td>
+<td><p>Returns <a class="reference internal" href="skia.FontMetrics.html#skia.FontMetrics" title="skia.FontMetrics"><code class="xref py py-class docutils literal notranslate"><span class="pre">FontMetrics</span></code></a> associated with <a class="reference internal" href="skia.Typeface.html#skia.Typeface" title="skia.Typeface"><code class="xref py py-class docutils literal notranslate"><span class="pre">Typeface</span></code></a>.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.Font.getPath" title="skia.Font.getPath"><code class="xref py py-obj docutils literal notranslate"><span class="pre">getPath</span></code></a></p></td>
+<td><p>Modifies path to be the outline of the glyph.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Font.getPaths" title="skia.Font.getPaths"><code class="xref py py-obj docutils literal notranslate"><span class="pre">getPaths</span></code></a></p></td>
+<td><p>Returns path corresponding to glyph array.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.Font.getPos" title="skia.Font.getPos"><code class="xref py py-obj docutils literal notranslate"><span class="pre">getPos</span></code></a></p></td>
+<td><p>Retrieves the positions for each glyph, beginning at the specified origin.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Font.getScaleX" title="skia.Font.getScaleX"><code class="xref py py-obj docutils literal notranslate"><span class="pre">getScaleX</span></code></a></p></td>
+<td><p>Returns text scale on x-axis.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.Font.getSize" title="skia.Font.getSize"><code class="xref py py-obj docutils literal notranslate"><span class="pre">getSize</span></code></a></p></td>
+<td><p>Returns text size in points.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Font.getSkewX" title="skia.Font.getSkewX"><code class="xref py py-obj docutils literal notranslate"><span class="pre">getSkewX</span></code></a></p></td>
+<td><p>Returns text skew on x-axis.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.Font.getSpacing" title="skia.Font.getSpacing"><code class="xref py py-obj docutils literal notranslate"><span class="pre">getSpacing</span></code></a></p></td>
+<td><p>Returns the recommended spacing between lines: the sum of metrics descent, ascent, and leading.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Font.getTypeface" title="skia.Font.getTypeface"><code class="xref py py-obj docutils literal notranslate"><span class="pre">getTypeface</span></code></a></p></td>
+<td><p>Returns <a class="reference internal" href="skia.Typeface.html#skia.Typeface" title="skia.Typeface"><code class="xref py py-class docutils literal notranslate"><span class="pre">Typeface</span></code></a> if set, or nullptr.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.Font.getWidths" title="skia.Font.getWidths"><code class="xref py py-obj docutils literal notranslate"><span class="pre">getWidths</span></code></a></p></td>
+<td><p>Retrieves the advance and bounds for each glyph in glyphs.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Font.getWidthsBounds" title="skia.Font.getWidthsBounds"><code class="xref py py-obj docutils literal notranslate"><span class="pre">getWidthsBounds</span></code></a></p></td>
+<td><p>Retrieves the advance and bounds for each glyph in glyphs.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.Font.getXPos" title="skia.Font.getXPos"><code class="xref py py-obj docutils literal notranslate"><span class="pre">getXPos</span></code></a></p></td>
+<td><p>Retrieves the x-positions for each glyph, beginning at the specified origin.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Font.isBaselineSnap" title="skia.Font.isBaselineSnap"><code class="xref py py-obj docutils literal notranslate"><span class="pre">isBaselineSnap</span></code></a></p></td>
+<td><p>Returns true if baselines will be snapped to pixel positions when the current transformation matrix is axis aligned.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.Font.isEmbeddedBitmaps" title="skia.Font.isEmbeddedBitmaps"><code class="xref py py-obj docutils literal notranslate"><span class="pre">isEmbeddedBitmaps</span></code></a></p></td>
+<td><p>Returns true if font engine may return glyphs from font bitmaps instead of from outlines.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Font.isEmbolden" title="skia.Font.isEmbolden"><code class="xref py py-obj docutils literal notranslate"><span class="pre">isEmbolden</span></code></a></p></td>
+<td><p>Returns true if bold is approximated by increasing the stroke width when creating glyph bitmaps from outlines.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.Font.isForceAutoHinting" title="skia.Font.isForceAutoHinting"><code class="xref py py-obj docutils literal notranslate"><span class="pre">isForceAutoHinting</span></code></a></p></td>
+<td><p>If true, instructs the font manager to always hint glyphs.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Font.isLinearMetrics" title="skia.Font.isLinearMetrics"><code class="xref py py-obj docutils literal notranslate"><span class="pre">isLinearMetrics</span></code></a></p></td>
+<td><p>Returns true if font and glyph metrics are requested to be linearly scalable.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.Font.isSubpixel" title="skia.Font.isSubpixel"><code class="xref py py-obj docutils literal notranslate"><span class="pre">isSubpixel</span></code></a></p></td>
+<td><p>Returns true if glyphs may be drawn at sub-pixel offsets.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Font.makeWithSize" title="skia.Font.makeWithSize"><code class="xref py py-obj docutils literal notranslate"><span class="pre">makeWithSize</span></code></a></p></td>
+<td><p>Returns a font with the same attributes of this font, but with the specified size.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.Font.measureText" title="skia.Font.measureText"><code class="xref py py-obj docutils literal notranslate"><span class="pre">measureText</span></code></a></p></td>
+<td><p>Returns the advance width of text.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Font.refTypeface" title="skia.Font.refTypeface"><code class="xref py py-obj docutils literal notranslate"><span class="pre">refTypeface</span></code></a></p></td>
+<td><p>Increases <a class="reference internal" href="skia.Typeface.html#skia.Typeface" title="skia.Typeface"><code class="xref py py-class docutils literal notranslate"><span class="pre">Typeface</span></code></a> <a class="reference internal" href="skia.RefCnt.html#skia.RefCnt" title="skia.RefCnt"><code class="xref py py-class docutils literal notranslate"><span class="pre">RefCnt</span></code></a> by one.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.Font.setBaselineSnap" title="skia.Font.setBaselineSnap"><code class="xref py py-obj docutils literal notranslate"><span class="pre">setBaselineSnap</span></code></a></p></td>
+<td><p>Requests that baselines be snapped to pixels when the current transformation matrix is axis aligned.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Font.setEdging" title="skia.Font.setEdging"><code class="xref py py-obj docutils literal notranslate"><span class="pre">setEdging</span></code></a></p></td>
+<td><p>Requests, but does not require, that edge pixels draw opaque or with partial transparency.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.Font.setEmbeddedBitmaps" title="skia.Font.setEmbeddedBitmaps"><code class="xref py py-obj docutils literal notranslate"><span class="pre">setEmbeddedBitmaps</span></code></a></p></td>
+<td><p>Requests, but does not require, to use bitmaps in fonts instead of outlines.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Font.setEmbolden" title="skia.Font.setEmbolden"><code class="xref py py-obj docutils literal notranslate"><span class="pre">setEmbolden</span></code></a></p></td>
+<td><p>Increases stroke width when creating glyph bitmaps to approximate a bold typeface.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.Font.setForceAutoHinting" title="skia.Font.setForceAutoHinting"><code class="xref py py-obj docutils literal notranslate"><span class="pre">setForceAutoHinting</span></code></a></p></td>
+<td><p>Sets whether to always hint glyphs.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Font.setHinting" title="skia.Font.setHinting"><code class="xref py py-obj docutils literal notranslate"><span class="pre">setHinting</span></code></a></p></td>
+<td><p>Sets level of glyph outline adjustment.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.Font.setLinearMetrics" title="skia.Font.setLinearMetrics"><code class="xref py py-obj docutils literal notranslate"><span class="pre">setLinearMetrics</span></code></a></p></td>
+<td><p>Requests, but does not require, linearly scalable font and glyph metrics.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Font.setScaleX" title="skia.Font.setScaleX"><code class="xref py py-obj docutils literal notranslate"><span class="pre">setScaleX</span></code></a></p></td>
+<td><p>Sets text scale on x-axis.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.Font.setSize" title="skia.Font.setSize"><code class="xref py py-obj docutils literal notranslate"><span class="pre">setSize</span></code></a></p></td>
+<td><p>Sets text size in points.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Font.setSkewX" title="skia.Font.setSkewX"><code class="xref py py-obj docutils literal notranslate"><span class="pre">setSkewX</span></code></a></p></td>
+<td><p>Sets text skew on x-axis.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.Font.setSubpixel" title="skia.Font.setSubpixel"><code class="xref py py-obj docutils literal notranslate"><span class="pre">setSubpixel</span></code></a></p></td>
+<td><p>Requests, but does not require, that glyphs respect sub-pixel positioning.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Font.setTypeface" title="skia.Font.setTypeface"><code class="xref py py-obj docutils literal notranslate"><span class="pre">setTypeface</span></code></a></p></td>
+<td><p>Sets <a class="reference internal" href="skia.Typeface.html#skia.Typeface" title="skia.Typeface"><code class="xref py py-class docutils literal notranslate"><span class="pre">Typeface</span></code></a> to typeface, decreasing <a class="reference internal" href="skia.RefCnt.html#skia.RefCnt" title="skia.RefCnt"><code class="xref py py-class docutils literal notranslate"><span class="pre">RefCnt</span></code></a> of the previous <a class="reference internal" href="skia.Typeface.html#skia.Typeface" title="skia.Typeface"><code class="xref py py-class docutils literal notranslate"><span class="pre">Typeface</span></code></a>.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.Font.textToGlyphs" title="skia.Font.textToGlyphs"><code class="xref py py-obj docutils literal notranslate"><span class="pre">textToGlyphs</span></code></a></p></td>
+<td><p>Converts text into glyph indices.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Font.unicharToGlyph" title="skia.Font.unicharToGlyph"><code class="xref py py-obj docutils literal notranslate"><span class="pre">unicharToGlyph</span></code></a></p></td>
+<td><p>Returns glyph index for Unicode character.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.Font.unicharsToGlyphs" title="skia.Font.unicharsToGlyphs"><code class="xref py py-obj docutils literal notranslate"><span class="pre">unicharsToGlyphs</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Attributes</p>
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Font.kAlias" title="skia.Font.kAlias"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kAlias</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.Font.kAntiAlias" title="skia.Font.kAntiAlias"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kAntiAlias</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.Font.kSubpixelAntiAlias" title="skia.Font.kSubpixelAntiAlias"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kSubpixelAntiAlias</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<section id="methods">
+<h2>Methods<a class="headerlink" href="#methods" title="Permalink to this heading"></a></h2>
+<dl class="py method">
+<dt class="sig sig-object py" id="skia.Font.__init__">
+<span class="sig-prename descclassname"><span class="pre">Font.</span></span><span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#skia.Font.__init__" title="Permalink to this definition"></a></dt>
+<dd><p>Overloaded function.</p>
+<ol class="arabic">
+<li><p>__init__(self: skia.Font) -&gt; None</p>
+<blockquote>
+<div><p>Constructs <a class="reference internal" href="#skia.Font" title="skia.Font"><code class="xref py py-class docutils literal notranslate"><span class="pre">Font</span></code></a> with default values.</p>
+</div></blockquote>
+</li>
+<li><p>__init__(self: skia.Font, typeface: object, size: float) -&gt; None</p>
+<blockquote>
+<div><p>Constructs <a class="reference internal" href="#skia.Font" title="skia.Font"><code class="xref py py-class docutils literal notranslate"><span class="pre">Font</span></code></a> with default values with
+<a class="reference internal" href="skia.Typeface.html#skia.Typeface" title="skia.Typeface"><code class="xref py py-class docutils literal notranslate"><span class="pre">Typeface</span></code></a> and size in points.</p>
+<dl class="field-list simple">
+<dt class="field-odd">typeface<span class="colon">:</span></dt>
+<dd class="field-odd"><p>font and style used to draw and measure
+text</p>
+</dd>
+<dt class="field-even">size<span class="colon">:</span></dt>
+<dd class="field-even"><p>typographic height of text</p>
+</dd>
+</dl>
+</div></blockquote>
+</li>
+<li><p>__init__(self: skia.Font, typeface: object) -&gt; None</p>
+<blockquote>
+<div><p>Constructs <a class="reference internal" href="#skia.Font" title="skia.Font"><code class="xref py py-class docutils literal notranslate"><span class="pre">Font</span></code></a> with default values with
+<a class="reference internal" href="skia.Typeface.html#skia.Typeface" title="skia.Typeface"><code class="xref py py-class docutils literal notranslate"><span class="pre">Typeface</span></code></a>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">typeface<span class="colon">:</span></dt>
+<dd class="field-odd"><p>font and style used to draw and measure
+text</p>
+</dd>
+</dl>
+</div></blockquote>
+</li>
+<li><p>__init__(self: skia.Font, typeface: object, size: float, scaleX: float, skewX: float) -&gt; None</p>
+<blockquote>
+<div><p>Constructs <a class="reference internal" href="#skia.Font" title="skia.Font"><code class="xref py py-class docutils literal notranslate"><span class="pre">Font</span></code></a> with default values with
+<a class="reference internal" href="skia.Typeface.html#skia.Typeface" title="skia.Typeface"><code class="xref py py-class docutils literal notranslate"><span class="pre">Typeface</span></code></a> and size in points, horizontal scale, and
+horizontal skew.</p>
+<p>Horizontal scale emulates condensed and expanded fonts. Horizontal skew
+emulates oblique fonts.</p>
+<dl class="field-list simple">
+<dt class="field-odd">typeface<span class="colon">:</span></dt>
+<dd class="field-odd"><p>font and style used to draw and measure
+text</p>
+</dd>
+<dt class="field-even">size<span class="colon">:</span></dt>
+<dd class="field-even"><p>typographic height of text</p>
+</dd>
+<dt class="field-odd">scaleX<span class="colon">:</span></dt>
+<dd class="field-odd"><p>text horizontal scale</p>
+</dd>
+<dt class="field-even">skewX<span class="colon">:</span></dt>
+<dd class="field-even"><p>additional shear on x-axis relative to y-axis</p>
+</dd>
+</dl>
+</div></blockquote>
+</li>
+</ol>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="skia.Font.countText">
+<span class="sig-prename descclassname"><span class="pre">Font.</span></span><span class="sig-name descname"><span class="pre">countText</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#skia.Font" title="skia.Font"><span class="pre">skia.Font</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">text</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">encoding</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="skia.TextEncoding.html#skia.TextEncoding" title="skia.TextEncoding"><span class="pre">skia.TextEncoding</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">skia.TextEncoding.kUTF8</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="headerlink" href="#skia.Font.countText" title="Permalink to this definition"></a></dt>
+<dd><p>Returns number of glyphs represented by text.</p>
+<p>If encoding is <a class="reference internal" href="skia.TextEncoding.html#skia.TextEncoding.kUTF8" title="skia.TextEncoding.kUTF8"><code class="xref py py-attr docutils literal notranslate"><span class="pre">TextEncoding.kUTF8</span></code></a>,
+<a class="reference internal" href="skia.TextEncoding.html#skia.TextEncoding.kUTF16" title="skia.TextEncoding.kUTF16"><code class="xref py py-attr docutils literal notranslate"><span class="pre">TextEncoding.kUTF16</span></code></a>, or <a class="reference internal" href="skia.TextEncoding.html#skia.TextEncoding.kUTF32" title="skia.TextEncoding.kUTF32"><code class="xref py py-attr docutils literal notranslate"><span class="pre">TextEncoding.kUTF32</span></code></a>; then
+each Unicode codepoint is mapped to a single glyph.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>text</strong> (<em>str</em>) – character storage encoded with <a class="reference internal" href="skia.TextEncoding.html#skia.TextEncoding" title="skia.TextEncoding"><code class="xref py py-class docutils literal notranslate"><span class="pre">TextEncoding</span></code></a></p></li>
+<li><p><strong>encoding</strong> (<a class="reference internal" href="skia.TextEncoding.html#skia.TextEncoding" title="skia.TextEncoding"><em>skia.TextEncoding</em></a>) – text encoding</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="skia.Font.dump">
+<span class="sig-prename descclassname"><span class="pre">Font.</span></span><span class="sig-name descname"><span class="pre">dump</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#skia.Font" title="skia.Font"><span class="pre">skia.Font</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#skia.Font.dump" title="Permalink to this definition"></a></dt>
+<dd><p>Dumps fields of the font to SkDebugf.</p>
+<p>May change its output over time, so clients should not rely on this for
+anything specific. Used to aid in debugging.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="skia.Font.getBounds">
+<span class="sig-prename descclassname"><span class="pre">Font.</span></span><span class="sig-name descname"><span class="pre">getBounds</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#skia.Font" title="skia.Font"><span class="pre">skia.Font</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">glyphs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">paint</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">SkPaint</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="skia.Rect.html#skia.Rect" title="skia.Rect"><span class="pre">skia.Rect</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#skia.Font.getBounds" title="Permalink to this definition"></a></dt>
+<dd><p>Retrieves the bounds for each glyph in glyphs.</p>
+<p>If paint is not nullptr, its stroking, <a class="reference internal" href="skia.PathEffect.html#skia.PathEffect" title="skia.PathEffect"><code class="xref py py-class docutils literal notranslate"><span class="pre">PathEffect</span></code></a>, and
+<a class="reference internal" href="skia.MaskFilter.html#skia.MaskFilter" title="skia.MaskFilter"><code class="xref py py-class docutils literal notranslate"><span class="pre">MaskFilter</span></code></a> fields are respected.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>glyphs</strong> (<em>List</em><em>[</em><em>int</em><em>]</em>) – array of glyph indices to be measured</p></li>
+<li><p><strong>paint</strong> (<a class="reference internal" href="skia.Paint.html#skia.Paint" title="skia.Paint"><em>skia.Paint</em></a>) – optional, specifies stroking,
+<a class="reference internal" href="skia.PathEffect.html#skia.PathEffect" title="skia.PathEffect"><code class="xref py py-class docutils literal notranslate"><span class="pre">PathEffect</span></code></a>, and <a class="reference internal" href="skia.MaskFilter.html#skia.MaskFilter" title="skia.MaskFilter"><code class="xref py py-class docutils literal notranslate"><span class="pre">MaskFilter</span></code></a></p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>bounds for each glyph relative to (0, 0)</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>List[<a class="reference internal" href="skia.Rect.html#skia.Rect" title="skia.Rect">skia.Rect</a>]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="skia.Font.getEdging">
+<span class="sig-prename descclassname"><span class="pre">Font.</span></span><span class="sig-name descname"><span class="pre">getEdging</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#skia.Font" title="skia.Font"><span class="pre">skia.Font</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="skia.Font.Edging.html#skia.Font.Edging" title="skia.Font.Edging"><span class="pre">skia.Font.Edging</span></a></span></span><a class="headerlink" href="#skia.Font.getEdging" title="Permalink to this definition"></a></dt>
+<dd><p>Whether edge pixels draw opaque or with partial transparency.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="skia.Font.getHinting">
+<span class="sig-prename descclassname"><span class="pre">Font.</span></span><span class="sig-name descname"><span class="pre">getHinting</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#skia.Font" title="skia.Font"><span class="pre">skia.Font</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="skia.FontHinting.html#skia.FontHinting" title="skia.FontHinting"><span class="pre">skia.FontHinting</span></a></span></span><a class="headerlink" href="#skia.Font.getHinting" title="Permalink to this definition"></a></dt>
+<dd><p>Returns level of glyph outline adjustment.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="skia.Font.getMetrics">
+<span class="sig-prename descclassname"><span class="pre">Font.</span></span><span class="sig-name descname"><span class="pre">getMetrics</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#skia.Font" title="skia.Font"><span class="pre">skia.Font</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">SkFontMetrics</span></span></span><a class="headerlink" href="#skia.Font.getMetrics" title="Permalink to this definition"></a></dt>
+<dd><p>Returns <a class="reference internal" href="skia.FontMetrics.html#skia.FontMetrics" title="skia.FontMetrics"><code class="xref py py-class docutils literal notranslate"><span class="pre">FontMetrics</span></code></a> associated with <a class="reference internal" href="skia.Typeface.html#skia.Typeface" title="skia.Typeface"><code class="xref py py-class docutils literal notranslate"><span class="pre">Typeface</span></code></a>.</p>
+<p>Results are scaled by text size but does not take into account
+dimensions required by text scale, text skew, fake bold, style stroke,
+and <a class="reference internal" href="skia.PathEffect.html#skia.PathEffect" title="skia.PathEffect"><code class="xref py py-class docutils literal notranslate"><span class="pre">PathEffect</span></code></a>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="skia.FontMetrics.html#skia.FontMetrics" title="skia.FontMetrics"><code class="xref py py-class docutils literal notranslate"><span class="pre">FontMetrics</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="skia.Font.getPath">
+<span class="sig-prename descclassname"><span class="pre">Font.</span></span><span class="sig-name descname"><span class="pre">getPath</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#skia.Font" title="skia.Font"><span class="pre">skia.Font</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">glyphID</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">object</span></span></span><a class="headerlink" href="#skia.Font.getPath" title="Permalink to this definition"></a></dt>
+<dd><p>Modifies path to be the outline of the glyph.</p>
+<p>If the glyph has an outline, modifies path to be the glyph’s outline and
+returns true. The glyph outline may be empty. Degenerate contours in the
+glyph outline will be skipped. If glyph is described by a bitmap,
+returns false and ignores path parameter.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>glyphID</strong> (<em>int</em>) – index of glyph</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>true if glyphID is described by path</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="skia.Font.getPaths">
+<span class="sig-prename descclassname"><span class="pre">Font.</span></span><span class="sig-name descname"><span class="pre">getPaths</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#skia.Font" title="skia.Font"><span class="pre">skia.Font</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">glyphIDs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">object</span></span></span><a class="headerlink" href="#skia.Font.getPaths" title="Permalink to this definition"></a></dt>
+<dd><p>Returns path corresponding to glyph array.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>glyphIDs</strong> – array of glyph indices</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>list of <a class="reference internal" href="skia.Path.html#skia.Path" title="skia.Path"><code class="xref py py-class docutils literal notranslate"><span class="pre">Path</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="skia.Font.getPos">
+<span class="sig-prename descclassname"><span class="pre">Font.</span></span><span class="sig-name descname"><span class="pre">getPos</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#skia.Font" title="skia.Font"><span class="pre">skia.Font</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">glyphs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">origin</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="skia.Point.html#skia.Point" title="skia.Point"><span class="pre">skia.Point</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">skia.Point(0,</span> <span class="pre">0)</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="skia.Point.html#skia.Point" title="skia.Point"><span class="pre">skia.Point</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#skia.Font.getPos" title="Permalink to this definition"></a></dt>
+<dd><p>Retrieves the positions for each glyph, beginning at the specified
+origin.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>glyphs</strong> (<em>List</em><em>[</em><em>int</em><em>]</em>) – array of glyph indices to be positioned</p></li>
+<li><p><strong>origin</strong> (<a class="reference internal" href="skia.Point.html#skia.Point" title="skia.Point"><em>skia.Point</em></a>) – location of the first glyph. Defaults to
+(0, 0).</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>glyphs positions</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="skia.Font.getScaleX">
+<span class="sig-prename descclassname"><span class="pre">Font.</span></span><span class="sig-name descname"><span class="pre">getScaleX</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#skia.Font" title="skia.Font"><span class="pre">skia.Font</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="headerlink" href="#skia.Font.getScaleX" title="Permalink to this definition"></a></dt>
+<dd><p>Returns text scale on x-axis.</p>
+<p>Default value is 1.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>text horizontal scale</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="skia.Font.getSize">
+<span class="sig-prename descclassname"><span class="pre">Font.</span></span><span class="sig-name descname"><span class="pre">getSize</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#skia.Font" title="skia.Font"><span class="pre">skia.Font</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="headerlink" href="#skia.Font.getSize" title="Permalink to this definition"></a></dt>
+<dd><p>Returns text size in points.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>typographic height of text</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="skia.Font.getSkewX">
+<span class="sig-prename descclassname"><span class="pre">Font.</span></span><span class="sig-name descname"><span class="pre">getSkewX</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#skia.Font" title="skia.Font"><span class="pre">skia.Font</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="headerlink" href="#skia.Font.getSkewX" title="Permalink to this definition"></a></dt>
+<dd><p>Returns text skew on x-axis.</p>
+<p>Default value is zero.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>additional shear on x-axis relative to y-axis</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="skia.Font.getSpacing">
+<span class="sig-prename descclassname"><span class="pre">Font.</span></span><span class="sig-name descname"><span class="pre">getSpacing</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#skia.Font" title="skia.Font"><span class="pre">skia.Font</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="headerlink" href="#skia.Font.getSpacing" title="Permalink to this definition"></a></dt>
+<dd><p>Returns the recommended spacing between lines: the sum of metrics
+descent, ascent, and leading.</p>
+<p>Result is scaled by text size but does not take into account dimensions
+required by stroking and <a class="reference internal" href="skia.PathEffect.html#skia.PathEffect" title="skia.PathEffect"><code class="xref py py-class docutils literal notranslate"><span class="pre">PathEffect</span></code></a>. Returns the same result
+as <a class="reference internal" href="#skia.Font.getMetrics" title="skia.Font.getMetrics"><code class="xref py py-meth docutils literal notranslate"><span class="pre">getMetrics()</span></code></a>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>recommended spacing between lines</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="skia.Font.getTypeface">
+<span class="sig-prename descclassname"><span class="pre">Font.</span></span><span class="sig-name descname"><span class="pre">getTypeface</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#skia.Font" title="skia.Font"><span class="pre">skia.Font</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="skia.Typeface.html#skia.Typeface" title="skia.Typeface"><span class="pre">skia.Typeface</span></a></span></span><a class="headerlink" href="#skia.Font.getTypeface" title="Permalink to this definition"></a></dt>
+<dd><p>Returns <a class="reference internal" href="skia.Typeface.html#skia.Typeface" title="skia.Typeface"><code class="xref py py-class docutils literal notranslate"><span class="pre">Typeface</span></code></a> if set, or nullptr.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="skia.Typeface.html#skia.Typeface" title="skia.Typeface"><code class="xref py py-class docutils literal notranslate"><span class="pre">Typeface</span></code></a> if previously set, nullptr otherwise</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="skia.Font.getWidths">
+<span class="sig-prename descclassname"><span class="pre">Font.</span></span><span class="sig-name descname"><span class="pre">getWidths</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#skia.Font" title="skia.Font"><span class="pre">skia.Font</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">glyphs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#skia.Font.getWidths" title="Permalink to this definition"></a></dt>
+<dd><p>Retrieves the advance and bounds for each glyph in glyphs.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>glyphs</strong> (<em>List</em><em>[</em><em>int</em><em>]</em>) – array of glyph indices to be measured</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>List[float]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="skia.Font.getWidthsBounds">
+<span class="sig-prename descclassname"><span class="pre">Font.</span></span><span class="sig-name descname"><span class="pre">getWidthsBounds</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#skia.Font" title="skia.Font"><span class="pre">skia.Font</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">glyphs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">paint</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">SkPaint</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">tuple</span></span></span><a class="headerlink" href="#skia.Font.getWidthsBounds" title="Permalink to this definition"></a></dt>
+<dd><p>Retrieves the advance and bounds for each glyph in glyphs.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>glyphs</strong> (<em>List</em><em>[</em><em>int</em><em>]</em>) – array of glyph indices to be measured</p></li>
+<li><p><strong>paint</strong> (<a class="reference internal" href="skia.Paint.html#skia.Paint" title="skia.Paint"><em>skia.Paint</em></a>) – optional, specifies stroking,
+<a class="reference internal" href="skia.PathEffect.html#skia.PathEffect" title="skia.PathEffect"><code class="xref py py-class docutils literal notranslate"><span class="pre">PathEffect</span></code></a> and <a class="reference internal" href="skia.MaskFilter.html#skia.MaskFilter" title="skia.MaskFilter"><code class="xref py py-class docutils literal notranslate"><span class="pre">MaskFilter</span></code></a></p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Widths and bounds array</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Tuple[List[float],List[<a class="reference internal" href="skia.Rect.html#skia.Rect" title="skia.Rect">skia.Rect</a>]]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="skia.Font.getXPos">
+<span class="sig-prename descclassname"><span class="pre">Font.</span></span><span class="sig-name descname"><span class="pre">getXPos</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#skia.Font" title="skia.Font"><span class="pre">skia.Font</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">glyphs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">origin</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#skia.Font.getXPos" title="Permalink to this definition"></a></dt>
+<dd><p>Retrieves the x-positions for each glyph, beginning at the specified
+origin.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>glyphs</strong> (<em>List</em><em>[</em><em>int</em><em>]</em>) – array of glyph indices to be positioned</p></li>
+<li><p><strong>origin</strong> (<a class="reference internal" href="skia.Point.html#skia.Point" title="skia.Point"><em>skia.Point</em></a>) – location of the first glyph. Defaults to 0.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>glyphs x-positions</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="skia.Font.isBaselineSnap">
+<span class="sig-prename descclassname"><span class="pre">Font.</span></span><span class="sig-name descname"><span class="pre">isBaselineSnap</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#skia.Font" title="skia.Font"><span class="pre">skia.Font</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#skia.Font.isBaselineSnap" title="Permalink to this definition"></a></dt>
+<dd><p>Returns true if baselines will be snapped to pixel positions when the
+current transformation matrix is axis aligned.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>baselines may be snapped to pixels</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="skia.Font.isEmbeddedBitmaps">
+<span class="sig-prename descclassname"><span class="pre">Font.</span></span><span class="sig-name descname"><span class="pre">isEmbeddedBitmaps</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#skia.Font" title="skia.Font"><span class="pre">skia.Font</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#skia.Font.isEmbeddedBitmaps" title="Permalink to this definition"></a></dt>
+<dd><p>Returns true if font engine may return glyphs from font bitmaps instead
+of from outlines.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>true if glyphs may be font bitmaps</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="skia.Font.isEmbolden">
+<span class="sig-prename descclassname"><span class="pre">Font.</span></span><span class="sig-name descname"><span class="pre">isEmbolden</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#skia.Font" title="skia.Font"><span class="pre">skia.Font</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#skia.Font.isEmbolden" title="Permalink to this definition"></a></dt>
+<dd><p>Returns true if bold is approximated by increasing the stroke width when
+creating glyph bitmaps from outlines.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>bold is approximated through stroke width</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="skia.Font.isForceAutoHinting">
+<span class="sig-prename descclassname"><span class="pre">Font.</span></span><span class="sig-name descname"><span class="pre">isForceAutoHinting</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#skia.Font" title="skia.Font"><span class="pre">skia.Font</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#skia.Font.isForceAutoHinting" title="Permalink to this definition"></a></dt>
+<dd><p>If true, instructs the font manager to always hint glyphs.</p>
+<p>Returned value is only meaningful if platform uses FreeType as the font
+manager.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>true if all glyphs are hinted</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="skia.Font.isLinearMetrics">
+<span class="sig-prename descclassname"><span class="pre">Font.</span></span><span class="sig-name descname"><span class="pre">isLinearMetrics</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#skia.Font" title="skia.Font"><span class="pre">skia.Font</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#skia.Font.isLinearMetrics" title="Permalink to this definition"></a></dt>
+<dd><p>Returns true if font and glyph metrics are requested to be linearly
+scalable.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>true if font and glyph metrics are requested to be linearly
+scalable.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="skia.Font.isSubpixel">
+<span class="sig-prename descclassname"><span class="pre">Font.</span></span><span class="sig-name descname"><span class="pre">isSubpixel</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#skia.Font" title="skia.Font"><span class="pre">skia.Font</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#skia.Font.isSubpixel" title="Permalink to this definition"></a></dt>
+<dd><p>Returns true if glyphs may be drawn at sub-pixel offsets.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>true if glyphs may be drawn at sub-pixel offsets.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="skia.Font.makeWithSize">
+<span class="sig-prename descclassname"><span class="pre">Font.</span></span><span class="sig-name descname"><span class="pre">makeWithSize</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#skia.Font" title="skia.Font"><span class="pre">skia.Font</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">size</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#skia.Font" title="skia.Font"><span class="pre">skia.Font</span></a></span></span><a class="headerlink" href="#skia.Font.makeWithSize" title="Permalink to this definition"></a></dt>
+<dd><p>Returns a font with the same attributes of this font, but with the
+specified size.</p>
+<p>Returns nullptr if size is less than zero, infinite, or NaN.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>size</strong> (<em>float</em>) – typographic height of text</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="skia.Font.measureText">
+<span class="sig-prename descclassname"><span class="pre">Font.</span></span><span class="sig-name descname"><span class="pre">measureText</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#skia.Font" title="skia.Font"><span class="pre">skia.Font</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">text</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">encoding</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="skia.TextEncoding.html#skia.TextEncoding" title="skia.TextEncoding"><span class="pre">skia.TextEncoding</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">skia.TextEncoding.kUTF8</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bounds</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="skia.Rect.html#skia.Rect" title="skia.Rect"><span class="pre">skia.Rect</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">paint</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">SkPaint</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="headerlink" href="#skia.Font.measureText" title="Permalink to this definition"></a></dt>
+<dd><p>Returns the advance width of text.</p>
+<p>The advance is the normal distance to move before drawing additional
+text. Returns the bounding box of text if bounds is not nullptr. paint
+stroke width or <a class="reference internal" href="skia.PathEffect.html#skia.PathEffect" title="skia.PathEffect"><code class="xref py py-class docutils literal notranslate"><span class="pre">PathEffect</span></code></a> may modify the advance with.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>text</strong> (<em>str</em>) – character storage encoded with <a class="reference internal" href="skia.TextEncoding.html#skia.TextEncoding" title="skia.TextEncoding"><code class="xref py py-class docutils literal notranslate"><span class="pre">TextEncoding</span></code></a></p></li>
+<li><p><strong>encoding</strong> (<a class="reference internal" href="skia.TextEncoding.html#skia.TextEncoding" title="skia.TextEncoding"><em>skia.TextEncoding</em></a>) – text encoding</p></li>
+<li><p><strong>bounds</strong> (<a class="reference internal" href="skia.Rect.html#skia.Rect" title="skia.Rect"><em>skia.Rect</em></a>) – returns bounding box relative to (0, 0) if not
+nullptr</p></li>
+<li><p><strong>paint</strong> (<a class="reference internal" href="skia.Paint.html#skia.Paint" title="skia.Paint"><em>skia.Paint</em></a>) – optional; may be nullptr</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>the advance width of text</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="skia.Font.refTypeface">
+<span class="sig-prename descclassname"><span class="pre">Font.</span></span><span class="sig-name descname"><span class="pre">refTypeface</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#skia.Font" title="skia.Font"><span class="pre">skia.Font</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="skia.Typeface.html#skia.Typeface" title="skia.Typeface"><span class="pre">skia.Typeface</span></a></span></span><a class="headerlink" href="#skia.Font.refTypeface" title="Permalink to this definition"></a></dt>
+<dd><p>Increases <a class="reference internal" href="skia.Typeface.html#skia.Typeface" title="skia.Typeface"><code class="xref py py-class docutils literal notranslate"><span class="pre">Typeface</span></code></a> <a class="reference internal" href="skia.RefCnt.html#skia.RefCnt" title="skia.RefCnt"><code class="xref py py-class docutils literal notranslate"><span class="pre">RefCnt</span></code></a> by one.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="skia.Typeface.html#skia.Typeface" title="skia.Typeface"><code class="xref py py-class docutils literal notranslate"><span class="pre">Typeface</span></code></a> if previously set, nullptr otherwise</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="skia.Font.setBaselineSnap">
+<span class="sig-prename descclassname"><span class="pre">Font.</span></span><span class="sig-name descname"><span class="pre">setBaselineSnap</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#skia.Font" title="skia.Font"><span class="pre">skia.Font</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">baselineSnap</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#skia.Font.setBaselineSnap" title="Permalink to this definition"></a></dt>
+<dd><p>Requests that baselines be snapped to pixels when the current
+transformation matrix is axis aligned.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>baselineSnap</strong> (<em>bool</em>) – setting for baseline snapping to pixels</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="skia.Font.setEdging">
+<span class="sig-prename descclassname"><span class="pre">Font.</span></span><span class="sig-name descname"><span class="pre">setEdging</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#skia.Font" title="skia.Font"><span class="pre">skia.Font</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">edging</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="skia.Font.Edging.html#skia.Font.Edging" title="skia.Font.Edging"><span class="pre">skia.Font.Edging</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#skia.Font.setEdging" title="Permalink to this definition"></a></dt>
+<dd><p>Requests, but does not require, that edge pixels draw opaque or with
+partial transparency.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="skia.Font.setEmbeddedBitmaps">
+<span class="sig-prename descclassname"><span class="pre">Font.</span></span><span class="sig-name descname"><span class="pre">setEmbeddedBitmaps</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#skia.Font" title="skia.Font"><span class="pre">skia.Font</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">embeddedBitmaps</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#skia.Font.setEmbeddedBitmaps" title="Permalink to this definition"></a></dt>
+<dd><p>Requests, but does not require, to use bitmaps in fonts instead of
+outlines.</p>
+<p>:param bool embeddedBitmaps setting to use bitmaps in fonts</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="skia.Font.setEmbolden">
+<span class="sig-prename descclassname"><span class="pre">Font.</span></span><span class="sig-name descname"><span class="pre">setEmbolden</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#skia.Font" title="skia.Font"><span class="pre">skia.Font</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">embolden</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#skia.Font.setEmbolden" title="Permalink to this definition"></a></dt>
+<dd><p>Increases stroke width when creating glyph bitmaps to approximate a bold
+typeface.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>embolden</strong> (<em>bool</em>) – setting for bold approximation</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="skia.Font.setForceAutoHinting">
+<span class="sig-prename descclassname"><span class="pre">Font.</span></span><span class="sig-name descname"><span class="pre">setForceAutoHinting</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#skia.Font" title="skia.Font"><span class="pre">skia.Font</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">forceAutoHinting</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#skia.Font.setForceAutoHinting" title="Permalink to this definition"></a></dt>
+<dd><p>Sets whether to always hint glyphs.</p>
+<p>If forceAutoHinting is set, instructs the font manager to always hint
+glyphs.</p>
+<p>Only affects platforms that use FreeType as the font manager.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>forceAutoHinting</strong> (<em>bool</em>) – setting to always hint glyphs</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="skia.Font.setHinting">
+<span class="sig-prename descclassname"><span class="pre">Font.</span></span><span class="sig-name descname"><span class="pre">setHinting</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#skia.Font" title="skia.Font"><span class="pre">skia.Font</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">hintingLevel</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="skia.FontHinting.html#skia.FontHinting" title="skia.FontHinting"><span class="pre">skia.FontHinting</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#skia.Font.setHinting" title="Permalink to this definition"></a></dt>
+<dd><p>Sets level of glyph outline adjustment.</p>
+<p>Does not check for valid values of hintingLevel.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="skia.Font.setLinearMetrics">
+<span class="sig-prename descclassname"><span class="pre">Font.</span></span><span class="sig-name descname"><span class="pre">setLinearMetrics</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#skia.Font" title="skia.Font"><span class="pre">skia.Font</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">linearMetrics</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#skia.Font.setLinearMetrics" title="Permalink to this definition"></a></dt>
+<dd><p>Requests, but does not require, linearly scalable font and glyph
+metrics.</p>
+<p>For outline fonts ‘true’ means font and glyph metrics should ignore
+hinting and rounding. Note that some bitmap formats may not be able to
+scale linearly and will ignore this flag.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>linearMetrics</strong> (<em>bool</em>) – setting for linearly scalable font and glyph
+metrics.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="skia.Font.setScaleX">
+<span class="sig-prename descclassname"><span class="pre">Font.</span></span><span class="sig-name descname"><span class="pre">setScaleX</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#skia.Font" title="skia.Font"><span class="pre">skia.Font</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">scaleX</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#skia.Font.setScaleX" title="Permalink to this definition"></a></dt>
+<dd><p>Sets text scale on x-axis.</p>
+<p>Default value is 1.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>scaleX</strong> (<em>float</em>) – text horizontal scale</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="skia.Font.setSize">
+<span class="sig-prename descclassname"><span class="pre">Font.</span></span><span class="sig-name descname"><span class="pre">setSize</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#skia.Font" title="skia.Font"><span class="pre">skia.Font</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">textSize</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#skia.Font.setSize" title="Permalink to this definition"></a></dt>
+<dd><p>Sets text size in points.</p>
+<p>Has no effect if textSize is not greater than or equal to zero.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>textSize</strong> (<em>float</em>) – typographic height of text</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="skia.Font.setSkewX">
+<span class="sig-prename descclassname"><span class="pre">Font.</span></span><span class="sig-name descname"><span class="pre">setSkewX</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#skia.Font" title="skia.Font"><span class="pre">skia.Font</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">skewX</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#skia.Font.setSkewX" title="Permalink to this definition"></a></dt>
+<dd><p>Sets text skew on x-axis.</p>
+<p>Default value is zero.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>skewX</strong> (<em>float</em>) – additional shear on x-axis relative to y-axis</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="skia.Font.setSubpixel">
+<span class="sig-prename descclassname"><span class="pre">Font.</span></span><span class="sig-name descname"><span class="pre">setSubpixel</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#skia.Font" title="skia.Font"><span class="pre">skia.Font</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">subpixel</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#skia.Font.setSubpixel" title="Permalink to this definition"></a></dt>
+<dd><p>Requests, but does not require, that glyphs respect sub-pixel
+positioning.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>subpixel</strong> (<em>bool</em>) – setting for sub-pixel positioning</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="skia.Font.setTypeface">
+<span class="sig-prename descclassname"><span class="pre">Font.</span></span><span class="sig-name descname"><span class="pre">setTypeface</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#skia.Font" title="skia.Font"><span class="pre">skia.Font</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">typeface</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="skia.Typeface.html#skia.Typeface" title="skia.Typeface"><span class="pre">skia.Typeface</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#skia.Font.setTypeface" title="Permalink to this definition"></a></dt>
+<dd><p>Sets <a class="reference internal" href="skia.Typeface.html#skia.Typeface" title="skia.Typeface"><code class="xref py py-class docutils literal notranslate"><span class="pre">Typeface</span></code></a> to typeface, decreasing <a class="reference internal" href="skia.RefCnt.html#skia.RefCnt" title="skia.RefCnt"><code class="xref py py-class docutils literal notranslate"><span class="pre">RefCnt</span></code></a> of
+the previous <a class="reference internal" href="skia.Typeface.html#skia.Typeface" title="skia.Typeface"><code class="xref py py-class docutils literal notranslate"><span class="pre">Typeface</span></code></a>.</p>
+<p>Pass nullptr to clear <a class="reference internal" href="skia.Typeface.html#skia.Typeface" title="skia.Typeface"><code class="xref py py-class docutils literal notranslate"><span class="pre">Typeface</span></code></a> and use the default typeface.
+Increments tf <a class="reference internal" href="skia.RefCnt.html#skia.RefCnt" title="skia.RefCnt"><code class="xref py py-class docutils literal notranslate"><span class="pre">RefCnt</span></code></a> by one.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>typeface</strong> – font and style used to draw text</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="skia.Font.textToGlyphs">
+<span class="sig-prename descclassname"><span class="pre">Font.</span></span><span class="sig-name descname"><span class="pre">textToGlyphs</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#skia.Font" title="skia.Font"><span class="pre">skia.Font</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">text</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">encoding</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="skia.TextEncoding.html#skia.TextEncoding" title="skia.TextEncoding"><span class="pre">skia.TextEncoding</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">skia.TextEncoding.kUTF8</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#skia.Font.textToGlyphs" title="Permalink to this definition"></a></dt>
+<dd><p>Converts text into glyph indices.</p>
+<p>Returns the number of glyph indices represented by text.
+<a class="reference internal" href="skia.TextEncoding.html#skia.TextEncoding" title="skia.TextEncoding"><code class="xref py py-class docutils literal notranslate"><span class="pre">TextEncoding</span></code></a> specifies how text represents characters or
+glyphs.</p>
+<p>Does not check text for valid character codes or valid glyph indices.</p>
+<p>If encoding is <a class="reference internal" href="skia.TextEncoding.html#skia.TextEncoding.kUTF8" title="skia.TextEncoding.kUTF8"><code class="xref py py-attr docutils literal notranslate"><span class="pre">TextEncoding.kUTF8</span></code></a> and text contains an
+invalid UTF-8 sequence, empty array is returned.</p>
+<p>When encoding is <a class="reference internal" href="skia.TextEncoding.html#skia.TextEncoding.kUTF8" title="skia.TextEncoding.kUTF8"><code class="xref py py-attr docutils literal notranslate"><span class="pre">TextEncoding.kUTF8</span></code></a>,
+<a class="reference internal" href="skia.TextEncoding.html#skia.TextEncoding.kUTF16" title="skia.TextEncoding.kUTF16"><code class="xref py py-attr docutils literal notranslate"><span class="pre">TextEncoding.kUTF16</span></code></a>, or <a class="reference internal" href="skia.TextEncoding.html#skia.TextEncoding.kUTF32" title="skia.TextEncoding.kUTF32"><code class="xref py py-attr docutils literal notranslate"><span class="pre">TextEncoding.kUTF32</span></code></a>; then
+each Unicode codepoint is mapped to a single glyph. This function uses
+the default character-to-glyph mapping from the <a class="reference internal" href="skia.Typeface.html#skia.Typeface" title="skia.Typeface"><code class="xref py py-class docutils literal notranslate"><span class="pre">Typeface</span></code></a> and
+maps characters not found in the <a class="reference internal" href="skia.Typeface.html#skia.Typeface" title="skia.Typeface"><code class="xref py py-class docutils literal notranslate"><span class="pre">Typeface</span></code></a> to zero.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>text</strong> (<em>str</em>) – character storage encoded with <a class="reference internal" href="skia.TextEncoding.html#skia.TextEncoding" title="skia.TextEncoding"><code class="xref py py-class docutils literal notranslate"><span class="pre">TextEncoding</span></code></a></p></li>
+<li><p><strong>encoding</strong> (<a class="reference internal" href="skia.TextEncoding.html#skia.TextEncoding" title="skia.TextEncoding"><em>skia.TextEncoding</em></a>) – text encoding</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>glyphs represented by text</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="skia.Font.unicharToGlyph">
+<span class="sig-prename descclassname"><span class="pre">Font.</span></span><span class="sig-name descname"><span class="pre">unicharToGlyph</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#skia.Font" title="skia.Font"><span class="pre">skia.Font</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">uni</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="headerlink" href="#skia.Font.unicharToGlyph" title="Permalink to this definition"></a></dt>
+<dd><p>Returns glyph index for Unicode character.</p>
+<p>If the character is not supported by the <a class="reference internal" href="skia.Typeface.html#skia.Typeface" title="skia.Typeface"><code class="xref py py-class docutils literal notranslate"><span class="pre">Typeface</span></code></a>, returns
+0.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>uni</strong> (<em>int</em>) – Unicode character</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="skia.Font.unicharsToGlyphs">
+<span class="sig-prename descclassname"><span class="pre">Font.</span></span><span class="sig-name descname"><span class="pre">unicharsToGlyphs</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#skia.Font" title="skia.Font"><span class="pre">skia.Font</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">uni</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#skia.Font.unicharsToGlyphs" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</section>
+<section id="attributes">
+<h2>Attributes<a class="headerlink" href="#attributes" title="Permalink to this heading"></a></h2>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="skia.Font.kAlias">
+<span class="sig-prename descclassname"><span class="pre">Font.</span></span><span class="sig-name descname"><span class="pre">kAlias</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;Edging.kAlias:</span> <span class="pre">0&gt;</span></em><a class="headerlink" href="#skia.Font.kAlias" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="skia.Font.kAntiAlias">
+<span class="sig-prename descclassname"><span class="pre">Font.</span></span><span class="sig-name descname"><span class="pre">kAntiAlias</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;Edging.kAntiAlias:</span> <span class="pre">1&gt;</span></em><a class="headerlink" href="#skia.Font.kAntiAlias" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="skia.Font.kSubpixelAntiAlias">
+<span class="sig-prename descclassname"><span class="pre">Font.</span></span><span class="sig-name descname"><span class="pre">kSubpixelAntiAlias</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;Edging.kSubpixelAntiAlias:</span> <span class="pre">2&gt;</span></em><a class="headerlink" href="#skia.Font.kSubpixelAntiAlias" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="skia.Flattanable.Type.html" class="btn btn-neutral float-left" title="Flattanable.Type" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="skia.Font.Edging.html" class="btn btn-neutral float-right" title="Font.Edging" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2020, Kota Yamaguchi.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

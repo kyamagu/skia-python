@@ -89,12 +89,12 @@
              
   <section id="overview">
 <h1>Overview<a class="headerlink" href="#overview" title="Permalink to this heading"></a></h1>
-<p>Skia is organized around the <code class="xref py py-class docutils literal notranslate"><span class="pre">Canvas</span></code> object. It is the host for
-the <cite>draw</cite> calls: <code class="xref py py-meth docutils literal notranslate"><span class="pre">Canvas.drawRect()</span></code>,
-<code class="xref py py-meth docutils literal notranslate"><span class="pre">Canvas.drawPath()</span></code>, <code class="xref py py-meth docutils literal notranslate"><span class="pre">Canvas.drawTextBlob()</span></code>, etc.
+<p>Skia is organized around the <a class="reference internal" href="../reference/skia.Canvas.html#skia.Canvas" title="skia.Canvas"><code class="xref py py-class docutils literal notranslate"><span class="pre">Canvas</span></code></a> object. It is the host for
+the <cite>draw</cite> calls: <a class="reference internal" href="../reference/skia.Canvas.html#skia.Canvas.drawRect" title="skia.Canvas.drawRect"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Canvas.drawRect()</span></code></a>,
+<a class="reference internal" href="../reference/skia.Canvas.html#skia.Canvas.drawPath" title="skia.Canvas.drawPath"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Canvas.drawPath()</span></code></a>, <a class="reference internal" href="../reference/skia.Canvas.html#skia.Canvas.drawTextBlob" title="skia.Canvas.drawTextBlob"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Canvas.drawTextBlob()</span></code></a>, etc.
 Each of these has two components: the primitive being drawn
-(<code class="xref py py-class docutils literal notranslate"><span class="pre">Rect</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">Path</span></code>, etc.) and color/style
-attributes (<code class="xref py py-class docutils literal notranslate"><span class="pre">Paint</span></code>). The following example creates a canvas,
+(<a class="reference internal" href="../reference/skia.Rect.html#skia.Rect" title="skia.Rect"><code class="xref py py-class docutils literal notranslate"><span class="pre">Rect</span></code></a>, <a class="reference internal" href="../reference/skia.Path.html#skia.Path" title="skia.Path"><code class="xref py py-class docutils literal notranslate"><span class="pre">Path</span></code></a>, etc.) and color/style
+attributes (<a class="reference internal" href="../reference/skia.Paint.html#skia.Paint" title="skia.Paint"><code class="xref py py-class docutils literal notranslate"><span class="pre">Paint</span></code></a>). The following example creates a canvas,
 draws a rectangle with specified paint, and writes the result to an image file:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">skia</span>
 
@@ -126,12 +126,12 @@ restrict where on the canvas the rectangle will be drawn, but all other
 stylistic attributes of the drawing are controlled by the paint.</p>
 <section id="canvas-details">
 <h2>Canvas details<a class="headerlink" href="#canvas-details" title="Permalink to this heading"></a></h2>
-<p><code class="xref py py-class docutils literal notranslate"><span class="pre">Canvas</span></code> is the drawing context for Skia. It knows where to
+<p><a class="reference internal" href="../reference/skia.Canvas.html#skia.Canvas" title="skia.Canvas"><code class="xref py py-class docutils literal notranslate"><span class="pre">Canvas</span></code></a> is the drawing context for Skia. It knows where to
 direct the drawing (i.e. where the screen of offscreen pixels are), and
 maintains a stack of matrices and clips. Note however, that unlike similar
 contexts in other APIs like postscript, cairo, or awt, Skia does not store any
 other drawing attributes in the context (e.g. color, pen size). Rather, these
-are specified explicitly in each draw call, via a <code class="xref py py-class docutils literal notranslate"><span class="pre">Paint</span></code>:</p>
+are specified explicitly in each draw call, via a <a class="reference internal" href="../reference/skia.Paint.html#skia.Paint" title="skia.Paint"><code class="xref py py-class docutils literal notranslate"><span class="pre">Paint</span></code></a>:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">skia</span>
 
 <span class="n">surface</span> <span class="o">=</span> <span class="n">skia</span><span class="o">.</span><span class="n">Surface</span><span class="p">(</span><span class="mi">256</span><span class="p">,</span> <span class="mi">256</span><span class="p">)</span>
@@ -161,8 +161,8 @@ drawing an enormous rectangle, but there are easier ways to do it:</p>
 <p>This fills the entire canvas (though respecting the current clip of course) with
 whatever color or shader (and xfermode) is specified by the paint. If there is a
 shader in the paint, then it will respect the current matrix on the canvas as
-well (see <code class="xref py py-class docutils literal notranslate"><span class="pre">Shader</span></code>). If you just want to draw a color (with an
-optional xfermode), you can just call <code class="xref py py-meth docutils literal notranslate"><span class="pre">Canvas.drawColor()</span></code>, and
+well (see <a class="reference internal" href="../reference/skia.Shader.html#skia.Shader" title="skia.Shader"><code class="xref py py-class docutils literal notranslate"><span class="pre">Shader</span></code></a>). If you just want to draw a color (with an
+optional xfermode), you can just call <a class="reference internal" href="../reference/skia.Canvas.html#skia.Canvas.drawColor" title="skia.Canvas.drawColor"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Canvas.drawColor()</span></code></a>, and
 save yourself having to allocate a paint:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">canvas</span><span class="o">.</span><span class="n">drawColor</span><span class="p">(</span><span class="n">skia</span><span class="o">.</span><span class="n">ColorWHITE</span><span class="p">)</span>
 </pre></div>
@@ -172,8 +172,8 @@ save yourself having to allocate a paint:</p>
 <h2>More drawings<a class="headerlink" href="#more-drawings" title="Permalink to this heading"></a></h2>
 <p>All of the other draw APIs are similar, each one ending with a paint parameter.
 The following example demonstrates drawing of shape primitives,
-<code class="xref py py-class docutils literal notranslate"><span class="pre">Path</span></code>, external <code class="xref py py-class docutils literal notranslate"><span class="pre">Image</span></code>, or
-<code class="xref py py-class docutils literal notranslate"><span class="pre">TextBlob</span></code> objects onto the canvas:</p>
+<a class="reference internal" href="../reference/skia.Path.html#skia.Path" title="skia.Path"><code class="xref py py-class docutils literal notranslate"><span class="pre">Path</span></code></a>, external <a class="reference internal" href="../reference/skia.Image.html#skia.Image" title="skia.Image"><code class="xref py py-class docutils literal notranslate"><span class="pre">Image</span></code></a>, or
+<a class="reference internal" href="../reference/skia.TextBlob.html#skia.TextBlob" title="skia.TextBlob"><code class="xref py py-class docutils literal notranslate"><span class="pre">TextBlob</span></code></a> objects onto the canvas:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">skia</span>
 
 <span class="n">surface</span> <span class="o">=</span> <span class="n">skia</span><span class="o">.</span><span class="n">Surface</span><span class="p">(</span><span class="mi">256</span><span class="p">,</span> <span class="mi">256</span><span class="p">)</span>
@@ -235,11 +235,11 @@ draws into numpy array:</p>
 <span class="n">canvas</span><span class="o">.</span><span class="n">drawCircle</span><span class="p">(</span><span class="mi">180</span><span class="p">,</span> <span class="mi">50</span><span class="p">,</span> <span class="mi">25</span><span class="p">,</span> <span class="n">paint</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>Alternatively, <code class="xref py py-class docutils literal notranslate"><span class="pre">Canvas</span></code> content can be exported to numpy array:</p>
+<p>Alternatively, <a class="reference internal" href="../reference/skia.Canvas.html#skia.Canvas" title="skia.Canvas"><code class="xref py py-class docutils literal notranslate"><span class="pre">Canvas</span></code></a> content can be exported to numpy array:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">array</span> <span class="o">=</span> <span class="n">canvas</span><span class="o">.</span><span class="n">toarray</span><span class="p">()</span>
 </pre></div>
 </div>
-<p><code class="xref py py-class docutils literal notranslate"><span class="pre">skia.Image</span></code> is convertible to <code class="docutils literal notranslate"><span class="pre">PIL</span></code> image:</p>
+<p><a class="reference internal" href="../reference/skia.Image.html#skia.Image" title="skia.Image"><code class="xref py py-class docutils literal notranslate"><span class="pre">skia.Image</span></code></a> is convertible to <code class="docutils literal notranslate"><span class="pre">PIL</span></code> image:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">skia_image</span> <span class="o">=</span> <span class="n">skia</span><span class="o">.</span><span class="n">Image</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s1">&#39;/path/to/input.png&#39;</span><span class="p">)</span>
 <span class="n">pil_image</span> <span class="o">=</span> <span class="n">PIL</span><span class="o">.</span><span class="n">Image</span><span class="o">.</span><span class="n">fromarray</span><span class="p">(</span>
     <span class="n">skia_image</span><span class="o">.</span><span class="n">convert</span><span class="p">(</span><span class="n">alphaType</span><span class="o">=</span><span class="n">skia</span><span class="o">.</span><span class="n">kUnpremul_AlphaType</span><span class="p">))</span>
@@ -257,28 +257,28 @@ draws into numpy array:</p>
 <h2>APIs at a glance<a class="headerlink" href="#apis-at-a-glance" title="Permalink to this heading"></a></h2>
 <p>Skia has various APIs from low to high level. Some key class objects are:</p>
 <ul class="simple">
-<li><p><code class="xref py py-class docutils literal notranslate"><span class="pre">AutoCanvasRestore</span></code> - Canvas save stack manager</p></li>
-<li><p><code class="xref py py-class docutils literal notranslate"><span class="pre">Bitmap</span></code> - two-dimensional raster pixel array</p></li>
-<li><p><code class="xref py py-class docutils literal notranslate"><span class="pre">BlendMode</span></code> - pixel color arithmetic</p></li>
-<li><p><code class="xref py py-class docutils literal notranslate"><span class="pre">Canvas</span></code> - drawing context</p></li>
-<li><p><code class="xref py py-class docutils literal notranslate"><span class="pre">Color</span></code> - color encoding using integer numbers</p></li>
-<li><p><code class="xref py py-class docutils literal notranslate"><span class="pre">Font</span></code> - text style and typeface</p></li>
-<li><p><code class="xref py py-class docutils literal notranslate"><span class="pre">Image</span></code> - two dimensional array of pixels to draw</p></li>
-<li><p><code class="xref py py-class docutils literal notranslate"><span class="pre">ImageInfo</span></code> - pixel dimensions and characteristics</p></li>
-<li><p><code class="xref py py-class docutils literal notranslate"><span class="pre">IPoint</span></code> - two integer coordinates</p></li>
-<li><p><code class="xref py py-class docutils literal notranslate"><span class="pre">IRect</span></code> - integer rectangle</p></li>
-<li><p><code class="xref py py-class docutils literal notranslate"><span class="pre">Matrix</span></code> - 3x3 transformation matrix</p></li>
-<li><p><code class="xref py py-class docutils literal notranslate"><span class="pre">Paint</span></code> - color, stroke, font, effects</p></li>
-<li><p><code class="xref py py-class docutils literal notranslate"><span class="pre">Path</span></code> - sequence of connected lines and curves</p></li>
-<li><p><code class="xref py py-class docutils literal notranslate"><span class="pre">Picture</span></code> - sequence of drawing commands</p></li>
-<li><p><code class="xref py py-class docutils literal notranslate"><span class="pre">Pixmap</span></code> - pixel map: image info and pixel address</p></li>
-<li><p><code class="xref py py-class docutils literal notranslate"><span class="pre">Point</span></code> - two floating point coordinates</p></li>
-<li><p><code class="xref py py-class docutils literal notranslate"><span class="pre">RRect</span></code> - floating point rounded rectangle</p></li>
-<li><p><code class="xref py py-class docutils literal notranslate"><span class="pre">Rect</span></code> - floating point rectangle</p></li>
-<li><p><code class="xref py py-class docutils literal notranslate"><span class="pre">Region</span></code> - compressed clipping mask</p></li>
-<li><p><code class="xref py py-class docutils literal notranslate"><span class="pre">Surface</span></code> - drawing destination</p></li>
-<li><p><code class="xref py py-class docutils literal notranslate"><span class="pre">TextBlob</span></code> - runs of glyphs</p></li>
-<li><p><code class="xref py py-class docutils literal notranslate"><span class="pre">TextBlobBuilder</span></code> - constructor for runs of glyphs</p></li>
+<li><p><a class="reference internal" href="../reference/skia.AutoCanvasRestore.html#skia.AutoCanvasRestore" title="skia.AutoCanvasRestore"><code class="xref py py-class docutils literal notranslate"><span class="pre">AutoCanvasRestore</span></code></a> - Canvas save stack manager</p></li>
+<li><p><a class="reference internal" href="../reference/skia.Bitmap.html#skia.Bitmap" title="skia.Bitmap"><code class="xref py py-class docutils literal notranslate"><span class="pre">Bitmap</span></code></a> - two-dimensional raster pixel array</p></li>
+<li><p><a class="reference internal" href="../reference/skia.BlendMode.html#skia.BlendMode" title="skia.BlendMode"><code class="xref py py-class docutils literal notranslate"><span class="pre">BlendMode</span></code></a> - pixel color arithmetic</p></li>
+<li><p><a class="reference internal" href="../reference/skia.Canvas.html#skia.Canvas" title="skia.Canvas"><code class="xref py py-class docutils literal notranslate"><span class="pre">Canvas</span></code></a> - drawing context</p></li>
+<li><p><a class="reference internal" href="../reference/skia.html#skia.Color" title="skia.Color"><code class="xref py py-class docutils literal notranslate"><span class="pre">Color</span></code></a> - color encoding using integer numbers</p></li>
+<li><p><a class="reference internal" href="../reference/skia.Font.html#skia.Font" title="skia.Font"><code class="xref py py-class docutils literal notranslate"><span class="pre">Font</span></code></a> - text style and typeface</p></li>
+<li><p><a class="reference internal" href="../reference/skia.Image.html#skia.Image" title="skia.Image"><code class="xref py py-class docutils literal notranslate"><span class="pre">Image</span></code></a> - two dimensional array of pixels to draw</p></li>
+<li><p><a class="reference internal" href="../reference/skia.ImageInfo.html#skia.ImageInfo" title="skia.ImageInfo"><code class="xref py py-class docutils literal notranslate"><span class="pre">ImageInfo</span></code></a> - pixel dimensions and characteristics</p></li>
+<li><p><a class="reference internal" href="../reference/skia.IPoint.html#skia.IPoint" title="skia.IPoint"><code class="xref py py-class docutils literal notranslate"><span class="pre">IPoint</span></code></a> - two integer coordinates</p></li>
+<li><p><a class="reference internal" href="../reference/skia.IRect.html#skia.IRect" title="skia.IRect"><code class="xref py py-class docutils literal notranslate"><span class="pre">IRect</span></code></a> - integer rectangle</p></li>
+<li><p><a class="reference internal" href="../reference/skia.Matrix.html#skia.Matrix" title="skia.Matrix"><code class="xref py py-class docutils literal notranslate"><span class="pre">Matrix</span></code></a> - 3x3 transformation matrix</p></li>
+<li><p><a class="reference internal" href="../reference/skia.Paint.html#skia.Paint" title="skia.Paint"><code class="xref py py-class docutils literal notranslate"><span class="pre">Paint</span></code></a> - color, stroke, font, effects</p></li>
+<li><p><a class="reference internal" href="../reference/skia.Path.html#skia.Path" title="skia.Path"><code class="xref py py-class docutils literal notranslate"><span class="pre">Path</span></code></a> - sequence of connected lines and curves</p></li>
+<li><p><a class="reference internal" href="../reference/skia.Picture.html#skia.Picture" title="skia.Picture"><code class="xref py py-class docutils literal notranslate"><span class="pre">Picture</span></code></a> - sequence of drawing commands</p></li>
+<li><p><a class="reference internal" href="../reference/skia.Pixmap.html#skia.Pixmap" title="skia.Pixmap"><code class="xref py py-class docutils literal notranslate"><span class="pre">Pixmap</span></code></a> - pixel map: image info and pixel address</p></li>
+<li><p><a class="reference internal" href="../reference/skia.Point.html#skia.Point" title="skia.Point"><code class="xref py py-class docutils literal notranslate"><span class="pre">Point</span></code></a> - two floating point coordinates</p></li>
+<li><p><a class="reference internal" href="../reference/skia.RRect.html#skia.RRect" title="skia.RRect"><code class="xref py py-class docutils literal notranslate"><span class="pre">RRect</span></code></a> - floating point rounded rectangle</p></li>
+<li><p><a class="reference internal" href="../reference/skia.Rect.html#skia.Rect" title="skia.Rect"><code class="xref py py-class docutils literal notranslate"><span class="pre">Rect</span></code></a> - floating point rectangle</p></li>
+<li><p><a class="reference internal" href="../reference/skia.Region.html#skia.Region" title="skia.Region"><code class="xref py py-class docutils literal notranslate"><span class="pre">Region</span></code></a> - compressed clipping mask</p></li>
+<li><p><a class="reference internal" href="../reference/skia.Surface.html#skia.Surface" title="skia.Surface"><code class="xref py py-class docutils literal notranslate"><span class="pre">Surface</span></code></a> - drawing destination</p></li>
+<li><p><a class="reference internal" href="../reference/skia.TextBlob.html#skia.TextBlob" title="skia.TextBlob"><code class="xref py py-class docutils literal notranslate"><span class="pre">TextBlob</span></code></a> - runs of glyphs</p></li>
+<li><p><a class="reference internal" href="../reference/skia.TextBlobBuilder.html#skia.TextBlobBuilder" title="skia.TextBlobBuilder"><code class="xref py py-class docutils literal notranslate"><span class="pre">TextBlobBuilder</span></code></a> - constructor for runs of glyphs</p></li>
 </ul>
 </section>
 </section>

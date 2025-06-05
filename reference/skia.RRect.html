@@ -1,0 +1,1164 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en">
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>RRect &mdash; skia-python 138.0rc1 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css" />
+
+  
+      <script src="../_static/jquery.js"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+      <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+      <script src="../_static/doctools.js"></script>
+      <script src="../_static/sphinx_highlight.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="RRect.Corner" href="skia.RRect.Corner.html" />
+    <link rel="prev" title="Point3" href="skia.Point3.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            skia-python
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../install.html">Install</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tutorial/index.html">Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../development.html">Development</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../reference.html">Reference</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="skia.html">skia</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="skia.AlphaType.html">AlphaType</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.ApplyPerspectiveClip.html">ApplyPerspectiveClip</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.AutoCanvasRestore.html">AutoCanvasRestore</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.BBHFactory.html">BBHFactory</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.BBoxHierarchy.html">BBoxHierarchy</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.Bitmap.html">Bitmap</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.BlendMode.html">BlendMode</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.BlendModeCoeff.html">BlendModeCoeff</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.BlurMaskFilter.html">BlurMaskFilter</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.BlurStyle.html">BlurStyle</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.Budgeted.html">Budgeted</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.Canvas.html">Canvas</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.ClipOp.html">ClipOp</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.Codec.html">Codec</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.Color4f.html">Color4f</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.ColorChannel.html">ColorChannel</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.ColorChannelFlag.html">ColorChannelFlag</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.ColorFilter.html">ColorFilter</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.ColorFilters.html">ColorFilters</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.ColorInfo.html">ColorInfo</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.ColorMatrix.html">ColorMatrix</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.ColorMatrixFilter.html">ColorMatrixFilter</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.ColorSpace.html">ColorSpace</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.ColorType.html">ColorType</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.ConvergeMode.html">ConvergeMode</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.CornerPathEffect.html">CornerPathEffect</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.CubicResampler.html">CubicResampler</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.DashPathEffect.html">DashPathEffect</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.Data.html">Data</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.DiscretePathEffect.html">DiscretePathEffect</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.Document.html">Document</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.Drawable.html">Drawable</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.DynamicMemoryWStream.html">DynamicMemoryWStream</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.EncodedImageFormat.html">EncodedImageFormat</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.EncodedOrigin.html">EncodedOrigin</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.FILEStream.html">FILEStream</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.FILEWStream.html">FILEWStream</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.FilterMode.html">FilterMode</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.Flattanable.html">Flattanable</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.Font.html">Font</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.FontArguments.html">FontArguments</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.FontHinting.html">FontHinting</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.FontMetrics.html">FontMetrics</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.FontMgr.html">FontMgr</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.FontParameters.html">FontParameters</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.FontStyle.html">FontStyle</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.FontStyleSet.html">FontStyleSet</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.GrBackendApi.html">GrBackendApi</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.GrBackendFormat.html">GrBackendFormat</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.GrBackendRenderTarget.html">GrBackendRenderTarget</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.GrBackendRenderTargets.html">GrBackendRenderTargets</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.GrBackendSemaphore.html">GrBackendSemaphore</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.GrBackendTexture.html">GrBackendTexture</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.GrColorType.html">GrColorType</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.GrContext.html">GrContext</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.GrContextOptions.html">GrContextOptions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.GrContext_Base.html">GrContext_Base</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.GrDirectContext.html">GrDirectContext</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.GrDirectContexts.html">GrDirectContexts</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.GrFlushInfo.html">GrFlushInfo</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.GrGLBackendState.html">GrGLBackendState</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.GrGLFormat.html">GrGLFormat</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.GrGLFramebufferInfo.html">GrGLFramebufferInfo</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.GrGLInterface.html">GrGLInterface</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.GrGLTextureInfo.html">GrGLTextureInfo</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.GrImageContext.html">GrImageContext</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.GrMipmapped.html">GrMipmapped</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.GrMockOptions.html">GrMockOptions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.GrMockRenderTargetInfo.html">GrMockRenderTargetInfo</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.GrMockTextureInfo.html">GrMockTextureInfo</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.GrProtected.html">GrProtected</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.GrPurgeResourceOptions.html">GrPurgeResourceOptions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.GrRecordingContext.html">GrRecordingContext</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.GrRenderable.html">GrRenderable</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.GrSemaphoresSubmitted.html">GrSemaphoresSubmitted</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.GrSurfaceOrigin.html">GrSurfaceOrigin</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.GrSyncCpu.html">GrSyncCpu</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.GrTextureType.html">GrTextureType</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.GrVkAlloc.html">GrVkAlloc</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.GrVkBackendContext.html">GrVkBackendContext</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.GrVkDrawableInfo.html">GrVkDrawableInfo</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.GrVkImageInfo.html">GrVkImageInfo</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.GrVkYcbcrConversionInfo.html">GrVkYcbcrConversionInfo</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.GradientShader.html">GradientShader</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.HighContrastConfig.html">HighContrastConfig</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.HighContrastFilter.html">HighContrastFilter</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.IPoint.html">IPoint</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.IRect.html">IRect</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.ISize.html">ISize</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.Image.html">Image</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.ImageFilter.html">ImageFilter</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.ImageFilters.html">ImageFilters</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.ImageInfo.html">ImageInfo</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.Line2DPathEffect.html">Line2DPathEffect</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.LumaColorFilter.html">LumaColorFilter</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.M44.html">M44</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.MaskFilter.html">MaskFilter</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.Matrix.html">Matrix</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.MemoryStream.html">MemoryStream</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.MipmapBuilder.html">MipmapBuilder</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.MipmapMode.html">MipmapMode</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.NullWStream.html">NullWStream</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.OpBuilder.html">OpBuilder</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.OverdrawColorFilter.html">OverdrawColorFilter</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.PDF.html">PDF</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.Paint.html">Paint</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.Path.html">Path</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.Path1DPathEffect.html">Path1DPathEffect</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.Path2DPathEffect.html">Path2DPathEffect</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.PathBuilder.html">PathBuilder</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.PathDirection.html">PathDirection</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.PathEffect.html">PathEffect</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.PathFillType.html">PathFillType</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.PathMeasure.html">PathMeasure</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.PathOp.html">PathOp</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.PathSegmentMask.html">PathSegmentMask</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.PathVerb.html">PathVerb</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.PerlinNoiseShader.html">PerlinNoiseShader</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.Picture.html">Picture</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.PictureRecorder.html">PictureRecorder</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.PixelGeometry.html">PixelGeometry</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.PixelRef.html">PixelRef</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.Pixmap.html">Pixmap</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.Point.html">Point</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.Point3.html">Point3</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">RRect</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#skia.RRect"><code class="docutils literal notranslate"><span class="pre">RRect</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="skia.RRect.Corner.html">RRect.Corner</a></li>
+<li class="toctree-l4"><a class="reference internal" href="skia.RRect.Type.html">RRect.Type</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#methods">Methods</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#attributes">Attributes</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="skia.RSXform.html">RSXform</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.RTreeFactory.html">RTreeFactory</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.Rect.html">Rect</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.RefCnt.html">RefCnt</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.RefCntBase.html">RefCntBase</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.Region.html">Region</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.RuntimeBlendBuilder.html">RuntimeBlendBuilder</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.RuntimeColorFilterBuilder.html">RuntimeColorFilterBuilder</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.RuntimeEffect.html">RuntimeEffect</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.RuntimeEffectBuilder.html">RuntimeEffectBuilder</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.RuntimeEffectBuilderChild.html">RuntimeEffectBuilderChild</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.RuntimeEffectBuilderUniform.html">RuntimeEffectBuilderUniform</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.RuntimeEffectChild.html">RuntimeEffectChild</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.RuntimeEffectChildPtr.html">RuntimeEffectChildPtr</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.RuntimeEffectResult.html">RuntimeEffectResult</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.RuntimeEffectUniform.html">RuntimeEffectUniform</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.RuntimeShaderBuilder.html">RuntimeShaderBuilder</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.SVGCanvas.html">SVGCanvas</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.SVGDOM.html">SVGDOM</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.SamplingOptions.html">SamplingOptions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.Shader.html">Shader</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.ShaderMaskFilter.html">ShaderMaskFilter</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.Shaders.html">Shaders</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.Size.html">Size</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.SpanRuntimeEffectChild.html">SpanRuntimeEffectChild</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.SpanRuntimeEffectChildPtr.html">SpanRuntimeEffectChildPtr</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.SpanRuntimeEffectUniform.html">SpanRuntimeEffectUniform</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.Stream.html">Stream</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.StreamAsset.html">StreamAsset</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.StreamMemory.html">StreamMemory</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.StreamRewindable.html">StreamRewindable</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.StreamSeekable.html">StreamSeekable</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.String.html">String</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.StrokeRec.html">StrokeRec</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.Surface.html">Surface</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.SurfaceCharacterization.html">SurfaceCharacterization</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.SurfaceProps.html">SurfaceProps</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.Surfaces.html">Surfaces</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.TableColorFilter.html">TableColorFilter</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.TableMaskFilter.html">TableMaskFilter</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.TextBlob.html">TextBlob</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.TextBlobBuilder.html">TextBlobBuilder</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.TextEncoding.html">TextEncoding</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.TileMode.html">TileMode</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.TrimPathEffect.html">TrimPathEffect</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.Typeface.html">Typeface</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.Unicode.html">Unicode</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.V2.html">V2</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.V3.html">V3</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.V4.html">V4</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.VectorRuntimeEffectChild.html">VectorRuntimeEffectChild</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.VectorRuntimeEffectChildPtr.html">VectorRuntimeEffectChildPtr</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.Vertices.html">Vertices</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.VkFormat.html">VkFormat</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.VkImageLayout.html">VkImageLayout</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.WStream.html">WStream</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.YUVAInfo.html">YUVAInfo</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.YUVAPixmapInfo.html">YUVAPixmapInfo</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.YUVAPixmaps.html">YUVAPixmaps</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.YUVColorSpace.html">YUVColorSpace</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.gpuBackendApi.html">gpuBackendApi</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.textlayout_FontCollection.html">textlayout_FontCollection</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.textlayout_Paragraph.html">textlayout_Paragraph</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.textlayout_ParagraphBuilder.html">textlayout_ParagraphBuilder</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.textlayout_ParagraphStyle.html">textlayout_ParagraphStyle</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.textlayout_StrutStyle.html">textlayout_StrutStyle</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.textlayout_TextAlign.html">textlayout_TextAlign</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.textlayout_TextDecoration.html">textlayout_TextDecoration</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.textlayout_TextDecorationMode.html">textlayout_TextDecorationMode</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.textlayout_TextDecorationStyle.html">textlayout_TextDecorationStyle</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.textlayout_TextStyle.html">textlayout_TextStyle</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.textlayout_TypefaceFontProvider.html">textlayout_TypefaceFontProvider</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skia.html#functions">Functions</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">skia-python</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../reference.html">Reference</a></li>
+          <li class="breadcrumb-item"><a href="skia.html">skia</a></li>
+      <li class="breadcrumb-item active">RRect</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/reference/skia.RRect.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="rrect">
+<h1>RRect<a class="headerlink" href="#rrect" title="Permalink to this heading"></a></h1>
+<dl class="py class">
+<dt class="sig sig-object py" id="skia.RRect">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">RRect</span></span><a class="headerlink" href="#skia.RRect" title="Permalink to this definition"></a></dt>
+<dd><p><a class="reference internal" href="#skia.RRect" title="skia.RRect"><code class="xref py py-class docutils literal notranslate"><span class="pre">RRect</span></code></a> describes a rounded rectangle with a bounds and a pair of
+radii for each corner.</p>
+<p>The bounds and radii can be set so that <a class="reference internal" href="#skia.RRect" title="skia.RRect"><code class="xref py py-class docutils literal notranslate"><span class="pre">RRect</span></code></a> describes: a
+rectangle with sharp corners; a circle; an oval; or a rectangle with one or
+more rounded corners.</p>
+<p><a class="reference internal" href="#skia.RRect" title="skia.RRect"><code class="xref py py-class docutils literal notranslate"><span class="pre">RRect</span></code></a> allows implementing CSS properties that describe rounded
+corners. <a class="reference internal" href="#skia.RRect" title="skia.RRect"><code class="xref py py-class docutils literal notranslate"><span class="pre">RRect</span></code></a> may have up to eight different radii, one for
+each axis on each of its four corners.</p>
+<p><a class="reference internal" href="#skia.RRect" title="skia.RRect"><code class="xref py py-class docutils literal notranslate"><span class="pre">RRect</span></code></a> may modify the provided parameters when initializing
+bounds and radii. If either axis radii is zero or less: radii are stored as
+zero; corner is square. If corner curves overlap, radii are proportionally
+reduced to fit within bounds.</p>
+<p class="rubric">Classes</p>
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="skia.RRect.Corner.html#skia.RRect.Corner" title="skia.RRect.Corner"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Corner</span></code></a></p></td>
+<td><p>Members:</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="skia.RRect.Type.html#skia.RRect.Type" title="skia.RRect.Type"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Type</span></code></a></p></td>
+<td><p>Members:</p></td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Methods</p>
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.RRect.MakeEmpty" title="skia.RRect.MakeEmpty"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MakeEmpty</span></code></a></p></td>
+<td><p>Initializes bounds at (0, 0), the origin, with zero width and height.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.RRect.MakeOval" title="skia.RRect.MakeOval"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MakeOval</span></code></a></p></td>
+<td><p>Sets bounds to oval, x-axis radii to half oval.width(), and all y-axis radii to half oval.height().</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.RRect.MakeRect" title="skia.RRect.MakeRect"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MakeRect</span></code></a></p></td>
+<td><p>Initializes to copy of r bounds and zeroes corner radii.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.RRect.MakeRectXY" title="skia.RRect.MakeRectXY"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MakeRectXY</span></code></a></p></td>
+<td><p>Sets to rounded rectangle with the same radii for all four corners.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.RRect.__init__" title="skia.RRect.__init__"><code class="xref py py-obj docutils literal notranslate"><span class="pre">__init__</span></code></a></p></td>
+<td><p>Overloaded function.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.RRect.contains" title="skia.RRect.contains"><code class="xref py py-obj docutils literal notranslate"><span class="pre">contains</span></code></a></p></td>
+<td><p>Returns true if rect is inside the bounds and corner radii, and if <a class="reference internal" href="#skia.RRect" title="skia.RRect"><code class="xref py py-class docutils literal notranslate"><span class="pre">RRect</span></code></a> and rect are not empty.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.RRect.dump" title="skia.RRect.dump"><code class="xref py py-obj docutils literal notranslate"><span class="pre">dump</span></code></a></p></td>
+<td><p>Writes text representation of <a class="reference internal" href="#skia.RRect" title="skia.RRect"><code class="xref py py-class docutils literal notranslate"><span class="pre">RRect</span></code></a> to standard output.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.RRect.dumpHex" title="skia.RRect.dumpHex"><code class="xref py py-obj docutils literal notranslate"><span class="pre">dumpHex</span></code></a></p></td>
+<td><p>Writes text representation of <a class="reference internal" href="#skia.RRect" title="skia.RRect"><code class="xref py py-class docutils literal notranslate"><span class="pre">RRect</span></code></a> to standard output.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.RRect.dumpToString" title="skia.RRect.dumpToString"><code class="xref py py-obj docutils literal notranslate"><span class="pre">dumpToString</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.RRect.getBounds" title="skia.RRect.getBounds"><code class="xref py py-obj docutils literal notranslate"><span class="pre">getBounds</span></code></a></p></td>
+<td><p>Returns bounds.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.RRect.getSimpleRadii" title="skia.RRect.getSimpleRadii"><code class="xref py py-obj docutils literal notranslate"><span class="pre">getSimpleRadii</span></code></a></p></td>
+<td><p>Returns top-left corner radii.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.RRect.getType" title="skia.RRect.getType"><code class="xref py py-obj docutils literal notranslate"><span class="pre">getType</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.RRect.height" title="skia.RRect.height"><code class="xref py py-obj docutils literal notranslate"><span class="pre">height</span></code></a></p></td>
+<td><p>Returns span on the y-axis.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.RRect.inset" title="skia.RRect.inset"><code class="xref py py-obj docutils literal notranslate"><span class="pre">inset</span></code></a></p></td>
+<td><p>Overloaded function.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.RRect.isComplex" title="skia.RRect.isComplex"><code class="xref py py-obj docutils literal notranslate"><span class="pre">isComplex</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.RRect.isEmpty" title="skia.RRect.isEmpty"><code class="xref py py-obj docutils literal notranslate"><span class="pre">isEmpty</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.RRect.isNinePatch" title="skia.RRect.isNinePatch"><code class="xref py py-obj docutils literal notranslate"><span class="pre">isNinePatch</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.RRect.isOval" title="skia.RRect.isOval"><code class="xref py py-obj docutils literal notranslate"><span class="pre">isOval</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.RRect.isRect" title="skia.RRect.isRect"><code class="xref py py-obj docutils literal notranslate"><span class="pre">isRect</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.RRect.isSimple" title="skia.RRect.isSimple"><code class="xref py py-obj docutils literal notranslate"><span class="pre">isSimple</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.RRect.isValid" title="skia.RRect.isValid"><code class="xref py py-obj docutils literal notranslate"><span class="pre">isValid</span></code></a></p></td>
+<td><p>Returns true if bounds and radii values are finite and describe a <a class="reference internal" href="#skia.RRect" title="skia.RRect"><code class="xref py py-class docutils literal notranslate"><span class="pre">RRect</span></code></a> <a class="reference internal" href="skia.RRect.Type.html#skia.RRect.Type" title="skia.RRect.Type"><code class="xref py py-class docutils literal notranslate"><span class="pre">RRect.Type</span></code></a> that matches <a class="reference internal" href="#skia.RRect.getType" title="skia.RRect.getType"><code class="xref py py-meth docutils literal notranslate"><span class="pre">getType()</span></code></a>.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.RRect.makeOffset" title="skia.RRect.makeOffset"><code class="xref py py-obj docutils literal notranslate"><span class="pre">makeOffset</span></code></a></p></td>
+<td><p>Returns <a class="reference internal" href="#skia.RRect" title="skia.RRect"><code class="xref py py-class docutils literal notranslate"><span class="pre">RRect</span></code></a> translated by (dx, dy).</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.RRect.offset" title="skia.RRect.offset"><code class="xref py py-obj docutils literal notranslate"><span class="pre">offset</span></code></a></p></td>
+<td><p>Translates <a class="reference internal" href="#skia.RRect" title="skia.RRect"><code class="xref py py-class docutils literal notranslate"><span class="pre">RRect</span></code></a> by (dx, dy).</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.RRect.outset" title="skia.RRect.outset"><code class="xref py py-obj docutils literal notranslate"><span class="pre">outset</span></code></a></p></td>
+<td><p>Overloaded function.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.RRect.radii" title="skia.RRect.radii"><code class="xref py py-obj docutils literal notranslate"><span class="pre">radii</span></code></a></p></td>
+<td><p>Returns scalar pair for radius of curve on x-axis and y-axis for one corner.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.RRect.readFromMemory" title="skia.RRect.readFromMemory"><code class="xref py py-obj docutils literal notranslate"><span class="pre">readFromMemory</span></code></a></p></td>
+<td><p>Reads <a class="reference internal" href="#skia.RRect" title="skia.RRect"><code class="xref py py-class docutils literal notranslate"><span class="pre">RRect</span></code></a> from buffer, reading kSizeInMemory bytes.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.RRect.rect" title="skia.RRect.rect"><code class="xref py py-obj docutils literal notranslate"><span class="pre">rect</span></code></a></p></td>
+<td><p>Returns bounds.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.RRect.setEmpty" title="skia.RRect.setEmpty"><code class="xref py py-obj docutils literal notranslate"><span class="pre">setEmpty</span></code></a></p></td>
+<td><p>Sets bounds to zero width and height at (0, 0), the origin.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.RRect.setNinePatch" title="skia.RRect.setNinePatch"><code class="xref py py-obj docutils literal notranslate"><span class="pre">setNinePatch</span></code></a></p></td>
+<td><p>Sets bounds to rect.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.RRect.setOval" title="skia.RRect.setOval"><code class="xref py py-obj docutils literal notranslate"><span class="pre">setOval</span></code></a></p></td>
+<td><p>Sets bounds to oval, x-axis radii to half oval.width(), and all y-axis radii to half oval.height().</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.RRect.setRect" title="skia.RRect.setRect"><code class="xref py py-obj docutils literal notranslate"><span class="pre">setRect</span></code></a></p></td>
+<td><p>Sets bounds to sorted rect, and sets corner radii to zero.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.RRect.setRectRadii" title="skia.RRect.setRectRadii"><code class="xref py py-obj docutils literal notranslate"><span class="pre">setRectRadii</span></code></a></p></td>
+<td><p>Sets bounds to rect.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.RRect.setRectXY" title="skia.RRect.setRectXY"><code class="xref py py-obj docutils literal notranslate"><span class="pre">setRectXY</span></code></a></p></td>
+<td><p>Sets to rounded rectangle with the same radii for all four corners.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.RRect.transform" title="skia.RRect.transform"><code class="xref py py-obj docutils literal notranslate"><span class="pre">transform</span></code></a></p></td>
+<td><p>Transforms by <a class="reference internal" href="#skia.RRect" title="skia.RRect"><code class="xref py py-class docutils literal notranslate"><span class="pre">RRect</span></code></a> by matrix, storing result in dst.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.RRect.type" title="skia.RRect.type"><code class="xref py py-obj docutils literal notranslate"><span class="pre">type</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.RRect.width" title="skia.RRect.width"><code class="xref py py-obj docutils literal notranslate"><span class="pre">width</span></code></a></p></td>
+<td><p>Returns span on the x-axis.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.RRect.writeToMemory" title="skia.RRect.writeToMemory"><code class="xref py py-obj docutils literal notranslate"><span class="pre">writeToMemory</span></code></a></p></td>
+<td><p>Writes <a class="reference internal" href="#skia.RRect" title="skia.RRect"><code class="xref py py-class docutils literal notranslate"><span class="pre">RRect</span></code></a> to buffer.</p></td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Attributes</p>
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.RRect.kComplex_Type" title="skia.RRect.kComplex_Type"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kComplex_Type</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.RRect.kEmpty_Type" title="skia.RRect.kEmpty_Type"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kEmpty_Type</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.RRect.kLastType" title="skia.RRect.kLastType"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kLastType</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.RRect.kLowerLeft_Corner" title="skia.RRect.kLowerLeft_Corner"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kLowerLeft_Corner</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.RRect.kLowerRight_Corner" title="skia.RRect.kLowerRight_Corner"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kLowerRight_Corner</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.RRect.kNinePatch_Type" title="skia.RRect.kNinePatch_Type"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kNinePatch_Type</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.RRect.kOval_Type" title="skia.RRect.kOval_Type"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kOval_Type</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.RRect.kRect_Type" title="skia.RRect.kRect_Type"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kRect_Type</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.RRect.kSimple_Type" title="skia.RRect.kSimple_Type"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kSimple_Type</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.RRect.kSizeInMemory" title="skia.RRect.kSizeInMemory"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kSizeInMemory</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skia.RRect.kUpperLeft_Corner" title="skia.RRect.kUpperLeft_Corner"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kUpperLeft_Corner</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#skia.RRect.kUpperRight_Corner" title="skia.RRect.kUpperRight_Corner"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kUpperRight_Corner</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<section id="methods">
+<h2>Methods<a class="headerlink" href="#methods" title="Permalink to this heading"></a></h2>
+<dl class="py method">
+<dt class="sig sig-object py" id="skia.RRect.MakeEmpty">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">RRect.</span></span><span class="sig-name descname"><span class="pre">MakeEmpty</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#skia.RRect" title="skia.RRect"><span class="pre">skia.RRect</span></a></span></span><a class="headerlink" href="#skia.RRect.MakeEmpty" title="Permalink to this definition"></a></dt>
+<dd><p>Initializes bounds at (0, 0), the origin, with zero width and height.</p>
+<p>Initializes corner radii to (0, 0), and sets type of kEmpty_Type.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>empty <a class="reference internal" href="#skia.RRect" title="skia.RRect"><code class="xref py py-class docutils literal notranslate"><span class="pre">RRect</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="skia.RRect.MakeOval">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">RRect.</span></span><span class="sig-name descname"><span class="pre">MakeOval</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">oval</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="skia.Rect.html#skia.Rect" title="skia.Rect"><span class="pre">skia.Rect</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#skia.RRect" title="skia.RRect"><span class="pre">skia.RRect</span></a></span></span><a class="headerlink" href="#skia.RRect.MakeOval" title="Permalink to this definition"></a></dt>
+<dd><p>Sets bounds to oval, x-axis radii to half oval.width(), and all y-axis
+radii to half oval.height().</p>
+<p>If oval bounds is empty, sets to kEmpty_Type. Otherwise, sets to
+kOval_Type.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>oval</strong> – bounds of oval</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>oval</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="skia.RRect.MakeRect">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">RRect.</span></span><span class="sig-name descname"><span class="pre">MakeRect</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">r</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="skia.Rect.html#skia.Rect" title="skia.Rect"><span class="pre">skia.Rect</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#skia.RRect" title="skia.RRect"><span class="pre">skia.RRect</span></a></span></span><a class="headerlink" href="#skia.RRect.MakeRect" title="Permalink to this definition"></a></dt>
+<dd><p>Initializes to copy of r bounds and zeroes corner radii.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>r</strong> – bounds to copy</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>copy of r</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="skia.RRect.MakeRectXY">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">RRect.</span></span><span class="sig-name descname"><span class="pre">MakeRectXY</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">rect</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="skia.Rect.html#skia.Rect" title="skia.Rect"><span class="pre">skia.Rect</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">xRad</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">yRad</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#skia.RRect" title="skia.RRect"><span class="pre">skia.RRect</span></a></span></span><a class="headerlink" href="#skia.RRect.MakeRectXY" title="Permalink to this definition"></a></dt>
+<dd><p>Sets to rounded rectangle with the same radii for all four corners.</p>
+<p>If rect is empty, sets to kEmpty_Type. Otherwise, if xRad and yRad are
+zero, sets to kRect_Type. Otherwise, if xRad is at least half
+rect.width() and yRad is at least half rect.height(), sets to
+kOval_Type. Otherwise, sets to kSimple_Type.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>rect</strong> – bounds of rounded rectangle</p></li>
+<li><p><strong>xRad</strong> – x-axis radius of corners</p></li>
+<li><p><strong>yRad</strong> – y-axis radius of corners</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>rounded rectangle</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="skia.RRect.__init__">
+<span class="sig-prename descclassname"><span class="pre">RRect.</span></span><span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#skia.RRect.__init__" title="Permalink to this definition"></a></dt>
+<dd><p>Overloaded function.</p>
+<ol class="arabic">
+<li><p>__init__(self: skia.RRect) -&gt; None</p>
+<blockquote>
+<div><p>Initializes bounds at (0, 0), the origin, with zero width and height.</p>
+<p>Initializes corner radii to (0, 0), and sets type of kEmpty_Type.</p>
+<dl class="field-list simple">
+<dt class="field-odd">return<span class="colon">:</span></dt>
+<dd class="field-odd"><p>empty <a class="reference internal" href="#skia.RRect" title="skia.RRect"><code class="xref py py-class docutils literal notranslate"><span class="pre">RRect</span></code></a></p>
+</dd>
+</dl>
+</div></blockquote>
+</li>
+<li><p>__init__(self: skia.RRect, rrect: skia.RRect) -&gt; None</p>
+<blockquote>
+<div><p>Initializes to copy of rrect bounds and corner radii.</p>
+<dl class="field-list simple">
+<dt class="field-odd">rrect<span class="colon">:</span></dt>
+<dd class="field-odd"><p>bounds and corner to copy</p>
+</dd>
+<dt class="field-even">return<span class="colon">:</span></dt>
+<dd class="field-even"><p>copy of rrect</p>
+</dd>
+</dl>
+</div></blockquote>
+</li>
+<li><p>__init__(self: skia.RRect, rect: skia.Rect, xRad: float, yRad: float) -&gt; None</p>
+<blockquote>
+<div><p>Initializes to rounded rectangle with the same radii for all four
+corners.</p>
+<p>If rect is empty, sets to kEmpty_Type. Otherwise, if xRad and yRad are
+zero, sets to kRect_Type. Otherwise, if xRad is at least half
+rect.width() and yRad is at least half rect.height(), sets to
+kOval_Type. Otherwise, sets to kSimple_Type.</p>
+<dl class="field-list simple">
+<dt class="field-odd">rect<span class="colon">:</span></dt>
+<dd class="field-odd"><p>bounds of rounded rectangle</p>
+</dd>
+<dt class="field-even">xRad<span class="colon">:</span></dt>
+<dd class="field-even"><p>x-axis radius of corners</p>
+</dd>
+<dt class="field-odd">yRad<span class="colon">:</span></dt>
+<dd class="field-odd"><p>y-axis radius of corners</p>
+</dd>
+<dt class="field-even">return<span class="colon">:</span></dt>
+<dd class="field-even"><p>rounded rectangle</p>
+</dd>
+</dl>
+</div></blockquote>
+</li>
+</ol>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="skia.RRect.contains">
+<span class="sig-prename descclassname"><span class="pre">RRect.</span></span><span class="sig-name descname"><span class="pre">contains</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#skia.RRect" title="skia.RRect"><span class="pre">skia.RRect</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">rect</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="skia.Rect.html#skia.Rect" title="skia.Rect"><span class="pre">skia.Rect</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#skia.RRect.contains" title="Permalink to this definition"></a></dt>
+<dd><p>Returns true if rect is inside the bounds and corner radii, and if
+<a class="reference internal" href="#skia.RRect" title="skia.RRect"><code class="xref py py-class docutils literal notranslate"><span class="pre">RRect</span></code></a> and rect are not empty.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>rect</strong> – area tested for containment</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>true if SkRRect contains rect</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="skia.RRect.dump">
+<span class="sig-prename descclassname"><span class="pre">RRect.</span></span><span class="sig-name descname"><span class="pre">dump</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#skia.RRect" title="skia.RRect"><span class="pre">skia.RRect</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">asHex</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#skia.RRect.dump" title="Permalink to this definition"></a></dt>
+<dd><p>Writes text representation of <a class="reference internal" href="#skia.RRect" title="skia.RRect"><code class="xref py py-class docutils literal notranslate"><span class="pre">RRect</span></code></a> to standard output.</p>
+<p>Set asHex true to generate exact binary representations of floating
+point numbers.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>asHex</strong> – true if Scalar values are written as hexadecimal</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="skia.RRect.dumpHex">
+<span class="sig-prename descclassname"><span class="pre">RRect.</span></span><span class="sig-name descname"><span class="pre">dumpHex</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#skia.RRect" title="skia.RRect"><span class="pre">skia.RRect</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#skia.RRect.dumpHex" title="Permalink to this definition"></a></dt>
+<dd><p>Writes text representation of <a class="reference internal" href="#skia.RRect" title="skia.RRect"><code class="xref py py-class docutils literal notranslate"><span class="pre">RRect</span></code></a> to standard output.</p>
+<p>The representation may be directly compiled as C++ code. Floating point
+values are written in hexadecimal to preserve their exact bit pattern.
+The output reconstructs the original <a class="reference internal" href="#skia.RRect" title="skia.RRect"><code class="xref py py-class docutils literal notranslate"><span class="pre">RRect</span></code></a>.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="skia.RRect.dumpToString">
+<span class="sig-prename descclassname"><span class="pre">RRect.</span></span><span class="sig-name descname"><span class="pre">dumpToString</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#skia.RRect" title="skia.RRect"><span class="pre">skia.RRect</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">asHex</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">SkString</span></span></span><a class="headerlink" href="#skia.RRect.dumpToString" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="skia.RRect.getBounds">
+<span class="sig-prename descclassname"><span class="pre">RRect.</span></span><span class="sig-name descname"><span class="pre">getBounds</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#skia.RRect" title="skia.RRect"><span class="pre">skia.RRect</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="skia.Rect.html#skia.Rect" title="skia.Rect"><span class="pre">skia.Rect</span></a></span></span><a class="headerlink" href="#skia.RRect.getBounds" title="Permalink to this definition"></a></dt>
+<dd><p>Returns bounds.</p>
+<p>Bounds may have zero width or zero height. Bounds right is greater than
+or equal to left; bounds bottom is greater than or equal to top. Result
+is identical to <a class="reference internal" href="#skia.RRect.rect" title="skia.RRect.rect"><code class="xref py py-meth docutils literal notranslate"><span class="pre">rect()</span></code></a>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>bounding box</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="skia.RRect.getSimpleRadii">
+<span class="sig-prename descclassname"><span class="pre">RRect.</span></span><span class="sig-name descname"><span class="pre">getSimpleRadii</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#skia.RRect" title="skia.RRect"><span class="pre">skia.RRect</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="skia.Point.html#skia.Point" title="skia.Point"><span class="pre">skia.Point</span></a></span></span><a class="headerlink" href="#skia.RRect.getSimpleRadii" title="Permalink to this definition"></a></dt>
+<dd><p>Returns top-left corner radii.</p>
+<p>If <a class="reference internal" href="#skia.RRect.type" title="skia.RRect.type"><code class="xref py py-meth docutils literal notranslate"><span class="pre">type()</span></code></a> returns kEmpty_Type, kRect_Type, kOval_Type, or
+kSimple_Type, returns a value representative of all corner radii. If
+<a class="reference internal" href="#skia.RRect.type" title="skia.RRect.type"><code class="xref py py-meth docutils literal notranslate"><span class="pre">type()</span></code></a> returns kNinePatch_Type or kComplex_Type, at least one
+of the remaining three corners has a different value.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>corner radii for simple types</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="skia.RRect.getType">
+<span class="sig-prename descclassname"><span class="pre">RRect.</span></span><span class="sig-name descname"><span class="pre">getType</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#skia.RRect" title="skia.RRect"><span class="pre">skia.RRect</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="skia.RRect.Type.html#skia.RRect.Type" title="skia.RRect.Type"><span class="pre">skia.RRect.Type</span></a></span></span><a class="headerlink" href="#skia.RRect.getType" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="skia.RRect.height">
+<span class="sig-prename descclassname"><span class="pre">RRect.</span></span><span class="sig-name descname"><span class="pre">height</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#skia.RRect" title="skia.RRect"><span class="pre">skia.RRect</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="headerlink" href="#skia.RRect.height" title="Permalink to this definition"></a></dt>
+<dd><p>Returns span on the y-axis.</p>
+<p>This does not check if result fits in 32-bit float; result may be
+infinity.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>rect().fBottom minus rect().fTop</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="skia.RRect.inset">
+<span class="sig-prename descclassname"><span class="pre">RRect.</span></span><span class="sig-name descname"><span class="pre">inset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#skia.RRect.inset" title="Permalink to this definition"></a></dt>
+<dd><p>Overloaded function.</p>
+<ol class="arabic">
+<li><p>inset(self: skia.RRect, dx: float, dy: float, dst: skia.RRect) -&gt; None</p>
+<blockquote>
+<div><p>Copies <a class="reference internal" href="#skia.RRect" title="skia.RRect"><code class="xref py py-class docutils literal notranslate"><span class="pre">RRect</span></code></a> to dst, then insets dst bounds by dx and dy,
+and adjusts dst radii by dx and dy.</p>
+<p>dx and dy may be positive, negative, or zero. dst may be
+<a class="reference internal" href="#skia.RRect" title="skia.RRect"><code class="xref py py-class docutils literal notranslate"><span class="pre">RRect</span></code></a>.</p>
+<p>If either corner radius is zero, the corner has no curvature and is
+unchanged. Otherwise, if adjusted radius becomes negative, pins radius
+to zero. If dx exceeds half dst bounds width, dst bounds left and right
+are set to bounds x-axis center. If dy exceeds half dst bounds height,
+dst bounds top and bottom are set to bounds y-axis center.</p>
+<p>If dx or dy cause the bounds to become infinite, dst bounds is zeroed.</p>
+<dl class="field-list simple">
+<dt class="field-odd">dx<span class="colon">:</span></dt>
+<dd class="field-odd"><p>added to rect().fLeft, and subtracted from rect().fRight</p>
+</dd>
+<dt class="field-even">dy<span class="colon">:</span></dt>
+<dd class="field-even"><p>added to rect().fTop, and subtracted from rect().fBottom</p>
+</dd>
+<dt class="field-odd">dst<span class="colon">:</span></dt>
+<dd class="field-odd"><p>insets bounds and radii</p>
+</dd>
+</dl>
+</div></blockquote>
+</li>
+<li><p>inset(self: skia.RRect, dx: float, dy: float) -&gt; None</p>
+<blockquote>
+<div><p>Insets bounds by dx and dy, and adjusts radii by dx and dy.</p>
+<p>dx and dy may be positive, negative, or zero.</p>
+<p>If either corner radius is zero, the corner has no curvature and is
+unchanged. Otherwise, if adjusted radius becomes negative, pins radius
+to zero. If dx exceeds half bounds width, bounds left and right are set
+to bounds x-axis center. If dy exceeds half bounds height, bounds top
+and bottom are set to bounds y-axis center.</p>
+<p>If dx or dy cause the bounds to become infinite, bounds is zeroed.</p>
+<dl class="field-list simple">
+<dt class="field-odd">dx<span class="colon">:</span></dt>
+<dd class="field-odd"><p>added to rect().fLeft, and subtracted from rect().fRight</p>
+</dd>
+<dt class="field-even">dy<span class="colon">:</span></dt>
+<dd class="field-even"><p>added to rect().fTop, and subtracted from rect().fBottom</p>
+</dd>
+</dl>
+</div></blockquote>
+</li>
+</ol>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="skia.RRect.isComplex">
+<span class="sig-prename descclassname"><span class="pre">RRect.</span></span><span class="sig-name descname"><span class="pre">isComplex</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#skia.RRect" title="skia.RRect"><span class="pre">skia.RRect</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#skia.RRect.isComplex" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="skia.RRect.isEmpty">
+<span class="sig-prename descclassname"><span class="pre">RRect.</span></span><span class="sig-name descname"><span class="pre">isEmpty</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#skia.RRect" title="skia.RRect"><span class="pre">skia.RRect</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#skia.RRect.isEmpty" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="skia.RRect.isNinePatch">
+<span class="sig-prename descclassname"><span class="pre">RRect.</span></span><span class="sig-name descname"><span class="pre">isNinePatch</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#skia.RRect" title="skia.RRect"><span class="pre">skia.RRect</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#skia.RRect.isNinePatch" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="skia.RRect.isOval">
+<span class="sig-prename descclassname"><span class="pre">RRect.</span></span><span class="sig-name descname"><span class="pre">isOval</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#skia.RRect" title="skia.RRect"><span class="pre">skia.RRect</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#skia.RRect.isOval" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="skia.RRect.isRect">
+<span class="sig-prename descclassname"><span class="pre">RRect.</span></span><span class="sig-name descname"><span class="pre">isRect</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#skia.RRect" title="skia.RRect"><span class="pre">skia.RRect</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#skia.RRect.isRect" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="skia.RRect.isSimple">
+<span class="sig-prename descclassname"><span class="pre">RRect.</span></span><span class="sig-name descname"><span class="pre">isSimple</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#skia.RRect" title="skia.RRect"><span class="pre">skia.RRect</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#skia.RRect.isSimple" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="skia.RRect.isValid">
+<span class="sig-prename descclassname"><span class="pre">RRect.</span></span><span class="sig-name descname"><span class="pre">isValid</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#skia.RRect" title="skia.RRect"><span class="pre">skia.RRect</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#skia.RRect.isValid" title="Permalink to this definition"></a></dt>
+<dd><p>Returns true if bounds and radii values are finite and describe a
+<a class="reference internal" href="#skia.RRect" title="skia.RRect"><code class="xref py py-class docutils literal notranslate"><span class="pre">RRect</span></code></a> <a class="reference internal" href="skia.RRect.Type.html#skia.RRect.Type" title="skia.RRect.Type"><code class="xref py py-class docutils literal notranslate"><span class="pre">RRect.Type</span></code></a> that matches
+<a class="reference internal" href="#skia.RRect.getType" title="skia.RRect.getType"><code class="xref py py-meth docutils literal notranslate"><span class="pre">getType()</span></code></a>.</p>
+<p>All <a class="reference internal" href="#skia.RRect" title="skia.RRect"><code class="xref py py-class docutils literal notranslate"><span class="pre">RRect</span></code></a> methods construct valid types, even if the input
+values are not valid. Invalid <a class="reference internal" href="#skia.RRect" title="skia.RRect"><code class="xref py py-class docutils literal notranslate"><span class="pre">RRect</span></code></a> data can only be
+generated by corrupting memory.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>true if bounds and radii match <a class="reference internal" href="#skia.RRect.type" title="skia.RRect.type"><code class="xref py py-meth docutils literal notranslate"><span class="pre">type()</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="skia.RRect.makeOffset">
+<span class="sig-prename descclassname"><span class="pre">RRect.</span></span><span class="sig-name descname"><span class="pre">makeOffset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#skia.RRect" title="skia.RRect"><span class="pre">skia.RRect</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">dx</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dy</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#skia.RRect" title="skia.RRect"><span class="pre">skia.RRect</span></a></span></span><a class="headerlink" href="#skia.RRect.makeOffset" title="Permalink to this definition"></a></dt>
+<dd><p>Returns <a class="reference internal" href="#skia.RRect" title="skia.RRect"><code class="xref py py-class docutils literal notranslate"><span class="pre">RRect</span></code></a> translated by (dx, dy).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>dx</strong> – offset added to rect().fLeft and rect().fRight</p></li>
+<li><p><strong>dy</strong> – offset added to rect().fTop and rect().fBottom</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference internal" href="#skia.RRect" title="skia.RRect"><code class="xref py py-class docutils literal notranslate"><span class="pre">RRect</span></code></a> bounds offset by (dx, dy), with unchanged
+corner radii</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="skia.RRect.offset">
+<span class="sig-prename descclassname"><span class="pre">RRect.</span></span><span class="sig-name descname"><span class="pre">offset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#skia.RRect" title="skia.RRect"><span class="pre">skia.RRect</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">dx</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dy</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#skia.RRect.offset" title="Permalink to this definition"></a></dt>
+<dd><p>Translates <a class="reference internal" href="#skia.RRect" title="skia.RRect"><code class="xref py py-class docutils literal notranslate"><span class="pre">RRect</span></code></a> by (dx, dy).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>dx</strong> – offset added to rect().fLeft and rect().fRight</p>
+</dd>
+<dt class="field-even">Parma dy<span class="colon">:</span></dt>
+<dd class="field-even"><p>offset added to rect().fTop and rect().fBottom</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="skia.RRect.outset">
+<span class="sig-prename descclassname"><span class="pre">RRect.</span></span><span class="sig-name descname"><span class="pre">outset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#skia.RRect.outset" title="Permalink to this definition"></a></dt>
+<dd><p>Overloaded function.</p>
+<ol class="arabic">
+<li><p>outset(self: skia.RRect, dx: float, dy: float, dst: skia.RRect) -&gt; None</p>
+<blockquote>
+<div><p>Outsets dst bounds by dx and dy, and adjusts radii by dx and dy.</p>
+<p>dx and dy may be positive, negative, or zero.</p>
+<p>If either corner radius is zero, the corner has no curvature and is
+unchanged. Otherwise, if adjusted radius becomes negative, pins radius
+to zero. If dx exceeds half dst bounds width, dst bounds left and right
+are set to bounds x-axis center. If dy exceeds half dst bounds height,
+dst bounds top and bottom are set to bounds y-axis center.</p>
+<p>If dx or dy cause the bounds to become infinite, dst bounds is zeroed.</p>
+<dl class="field-list simple">
+<dt class="field-odd">dx<span class="colon">:</span></dt>
+<dd class="field-odd"><p>subtracted from rect().fLeft, and added to rect().fRight</p>
+</dd>
+<dt class="field-even">dy<span class="colon">:</span></dt>
+<dd class="field-even"><p>subtracted from rect().fTop, and added to rect().fBottom</p>
+</dd>
+<dt class="field-odd">dst<span class="colon">:</span></dt>
+<dd class="field-odd"><p>outset bounds and radii</p>
+</dd>
+</dl>
+</div></blockquote>
+</li>
+<li><p>outset(self: skia.RRect, dx: float, dy: float) -&gt; None</p>
+<blockquote>
+<div><p>Outsets bounds by dx and dy, and adjusts radii by dx and dy.</p>
+<p>dx and dy may be positive, negative, or zero.</p>
+<p>If either corner radius is zero, the corner has no curvature and is
+unchanged. Otherwise, if adjusted radius becomes negative, pins radius
+to zero. If dx exceeds half bounds width, bounds left and right are set
+to bounds x-axis center. If dy exceeds half bounds height, bounds top
+and bottom are set to bounds y-axis center.</p>
+<p>If dx or dy cause the bounds to become infinite, bounds is zeroed.</p>
+<dl class="field-list simple">
+<dt class="field-odd">dx<span class="colon">:</span></dt>
+<dd class="field-odd"><p>subtracted from rect().fLeft, and added to rect().fRight</p>
+</dd>
+<dt class="field-even">dy<span class="colon">:</span></dt>
+<dd class="field-even"><p>subtracted from rect().fTop, and added to rect().fBottom</p>
+</dd>
+</dl>
+</div></blockquote>
+</li>
+</ol>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="skia.RRect.radii">
+<span class="sig-prename descclassname"><span class="pre">RRect.</span></span><span class="sig-name descname"><span class="pre">radii</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#skia.RRect" title="skia.RRect"><span class="pre">skia.RRect</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">corner</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="skia.RRect.Corner.html#skia.RRect.Corner" title="skia.RRect.Corner"><span class="pre">skia.RRect.Corner</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="skia.Point.html#skia.Point" title="skia.Point"><span class="pre">skia.Point</span></a></span></span><a class="headerlink" href="#skia.RRect.radii" title="Permalink to this definition"></a></dt>
+<dd><p>Returns scalar pair for radius of curve on x-axis and y-axis for one
+corner.</p>
+<p>Both radii may be zero. If not zero, both are positive and finite.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>x-axis and y-axis radii for one corner</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="skia.RRect.readFromMemory">
+<span class="sig-prename descclassname"><span class="pre">RRect.</span></span><span class="sig-name descname"><span class="pre">readFromMemory</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#skia.RRect" title="skia.RRect"><span class="pre">skia.RRect</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">buffer</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="headerlink" href="#skia.RRect.readFromMemory" title="Permalink to this definition"></a></dt>
+<dd><p>Reads <a class="reference internal" href="#skia.RRect" title="skia.RRect"><code class="xref py py-class docutils literal notranslate"><span class="pre">RRect</span></code></a> from buffer, reading kSizeInMemory bytes.</p>
+<p>Returns kSizeInMemory, bytes read if length is at least kSizeInMemory.
+Otherwise, returns zero.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>buffer</strong> – memory to read from</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>bytes read, or 0 if length is less than kSizeInMemory</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="skia.RRect.rect">
+<span class="sig-prename descclassname"><span class="pre">RRect.</span></span><span class="sig-name descname"><span class="pre">rect</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#skia.RRect" title="skia.RRect"><span class="pre">skia.RRect</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="skia.Rect.html#skia.Rect" title="skia.Rect"><span class="pre">skia.Rect</span></a></span></span><a class="headerlink" href="#skia.RRect.rect" title="Permalink to this definition"></a></dt>
+<dd><p>Returns bounds.</p>
+<p>Bounds may have zero width or zero height. Bounds right is greater than
+or equal to left; bounds bottom is greater than or equal to top. Result
+is identical to <a class="reference internal" href="#skia.RRect.getBounds" title="skia.RRect.getBounds"><code class="xref py py-meth docutils literal notranslate"><span class="pre">getBounds()</span></code></a>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>bounding box</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="skia.RRect.setEmpty">
+<span class="sig-prename descclassname"><span class="pre">RRect.</span></span><span class="sig-name descname"><span class="pre">setEmpty</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#skia.RRect" title="skia.RRect"><span class="pre">skia.RRect</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#skia.RRect.setEmpty" title="Permalink to this definition"></a></dt>
+<dd><p>Sets bounds to zero width and height at (0, 0), the origin.</p>
+<p>Sets corner radii to zero and sets type to kEmpty_Type.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="skia.RRect.setNinePatch">
+<span class="sig-prename descclassname"><span class="pre">RRect.</span></span><span class="sig-name descname"><span class="pre">setNinePatch</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#skia.RRect" title="skia.RRect"><span class="pre">skia.RRect</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">rect</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="skia.Rect.html#skia.Rect" title="skia.Rect"><span class="pre">skia.Rect</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">leftRad</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">topRad</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rightRad</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bottomRad</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#skia.RRect.setNinePatch" title="Permalink to this definition"></a></dt>
+<dd><p>Sets bounds to rect.</p>
+<p>Sets radii to (leftRad, topRad), (rightRad, topRad), (rightRad,
+bottomRad), (leftRad, bottomRad).</p>
+<p>If rect is empty, sets to kEmpty_Type. Otherwise, if leftRad and
+rightRad are zero, sets to kRect_Type. Otherwise, if topRad and
+bottomRad are zero, sets to kRect_Type. Otherwise, if leftRad and
+rightRad are equal and at least half rect.width(), and topRad and
+bottomRad are equal at least half rect.height(), sets to kOval_Type.
+Otherwise, if leftRad and rightRad are equal, and topRad and bottomRad
+are equal, sets to kSimple_Type. Otherwise, sets to kNinePatch_Type.</p>
+<p>Nine patch refers to the nine parts defined by the radii: one center
+rectangle, four edge patches, and four corner patches.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>rect</strong> – bounds of rounded rectangle</p></li>
+<li><p><strong>leftRad</strong> – left-top and left-bottom x-axis radius</p></li>
+<li><p><strong>topRad</strong> – left-top and right-top y-axis radius</p></li>
+<li><p><strong>rightRad</strong> – right-top and right-bottom x-axis radius</p></li>
+<li><p><strong>bottomRad</strong> – left-bottom and right-bottom y-axis radius</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="skia.RRect.setOval">
+<span class="sig-prename descclassname"><span class="pre">RRect.</span></span><span class="sig-name descname"><span class="pre">setOval</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#skia.RRect" title="skia.RRect"><span class="pre">skia.RRect</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">oval</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="skia.Rect.html#skia.Rect" title="skia.Rect"><span class="pre">skia.Rect</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#skia.RRect.setOval" title="Permalink to this definition"></a></dt>
+<dd><p>Sets bounds to oval, x-axis radii to half oval.width(), and all y-axis
+radii to half oval.height().</p>
+<p>If oval bounds is empty, sets to kEmpty_Type. Otherwise, sets to
+kOval_Type.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>oval</strong> – bounds of oval</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="skia.RRect.setRect">
+<span class="sig-prename descclassname"><span class="pre">RRect.</span></span><span class="sig-name descname"><span class="pre">setRect</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#skia.RRect" title="skia.RRect"><span class="pre">skia.RRect</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">rect</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="skia.Rect.html#skia.Rect" title="skia.Rect"><span class="pre">skia.Rect</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#skia.RRect.setRect" title="Permalink to this definition"></a></dt>
+<dd><p>Sets bounds to sorted rect, and sets corner radii to zero.</p>
+<p>If set bounds has width and height, and sets type to kRect_Type;
+otherwise, sets type to kEmpty_Type.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>rect</strong> – bounds to set</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="skia.RRect.setRectRadii">
+<span class="sig-prename descclassname"><span class="pre">RRect.</span></span><span class="sig-name descname"><span class="pre">setRectRadii</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#skia.RRect" title="skia.RRect"><span class="pre">skia.RRect</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">rect</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="skia.Rect.html#skia.Rect" title="skia.Rect"><span class="pre">skia.Rect</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">radii</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="skia.Point.html#skia.Point" title="skia.Point"><span class="pre">skia.Point</span></a><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#skia.RRect.setRectRadii" title="Permalink to this definition"></a></dt>
+<dd><p>Sets bounds to rect.</p>
+<p>Sets radii array for individual control of all for corners.</p>
+<p>If rect is empty, sets to kEmpty_Type. Otherwise, if one of each corner
+radii are zero, sets to kRect_Type. Otherwise, if all x-axis radii are
+equal and at least half rect.width(), and all y-axis radii are equal at
+least half rect.height(), sets to kOval_Type. Otherwise, if all x-axis
+radii are equal, and all y-axis radii are equal, sets to kSimple_Type.
+Otherwise, sets to kNinePatch_Type.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>rect</strong> – bounds of rounded rectangle</p></li>
+<li><p><strong>radii</strong> – corner x-axis and y-axis radii</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="skia.RRect.setRectXY">
+<span class="sig-prename descclassname"><span class="pre">RRect.</span></span><span class="sig-name descname"><span class="pre">setRectXY</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#skia.RRect" title="skia.RRect"><span class="pre">skia.RRect</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">rect</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="skia.Rect.html#skia.Rect" title="skia.Rect"><span class="pre">skia.Rect</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">xRad</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">yRad</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#skia.RRect.setRectXY" title="Permalink to this definition"></a></dt>
+<dd><p>Sets to rounded rectangle with the same radii for all four corners.</p>
+<p>If rect is empty, sets to kEmpty_Type. Otherwise, if xRad or yRad is
+zero, sets to kRect_Type. Otherwise, if xRad is at least half
+rect.width() and yRad is at least half rect.height(), sets to
+kOval_Type. Otherwise, sets to kSimple_Type.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>rect</strong> – bounds of rounded rectangle</p></li>
+<li><p><strong>xRad</strong> – x-axis radius of corners</p></li>
+<li><p><strong>yRad</strong> – y-axis radius of corners</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="skia.RRect.transform">
+<span class="sig-prename descclassname"><span class="pre">RRect.</span></span><span class="sig-name descname"><span class="pre">transform</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#skia.RRect" title="skia.RRect"><span class="pre">skia.RRect</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">matrix</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">SkMatrix</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dst</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#skia.RRect" title="skia.RRect"><span class="pre">skia.RRect</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#skia.RRect.transform" title="Permalink to this definition"></a></dt>
+<dd><p>Transforms by <a class="reference internal" href="#skia.RRect" title="skia.RRect"><code class="xref py py-class docutils literal notranslate"><span class="pre">RRect</span></code></a> by matrix, storing result in dst.</p>
+<p>Returns true if <a class="reference internal" href="#skia.RRect" title="skia.RRect"><code class="xref py py-class docutils literal notranslate"><span class="pre">RRect</span></code></a> transformed can be represented by
+another <a class="reference internal" href="#skia.RRect" title="skia.RRect"><code class="xref py py-class docutils literal notranslate"><span class="pre">RRect</span></code></a>. Returns false if matrix contains
+transformations that are not axis aligned.</p>
+<p>Asserts in debug builds if <a class="reference internal" href="#skia.RRect" title="skia.RRect"><code class="xref py py-class docutils literal notranslate"><span class="pre">RRect</span></code></a> equals dst.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>matrix</strong> – <a class="reference internal" href="skia.Matrix.html#skia.Matrix" title="skia.Matrix"><code class="xref py py-class docutils literal notranslate"><span class="pre">Matrix</span></code></a> specifying the transform</p></li>
+<li><p><strong>dst</strong> – <a class="reference internal" href="#skia.RRect" title="skia.RRect"><code class="xref py py-class docutils literal notranslate"><span class="pre">RRect</span></code></a> to store the result</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>true if transformation succeeded.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="skia.RRect.type">
+<span class="sig-prename descclassname"><span class="pre">RRect.</span></span><span class="sig-name descname"><span class="pre">type</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#skia.RRect" title="skia.RRect"><span class="pre">skia.RRect</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="skia.RRect.Type.html#skia.RRect.Type" title="skia.RRect.Type"><span class="pre">skia.RRect.Type</span></a></span></span><a class="headerlink" href="#skia.RRect.type" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="skia.RRect.width">
+<span class="sig-prename descclassname"><span class="pre">RRect.</span></span><span class="sig-name descname"><span class="pre">width</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#skia.RRect" title="skia.RRect"><span class="pre">skia.RRect</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="headerlink" href="#skia.RRect.width" title="Permalink to this definition"></a></dt>
+<dd><p>Returns span on the x-axis.</p>
+<p>This does not check if result fits in 32-bit float; result may be
+infinity.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>rect().fRight minus rect().fLeft</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="skia.RRect.writeToMemory">
+<span class="sig-prename descclassname"><span class="pre">RRect.</span></span><span class="sig-name descname"><span class="pre">writeToMemory</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#skia.RRect" title="skia.RRect"><span class="pre">skia.RRect</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bytes</span></span></span><a class="headerlink" href="#skia.RRect.writeToMemory" title="Permalink to this definition"></a></dt>
+<dd><p>Writes <a class="reference internal" href="#skia.RRect" title="skia.RRect"><code class="xref py py-class docutils literal notranslate"><span class="pre">RRect</span></code></a> to buffer.</p>
+<p>Writes kSizeInMemory bytes, and returns kSizeInMemory, the number of
+bytes written.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>bytes written, kSizeInMemory</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="attributes">
+<h2>Attributes<a class="headerlink" href="#attributes" title="Permalink to this heading"></a></h2>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="skia.RRect.kComplex_Type">
+<span class="sig-prename descclassname"><span class="pre">RRect.</span></span><span class="sig-name descname"><span class="pre">kComplex_Type</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;Type.kComplex_Type:</span> <span class="pre">5&gt;</span></em><a class="headerlink" href="#skia.RRect.kComplex_Type" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="skia.RRect.kEmpty_Type">
+<span class="sig-prename descclassname"><span class="pre">RRect.</span></span><span class="sig-name descname"><span class="pre">kEmpty_Type</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;Type.kEmpty_Type:</span> <span class="pre">0&gt;</span></em><a class="headerlink" href="#skia.RRect.kEmpty_Type" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="skia.RRect.kLastType">
+<span class="sig-prename descclassname"><span class="pre">RRect.</span></span><span class="sig-name descname"><span class="pre">kLastType</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;Type.kComplex_Type:</span> <span class="pre">5&gt;</span></em><a class="headerlink" href="#skia.RRect.kLastType" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="skia.RRect.kLowerLeft_Corner">
+<span class="sig-prename descclassname"><span class="pre">RRect.</span></span><span class="sig-name descname"><span class="pre">kLowerLeft_Corner</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;Corner.kLowerLeft_Corner:</span> <span class="pre">3&gt;</span></em><a class="headerlink" href="#skia.RRect.kLowerLeft_Corner" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="skia.RRect.kLowerRight_Corner">
+<span class="sig-prename descclassname"><span class="pre">RRect.</span></span><span class="sig-name descname"><span class="pre">kLowerRight_Corner</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;Corner.kLowerRight_Corner:</span> <span class="pre">2&gt;</span></em><a class="headerlink" href="#skia.RRect.kLowerRight_Corner" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="skia.RRect.kNinePatch_Type">
+<span class="sig-prename descclassname"><span class="pre">RRect.</span></span><span class="sig-name descname"><span class="pre">kNinePatch_Type</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;Type.kNinePatch_Type:</span> <span class="pre">4&gt;</span></em><a class="headerlink" href="#skia.RRect.kNinePatch_Type" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="skia.RRect.kOval_Type">
+<span class="sig-prename descclassname"><span class="pre">RRect.</span></span><span class="sig-name descname"><span class="pre">kOval_Type</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;Type.kOval_Type:</span> <span class="pre">2&gt;</span></em><a class="headerlink" href="#skia.RRect.kOval_Type" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="skia.RRect.kRect_Type">
+<span class="sig-prename descclassname"><span class="pre">RRect.</span></span><span class="sig-name descname"><span class="pre">kRect_Type</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;Type.kRect_Type:</span> <span class="pre">1&gt;</span></em><a class="headerlink" href="#skia.RRect.kRect_Type" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="skia.RRect.kSimple_Type">
+<span class="sig-prename descclassname"><span class="pre">RRect.</span></span><span class="sig-name descname"><span class="pre">kSimple_Type</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;Type.kSimple_Type:</span> <span class="pre">3&gt;</span></em><a class="headerlink" href="#skia.RRect.kSimple_Type" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="skia.RRect.kSizeInMemory">
+<span class="sig-prename descclassname"><span class="pre">RRect.</span></span><span class="sig-name descname"><span class="pre">kSizeInMemory</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">48</span></em><a class="headerlink" href="#skia.RRect.kSizeInMemory" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="skia.RRect.kUpperLeft_Corner">
+<span class="sig-prename descclassname"><span class="pre">RRect.</span></span><span class="sig-name descname"><span class="pre">kUpperLeft_Corner</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;Corner.kUpperLeft_Corner:</span> <span class="pre">0&gt;</span></em><a class="headerlink" href="#skia.RRect.kUpperLeft_Corner" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="skia.RRect.kUpperRight_Corner">
+<span class="sig-prename descclassname"><span class="pre">RRect.</span></span><span class="sig-name descname"><span class="pre">kUpperRight_Corner</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;Corner.kUpperRight_Corner:</span> <span class="pre">1&gt;</span></em><a class="headerlink" href="#skia.RRect.kUpperRight_Corner" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="skia.Point3.html" class="btn btn-neutral float-left" title="Point3" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="skia.RRect.Corner.html" class="btn btn-neutral float-right" title="RRect.Corner" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2020, Kota Yamaguchi.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
