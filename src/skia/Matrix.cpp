@@ -1830,6 +1830,34 @@ py::class_<SkM44>(m, "M44", R"docstring(
         py::arg("eye"), py::arg("center"), py::arg("up"))
     .def_static("Perspective", &SkM44::Perspective,
         py::arg("near"), py::arg("far"), py::arg("angle"))
+    .def("rc",
+        [] (const SkM44& self, int r, int c) {
+            if ((r < 0) || (r > 3) || (c < 0) || (c > 3))
+                throw py::value_error("Indices must be between 0 to 3.");
+            return self.rc(r, c);
+        },
+        R"docstring(
+        Returns one matrix value from a particular row/column.
+
+        :param r:  matrix row to fetch
+        :param c:  matrix column to fetch
+        :return:   value at the given matrix position
+        )docstring",
+        py::arg("r"), py::arg("c"))
+    .def("setRC",
+        [] (SkM44& self, int r, int c, SkScalar value) {
+            if ((r < 0) || (r > 3) || (c < 0) || (c > 3))
+                throw py::value_error("Indices must be between 0 to 3.");
+            self.setRC(r, c, value);
+        },
+        R"docstring(
+        Set one matrix value at a particular row/column.
+
+        :param r:  matrix row to set
+        :param c:  matrix column to set
+        :param value:  value to set
+        )docstring",
+        py::arg("r"), py::arg("c"), py::arg("value"))
     .def("setIdentity", &SkM44::setIdentity)
     .def("setTranslate", &SkM44::setTranslate,
         py::arg("x"), py::arg("y"), py::arg("z") = 0)
