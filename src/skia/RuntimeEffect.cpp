@@ -24,7 +24,7 @@ py::class_<SkRuntimeEffectBuilder> runtime_effect_builder(m, "RuntimeEffectBuild
 
 py::enum_<SkRuntimeEffect::ChildType>(runtime_effect, "ChildType")
     .value("kShader",       SkRuntimeEffect::ChildType::kShader)
-    .value("kColorFilter,", SkRuntimeEffect::ChildType::kColorFilter)
+    .value("kColorFilter", SkRuntimeEffect::ChildType::kColorFilter)
     .value("kBlender",      SkRuntimeEffect::ChildType::kBlender)
     .export_values();
 
