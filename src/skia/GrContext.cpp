@@ -956,7 +956,7 @@ py::class_<GrDirectContext, sk_sp<GrDirectContext>, GrRecordingContext>(m, "GrDi
 
         The client should ensure that the returned backend texture is valid.
         For the Vulkan backend the layout of the created VkImage will be:
-             VK_IMAGE_LAYOUT_UNDEFINED.
+        VK_IMAGE_LAYOUT_UNDEFINED .
         )docstring",
         py::arg("width"), py::arg("height"), py::arg("backendFormat"),
         py::arg("mipMapped"), py::arg("renderable"),
@@ -996,7 +996,7 @@ py::class_<GrDirectContext, sk_sp<GrDirectContext>, GrRecordingContext>(m, "GrDi
         The finishedProc will always get called even if we failed to create the
         GrBackendTexture.
         For the Vulkan backend the layout of the created VkImage will be:
-            VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL
+        VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL .
         )docstring",
         py::arg("width"), py::arg("height"), py::arg("backendFormat"),
         py::arg("color"), py::arg("mipMapped"), py::arg("renderable"),
