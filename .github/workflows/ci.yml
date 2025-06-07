@@ -165,8 +165,8 @@ jobs:
           # installing libegl1 will also install libegl-mesa0
           sudo apt-get -y install libegl1
           python -m pip install -f dist skia-python
-          python -m pip install sphinx==6.2.1 sphinx-rtd-theme
-          python setup.py build_sphinx
+          python -m pip install sphinx sphinx-rtd-theme
+          sphinx-build -b html docs docs/_build/html
 
       - name: Deploy docs
         if: github.event_name == 'release' && github.event.action == 'published'

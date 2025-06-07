@@ -196,15 +196,6 @@ setup(
     ],
     setup_requires=['pybind11>=2.6'],
     cmdclass={'build_ext': BuildExt},
-    command_options={
-        'build_sphinx': {
-            'project': ('setup.py', NAME),
-            'version': ('setup.py', __version__),
-            'release': ('setup.py', __version__),
-            'source_dir': ('setup.py', 'docs'),
-            'build_dir': ('setup.py', 'docs/_build'),
-        },
-    },
     classifiers=[
         'Development Status :: 4 - Beta',
         'Intended Audience :: Developers',
