@@ -1,21 +1,21 @@
 
 
 <!DOCTYPE html>
-<html class="writer-html5" lang="en">
+<html class="writer-html5" lang="en" data-content_root="../">
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Paint Overview &mdash; skia-python 138.0rc1 documentation</title>
-      <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
-      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css" />
+  <title>Paint Overview &mdash; skia-python 0.0.1 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
 
   
-      <script src="../_static/jquery.js"></script>
-      <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
-      <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
-      <script src="../_static/doctools.js"></script>
-      <script src="../_static/sphinx_highlight.js"></script>
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=d45e8c67"></script>
+      <script src="../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -121,7 +121,7 @@
            <div itemprop="articleBody">
              
   <section id="paint-overview">
-<h1>Paint Overview<a class="headerlink" href="#paint-overview" title="Permalink to this heading"></a></h1>
+<h1>Paint Overview<a class="headerlink" href="#paint-overview" title="Link to this heading"></a></h1>
 <p>Anytime you draw something in Skia, and want to specify what color it is, or how
 it blends with the background, or what style or font to draw it in, you specify
 those attributes in a paint.</p>
@@ -217,7 +217,7 @@ are used not only for drawing text, but also for measuring it:</p>
 </pre></div>
 </div>
 <section id="xfermode">
-<span id="id1"></span><h2>Xfermode<a class="headerlink" href="#xfermode" title="Permalink to this heading"></a></h2>
+<span id="id1"></span><h2>Xfermode<a class="headerlink" href="#xfermode" title="Link to this heading"></a></h2>
 <p>The following example demonstrates all of the Skia’s standard transfer modes. In
 this example the source is a solid magenta color with a horizontal alpha
 gradient and the destination is a solid cyan color with a vertical alpha
@@ -290,10 +290,10 @@ gradient.</p>
 <img alt="Paint 4" src="../_images/paint-4.png" />
 </section>
 <section id="shader">
-<span id="id2"></span><h2>Shader<a class="headerlink" href="#shader" title="Permalink to this heading"></a></h2>
+<span id="id2"></span><h2>Shader<a class="headerlink" href="#shader" title="Link to this heading"></a></h2>
 <p>Several shaders are defined (besides the linear gradient already mentioned):</p>
 <section id="bitmap-shader">
-<h3>Bitmap Shader<a class="headerlink" href="#bitmap-shader" title="Permalink to this heading"></a></h3>
+<h3>Bitmap Shader<a class="headerlink" href="#bitmap-shader" title="Link to this heading"></a></h3>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">image</span> <span class="o">=</span> <span class="n">skia</span><span class="o">.</span><span class="n">Image</span><span class="o">.</span><span class="n">MakeFromEncoded</span><span class="p">(</span>
     <span class="n">skia</span><span class="o">.</span><span class="n">Data</span><span class="o">.</span><span class="n">MakeFromFileName</span><span class="p">(</span><span class="s1">&#39;../skia/resources/images/color_wheel.png&#39;</span><span class="p">))</span>
 
@@ -313,7 +313,7 @@ gradient.</p>
 <img alt="Bitmap Shader" src="../_images/paint-bitmap-shader.png" />
 </section>
 <section id="radial-gradient-shader">
-<h3>Radial Gradient Shader<a class="headerlink" href="#radial-gradient-shader" title="Permalink to this heading"></a></h3>
+<h3>Radial Gradient Shader<a class="headerlink" href="#radial-gradient-shader" title="Link to this heading"></a></h3>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">canvas</span><span class="o">.</span><span class="n">drawPaint</span><span class="p">({</span>
     <span class="s1">&#39;Shader&#39;</span><span class="p">:</span> <span class="n">skia</span><span class="o">.</span><span class="n">GradientShader</span><span class="o">.</span><span class="n">MakeRadial</span><span class="p">(</span>
         <span class="n">center</span><span class="o">=</span><span class="p">(</span><span class="mf">128.0</span><span class="p">,</span> <span class="mf">128.0</span><span class="p">),</span>
@@ -326,7 +326,7 @@ gradient.</p>
 <img alt="Radial Gradient Shader" src="../_images/paint-radial-gradient-shader.png" />
 </section>
 <section id="two-point-conical-gradient-shader">
-<h3>Two-Point Conical Gradient Shader<a class="headerlink" href="#two-point-conical-gradient-shader" title="Permalink to this heading"></a></h3>
+<h3>Two-Point Conical Gradient Shader<a class="headerlink" href="#two-point-conical-gradient-shader" title="Link to this heading"></a></h3>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">canvas</span><span class="o">.</span><span class="n">drawPaint</span><span class="p">({</span>
     <span class="s1">&#39;Shader&#39;</span><span class="p">:</span> <span class="n">skia</span><span class="o">.</span><span class="n">GradientShader</span><span class="o">.</span><span class="n">MakeTwoPointConical</span><span class="p">(</span>
         <span class="n">start</span><span class="o">=</span><span class="p">(</span><span class="mf">128.0</span><span class="p">,</span> <span class="mf">128.0</span><span class="p">),</span>
@@ -341,7 +341,7 @@ gradient.</p>
 <img alt="Two-Point Conical Gradient Shader" src="../_images/paint-two-point-conical-gradient-shader.png" />
 </section>
 <section id="sweep-gradient-shader">
-<h3>Sweep Gradient Shader<a class="headerlink" href="#sweep-gradient-shader" title="Permalink to this heading"></a></h3>
+<h3>Sweep Gradient Shader<a class="headerlink" href="#sweep-gradient-shader" title="Link to this heading"></a></h3>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">canvas</span><span class="o">.</span><span class="n">drawPaint</span><span class="p">({</span>
     <span class="s1">&#39;Shader&#39;</span><span class="p">:</span> <span class="n">skia</span><span class="o">.</span><span class="n">GradientShader</span><span class="o">.</span><span class="n">MakeSweep</span><span class="p">(</span>
         <span class="n">cx</span><span class="o">=</span><span class="mf">128.0</span><span class="p">,</span>
@@ -359,7 +359,7 @@ gradient.</p>
 <img alt="Sweep Gradient Shader" src="../_images/paint-sweep-gradient-shader.png" />
 </section>
 <section id="fractal-perlin-noise-shader">
-<h3>Fractal Perlin Noise Shader<a class="headerlink" href="#fractal-perlin-noise-shader" title="Permalink to this heading"></a></h3>
+<h3>Fractal Perlin Noise Shader<a class="headerlink" href="#fractal-perlin-noise-shader" title="Link to this heading"></a></h3>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">canvas</span><span class="o">.</span><span class="n">drawPaint</span><span class="p">({</span>
     <span class="s1">&#39;Shader&#39;</span><span class="p">:</span> <span class="n">skia</span><span class="o">.</span><span class="n">PerlinNoiseShader</span><span class="o">.</span><span class="n">MakeFractalNoise</span><span class="p">(</span><span class="mf">0.05</span><span class="p">,</span> <span class="mf">0.05</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">)</span>
 <span class="p">})</span>
@@ -368,7 +368,7 @@ gradient.</p>
 <img alt="Fractal Perlin Noise Shader" src="../_images/paint-fractal-perlin-noise-shader.png" />
 </section>
 <section id="turbulence-perlin-noise-shader">
-<h3>Turbulence Perlin Noise Shader<a class="headerlink" href="#turbulence-perlin-noise-shader" title="Permalink to this heading"></a></h3>
+<h3>Turbulence Perlin Noise Shader<a class="headerlink" href="#turbulence-perlin-noise-shader" title="Link to this heading"></a></h3>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">canvas</span><span class="o">.</span><span class="n">drawPaint</span><span class="p">({</span>
     <span class="s1">&#39;Shader&#39;</span><span class="p">:</span> <span class="n">skia</span><span class="o">.</span><span class="n">PerlinNoiseShader</span><span class="o">.</span><span class="n">MakeTurbulence</span><span class="p">(</span><span class="mf">0.05</span><span class="p">,</span> <span class="mf">0.05</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">)</span>
 <span class="p">})</span>
@@ -377,7 +377,7 @@ gradient.</p>
 <img alt="Turbulence Perlin Noise Shader" src="../_images/paint-turbulence-perlin-noise-shader.png" />
 </section>
 <section id="compose-shader">
-<h3>Compose Shader<a class="headerlink" href="#compose-shader" title="Permalink to this heading"></a></h3>
+<h3>Compose Shader<a class="headerlink" href="#compose-shader" title="Link to this heading"></a></h3>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">shader</span> <span class="o">=</span> <span class="n">skia</span><span class="o">.</span><span class="n">Shaders</span><span class="o">.</span><span class="n">Blend</span><span class="p">(</span>
     <span class="n">skia</span><span class="o">.</span><span class="n">BlendMode</span><span class="o">.</span><span class="n">kDifference</span><span class="p">,</span>
     <span class="n">skia</span><span class="o">.</span><span class="n">GradientShader</span><span class="o">.</span><span class="n">MakeRadial</span><span class="p">((</span><span class="mf">128.0</span><span class="p">,</span> <span class="mf">128.0</span><span class="p">),</span> <span class="mf">180.0</span><span class="p">,</span> <span class="p">[</span><span class="n">skia</span><span class="o">.</span><span class="n">ColorBLUE</span><span class="p">,</span> <span class="n">skia</span><span class="o">.</span><span class="n">ColorYELLOW</span><span class="p">]),</span>
@@ -389,10 +389,10 @@ gradient.</p>
 </section>
 </section>
 <section id="imagefilter">
-<span id="id3"></span><h2>ImageFilter<a class="headerlink" href="#imagefilter" title="Permalink to this heading"></a></h2>
+<span id="id3"></span><h2>ImageFilter<a class="headerlink" href="#imagefilter" title="Link to this heading"></a></h2>
 <p>See <a class="reference internal" href="../reference/skia.ImageFilters.html#skia.ImageFilters" title="skia.ImageFilters"><code class="xref py py-class docutils literal notranslate"><span class="pre">ImageFilters</span></code></a> for a list of available filters.</p>
 <section id="drop-shadow">
-<h3>Drop Shadow<a class="headerlink" href="#drop-shadow" title="Permalink to this heading"></a></h3>
+<h3>Drop Shadow<a class="headerlink" href="#drop-shadow" title="Link to this heading"></a></h3>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">canvas</span><span class="o">.</span><span class="n">drawColor</span><span class="p">(</span><span class="n">skia</span><span class="o">.</span><span class="n">ColorWHITE</span><span class="p">)</span>
 <span class="n">paint</span> <span class="o">=</span> <span class="n">skia</span><span class="o">.</span><span class="n">Paint</span><span class="p">(</span>
     <span class="n">ImageFilter</span><span class="o">=</span><span class="n">skia</span><span class="o">.</span><span class="n">ImageFilters</span><span class="o">.</span><span class="n">DropShadow</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="n">skia</span><span class="o">.</span><span class="n">ColorBLACK</span><span class="p">)</span>
@@ -404,7 +404,7 @@ gradient.</p>
 <img alt="Drop Shadow Image Filter" src="../_images/paint-drop-shadow-image-filter.png" />
 </section>
 <section id="dilate">
-<h3>Dilate<a class="headerlink" href="#dilate" title="Permalink to this heading"></a></h3>
+<h3>Dilate<a class="headerlink" href="#dilate" title="Link to this heading"></a></h3>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">canvas</span><span class="o">.</span><span class="n">drawColor</span><span class="p">(</span><span class="n">skia</span><span class="o">.</span><span class="n">ColorWHITE</span><span class="p">)</span>
 <span class="n">paint</span> <span class="o">=</span> <span class="n">skia</span><span class="o">.</span><span class="n">Paint</span><span class="p">(</span>
     <span class="n">ImageFilter</span><span class="o">=</span><span class="n">skia</span><span class="o">.</span><span class="n">ImageFilters</span><span class="o">.</span><span class="n">Dilate</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
@@ -416,7 +416,7 @@ gradient.</p>
 <img alt="Dilate Image Filter" src="../_images/paint-dilate-image-filter.png" />
 </section>
 <section id="erode">
-<h3>Erode<a class="headerlink" href="#erode" title="Permalink to this heading"></a></h3>
+<h3>Erode<a class="headerlink" href="#erode" title="Link to this heading"></a></h3>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">canvas</span><span class="o">.</span><span class="n">drawColor</span><span class="p">(</span><span class="n">skia</span><span class="o">.</span><span class="n">ColorWHITE</span><span class="p">)</span>
 <span class="n">paint</span> <span class="o">=</span> <span class="n">skia</span><span class="o">.</span><span class="n">Paint</span><span class="p">(</span>
     <span class="n">ImageFilter</span><span class="o">=</span><span class="n">skia</span><span class="o">.</span><span class="n">ImageFilters</span><span class="o">.</span><span class="n">Erode</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
@@ -429,9 +429,9 @@ gradient.</p>
 </section>
 </section>
 <section id="maskfilter">
-<span id="id4"></span><h2>MaskFilter<a class="headerlink" href="#maskfilter" title="Permalink to this heading"></a></h2>
+<span id="id4"></span><h2>MaskFilter<a class="headerlink" href="#maskfilter" title="Link to this heading"></a></h2>
 <section id="blur-mask-filter">
-<h3>Blur Mask Filter<a class="headerlink" href="#blur-mask-filter" title="Permalink to this heading"></a></h3>
+<h3>Blur Mask Filter<a class="headerlink" href="#blur-mask-filter" title="Link to this heading"></a></h3>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">canvas</span><span class="o">.</span><span class="n">drawColor</span><span class="p">(</span><span class="n">skia</span><span class="o">.</span><span class="n">ColorWHITE</span><span class="p">)</span>
 <span class="n">paint</span> <span class="o">=</span> <span class="n">skia</span><span class="o">.</span><span class="n">Paint</span><span class="p">(</span>
     <span class="n">MaskFilter</span><span class="o">=</span><span class="n">skia</span><span class="o">.</span><span class="n">MaskFilter</span><span class="o">.</span><span class="n">MakeBlur</span><span class="p">(</span><span class="n">skia</span><span class="o">.</span><span class="n">kNormal_BlurStyle</span><span class="p">,</span> <span class="mf">5.0</span><span class="p">)</span>
@@ -444,9 +444,9 @@ gradient.</p>
 </section>
 </section>
 <section id="colorfilter">
-<span id="id5"></span><h2>ColorFilter<a class="headerlink" href="#colorfilter" title="Permalink to this heading"></a></h2>
+<span id="id5"></span><h2>ColorFilter<a class="headerlink" href="#colorfilter" title="Link to this heading"></a></h2>
 <section id="color-matrix-color-filter">
-<h3>Color Matrix Color Filter<a class="headerlink" href="#color-matrix-color-filter" title="Permalink to this heading"></a></h3>
+<h3>Color Matrix Color Filter<a class="headerlink" href="#color-matrix-color-filter" title="Link to this heading"></a></h3>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">image</span> <span class="o">=</span> <span class="n">skia</span><span class="o">.</span><span class="n">Image</span><span class="o">.</span><span class="n">MakeFromEncoded</span><span class="p">(</span>
     <span class="n">skia</span><span class="o">.</span><span class="n">Data</span><span class="o">.</span><span class="n">MakeFromFileName</span><span class="p">(</span>
         <span class="s1">&#39;../skia/resources/images/mandrill_512_q075.jpg&#39;</span><span class="p">))</span>
@@ -477,7 +477,7 @@ gradient.</p>
 <img alt="Color Matrix Color Filter" src="../_images/paint-color-matrix-color-filter.png" />
 </section>
 <section id="color-table-color-filter">
-<h3>Color Table Color Filter<a class="headerlink" href="#color-table-color-filter" title="Permalink to this heading"></a></h3>
+<h3>Color Table Color Filter<a class="headerlink" href="#color-table-color-filter" title="Link to this heading"></a></h3>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">canvas</span><span class="o">.</span><span class="n">scale</span><span class="p">(</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">)</span>
 <span class="n">ct</span> <span class="o">=</span> <span class="nb">bytearray</span><span class="p">(</span><span class="mi">256</span><span class="p">)</span>
 <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">256</span><span class="p">):</span>
@@ -493,9 +493,9 @@ gradient.</p>
 </section>
 </section>
 <section id="patheffect">
-<span id="id6"></span><h2>PathEffect<a class="headerlink" href="#patheffect" title="Permalink to this heading"></a></h2>
+<span id="id6"></span><h2>PathEffect<a class="headerlink" href="#patheffect" title="Link to this heading"></a></h2>
 <section id="path-2d-path-effect">
-<h3>Path 2D Path Effect<a class="headerlink" href="#path-2d-path-effect" title="Permalink to this heading"></a></h3>
+<h3>Path 2D Path Effect<a class="headerlink" href="#path-2d-path-effect" title="Link to this heading"></a></h3>
 <p>Stamp the specified path to fill the shape, using the matrix to define the
 latice.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">scale</span> <span class="o">=</span> <span class="mf">10.0</span>
@@ -520,7 +520,7 @@ latice.</p>
 <img alt="Path 2D Path Effect" src="../_images/paint-path-2d-path-effect.png" />
 </section>
 <section id="line-2d-path-effect">
-<h3>Line 2D Path Effect<a class="headerlink" href="#line-2d-path-effect" title="Permalink to this heading"></a></h3>
+<h3>Line 2D Path Effect<a class="headerlink" href="#line-2d-path-effect" title="Link to this heading"></a></h3>
 <p>A special case of Path2DPathEffect where the path is a straight line to be
 stroked, not a path to be filled.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">lattice</span> <span class="o">=</span> <span class="n">skia</span><span class="o">.</span><span class="n">Matrix</span><span class="p">()</span>
@@ -539,7 +539,7 @@ stroked, not a path to be filled.</p>
 <img alt="Line 2D Path Effect" src="../_images/paint-line-2d-path-effect.png" />
 </section>
 <section id="path-1d-path-effect">
-<h3>Path 1D Path Effect<a class="headerlink" href="#path-1d-path-effect" title="Permalink to this heading"></a></h3>
+<h3>Path 1D Path Effect<a class="headerlink" href="#path-1d-path-effect" title="Link to this heading"></a></h3>
 <p>Create dash-like effects by replicating the specified path along the drawn path.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">path</span> <span class="o">=</span> <span class="n">skia</span><span class="o">.</span><span class="n">Path</span><span class="p">()</span>
 <span class="n">path</span><span class="o">.</span><span class="n">addOval</span><span class="p">(</span><span class="n">skia</span><span class="o">.</span><span class="n">Rect</span><span class="p">(</span><span class="mf">16.0</span><span class="p">,</span> <span class="mf">6.0</span><span class="p">))</span>
@@ -555,7 +555,7 @@ stroked, not a path to be filled.</p>
 <img alt="Path 1D Path Effect" src="../_images/paint-path-1d-path-effect.png" />
 </section>
 <section id="corner-path-effect">
-<h3>Corner Path Effect<a class="headerlink" href="#corner-path-effect" title="Permalink to this heading"></a></h3>
+<h3>Corner Path Effect<a class="headerlink" href="#corner-path-effect" title="Link to this heading"></a></h3>
 <p>A path effect that can turn sharp corners into various treatments (e.g. rounded
 corners).</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">star</span><span class="p">():</span>
@@ -582,7 +582,7 @@ corners).</p>
 <img alt="Corner Path Effect" src="../_images/paint-corner-path-effect.png" />
 </section>
 <section id="dash-path-effect">
-<h3>Dash Path Effect<a class="headerlink" href="#dash-path-effect" title="Permalink to this heading"></a></h3>
+<h3>Dash Path Effect<a class="headerlink" href="#dash-path-effect" title="Link to this heading"></a></h3>
 <p>A path effect that implements dashing.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">paint</span> <span class="o">=</span> <span class="n">skia</span><span class="o">.</span><span class="n">Paint</span><span class="p">(</span>
     <span class="n">AntiAlias</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
@@ -598,7 +598,7 @@ corners).</p>
 <img alt="Dash Path Effect" src="../_images/paint-dash-path-effect.png" />
 </section>
 <section id="discrete-path-effect">
-<h3>Discrete Path Effect<a class="headerlink" href="#discrete-path-effect" title="Permalink to this heading"></a></h3>
+<h3>Discrete Path Effect<a class="headerlink" href="#discrete-path-effect" title="Link to this heading"></a></h3>
 <p>This path effect chops a path into discrete segments, and randomly displaces
 them.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">paint</span> <span class="o">=</span> <span class="n">skia</span><span class="o">.</span><span class="n">Paint</span><span class="p">(</span>
@@ -615,7 +615,7 @@ them.</p>
 <img alt="Discrete Path Effect" src="../_images/paint-dash-path-effect.png" />
 </section>
 <section id="compose-path-effect">
-<h3>Compose Path Effect<a class="headerlink" href="#compose-path-effect" title="Permalink to this heading"></a></h3>
+<h3>Compose Path Effect<a class="headerlink" href="#compose-path-effect" title="Link to this heading"></a></h3>
 <p>A pathEffect whose effect is to apply first the inner pathEffect and the the
 outer pathEffect (i.e. outer(inner(path))).</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">path_effect</span> <span class="o">=</span> <span class="n">skia</span><span class="o">.</span><span class="n">PathEffect</span><span class="o">.</span><span class="n">MakeCompose</span><span class="p">(</span>
@@ -636,7 +636,7 @@ outer pathEffect (i.e. outer(inner(path))).</p>
 <img alt="Compose Path Effect" src="../_images/paint-compose-path-effect.png" />
 </section>
 <section id="sum-path-effect">
-<h3>Sum Path Effect<a class="headerlink" href="#sum-path-effect" title="Permalink to this heading"></a></h3>
+<h3>Sum Path Effect<a class="headerlink" href="#sum-path-effect" title="Link to this heading"></a></h3>
 <p>A pathEffect whose effect is to apply two effects, in sequence (i.e. first(path)
 + second(path)).</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">path_effect</span> <span class="o">=</span> <span class="n">skia</span><span class="o">.</span><span class="n">PathEffect</span><span class="o">.</span><span class="n">MakeSum</span><span class="p">(</span>
