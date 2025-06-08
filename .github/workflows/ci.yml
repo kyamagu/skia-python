@@ -68,14 +68,14 @@ jobs:
       matrix:
         os: [ubuntu-22.04, windows-2022, macos-13]
         arch: [auto64]
-        cp: ["cp39"]
+        cp: ["cp3{8,9}"]
         include:
           - os: macos-13
             arch: arm64
-            cp: "cp39"
+            cp: "cp3{8,9}"
           - os: ubuntu-22.04-arm
             arch: aarch64
-            cp: "cp39"
+            cp: "cp3{8,9}"
 
     steps:
       - uses: actions/checkout@v4
@@ -117,7 +117,7 @@ jobs:
       - uses: actions/setup-python@v5
         name: Install Python
         with:
-          python-version: '3.11'
+          python-version: '3.8'
 
       - uses: actions/download-artifact@v4
         with:
