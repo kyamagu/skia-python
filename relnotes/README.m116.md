@@ -45,7 +45,7 @@ of this update had taken from.
   detection code in upsteam Skia between m87 and m116, to optimize for speed and
   work-around driver bugs. If you use a non-open-source GPU driver, i.e.
   everybody except Mesa on Linux, and especially Apple Mac users,
-  you may need to request compatible OpenGL profile to match the your
+  you may need to request compatible OpenGL profile to match your
   GPU/driver's capability. For Apple Mac users, with `glfw`, adds the following:
 
 ```

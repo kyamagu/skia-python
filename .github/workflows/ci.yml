@@ -25,6 +25,9 @@ jobs:
           - os: ubuntu-22.04-arm
             arch: aarch64
             cp: "cp3{10,11,12,13}"
+          - os: windows-11-arm
+            arch: ARM64
+            cp: "cp3{11,12,13}"
 
     steps:
       - uses: actions/checkout@v4
@@ -56,45 +59,6 @@ jobs:
           name: wheel-${{ matrix.os }}-${{ matrix.arch }}-${{ matrix.cp }}
           path: ./wheelhouse/*.whl
 
-  build_wheels_armwindows:
-    name: Build wheels on ${{ matrix.os }} (${{ matrix.arch }}) for ${{ matrix.cp }}
-    runs-on: ${{ matrix.os }}
-    strategy:
-      fail-fast: false
-      matrix:
-        os: [windows-11-arm]
-        arch: [ARM64]
-        cp: ["cp3{11,12,13}"]
-
-    steps:
-      - uses: actions/checkout@v4
-        with:
-          submodules: true
-
-      - name: Build wheels
-        uses: pypa/cibuildwheel@v2.21.3
-        env:
-          CIBW_MANYLINUX_X86_64_IMAGE: manylinux_2_28
-          CIBW_MANYLINUX_AARCH64_IMAGE: manylinux_2_28
-          CIBW_BUILD: "${{ matrix.cp }}-*"
-          CIBW_SKIP: "*musllinux*"
-          CIBW_ARCHS: ${{ matrix.arch }}
-          CIBW_ENVIRONMENT_MACOS: TARGET_ARCH=${{ matrix.arch }} MACOSX_DEPLOYMENT_TARGET=11.0
-          CIBW_BEFORE_ALL: bash scripts/build_${{ runner.os }}.sh
-          CIBW_BEFORE_BUILD: pip install pybind11 numpy
-          CIBW_BEFORE_BUILD_WINDOWS: pip install pybind11 "numpy >= 2.3.0rc1"
-          CIBW_TEST_REQUIRES: pytest pillow glfw
-          CIBW_TEST_REQUIRES_MACOS: pytest pillow pyopengl
-          CIBW_TEST_COMMAND: python -m pytest {project}/tests
-          CIBW_TEST_COMMAND_LINUX: >
-            xvfb-run -s "-screen 0 640x480x24" python -m pytest {project}/tests
-          CIBW_TEST_SKIP: "*-macosx_arm64"
-
-      - uses: actions/upload-artifact@v4
-        with:
-          name: wheel-${{ matrix.os }}-${{ matrix.arch }}-${{ matrix.cp }}
-          path: ./wheelhouse/*.whl
-
   # identical to "build_wheels", except with the older pypa/cibuildwheel@v2.19.2
   build_wheels_old:
     name: Build wheels on ${{ matrix.os }} (${{ matrix.arch }}) for ${{ matrix.cp }}
@@ -104,14 +68,14 @@ jobs:
       matrix:
         os: [ubuntu-22.04, windows-2022, macos-13]
         arch: [auto64]
-        cp: ["cp39"]
+        cp: ["cp3{8,9}"]
         include:
           - os: macos-13
             arch: arm64
-            cp: "cp39"
+            cp: "cp3{8,9}"
           - os: ubuntu-22.04-arm
             arch: aarch64
-            cp: "cp39"
+            cp: "cp3{8,9}"
 
     steps:
       - uses: actions/checkout@v4
@@ -145,7 +109,7 @@ jobs:
 
   build_docs:
     name: Build docs
-    needs: [build_wheels, build_wheels_armwindows, build_wheels_old]
+    needs: [build_wheels, build_wheels_old]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -165,8 +129,8 @@ jobs:
           # installing libegl1 will also install libegl-mesa0
           sudo apt-get -y install libegl1
           python -m pip install --pre -f dist skia-python
-          python -m pip install sphinx==6.2.1 sphinx-rtd-theme
-          python setup.py build_sphinx
+          python -m pip install sphinx sphinx-rtd-theme
+          sphinx-build -b html docs docs/_build/html
 
       - name: Deploy docs
         if: github.event_name == 'release' && github.event.action == 'published'
@@ -177,7 +141,7 @@ jobs:
 
   publish:
     name: Upload packages to PyPI
-    needs: [build_wheels, build_wheels_armwindows, build_wheels_old]
+    needs: [build_wheels, build_wheels_old]
     runs-on: ubuntu-latest
     if: github.event_name == 'release' && github.event.action == 'published'
     permissions:

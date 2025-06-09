@@ -12,7 +12,7 @@ except ImportError:
     pass
 
 NAME = 'skia-python'
-__version__ = '138.0rc1'
+__version__ = '138.0'
 
 SKIA_PATH = os.getenv('SKIA_PATH', 'skia')
 SKIA_OUT_PATH = os.getenv(
@@ -178,21 +178,11 @@ setup(
     ext_modules=[extension],
     data_files=data_files,
     install_requires=[
-        'numpy; sys_platform != "win32" or python_version <= "3.10"',
-        'numpy>=2.3.0rc1; sys_platform == "win32" and python_version >= "3.11"',
+        'numpy',
         'pybind11>=2.6'
     ],
     setup_requires=['pybind11>=2.6'],
     cmdclass={'build_ext': BuildExt},
-    command_options={
-        'build_sphinx': {
-            'project': ('setup.py', NAME),
-            'version': ('setup.py', __version__),
-            'release': ('setup.py', __version__),
-            'source_dir': ('setup.py', 'docs'),
-            'build_dir': ('setup.py', 'docs/_build'),
-        },
-    },
     classifiers=[
         'Development Status :: 4 - Beta',
         'Intended Audience :: Developers',
