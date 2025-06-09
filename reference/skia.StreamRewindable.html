@@ -1,21 +1,21 @@
 
 
 <!DOCTYPE html>
-<html class="writer-html5" lang="en">
+<html class="writer-html5" lang="en" data-content_root="../">
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>StreamRewindable &mdash; skia-python 138.0rc1 documentation</title>
-      <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
-      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css" />
+  <title>StreamRewindable &mdash; skia-python 0.0.1 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
 
   
-      <script src="../_static/jquery.js"></script>
-      <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
-      <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
-      <script src="../_static/doctools.js"></script>
-      <script src="../_static/sphinx_highlight.js"></script>
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=d45e8c67"></script>
+      <script src="../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -284,114 +284,114 @@
            <div itemprop="articleBody">
              
   <section id="streamrewindable">
-<h1>StreamRewindable<a class="headerlink" href="#streamrewindable" title="Permalink to this heading"></a></h1>
+<h1>StreamRewindable<a class="headerlink" href="#streamrewindable" title="Link to this heading"></a></h1>
 <dl class="py class">
 <dt class="sig sig-object py" id="skia.StreamRewindable">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">StreamRewindable</span></span><a class="headerlink" href="#skia.StreamRewindable" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">StreamRewindable</span></span><a class="headerlink" href="#skia.StreamRewindable" title="Link to this definition"></a></dt>
 <dd><p class="rubric">Methods</p>
 <table class="autosummary longtable docutils align-default">
 <tbody>
 <tr class="row-odd"><td><p><a class="reference internal" href="#skia.StreamRewindable.MakeFromFile" title="skia.StreamRewindable.MakeFromFile"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MakeFromFile</span></code></a></p></td>
-<td><p>Attempts to open the specified file as a stream, returns nullptr on failure.</p></td>
+<td><p>MakeFromFile(path: str) -&gt; SkStreamAsset</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#skia.StreamRewindable.__init__" title="skia.StreamRewindable.__init__"><code class="xref py py-obj docutils literal notranslate"><span class="pre">__init__</span></code></a></p></td>
 <td><p></p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#skia.StreamRewindable.duplicate" title="skia.StreamRewindable.duplicate"><code class="xref py py-obj docutils literal notranslate"><span class="pre">duplicate</span></code></a></p></td>
-<td><p></p></td>
+<td><p>duplicate(self: skia.StreamRewindable) -&gt; skia.StreamRewindable</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#skia.StreamRewindable.fork" title="skia.StreamRewindable.fork"><code class="xref py py-obj docutils literal notranslate"><span class="pre">fork</span></code></a></p></td>
-<td><p>Duplicates this stream.</p></td>
+<td><p>fork(self: skia.Stream) -&gt; skia.Stream</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#skia.StreamRewindable.getLength" title="skia.StreamRewindable.getLength"><code class="xref py py-obj docutils literal notranslate"><span class="pre">getLength</span></code></a></p></td>
-<td><p>Returns the total length of the stream.</p></td>
+<td><p>getLength(self: skia.Stream) -&gt; int</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#skia.StreamRewindable.getMemoryBase" title="skia.StreamRewindable.getMemoryBase"><code class="xref py py-obj docutils literal notranslate"><span class="pre">getMemoryBase</span></code></a></p></td>
-<td><p>Returns the starting address for the data.</p></td>
+<td><p>getMemoryBase(self: skia.Stream) -&gt; capsule</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#skia.StreamRewindable.getPosition" title="skia.StreamRewindable.getPosition"><code class="xref py py-obj docutils literal notranslate"><span class="pre">getPosition</span></code></a></p></td>
-<td><p>Returns the current position in the stream.</p></td>
+<td><p>getPosition(self: skia.Stream) -&gt; int</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#skia.StreamRewindable.hasLength" title="skia.StreamRewindable.hasLength"><code class="xref py py-obj docutils literal notranslate"><span class="pre">hasLength</span></code></a></p></td>
-<td><p>Returns true if this stream can report it's total length.</p></td>
+<td><p>hasLength(self: skia.Stream) -&gt; bool</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#skia.StreamRewindable.hasPosition" title="skia.StreamRewindable.hasPosition"><code class="xref py py-obj docutils literal notranslate"><span class="pre">hasPosition</span></code></a></p></td>
-<td><p>Returns true if this stream can report it's current position.</p></td>
+<td><p>hasPosition(self: skia.Stream) -&gt; bool</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#skia.StreamRewindable.isAtEnd" title="skia.StreamRewindable.isAtEnd"><code class="xref py py-obj docutils literal notranslate"><span class="pre">isAtEnd</span></code></a></p></td>
-<td><p>Returns true when all the bytes in the stream have been read.</p></td>
+<td><p>isAtEnd(self: skia.Stream) -&gt; bool</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#skia.StreamRewindable.move" title="skia.StreamRewindable.move"><code class="xref py py-obj docutils literal notranslate"><span class="pre">move</span></code></a></p></td>
-<td><p>Seeks to an relative offset in the stream.</p></td>
+<td><p>move(self: skia.Stream, offset: int) -&gt; bool</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#skia.StreamRewindable.peek" title="skia.StreamRewindable.peek"><code class="xref py py-obj docutils literal notranslate"><span class="pre">peek</span></code></a></p></td>
-<td><p>Attempt to peek at size bytes.</p></td>
+<td><p>peek(self: skia.Stream, buffer: Buffer) -&gt; int</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#skia.StreamRewindable.read" title="skia.StreamRewindable.read"><code class="xref py py-obj docutils literal notranslate"><span class="pre">read</span></code></a></p></td>
-<td><p>Reads or skips size number of bytes.</p></td>
+<td><p>read(self: skia.Stream, buffer: Buffer, size: int = 0) -&gt; int</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#skia.StreamRewindable.readBool" title="skia.StreamRewindable.readBool"><code class="xref py py-obj docutils literal notranslate"><span class="pre">readBool</span></code></a></p></td>
-<td><p></p></td>
+<td><p>readBool(self: skia.Stream) -&gt; bool</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#skia.StreamRewindable.readPackedUInt" title="skia.StreamRewindable.readPackedUInt"><code class="xref py py-obj docutils literal notranslate"><span class="pre">readPackedUInt</span></code></a></p></td>
-<td><p></p></td>
+<td><p>readPackedUInt(self: skia.Stream) -&gt; int</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#skia.StreamRewindable.readS16" title="skia.StreamRewindable.readS16"><code class="xref py py-obj docutils literal notranslate"><span class="pre">readS16</span></code></a></p></td>
-<td><p></p></td>
+<td><p>readS16(self: skia.Stream) -&gt; int</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#skia.StreamRewindable.readS32" title="skia.StreamRewindable.readS32"><code class="xref py py-obj docutils literal notranslate"><span class="pre">readS32</span></code></a></p></td>
-<td><p></p></td>
+<td><p>readS32(self: skia.Stream) -&gt; int</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#skia.StreamRewindable.readS8" title="skia.StreamRewindable.readS8"><code class="xref py py-obj docutils literal notranslate"><span class="pre">readS8</span></code></a></p></td>
-<td><p></p></td>
+<td><p>readS8(self: skia.Stream) -&gt; int</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#skia.StreamRewindable.readScalar" title="skia.StreamRewindable.readScalar"><code class="xref py py-obj docutils literal notranslate"><span class="pre">readScalar</span></code></a></p></td>
-<td><p></p></td>
+<td><p>readScalar(self: skia.Stream) -&gt; float</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#skia.StreamRewindable.readU16" title="skia.StreamRewindable.readU16"><code class="xref py py-obj docutils literal notranslate"><span class="pre">readU16</span></code></a></p></td>
-<td><p></p></td>
+<td><p>readU16(self: skia.Stream) -&gt; int</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#skia.StreamRewindable.readU32" title="skia.StreamRewindable.readU32"><code class="xref py py-obj docutils literal notranslate"><span class="pre">readU32</span></code></a></p></td>
-<td><p></p></td>
+<td><p>readU32(self: skia.Stream) -&gt; int</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#skia.StreamRewindable.readU8" title="skia.StreamRewindable.readU8"><code class="xref py py-obj docutils literal notranslate"><span class="pre">readU8</span></code></a></p></td>
-<td><p></p></td>
+<td><p>readU8(self: skia.Stream) -&gt; int</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#skia.StreamRewindable.rewind" title="skia.StreamRewindable.rewind"><code class="xref py py-obj docutils literal notranslate"><span class="pre">rewind</span></code></a></p></td>
-<td><p>Rewinds to the beginning of the stream.</p></td>
+<td><p>rewind(self: skia.Stream) -&gt; bool</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#skia.StreamRewindable.seek" title="skia.StreamRewindable.seek"><code class="xref py py-obj docutils literal notranslate"><span class="pre">seek</span></code></a></p></td>
-<td><p>Seeks to an absolute position in the stream.</p></td>
+<td><p>seek(self: skia.Stream, position: int) -&gt; bool</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#skia.StreamRewindable.skip" title="skia.StreamRewindable.skip"><code class="xref py py-obj docutils literal notranslate"><span class="pre">skip</span></code></a></p></td>
-<td><p>Skip size number of bytes.</p></td>
+<td><p>skip(self: skia.Stream, size: int) -&gt; int</p></td>
 </tr>
 </tbody>
 </table>
 </dd></dl>
 
 <section id="methods">
-<h2>Methods<a class="headerlink" href="#methods" title="Permalink to this heading"></a></h2>
+<h2>Methods<a class="headerlink" href="#methods" title="Link to this heading"></a></h2>
 <dl class="py method">
 <dt class="sig sig-object py" id="skia.StreamRewindable.MakeFromFile">
-<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">StreamRewindable.</span></span><span class="sig-name descname"><span class="pre">MakeFromFile</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">SkStreamAsset</span></span></span><a class="headerlink" href="#skia.StreamRewindable.MakeFromFile" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="k"><span class="pre">static</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">StreamRewindable.</span></span><span class="sig-name descname"><span class="pre">MakeFromFile</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">SkStreamAsset</span></span></span><a class="headerlink" href="#skia.StreamRewindable.MakeFromFile" title="Link to this definition"></a></dt>
 <dd><p>Attempts to open the specified file as a stream, returns nullptr on
 failure.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="skia.StreamRewindable.__init__">
-<span class="sig-prename descclassname"><span class="pre">StreamRewindable.</span></span><span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#skia.StreamRewindable.__init__" title="Permalink to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">StreamRewindable.</span></span><span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#skia.StreamRewindable.__init__" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="skia.StreamRewindable.duplicate">
-<span class="sig-prename descclassname"><span class="pre">StreamRewindable.</span></span><span class="sig-name descname"><span class="pre">duplicate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#skia.StreamRewindable" title="skia.StreamRewindable"><span class="pre">skia.StreamRewindable</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#skia.StreamRewindable" title="skia.StreamRewindable"><span class="pre">skia.StreamRewindable</span></a></span></span><a class="headerlink" href="#skia.StreamRewindable.duplicate" title="Permalink to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">StreamRewindable.</span></span><span class="sig-name descname"><span class="pre">duplicate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#skia.StreamRewindable" title="skia.StreamRewindable"><span class="pre">skia.StreamRewindable</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#skia.StreamRewindable" title="skia.StreamRewindable"><span class="pre">skia.StreamRewindable</span></a></span></span><a class="headerlink" href="#skia.StreamRewindable.duplicate" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="skia.StreamRewindable.fork">
-<span class="sig-prename descclassname"><span class="pre">StreamRewindable.</span></span><span class="sig-name descname"><span class="pre">fork</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="skia.Stream.html#skia.Stream" title="skia.Stream"><span class="pre">skia.Stream</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="skia.Stream.html#skia.Stream" title="skia.Stream"><span class="pre">skia.Stream</span></a></span></span><a class="headerlink" href="#skia.StreamRewindable.fork" title="Permalink to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">StreamRewindable.</span></span><span class="sig-name descname"><span class="pre">fork</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="skia.Stream.html#skia.Stream" title="skia.Stream"><span class="pre">skia.Stream</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="skia.Stream.html#skia.Stream" title="skia.Stream"><span class="pre">skia.Stream</span></a></span></span><a class="headerlink" href="#skia.StreamRewindable.fork" title="Link to this definition"></a></dt>
 <dd><p>Duplicates this stream.</p>
 <p>If this cannot be done, returns NULL. The returned stream will be
 positioned the same as this stream.</p>
@@ -399,7 +399,7 @@ positioned the same as this stream.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="skia.StreamRewindable.getLength">
-<span class="sig-prename descclassname"><span class="pre">StreamRewindable.</span></span><span class="sig-name descname"><span class="pre">getLength</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="skia.Stream.html#skia.Stream" title="skia.Stream"><span class="pre">skia.Stream</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="headerlink" href="#skia.StreamRewindable.getLength" title="Permalink to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">StreamRewindable.</span></span><span class="sig-name descname"><span class="pre">getLength</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="skia.Stream.html#skia.Stream" title="skia.Stream"><span class="pre">skia.Stream</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="headerlink" href="#skia.StreamRewindable.getLength" title="Link to this definition"></a></dt>
 <dd><p>Returns the total length of the stream.</p>
 <p>If this cannot be done, returns 0.</p>
 <p>Reimplemented in <a class="reference internal" href="skia.MemoryStream.html#skia.MemoryStream" title="skia.MemoryStream"><code class="xref py py-class docutils literal notranslate"><span class="pre">MemoryStream</span></code></a>, <a class="reference internal" href="skia.FILEStream.html#skia.FILEStream" title="skia.FILEStream"><code class="xref py py-class docutils literal notranslate"><span class="pre">FILEStream</span></code></a>, and
@@ -408,7 +408,7 @@ positioned the same as this stream.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="skia.StreamRewindable.getMemoryBase">
-<span class="sig-prename descclassname"><span class="pre">StreamRewindable.</span></span><span class="sig-name descname"><span class="pre">getMemoryBase</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="skia.Stream.html#skia.Stream" title="skia.Stream"><span class="pre">skia.Stream</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">capsule</span></span></span><a class="headerlink" href="#skia.StreamRewindable.getMemoryBase" title="Permalink to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">StreamRewindable.</span></span><span class="sig-name descname"><span class="pre">getMemoryBase</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="skia.Stream.html#skia.Stream" title="skia.Stream"><span class="pre">skia.Stream</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">capsule</span></span></span><a class="headerlink" href="#skia.StreamRewindable.getMemoryBase" title="Link to this definition"></a></dt>
 <dd><p>Returns the starting address for the data.</p>
 <p>If this cannot be done, returns NULL.</p>
 <p>Reimplemented in <a class="reference internal" href="skia.MemoryStream.html#skia.MemoryStream" title="skia.MemoryStream"><code class="xref py py-class docutils literal notranslate"><span class="pre">MemoryStream</span></code></a>, and <a class="reference internal" href="skia.StreamMemory.html#skia.StreamMemory" title="skia.StreamMemory"><code class="xref py py-class docutils literal notranslate"><span class="pre">StreamMemory</span></code></a>.</p>
@@ -416,7 +416,7 @@ positioned the same as this stream.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="skia.StreamRewindable.getPosition">
-<span class="sig-prename descclassname"><span class="pre">StreamRewindable.</span></span><span class="sig-name descname"><span class="pre">getPosition</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="skia.Stream.html#skia.Stream" title="skia.Stream"><span class="pre">skia.Stream</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="headerlink" href="#skia.StreamRewindable.getPosition" title="Permalink to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">StreamRewindable.</span></span><span class="sig-name descname"><span class="pre">getPosition</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="skia.Stream.html#skia.Stream" title="skia.Stream"><span class="pre">skia.Stream</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="headerlink" href="#skia.StreamRewindable.getPosition" title="Link to this definition"></a></dt>
 <dd><p>Returns the current position in the stream.</p>
 <p>If this cannot be done, returns 0.</p>
 <p>Reimplemented in <a class="reference internal" href="skia.MemoryStream.html#skia.MemoryStream" title="skia.MemoryStream"><code class="xref py py-class docutils literal notranslate"><span class="pre">MemoryStream</span></code></a>, <a class="reference internal" href="skia.FILEStream.html#skia.FILEStream" title="skia.FILEStream"><code class="xref py py-class docutils literal notranslate"><span class="pre">FILEStream</span></code></a>, and
@@ -425,21 +425,21 @@ positioned the same as this stream.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="skia.StreamRewindable.hasLength">
-<span class="sig-prename descclassname"><span class="pre">StreamRewindable.</span></span><span class="sig-name descname"><span class="pre">hasLength</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="skia.Stream.html#skia.Stream" title="skia.Stream"><span class="pre">skia.Stream</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#skia.StreamRewindable.hasLength" title="Permalink to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">StreamRewindable.</span></span><span class="sig-name descname"><span class="pre">hasLength</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="skia.Stream.html#skia.Stream" title="skia.Stream"><span class="pre">skia.Stream</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#skia.StreamRewindable.hasLength" title="Link to this definition"></a></dt>
 <dd><p>Returns true if this stream can report it’s total length.</p>
 <p>Reimplemented in <a class="reference internal" href="skia.StreamAsset.html#skia.StreamAsset" title="skia.StreamAsset"><code class="xref py py-class docutils literal notranslate"><span class="pre">StreamAsset</span></code></a>.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="skia.StreamRewindable.hasPosition">
-<span class="sig-prename descclassname"><span class="pre">StreamRewindable.</span></span><span class="sig-name descname"><span class="pre">hasPosition</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="skia.Stream.html#skia.Stream" title="skia.Stream"><span class="pre">skia.Stream</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#skia.StreamRewindable.hasPosition" title="Permalink to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">StreamRewindable.</span></span><span class="sig-name descname"><span class="pre">hasPosition</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="skia.Stream.html#skia.Stream" title="skia.Stream"><span class="pre">skia.Stream</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#skia.StreamRewindable.hasPosition" title="Link to this definition"></a></dt>
 <dd><p>Returns true if this stream can report it’s current position.</p>
 <p>Reimplemented in <a class="reference internal" href="skia.StreamSeekable.html#skia.StreamSeekable" title="skia.StreamSeekable"><code class="xref py py-class docutils literal notranslate"><span class="pre">StreamSeekable</span></code></a>.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="skia.StreamRewindable.isAtEnd">
-<span class="sig-prename descclassname"><span class="pre">StreamRewindable.</span></span><span class="sig-name descname"><span class="pre">isAtEnd</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="skia.Stream.html#skia.Stream" title="skia.Stream"><span class="pre">skia.Stream</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#skia.StreamRewindable.isAtEnd" title="Permalink to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">StreamRewindable.</span></span><span class="sig-name descname"><span class="pre">isAtEnd</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="skia.Stream.html#skia.Stream" title="skia.Stream"><span class="pre">skia.Stream</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#skia.StreamRewindable.isAtEnd" title="Link to this definition"></a></dt>
 <dd><p>Returns true when all the bytes in the stream have been read.</p>
 <p>This may return true early (when there are no more bytes to be read) or
 late (after the first unsuccessful read).</p>
@@ -448,7 +448,7 @@ late (after the first unsuccessful read).</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="skia.StreamRewindable.move">
-<span class="sig-prename descclassname"><span class="pre">StreamRewindable.</span></span><span class="sig-name descname"><span class="pre">move</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="skia.Stream.html#skia.Stream" title="skia.Stream"><span class="pre">skia.Stream</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">offset</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#skia.StreamRewindable.move" title="Permalink to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">StreamRewindable.</span></span><span class="sig-name descname"><span class="pre">move</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="skia.Stream.html#skia.Stream" title="skia.Stream"><span class="pre">skia.Stream</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">offset</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#skia.StreamRewindable.move" title="Link to this definition"></a></dt>
 <dd><p>Seeks to an relative offset in the stream.</p>
 <p>If this cannot be done, returns false. If an attempt is made to move to
 a position outside the stream, the position will be set to the closest
@@ -459,7 +459,7 @@ point within the stream (beginning or end).</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="skia.StreamRewindable.peek">
-<span class="sig-prename descclassname"><span class="pre">StreamRewindable.</span></span><span class="sig-name descname"><span class="pre">peek</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="skia.Stream.html#skia.Stream" title="skia.Stream"><span class="pre">skia.Stream</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">buffer</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Buffer</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="headerlink" href="#skia.StreamRewindable.peek" title="Permalink to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">StreamRewindable.</span></span><span class="sig-name descname"><span class="pre">peek</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="skia.Stream.html#skia.Stream" title="skia.Stream"><span class="pre">skia.Stream</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">buffer</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Buffer</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="headerlink" href="#skia.StreamRewindable.peek" title="Link to this definition"></a></dt>
 <dd><p>Attempt to peek at size bytes.</p>
 <p>If this stream supports peeking, copy min(size, peekable bytes) into
 buffer, and return the number of bytes copied. If the stream does not
@@ -483,7 +483,7 @@ Destination to copy bytes.</p></li>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="skia.StreamRewindable.read">
-<span class="sig-prename descclassname"><span class="pre">StreamRewindable.</span></span><span class="sig-name descname"><span class="pre">read</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="skia.Stream.html#skia.Stream" title="skia.Stream"><span class="pre">skia.Stream</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">buffer</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Buffer</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">size</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="headerlink" href="#skia.StreamRewindable.read" title="Permalink to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">StreamRewindable.</span></span><span class="sig-name descname"><span class="pre">read</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="skia.Stream.html#skia.Stream" title="skia.Stream"><span class="pre">skia.Stream</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">buffer</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Buffer</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">size</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="headerlink" href="#skia.StreamRewindable.read" title="Link to this definition"></a></dt>
 <dd><p>Reads or skips size number of bytes.</p>
 <p>If buffer == NULL, skip size bytes, return how many were skipped. If
 buffer != NULL, copy size bytes into buffer, return how many were
@@ -505,52 +505,52 @@ into buffer</p></li>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="skia.StreamRewindable.readBool">
-<span class="sig-prename descclassname"><span class="pre">StreamRewindable.</span></span><span class="sig-name descname"><span class="pre">readBool</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="skia.Stream.html#skia.Stream" title="skia.Stream"><span class="pre">skia.Stream</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#skia.StreamRewindable.readBool" title="Permalink to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">StreamRewindable.</span></span><span class="sig-name descname"><span class="pre">readBool</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="skia.Stream.html#skia.Stream" title="skia.Stream"><span class="pre">skia.Stream</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#skia.StreamRewindable.readBool" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="skia.StreamRewindable.readPackedUInt">
-<span class="sig-prename descclassname"><span class="pre">StreamRewindable.</span></span><span class="sig-name descname"><span class="pre">readPackedUInt</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="skia.Stream.html#skia.Stream" title="skia.Stream"><span class="pre">skia.Stream</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="headerlink" href="#skia.StreamRewindable.readPackedUInt" title="Permalink to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">StreamRewindable.</span></span><span class="sig-name descname"><span class="pre">readPackedUInt</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="skia.Stream.html#skia.Stream" title="skia.Stream"><span class="pre">skia.Stream</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="headerlink" href="#skia.StreamRewindable.readPackedUInt" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="skia.StreamRewindable.readS16">
-<span class="sig-prename descclassname"><span class="pre">StreamRewindable.</span></span><span class="sig-name descname"><span class="pre">readS16</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="skia.Stream.html#skia.Stream" title="skia.Stream"><span class="pre">skia.Stream</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="headerlink" href="#skia.StreamRewindable.readS16" title="Permalink to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">StreamRewindable.</span></span><span class="sig-name descname"><span class="pre">readS16</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="skia.Stream.html#skia.Stream" title="skia.Stream"><span class="pre">skia.Stream</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="headerlink" href="#skia.StreamRewindable.readS16" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="skia.StreamRewindable.readS32">
-<span class="sig-prename descclassname"><span class="pre">StreamRewindable.</span></span><span class="sig-name descname"><span class="pre">readS32</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="skia.Stream.html#skia.Stream" title="skia.Stream"><span class="pre">skia.Stream</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="headerlink" href="#skia.StreamRewindable.readS32" title="Permalink to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">StreamRewindable.</span></span><span class="sig-name descname"><span class="pre">readS32</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="skia.Stream.html#skia.Stream" title="skia.Stream"><span class="pre">skia.Stream</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="headerlink" href="#skia.StreamRewindable.readS32" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="skia.StreamRewindable.readS8">
-<span class="sig-prename descclassname"><span class="pre">StreamRewindable.</span></span><span class="sig-name descname"><span class="pre">readS8</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="skia.Stream.html#skia.Stream" title="skia.Stream"><span class="pre">skia.Stream</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="headerlink" href="#skia.StreamRewindable.readS8" title="Permalink to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">StreamRewindable.</span></span><span class="sig-name descname"><span class="pre">readS8</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="skia.Stream.html#skia.Stream" title="skia.Stream"><span class="pre">skia.Stream</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="headerlink" href="#skia.StreamRewindable.readS8" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="skia.StreamRewindable.readScalar">
-<span class="sig-prename descclassname"><span class="pre">StreamRewindable.</span></span><span class="sig-name descname"><span class="pre">readScalar</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="skia.Stream.html#skia.Stream" title="skia.Stream"><span class="pre">skia.Stream</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="headerlink" href="#skia.StreamRewindable.readScalar" title="Permalink to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">StreamRewindable.</span></span><span class="sig-name descname"><span class="pre">readScalar</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="skia.Stream.html#skia.Stream" title="skia.Stream"><span class="pre">skia.Stream</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="headerlink" href="#skia.StreamRewindable.readScalar" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="skia.StreamRewindable.readU16">
-<span class="sig-prename descclassname"><span class="pre">StreamRewindable.</span></span><span class="sig-name descname"><span class="pre">readU16</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="skia.Stream.html#skia.Stream" title="skia.Stream"><span class="pre">skia.Stream</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="headerlink" href="#skia.StreamRewindable.readU16" title="Permalink to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">StreamRewindable.</span></span><span class="sig-name descname"><span class="pre">readU16</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="skia.Stream.html#skia.Stream" title="skia.Stream"><span class="pre">skia.Stream</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="headerlink" href="#skia.StreamRewindable.readU16" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="skia.StreamRewindable.readU32">
-<span class="sig-prename descclassname"><span class="pre">StreamRewindable.</span></span><span class="sig-name descname"><span class="pre">readU32</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="skia.Stream.html#skia.Stream" title="skia.Stream"><span class="pre">skia.Stream</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="headerlink" href="#skia.StreamRewindable.readU32" title="Permalink to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">StreamRewindable.</span></span><span class="sig-name descname"><span class="pre">readU32</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="skia.Stream.html#skia.Stream" title="skia.Stream"><span class="pre">skia.Stream</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="headerlink" href="#skia.StreamRewindable.readU32" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="skia.StreamRewindable.readU8">
-<span class="sig-prename descclassname"><span class="pre">StreamRewindable.</span></span><span class="sig-name descname"><span class="pre">readU8</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="skia.Stream.html#skia.Stream" title="skia.Stream"><span class="pre">skia.Stream</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="headerlink" href="#skia.StreamRewindable.readU8" title="Permalink to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">StreamRewindable.</span></span><span class="sig-name descname"><span class="pre">readU8</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="skia.Stream.html#skia.Stream" title="skia.Stream"><span class="pre">skia.Stream</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="headerlink" href="#skia.StreamRewindable.readU8" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="skia.StreamRewindable.rewind">
-<span class="sig-prename descclassname"><span class="pre">StreamRewindable.</span></span><span class="sig-name descname"><span class="pre">rewind</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="skia.Stream.html#skia.Stream" title="skia.Stream"><span class="pre">skia.Stream</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#skia.StreamRewindable.rewind" title="Permalink to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">StreamRewindable.</span></span><span class="sig-name descname"><span class="pre">rewind</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="skia.Stream.html#skia.Stream" title="skia.Stream"><span class="pre">skia.Stream</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#skia.StreamRewindable.rewind" title="Link to this definition"></a></dt>
 <dd><p>Rewinds to the beginning of the stream.</p>
 <p>Returns true if the stream is known to be at the beginning after this
 call returns.</p>
@@ -560,7 +560,7 @@ call returns.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="skia.StreamRewindable.seek">
-<span class="sig-prename descclassname"><span class="pre">StreamRewindable.</span></span><span class="sig-name descname"><span class="pre">seek</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="skia.Stream.html#skia.Stream" title="skia.Stream"><span class="pre">skia.Stream</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">position</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#skia.StreamRewindable.seek" title="Permalink to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">StreamRewindable.</span></span><span class="sig-name descname"><span class="pre">seek</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="skia.Stream.html#skia.Stream" title="skia.Stream"><span class="pre">skia.Stream</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">position</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#skia.StreamRewindable.seek" title="Link to this definition"></a></dt>
 <dd><p>Seeks to an absolute position in the stream.</p>
 <p>If this cannot be done, returns false. If an attempt is made to seek
 past the end of the stream, the position will be set to the end of the
@@ -571,7 +571,7 @@ stream.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="skia.StreamRewindable.skip">
-<span class="sig-prename descclassname"><span class="pre">StreamRewindable.</span></span><span class="sig-name descname"><span class="pre">skip</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="skia.Stream.html#skia.Stream" title="skia.Stream"><span class="pre">skia.Stream</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">size</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="headerlink" href="#skia.StreamRewindable.skip" title="Permalink to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">StreamRewindable.</span></span><span class="sig-name descname"><span class="pre">skip</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="skia.Stream.html#skia.Stream" title="skia.Stream"><span class="pre">skia.Stream</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">size</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="headerlink" href="#skia.StreamRewindable.skip" title="Link to this definition"></a></dt>
 <dd><p>Skip size number of bytes.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns<span class="colon">:</span></dt>

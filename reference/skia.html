@@ -1,21 +1,21 @@
 
 
 <!DOCTYPE html>
-<html class="writer-html5" lang="en">
+<html class="writer-html5" lang="en" data-content_root="../">
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>skia &mdash; skia-python 138.0rc1 documentation</title>
-      <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
-      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css" />
+  <title>skia &mdash; skia-python 0.0.1 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
 
   
-      <script src="../_static/jquery.js"></script>
-      <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
-      <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
-      <script src="../_static/doctools.js"></script>
-      <script src="../_static/sphinx_highlight.js"></script>
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=d45e8c67"></script>
+      <script src="../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -310,97 +310,97 @@
            <div itemprop="articleBody">
              
   <section id="module-skia">
-<span id="skia"></span><h1>skia<a class="headerlink" href="#module-skia" title="Permalink to this heading"></a></h1>
+<span id="skia"></span><h1>skia<a class="headerlink" href="#module-skia" title="Link to this heading"></a></h1>
 <p>Python Skia binding module.</p>
 <p class="rubric">Functions</p>
 <table class="autosummary longtable docutils align-default">
 <tbody>
 <tr class="row-odd"><td><p><a class="reference internal" href="#skia.AlphaTypeIsOpaque" title="skia.AlphaTypeIsOpaque"><code class="xref py py-obj docutils literal notranslate"><span class="pre">AlphaTypeIsOpaque</span></code></a></p></td>
-<td><p>Returns true if <a class="reference internal" href="skia.AlphaType.html#skia.AlphaType" title="skia.AlphaType"><code class="xref py py-class docutils literal notranslate"><span class="pre">AlphaType</span></code></a> equals <a class="reference internal" href="skia.AlphaType.html#skia.AlphaType.kOpaque_AlphaType" title="skia.AlphaType.kOpaque_AlphaType"><code class="xref py py-attr docutils literal notranslate"><span class="pre">kOpaque_AlphaType</span></code></a>.</p></td>
+<td><p>AlphaTypeIsOpaque(at: skia.AlphaType) -&gt; bool</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#skia.AsWinding" title="skia.AsWinding"><code class="xref py py-obj docutils literal notranslate"><span class="pre">AsWinding</span></code></a></p></td>
-<td><p>Set the result with fill type winding to area equivalent to path.</p></td>
+<td><p>AsWinding(path: skia.Path) -&gt; skia.Path</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#skia.BlendMode_AsCoeff" title="skia.BlendMode_AsCoeff"><code class="xref py py-obj docutils literal notranslate"><span class="pre">BlendMode_AsCoeff</span></code></a></p></td>
-<td><p>Returns true if 'mode' is a coefficient-based blend mode (&lt;= kLastCoeffMode).</p></td>
+<td><p>BlendMode_AsCoeff(mode: skia.BlendMode, src: skia.BlendModeCoeff, dst: skia.BlendModeCoeff) -&gt; bool</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#skia.BlendMode_Name" title="skia.BlendMode_Name"><code class="xref py py-obj docutils literal notranslate"><span class="pre">BlendMode_Name</span></code></a></p></td>
-<td><p>Returns name of blendMode as null-terminated C string.</p></td>
+<td><p>BlendMode_Name(blendMode: skia.BlendMode) -&gt; str</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#skia.Color" title="skia.Color"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Color</span></code></a></p></td>
-<td><p>Returns color value from 8-bit component values.</p></td>
+<td><p>Color(r: int, g: int, b: int, a: int = 255) -&gt; int</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#skia.ColorGetA" title="skia.ColorGetA"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ColorGetA</span></code></a></p></td>
-<td><p>Returns alpha byte from color value.</p></td>
+<td><p>ColorGetA(color: int) -&gt; int</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#skia.ColorGetB" title="skia.ColorGetB"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ColorGetB</span></code></a></p></td>
-<td><p>Returns blue component of color, from zero to 255.</p></td>
+<td><p>ColorGetB(color: int) -&gt; int</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#skia.ColorGetG" title="skia.ColorGetG"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ColorGetG</span></code></a></p></td>
-<td><p>Returns green component of color, from zero to 255.</p></td>
+<td><p>ColorGetG(color: int) -&gt; int</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#skia.ColorGetR" title="skia.ColorGetR"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ColorGetR</span></code></a></p></td>
-<td><p>Returns red component of color, from zero to 255.</p></td>
+<td><p>ColorGetR(color: int) -&gt; int</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#skia.ColorSetA" title="skia.ColorSetA"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ColorSetA</span></code></a></p></td>
-<td><p>Returns unpremultiplied color with red, blue, and green set from c; and alpha set from a.</p></td>
+<td><p>ColorSetA(c: int, a: int) -&gt; int</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#skia.ColorSetARGB" title="skia.ColorSetARGB"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ColorSetARGB</span></code></a></p></td>
-<td><p>Returns color value from 8-bit component values.</p></td>
+<td><p>ColorSetARGB(a: int, r: int, g: int, b: int) -&gt; int</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#skia.ColorSetRGB" title="skia.ColorSetRGB"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ColorSetRGB</span></code></a></p></td>
-<td><p>Returns color value from 8-bit component values, with alpha set fully opaque to 255.</p></td>
+<td><p>ColorSetRGB(r: int, g: int, b: int) -&gt; int</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#skia.ColorToHSV" title="skia.ColorToHSV"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ColorToHSV</span></code></a></p></td>
-<td><p>Converts ARGB to its HSV components.</p></td>
+<td><p>ColorToHSV(color: int) -&gt; list[float]</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#skia.ColorTypeBytesPerPixel" title="skia.ColorTypeBytesPerPixel"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ColorTypeBytesPerPixel</span></code></a></p></td>
-<td><p>Returns the number of bytes required to store a pixel, including unused padding.</p></td>
+<td><p>ColorTypeBytesPerPixel(ct: skia.ColorType) -&gt; int</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#skia.ColorTypeIsAlwaysOpaque" title="skia.ColorTypeIsAlwaysOpaque"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ColorTypeIsAlwaysOpaque</span></code></a></p></td>
-<td><p>Returns true if <a class="reference internal" href="skia.ColorType.html#skia.ColorType" title="skia.ColorType"><code class="xref py py-class docutils literal notranslate"><span class="pre">ColorType</span></code></a> always decodes alpha to 1.0, making the pixel fully opaque.</p></td>
+<td><p>ColorTypeIsAlwaysOpaque(ct: skia.ColorType) -&gt; bool</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#skia.ColorTypeValidateAlphaType" title="skia.ColorTypeValidateAlphaType"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ColorTypeValidateAlphaType</span></code></a></p></td>
-<td><p>Returns true if canonical can be set to a valid <a class="reference internal" href="skia.AlphaType.html#skia.AlphaType" title="skia.AlphaType"><code class="xref py py-class docutils literal notranslate"><span class="pre">AlphaType</span></code></a> for colorType.</p></td>
+<td><p>ColorTypeValidateAlphaType(colorType: skia.ColorType, alphaType: skia.AlphaType, canonical: skia.AlphaType = None) -&gt; bool</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#skia.ComputeIsOpaque" title="skia.ComputeIsOpaque"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ComputeIsOpaque</span></code></a></p></td>
-<td><p>Returns true if all pixels are opaque.</p></td>
+<td><p>ComputeIsOpaque(bm: skia.Bitmap) -&gt; bool</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#skia.EncodedOriginToMatrix" title="skia.EncodedOriginToMatrix"><code class="xref py py-obj docutils literal notranslate"><span class="pre">EncodedOriginToMatrix</span></code></a></p></td>
-<td><p>Given an encoded origin and the width and height of the source data, returns a matrix that transforms the source rectangle with upper left corner at [0, 0] and origin to a correctly oriented destination rectangle of [0, 0, w, h].</p></td>
+<td><p>EncodedOriginToMatrix(origin: skia.EncodedOrigin, w: int, h: int) -&gt; skia.Matrix</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#skia.HSVToColor" title="skia.HSVToColor"><code class="xref py py-obj docutils literal notranslate"><span class="pre">HSVToColor</span></code></a></p></td>
-<td><p>Converts HSV components to an ARGB color.</p></td>
+<td><p>HSVToColor(hsv: list[float], alpha: int = 255) -&gt; int</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#skia.MakeNullCanvas" title="skia.MakeNullCanvas"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MakeNullCanvas</span></code></a></p></td>
-<td><p></p></td>
+<td><p>MakeNullCanvas() -&gt; skia.Canvas</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#skia.Op" title="skia.Op"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Op</span></code></a></p></td>
-<td><p>Set this path to the result of applying the Op to this path and the specified path: this = (this op operand).</p></td>
+<td><p>Op(one: skia.Path, two: skia.Path, op: skia.PathOp) -&gt; skia.Path</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#skia.PathFillType_ConvertToNonInverse" title="skia.PathFillType_ConvertToNonInverse"><code class="xref py py-obj docutils literal notranslate"><span class="pre">PathFillType_ConvertToNonInverse</span></code></a></p></td>
-<td><p></p></td>
+<td><p>PathFillType_ConvertToNonInverse(ft: skia.PathFillType) -&gt; skia.PathFillType</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#skia.PathFillType_IsEvenOdd" title="skia.PathFillType_IsEvenOdd"><code class="xref py py-obj docutils literal notranslate"><span class="pre">PathFillType_IsEvenOdd</span></code></a></p></td>
-<td><p></p></td>
+<td><p>PathFillType_IsEvenOdd(ft: skia.PathFillType) -&gt; bool</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#skia.PathFillType_IsInverse" title="skia.PathFillType_IsInverse"><code class="xref py py-obj docutils literal notranslate"><span class="pre">PathFillType_IsInverse</span></code></a></p></td>
-<td><p></p></td>
+<td><p>PathFillType_IsInverse(ft: skia.PathFillType) -&gt; bool</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#skia.PreMultiplyARGB" title="skia.PreMultiplyARGB"><code class="xref py py-obj docutils literal notranslate"><span class="pre">PreMultiplyARGB</span></code></a></p></td>
-<td><p>Returns a SkPMColor value from unpremultiplied 8-bit component values.</p></td>
+<td><p>PreMultiplyARGB(a: int, r: int, g: int, b: int) -&gt; int</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#skia.PreMultiplyColor" title="skia.PreMultiplyColor"><code class="xref py py-obj docutils literal notranslate"><span class="pre">PreMultiplyColor</span></code></a></p></td>
-<td><p>Returns pmcolor closest to color c.</p></td>
+<td><p>PreMultiplyColor(c: int) -&gt; int</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#skia.RGBToHSV" title="skia.RGBToHSV"><code class="xref py py-obj docutils literal notranslate"><span class="pre">RGBToHSV</span></code></a></p></td>
-<td><p>Converts RGB to its HSV components.</p></td>
+<td><p>RGBToHSV(red: int, green: int, blue: int) -&gt; list[float]</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#skia.Simplify" title="skia.Simplify"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Simplify</span></code></a></p></td>
-<td><p>Set this path to a set of non-overlapping contours that describe the same area as the original path.</p></td>
+<td><p>Simplify(path: skia.Path) -&gt; skia.Path</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#skia.TightBounds" title="skia.TightBounds"><code class="xref py py-obj docutils literal notranslate"><span class="pre">TightBounds</span></code></a></p></td>
-<td><p>Set the resulting rectangle to the tight bounds of the path.</p></td>
+<td><p>TightBounds(path: skia.Path) -&gt; skia.Rect</p></td>
 </tr>
 </tbody>
 </table>
@@ -483,7 +483,7 @@
 <td><p>Describes geometric operations (ala <a class="reference internal" href="skia.Region.Op.html#skia.Region.Op" title="skia.Region.Op"><code class="xref py py-class docutils literal notranslate"><span class="pre">Region.Op</span></code></a>) that can be</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="skia.CornerPathEffect.html#skia.CornerPathEffect" title="skia.CornerPathEffect"><code class="xref py py-obj docutils literal notranslate"><span class="pre">CornerPathEffect</span></code></a></p></td>
-<td><p><a class="reference internal" href="skia.CornerPathEffect.html#skia.CornerPathEffect" title="skia.CornerPathEffect"><code class="xref py py-class docutils literal notranslate"><span class="pre">CornerPathEffect</span></code></a> is a subclass of <a class="reference internal" href="skia.PathEffect.html#skia.PathEffect" title="skia.PathEffect"><code class="xref py py-class docutils literal notranslate"><span class="pre">PathEffect</span></code></a> that can turn sharp corners into various treatments (e.g.</p></td>
+<td><p><a class="reference internal" href="skia.CornerPathEffect.html#skia.CornerPathEffect" title="skia.CornerPathEffect"><code class="xref py py-class docutils literal notranslate"><span class="pre">CornerPathEffect</span></code></a> is a subclass of <a class="reference internal" href="skia.PathEffect.html#skia.PathEffect" title="skia.PathEffect"><code class="xref py py-class docutils literal notranslate"><span class="pre">PathEffect</span></code></a> that can turn sharp corners into various treatments (e.g. rounded corners).</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="skia.CubicResampler.html#skia.CubicResampler" title="skia.CubicResampler"><code class="xref py py-obj docutils literal notranslate"><span class="pre">CubicResampler</span></code></a></p></td>
 <td><p></p></td>
@@ -951,8 +951,7 @@
 <td><p>Members:</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="skia.WStream.html#skia.WStream" title="skia.WStream"><code class="xref py py-obj docutils literal notranslate"><span class="pre">WStream</span></code></a></p></td>
-<td><p><p class="rubric">Subclasses</p>
-</p></td>
+<td><p></p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="skia.YUVAInfo.html#skia.YUVAInfo" title="skia.YUVAInfo"><code class="xref py py-obj docutils literal notranslate"><span class="pre">YUVAInfo</span></code></a></p></td>
 <td><p>Specifies the structure of planes for a YUV image with optional alpha.</p></td>
@@ -1005,10 +1004,10 @@
 </tbody>
 </table>
 <section id="functions">
-<h2>Functions<a class="headerlink" href="#functions" title="Permalink to this heading"></a></h2>
+<h2>Functions<a class="headerlink" href="#functions" title="Link to this heading"></a></h2>
 <dl class="py function">
 <dt class="sig sig-object py" id="skia.AlphaTypeIsOpaque">
-<span class="sig-name descname"><span class="pre">AlphaTypeIsOpaque</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">at</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="skia.AlphaType.html#skia.AlphaType" title="skia.AlphaType"><span class="pre">skia.AlphaType</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#skia.AlphaTypeIsOpaque" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">AlphaTypeIsOpaque</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">at</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="skia.AlphaType.html#skia.AlphaType" title="skia.AlphaType"><span class="pre">skia.AlphaType</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#skia.AlphaTypeIsOpaque" title="Link to this definition"></a></dt>
 <dd><p>Returns true if <a class="reference internal" href="skia.AlphaType.html#skia.AlphaType" title="skia.AlphaType"><code class="xref py py-class docutils literal notranslate"><span class="pre">AlphaType</span></code></a> equals
 <a class="reference internal" href="skia.AlphaType.html#skia.AlphaType.kOpaque_AlphaType" title="skia.AlphaType.kOpaque_AlphaType"><code class="xref py py-attr docutils literal notranslate"><span class="pre">kOpaque_AlphaType</span></code></a>.</p>
 <p><a class="reference internal" href="skia.AlphaType.html#skia.AlphaType.kOpaque_AlphaType" title="skia.AlphaType.kOpaque_AlphaType"><code class="xref py py-attr docutils literal notranslate"><span class="pre">kOpaque_AlphaType</span></code></a> is a hint that the
@@ -1021,7 +1020,7 @@ than 1.0 is undefined.</p>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="skia.AsWinding">
-<span class="sig-name descname"><span class="pre">AsWinding</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="skia.Path.html#skia.Path" title="skia.Path"><span class="pre">skia.Path</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="skia.Path.html#skia.Path" title="skia.Path"><span class="pre">skia.Path</span></a></span></span><a class="headerlink" href="#skia.AsWinding" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">AsWinding</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="skia.Path.html#skia.Path" title="skia.Path"><span class="pre">skia.Path</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="skia.Path.html#skia.Path" title="skia.Path"><span class="pre">skia.Path</span></a></span></span><a class="headerlink" href="#skia.AsWinding" title="Link to this definition"></a></dt>
 <dd><p>Set the result with fill type winding to area equivalent to path.</p>
 <p>Returns true if successful. Does not detect if path contains contours which
 contain self-crossings or cross other contours; in these cases, may return
@@ -1040,7 +1039,7 @@ runtime error. The result may be the input.</p>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="skia.BlendMode_AsCoeff">
-<span class="sig-name descname"><span class="pre">BlendMode_AsCoeff</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mode</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="skia.BlendMode.html#skia.BlendMode" title="skia.BlendMode"><span class="pre">skia.BlendMode</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">src</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="skia.BlendModeCoeff.html#skia.BlendModeCoeff" title="skia.BlendModeCoeff"><span class="pre">skia.BlendModeCoeff</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">dst</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="skia.BlendModeCoeff.html#skia.BlendModeCoeff" title="skia.BlendModeCoeff"><span class="pre">skia.BlendModeCoeff</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#skia.BlendMode_AsCoeff" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">BlendMode_AsCoeff</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mode</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="skia.BlendMode.html#skia.BlendMode" title="skia.BlendMode"><span class="pre">skia.BlendMode</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">src</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="skia.BlendModeCoeff.html#skia.BlendModeCoeff" title="skia.BlendModeCoeff"><span class="pre">skia.BlendModeCoeff</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">dst</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="skia.BlendModeCoeff.html#skia.BlendModeCoeff" title="skia.BlendModeCoeff"><span class="pre">skia.BlendModeCoeff</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#skia.BlendMode_AsCoeff" title="Link to this definition"></a></dt>
 <dd><p>Returns true if ‘mode’ is a coefficient-based blend mode (&lt;=
 kLastCoeffMode).</p>
 <p>If true is returned, the mode’s src and dst coefficient functions are set in
@@ -1049,13 +1048,13 @@ kLastCoeffMode).</p>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="skia.BlendMode_Name">
-<span class="sig-name descname"><span class="pre">BlendMode_Name</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">blendMode</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="skia.BlendMode.html#skia.BlendMode" title="skia.BlendMode"><span class="pre">skia.BlendMode</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="headerlink" href="#skia.BlendMode_Name" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">BlendMode_Name</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">blendMode</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="skia.BlendMode.html#skia.BlendMode" title="skia.BlendMode"><span class="pre">skia.BlendMode</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="headerlink" href="#skia.BlendMode_Name" title="Link to this definition"></a></dt>
 <dd><p>Returns name of blendMode as null-terminated C string.</p>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="skia.Color">
-<span class="sig-name descname"><span class="pre">Color</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">r</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">g</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">b</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">a</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">255</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="headerlink" href="#skia.Color" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">Color</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">r</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">g</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">b</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">a</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">255</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="headerlink" href="#skia.Color" title="Link to this definition"></a></dt>
 <dd><p>Returns color value from 8-bit component values.</p>
 <p>In Skia, colors are represented as 32-bit ARGB word, where each component
 has 8-bit. Colors can be specified by Python literal or constructed from the
@@ -1089,31 +1088,31 @@ unpremultiplied, a may be smaller than the largest of r, g, and b.</p>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="skia.ColorGetA">
-<span class="sig-name descname"><span class="pre">ColorGetA</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">color</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="headerlink" href="#skia.ColorGetA" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">ColorGetA</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">color</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="headerlink" href="#skia.ColorGetA" title="Link to this definition"></a></dt>
 <dd><p>Returns alpha byte from color value.</p>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="skia.ColorGetB">
-<span class="sig-name descname"><span class="pre">ColorGetB</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">color</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="headerlink" href="#skia.ColorGetB" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">ColorGetB</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">color</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="headerlink" href="#skia.ColorGetB" title="Link to this definition"></a></dt>
 <dd><p>Returns blue component of color, from zero to 255.</p>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="skia.ColorGetG">
-<span class="sig-name descname"><span class="pre">ColorGetG</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">color</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="headerlink" href="#skia.ColorGetG" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">ColorGetG</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">color</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="headerlink" href="#skia.ColorGetG" title="Link to this definition"></a></dt>
 <dd><p>Returns green component of color, from zero to 255.</p>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="skia.ColorGetR">
-<span class="sig-name descname"><span class="pre">ColorGetR</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">color</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="headerlink" href="#skia.ColorGetR" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">ColorGetR</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">color</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="headerlink" href="#skia.ColorGetR" title="Link to this definition"></a></dt>
 <dd><p>Returns red component of color, from zero to 255.</p>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="skia.ColorSetA">
-<span class="sig-name descname"><span class="pre">ColorSetA</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">c</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">a</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="headerlink" href="#skia.ColorSetA" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">ColorSetA</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">c</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">a</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="headerlink" href="#skia.ColorSetA" title="Link to this definition"></a></dt>
 <dd><p>Returns unpremultiplied color with red, blue, and green set from c; and
 alpha set from a.</p>
 <p>Alpha component of c is ignored and is replaced by a in result.</p>
@@ -1132,7 +1131,7 @@ alpha set from a.</p>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="skia.ColorSetARGB">
-<span class="sig-name descname"><span class="pre">ColorSetARGB</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">a</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">r</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">g</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">b</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="headerlink" href="#skia.ColorSetARGB" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">ColorSetARGB</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">a</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">r</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">g</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">b</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="headerlink" href="#skia.ColorSetARGB" title="Link to this definition"></a></dt>
 <dd><p>Returns color value from 8-bit component values.</p>
 <p>Asserts if SK_DEBUG is defined if a, r, g, or b exceed 255. Since color is
 unpremultiplied, a may be smaller than the largest of r, g, and b.</p>
@@ -1154,14 +1153,14 @@ unpremultiplied, a may be smaller than the largest of r, g, and b.</p>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="skia.ColorSetRGB">
-<span class="sig-name descname"><span class="pre">ColorSetRGB</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">r</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">g</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">b</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="headerlink" href="#skia.ColorSetRGB" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">ColorSetRGB</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">r</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">g</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">b</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="headerlink" href="#skia.ColorSetRGB" title="Link to this definition"></a></dt>
 <dd><p>Returns color value from 8-bit component values, with alpha set fully opaque
 to 255.</p>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="skia.ColorToHSV">
-<span class="sig-name descname"><span class="pre">ColorToHSV</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">color</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#skia.ColorToHSV" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">ColorToHSV</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">color</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#skia.ColorToHSV" title="Link to this definition"></a></dt>
 <dd><p>Converts ARGB to its HSV components.</p>
 <p>Alpha in ARGB is ignored. hsv[0] contains hsv hue, and is assigned a value
 from zero to less than 360. hsv[1] contains hsv saturation, a value from
@@ -1178,7 +1177,7 @@ zero to one. hsv[2] contains hsv value, a value from zero to one.</p>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="skia.ColorTypeBytesPerPixel">
-<span class="sig-name descname"><span class="pre">ColorTypeBytesPerPixel</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ct</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="skia.ColorType.html#skia.ColorType" title="skia.ColorType"><span class="pre">skia.ColorType</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="headerlink" href="#skia.ColorTypeBytesPerPixel" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">ColorTypeBytesPerPixel</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ct</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="skia.ColorType.html#skia.ColorType" title="skia.ColorType"><span class="pre">skia.ColorType</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="headerlink" href="#skia.ColorTypeBytesPerPixel" title="Link to this definition"></a></dt>
 <dd><p>Returns the number of bytes required to store a pixel, including unused
 padding.</p>
 <p>Returns zero if ct is <code class="xref py py-attr docutils literal notranslate"><span class="pre">kUnknown_ColorType</span></code> or invalid.</p>
@@ -1191,7 +1190,7 @@ padding.</p>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="skia.ColorTypeIsAlwaysOpaque">
-<span class="sig-name descname"><span class="pre">ColorTypeIsAlwaysOpaque</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ct</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="skia.ColorType.html#skia.ColorType" title="skia.ColorType"><span class="pre">skia.ColorType</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#skia.ColorTypeIsAlwaysOpaque" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">ColorTypeIsAlwaysOpaque</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ct</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="skia.ColorType.html#skia.ColorType" title="skia.ColorType"><span class="pre">skia.ColorType</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#skia.ColorTypeIsAlwaysOpaque" title="Link to this definition"></a></dt>
 <dd><p>Returns true if <a class="reference internal" href="skia.ColorType.html#skia.ColorType" title="skia.ColorType"><code class="xref py py-class docutils literal notranslate"><span class="pre">ColorType</span></code></a> always decodes alpha to 1.0, making
 the pixel fully opaque.</p>
 <p>If true, <a class="reference internal" href="skia.ColorType.html#skia.ColorType" title="skia.ColorType"><code class="xref py py-class docutils literal notranslate"><span class="pre">ColorType</span></code></a> does not reserve bits to encode alpha.</p>
@@ -1204,7 +1203,7 @@ the pixel fully opaque.</p>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="skia.ColorTypeValidateAlphaType">
-<span class="sig-name descname"><span class="pre">ColorTypeValidateAlphaType</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">colorType</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="skia.ColorType.html#skia.ColorType" title="skia.ColorType"><span class="pre">skia.ColorType</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">alphaType</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="skia.AlphaType.html#skia.AlphaType" title="skia.AlphaType"><span class="pre">skia.AlphaType</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">canonical</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="skia.AlphaType.html#skia.AlphaType" title="skia.AlphaType"><span class="pre">skia.AlphaType</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#skia.ColorTypeValidateAlphaType" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">ColorTypeValidateAlphaType</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">colorType</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="skia.ColorType.html#skia.ColorType" title="skia.ColorType"><span class="pre">skia.ColorType</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">alphaType</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="skia.AlphaType.html#skia.AlphaType" title="skia.AlphaType"><span class="pre">skia.AlphaType</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">canonical</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="skia.AlphaType.html#skia.AlphaType" title="skia.AlphaType"><span class="pre">skia.AlphaType</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#skia.ColorTypeValidateAlphaType" title="Link to this definition"></a></dt>
 <dd><p>Returns true if canonical can be set to a valid <a class="reference internal" href="skia.AlphaType.html#skia.AlphaType" title="skia.AlphaType"><code class="xref py py-class docutils literal notranslate"><span class="pre">AlphaType</span></code></a> for
 colorType.</p>
 <p>If there is more than one valid canonical <a class="reference internal" href="skia.AlphaType.html#skia.AlphaType" title="skia.AlphaType"><code class="xref py py-class docutils literal notranslate"><span class="pre">AlphaType</span></code></a>, set to
@@ -1231,7 +1230,7 @@ colorType</p>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="skia.ComputeIsOpaque">
-<span class="sig-name descname"><span class="pre">ComputeIsOpaque</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">bm</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="skia.Bitmap.html#skia.Bitmap" title="skia.Bitmap"><span class="pre">skia.Bitmap</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#skia.ComputeIsOpaque" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">ComputeIsOpaque</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">bm</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="skia.Bitmap.html#skia.Bitmap" title="skia.Bitmap"><span class="pre">skia.Bitmap</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#skia.ComputeIsOpaque" title="Link to this definition"></a></dt>
 <dd><p>Returns true if all pixels are opaque.</p>
 <p><a class="reference internal" href="skia.ColorType.html#skia.ColorType" title="skia.ColorType"><code class="xref py py-class docutils literal notranslate"><span class="pre">ColorType</span></code></a> determines how pixels are encoded, and whether pixel
 describes alpha. Returns true for <a class="reference internal" href="skia.ColorType.html#skia.ColorType" title="skia.ColorType"><code class="xref py py-class docutils literal notranslate"><span class="pre">ColorType</span></code></a> without alpha in
@@ -1260,7 +1259,7 @@ opaque</p>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="skia.EncodedOriginToMatrix">
-<span class="sig-name descname"><span class="pre">EncodedOriginToMatrix</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">origin</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="skia.EncodedOrigin.html#skia.EncodedOrigin" title="skia.EncodedOrigin"><span class="pre">skia.EncodedOrigin</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">w</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">h</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="skia.Matrix.html#skia.Matrix" title="skia.Matrix"><span class="pre">skia.Matrix</span></a></span></span><a class="headerlink" href="#skia.EncodedOriginToMatrix" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">EncodedOriginToMatrix</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">origin</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="skia.EncodedOrigin.html#skia.EncodedOrigin" title="skia.EncodedOrigin"><span class="pre">skia.EncodedOrigin</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">w</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">h</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="skia.Matrix.html#skia.Matrix" title="skia.Matrix"><span class="pre">skia.Matrix</span></a></span></span><a class="headerlink" href="#skia.EncodedOriginToMatrix" title="Link to this definition"></a></dt>
 <dd><p>Given an encoded origin and the width and height of the source data,
 returns a matrix that transforms the source rectangle with upper left
 corner at [0, 0] and origin to a correctly oriented destination rectangle
@@ -1269,7 +1268,7 @@ of [0, 0, w, h].</p>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="skia.HSVToColor">
-<span class="sig-name descname"><span class="pre">HSVToColor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">hsv</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">alpha</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">255</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="headerlink" href="#skia.HSVToColor" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">HSVToColor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">hsv</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">alpha</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">255</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="headerlink" href="#skia.HSVToColor" title="Link to this definition"></a></dt>
 <dd><p>Converts HSV components to an ARGB color.</p>
 <p>Alpha is passed through unchanged. hsv[0] represents hsv hue, an angle from
 zero to less than 360. hsv[1] represents hsv saturation, and varies from
@@ -1290,12 +1289,12 @@ zero to one. hsv[2] represents hsv value, and varies from zero to one.</p>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="skia.MakeNullCanvas">
-<span class="sig-name descname"><span class="pre">MakeNullCanvas</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="skia.Canvas.html#skia.Canvas" title="skia.Canvas"><span class="pre">skia.Canvas</span></a></span></span><a class="headerlink" href="#skia.MakeNullCanvas" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">MakeNullCanvas</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="skia.Canvas.html#skia.Canvas" title="skia.Canvas"><span class="pre">skia.Canvas</span></a></span></span><a class="headerlink" href="#skia.MakeNullCanvas" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="skia.Op">
-<span class="sig-name descname"><span class="pre">Op</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">one</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="skia.Path.html#skia.Path" title="skia.Path"><span class="pre">skia.Path</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">two</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="skia.Path.html#skia.Path" title="skia.Path"><span class="pre">skia.Path</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">op</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="skia.PathOp.html#skia.PathOp" title="skia.PathOp"><span class="pre">skia.PathOp</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="skia.Path.html#skia.Path" title="skia.Path"><span class="pre">skia.Path</span></a></span></span><a class="headerlink" href="#skia.Op" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">Op</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">one</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="skia.Path.html#skia.Path" title="skia.Path"><span class="pre">skia.Path</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">two</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="skia.Path.html#skia.Path" title="skia.Path"><span class="pre">skia.Path</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">op</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="skia.PathOp.html#skia.PathOp" title="skia.PathOp"><span class="pre">skia.PathOp</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="skia.Path.html#skia.Path" title="skia.Path"><span class="pre">skia.Path</span></a></span></span><a class="headerlink" href="#skia.Op" title="Link to this definition"></a></dt>
 <dd><p>Set this path to the result of applying the Op to this path and the
 specified path: this = (this op operand).</p>
 <p>The resulting path will be constructed from non-overlapping contours. The
@@ -1319,22 +1318,22 @@ runtime error.</p>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="skia.PathFillType_ConvertToNonInverse">
-<span class="sig-name descname"><span class="pre">PathFillType_ConvertToNonInverse</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ft</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="skia.PathFillType.html#skia.PathFillType" title="skia.PathFillType"><span class="pre">skia.PathFillType</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="skia.PathFillType.html#skia.PathFillType" title="skia.PathFillType"><span class="pre">skia.PathFillType</span></a></span></span><a class="headerlink" href="#skia.PathFillType_ConvertToNonInverse" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">PathFillType_ConvertToNonInverse</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ft</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="skia.PathFillType.html#skia.PathFillType" title="skia.PathFillType"><span class="pre">skia.PathFillType</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="skia.PathFillType.html#skia.PathFillType" title="skia.PathFillType"><span class="pre">skia.PathFillType</span></a></span></span><a class="headerlink" href="#skia.PathFillType_ConvertToNonInverse" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="skia.PathFillType_IsEvenOdd">
-<span class="sig-name descname"><span class="pre">PathFillType_IsEvenOdd</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ft</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="skia.PathFillType.html#skia.PathFillType" title="skia.PathFillType"><span class="pre">skia.PathFillType</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#skia.PathFillType_IsEvenOdd" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">PathFillType_IsEvenOdd</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ft</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="skia.PathFillType.html#skia.PathFillType" title="skia.PathFillType"><span class="pre">skia.PathFillType</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#skia.PathFillType_IsEvenOdd" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="skia.PathFillType_IsInverse">
-<span class="sig-name descname"><span class="pre">PathFillType_IsInverse</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ft</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="skia.PathFillType.html#skia.PathFillType" title="skia.PathFillType"><span class="pre">skia.PathFillType</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#skia.PathFillType_IsInverse" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">PathFillType_IsInverse</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ft</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="skia.PathFillType.html#skia.PathFillType" title="skia.PathFillType"><span class="pre">skia.PathFillType</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#skia.PathFillType_IsInverse" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="skia.PreMultiplyARGB">
-<span class="sig-name descname"><span class="pre">PreMultiplyARGB</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">a</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">r</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">g</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">b</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="headerlink" href="#skia.PreMultiplyARGB" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">PreMultiplyARGB</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">a</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">r</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">g</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">b</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="headerlink" href="#skia.PreMultiplyARGB" title="Link to this definition"></a></dt>
 <dd><p>Returns a SkPMColor value from unpremultiplied 8-bit component values.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -1353,7 +1352,7 @@ runtime error.</p>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="skia.PreMultiplyColor">
-<span class="sig-name descname"><span class="pre">PreMultiplyColor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">c</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="headerlink" href="#skia.PreMultiplyColor" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">PreMultiplyColor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">c</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="headerlink" href="#skia.PreMultiplyColor" title="Link to this definition"></a></dt>
 <dd><p>Returns pmcolor closest to color c.</p>
 <p>Multiplies c RGB components by the c alpha, and arranges the bytes to match
 the format of kN32_ColorType.</p>
@@ -1369,7 +1368,7 @@ the format of kN32_ColorType.</p>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="skia.RGBToHSV">
-<span class="sig-name descname"><span class="pre">RGBToHSV</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">red</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">green</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">blue</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#skia.RGBToHSV" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">RGBToHSV</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">red</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">green</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">blue</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#skia.RGBToHSV" title="Link to this definition"></a></dt>
 <dd><p>Converts RGB to its HSV components.</p>
 <p>hsv[0] contains hsv hue, a value from zero to less than 360. hsv[1] contains
 hsv saturation, a value from zero to one. hsv[2] contains hsv value, a value
@@ -1390,7 +1389,7 @@ from zero to one.</p>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="skia.Simplify">
-<span class="sig-name descname"><span class="pre">Simplify</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="skia.Path.html#skia.Path" title="skia.Path"><span class="pre">skia.Path</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="skia.Path.html#skia.Path" title="skia.Path"><span class="pre">skia.Path</span></a></span></span><a class="headerlink" href="#skia.Simplify" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">Simplify</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="skia.Path.html#skia.Path" title="skia.Path"><span class="pre">skia.Path</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="skia.Path.html#skia.Path" title="skia.Path"><span class="pre">skia.Path</span></a></span></span><a class="headerlink" href="#skia.Simplify" title="Link to this definition"></a></dt>
 <dd><p>Set this path to a set of non-overlapping contours that describe the same
 area as the original path.</p>
 <p>The curve order is reduced where possible so that cubics may be turned into
@@ -1409,7 +1408,7 @@ runtime error.</p>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="skia.TightBounds">
-<span class="sig-name descname"><span class="pre">TightBounds</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="skia.Path.html#skia.Path" title="skia.Path"><span class="pre">skia.Path</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="skia.Rect.html#skia.Rect" title="skia.Rect"><span class="pre">skia.Rect</span></a></span></span><a class="headerlink" href="#skia.TightBounds" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">TightBounds</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="skia.Path.html#skia.Path" title="skia.Path"><span class="pre">skia.Path</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="skia.Rect.html#skia.Rect" title="skia.Rect"><span class="pre">skia.Rect</span></a></span></span><a class="headerlink" href="#skia.TightBounds" title="Link to this definition"></a></dt>
 <dd><p>Set the resulting rectangle to the tight bounds of the path.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>

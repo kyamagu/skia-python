@@ -1,21 +1,21 @@
 
 
 <!DOCTYPE html>
-<html class="writer-html5" lang="en">
+<html class="writer-html5" lang="en" data-content_root="../">
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>YUVAInfo &mdash; skia-python 138.0rc1 documentation</title>
-      <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
-      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css" />
+  <title>YUVAInfo &mdash; skia-python 0.0.1 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
 
   
-      <script src="../_static/jquery.js"></script>
-      <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
-      <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
-      <script src="../_static/doctools.js"></script>
-      <script src="../_static/sphinx_highlight.js"></script>
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=d45e8c67"></script>
+      <script src="../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -288,10 +288,10 @@
            <div itemprop="articleBody">
              
   <section id="yuvainfo">
-<h1>YUVAInfo<a class="headerlink" href="#yuvainfo" title="Permalink to this heading"></a></h1>
+<h1>YUVAInfo<a class="headerlink" href="#yuvainfo" title="Link to this heading"></a></h1>
 <dl class="py class">
 <dt class="sig sig-object py" id="skia.YUVAInfo">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">YUVAInfo</span></span><a class="headerlink" href="#skia.YUVAInfo" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">YUVAInfo</span></span><a class="headerlink" href="#skia.YUVAInfo" title="Link to this definition"></a></dt>
 <dd><p>Specifies the structure of planes for a YUV image with optional alpha. The
 actual planar data is not part of this structure and depending on usage is
 in external textures or pixmaps.</p>
@@ -313,61 +313,61 @@ in external textures or pixmaps.</p>
 <table class="autosummary longtable docutils align-default">
 <tbody>
 <tr class="row-odd"><td><p><a class="reference internal" href="#skia.YUVAInfo.HasAlpha" title="skia.YUVAInfo.HasAlpha"><code class="xref py py-obj docutils literal notranslate"><span class="pre">HasAlpha</span></code></a></p></td>
-<td><p>Does the PlaneConfig have alpha values?</p></td>
+<td><p>HasAlpha(config: skia.YUVAInfo.PlaneConfig) -&gt; bool</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#skia.YUVAInfo.NumChannelsInPlane" title="skia.YUVAInfo.NumChannelsInPlane"><code class="xref py py-obj docutils literal notranslate"><span class="pre">NumChannelsInPlane</span></code></a></p></td>
-<td><p>Number of Y, U, V, A channels in the ith plane for a given PlaneConfig (or 0 if i is invalid).</p></td>
+<td><p>NumChannelsInPlane(config: skia.YUVAInfo.PlaneConfig, i: int) -&gt; int</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#skia.YUVAInfo.NumPlanes" title="skia.YUVAInfo.NumPlanes"><code class="xref py py-obj docutils literal notranslate"><span class="pre">NumPlanes</span></code></a></p></td>
-<td><p>Number of planes for a given PlaneConfig.</p></td>
+<td><p>NumPlanes(config: skia.YUVAInfo.PlaneConfig) -&gt; int</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#skia.YUVAInfo.PlaneDimensions" title="skia.YUVAInfo.PlaneDimensions"><code class="xref py py-obj docutils literal notranslate"><span class="pre">PlaneDimensions</span></code></a></p></td>
-<td><p>Given image dimensions, a planar configuration, and origin, determine the expected size of each plane.</p></td>
+<td><p>PlaneDimensions(imageDimensions: skia.ISize, config: skia.YUVAInfo.PlaneConfig, sampling: skia.YUVAInfo.Subsampling, origin: skia.EncodedOrigin) -&gt; list[skia.ISize]</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#skia.YUVAInfo.__init__" title="skia.YUVAInfo.__init__"><code class="xref py py-obj docutils literal notranslate"><span class="pre">__init__</span></code></a></p></td>
-<td><p>Overloaded function.</p></td>
+<td><p>__init__(<a href="#id1"><span class="problematic" id="id2">*</span></a>args, <a href="#id3"><span class="problematic" id="id4">**</span></a>kwargs) Overloaded function.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#skia.YUVAInfo.computeTotalBytes" title="skia.YUVAInfo.computeTotalBytes"><code class="xref py py-obj docutils literal notranslate"><span class="pre">computeTotalBytes</span></code></a></p></td>
-<td><p>Given a per-plane row bytes, determine size to allocate for all planes.</p></td>
+<td><p>computeTotalBytes(self: skia.YUVAInfo, rowBytes: list[int], returnPlaneSizes: bool = False) -&gt; object</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#skia.YUVAInfo.dimensions" title="skia.YUVAInfo.dimensions"><code class="xref py py-obj docutils literal notranslate"><span class="pre">dimensions</span></code></a></p></td>
-<td><p>Dimensions of the full resolution image (after planes have been oriented to how the image is displayed as indicated by fOrigin).</p></td>
+<td><p>dimensions(self: skia.YUVAInfo) -&gt; skia.ISize</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#skia.YUVAInfo.hasAlpha" title="skia.YUVAInfo.hasAlpha"><code class="xref py py-obj docutils literal notranslate"><span class="pre">hasAlpha</span></code></a></p></td>
-<td><p></p></td>
+<td><p>hasAlpha(self: skia.YUVAInfo) -&gt; bool</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#skia.YUVAInfo.height" title="skia.YUVAInfo.height"><code class="xref py py-obj docutils literal notranslate"><span class="pre">height</span></code></a></p></td>
-<td><p></p></td>
+<td><p>height(self: skia.YUVAInfo) -&gt; int</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#skia.YUVAInfo.numChannelsInPlane" title="skia.YUVAInfo.numChannelsInPlane"><code class="xref py py-obj docutils literal notranslate"><span class="pre">numChannelsInPlane</span></code></a></p></td>
-<td><p></p></td>
+<td><p>numChannelsInPlane(self: skia.YUVAInfo, i: int) -&gt; int</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#skia.YUVAInfo.numPlanes" title="skia.YUVAInfo.numPlanes"><code class="xref py py-obj docutils literal notranslate"><span class="pre">numPlanes</span></code></a></p></td>
-<td><p></p></td>
+<td><p>numPlanes(self: skia.YUVAInfo) -&gt; int</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#skia.YUVAInfo.origin" title="skia.YUVAInfo.origin"><code class="xref py py-obj docutils literal notranslate"><span class="pre">origin</span></code></a></p></td>
-<td><p></p></td>
+<td><p>origin(self: skia.YUVAInfo) -&gt; skia.EncodedOrigin</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#skia.YUVAInfo.planeConfig" title="skia.YUVAInfo.planeConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">planeConfig</span></code></a></p></td>
-<td><p></p></td>
+<td><p>planeConfig(self: skia.YUVAInfo) -&gt; skia.YUVAInfo.PlaneConfig</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#skia.YUVAInfo.planeDimensions" title="skia.YUVAInfo.planeDimensions"><code class="xref py py-obj docutils literal notranslate"><span class="pre">planeDimensions</span></code></a></p></td>
-<td><p>Returns the number of planes and initializes planeDimensions[0]..planeDimensions[&lt;ret&gt;] to the expected dimensions for each plane.</p></td>
+<td><p>planeDimensions(self: skia.YUVAInfo) -&gt; list[skia.ISize]</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#skia.YUVAInfo.sitingX" title="skia.YUVAInfo.sitingX"><code class="xref py py-obj docutils literal notranslate"><span class="pre">sitingX</span></code></a></p></td>
-<td><p></p></td>
+<td><p>sitingX(self: skia.YUVAInfo) -&gt; skia.YUVAInfo.Siting</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#skia.YUVAInfo.sitingY" title="skia.YUVAInfo.sitingY"><code class="xref py py-obj docutils literal notranslate"><span class="pre">sitingY</span></code></a></p></td>
-<td><p></p></td>
+<td><p>sitingY(self: skia.YUVAInfo) -&gt; skia.YUVAInfo.Siting</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#skia.YUVAInfo.subSampling" title="skia.YUVAInfo.subSampling"><code class="xref py py-obj docutils literal notranslate"><span class="pre">subSampling</span></code></a></p></td>
-<td><p></p></td>
+<td><p>subSampling(self: skia.YUVAInfo) -&gt; skia.YUVAInfo.Subsampling</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#skia.YUVAInfo.width" title="skia.YUVAInfo.width"><code class="xref py py-obj docutils literal notranslate"><span class="pre">width</span></code></a></p></td>
-<td><p></p></td>
+<td><p>width(self: skia.YUVAInfo) -&gt; int</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#skia.YUVAInfo.yuvColorSpace" title="skia.YUVAInfo.yuvColorSpace"><code class="xref py py-obj docutils literal notranslate"><span class="pre">yuvColorSpace</span></code></a></p></td>
-<td><p></p></td>
+<td><p>yuvColorSpace(self: skia.YUVAInfo) -&gt; skia.YUVColorSpace</p></td>
 </tr>
 </tbody>
 </table>
@@ -442,29 +442,29 @@ in external textures or pixmaps.</p>
 </dd></dl>
 
 <section id="methods">
-<h2>Methods<a class="headerlink" href="#methods" title="Permalink to this heading"></a></h2>
+<h2>Methods<a class="headerlink" href="#methods" title="Link to this heading"></a></h2>
 <dl class="py method">
 <dt class="sig sig-object py" id="skia.YUVAInfo.HasAlpha">
-<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">YUVAInfo.</span></span><span class="sig-name descname"><span class="pre">HasAlpha</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="skia.YUVAInfo.PlaneConfig.html#skia.YUVAInfo.PlaneConfig" title="skia.YUVAInfo.PlaneConfig"><span class="pre">skia.YUVAInfo.PlaneConfig</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#skia.YUVAInfo.HasAlpha" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="k"><span class="pre">static</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">YUVAInfo.</span></span><span class="sig-name descname"><span class="pre">HasAlpha</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="skia.YUVAInfo.PlaneConfig.html#skia.YUVAInfo.PlaneConfig" title="skia.YUVAInfo.PlaneConfig"><span class="pre">skia.YUVAInfo.PlaneConfig</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#skia.YUVAInfo.HasAlpha" title="Link to this definition"></a></dt>
 <dd><p>Does the PlaneConfig have alpha values?</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="skia.YUVAInfo.NumChannelsInPlane">
-<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">YUVAInfo.</span></span><span class="sig-name descname"><span class="pre">NumChannelsInPlane</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="skia.YUVAInfo.PlaneConfig.html#skia.YUVAInfo.PlaneConfig" title="skia.YUVAInfo.PlaneConfig"><span class="pre">skia.YUVAInfo.PlaneConfig</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">i</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="headerlink" href="#skia.YUVAInfo.NumChannelsInPlane" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="k"><span class="pre">static</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">YUVAInfo.</span></span><span class="sig-name descname"><span class="pre">NumChannelsInPlane</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="skia.YUVAInfo.PlaneConfig.html#skia.YUVAInfo.PlaneConfig" title="skia.YUVAInfo.PlaneConfig"><span class="pre">skia.YUVAInfo.PlaneConfig</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">i</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="headerlink" href="#skia.YUVAInfo.NumChannelsInPlane" title="Link to this definition"></a></dt>
 <dd><p>Number of Y, U, V, A channels in the ith plane for a given PlaneConfig
 (or 0 if i is invalid).</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="skia.YUVAInfo.NumPlanes">
-<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">YUVAInfo.</span></span><span class="sig-name descname"><span class="pre">NumPlanes</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="skia.YUVAInfo.PlaneConfig.html#skia.YUVAInfo.PlaneConfig" title="skia.YUVAInfo.PlaneConfig"><span class="pre">skia.YUVAInfo.PlaneConfig</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="headerlink" href="#skia.YUVAInfo.NumPlanes" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="k"><span class="pre">static</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">YUVAInfo.</span></span><span class="sig-name descname"><span class="pre">NumPlanes</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="skia.YUVAInfo.PlaneConfig.html#skia.YUVAInfo.PlaneConfig" title="skia.YUVAInfo.PlaneConfig"><span class="pre">skia.YUVAInfo.PlaneConfig</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="headerlink" href="#skia.YUVAInfo.NumPlanes" title="Link to this definition"></a></dt>
 <dd><p>Number of planes for a given PlaneConfig.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="skia.YUVAInfo.PlaneDimensions">
-<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">YUVAInfo.</span></span><span class="sig-name descname"><span class="pre">PlaneDimensions</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">imageDimensions</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="skia.ISize.html#skia.ISize" title="skia.ISize"><span class="pre">skia.ISize</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">config</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="skia.YUVAInfo.PlaneConfig.html#skia.YUVAInfo.PlaneConfig" title="skia.YUVAInfo.PlaneConfig"><span class="pre">skia.YUVAInfo.PlaneConfig</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">sampling</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="skia.YUVAInfo.Subsampling.html#skia.YUVAInfo.Subsampling" title="skia.YUVAInfo.Subsampling"><span class="pre">skia.YUVAInfo.Subsampling</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">origin</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="skia.EncodedOrigin.html#skia.EncodedOrigin" title="skia.EncodedOrigin"><span class="pre">skia.EncodedOrigin</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="skia.ISize.html#skia.ISize" title="skia.ISize"><span class="pre">skia.ISize</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#skia.YUVAInfo.PlaneDimensions" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="k"><span class="pre">static</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">YUVAInfo.</span></span><span class="sig-name descname"><span class="pre">PlaneDimensions</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">imageDimensions</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="skia.ISize.html#skia.ISize" title="skia.ISize"><span class="pre">skia.ISize</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">config</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="skia.YUVAInfo.PlaneConfig.html#skia.YUVAInfo.PlaneConfig" title="skia.YUVAInfo.PlaneConfig"><span class="pre">skia.YUVAInfo.PlaneConfig</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">sampling</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="skia.YUVAInfo.Subsampling.html#skia.YUVAInfo.Subsampling" title="skia.YUVAInfo.Subsampling"><span class="pre">skia.YUVAInfo.Subsampling</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">origin</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="skia.EncodedOrigin.html#skia.EncodedOrigin" title="skia.EncodedOrigin"><span class="pre">skia.EncodedOrigin</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="skia.ISize.html#skia.ISize" title="skia.ISize"><span class="pre">skia.ISize</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#skia.YUVAInfo.PlaneDimensions" title="Link to this definition"></a></dt>
 <dd><p>Given image dimensions, a planar configuration, and origin, determine
 the expected size of each plane. Returns a list of expected
 planes.</p>
@@ -474,7 +474,7 @@ been transformed to the intended display orientation).</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="skia.YUVAInfo.__init__">
-<span class="sig-prename descclassname"><span class="pre">YUVAInfo.</span></span><span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#skia.YUVAInfo.__init__" title="Permalink to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">YUVAInfo.</span></span><span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#skia.YUVAInfo.__init__" title="Link to this definition"></a></dt>
 <dd><p>Overloaded function.</p>
 <ol class="arabic">
 <li><p>__init__(self: skia.YUVAInfo) -&gt; None</p></li>
@@ -490,7 +490,7 @@ planes have been oriented to how the image is displayed as indicated by
 
 <dl class="py method">
 <dt class="sig sig-object py" id="skia.YUVAInfo.computeTotalBytes">
-<span class="sig-prename descclassname"><span class="pre">YUVAInfo.</span></span><span class="sig-name descname"><span class="pre">computeTotalBytes</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#skia.YUVAInfo" title="skia.YUVAInfo"><span class="pre">skia.YUVAInfo</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">rowBytes</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">returnPlaneSizes</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">object</span></span></span><a class="headerlink" href="#skia.YUVAInfo.computeTotalBytes" title="Permalink to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">YUVAInfo.</span></span><span class="sig-name descname"><span class="pre">computeTotalBytes</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#skia.YUVAInfo" title="skia.YUVAInfo"><span class="pre">skia.YUVAInfo</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">rowBytes</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">returnPlaneSizes</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">object</span></span></span><a class="headerlink" href="#skia.YUVAInfo.computeTotalBytes" title="Link to this definition"></a></dt>
 <dd><p>Given a per-plane row bytes, determine size to allocate for all
 planes. Optionally retrieves the per-plane byte sizes if
 returnPlaneSizes is True. If total size overflows will return SIZE_MAX
@@ -499,44 +499,44 @@ and set all planeSizes to SIZE_MAX.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="skia.YUVAInfo.dimensions">
-<span class="sig-prename descclassname"><span class="pre">YUVAInfo.</span></span><span class="sig-name descname"><span class="pre">dimensions</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#skia.YUVAInfo" title="skia.YUVAInfo"><span class="pre">skia.YUVAInfo</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="skia.ISize.html#skia.ISize" title="skia.ISize"><span class="pre">skia.ISize</span></a></span></span><a class="headerlink" href="#skia.YUVAInfo.dimensions" title="Permalink to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">YUVAInfo.</span></span><span class="sig-name descname"><span class="pre">dimensions</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#skia.YUVAInfo" title="skia.YUVAInfo"><span class="pre">skia.YUVAInfo</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="skia.ISize.html#skia.ISize" title="skia.ISize"><span class="pre">skia.ISize</span></a></span></span><a class="headerlink" href="#skia.YUVAInfo.dimensions" title="Link to this definition"></a></dt>
 <dd><p>Dimensions of the full resolution image (after planes have been oriented
 to how the image is displayed as indicated by fOrigin).</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="skia.YUVAInfo.hasAlpha">
-<span class="sig-prename descclassname"><span class="pre">YUVAInfo.</span></span><span class="sig-name descname"><span class="pre">hasAlpha</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#skia.YUVAInfo" title="skia.YUVAInfo"><span class="pre">skia.YUVAInfo</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#skia.YUVAInfo.hasAlpha" title="Permalink to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">YUVAInfo.</span></span><span class="sig-name descname"><span class="pre">hasAlpha</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#skia.YUVAInfo" title="skia.YUVAInfo"><span class="pre">skia.YUVAInfo</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#skia.YUVAInfo.hasAlpha" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="skia.YUVAInfo.height">
-<span class="sig-prename descclassname"><span class="pre">YUVAInfo.</span></span><span class="sig-name descname"><span class="pre">height</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#skia.YUVAInfo" title="skia.YUVAInfo"><span class="pre">skia.YUVAInfo</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="headerlink" href="#skia.YUVAInfo.height" title="Permalink to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">YUVAInfo.</span></span><span class="sig-name descname"><span class="pre">height</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#skia.YUVAInfo" title="skia.YUVAInfo"><span class="pre">skia.YUVAInfo</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="headerlink" href="#skia.YUVAInfo.height" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="skia.YUVAInfo.numChannelsInPlane">
-<span class="sig-prename descclassname"><span class="pre">YUVAInfo.</span></span><span class="sig-name descname"><span class="pre">numChannelsInPlane</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#skia.YUVAInfo" title="skia.YUVAInfo"><span class="pre">skia.YUVAInfo</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">i</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="headerlink" href="#skia.YUVAInfo.numChannelsInPlane" title="Permalink to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">YUVAInfo.</span></span><span class="sig-name descname"><span class="pre">numChannelsInPlane</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#skia.YUVAInfo" title="skia.YUVAInfo"><span class="pre">skia.YUVAInfo</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">i</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="headerlink" href="#skia.YUVAInfo.numChannelsInPlane" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="skia.YUVAInfo.numPlanes">
-<span class="sig-prename descclassname"><span class="pre">YUVAInfo.</span></span><span class="sig-name descname"><span class="pre">numPlanes</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#skia.YUVAInfo" title="skia.YUVAInfo"><span class="pre">skia.YUVAInfo</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="headerlink" href="#skia.YUVAInfo.numPlanes" title="Permalink to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">YUVAInfo.</span></span><span class="sig-name descname"><span class="pre">numPlanes</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#skia.YUVAInfo" title="skia.YUVAInfo"><span class="pre">skia.YUVAInfo</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="headerlink" href="#skia.YUVAInfo.numPlanes" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="skia.YUVAInfo.origin">
-<span class="sig-prename descclassname"><span class="pre">YUVAInfo.</span></span><span class="sig-name descname"><span class="pre">origin</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#skia.YUVAInfo" title="skia.YUVAInfo"><span class="pre">skia.YUVAInfo</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="skia.EncodedOrigin.html#skia.EncodedOrigin" title="skia.EncodedOrigin"><span class="pre">skia.EncodedOrigin</span></a></span></span><a class="headerlink" href="#skia.YUVAInfo.origin" title="Permalink to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">YUVAInfo.</span></span><span class="sig-name descname"><span class="pre">origin</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#skia.YUVAInfo" title="skia.YUVAInfo"><span class="pre">skia.YUVAInfo</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="skia.EncodedOrigin.html#skia.EncodedOrigin" title="skia.EncodedOrigin"><span class="pre">skia.EncodedOrigin</span></a></span></span><a class="headerlink" href="#skia.YUVAInfo.origin" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="skia.YUVAInfo.planeConfig">
-<span class="sig-prename descclassname"><span class="pre">YUVAInfo.</span></span><span class="sig-name descname"><span class="pre">planeConfig</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#skia.YUVAInfo" title="skia.YUVAInfo"><span class="pre">skia.YUVAInfo</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="skia.YUVAInfo.PlaneConfig.html#skia.YUVAInfo.PlaneConfig" title="skia.YUVAInfo.PlaneConfig"><span class="pre">skia.YUVAInfo.PlaneConfig</span></a></span></span><a class="headerlink" href="#skia.YUVAInfo.planeConfig" title="Permalink to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">YUVAInfo.</span></span><span class="sig-name descname"><span class="pre">planeConfig</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#skia.YUVAInfo" title="skia.YUVAInfo"><span class="pre">skia.YUVAInfo</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="skia.YUVAInfo.PlaneConfig.html#skia.YUVAInfo.PlaneConfig" title="skia.YUVAInfo.PlaneConfig"><span class="pre">skia.YUVAInfo.PlaneConfig</span></a></span></span><a class="headerlink" href="#skia.YUVAInfo.planeConfig" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="skia.YUVAInfo.planeDimensions">
-<span class="sig-prename descclassname"><span class="pre">YUVAInfo.</span></span><span class="sig-name descname"><span class="pre">planeDimensions</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#skia.YUVAInfo" title="skia.YUVAInfo"><span class="pre">skia.YUVAInfo</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="skia.ISize.html#skia.ISize" title="skia.ISize"><span class="pre">skia.ISize</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#skia.YUVAInfo.planeDimensions" title="Permalink to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">YUVAInfo.</span></span><span class="sig-name descname"><span class="pre">planeDimensions</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#skia.YUVAInfo" title="skia.YUVAInfo"><span class="pre">skia.YUVAInfo</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="skia.ISize.html#skia.ISize" title="skia.ISize"><span class="pre">skia.ISize</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#skia.YUVAInfo.planeDimensions" title="Link to this definition"></a></dt>
 <dd><p>Returns the number of planes and initializes
 planeDimensions[0]..planeDimensions[&lt;ret&gt;] to the expected dimensions
 for each plane. Dimensions are as stored in memory, before
@@ -545,135 +545,135 @@ transformation to image display space as indicated by origin().</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="skia.YUVAInfo.sitingX">
-<span class="sig-prename descclassname"><span class="pre">YUVAInfo.</span></span><span class="sig-name descname"><span class="pre">sitingX</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#skia.YUVAInfo" title="skia.YUVAInfo"><span class="pre">skia.YUVAInfo</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="skia.YUVAInfo.Siting.html#skia.YUVAInfo.Siting" title="skia.YUVAInfo.Siting"><span class="pre">skia.YUVAInfo.Siting</span></a></span></span><a class="headerlink" href="#skia.YUVAInfo.sitingX" title="Permalink to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">YUVAInfo.</span></span><span class="sig-name descname"><span class="pre">sitingX</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#skia.YUVAInfo" title="skia.YUVAInfo"><span class="pre">skia.YUVAInfo</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="skia.YUVAInfo.Siting.html#skia.YUVAInfo.Siting" title="skia.YUVAInfo.Siting"><span class="pre">skia.YUVAInfo.Siting</span></a></span></span><a class="headerlink" href="#skia.YUVAInfo.sitingX" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="skia.YUVAInfo.sitingY">
-<span class="sig-prename descclassname"><span class="pre">YUVAInfo.</span></span><span class="sig-name descname"><span class="pre">sitingY</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#skia.YUVAInfo" title="skia.YUVAInfo"><span class="pre">skia.YUVAInfo</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="skia.YUVAInfo.Siting.html#skia.YUVAInfo.Siting" title="skia.YUVAInfo.Siting"><span class="pre">skia.YUVAInfo.Siting</span></a></span></span><a class="headerlink" href="#skia.YUVAInfo.sitingY" title="Permalink to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">YUVAInfo.</span></span><span class="sig-name descname"><span class="pre">sitingY</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#skia.YUVAInfo" title="skia.YUVAInfo"><span class="pre">skia.YUVAInfo</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="skia.YUVAInfo.Siting.html#skia.YUVAInfo.Siting" title="skia.YUVAInfo.Siting"><span class="pre">skia.YUVAInfo.Siting</span></a></span></span><a class="headerlink" href="#skia.YUVAInfo.sitingY" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="skia.YUVAInfo.subSampling">
-<span class="sig-prename descclassname"><span class="pre">YUVAInfo.</span></span><span class="sig-name descname"><span class="pre">subSampling</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#skia.YUVAInfo" title="skia.YUVAInfo"><span class="pre">skia.YUVAInfo</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="skia.YUVAInfo.Subsampling.html#skia.YUVAInfo.Subsampling" title="skia.YUVAInfo.Subsampling"><span class="pre">skia.YUVAInfo.Subsampling</span></a></span></span><a class="headerlink" href="#skia.YUVAInfo.subSampling" title="Permalink to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">YUVAInfo.</span></span><span class="sig-name descname"><span class="pre">subSampling</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#skia.YUVAInfo" title="skia.YUVAInfo"><span class="pre">skia.YUVAInfo</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="skia.YUVAInfo.Subsampling.html#skia.YUVAInfo.Subsampling" title="skia.YUVAInfo.Subsampling"><span class="pre">skia.YUVAInfo.Subsampling</span></a></span></span><a class="headerlink" href="#skia.YUVAInfo.subSampling" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="skia.YUVAInfo.width">
-<span class="sig-prename descclassname"><span class="pre">YUVAInfo.</span></span><span class="sig-name descname"><span class="pre">width</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#skia.YUVAInfo" title="skia.YUVAInfo"><span class="pre">skia.YUVAInfo</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="headerlink" href="#skia.YUVAInfo.width" title="Permalink to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">YUVAInfo.</span></span><span class="sig-name descname"><span class="pre">width</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#skia.YUVAInfo" title="skia.YUVAInfo"><span class="pre">skia.YUVAInfo</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="headerlink" href="#skia.YUVAInfo.width" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="skia.YUVAInfo.yuvColorSpace">
-<span class="sig-prename descclassname"><span class="pre">YUVAInfo.</span></span><span class="sig-name descname"><span class="pre">yuvColorSpace</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#skia.YUVAInfo" title="skia.YUVAInfo"><span class="pre">skia.YUVAInfo</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="skia.YUVColorSpace.html#skia.YUVColorSpace" title="skia.YUVColorSpace"><span class="pre">skia.YUVColorSpace</span></a></span></span><a class="headerlink" href="#skia.YUVAInfo.yuvColorSpace" title="Permalink to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">YUVAInfo.</span></span><span class="sig-name descname"><span class="pre">yuvColorSpace</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#skia.YUVAInfo" title="skia.YUVAInfo"><span class="pre">skia.YUVAInfo</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="skia.YUVColorSpace.html#skia.YUVColorSpace" title="skia.YUVColorSpace"><span class="pre">skia.YUVColorSpace</span></a></span></span><a class="headerlink" href="#skia.YUVAInfo.yuvColorSpace" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 </section>
 <section id="attributes">
-<h2>Attributes<a class="headerlink" href="#attributes" title="Permalink to this heading"></a></h2>
+<h2>Attributes<a class="headerlink" href="#attributes" title="Link to this heading"></a></h2>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="skia.YUVAInfo.k410">
-<span class="sig-prename descclassname"><span class="pre">YUVAInfo.</span></span><span class="sig-name descname"><span class="pre">k410</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;Subsampling.k410:</span> <span class="pre">6&gt;</span></em><a class="headerlink" href="#skia.YUVAInfo.k410" title="Permalink to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">YUVAInfo.</span></span><span class="sig-name descname"><span class="pre">k410</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;Subsampling.k410:</span> <span class="pre">6&gt;</span></em><a class="headerlink" href="#skia.YUVAInfo.k410" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="skia.YUVAInfo.k411">
-<span class="sig-prename descclassname"><span class="pre">YUVAInfo.</span></span><span class="sig-name descname"><span class="pre">k411</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;Subsampling.k411:</span> <span class="pre">5&gt;</span></em><a class="headerlink" href="#skia.YUVAInfo.k411" title="Permalink to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">YUVAInfo.</span></span><span class="sig-name descname"><span class="pre">k411</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;Subsampling.k411:</span> <span class="pre">5&gt;</span></em><a class="headerlink" href="#skia.YUVAInfo.k411" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="skia.YUVAInfo.k420">
-<span class="sig-prename descclassname"><span class="pre">YUVAInfo.</span></span><span class="sig-name descname"><span class="pre">k420</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;Subsampling.k420:</span> <span class="pre">3&gt;</span></em><a class="headerlink" href="#skia.YUVAInfo.k420" title="Permalink to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">YUVAInfo.</span></span><span class="sig-name descname"><span class="pre">k420</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;Subsampling.k420:</span> <span class="pre">3&gt;</span></em><a class="headerlink" href="#skia.YUVAInfo.k420" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="skia.YUVAInfo.k422">
-<span class="sig-prename descclassname"><span class="pre">YUVAInfo.</span></span><span class="sig-name descname"><span class="pre">k422</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;Subsampling.k422:</span> <span class="pre">2&gt;</span></em><a class="headerlink" href="#skia.YUVAInfo.k422" title="Permalink to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">YUVAInfo.</span></span><span class="sig-name descname"><span class="pre">k422</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;Subsampling.k422:</span> <span class="pre">2&gt;</span></em><a class="headerlink" href="#skia.YUVAInfo.k422" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="skia.YUVAInfo.k440">
-<span class="sig-prename descclassname"><span class="pre">YUVAInfo.</span></span><span class="sig-name descname"><span class="pre">k440</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;Subsampling.k440:</span> <span class="pre">4&gt;</span></em><a class="headerlink" href="#skia.YUVAInfo.k440" title="Permalink to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">YUVAInfo.</span></span><span class="sig-name descname"><span class="pre">k440</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;Subsampling.k440:</span> <span class="pre">4&gt;</span></em><a class="headerlink" href="#skia.YUVAInfo.k440" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="skia.YUVAInfo.k444">
-<span class="sig-prename descclassname"><span class="pre">YUVAInfo.</span></span><span class="sig-name descname"><span class="pre">k444</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;Subsampling.k444:</span> <span class="pre">1&gt;</span></em><a class="headerlink" href="#skia.YUVAInfo.k444" title="Permalink to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">YUVAInfo.</span></span><span class="sig-name descname"><span class="pre">k444</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;Subsampling.k444:</span> <span class="pre">1&gt;</span></em><a class="headerlink" href="#skia.YUVAInfo.k444" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="skia.YUVAInfo.kCentered">
-<span class="sig-prename descclassname"><span class="pre">YUVAInfo.</span></span><span class="sig-name descname"><span class="pre">kCentered</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;Siting.kCentered:</span> <span class="pre">0&gt;</span></em><a class="headerlink" href="#skia.YUVAInfo.kCentered" title="Permalink to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">YUVAInfo.</span></span><span class="sig-name descname"><span class="pre">kCentered</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;Siting.kCentered:</span> <span class="pre">0&gt;</span></em><a class="headerlink" href="#skia.YUVAInfo.kCentered" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="skia.YUVAInfo.kMaxPlanes">
-<span class="sig-prename descclassname"><span class="pre">YUVAInfo.</span></span><span class="sig-name descname"><span class="pre">kMaxPlanes</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">4</span></em><a class="headerlink" href="#skia.YUVAInfo.kMaxPlanes" title="Permalink to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">YUVAInfo.</span></span><span class="sig-name descname"><span class="pre">kMaxPlanes</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">4</span></em><a class="headerlink" href="#skia.YUVAInfo.kMaxPlanes" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="skia.YUVAInfo.kUYV">
-<span class="sig-prename descclassname"><span class="pre">YUVAInfo.</span></span><span class="sig-name descname"><span class="pre">kUYV</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;PlaneConfig.kUYV:</span> <span class="pre">6&gt;</span></em><a class="headerlink" href="#skia.YUVAInfo.kUYV" title="Permalink to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">YUVAInfo.</span></span><span class="sig-name descname"><span class="pre">kUYV</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;PlaneConfig.kUYV:</span> <span class="pre">6&gt;</span></em><a class="headerlink" href="#skia.YUVAInfo.kUYV" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="skia.YUVAInfo.kUYVA">
-<span class="sig-prename descclassname"><span class="pre">YUVAInfo.</span></span><span class="sig-name descname"><span class="pre">kUYVA</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;PlaneConfig.kUYVA:</span> <span class="pre">12&gt;</span></em><a class="headerlink" href="#skia.YUVAInfo.kUYVA" title="Permalink to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">YUVAInfo.</span></span><span class="sig-name descname"><span class="pre">kUYVA</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;PlaneConfig.kUYVA:</span> <span class="pre">12&gt;</span></em><a class="headerlink" href="#skia.YUVAInfo.kUYVA" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="skia.YUVAInfo.kUnknown">
-<span class="sig-prename descclassname"><span class="pre">YUVAInfo.</span></span><span class="sig-name descname"><span class="pre">kUnknown</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;Subsampling.kUnknown:</span> <span class="pre">0&gt;</span></em><a class="headerlink" href="#skia.YUVAInfo.kUnknown" title="Permalink to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">YUVAInfo.</span></span><span class="sig-name descname"><span class="pre">kUnknown</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;Subsampling.kUnknown:</span> <span class="pre">0&gt;</span></em><a class="headerlink" href="#skia.YUVAInfo.kUnknown" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="skia.YUVAInfo.kYUV">
-<span class="sig-prename descclassname"><span class="pre">YUVAInfo.</span></span><span class="sig-name descname"><span class="pre">kYUV</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;PlaneConfig.kYUV:</span> <span class="pre">5&gt;</span></em><a class="headerlink" href="#skia.YUVAInfo.kYUV" title="Permalink to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">YUVAInfo.</span></span><span class="sig-name descname"><span class="pre">kYUV</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;PlaneConfig.kYUV:</span> <span class="pre">5&gt;</span></em><a class="headerlink" href="#skia.YUVAInfo.kYUV" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="skia.YUVAInfo.kYUVA">
-<span class="sig-prename descclassname"><span class="pre">YUVAInfo.</span></span><span class="sig-name descname"><span class="pre">kYUVA</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;PlaneConfig.kYUVA:</span> <span class="pre">11&gt;</span></em><a class="headerlink" href="#skia.YUVAInfo.kYUVA" title="Permalink to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">YUVAInfo.</span></span><span class="sig-name descname"><span class="pre">kYUVA</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;PlaneConfig.kYUVA:</span> <span class="pre">11&gt;</span></em><a class="headerlink" href="#skia.YUVAInfo.kYUVA" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="skia.YUVAInfo.kY_UV">
-<span class="sig-prename descclassname"><span class="pre">YUVAInfo.</span></span><span class="sig-name descname"><span class="pre">kY_UV</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;PlaneConfig.kY_UV:</span> <span class="pre">3&gt;</span></em><a class="headerlink" href="#skia.YUVAInfo.kY_UV" title="Permalink to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">YUVAInfo.</span></span><span class="sig-name descname"><span class="pre">kY_UV</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;PlaneConfig.kY_UV:</span> <span class="pre">3&gt;</span></em><a class="headerlink" href="#skia.YUVAInfo.kY_UV" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="skia.YUVAInfo.kY_UV_A">
-<span class="sig-prename descclassname"><span class="pre">YUVAInfo.</span></span><span class="sig-name descname"><span class="pre">kY_UV_A</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;PlaneConfig.kY_UV_A:</span> <span class="pre">9&gt;</span></em><a class="headerlink" href="#skia.YUVAInfo.kY_UV_A" title="Permalink to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">YUVAInfo.</span></span><span class="sig-name descname"><span class="pre">kY_UV_A</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;PlaneConfig.kY_UV_A:</span> <span class="pre">9&gt;</span></em><a class="headerlink" href="#skia.YUVAInfo.kY_UV_A" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="skia.YUVAInfo.kY_U_V">
-<span class="sig-prename descclassname"><span class="pre">YUVAInfo.</span></span><span class="sig-name descname"><span class="pre">kY_U_V</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;PlaneConfig.kY_U_V:</span> <span class="pre">1&gt;</span></em><a class="headerlink" href="#skia.YUVAInfo.kY_U_V" title="Permalink to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">YUVAInfo.</span></span><span class="sig-name descname"><span class="pre">kY_U_V</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;PlaneConfig.kY_U_V:</span> <span class="pre">1&gt;</span></em><a class="headerlink" href="#skia.YUVAInfo.kY_U_V" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="skia.YUVAInfo.kY_U_V_A">
-<span class="sig-prename descclassname"><span class="pre">YUVAInfo.</span></span><span class="sig-name descname"><span class="pre">kY_U_V_A</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;PlaneConfig.kY_U_V_A:</span> <span class="pre">7&gt;</span></em><a class="headerlink" href="#skia.YUVAInfo.kY_U_V_A" title="Permalink to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">YUVAInfo.</span></span><span class="sig-name descname"><span class="pre">kY_U_V_A</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;PlaneConfig.kY_U_V_A:</span> <span class="pre">7&gt;</span></em><a class="headerlink" href="#skia.YUVAInfo.kY_U_V_A" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="skia.YUVAInfo.kY_VU">
-<span class="sig-prename descclassname"><span class="pre">YUVAInfo.</span></span><span class="sig-name descname"><span class="pre">kY_VU</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;PlaneConfig.kY_VU:</span> <span class="pre">4&gt;</span></em><a class="headerlink" href="#skia.YUVAInfo.kY_VU" title="Permalink to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">YUVAInfo.</span></span><span class="sig-name descname"><span class="pre">kY_VU</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;PlaneConfig.kY_VU:</span> <span class="pre">4&gt;</span></em><a class="headerlink" href="#skia.YUVAInfo.kY_VU" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="skia.YUVAInfo.kY_VU_A">
-<span class="sig-prename descclassname"><span class="pre">YUVAInfo.</span></span><span class="sig-name descname"><span class="pre">kY_VU_A</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;PlaneConfig.kY_VU_A:</span> <span class="pre">10&gt;</span></em><a class="headerlink" href="#skia.YUVAInfo.kY_VU_A" title="Permalink to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">YUVAInfo.</span></span><span class="sig-name descname"><span class="pre">kY_VU_A</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;PlaneConfig.kY_VU_A:</span> <span class="pre">10&gt;</span></em><a class="headerlink" href="#skia.YUVAInfo.kY_VU_A" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="skia.YUVAInfo.kY_V_U">
-<span class="sig-prename descclassname"><span class="pre">YUVAInfo.</span></span><span class="sig-name descname"><span class="pre">kY_V_U</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;PlaneConfig.kY_V_U:</span> <span class="pre">2&gt;</span></em><a class="headerlink" href="#skia.YUVAInfo.kY_V_U" title="Permalink to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">YUVAInfo.</span></span><span class="sig-name descname"><span class="pre">kY_V_U</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;PlaneConfig.kY_V_U:</span> <span class="pre">2&gt;</span></em><a class="headerlink" href="#skia.YUVAInfo.kY_V_U" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="skia.YUVAInfo.kY_V_U_A">
-<span class="sig-prename descclassname"><span class="pre">YUVAInfo.</span></span><span class="sig-name descname"><span class="pre">kY_V_U_A</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;PlaneConfig.kY_V_U_A:</span> <span class="pre">8&gt;</span></em><a class="headerlink" href="#skia.YUVAInfo.kY_V_U_A" title="Permalink to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">YUVAInfo.</span></span><span class="sig-name descname"><span class="pre">kY_V_U_A</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;PlaneConfig.kY_V_U_A:</span> <span class="pre">8&gt;</span></em><a class="headerlink" href="#skia.YUVAInfo.kY_V_U_A" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 </section>

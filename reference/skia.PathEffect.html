@@ -1,21 +1,21 @@
 
 
 <!DOCTYPE html>
-<html class="writer-html5" lang="en">
+<html class="writer-html5" lang="en" data-content_root="../">
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>PathEffect &mdash; skia-python 138.0rc1 documentation</title>
-      <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
-      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css" />
+  <title>PathEffect &mdash; skia-python 0.0.1 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
 
   
-      <script src="../_static/jquery.js"></script>
-      <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
-      <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
-      <script src="../_static/doctools.js"></script>
-      <script src="../_static/sphinx_highlight.js"></script>
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=d45e8c67"></script>
+      <script src="../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -286,10 +286,10 @@
            <div itemprop="articleBody">
              
   <section id="patheffect">
-<h1>PathEffect<a class="headerlink" href="#patheffect" title="Permalink to this heading"></a></h1>
+<h1>PathEffect<a class="headerlink" href="#patheffect" title="Link to this heading"></a></h1>
 <dl class="py class">
 <dt class="sig sig-object py" id="skia.PathEffect">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">PathEffect</span></span><a class="headerlink" href="#skia.PathEffect" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">PathEffect</span></span><a class="headerlink" href="#skia.PathEffect" title="Link to this definition"></a></dt>
 <dd><p><a class="reference internal" href="#skia.PathEffect" title="skia.PathEffect"><code class="xref py py-class docutils literal notranslate"><span class="pre">PathEffect</span></code></a> is the base class for objects in the
 <a class="reference internal" href="skia.Paint.html#skia.Paint" title="skia.Paint"><code class="xref py py-class docutils literal notranslate"><span class="pre">Paint</span></code></a> that affect the geometry of a drawing primitive before it
 is transformed by the canvas’ matrix and drawn.</p>
@@ -304,7 +304,7 @@ is transformed by the canvas’ matrix and drawn.</p>
 <td><p></p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="skia.CornerPathEffect.html#skia.CornerPathEffect" title="skia.CornerPathEffect"><code class="xref py py-obj docutils literal notranslate"><span class="pre">CornerPathEffect</span></code></a></p></td>
-<td><p><a class="reference internal" href="skia.CornerPathEffect.html#skia.CornerPathEffect" title="skia.CornerPathEffect"><code class="xref py py-class docutils literal notranslate"><span class="pre">CornerPathEffect</span></code></a> is a subclass of <a class="reference internal" href="#skia.PathEffect" title="skia.PathEffect"><code class="xref py py-class docutils literal notranslate"><span class="pre">PathEffect</span></code></a> that can turn sharp corners into various treatments (e.g.</p></td>
+<td><p><a class="reference internal" href="skia.CornerPathEffect.html#skia.CornerPathEffect" title="skia.CornerPathEffect"><code class="xref py py-class docutils literal notranslate"><span class="pre">CornerPathEffect</span></code></a> is a subclass of <a class="reference internal" href="#skia.PathEffect" title="skia.PathEffect"><code class="xref py py-class docutils literal notranslate"><span class="pre">PathEffect</span></code></a> that can turn sharp corners into various treatments (e.g. rounded corners).</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="skia.Line2DPathEffect.html#skia.Line2DPathEffect" title="skia.Line2DPathEffect"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Line2DPathEffect</span></code></a></p></td>
 <td><p></p></td>
@@ -332,40 +332,40 @@ is transformed by the canvas’ matrix and drawn.</p>
 <table class="autosummary longtable docutils align-default">
 <tbody>
 <tr class="row-odd"><td><p><a class="reference internal" href="#skia.PathEffect.Deserialize" title="skia.PathEffect.Deserialize"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Deserialize</span></code></a></p></td>
-<td><p></p></td>
+<td><p>Deserialize(data: Buffer) -&gt; skia.PathEffect</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#skia.PathEffect.GetFlattenableType" title="skia.PathEffect.GetFlattenableType"><code class="xref py py-obj docutils literal notranslate"><span class="pre">GetFlattenableType</span></code></a></p></td>
-<td><p></p></td>
+<td><p>GetFlattenableType() -&gt; skia.Flattanable.Type</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#skia.PathEffect.MakeCompose" title="skia.PathEffect.MakeCompose"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MakeCompose</span></code></a></p></td>
-<td><p>Returns a patheffect that applies the inner effect to the path, and then applies the outer effect to the result of the inner's.</p></td>
+<td><p>MakeCompose(outer: skia.PathEffect, inner: skia.PathEffect) -&gt; skia.PathEffect</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#skia.PathEffect.MakeSum" title="skia.PathEffect.MakeSum"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MakeSum</span></code></a></p></td>
-<td><p>Returns a patheffect that apples each effect (first and second) to the original path, and returns a path with the sum of these.</p></td>
+<td><p>MakeSum(first: skia.PathEffect, second: skia.PathEffect) -&gt; skia.PathEffect</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#skia.PathEffect.__init__" title="skia.PathEffect.__init__"><code class="xref py py-obj docutils literal notranslate"><span class="pre">__init__</span></code></a></p></td>
 <td><p></p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#skia.PathEffect.filterPath" title="skia.PathEffect.filterPath"><code class="xref py py-obj docutils literal notranslate"><span class="pre">filterPath</span></code></a></p></td>
-<td><p>Given a src path (input) and a stroke-rec (input and output), apply this effect to the src path, returning the new path in dst, and return true.</p></td>
+<td><p>filterPath(self: skia.PathEffect, dst: SkPath, src: SkPath, stroke_rec: skia.StrokeRec, cullR: skia.Rect) -&gt; bool</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#skia.PathEffect.getFlattenableType" title="skia.PathEffect.getFlattenableType"><code class="xref py py-obj docutils literal notranslate"><span class="pre">getFlattenableType</span></code></a></p></td>
-<td><p></p></td>
+<td><p>getFlattenableType(self: skia.Flattanable) -&gt; skia.Flattanable.Type</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#skia.PathEffect.getTypeName" title="skia.PathEffect.getTypeName"><code class="xref py py-obj docutils literal notranslate"><span class="pre">getTypeName</span></code></a></p></td>
-<td><p>Returns the name of the object's class.</p></td>
+<td><p>getTypeName(self: skia.Flattanable) -&gt; str</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#skia.PathEffect.ref" title="skia.PathEffect.ref"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ref</span></code></a></p></td>
-<td><p>Increment the reference count.</p></td>
+<td><p>ref(self: skia.RefCntBase) -&gt; None</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#skia.PathEffect.serialize" title="skia.PathEffect.serialize"><code class="xref py py-obj docutils literal notranslate"><span class="pre">serialize</span></code></a></p></td>
-<td><p></p></td>
+<td><p>serialize(self: skia.Flattanable) -&gt; skia.Data</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#skia.PathEffect.unique" title="skia.PathEffect.unique"><code class="xref py py-obj docutils literal notranslate"><span class="pre">unique</span></code></a></p></td>
-<td><p>May return true if the caller is the only owner.</p></td>
+<td><p>unique(self: skia.RefCntBase) -&gt; bool</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#skia.PathEffect.unref" title="skia.PathEffect.unref"><code class="xref py py-obj docutils literal notranslate"><span class="pre">unref</span></code></a></p></td>
-<td><p>Decrement the reference count.</p></td>
+<td><p>unref(self: skia.RefCntBase) -&gt; None</p></td>
 </tr>
 </tbody>
 </table>
@@ -395,20 +395,20 @@ is transformed by the canvas’ matrix and drawn.</p>
 </dd></dl>
 
 <section id="methods">
-<h2>Methods<a class="headerlink" href="#methods" title="Permalink to this heading"></a></h2>
+<h2>Methods<a class="headerlink" href="#methods" title="Link to this heading"></a></h2>
 <dl class="py method">
 <dt class="sig sig-object py" id="skia.PathEffect.Deserialize">
-<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">PathEffect.</span></span><span class="sig-name descname"><span class="pre">Deserialize</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Buffer</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#skia.PathEffect" title="skia.PathEffect"><span class="pre">skia.PathEffect</span></a></span></span><a class="headerlink" href="#skia.PathEffect.Deserialize" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="k"><span class="pre">static</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">PathEffect.</span></span><span class="sig-name descname"><span class="pre">Deserialize</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Buffer</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#skia.PathEffect" title="skia.PathEffect"><span class="pre">skia.PathEffect</span></a></span></span><a class="headerlink" href="#skia.PathEffect.Deserialize" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="skia.PathEffect.GetFlattenableType">
-<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">PathEffect.</span></span><span class="sig-name descname"><span class="pre">GetFlattenableType</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="skia.Flattanable.Type.html#skia.Flattanable.Type" title="skia.Flattanable.Type"><span class="pre">skia.Flattanable.Type</span></a></span></span><a class="headerlink" href="#skia.PathEffect.GetFlattenableType" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="k"><span class="pre">static</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">PathEffect.</span></span><span class="sig-name descname"><span class="pre">GetFlattenableType</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="skia.Flattanable.Type.html#skia.Flattanable.Type" title="skia.Flattanable.Type"><span class="pre">skia.Flattanable.Type</span></a></span></span><a class="headerlink" href="#skia.PathEffect.GetFlattenableType" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="skia.PathEffect.MakeCompose">
-<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">PathEffect.</span></span><span class="sig-name descname"><span class="pre">MakeCompose</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">outer</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#skia.PathEffect" title="skia.PathEffect"><span class="pre">skia.PathEffect</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">inner</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#skia.PathEffect" title="skia.PathEffect"><span class="pre">skia.PathEffect</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#skia.PathEffect" title="skia.PathEffect"><span class="pre">skia.PathEffect</span></a></span></span><a class="headerlink" href="#skia.PathEffect.MakeCompose" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="k"><span class="pre">static</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">PathEffect.</span></span><span class="sig-name descname"><span class="pre">MakeCompose</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">outer</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#skia.PathEffect" title="skia.PathEffect"><span class="pre">skia.PathEffect</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">inner</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#skia.PathEffect" title="skia.PathEffect"><span class="pre">skia.PathEffect</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#skia.PathEffect" title="skia.PathEffect"><span class="pre">skia.PathEffect</span></a></span></span><a class="headerlink" href="#skia.PathEffect.MakeCompose" title="Link to this definition"></a></dt>
 <dd><p>Returns a patheffect that applies the inner effect to the path, and then
 applies the outer effect to the result of the inner’s.</p>
 <p>result = outer(inner(path))</p>
@@ -416,7 +416,7 @@ applies the outer effect to the result of the inner’s.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="skia.PathEffect.MakeSum">
-<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">PathEffect.</span></span><span class="sig-name descname"><span class="pre">MakeSum</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">first</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#skia.PathEffect" title="skia.PathEffect"><span class="pre">skia.PathEffect</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">second</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#skia.PathEffect" title="skia.PathEffect"><span class="pre">skia.PathEffect</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#skia.PathEffect" title="skia.PathEffect"><span class="pre">skia.PathEffect</span></a></span></span><a class="headerlink" href="#skia.PathEffect.MakeSum" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="k"><span class="pre">static</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">PathEffect.</span></span><span class="sig-name descname"><span class="pre">MakeSum</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">first</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#skia.PathEffect" title="skia.PathEffect"><span class="pre">skia.PathEffect</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">second</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#skia.PathEffect" title="skia.PathEffect"><span class="pre">skia.PathEffect</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#skia.PathEffect" title="skia.PathEffect"><span class="pre">skia.PathEffect</span></a></span></span><a class="headerlink" href="#skia.PathEffect.MakeSum" title="Link to this definition"></a></dt>
 <dd><p>Returns a patheffect that apples each effect (first and second) to the
 original path, and returns a path with the sum of these.</p>
 <p>result = first(path) + second(path)</p>
@@ -424,12 +424,12 @@ original path, and returns a path with the sum of these.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="skia.PathEffect.__init__">
-<span class="sig-prename descclassname"><span class="pre">PathEffect.</span></span><span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#skia.PathEffect.__init__" title="Permalink to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">PathEffect.</span></span><span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#skia.PathEffect.__init__" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="skia.PathEffect.filterPath">
-<span class="sig-prename descclassname"><span class="pre">PathEffect.</span></span><span class="sig-name descname"><span class="pre">filterPath</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#skia.PathEffect" title="skia.PathEffect"><span class="pre">skia.PathEffect</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">dst</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">SkPath</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">src</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">SkPath</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stroke_rec</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="skia.StrokeRec.html#skia.StrokeRec" title="skia.StrokeRec"><span class="pre">skia.StrokeRec</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">cullR</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="skia.Rect.html#skia.Rect" title="skia.Rect"><span class="pre">skia.Rect</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#skia.PathEffect.filterPath" title="Permalink to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">PathEffect.</span></span><span class="sig-name descname"><span class="pre">filterPath</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#skia.PathEffect" title="skia.PathEffect"><span class="pre">skia.PathEffect</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">dst</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">SkPath</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">src</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">SkPath</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stroke_rec</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="skia.StrokeRec.html#skia.StrokeRec" title="skia.StrokeRec"><span class="pre">skia.StrokeRec</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">cullR</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="skia.Rect.html#skia.Rect" title="skia.Rect"><span class="pre">skia.Rect</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#skia.PathEffect.filterPath" title="Link to this definition"></a></dt>
 <dd><p>Given a src path (input) and a stroke-rec (input and output), apply this
 effect to the src path, returning the new path in dst, and return true.</p>
 <p>If this effect cannot be applied, return false and ignore dst and
@@ -445,38 +445,38 @@ resulting stroke-rec to dst and then draw.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="skia.PathEffect.getFlattenableType">
-<span class="sig-prename descclassname"><span class="pre">PathEffect.</span></span><span class="sig-name descname"><span class="pre">getFlattenableType</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="skia.Flattanable.html#skia.Flattanable" title="skia.Flattanable"><span class="pre">skia.Flattanable</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="skia.Flattanable.Type.html#skia.Flattanable.Type" title="skia.Flattanable.Type"><span class="pre">skia.Flattanable.Type</span></a></span></span><a class="headerlink" href="#skia.PathEffect.getFlattenableType" title="Permalink to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">PathEffect.</span></span><span class="sig-name descname"><span class="pre">getFlattenableType</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="skia.Flattanable.html#skia.Flattanable" title="skia.Flattanable"><span class="pre">skia.Flattanable</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="skia.Flattanable.Type.html#skia.Flattanable.Type" title="skia.Flattanable.Type"><span class="pre">skia.Flattanable.Type</span></a></span></span><a class="headerlink" href="#skia.PathEffect.getFlattenableType" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="skia.PathEffect.getTypeName">
-<span class="sig-prename descclassname"><span class="pre">PathEffect.</span></span><span class="sig-name descname"><span class="pre">getTypeName</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="skia.Flattanable.html#skia.Flattanable" title="skia.Flattanable"><span class="pre">skia.Flattanable</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="headerlink" href="#skia.PathEffect.getTypeName" title="Permalink to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">PathEffect.</span></span><span class="sig-name descname"><span class="pre">getTypeName</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="skia.Flattanable.html#skia.Flattanable" title="skia.Flattanable"><span class="pre">skia.Flattanable</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="headerlink" href="#skia.PathEffect.getTypeName" title="Link to this definition"></a></dt>
 <dd><p>Returns the name of the object’s class.</p>
 <p>Implemented in <a class="reference internal" href="skia.Drawable.html#skia.Drawable" title="skia.Drawable"><code class="xref py py-class docutils literal notranslate"><span class="pre">Drawable</span></code></a>.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="skia.PathEffect.ref">
-<span class="sig-prename descclassname"><span class="pre">PathEffect.</span></span><span class="sig-name descname"><span class="pre">ref</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="skia.RefCntBase.html#skia.RefCntBase" title="skia.RefCntBase"><span class="pre">skia.RefCntBase</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#skia.PathEffect.ref" title="Permalink to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">PathEffect.</span></span><span class="sig-name descname"><span class="pre">ref</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="skia.RefCntBase.html#skia.RefCntBase" title="skia.RefCntBase"><span class="pre">skia.RefCntBase</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#skia.PathEffect.ref" title="Link to this definition"></a></dt>
 <dd><p>Increment the reference count.</p>
 <p>Must be balanced by a call to <a class="reference internal" href="#skia.PathEffect.unref" title="skia.PathEffect.unref"><code class="xref py py-meth docutils literal notranslate"><span class="pre">unref()</span></code></a>.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="skia.PathEffect.serialize">
-<span class="sig-prename descclassname"><span class="pre">PathEffect.</span></span><span class="sig-name descname"><span class="pre">serialize</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="skia.Flattanable.html#skia.Flattanable" title="skia.Flattanable"><span class="pre">skia.Flattanable</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="skia.Data.html#skia.Data" title="skia.Data"><span class="pre">skia.Data</span></a></span></span><a class="headerlink" href="#skia.PathEffect.serialize" title="Permalink to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">PathEffect.</span></span><span class="sig-name descname"><span class="pre">serialize</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="skia.Flattanable.html#skia.Flattanable" title="skia.Flattanable"><span class="pre">skia.Flattanable</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="skia.Data.html#skia.Data" title="skia.Data"><span class="pre">skia.Data</span></a></span></span><a class="headerlink" href="#skia.PathEffect.serialize" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="skia.PathEffect.unique">
-<span class="sig-prename descclassname"><span class="pre">PathEffect.</span></span><span class="sig-name descname"><span class="pre">unique</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="skia.RefCntBase.html#skia.RefCntBase" title="skia.RefCntBase"><span class="pre">skia.RefCntBase</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#skia.PathEffect.unique" title="Permalink to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">PathEffect.</span></span><span class="sig-name descname"><span class="pre">unique</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="skia.RefCntBase.html#skia.RefCntBase" title="skia.RefCntBase"><span class="pre">skia.RefCntBase</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#skia.PathEffect.unique" title="Link to this definition"></a></dt>
 <dd><p>May return true if the caller is the only owner.</p>
 <p>Ensures that all previous owner’s actions are complete.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="skia.PathEffect.unref">
-<span class="sig-prename descclassname"><span class="pre">PathEffect.</span></span><span class="sig-name descname"><span class="pre">unref</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="skia.RefCntBase.html#skia.RefCntBase" title="skia.RefCntBase"><span class="pre">skia.RefCntBase</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#skia.PathEffect.unref" title="Permalink to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">PathEffect.</span></span><span class="sig-name descname"><span class="pre">unref</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="skia.RefCntBase.html#skia.RefCntBase" title="skia.RefCntBase"><span class="pre">skia.RefCntBase</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#skia.PathEffect.unref" title="Link to this definition"></a></dt>
 <dd><p>Decrement the reference count.</p>
 <p>If the reference count is 1 before the decrement, then delete the
 object. Note that if this is the case, then the object needs to have
@@ -485,35 +485,35 @@ been allocated via new, and not on the stack.</p>
 
 </section>
 <section id="attributes">
-<h2>Attributes<a class="headerlink" href="#attributes" title="Permalink to this heading"></a></h2>
+<h2>Attributes<a class="headerlink" href="#attributes" title="Link to this heading"></a></h2>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="skia.PathEffect.kColorFilter_Type">
-<span class="sig-prename descclassname"><span class="pre">PathEffect.</span></span><span class="sig-name descname"><span class="pre">kColorFilter_Type</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;Type.kColorFilter_Type:</span> <span class="pre">0&gt;</span></em><a class="headerlink" href="#skia.PathEffect.kColorFilter_Type" title="Permalink to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">PathEffect.</span></span><span class="sig-name descname"><span class="pre">kColorFilter_Type</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;Type.kColorFilter_Type:</span> <span class="pre">0&gt;</span></em><a class="headerlink" href="#skia.PathEffect.kColorFilter_Type" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="skia.PathEffect.kDrawLooper_Type">
-<span class="sig-prename descclassname"><span class="pre">PathEffect.</span></span><span class="sig-name descname"><span class="pre">kDrawLooper_Type</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;Type.kDrawLooper_Type:</span> <span class="pre">3&gt;</span></em><a class="headerlink" href="#skia.PathEffect.kDrawLooper_Type" title="Permalink to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">PathEffect.</span></span><span class="sig-name descname"><span class="pre">kDrawLooper_Type</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;Type.kDrawLooper_Type:</span> <span class="pre">3&gt;</span></em><a class="headerlink" href="#skia.PathEffect.kDrawLooper_Type" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="skia.PathEffect.kDrawable_Type">
-<span class="sig-prename descclassname"><span class="pre">PathEffect.</span></span><span class="sig-name descname"><span class="pre">kDrawable_Type</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;Type.kDrawable_Type:</span> <span class="pre">2&gt;</span></em><a class="headerlink" href="#skia.PathEffect.kDrawable_Type" title="Permalink to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">PathEffect.</span></span><span class="sig-name descname"><span class="pre">kDrawable_Type</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;Type.kDrawable_Type:</span> <span class="pre">2&gt;</span></em><a class="headerlink" href="#skia.PathEffect.kDrawable_Type" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="skia.PathEffect.kImageFilter_Type">
-<span class="sig-prename descclassname"><span class="pre">PathEffect.</span></span><span class="sig-name descname"><span class="pre">kImageFilter_Type</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;Type.kImageFilter_Type:</span> <span class="pre">4&gt;</span></em><a class="headerlink" href="#skia.PathEffect.kImageFilter_Type" title="Permalink to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">PathEffect.</span></span><span class="sig-name descname"><span class="pre">kImageFilter_Type</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;Type.kImageFilter_Type:</span> <span class="pre">4&gt;</span></em><a class="headerlink" href="#skia.PathEffect.kImageFilter_Type" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="skia.PathEffect.kMaskFilter_Type">
-<span class="sig-prename descclassname"><span class="pre">PathEffect.</span></span><span class="sig-name descname"><span class="pre">kMaskFilter_Type</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;Type.kMaskFilter_Type:</span> <span class="pre">5&gt;</span></em><a class="headerlink" href="#skia.PathEffect.kMaskFilter_Type" title="Permalink to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">PathEffect.</span></span><span class="sig-name descname"><span class="pre">kMaskFilter_Type</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;Type.kMaskFilter_Type:</span> <span class="pre">5&gt;</span></em><a class="headerlink" href="#skia.PathEffect.kMaskFilter_Type" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="skia.PathEffect.kPathEffect_Type">
-<span class="sig-prename descclassname"><span class="pre">PathEffect.</span></span><span class="sig-name descname"><span class="pre">kPathEffect_Type</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;Type.kPathEffect_Type:</span> <span class="pre">6&gt;</span></em><a class="headerlink" href="#skia.PathEffect.kPathEffect_Type" title="Permalink to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">PathEffect.</span></span><span class="sig-name descname"><span class="pre">kPathEffect_Type</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;Type.kPathEffect_Type:</span> <span class="pre">6&gt;</span></em><a class="headerlink" href="#skia.PathEffect.kPathEffect_Type" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 </section>
