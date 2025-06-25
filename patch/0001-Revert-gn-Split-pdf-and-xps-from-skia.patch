@@ -1,0 +1,210 @@
+From e5b9496b71237d3e63289c6fd8a7466d8db80a29 Mon Sep 17 00:00:00 2001
+From: Florin Malita <fmalita@google.com>
+Date: Mon, 23 Jun 2025 19:07:15 -0700
+Subject: [PATCH] Revert "[gn] Split :pdf and :xps from :skia"
+
+This reverts commit 3f34cf7c2d940a9ed84bf131d6c33b7380e180a0.
+
+Reason for revert: breaking Android
+
+Original change's description:
+> [gn] Split :pdf and :xps from :skia
+>
+> After https://skia-review.googlesource.com/c/skia/+/1008277/2, we end up
+> with an implicit dependency cycle:
+>
+> :skia -> :pdf/:xps (SkClipStack_AsPath) -> //modules/pathops -> :skia
+>
+> To fix, remove pdf and xps deps from "core" :skia and add to leaf apps
+> instead.
+>
+> Change-Id: Ibdd58a97672ab5f9566c71907ce9e664eb809d4a
+> Reviewed-on: https://skia-review.googlesource.com/c/skia/+/1009616
+> Reviewed-by: Ben Wagner <bungeman@google.com>
+> Commit-Queue: Florin Malita <fmalita@google.com>
+
+No-Presubmit: true
+No-Tree-Checks: true
+No-Try: true
+Change-Id: I259449122b1b77894e841d3146487f5be8bebfba
+Reviewed-on: https://skia-review.googlesource.com/c/skia/+/1011517
+Auto-Submit: Florin Malita <fmalita@google.com>
+Commit-Queue: Rubber Stamper <rubber-stamper@appspot.gserviceaccount.com>
+Bot-Commit: Rubber Stamper <rubber-stamper@appspot.gserviceaccount.com>
+Signed-off-by: Hin-Tak Leung <htl10@users.sourceforge.net>
+---
+ BUILD.gn                    | 41 ++++++-------------------------------
+ bazel/exporter_tool/main.go |  4 ----
+ gn/utils.gni                |  6 ------
+ 3 files changed, 6 insertions(+), 45 deletions(-)
+
+diff --git a/BUILD.gn b/BUILD.gn
+index 0cdde0edfa..acdfb6d793 100644
+--- a/BUILD.gn
++++ b/BUILD.gn
+@@ -1257,22 +1257,12 @@ optional("graphite") {
+   }
+ }
+ 
+-skia_component("clipstack_utils") {
+-  deps = [
+-    ":skia",
+-    "//modules/pathops",
+-  ]
+-  sources = skia_clipstack_utils_sources
+-}
+-
+ optional("pdf") {
+-  enabled = skia_use_zlib && skia_enable_pdf
++  enabled = skia_use_zlib && skia_enable_pdf && skia_use_libjpeg_turbo_decode &&
++            skia_use_libjpeg_turbo_encode
+   public_defines = [ "SK_SUPPORT_PDF" ]
+ 
+-  deps = [
+-    ":clipstack_utils",
+-    "//third_party/zlib",
+-  ]
++  deps = [ "//third_party/zlib" ]
+   public = skia_pdf_public
+   sources = skia_pdf_sources
+   sources_when_disabled = [ "src/pdf/SkDocument_PDF_None.cpp" ]
+@@ -1296,7 +1286,6 @@ optional("pdf_jpeg_helpers") {
+ optional("xps") {
+   enabled = skia_use_xps && is_win
+   public_defines = [ "SK_SUPPORT_XPS" ]
+-  deps = [ ":clipstack_utils" ]
+   public = skia_xps_public
+   sources = skia_xps_sources
+ }
+@@ -1672,8 +1661,11 @@ skia_component("skia") {
+     ":gpu",
+     ":graphite",
+     ":jpeg_encode",
++    ":pdf",
++    ":pdf_jpeg_helpers",
+     ":png_encode_libpng",
+     ":webp_encode",
++    ":xps",
+   ]
+ 
+   deps = [
+@@ -1731,10 +1723,6 @@ skia_component("skia") {
+     "src/sfnt/SkOTUtils.cpp",
+   ]
+ 
+-  # TODO(fmalita): remove from skia_utils_private after clients are migrated to
+-  # skia_clipstack_utils_sources
+-  sources -= skia_clipstack_utils_sources
+-
+   defines = []
+   libs = []
+ 
+@@ -1950,8 +1938,6 @@ if (skia_enable_tools) {
+       deps = [
+         ":flags",
+         ":gpu_tool_utils",
+-        ":pdf",
+-        ":pdf_jpeg_helpers",
+         ":skia",
+         ":skia.h",
+         "modules/pathops",
+@@ -2558,8 +2544,6 @@ if (skia_enable_tools) {
+       ":flags",
+       ":gm",
+       ":gpu_tool_utils",
+-      ":pdf",
+-      ":pdf_jpeg_helpers",
+       ":skia",
+       ":tool_utils",
+       "modules/skparagraph:bench",
+@@ -2632,13 +2616,10 @@ if (skia_enable_tools) {
+         ":gm",
+         ":gpu_tool_utils",
+         ":hash_and_encode",
+-        ":pdf",
+-        ":pdf_jpeg_helpers",
+         ":skia",
+         ":tests",
+         ":tool_utils",
+         ":trace",
+-        ":xps",
+         "modules/pathops",
+         "modules/skottie",
+         "modules/skottie:utils",
+@@ -2751,8 +2732,6 @@ if (skia_enable_tools) {
+     test_app("sktexttopdf") {
+       sources = [ "tools/using_skia_and_harfbuzz.cpp" ]
+       deps = [
+-        ":pdf",
+-        ":pdf_jpeg_helpers",
+         ":skia",
+         "modules/pathops",
+         "modules/skshaper",
+@@ -2853,8 +2832,6 @@ if (skia_enable_tools) {
+     deps = [
+       ":flags",
+       ":gpu_tool_utils",
+-      ":pdf",
+-      ":pdf_jpeg_helpers",
+       ":skia",
+       "modules/jsonreader",
+       "modules/skottie:fuzz",
+@@ -2903,8 +2880,6 @@ if (skia_enable_tools) {
+       ]
+       deps = [
+         ":gm",
+-        ":pdf",
+-        ":pdf_jpeg_helpers",
+         ":skia",
+         ":tests",
+         ":tool_utils",
+@@ -3084,8 +3059,6 @@ if (skia_enable_tools) {
+         ]
+       }
+       deps = [
+-        ":pdf",
+-        ":pdf_jpeg_helpers",
+         ":skia",
+         ":skia.h",
+         "modules/skottie",
+@@ -3306,8 +3279,6 @@ if (skia_enable_tools) {
+         deps += [
+           ":flags",
+           ":gpu_tool_utils",
+-          ":pdf",
+-          ":pdf_jpeg_helpers",
+           ":skia",
+           ":tool_utils",
+         ]
+diff --git a/bazel/exporter_tool/main.go b/bazel/exporter_tool/main.go
+index 77bc549ece..5201da4220 100644
+--- a/bazel/exporter_tool/main.go
++++ b/bazel/exporter_tool/main.go
+@@ -449,10 +449,6 @@ var gniExportDescs = []exporter.GNIExportDesc{
+ 				"//src/utils:utils_skslc_hdrs",
+ 				"//src/utils:utils_skslc_srcs",
+ 			}},
+-		{Var: "skia_clipstack_utils_sources",
+-			Rules: []string{
+-				"//src/utils:clip_stack_utils",
+-			}},
+ 	},
+ 	},
+ 	{GNI: "gn/xps.gni", Vars: []exporter.GNIFileListExportDesc{
+diff --git a/gn/utils.gni b/gn/utils.gni
+index 42255ce6a3..080f89c98e 100644
+--- a/gn/utils.gni
++++ b/gn/utils.gni
+@@ -120,9 +120,3 @@ skia_utils_private = [
+   "$_src/utils/win/SkTScopedComPtr.h",
+   "$_src/utils/win/SkWGL_win.cpp",
+ ]
+-
+-# Generated by Bazel rule //src/utils:clip_stack_utils
+-skia_clipstack_utils_sources = [
+-  "$_src/utils/SkClipStackUtils.cpp",
+-  "$_src/utils/SkClipStackUtils.h",
+-]
+-- 
+2.49.0
+
