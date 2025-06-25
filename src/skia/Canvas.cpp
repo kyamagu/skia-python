@@ -1346,7 +1346,7 @@ canvas
         // &SkCanvas::drawPoints,
         [] (SkCanvas& canvas, SkCanvas::PointMode mode,
             const std::vector<SkPoint>& points, const SkPaint &paint) {
-            canvas.drawPoints(mode, points.size(), &points[0], paint);
+            canvas.drawPoints(mode, {&points[0], points.size()}, paint);
         },
         R"docstring(
         Draws pts using clip, :py:class:`Matrix` and :py:class:`Paint`
@@ -2318,9 +2318,9 @@ canvas
             if (!colors.empty() && colors.size() != xform.size())
                 throw std::runtime_error(
                     "colors must have the same length with xform.");
-            canvas.drawAtlas(atlas, &xform[0], &tex[0],
-                (colors.empty()) ? nullptr : &colors[0],
-                xform.size(), mode, options, cullRect, paint);
+            canvas.drawAtlas(atlas, {&xform[0], xform.size()}, {&tex[0], tex.size()},
+                {(colors.empty()) ? nullptr : &colors[0],
+                colors.size()}, mode, options, cullRect, paint);
         },
         R"docstring(
         Draws a set of sprites from atlas, using clip, :py:class:`Matrix`, and

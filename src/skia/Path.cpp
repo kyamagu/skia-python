@@ -380,8 +380,8 @@ path
             SkPathFillType fillType,
             bool isVolatile) {
             return SkPath::Make(
-                points.data(), points.size(), verbs.data(), verbs.size(),
-                conicWeights.data(), conicWeights.size(), fillType, isVolatile);
+                {points.data(), points.size()}, {verbs.data(), verbs.size()},
+                {conicWeights.data(), conicWeights.size()}, fillType, isVolatile);
         },
         R"docstring(
         Create a new path with the specified segments.
@@ -434,7 +434,7 @@ path
         [] (const std::vector<SkPoint>& points, bool isClosed,
             SkPathFillType fillType, bool isVolatile) {
             return SkPath::Polygon(
-                points.data(), points.size(), isClosed, fillType, isVolatile);
+                {points.data(), points.size()}, isClosed, fillType, isVolatile);
         },
         py::arg("points"), py::arg("isClosed"),
         py::arg_v("fillType", SkPathFillType::kWinding, "skia.PathFillType.kWinding"),
@@ -710,7 +710,7 @@ path
             if (max == 0)
                 max = path.countVerbs();
             std::vector<SkPoint> points(max);
-            auto length = path.getPoints(&points[0], max);
+            auto length = path.getPoints({&points[0], max});
             if (length < max)
                 points.erase(points.begin() + length, points.end());
             return points;
@@ -741,7 +741,7 @@ path
             if (max == 0)
                 max = path.countVerbs();
             std::vector<uint8_t> verbs(max);
-            auto length = path.getVerbs(&verbs[0], max);
+            auto length = path.getVerbs({&verbs[0], max});
             if (length < max)
                 verbs.erase(verbs.begin() + length, verbs.end());
             std::vector<SkPath::Verb> verbs_(verbs.size());
@@ -1604,7 +1604,7 @@ path
                     << " elements).";
                 throw py::value_error(stream.str());
             }
-            return path.addRoundRect(rect, &radii_[0], dir);
+            return path.addRoundRect(rect, {&radii_[0], radii_.size()}, dir);
         },
         R"docstring(
         Appends :py:class:`RRect` to :py:class:`Path`, creating a new closed
@@ -1658,7 +1658,7 @@ path
         py::arg("rrect"), py::arg("dir"), py::arg("start"))
     .def("addPoly",
         [] (SkPath& path, const std::vector<SkPoint>& pts, bool close) {
-            return path.addPoly(&pts[0], pts.size(), close);
+            return path.addPoly({&pts[0], pts.size()}, close);
         },
         R"docstring(
         Adds contour created from pts.
@@ -2291,7 +2291,7 @@ PathBuilder
     .def("close", &SkPathBuilder::close)
     .def("polylineTo",
         [] (SkPathBuilder& self, const std::vector<SkPoint>& points) {
-            return self.polylineTo(points.data(), points.size());
+            return self.polylineTo({points.data(), points.size()});
         },
         R"docstring(
         Append a series of lineTo(...)
@@ -2457,7 +2457,7 @@ PathBuilder
     .def("addPolygon",
         [] (SkPathBuilder& self, const std::vector<SkPoint>& points,
             bool isClosed) {
-            return self.addPolygon(points.data(), points.size(), isClosed);
+            return self.addPolygon({points.data(), points.size()}, isClosed);
         },
         py::arg("points"), py::arg("isClosed"))
     .def("incReserve",

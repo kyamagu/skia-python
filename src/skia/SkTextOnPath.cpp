@@ -17,10 +17,9 @@
 static void morphpoints(SkPoint dst[], const SkPoint src[], int count,
                         SkPathMeasure& meas, const SkMatrix& matrix) {
     for (int i = 0; i < count; i++) {
-        SkPoint pos;
         SkVector tangent;
 
-        matrix.mapXY(src[i].fX, src[i].fY, &pos);
+        SkPoint pos = matrix.mapPoint({src[i].fX, src[i].fY});
         SkScalar sx = pos.fX;
         SkScalar sy = pos.fY;
 
@@ -101,9 +100,9 @@ void SkVisitTextOnPath(const void* text, size_t byteLength, const SkPaint& paint
     int glyphCount = font.countText(text, byteLength, SkTextEncoding::kUTF8);
     if (glyphCount <= 0) return;
     std::vector<SkGlyphID> glyphs(glyphCount);
-    font.textToGlyphs(text, byteLength, SkTextEncoding::kUTF8, glyphs.data(), glyphCount);
+    font.textToGlyphs(text, byteLength, SkTextEncoding::kUTF8, {glyphs.data(), glyphCount});
     std::vector<SkScalar> advances(glyphCount);
-    font.getWidths(glyphs.data(), glyphCount, advances.data());
+    font.getWidths({glyphs.data(), glyphCount}, {advances.data(), advances.size()});
 
     // Prepare path measuring
     SkPathMeasure       meas(follow, false);

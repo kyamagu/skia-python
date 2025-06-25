@@ -454,14 +454,14 @@ typeface
         )docstring")
     .def("getVariationDesignParameters",
         [] (const SkTypeface& typeface) {
-            auto count = typeface.getVariationDesignParameters(nullptr, 0);
+            auto count = typeface.getVariationDesignParameters({nullptr, 0});
             if (count == -1)
                 throw std::runtime_error("Failed to get; Likely no parameter");
             std::vector<Axis> params(count);
             if (count == 0)
                 return params;
             auto actualCount = typeface.getVariationDesignParameters(
-                params.data(), params.size());
+                {params.data(), params.size()});
             if (actualCount == -1)
                 throw std::runtime_error("Failed to get");
             return params;
@@ -474,12 +474,12 @@ typeface
         )docstring")
     .def("getVariationDesignPosition",
         [] (const SkTypeface& typeface) {
-            auto count = typeface.getVariationDesignPosition(nullptr, 0);
+            auto count = typeface.getVariationDesignPosition({nullptr, 0});
             if (count == -1)
                 throw std::runtime_error("Failed to get; Likely no position");
             std::vector<Coordinate> coords(count);
             auto actualCount = typeface.getVariationDesignPosition(
-                coords.data(), coords.size());
+                {coords.data(), coords.size()});
             if (actualCount == -1)
                 throw std::runtime_error("Failed to get");
             return coords;
@@ -523,7 +523,7 @@ typeface
     .def("unicharsToGlyphs",
         [] (const SkTypeface& typeface, const std::vector<SkUnichar>& chars) {
             std::vector<SkGlyphID> glyphs(chars.size());
-            typeface.unicharsToGlyphs(&chars[0], chars.size(), &glyphs[0]);
+            typeface.unicharsToGlyphs({&chars[0], chars.size()}, {&glyphs[0], glyphs.size()});
             return glyphs;
         },
         R"docstring(
@@ -555,7 +555,7 @@ typeface
     .def("getTableTags",
         [] (const SkTypeface& typeface) {
             std::vector<SkFontTableTag> tags(typeface.countTables());
-            size_t size = typeface.getTableTags(&tags[0]);
+            size_t size = typeface.readTableTags({&tags[0], tags.size()});
             if (size < tags.size())
                 throw std::runtime_error("Failed to get table tags.");
             return tags;
@@ -612,7 +612,7 @@ typeface
             const std::vector<SkGlyphID>& glyphs) -> py::object {
             std::vector<int32_t> adjustments(glyphs.size() - 1);
             auto result = typeface.getKerningPairAdjustments(
-                &glyphs[0], glyphs.size(), (glyphs.size() > 1) ? &adjustments[0] : nullptr);
+                {&glyphs[0], glyphs.size()}, {(glyphs.size() > 1) ? &adjustments[0] : nullptr, adjustments.size()});
             if (!result) {
                 // Kerning is not supported for this typeface.
                 return py::none();
@@ -1314,7 +1314,7 @@ font
             int count = font.countText(&text[0], text.size(), encoding);
             std::vector<SkGlyphID> glyphs(count);
             font.textToGlyphs(
-                &text[0], text.size(), encoding, &glyphs[0], glyphs.size());
+                &text[0], text.size(), encoding, {&glyphs[0], glyphs.size()});
             return glyphs;
         },
         R"docstring(
@@ -1354,7 +1354,7 @@ font
     .def("unicharsToGlyphs",
         [] (const SkFont& font, const std::vector<SkUnichar>& uni) {
             std::vector<SkGlyphID> glyphs(uni.size());
-            font.unicharsToGlyphs(&uni[0], uni.size(), &glyphs[0]);
+            font.unicharsToGlyphs({&uni[0], uni.size()}, {&glyphs[0], glyphs.size()});
             return glyphs;
         },
         py::arg("uni"))
@@ -1401,7 +1401,7 @@ font
     .def("getWidths",
         [] (const SkFont& font, const std::vector<SkGlyphID>& glyphs) {
             std::vector<SkScalar> width(glyphs.size());
-            font.getWidths(&glyphs[0], glyphs.size(), &width[0]);
+            font.getWidths({&glyphs[0], glyphs.size()}, {&width[0], width.size()});
             return width;
         },
         R"docstring(
@@ -1417,7 +1417,7 @@ font
             std::vector<SkScalar> width(glyphs.size());
             std::vector<SkRect> bounds(glyphs.size());
             font.getWidthsBounds(
-                &glyphs[0], glyphs.size(), &width[0], &bounds[0], paint);
+                {&glyphs[0], glyphs.size()}, {&width[0], width.size()}, {&bounds[0], bounds.size()}, paint);
             return py::make_tuple(width, bounds);
         },
         R"docstring(
@@ -1434,7 +1434,7 @@ font
         [] (const SkFont& font, const std::vector<SkGlyphID>& glyphs,
             const SkPaint* paint) {
             std::vector<SkRect> bounds(glyphs.size());
-            font.getBounds(&glyphs[0], glyphs.size(), &bounds[0], paint);
+            font.getBounds({&glyphs[0], glyphs.size()}, {&bounds[0], bounds.size()}, paint);
             return bounds;
         },
         R"docstring(
@@ -1454,7 +1454,7 @@ font
         [] (const SkFont& font, const std::vector<SkGlyphID>& glyphs,
             const SkPoint& origin) {
             std::vector<SkPoint> pos(glyphs.size());
-            font.getPos(&glyphs[0], glyphs.size(), &pos[0], origin);
+            font.getPos({&glyphs[0], glyphs.size()}, {&pos[0], pos.size()}, origin);
             return pos;
         },
         R"docstring(
@@ -1472,7 +1472,7 @@ font
         [] (const SkFont& font, const std::vector<SkGlyphID>& glyphs,
             const SkScalar& origin) {
             std::vector<SkScalar> xpos(glyphs.size());
-            font.getXPos(&glyphs[0], glyphs.size(), &xpos[0], origin);
+            font.getXPos({&glyphs[0], glyphs.size()}, {&xpos[0], xpos.size()}, origin);
             return xpos;
         },
         R"docstring(
@@ -1509,8 +1509,8 @@ font
             std::vector<SkPath> paths;
             paths.reserve(glyphIDs.size());
             font.getPaths(
-                glyphIDs.data(),
-                glyphIDs.size(),
+                {glyphIDs.data(),
+                glyphIDs.size()},
                 [] (const SkPath* pathOrNull, const SkMatrix& mx, void* ctx) {
                     auto paths_ = static_cast<std::vector<SkPath>*>(ctx);
                     if (pathOrNull) {
