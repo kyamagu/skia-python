@@ -12,10 +12,10 @@ fi
 
 # Build skia
 cd skia && \
-    patch -p1 < ../patch/skia-m138-minimize-download.patch && \
+    patch -p1 < ../patch/skia-m139-minimize-download.patch && \
+    patch -p1 < ../patch/0001-Revert-gn-Split-pdf-and-xps-from-skia.patch && \
     patch -p1 < ../patch/skia-m132-colrv1-freetype.diff && \
     patch -p1 -R < ../patch/0001-Disable-OpenGL-for-Windows-on-ARM64.patch && \
-    patch -p1 < ../patch/0001-gn-Remove-msvc-env-setting.patch && \
     python tools/git-sync-deps && \
     bin/gn gen out/Release --args="
 is_official_build=true

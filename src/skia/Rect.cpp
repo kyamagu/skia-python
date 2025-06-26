@@ -868,7 +868,7 @@ py::class_<SkRect>(m, "Rect", R"docstring(
         py::arg("left"), py::arg("top"), py::arg("right"), py::arg("bottom"))
     .def("setBounds",
         [] (SkRect& rect, const std::vector<SkPoint>& points) {
-            rect.setBounds(&points[0], points.size());
+            rect.setBounds({&points[0], points.size()});
         },
         R"docstring(
         Sets to bounds of :py:class:`Point` array with count entries.
@@ -884,7 +884,7 @@ py::class_<SkRect>(m, "Rect", R"docstring(
         py::arg("points"))
     .def("setBoundsCheck",
         [] (SkRect& rect, const std::vector<SkPoint>& points) {
-            return rect.setBoundsCheck(&points[0], points.size());
+            return rect.setBoundsCheck({&points[0], points.size()});
         },
         R"docstring(
         Sets to bounds of :py:class:`Point` array with count entries.
@@ -902,7 +902,7 @@ py::class_<SkRect>(m, "Rect", R"docstring(
         py::arg("points"))
     .def("setBoundsNoCheck",
         [] (SkRect& rect, const std::vector<SkPoint>& points) {
-            rect.setBoundsNoCheck(&points[0], points.size());
+            rect.setBoundsNoCheck({&points[0], points.size()});
         },
         R"docstring(
         Sets to bounds of :py:class:`Point` pts array with count entries.

@@ -1291,7 +1291,7 @@ matrix
         [] (const SkMatrix& matrix, std::vector<SkPoint>& pts) {
             if (pts.empty())
                 return pts;
-            matrix.mapPoints(&pts[0], &pts[0], pts.size());
+            matrix.mapPoints({&pts[0], pts.size()}, {&pts[0], pts.size()});
             return pts;
         },
         R"docstring(
@@ -1325,7 +1325,7 @@ matrix
         [] (const SkMatrix& matrix, std::vector<SkPoint3>& pts) -> py::object {
             if (pts.empty())
                 return py::cast(pts);
-            matrix.mapHomogeneousPoints(&pts[0], &pts[0], pts.size());
+            matrix.mapHomogeneousPoints({&pts[0], pts.size()}, {&pts[0], pts.size()});
             return py::cast(pts);
         },
         R"docstring(
@@ -1354,7 +1354,7 @@ matrix
             if (pts.empty())
                 return py::cast(pts);
             std::vector<SkPoint3> dst(pts.size());
-            matrix.mapHomogeneousPoints(&dst[0], &pts[0], pts.size());
+            matrix.mapPointsToHomogeneous({&dst[0], dst.size()}, {&pts[0], pts.size()});
             return py::cast(dst);
         },
         R"docstring(
@@ -1365,7 +1365,9 @@ matrix
         )docstring",
         py::arg("pts"))
     .def("mapXY",
-        py::overload_cast<SkScalar, SkScalar>(&SkMatrix::mapXY, py::const_),
+        [] (const SkMatrix& matrix, SkScalar x, SkScalar y) {
+            return matrix.mapPoint({x, y});
+        },
         R"docstring(
         Returns :py:class:`Point` (x, y) multiplied by :py:class:`Matrix`.
 
@@ -1390,7 +1392,7 @@ matrix
         [] (const SkMatrix& matrix, std::vector<SkVector>& src) {
             if (src.empty())
                 return src;
-            matrix.mapVectors(&src[0], &src[0], src.size());
+            matrix.mapVectors({&src[0], src.size()}, {&src[0], src.size()});
             return src;
         },
         R"docstring(

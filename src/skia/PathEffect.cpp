@@ -330,7 +330,7 @@ py::class_<SkDashPathEffect>(m, "DashPathEffect")
     .def_static("Make",
         [] (const std::vector<SkScalar>& intervals, SkScalar phase) {
             return SkDashPathEffect::Make(
-                &intervals[0], intervals.size(), phase);
+                {&intervals[0], intervals.size()}, phase);
         },
         R"docstring(
         For example: if intervals[] = {10, 20}, count = 2, and phase = 25, this
