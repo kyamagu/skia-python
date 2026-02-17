@@ -1550,7 +1550,7 @@ matrix
         :return: maximum scale factor
         )docstring")
     .def("getMinMaxScales",
-        [] (const SkMatrix& matrix) {
+        [] (const SkMatrix& matrix) -> py::object {
             std::vector<SkScalar> factors(2);
             if (matrix.getMinMaxScales(&factors[0]))
                 return py::make_tuple(factors[0], factors[1]);
