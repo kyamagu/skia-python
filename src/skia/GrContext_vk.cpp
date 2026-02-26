@@ -3,7 +3,7 @@
 
 void initGrContext_vk(py::module &m) {
 
-py::enum_<VkFormat>(m, "VkFormat", py::arithmetic())
+py::enum_<VkFormat>(m, "VkFormat")
     .value("UNDEFINED",                                      VkFormat::VK_FORMAT_UNDEFINED)
     .value("R4G4_UNORM_PACK8",                               VkFormat::VK_FORMAT_R4G4_UNORM_PACK8)
     .value("R4G4B4A4_UNORM_PACK16",                          VkFormat::VK_FORMAT_R4G4B4A4_UNORM_PACK16)
@@ -314,8 +314,6 @@ py::enum_<VkFormat>(m, "VkFormat", py::arithmetic())
     .value("MAX_ENUM",                                       VkFormat::VK_FORMAT_MAX_ENUM)
     .export_values();
 
-py::implicitly_convertible<int, VkFormat>();
-
 py::enum_<VkImageLayout>(m, "VkImageLayout", py::arithmetic())
     .value("UNDEFINED",                                      VkImageLayout::VK_IMAGE_LAYOUT_UNDEFINED)
     .value("GENERAL",                                        VkImageLayout::VK_IMAGE_LAYOUT_GENERAL)
@@ -359,8 +357,6 @@ py::enum_<VkImageLayout>(m, "VkImageLayout", py::arithmetic())
     .value("ATTACHMENT_OPTIMAL_KHR",                         VkImageLayout::VK_IMAGE_LAYOUT_ATTACHMENT_OPTIMAL_KHR)
     .value("MAX_ENUM",                                       VkImageLayout::VK_IMAGE_LAYOUT_MAX_ENUM)
     .export_values();
-
-py::implicitly_convertible<int, VkImageLayout>();
 
 py::class_<GrVkAlloc>(m, "GrVkAlloc")
     .def(py::init<>())
