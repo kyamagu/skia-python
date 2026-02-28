@@ -33,19 +33,19 @@ index ef913e9..33f3208 100644
        sources += [ "src/gpu/ganesh/gl/GrGLMakeNativeInterface_none.cpp" ]
      }
 @@ -2185,10 +2187,10 @@ if (skia_enable_tools) {
-           "tools/gpu/gl/win/SkWGL.h",
-           "tools/gpu/gl/win/SkWGL_win.cpp",
-         ]
--      libs += [
--        "Gdi32.lib",
--        "OpenGL32.lib",
--        ]
-+        libs += [ "Gdi32.lib" ]
-+        if (target_cpu != "arm64") {
-+          libs += [ "OpenGL32.lib" ]
-+        }
+             "tools/ganesh/gl/win/SkWGL.h",
+             "tools/ganesh/gl/win/SkWGL_win.cpp",
+           ]
+-        libs += [
+-          "Gdi32.lib",
+-          "OpenGL32.lib",
+-          ]
++          libs += [ "Gdi32.lib" ]
++          if (target_cpu != "arm64") {
++            libs += [ "OpenGL32.lib" ]
++          }
+         }
        }
-     }
  
 diff --git b/src/gpu/ganesh/gl/win/GrGLMakeNativeInterface_win.cpp a/src/gpu/ganesh/gl/win/GrGLMakeNativeInterface_win.cpp
 index f33f2e1..da3cbe2 100644
@@ -70,10 +70,10 @@ index f33f2e1..da3cbe2 100644
 +#endif // ARM64
 +
  #endif // SK_DISABLE_LEGACY_GL_MAKE_NATIVE_INTERFACE
-diff --git b/tools/gpu/gl/win/SkWGL_win.cpp a/tools/gpu/gl/win/SkWGL_win.cpp
+diff --git b/tools/ganesh/gl/win/SkWGL_win.cpp a/tools/ganesh/gl/win/SkWGL_win.cpp
 index 4cb462b..ac2d700 100644
---- b/tools/gpu/gl/win/SkWGL_win.cpp
-+++ a/tools/gpu/gl/win/SkWGL_win.cpp
+--- b/tools/ganesh/gl/win/SkWGL_win.cpp
++++ a/tools/ganesh/gl/win/SkWGL_win.cpp
 @@ -6,7 +6,7 @@
   */
  
@@ -81,15 +81,15 @@ index 4cb462b..ac2d700 100644
 -#if defined(SK_BUILD_FOR_WIN) && !defined(WINUWP)
 +#if defined(SK_BUILD_FOR_WIN) && !defined(_M_ARM64) && !defined(WINUWP)
  
- #include "tools/gpu/gl/win/SkWGL.h"
+ #include "tools/ganesh/gl/win/SkWGL.h"
  
-diff --git b/tools/gpu/gl/win/CreatePlatformGLTestContext_win.cpp a/tools/gpu/gl/win/CreatePlatformGLTestContext_win.cpp
+diff --git b/tools/ganesh/gl/win/CreatePlatformGLTestContext_win.cpp a/tools/ganesh/gl/win/CreatePlatformGLTestContext_win.cpp
 index cb62daf..0d29da7 100644
---- b/tools/gpu/gl/win/CreatePlatformGLTestContext_win.cpp
-+++ a/tools/gpu/gl/win/CreatePlatformGLTestContext_win.cpp
+--- b/tools/ganesh/gl/win/CreatePlatformGLTestContext_win.cpp
++++ a/tools/ganesh/gl/win/CreatePlatformGLTestContext_win.cpp
 @@ -8,6 +8,16 @@
  
- #include "tools/gpu/gl/GLTestContext.h"
+ #include "tools/ganesh/gl/GLTestContext.h"
  
 +#if defined(_M_ARM64)
 +
@@ -103,7 +103,7 @@ index cb62daf..0d29da7 100644
 +
  #include <windows.h>
  #include <GL/GL.h>
- #include "tools/gpu/gl/win/SkWGL.h"
+ #include "tools/ganesh/gl/win/SkWGL.h"
 @@ -221,3 +231,4 @@ GLTestContext* CreatePlatformGLTestContext(GrGLStandard forcedGpuAPI,
  }
  }  // namespace sk_gpu_test

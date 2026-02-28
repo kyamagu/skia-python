@@ -1,4 +1,5 @@
 #include "common.h"
+#include <include/core/SkPathBuilder.h>
 #include <include/core/SkStrokeRec.h>
 #include <include/effects/Sk1DPathEffect.h>
 #include <include/effects/Sk2DPathEffect.h>
@@ -62,7 +63,11 @@ strokerec
 
         :py:meth:`applyToPath` will return true.
         )docstring")
-    .def("applyToPath", &SkStrokeRec::applyToPath,
+    .def("applyToPath",
+        [] (const SkStrokeRec& strokerec, SkPath* dst, const SkPath& src) {
+            auto dst2 = SkPathBuilder(*dst);
+            return strokerec.applyToPath(&dst2, src);
+        },
         R"docstring(
         Apply these stroke parameters to the src path, returning the result in
         dst.
@@ -330,7 +335,7 @@ py::class_<SkDashPathEffect>(m, "DashPathEffect")
     .def_static("Make",
         [] (const std::vector<SkScalar>& intervals, SkScalar phase) {
             return SkDashPathEffect::Make(
-                &intervals[0], intervals.size(), phase);
+                {&intervals[0], intervals.size()}, phase);
         },
         R"docstring(
         For example: if intervals[] = {10, 20}, count = 2, and phase = 25, this

@@ -1,0 +1,48 @@
+From 2591c04c3f632861b40024f72f207d747866e3a7 Mon Sep 17 00:00:00 2001
+From: Michael Reed <mike@reedtribe.org>
+Date: Tue, 30 Dec 2025 22:20:13 -0500
+Subject: [PATCH] Remove obsolete types in SkPath.h
+
+- leftovers from the editable path days
+
+Change-Id: I0b6541d3cbed558fd2b9903de6941540585b37d2
+Reviewed-on: https://skia-review.googlesource.com/c/skia/+/1133796
+Reviewed-by: Florin Malita <fmalita@google.com>
+Reviewed-by: Eric Boren <borenet@google.com>
+Commit-Queue: Mike Reed <mike@reedtribe.org>
+Signed-off-by: Hin-Tak Leung <htl10@users.sourceforge.net>
+---
+ include/core/SkPath.h | 10 ----------
+ 1 file changed, 10 deletions(-)
+
+diff --git a/include/core/SkPath.h b/include/core/SkPath.h
+index b3bb82cae0..7a433f7a82 100644
+--- a/include/core/SkPath.h
++++ b/include/core/SkPath.h
+@@ -33,7 +33,6 @@ class SkWStream;
+ enum class SkPathConvexity;
+ enum class SkResolveConvexity;
+ struct SkPathRaw;
+-struct SkPathVerbAnalysis;
+ struct SkPathOvalInfo;
+ struct SkPathRRectInfo;
+ 
+@@ -556,15 +555,6 @@ public:
+     */
+     bool conservativelyContainsRect(const SkRect& rect) const;
+ 
+-    /** \enum SkPath::ArcSize
+-        Four oval parts with radii (rx, ry) start at last SkPath SkPoint and ends at (x, y).
+-        ArcSize and Direction select one of the four oval parts.
+-    */
+-    enum ArcSize {
+-        kSmall_ArcSize, //!< smaller of arc pair
+-        kLarge_ArcSize, //!< larger of arc pair
+-    };
+-
+     /** Approximates conic with quad array. Conic is constructed from start SkPoint p0,
+         control SkPoint p1, end SkPoint p2, and weight w.
+         Quad array is stored in pts; this storage is supplied by caller.
+-- 
+2.52.0
+

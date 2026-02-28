@@ -1,0 +1,11 @@
+--- a/bin/fetch-gn.orig	2025-08-11 19:21:42.666070053 +0100
++++ b/bin/fetch-gn	2025-08-11 19:23:01.381159842 +0100
+@@ -20,7 +20,7 @@
+ gnzip = os.path.join(tempfile.mkdtemp(), 'gn.zip')
+ with open(gnzip, 'wb') as f:
+   OS  = {'darwin': 'mac', 'linux': 'linux', 'linux2': 'linux', 'win32': 'windows'}[sys.platform]
+-  cpu = {'aarch64': 'arm64', 'amd64': 'amd64', 'arm64': 'arm64', 'x86_64': 'amd64'}[platform.machine().lower()]
++  cpu = {'aarch64': 'arm64', 'amd64': 'amd64', 'arm64': 'amd64', 'x86_64': 'amd64'}[platform.machine().lower()]
+ 
+   rev = 'b2afae122eeb6ce09c52d63f67dc53fc517dbdc8'
+   url = 'https://chrome-infra-packages.appspot.com/dl/gn/gn/{}-{}/+/git_revision:{}'.format(

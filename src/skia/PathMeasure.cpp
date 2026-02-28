@@ -83,7 +83,7 @@ path_measure
         :py:class:`Point` and tangent :py:class:`Vector`.
         )docstring",
         py::arg("distance"))
-    .def("getSegment", &SkPathMeasure::getSegment,
+    .def("getSegment", py::overload_cast<SkScalar, SkScalar, SkPath*, bool>(&SkPathMeasure::getSegment),
         R"docstring(
         Given a start and stop distance, return in dst the intervening
         segment(s).

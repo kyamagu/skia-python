@@ -150,8 +150,8 @@ sk_sp<SkImage> ImageConvert(
         at = image.alphaType();
     if (at == image.alphaType()) {
         if (ct == image.colorType())
-            return image.makeColorSpace(nullptr, CloneColorSpace(cs));
-        return image.makeColorTypeAndColorSpace(nullptr, ct, CloneColorSpace(cs));
+            return image.makeColorSpace(nullptr, CloneColorSpace(cs), {});
+        return image.makeColorTypeAndColorSpace(nullptr, ct, CloneColorSpace(cs), {});
     }
 
     auto imageInfo = SkImageInfo::Make(
@@ -1398,7 +1398,10 @@ image
 
         :return: true if :py:class:`Image` is a GPU texture
         )docstring")
-    .def("isValid", py::overload_cast<GrRecordingContext*>(&SkImage::isValid, py::const_),
+    .def("isValid",
+        [] (const SkImage& image, GrRecordingContext* ctx) {
+            return image.isValid(((ctx) ? ctx->asRecorder() : nullptr));
+        },
         R"docstring(
         Returns true if :py:class:`Image` can be drawn on either raster surface
         or GPU surface.
@@ -1712,7 +1715,7 @@ image
         py::arg("encodedImageFormat"), py::arg("quality"))
     .def("encodeToData",
         [] (SkImage& image) {
-            sk_sp<SkData> data = image.refEncodedData();
+            sk_sp<const SkData> data = image.refEncodedData();
             if (!data) {
                 data = SkPngEncoder::Encode(nullptr, &image, {});
             }
@@ -1744,7 +1747,7 @@ image
         )docstring")
     .def("makeSubset",
         [] (SkImage& image, const SkIRect& subset, GrDirectContext* direct) {
-            return image.makeSubset(direct, subset);
+            return image.makeSubset(((direct) ? direct->asRecorder() : nullptr), subset, {});
         },
         R"docstring(
         Returns subset of :py:class:`Image`.
@@ -1943,7 +1946,7 @@ image
     .def("makeColorSpace",
         [] (const SkImage& image, const SkColorSpace* target,
             GrDirectContext* direct) {
-            return image.makeColorSpace(direct, CloneColorSpace(target));
+            return image.makeColorSpace(((direct) ? direct->asRecorder() : nullptr), CloneColorSpace(target), {});
         },
         R"docstring(
         Creates :py:class:`Image` in target :py:class:`ColorSpace`.
@@ -1965,7 +1968,7 @@ image
         [] (const SkImage& image, SkColorType ct, const SkColorSpace* cs,
             GrDirectContext* direct) {
             return image.makeColorTypeAndColorSpace(
-                direct, ct, CloneColorSpace(cs));
+                ((direct) ? direct->asRecorder() : nullptr), ct, CloneColorSpace(cs), {});
         },
         R"docstring(
         Experimental.

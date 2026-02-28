@@ -347,7 +347,7 @@ region
 
         :return: relative complexity
         )docstring")
-    .def("getBoundaryPath", &SkRegion::getBoundaryPath,
+    .def("getBoundaryPath", py::overload_cast<SkPath*>(&SkRegion::getBoundaryPath, py::const_),
         R"docstring(
         Appends outline of :py:class:`Region` to path.
 

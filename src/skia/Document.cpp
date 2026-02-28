@@ -1,6 +1,7 @@
 #include "common.h"
 #include <include/docs/SkPDFDocument.h>
 #include <include/docs/SkPDFJpegHelpers.h>
+#include <include/core/SkSpan.h>
 #include <pybind11/stl.h>
 
 namespace {
@@ -198,6 +199,11 @@ py::class_<SkPDF::AttributeList>(pdf, "AttributeList")
     .def("appendString", &SkPDF::AttributeList::appendName,
         py::arg("owner"), py::arg("name"), py::arg("value"))
     .def("appendFloatArray", &SkPDF::AttributeList::appendFloatArray,
+        py::arg("owner"), py::arg("name"), py::arg("value"))
+    .def("appendFloatArray",
+        [] (SkPDF::AttributeList& self, const char* owner, const char* name, const std::vector<float>& value) {
+            return self.appendFloatArray(owner, name, SkSpan<const float>(value));
+        },
         py::arg("owner"), py::arg("name"), py::arg("value"))
     .def("appendStringArray", &SkPDF::AttributeList::appendNodeIdArray,
         py::arg("owner"), py::arg("name"), py::arg("value"))

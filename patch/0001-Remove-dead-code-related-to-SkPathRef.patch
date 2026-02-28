@@ -1,0 +1,4999 @@
+From 98c01ea504d71e56b855699bee3d51459130c947 Mon Sep 17 00:00:00 2001
+From: Michael Reed <mike@reedtribe.org>
+Date: Fri, 19 Dec 2025 09:28:49 -0500
+Subject: [PATCH] Remove dead code related to SkPathRef
+
+Change-Id: Ifd990a83c603b74d1bf90fbe4a90f60be76dc6f4
+Reviewed-on: https://skia-review.googlesource.com/c/skia/+/1116776
+Reviewed-by: Florin Malita <fmalita@google.com>
+Reviewed-by: Eric Boren <borenet@google.com>
+Commit-Queue: Florin Malita <fmalita@google.com>
+Signed-off-by: Hin-Tak Leung <htl10@users.sourceforge.net>
+---
+ BUILD.gn                     |   3 -
+ bench/PathBench.cpp          |  95 ----
+ bench/PathOpsBench.cpp       |  14 -
+ gn/core.gni                  |   3 -
+ gn/gn_to_bp.py               |   3 -
+ include/core/SkFont.h        |   6 +-
+ include/core/SkPath.h        | 869 ------------------------------
+ include/core/SkPathBuilder.h |  11 +-
+ include/core/SkRegion.h      |   7 +-
+ include/private/SkPathRef.h  | 457 ----------------
+ src/core/BUILD.bazel         |   3 -
+ src/core/SkFont.cpp          |  10 -
+ src/core/SkPath.cpp          |  17 -
+ src/core/SkPathPriv.cpp      | 119 +++++
+ src/core/SkPathPriv.h        |   9 -
+ src/core/SkPathRef.cpp       | 581 --------------------
+ src/core/SkPath_editing.cpp  | 990 -----------------------------------
+ src/core/SkPath_pathdata.cpp |  17 -
+ src/core/SkPath_pathref.cpp  | 479 -----------------
+ src/core/SkPath_serial.cpp   |  10 -
+ src/core/SkRegion_path.cpp   |  10 -
+ tests/PathBuilderTest.cpp    |  86 ---
+ tests/PathMeasureTest.cpp    |  19 -
+ tests/PathTest.cpp           | 585 +--------------------
+ 24 files changed, 128 insertions(+), 4275 deletions(-)
+ delete mode 100644 src/core/SkPathRef.cpp
+ delete mode 100644 src/core/SkPath_editing.cpp
+ delete mode 100644 src/core/SkPath_pathref.cpp
+
+diff --git a/BUILD.gn b/BUILD.gn
+index aec2bec599..9d7fe24106 100644
+--- a/BUILD.gn
++++ b/BUILD.gn
+@@ -24,9 +24,6 @@ config("skia_public") {
+   defines = [
+     "SK_CODEC_DECODES_BMP",
+     "SK_CODEC_DECODES_WBMP",
+-
+-    # TODO(kjlubick,fmalita) Remove when clients updated and APIs deleted.
+-    "SK_HIDE_PATH_EDIT_METHODS",
+   ]
+   cflags_objcc = []
+   if (is_component_build) {
+diff --git a/bench/PathBench.cpp b/bench/PathBench.cpp
+index 7b058eb461..df6d8774f6 100644
+--- a/bench/PathBench.cpp
++++ b/bench/PathBench.cpp
+@@ -629,94 +629,6 @@ private:
+     using INHERITED = RandomPathBench;
+ };
+ 
+-#ifndef SK_HIDE_PATH_EDIT_METHODS
+-class SkBench_AddPathTest : public RandomPathBench {
+-public:
+-    enum AddType {
+-        kAdd_AddType,
+-        kAddTrans_AddType,
+-        kAddMatrix_AddType,
+-        kReverseAdd_AddType,
+-    };
+-
+-    SkBench_AddPathTest(AddType type) : fType(type) {
+-        fMatrix.setRotate(60 * SK_Scalar1);
+-    }
+-
+-protected:
+-    const char* onGetName() override {
+-        switch (fType) {
+-            case kAdd_AddType:
+-                return "path_add_path";
+-            case kAddTrans_AddType:
+-                return "path_add_path_trans";
+-            case kAddMatrix_AddType:
+-                return "path_add_path_matrix";
+-            case kReverseAdd_AddType:
+-                return "path_reverse_add_path";
+-            default:
+-                SkDEBUGFAIL("Bad add type");
+-                return "";
+-        }
+-    }
+-
+-    void onDelayedSetup() override {
+-        this->createData(10, 100, true);
+-        fPaths0.reset(kPathCnt);
+-        fPaths1.reset(kPathCnt);
+-        for (int i = 0; i < kPathCnt; ++i) {
+-            fPaths0[i] = this->makePath();
+-            fPaths1[i] = this->makePath();
+-        }
+-        this->finishedMakingPaths();
+-    }
+-
+-    void onDraw(int loops, SkCanvas*) override {
+-        switch (fType) {
+-            case kAdd_AddType:
+-                for (int i = 0; i < loops; ++i) {
+-                    int idx = i & (kPathCnt - 1);
+-                    SkPath result = fPaths0[idx];
+-                    result.addPath(fPaths1[idx]);
+-                }
+-                break;
+-            case kAddTrans_AddType:
+-                for (int i = 0; i < loops; ++i) {
+-                    int idx = i & (kPathCnt - 1);
+-                    SkPath result = fPaths0[idx];
+-                    result.addPath(fPaths1[idx], 2 * SK_Scalar1, 5 * SK_Scalar1);
+-                }
+-                break;
+-            case kAddMatrix_AddType:
+-                for (int i = 0; i < loops; ++i) {
+-                    int idx = i & (kPathCnt - 1);
+-                    SkPath result = fPaths0[idx];
+-                    result.addPath(fPaths1[idx], fMatrix);
+-                }
+-                break;
+-            case kReverseAdd_AddType:
+-                for (int i = 0; i < loops; ++i) {
+-                    int idx = i & (kPathCnt - 1);
+-                    SkPath result = fPaths0[idx];
+-                    result.reverseAddPath(fPaths1[idx]);
+-                }
+-                break;
+-        }
+-    }
+-
+-private:
+-    AddType fType; // or reverseAddPath
+-    enum {
+-        // must be a pow 2
+-        kPathCnt = 1 << 5,
+-    };
+-    AutoTArray<SkPath> fPaths0;
+-    AutoTArray<SkPath> fPaths1;
+-    SkMatrix         fMatrix;
+-    using INHERITED = RandomPathBench;
+-};
+-#endif
+-
+ class CirclesBench : public Benchmark {
+ protected:
+     SkString            fName;
+@@ -1295,13 +1207,6 @@ DEF_BENCH( return new MAKEFROM(path_from_rect) )
+ 
+ #undef MAKEFROM
+ 
+-#ifndef SK_HIDE_PATH_EDIT_METHODS
+-DEF_BENCH( return new SkBench_AddPathTest(SkBench_AddPathTest::kAdd_AddType); )
+-DEF_BENCH( return new SkBench_AddPathTest(SkBench_AddPathTest::kAddTrans_AddType); )
+-DEF_BENCH( return new SkBench_AddPathTest(SkBench_AddPathTest::kAddMatrix_AddType); )
+-DEF_BENCH( return new SkBench_AddPathTest(SkBench_AddPathTest::kReverseAdd_AddType); )
+-#endif
+-
+ DEF_BENCH( return new CirclesBench(FLAGS00); )
+ DEF_BENCH( return new CirclesBench(FLAGS01); )
+ DEF_BENCH( return new ArbRoundRectBench(false); )
+diff --git a/bench/PathOpsBench.cpp b/bench/PathOpsBench.cpp
+index e20e0bf416..ffd66e0d21 100644
+--- a/bench/PathOpsBench.cpp
++++ b/bench/PathOpsBench.cpp
+@@ -137,9 +137,6 @@ template <typename T> void run_builder(T& b, bool useReserve, int N) {
+ }
+ 
+ enum class MakeType {
+-#ifndef SK_HIDE_PATH_EDIT_METHODS
+-    kPath,
+-#endif
+     kSnapshot,
+     kDetach,
+     kArray,
+@@ -181,13 +178,6 @@ protected:
+                 run_builder(b, fUseReserve, N);
+                 return MakeType::kSnapshot == fMakeType ? b.snapshot() : b.detach();
+             }
+-#ifndef SK_HIDE_PATH_EDIT_METHODS
+-            case MakeType::kPath: {
+-                SkPath p;
+-                run_builder(p, fUseReserve, N);
+-                return p;
+-            }
+-#endif
+             case MakeType::kArray: {
+             //    ArrayPath<N*12> arrays;
+             //    run_builder(arrays, false, N);
+@@ -215,10 +205,6 @@ protected:
+ private:
+     using INHERITED = Benchmark;
+ };
+-#ifndef SK_HIDE_PATH_EDIT_METHODS
+-DEF_BENCH( return new PathBuilderBench(MakeType::kPath, false); )
+-DEF_BENCH( return new PathBuilderBench(MakeType::kPath, true); )
+-#endif
+ DEF_BENCH( return new PathBuilderBench(MakeType::kSnapshot, false); )
+ DEF_BENCH( return new PathBuilderBench(MakeType::kDetach, false); )
+ DEF_BENCH( return new PathBuilderBench(MakeType::kSnapshot, true); )
+diff --git a/gn/core.gni b/gn/core.gni
+index e15c9f3a05..fdf85f0d83 100644
+--- a/gn/core.gni
++++ b/gn/core.gni
+@@ -487,12 +487,9 @@ skia_core_sources = [
+   "$_src/core/SkPathRaw.h",
+   "$_src/core/SkPathRawShapes.cpp",
+   "$_src/core/SkPathRawShapes.h",
+-  "$_src/core/SkPathRef.cpp",
+   "$_src/core/SkPathUtils.cpp",
+-  "$_src/core/SkPath_editing.cpp",
+   "$_src/core/SkPath_interpolate.cpp",
+   "$_src/core/SkPath_pathdata.cpp",
+-  "$_src/core/SkPath_pathref.cpp",
+   "$_src/core/SkPath_serial.cpp",
+   "$_src/core/SkPicture.cpp",
+   "$_src/core/SkPictureData.cpp",
+diff --git a/gn/gn_to_bp.py b/gn/gn_to_bp.py
+index c976e2d5fe..6c96c6ecae 100755
+--- a/gn/gn_to_bp.py
++++ b/gn/gn_to_bp.py
+@@ -772,9 +772,6 @@ defs = gn_to_bp_utils.GetArchSources(os.path.join(here, 'opts.gni'))
+ 
+ def get_defines(json):
+   defines = {str(d) for d in json['targets']['//:skia']['defines']}
+-  # TODO(kjlubick, fmalita) Add this back in to enforce Android doesn't
+-  # use these methods anymore.
+-  defines.remove("SK_HIDE_PATH_EDIT_METHODS")
+   defines.remove('SK_DISABLE_LEGACY_NONCONST_SERIAL_PROCS')
+   return defines
+ 
+diff --git a/include/core/SkFont.h b/include/core/SkFont.h
+index e3aae04d79..d2052b42ca 100644
+--- a/include/core/SkFont.h
++++ b/include/core/SkFont.h
+@@ -8,7 +8,7 @@
+ #ifndef SkFont_DEFINED
+ #define SkFont_DEFINED
+ 
+-#include "include/core/SkPath.h"  // IWYU pragma: keep (for SK_HIDE_PATH_EDIT_METHODS)
++#include "include/core/SkPath.h"
+ #include "include/core/SkPoint.h" // IWYU pragma: keep (for unspanned apis)
+ #include "include/core/SkRect.h"
+ #include "include/core/SkRefCnt.h"
+@@ -442,10 +442,6 @@ public:
+      */
+     std::optional<SkPath> getPath(SkGlyphID glyphID) const;
+ 
+-#ifndef SK_HIDE_PATH_EDIT_METHODS
+-    bool getPath(SkGlyphID glyphID, SkPath* path) const;
+-#endif
+-
+     /** Returns path corresponding to glyph array.
+ 
+         @param glyphIDs      array of glyph indices
+diff --git a/include/core/SkPath.h b/include/core/SkPath.h
+index 6465815b0e..39916e46c4 100644
+--- a/include/core/SkPath.h
++++ b/include/core/SkPath.h
+@@ -37,24 +37,10 @@ struct SkPathVerbAnalysis;
+ struct SkPathOvalInfo;
+ struct SkPathRRectInfo;
+ 
+-// WIP -- define this locally, and fix call-sites to use SkPathBuilder (skbug.com/40040287)
+-#ifndef SK_HIDE_PATH_EDIT_METHODS
+-//#define SK_HIDE_PATH_EDIT_METHODS
+-#endif
+-
+ // Migrate clients so this is unneeded
+ #define SK_LEGACY_PATH_ACCESSORS
+ 
+-#if defined(SK_HIDE_PATH_EDIT_METHODS) && !defined(SK_DISABLE_PATHDATA)
+-    // enable this to try using SkPathData
+-    #define SK_PATH_USES_PATHDATA
+-#endif
+-
+-#ifdef SK_PATH_USES_PATHDATA
+ class SkPathData;
+-#else
+-class SkPathRef;
+-#endif
+ 
+ /** \class SkPath
+     SkPath contain geometry. SkPath may be empty, or contain one or more verbs that
+@@ -780,778 +766,6 @@ public:
+     */
+     SkPath& reset();
+ 
+-#ifndef SK_HIDE_PATH_EDIT_METHODS
+-    /** Returns a copy of this path in the current state, and resets the path to empty. */
+-    SkPath detach() {
+-        SkPath result = *this;
+-        this->reset();
+-        return result;
+-    }
+-
+-    /** Sets SkPath to its initial state, preserving internal storage.
+-        Removes verb array, SkPoint array, and weights, and sets FillType to kWinding.
+-        Internal storage associated with SkPath is retained.
+-
+-        Use rewind() instead of reset() if SkPath storage will be reused and performance
+-        is critical.
+-
+-        @return  reference to SkPath
+-
+-        example: https://fiddle.skia.org/c/@Path_rewind
+-    */
+-    SkPath& rewind();
+-
+-    /** Grows SkPath verb array, SkPoint array, and conics to contain additional space.
+-        May improve performance and use less memory by
+-        reducing the number and size of allocations when creating SkPath.
+-
+-        @param extraPtCount  number of additional SkPoint to allocate
+-        @param extraVerbCount  number of additional verbs
+-        @param extraConicCount  number of additional conics
+-
+-        example: https://fiddle.skia.org/c/@Path_incReserve
+-    */
+-    void incReserve(int extraPtCount, int extraVerbCount = 0, int extraConicCount = 0);
+-
+-    /** Specifies the beginning of contour. If the previous verb was a "move" verb,
+-     *  then this just replaces the point value of that move, otherwise it appends a new
+-     *  "move" verb to the path using the point.
+-     *
+-     *  Thus, each contour can only have 1 move verb in it (the last one specified).
+-     */
+-    SkPath& moveTo(SkPoint p) {
+-        return this->moveTo(p.fX, p.fY);
+-    }
+-    SkPath& moveTo(SkScalar x, SkScalar y);
+-
+-    /** Adds beginning of contour relative to last point.
+-        If SkPath is empty, starts contour at (dx, dy).
+-        Otherwise, start contour at last point offset by (dx, dy).
+-        Function name stands for "relative move to".
+-
+-        @param dx  offset from last point to contour start on x-axis
+-        @param dy  offset from last point to contour start on y-axis
+-        @return    reference to SkPath
+-
+-        example: https://fiddle.skia.org/c/@Path_rMoveTo
+-    */
+-    SkPath& rMoveTo(SkScalar dx, SkScalar dy);
+-
+-    /** Adds line from last point to (x, y). If SkPath is empty, or last SkPath::Verb is
+-        kClose_Verb, last point is set to (0, 0) before adding line.
+-
+-        lineTo() appends kMove_Verb to verb array and (0, 0) to SkPoint array, if needed.
+-        lineTo() then appends kLine_Verb to verb array and (x, y) to SkPoint array.
+-
+-        @param x  end of added line on x-axis
+-        @param y  end of added line on y-axis
+-        @return   reference to SkPath
+-
+-        example: https://fiddle.skia.org/c/@Path_lineTo
+-    */
+-    SkPath& lineTo(SkScalar x, SkScalar y);
+-
+-    /** Adds line from last point to SkPoint p. If SkPath is empty, or last SkPath::Verb is
+-        kClose_Verb, last point is set to (0, 0) before adding line.
+-
+-        lineTo() first appends kMove_Verb to verb array and (0, 0) to SkPoint array, if needed.
+-        lineTo() then appends kLine_Verb to verb array and SkPoint p to SkPoint array.
+-
+-        @param p  end SkPoint of added line
+-        @return   reference to SkPath
+-    */
+-    SkPath& lineTo(const SkPoint& p) {
+-        return this->lineTo(p.fX, p.fY);
+-    }
+-
+-    /** Adds line from last point to vector (dx, dy). If SkPath is empty, or last SkPath::Verb is
+-        kClose_Verb, last point is set to (0, 0) before adding line.
+-
+-        Appends kMove_Verb to verb array and (0, 0) to SkPoint array, if needed;
+-        then appends kLine_Verb to verb array and line end to SkPoint array.
+-        Line end is last point plus vector (dx, dy).
+-        Function name stands for "relative line to".
+-
+-        @param dx  offset from last point to line end on x-axis
+-        @param dy  offset from last point to line end on y-axis
+-        @return    reference to SkPath
+-
+-        example: https://fiddle.skia.org/c/@Path_rLineTo
+-        example: https://fiddle.skia.org/c/@Quad_a
+-        example: https://fiddle.skia.org/c/@Quad_b
+-    */
+-    SkPath& rLineTo(SkScalar dx, SkScalar dy);
+-
+-    /** Adds quad from last point towards (x1, y1), to (x2, y2).
+-        If SkPath is empty, or last SkPath::Verb is kClose_Verb, last point is set to (0, 0)
+-        before adding quad.
+-
+-        Appends kMove_Verb to verb array and (0, 0) to SkPoint array, if needed;
+-        then appends kQuad_Verb to verb array; and (x1, y1), (x2, y2)
+-        to SkPoint array.
+-
+-        @param x1  control SkPoint of quad on x-axis
+-        @param y1  control SkPoint of quad on y-axis
+-        @param x2  end SkPoint of quad on x-axis
+-        @param y2  end SkPoint of quad on y-axis
+-        @return    reference to SkPath
+-
+-        example: https://fiddle.skia.org/c/@Path_quadTo
+-    */
+-    SkPath& quadTo(SkScalar x1, SkScalar y1, SkScalar x2, SkScalar y2);
+-
+-    /** Adds quad from last point towards SkPoint p1, to SkPoint p2.
+-        If SkPath is empty, or last SkPath::Verb is kClose_Verb, last point is set to (0, 0)
+-        before adding quad.
+-
+-        Appends kMove_Verb to verb array and (0, 0) to SkPoint array, if needed;
+-        then appends kQuad_Verb to verb array; and SkPoint p1, p2
+-        to SkPoint array.
+-
+-        @param p1  control SkPoint of added quad
+-        @param p2  end SkPoint of added quad
+-        @return    reference to SkPath
+-    */
+-    SkPath& quadTo(const SkPoint& p1, const SkPoint& p2) {
+-        return this->quadTo(p1.fX, p1.fY, p2.fX, p2.fY);
+-    }
+-
+-    /** Adds quad from last point towards vector (dx1, dy1), to vector (dx2, dy2).
+-        If SkPath is empty, or last SkPath::Verb
+-        is kClose_Verb, last point is set to (0, 0) before adding quad.
+-
+-        Appends kMove_Verb to verb array and (0, 0) to SkPoint array,
+-        if needed; then appends kQuad_Verb to verb array; and appends quad
+-        control and quad end to SkPoint array.
+-        Quad control is last point plus vector (dx1, dy1).
+-        Quad end is last point plus vector (dx2, dy2).
+-        Function name stands for "relative quad to".
+-
+-        @param dx1  offset from last point to quad control on x-axis
+-        @param dy1  offset from last point to quad control on y-axis
+-        @param dx2  offset from last point to quad end on x-axis
+-        @param dy2  offset from last point to quad end on y-axis
+-        @return     reference to SkPath
+-
+-        example: https://fiddle.skia.org/c/@Conic_Weight_a
+-        example: https://fiddle.skia.org/c/@Conic_Weight_b
+-        example: https://fiddle.skia.org/c/@Conic_Weight_c
+-        example: https://fiddle.skia.org/c/@Path_rQuadTo
+-    */
+-    SkPath& rQuadTo(SkScalar dx1, SkScalar dy1, SkScalar dx2, SkScalar dy2);
+-
+-    /** Adds conic from last point towards (x1, y1), to (x2, y2), weighted by w.
+-        If SkPath is empty, or last SkPath::Verb is kClose_Verb, last point is set to (0, 0)
+-        before adding conic.
+-
+-        Appends kMove_Verb to verb array and (0, 0) to SkPoint array, if needed.
+-
+-        If w is finite and not one, appends kConic_Verb to verb array;
+-        and (x1, y1), (x2, y2) to SkPoint array; and w to conic weights.
+-
+-        If w is one, appends kQuad_Verb to verb array, and
+-        (x1, y1), (x2, y2) to SkPoint array.
+-
+-        If w is not finite, appends kLine_Verb twice to verb array, and
+-        (x1, y1), (x2, y2) to SkPoint array.
+-
+-        @param x1  control SkPoint of conic on x-axis
+-        @param y1  control SkPoint of conic on y-axis
+-        @param x2  end SkPoint of conic on x-axis
+-        @param y2  end SkPoint of conic on y-axis
+-        @param w   weight of added conic
+-        @return    reference to SkPath
+-    */
+-    SkPath& conicTo(SkScalar x1, SkScalar y1, SkScalar x2, SkScalar y2,
+-                    SkScalar w);
+-
+-    /** Adds conic from last point towards SkPoint p1, to SkPoint p2, weighted by w.
+-        If SkPath is empty, or last SkPath::Verb is kClose_Verb, last point is set to (0, 0)
+-        before adding conic.
+-
+-        Appends kMove_Verb to verb array and (0, 0) to SkPoint array, if needed.
+-
+-        If w is finite and not one, appends kConic_Verb to verb array;
+-        and SkPoint p1, p2 to SkPoint array; and w to conic weights.
+-
+-        If w is one, appends kQuad_Verb to verb array, and SkPoint p1, p2
+-        to SkPoint array.
+-
+-        If w is not finite, appends kLine_Verb twice to verb array, and
+-        SkPoint p1, p2 to SkPoint array.
+-
+-        @param p1  control SkPoint of added conic
+-        @param p2  end SkPoint of added conic
+-        @param w   weight of added conic
+-        @return    reference to SkPath
+-    */
+-    SkPath& conicTo(const SkPoint& p1, const SkPoint& p2, SkScalar w) {
+-        return this->conicTo(p1.fX, p1.fY, p2.fX, p2.fY, w);
+-    }
+-
+-    /** Adds conic from last point towards vector (dx1, dy1), to vector (dx2, dy2),
+-        weighted by w. If SkPath is empty, or last SkPath::Verb
+-        is kClose_Verb, last point is set to (0, 0) before adding conic.
+-
+-        Appends kMove_Verb to verb array and (0, 0) to SkPoint array,
+-        if needed.
+-
+-        If w is finite and not one, next appends kConic_Verb to verb array,
+-        and w is recorded as conic weight; otherwise, if w is one, appends
+-        kQuad_Verb to verb array; or if w is not finite, appends kLine_Verb
+-        twice to verb array.
+-
+-        In all cases appends SkPoint control and end to SkPoint array.
+-        control is last point plus vector (dx1, dy1).
+-        end is last point plus vector (dx2, dy2).
+-
+-        Function name stands for "relative conic to".
+-
+-        @param dx1  offset from last point to conic control on x-axis
+-        @param dy1  offset from last point to conic control on y-axis
+-        @param dx2  offset from last point to conic end on x-axis
+-        @param dy2  offset from last point to conic end on y-axis
+-        @param w    weight of added conic
+-        @return     reference to SkPath
+-    */
+-    SkPath& rConicTo(SkScalar dx1, SkScalar dy1, SkScalar dx2, SkScalar dy2,
+-                     SkScalar w);
+-
+-    /** Adds cubic from last point towards (x1, y1), then towards (x2, y2), ending at
+-        (x3, y3). If SkPath is empty, or last SkPath::Verb is kClose_Verb, last point is set to
+-        (0, 0) before adding cubic.
+-
+-        Appends kMove_Verb to verb array and (0, 0) to SkPoint array, if needed;
+-        then appends kCubic_Verb to verb array; and (x1, y1), (x2, y2), (x3, y3)
+-        to SkPoint array.
+-
+-        @param x1  first control SkPoint of cubic on x-axis
+-        @param y1  first control SkPoint of cubic on y-axis
+-        @param x2  second control SkPoint of cubic on x-axis
+-        @param y2  second control SkPoint of cubic on y-axis
+-        @param x3  end SkPoint of cubic on x-axis
+-        @param y3  end SkPoint of cubic on y-axis
+-        @return    reference to SkPath
+-    */
+-    SkPath& cubicTo(SkScalar x1, SkScalar y1, SkScalar x2, SkScalar y2,
+-                    SkScalar x3, SkScalar y3);
+-
+-    /** Adds cubic from last point towards SkPoint p1, then towards SkPoint p2, ending at
+-        SkPoint p3. If SkPath is empty, or last SkPath::Verb is kClose_Verb, last point is set to
+-        (0, 0) before adding cubic.
+-
+-        Appends kMove_Verb to verb array and (0, 0) to SkPoint array, if needed;
+-        then appends kCubic_Verb to verb array; and SkPoint p1, p2, p3
+-        to SkPoint array.
+-
+-        @param p1  first control SkPoint of cubic
+-        @param p2  second control SkPoint of cubic
+-        @param p3  end SkPoint of cubic
+-        @return    reference to SkPath
+-    */
+-    SkPath& cubicTo(const SkPoint& p1, const SkPoint& p2, const SkPoint& p3) {
+-        return this->cubicTo(p1.fX, p1.fY, p2.fX, p2.fY, p3.fX, p3.fY);
+-    }
+-
+-    /** Adds cubic from last point towards vector (dx1, dy1), then towards
+-        vector (dx2, dy2), to vector (dx3, dy3).
+-        If SkPath is empty, or last SkPath::Verb
+-        is kClose_Verb, last point is set to (0, 0) before adding cubic.
+-
+-        Appends kMove_Verb to verb array and (0, 0) to SkPoint array,
+-        if needed; then appends kCubic_Verb to verb array; and appends cubic
+-        control and cubic end to SkPoint array.
+-        Cubic control is last point plus vector (dx1, dy1).
+-        Cubic end is last point plus vector (dx2, dy2).
+-        Function name stands for "relative cubic to".
+-
+-        @param dx1  offset from last point to first cubic control on x-axis
+-        @param dy1  offset from last point to first cubic control on y-axis
+-        @param dx2  offset from last point to second cubic control on x-axis
+-        @param dy2  offset from last point to second cubic control on y-axis
+-        @param dx3  offset from last point to cubic end on x-axis
+-        @param dy3  offset from last point to cubic end on y-axis
+-        @return    reference to SkPath
+-    */
+-    SkPath& rCubicTo(SkScalar dx1, SkScalar dy1, SkScalar dx2, SkScalar dy2,
+-                     SkScalar dx3, SkScalar dy3);
+-
+-    /** Appends arc to SkPath. Arc added is part of ellipse
+-        bounded by oval, from startAngle through sweepAngle. Both startAngle and
+-        sweepAngle are measured in degrees, where zero degrees is aligned with the
+-        positive x-axis, and positive sweeps extends arc clockwise.
+-
+-        arcTo() adds line connecting SkPath last SkPoint to initial arc SkPoint if forceMoveTo
+-        is false and SkPath is not empty. Otherwise, added contour begins with first point
+-        of arc. Angles greater than -360 and less than 360 are treated modulo 360.
+-
+-        @param oval         bounds of ellipse containing arc
+-        @param startAngle   starting angle of arc in degrees
+-        @param sweepAngle   sweep, in degrees. Positive is clockwise; treated modulo 360
+-        @param forceMoveTo  true to start a new contour with arc
+-        @return             reference to SkPath
+-
+-        example: https://fiddle.skia.org/c/@Path_arcTo
+-    */
+-    SkPath& arcTo(const SkRect& oval, SkScalar startAngle, SkScalar sweepAngle, bool forceMoveTo);
+-
+-    /** Appends arc to SkPath, after appending line if needed. Arc is implemented by conic
+-        weighted to describe part of circle. Arc is contained by tangent from
+-        last SkPath point to (x1, y1), and tangent from (x1, y1) to (x2, y2). Arc
+-        is part of circle sized to radius, positioned so it touches both tangent lines.
+-
+-        If last Path Point does not start Arc, arcTo appends connecting Line to Path.
+-        The length of Vector from (x1, y1) to (x2, y2) does not affect Arc.
+-
+-        Arc sweep is always less than 180 degrees. If radius is zero, or if
+-        tangents are nearly parallel, arcTo appends Line from last Path Point to (x1, y1).
+-
+-        arcTo appends at most one Line and one conic.
+-        arcTo implements the functionality of PostScript arct and HTML Canvas arcTo.
+-
+-        @param x1      x-axis value common to pair of tangents
+-        @param y1      y-axis value common to pair of tangents
+-        @param x2      x-axis value end of second tangent
+-        @param y2      y-axis value end of second tangent
+-        @param radius  distance from arc to circle center
+-        @return        reference to SkPath
+-
+-        example: https://fiddle.skia.org/c/@Path_arcTo_2_a
+-        example: https://fiddle.skia.org/c/@Path_arcTo_2_b
+-        example: https://fiddle.skia.org/c/@Path_arcTo_2_c
+-    */
+-    SkPath& arcTo(SkScalar x1, SkScalar y1, SkScalar x2, SkScalar y2, SkScalar radius);
+-
+-    /** Appends arc to SkPath, after appending line if needed. Arc is implemented by conic
+-        weighted to describe part of circle. Arc is contained by tangent from
+-        last SkPath point to p1, and tangent from p1 to p2. Arc
+-        is part of circle sized to radius, positioned so it touches both tangent lines.
+-
+-        If last SkPath SkPoint does not start arc, arcTo() appends connecting line to SkPath.
+-        The length of vector from p1 to p2 does not affect arc.
+-
+-        Arc sweep is always less than 180 degrees. If radius is zero, or if
+-        tangents are nearly parallel, arcTo() appends line from last SkPath SkPoint to p1.
+-
+-        arcTo() appends at most one line and one conic.
+-        arcTo() implements the functionality of PostScript arct and HTML Canvas arcTo.
+-
+-        @param p1      SkPoint common to pair of tangents
+-        @param p2      end of second tangent
+-        @param radius  distance from arc to circle center
+-        @return        reference to SkPath
+-    */
+-    SkPath& arcTo(SkPoint p1, SkPoint p2, SkScalar radius) {
+-        return this->arcTo(p1.fX, p1.fY, p2.fX, p2.fY, radius);
+-    }
+-
+-    /** Appends arc to SkPath. Arc is implemented by one or more conics weighted to
+-        describe part of oval with radii (rx, ry) rotated by xAxisRotate degrees. Arc
+-        curves from last SkPath SkPoint to (x, y), choosing one of four possible routes:
+-        clockwise or counterclockwise, and smaller or larger.
+-
+-        Arc sweep is always less than 360 degrees. arcTo() appends line to (x, y) if
+-        either radii are zero, or if last SkPath SkPoint equals (x, y). arcTo() scales radii
+-        (rx, ry) to fit last SkPath SkPoint and (x, y) if both are greater than zero but
+-        too small.
+-
+-        arcTo() appends up to four conic curves.
+-        arcTo() implements the functionality of SVG arc, although SVG sweep-flag value
+-        is opposite the integer value of sweep; SVG sweep-flag uses 1 for clockwise,
+-        while kCW_Direction cast to int is zero.
+-
+-        @param rx           radius on x-axis before x-axis rotation
+-        @param ry           radius on y-axis before x-axis rotation
+-        @param xAxisRotate  x-axis rotation in degrees; positive values are clockwise
+-        @param largeArc     chooses smaller or larger arc
+-        @param sweep        chooses clockwise or counterclockwise arc
+-        @param x            end of arc
+-        @param y            end of arc
+-        @return             reference to SkPath
+-    */
+-    SkPath& arcTo(SkScalar rx, SkScalar ry, SkScalar xAxisRotate, ArcSize largeArc,
+-                  SkPathDirection sweep, SkScalar x, SkScalar y);
+-
+-    /** Appends arc to SkPath. Arc is implemented by one or more conic weighted to describe
+-        part of oval with radii (r.fX, r.fY) rotated by xAxisRotate degrees. Arc curves
+-        from last SkPath SkPoint to (xy.fX, xy.fY), choosing one of four possible routes:
+-        clockwise or counterclockwise,
+-        and smaller or larger.
+-
+-        Arc sweep is always less than 360 degrees. arcTo() appends line to xy if either
+-        radii are zero, or if last SkPath SkPoint equals (xy.fX, xy.fY). arcTo() scales radii r to
+-        fit last SkPath SkPoint and xy if both are greater than zero but too small to describe
+-        an arc.
+-
+-        arcTo() appends up to four conic curves.
+-        arcTo() implements the functionality of SVG arc, although SVG sweep-flag value is
+-        opposite the integer value of sweep; SVG sweep-flag uses 1 for clockwise, while
+-        kCW_Direction cast to int is zero.
+-
+-        @param r            radii on axes before x-axis rotation
+-        @param xAxisRotate  x-axis rotation in degrees; positive values are clockwise
+-        @param largeArc     chooses smaller or larger arc
+-        @param sweep        chooses clockwise or counterclockwise arc
+-        @param xy           end of arc
+-        @return             reference to SkPath
+-    */
+-    SkPath& arcTo(SkPoint r,
+-                  SkScalar xAxisRotate,
+-                  ArcSize largeArc,
+-                  SkPathDirection sweep,
+-                  const SkPoint xy) {
+-        return this->arcTo(r.fX, r.fY, xAxisRotate, largeArc, sweep, xy.fX, xy.fY);
+-    }
+-
+-    /** Appends arc to SkPath, relative to last SkPath SkPoint. Arc is implemented by one or
+-        more conic, weighted to describe part of oval with radii (rx, ry) rotated by
+-        xAxisRotate degrees. Arc curves from last SkPath SkPoint to relative end SkPoint:
+-        (dx, dy), choosing one of four possible routes: clockwise or
+-        counterclockwise, and smaller or larger. If SkPath is empty, the start arc SkPoint
+-        is (0, 0).
+-
+-        Arc sweep is always less than 360 degrees. arcTo() appends line to end SkPoint
+-        if either radii are zero, or if last SkPath SkPoint equals end SkPoint.
+-        arcTo() scales radii (rx, ry) to fit last SkPath SkPoint and end SkPoint if both are
+-        greater than zero but too small to describe an arc.
+-
+-        arcTo() appends up to four conic curves.
+-        arcTo() implements the functionality of svg arc, although SVG "sweep-flag" value is
+-        opposite the integer value of sweep; SVG "sweep-flag" uses 1 for clockwise, while
+-        kCW_Direction cast to int is zero.
+-
+-        @param rx           radius before x-axis rotation
+-        @param ry           radius before x-axis rotation
+-        @param xAxisRotate  x-axis rotation in degrees; positive values are clockwise
+-        @param largeArc     chooses smaller or larger arc
+-        @param sweep        chooses clockwise or counterclockwise arc
+-        @param dx           x-axis offset end of arc from last SkPath SkPoint
+-        @param dy           y-axis offset end of arc from last SkPath SkPoint
+-        @return             reference to SkPath
+-    */
+-    SkPath& rArcTo(SkScalar rx, SkScalar ry, SkScalar xAxisRotate, ArcSize largeArc,
+-                   SkPathDirection sweep, SkScalar dx, SkScalar dy);
+-
+-    /** Appends kClose_Verb to SkPath. A closed contour connects the first and last SkPoint
+-        with line, forming a continuous loop. Open and closed contour draw the same
+-        with SkPaint::kFill_Style. With SkPaint::kStroke_Style, open contour draws
+-        SkPaint::Cap at contour start and end; closed contour draws
+-        SkPaint::Join at contour start and end.
+-
+-        close() has no effect if SkPath is empty or last SkPath SkPath::Verb is kClose_Verb.
+-
+-        @return  reference to SkPath
+-
+-        example: https://fiddle.skia.org/c/@Path_close
+-    */
+-    SkPath& close();
+-
+-    /** Adds a new contour to the path, defined by the rect, and wound in the
+-        specified direction. The verbs added to the path will be:
+-
+-        kMove, kLine, kLine, kLine, kClose
+-
+-        start specifies which corner to begin the contour:
+-            0: upper-left  corner
+-            1: upper-right corner
+-            2: lower-right corner
+-            3: lower-left  corner
+-
+-        This start point also acts as the implied beginning of the subsequent,
+-        contour, if it does not have an explicit moveTo(). e.g.
+-
+-            path.addRect(...)
+-            // if we don't say moveTo() here, we will use the rect's start point
+-            path.lineTo(...)
+-
+-        @param rect   SkRect to add as a closed contour
+-        @param dir    SkPath::Direction to orient the new contour
+-        @param start  initial corner of SkRect to add
+-        @return       reference to SkPath
+-
+-        example: https://fiddle.skia.org/c/@Path_addRect_2
+-     */
+-    SkPath& addRect(const SkRect& rect, SkPathDirection dir, unsigned start);
+-
+-    SkPath& addRect(const SkRect& rect, SkPathDirection dir = SkPathDirection::kCW) {
+-        return this->addRect(rect, dir, 0);
+-    }
+-
+-    SkPath& addRect(SkScalar left, SkScalar top, SkScalar right, SkScalar bottom,
+-                    SkPathDirection dir = SkPathDirection::kCW) {
+-        return this->addRect({left, top, right, bottom}, dir, 0);
+-    }
+-
+-    /** Adds oval to path, appending kMove_Verb, four kConic_Verb, and kClose_Verb.
+-        Oval is upright ellipse bounded by SkRect oval with radii equal to half oval width
+-        and half oval height. Oval begins at (oval.fRight, oval.centerY()) and continues
+-        clockwise if dir is kCW_Direction, counterclockwise if dir is kCCW_Direction.
+-
+-        @param oval  bounds of ellipse added
+-        @param dir   SkPath::Direction to wind ellipse
+-        @return      reference to SkPath
+-
+-        example: https://fiddle.skia.org/c/@Path_addOval
+-    */
+-    SkPath& addOval(const SkRect& oval, SkPathDirection dir = SkPathDirection::kCW);
+-
+-    /** Adds oval to SkPath, appending kMove_Verb, four kConic_Verb, and kClose_Verb.
+-        Oval is upright ellipse bounded by SkRect oval with radii equal to half oval width
+-        and half oval height. Oval begins at start and continues
+-        clockwise if dir is kCW_Direction, counterclockwise if dir is kCCW_Direction.
+-
+-        @param oval   bounds of ellipse added
+-        @param dir    SkPath::Direction to wind ellipse
+-        @param start  index of initial point of ellipse
+-        @return       reference to SkPath
+-
+-        example: https://fiddle.skia.org/c/@Path_addOval_2
+-    */
+-    SkPath& addOval(const SkRect& oval, SkPathDirection dir, unsigned start);
+-
+-    /** Adds circle centered at (x, y) of size radius to SkPath, appending kMove_Verb,
+-        four kConic_Verb, and kClose_Verb. Circle begins at: (x + radius, y), continuing
+-        clockwise if dir is kCW_Direction, and counterclockwise if dir is kCCW_Direction.
+-
+-        Has no effect if radius is zero or negative.
+-
+-        @param x       center of circle
+-        @param y       center of circle
+-        @param radius  distance from center to edge
+-        @param dir     SkPath::Direction to wind circle
+-        @return        reference to SkPath
+-    */
+-    SkPath& addCircle(SkScalar x, SkScalar y, SkScalar radius,
+-                      SkPathDirection dir = SkPathDirection::kCW);
+-
+-    /** Appends arc to SkPath, as the start of new contour. Arc added is part of ellipse
+-        bounded by oval, from startAngle through sweepAngle. Both startAngle and
+-        sweepAngle are measured in degrees, where zero degrees is aligned with the
+-        positive x-axis, and positive sweeps extends arc clockwise.
+-
+-        If sweepAngle <= -360, or sweepAngle >= 360; and startAngle modulo 90 is nearly
+-        zero, append oval instead of arc. Otherwise, sweepAngle values are treated
+-        modulo 360, and arc may or may not draw depending on numeric rounding.
+-
+-        @param oval        bounds of ellipse containing arc
+-        @param startAngle  starting angle of arc in degrees
+-        @param sweepAngle  sweep, in degrees. Positive is clockwise; treated modulo 360
+-        @return            reference to SkPath
+-
+-        example: https://fiddle.skia.org/c/@Path_addArc
+-    */
+-    SkPath& addArc(const SkRect& oval, SkScalar startAngle, SkScalar sweepAngle);
+-
+-    /** Appends SkRRect to SkPath, creating a new closed contour. SkRRect has bounds
+-        equal to rect; each corner is 90 degrees of an ellipse with radii (rx, ry). If
+-        dir is kCW_Direction, SkRRect starts at top-left of the lower-left corner and
+-        winds clockwise. If dir is kCCW_Direction, SkRRect starts at the bottom-left
+-        of the upper-left corner and winds counterclockwise.
+-
+-        If either rx or ry is too large, rx and ry are scaled uniformly until the
+-        corners fit. If rx or ry is less than or equal to zero, addRoundRect() appends
+-        SkRect rect to SkPath.
+-
+-        After appending, SkPath may be empty, or may contain: SkRect, oval, or SkRRect.
+-
+-        @param rect  bounds of SkRRect
+-        @param rx    x-axis radius of rounded corners on the SkRRect
+-        @param ry    y-axis radius of rounded corners on the SkRRect
+-        @param dir   SkPath::Direction to wind SkRRect
+-        @return      reference to SkPath
+-    */
+-    SkPath& addRoundRect(const SkRect& rect, SkScalar rx, SkScalar ry,
+-                         SkPathDirection dir = SkPathDirection::kCW);
+-
+-    /** Appends SkRRect to SkPath, creating a new closed contour. SkRRect has bounds
+-        equal to rect; each corner is 90 degrees of an ellipse with radii from the
+-        array.
+-
+-        @param rect   bounds of SkRRect
+-        @param radii  array of 8 SkScalar values, a radius pair for each corner
+-        @param dir    SkPath::Direction to wind SkRRect
+-        @return       reference to SkPath
+-    */
+-    SkPath& addRoundRect(const SkRect& rect, SkSpan<const SkScalar> radii,
+-                         SkPathDirection dir = SkPathDirection::kCW);
+-
+-    /** Adds rrect to SkPath, creating a new closed contour. If
+-        dir is kCW_Direction, rrect starts at top-left of the lower-left corner and
+-        winds clockwise. If dir is kCCW_Direction, rrect starts at the bottom-left
+-        of the upper-left corner and winds counterclockwise.
+-
+-        After appending, SkPath may be empty, or may contain: SkRect, oval, or SkRRect.
+-
+-        @param rrect  bounds and radii of rounded rectangle
+-        @param dir    SkPath::Direction to wind SkRRect
+-        @return       reference to SkPath
+-
+-        example: https://fiddle.skia.org/c/@Path_addRRect
+-    */
+-    SkPath& addRRect(const SkRRect& rrect, SkPathDirection dir = SkPathDirection::kCW);
+-
+-    /** Adds rrect to SkPath, creating a new closed contour. If dir is kCW_Direction, rrect
+-        winds clockwise; if dir is kCCW_Direction, rrect winds counterclockwise.
+-        start determines the first point of rrect to add.
+-
+-        @param rrect  bounds and radii of rounded rectangle
+-        @param dir    SkPath::Direction to wind SkRRect
+-        @param start  index of initial point of SkRRect
+-        @return       reference to SkPath
+-
+-        example: https://fiddle.skia.org/c/@Path_addRRect_2
+-    */
+-    SkPath& addRRect(const SkRRect& rrect, SkPathDirection dir, unsigned start);
+-
+-    /** Adds contour created from line array, adding (count - 1) line segments.
+-        Contour added starts at pts[0], then adds a line for every additional SkPoint
+-        in pts array. If close is true, appends kClose_Verb to SkPath, connecting
+-        pts[count - 1] and pts[0].
+-
+-        If count is zero, append kMove_Verb to path.
+-        Has no effect if count is less than one.
+-
+-        @param pts    array of line sharing end and start SkPoint
+-        @param count  length of SkPoint array
+-        @param close  true to add line connecting contour end and start
+-        @return       reference to SkPath
+-
+-        example: https://fiddle.skia.org/c/@Path_addPoly
+-    */
+-    SkPath& addPoly(SkSpan<const SkPoint> pts, bool close);
+-
+-    /** Appends src to SkPath, offset by (dx, dy).
+-
+-        If mode is kAppend_AddPathMode, src verb array, SkPoint array, and conic weights are
+-        added unaltered. If mode is kExtend_AddPathMode, add line before appending
+-        verbs, SkPoint, and conic weights.
+-
+-        @param src   SkPath verbs, SkPoint, and conic weights to add
+-        @param dx    offset added to src SkPoint array x-axis coordinates
+-        @param dy    offset added to src SkPoint array y-axis coordinates
+-        @param mode  kAppend_AddPathMode or kExtend_AddPathMode
+-        @return      reference to SkPath
+-    */
+-    SkPath& addPath(const SkPath& src, SkScalar dx, SkScalar dy,
+-                    AddPathMode mode = kAppend_AddPathMode);
+-
+-    /** Appends src to SkPath.
+-
+-        If mode is kAppend_AddPathMode, src verb array, SkPoint array, and conic weights are
+-        added unaltered. If mode is kExtend_AddPathMode, add line before appending
+-        verbs, SkPoint, and conic weights.
+-
+-        @param src   SkPath verbs, SkPoint, and conic weights to add
+-        @param mode  kAppend_AddPathMode or kExtend_AddPathMode
+-        @return      reference to SkPath
+-    */
+-    SkPath& addPath(const SkPath& src, AddPathMode mode = kAppend_AddPathMode) {
+-        SkMatrix m;
+-        m.reset();
+-        return this->addPath(src, m, mode);
+-    }
+-
+-    /** Appends src to SkPath, transformed by matrix. Transformed curves may have different
+-        verbs, SkPoint, and conic weights.
+-
+-        If mode is kAppend_AddPathMode, src verb array, SkPoint array, and conic weights are
+-        added unaltered. If mode is kExtend_AddPathMode, add line before appending
+-        verbs, SkPoint, and conic weights.
+-
+-        @param src     SkPath verbs, SkPoint, and conic weights to add
+-        @param matrix  transform applied to src
+-        @param mode    kAppend_AddPathMode or kExtend_AddPathMode
+-        @return        reference to SkPath
+-    */
+-    SkPath& addPath(const SkPath& src, const SkMatrix& matrix,
+-                    AddPathMode mode = kAppend_AddPathMode);
+-
+-    /** Appends src to SkPath, from back to front.
+-        Reversed src always appends a new contour to SkPath.
+-
+-        @param src  SkPath verbs, SkPoint, and conic weights to add
+-        @return     reference to SkPath
+-
+-        example: https://fiddle.skia.org/c/@Path_reverseAddPath
+-    */
+-    SkPath& reverseAddPath(const SkPath& src);
+-
+-    /** Sets last point to (x, y). If SkPoint array is empty, append kMove_Verb to
+-        verb array and append (x, y) to SkPoint array.
+-
+-        @param x  set x-axis value of last point
+-        @param y  set y-axis value of last point
+-
+-        example: https://fiddle.skia.org/c/@Path_setLastPt
+-    */
+-    void setLastPt(SkScalar x, SkScalar y);
+-
+-    /** Sets the last point on the path. If SkPoint array is empty, append kMove_Verb to
+-        verb array and append p to SkPoint array.
+-
+-        @param p  set value of last point
+-    */
+-    void setLastPt(const SkPoint& p) {
+-        this->setLastPt(p.fX, p.fY);
+-    }
+-#endif
+-
+-#ifdef SK_HIDE_PATH_EDIT_METHODS
+-private:
+-#endif
+-
+-#ifndef SK_PATH_USES_PATHDATA
+-    /** Offsets SkPoint array by (dx, dy). Offset SkPath replaces dst.
+-        If dst is nullptr, SkPath is replaced by offset data.
+-
+-        @param dx   offset added to SkPoint array x-axis coordinates
+-        @param dy   offset added to SkPoint array y-axis coordinates
+-        @param dst  overwritten, translated copy of SkPath; may be nullptr
+-
+-        example: https://fiddle.skia.org/c/@Path_offset
+-    */
+-    void offset(SkScalar dx, SkScalar dy, SkPath* dst) const;
+-
+-    /** Offsets SkPoint array by (dx, dy). SkPath is replaced by offset data.
+-
+-        @param dx  offset added to SkPoint array x-axis coordinates
+-        @param dy  offset added to SkPoint array y-axis coordinates
+-    */
+-    SkPath& offset(SkScalar dx, SkScalar dy) {
+-        this->offset(dx, dy, this);
+-        return *this;
+-    }
+-
+-    /** Transforms verb array, SkPoint array, and weight by matrix.
+-        transform may change verbs and increase their number.
+-        Transformed SkPath replaces dst; if dst is nullptr, original data
+-        is replaced.
+-
+-        @param matrix  SkMatrix to apply to SkPath
+-        @param dst     overwritten, transformed copy of SkPath; may be nullptr
+-        @param pc      whether to apply perspective clipping
+-
+-        example: https://fiddle.skia.org/c/@Path_transform
+-    */
+-    void transform(const SkMatrix& matrix, SkPath* dst) const;
+-
+-    /** Transforms verb array, SkPoint array, and weight by matrix.
+-        transform may change verbs and increase their number.
+-        SkPath is replaced by transformed data.
+-
+-        @param matrix  SkMatrix to apply to SkPath
+-        @param pc      whether to apply perspective clipping
+-    */
+-    SkPath& transform(const SkMatrix& matrix) {
+-        this->transform(matrix, this);
+-        return *this;
+-    }
+-#endif
+-
+-#ifdef SK_HIDE_PATH_EDIT_METHODS
+-public:
+-#endif
+-
+ #ifdef SK_SUPPORT_UNSPANNED_APIS
+     static SkPath Make(const SkPoint points[], int pointCount,
+                        const uint8_t verbs[], int verbCount,
+@@ -1573,15 +787,6 @@ public:
+     int getVerbs(uint8_t verbs[], int max) const {
+         return (int)this->getVerbs({verbs, max});
+     }
+-#ifndef SK_HIDE_PATH_EDIT_METHODS
+-    SkPath& addRoundRect(const SkRect& rect, const SkScalar radii[],
+-                         SkPathDirection dir = SkPathDirection::kCW) {
+-        return this->addRoundRect(rect, {radii, radii ? 8 : 0}, dir);
+-    }
+-    SkPath& addPoly(const SkPoint pts[], int count, bool close) {
+-        return this->addPoly({pts, count}, close);
+-    }
+-#endif  // SK_HIDE_PATH_EDIT_METHODS
+ #endif  // SK_SUPPORT_UNSPANNED_APIS
+ 
+     SkPathIter iter() const;
+@@ -1919,10 +1124,6 @@ public:
+     static std::optional<SkPath> ReadFromMemory(const void* buffer, size_t length,
+                                                 size_t* bytesRead = nullptr);
+ 
+-#ifndef SK_HIDE_PATH_EDIT_METHODS
+-    size_t readFromMemory(const void* buffer, size_t length);
+-#endif
+-
+     /** (See skbug.com/40032862)
+         Returns a non-zero, globally unique value. A different value is returned
+         if verb array, SkPoint array, or conic weight changes.
+@@ -1949,7 +1150,6 @@ public:
+     using sk_is_trivially_relocatable = std::true_type;
+ 
+ private:
+-#ifdef SK_PATH_USES_PATHDATA
+     static SkPath MakeNullCheck(sk_sp<SkPathData>, SkPathFillType, bool isVolatile);
+     static SkPathData* PeekErrorSingleton();
+ 
+@@ -1958,37 +1158,6 @@ private:
+     sk_sp<SkPathData> fPathData;
+     SkPathFillType    fFillType;
+     bool              fIsVolatile;
+-#else
+-    SkPath(sk_sp<SkPathRef>, SkPathFillType, bool isVolatile, SkPathConvexity);
+-
+-    sk_sp<SkPathRef>             fPathRef;
+-    int                          fLastMoveToIndex;
+-    mutable std::atomic<uint8_t> fConvexity;      // SkPathConvexity
+-    SkPathFillType               fFillType;
+-    bool                         fIsVolatile;
+-
+-    static_assert(::sk_is_trivially_relocatable<decltype(fPathRef)>::value);
+-
+-    /** Resets all fields other than fPathRef to their initial 'empty' values.
+-     *  Assumes the caller has already emptied fPathRef.
+-     */
+-    void resetFields();
+-
+-    /** Sets all fields other than fPathRef to the values in 'that'.
+-     *  Assumes the caller has already set fPathRef.
+-     *  Doesn't change fGenerationID or fSourcePath on Android.
+-     */
+-    void copyFields(const SkPath& that);
+-
+-    // Creates a new Path after the supplied arguments have been validated by
+-    // SkPathPriv::AnalyzeVerbs().
+-    static SkPath MakeInternal(const SkPathVerbAnalysis&,
+-                               const SkPoint[],
+-                               SkSpan<const SkPathVerb>,
+-                               const float conics[],
+-                               SkPathFillType,
+-                               bool isVolatile);
+-#endif
+ 
+     size_t writeToMemoryAsRRect(void* buffer) const;
+     size_t readAsRRect(const void*, size_t);
+@@ -1997,24 +1166,6 @@ private:
+     friend class SkPathPriv;
+     friend class SkPathStroker;
+ 
+-    /*  Append, in reverse order, the first contour of path, ignoring path's
+-        last point. If no moveTo() call has been made for this contour, the
+-        first point is automatically set to (0,0).
+-    */
+-    SkPath& reversePathTo(const SkPath&);
+-
+-    // called before we add points for lineTo, quadTo, cubicTo, checking to see
+-    // if we need to inject a leading moveTo first
+-    //
+-    //  SkPath path; path.lineTo(...);   <--- need a leading moveTo(0, 0)
+-    // SkPath path; ... path.close(); path.lineTo(...) <-- need a moveTo(previous moveTo)
+-    //
+-    void injectMoveToIfNeeded();
+-
+-    bool hasOnlyMoveTos() const {
+-        return this->getSegmentMasks() == 0;
+-    }
+-
+     SkPathConvexity computeConvexity() const;
+ 
+     bool isValidImpl() const;
+@@ -2023,26 +1174,8 @@ private:
+      */
+ #ifdef SK_DEBUG
+     void validate() const;
+-    void validateRef() const;
+ #endif
+ 
+-    // called by stroker to see if all points (in the last contour) are equal and worthy of a cap
+-    bool isZeroLengthSincePoint(int startPtIndex) const;
+-
+-    /** Returns if the path can return a bound at no cost (true) or will have to
+-        perform some computation (false).
+-     */
+-    bool hasComputedBounds() const;
+-
+-    // 'rect' needs to be sorted
+-    void setBounds(const SkRect& rect);
+-
+-    void setPt(int index, SkScalar x, SkScalar y);
+-
+-    SkPath& dirtyAfterEdit();
+-
+-    void addRaw(const SkPathRaw&);
+-
+     /** Returns the comvexity type, computing if needed. Never returns kUnknown.
+         @return  path's convexity type (convex or concave)
+     */
+@@ -2056,9 +1189,7 @@ private:
+      */
+     void setConvexity(SkPathConvexity) const;
+ 
+-    friend class SkAutoAddSimpleShape;  // setConvexity
+     friend class SkPathBuilder;
+-    friend class PathTest_Private; // unit test reversePathTo
+ };
+ 
+ #endif
+diff --git a/include/core/SkPathBuilder.h b/include/core/SkPathBuilder.h
+index 9cc3d9de15..e8d26edd68 100644
+--- a/include/core/SkPathBuilder.h
++++ b/include/core/SkPathBuilder.h
+@@ -31,6 +31,9 @@ struct SkPathRaw;
+ class SkString;
+ 
+ class SK_API SkPathBuilder {
++    using PointsArray = skia_private::STArray<4, SkPoint>;
++    using VerbsArray = skia_private::STArray<4, SkPathVerb>;
++    using ConicWeightsArray = skia_private::STArray<2, float>;
+ public:
+     /** Constructs an empty SkPathBuilder. By default, SkPathBuilder has no verbs, no SkPoint, and
+         no weights. FillType is set to kWinding.
+@@ -990,9 +993,9 @@ public:
+     bool contains(SkPoint) const;
+ 
+ private:
+-    SkPathRef::PointsArray fPts;
+-    SkPathRef::VerbsArray fVerbs;
+-    SkPathRef::ConicWeightsArray fConicWeights;
++    PointsArray fPts;
++    VerbsArray fVerbs;
++    ConicWeightsArray fConicWeights;
+ 
+     SkPathFillType  fFillType;
+     bool            fIsVolatile;
+@@ -1014,8 +1017,6 @@ private:
+         }
+     }
+ 
+-    SkPath make(sk_sp<SkPathRef>) const;
+-
+     bool isZeroLengthSincePoint(int startPtIndex) const;
+ 
+     SkPathBuilder& privateReverseAddPath(const SkPath&);
+diff --git a/include/core/SkRegion.h b/include/core/SkRegion.h
+index 6410e3af6a..22a72169df 100644
+--- a/include/core/SkRegion.h
++++ b/include/core/SkRegion.h
+@@ -8,14 +8,13 @@
+ #ifndef SkRegion_DEFINED
+ #define SkRegion_DEFINED
+ 
++#include "include/core/SkPath.h"
+ #include "include/core/SkRect.h"
+ #include "include/private/base/SkAPI.h"
+ #include "include/private/base/SkAssert.h"
+ #include "include/private/base/SkDebug.h"
+ #include "include/private/base/SkTypeTraits.h"
+ 
+-#include "include/core/SkPath.h"    // IWYU -- for SK_HIDE_PATH_EDIT_METHODS
+-
+ #include <cstddef>
+ #include <cstdint>
+ #include <type_traits>
+@@ -195,10 +194,6 @@ public:
+      */
+     SkPath getBoundaryPath() const;
+ 
+-#ifndef SK_HIDE_PATH_EDIT_METHODS
+-    bool getBoundaryPath(SkPath* path) const;
+-#endif
+-
+     /** Constructs an empty SkRegion. SkRegion is set to empty bounds
+         at (0, 0) with zero width and height. Always returns false.
+ 
+diff --git a/include/private/SkPathRef.h b/include/private/SkPathRef.h
+index 5b0438b0bd..086c5ea36e 100644
+--- a/include/private/SkPathRef.h
++++ b/include/private/SkPathRef.h
+@@ -87,461 +87,4 @@ struct SkPathIsAData {
+     SkPathDirection fDirection;
+ };
+ 
+-/**
+- * Holds the path verbs and points. It is versioned by a generation ID. None of its public methods
+- * modify the contents. To modify or append to the verbs/points wrap the SkPathRef in an
+- * SkPathRef::Editor object. Installing the editor resets the generation ID. It also performs
+- * copy-on-write if the SkPathRef is shared by multiple SkPaths. The caller passes the Editor's
+- * constructor a pointer to a sk_sp<SkPathRef>, which may be updated to point to a new SkPathRef
+- * after the editor's constructor returns.
+- *
+- * The points and verbs are stored in a single allocation. The points are at the begining of the
+- * allocation while the verbs are stored at end of the allocation, in reverse order. Thus the points
+- * and verbs both grow into the middle of the allocation until the meet. To access verb i in the
+- * verb array use ref.verbs()[~i] (because verbs() returns a pointer just beyond the first
+- * logical verb or the last verb in memory).
+- */
+-
+-class SK_API SkPathRef final : public SkNVRefCnt<SkPathRef> {
+-public:
+-    // See https://bugs.chromium.org/p/skia/issues/detail?id=13817 for how these sizes were
+-    // determined.
+-    using PointsArray = skia_private::STArray<4, SkPoint>;
+-    using VerbsArray = skia_private::STArray<4, SkPathVerb>;
+-    using ConicWeightsArray = skia_private::STArray<2, float>;
+-
+-    SkPathRef(SkSpan<const SkPoint> points, SkSpan<const SkPathVerb> verbs,
+-              SkSpan<const SkScalar> weights, unsigned segmentMask, const SkMatrix* mx)
+-        : fPoints(points)
+-        , fVerbs(verbs)
+-        , fConicWeights(weights)
+-    {
+-        fBoundsIsDirty = true;    // this also invalidates fIsFinite
+-        fGenerationID = 0;        // recompute
+-        fSegmentMask = SkToU8(segmentMask);
+-        fType = SkPathIsAType::kGeneral;
+-        SkDEBUGCODE(fEditorsAttached.store(0);)
+-        if (mx && !mx->isIdentity()) {
+-            mx->mapPoints(fPoints);
+-        }
+-        this->computeBounds();  // do this now, before we worry about multiple owners/threads
+-        SkDEBUGCODE(this->validate();)
+-    }
+-
+-    class Editor {
+-    public:
+-        Editor(sk_sp<SkPathRef>* pathRef,
+-               int incReserveVerbs = 0,
+-               int incReservePoints = 0,
+-               int incReserveConics = 0);
+-
+-        ~Editor() { SkDEBUGCODE(fPathRef->fEditorsAttached--;) }
+-
+-        /**
+-         * Returns the array of points.
+-         */
+-        SkPoint* writablePoints() { return fPathRef->getWritablePoints(); }
+-        const SkPoint* points() const { return fPathRef->points(); }
+-
+-        /**
+-         * Gets the ith point. Shortcut for this->points() + i
+-         */
+-        SkPoint* atPoint(int i) { return fPathRef->getWritablePoints() + i; }
+-        const SkPoint* atPoint(int i) const { return &fPathRef->fPoints[i]; }
+-
+-        /**
+-         * Adds the verb and allocates space for the number of points indicated by the verb. The
+-         * return value is a pointer to where the points for the verb should be written.
+-         * 'weight' is only used if 'verb' is kConic_Verb
+-         */
+-        SkPoint* growForVerb(SkPathVerb verb, SkScalar weight = 0) {
+-            SkDEBUGCODE(fPathRef->validate();)
+-            return fPathRef->growForVerb(verb, weight);
+-        }
+-
+-        /**
+-         * Allocates space for multiple instances of a particular verb and the
+-         * requisite points & weights.
+-         * The return pointer points at the first new point (indexed normally [<i>]).
+-         * If 'verb' is kConic_Verb, 'weights' will return a pointer to the
+-         * space for the conic weights (indexed normally).
+-         */
+-        SkPoint* growForRepeatedVerb(SkPathVerb verb,
+-                                     int numVbs,
+-                                     SkScalar** weights = nullptr) {
+-            return fPathRef->growForRepeatedVerb(verb, numVbs, weights);
+-        }
+-
+-        /**
+-         * Concatenates all verbs from 'path' onto the pathRef's verbs array. Increases the point
+-         * count by the number of points in 'path', and the conic weight count by the number of
+-         * conics in 'path'.
+-         *
+-         * Returns pointers to the uninitialized points and conic weights data.
+-         */
+-        std::tuple<SkPoint*, SkScalar*> growForVerbsInPath(const SkPathRef& path) {
+-            return fPathRef->growForVerbsInPath(path);
+-        }
+-
+-        /**
+-         * Resets the path ref to a new verb and point count. The new verbs and points are
+-         * uninitialized.
+-         */
+-        void resetToSize(int newVerbCnt, int newPointCnt, int newConicCount) {
+-            fPathRef->resetToSize(newVerbCnt, newPointCnt, newConicCount);
+-        }
+-
+-        /**
+-         * Gets the path ref that is wrapped in the Editor.
+-         */
+-        SkPathRef* pathRef() { return fPathRef; }
+-
+-        void setIsOval(SkPathDirection dir, unsigned start) {
+-            fPathRef->setIsOval(dir, start);
+-        }
+-
+-        void setIsRRect(SkPathDirection dir, unsigned start) {
+-            fPathRef->setIsRRect(dir, start);
+-        }
+-
+-        void setBounds(const SkRect& rect) { fPathRef->setBounds(rect); }
+-
+-    private:
+-        SkPathRef* fPathRef;
+-    };
+-
+-public:
+-    /**
+-     * Gets a path ref with no verbs or points.
+-     */
+-    static SkPathRef* CreateEmpty();
+-
+-    /**
+-     *  Returns true if all of the points in this path are finite, meaning there
+-     *  are no infinities and no NaNs.
+-     */
+-    bool isFinite() const {
+-        if (fBoundsIsDirty) {
+-            this->computeBounds();
+-        }
+-        return SkToBool(fIsFinite);
+-    }
+-
+-    /**
+-     *  Returns a mask, where each bit corresponding to a SegmentMask is
+-     *  set if the path contains 1 or more segments of that type.
+-     *  Returns 0 for an empty path (no segments).
+-     */
+-    uint32_t getSegmentMasks() const { return fSegmentMask; }
+-
+-    /** Returns Info struct if the path is an oval, else return {}.
+-     *  Tracking whether a path is an oval is considered an
+-     *  optimization for performance and so some paths that are in
+-     *  fact ovals can report {}.
+-     */
+-    std::optional<SkPathOvalInfo> isOval() const {
+-        if (fType == SkPathIsAType::kOval) {
+-            return {{
+-                this->getBounds(),
+-                fIsA.fDirection,
+-                fIsA.fStartIndex,
+-            }};
+-        }
+-        return {};
+-    }
+-
+-    std::optional<SkPathRRectInfo> isRRect() const;
+-
+-    bool hasComputedBounds() const {
+-        return !fBoundsIsDirty;
+-    }
+-
+-    /** Returns the bounds of the path's points. If the path contains 0 or 1
+-        points, the bounds is set to (0,0,0,0), and isEmpty() will return true.
+-        Note: this bounds may be larger than the actual shape, since curves
+-        do not extend as far as their control points.
+-    */
+-    const SkRect& getBounds() const {
+-        if (fBoundsIsDirty) {
+-            this->computeBounds();
+-        }
+-        return fBounds;
+-    }
+-
+-    SkRRect getRRect() const;
+-
+-    /**
+-     * Transforms a path ref by a matrix, allocating a new one only if necessary.
+-     */
+-    static void CreateTransformedCopy(sk_sp<SkPathRef>* dst,
+-                                      const SkPathRef& src,
+-                                      const SkMatrix& matrix);
+-
+-  //  static SkPathRef* CreateFromBuffer(SkRBuffer* buffer);
+-
+-    /**
+-     * Rollsback a path ref to zero verbs and points with the assumption that the path ref will be
+-     * repopulated with approximately the same number of verbs and points. A new path ref is created
+-     * only if necessary.
+-     */
+-    static void Rewind(sk_sp<SkPathRef>* pathRef);
+-
+-    ~SkPathRef();
+-    int countPoints() const { return fPoints.size(); }
+-    int countVerbs() const { return fVerbs.size(); }
+-    int countWeights() const { return fConicWeights.size(); }
+-
+-    size_t approximateBytesUsed() const;
+-
+-    /**
+-     * Returns a pointer one beyond the first logical verb (last verb in memory order).
+-     */
+-    const SkPathVerb* verbsBegin() const { return fVerbs.begin(); }
+-
+-    /**
+-     * Returns a const pointer to the first verb in memory (which is the last logical verb).
+-     */
+-    const SkPathVerb* verbsEnd() const { return fVerbs.end(); }
+-
+-    SkSpan<const SkPathVerb> verbs() const { return fVerbs; }
+-
+-    /**
+-     * Returns a const pointer to the first point.
+-     */
+-    const SkPoint* points() const { return fPoints.begin(); }
+-
+-    /**
+-     * Shortcut for this->points() + this->countPoints()
+-     */
+-    const SkPoint* pointsEnd() const { return this->points() + this->countPoints(); }
+-
+-    SkSpan<const SkPoint> pointSpan() const { return fPoints; }
+-    SkSpan<const float> conicSpan() const { return fConicWeights; }
+-
+-    const SkScalar* conicWeights() const { return fConicWeights.begin(); }
+-    const SkScalar* conicWeightsEnd() const { return fConicWeights.end(); }
+-
+-
+-    /**
+-     * Convenience methods for getting to a verb or point by index.
+-     */
+-    SkPathVerb atVerb(int index) const { return fVerbs[index]; }
+-    SkPoint atPoint(int index) const { return fPoints[index]; }
+-
+-    bool operator== (const SkPathRef& ref) const;
+-
+-    /**
+-     * Gets an ID that uniquely identifies the contents of the path ref. If two path refs have the
+-     * same ID then they have the same verbs and points. However, two path refs may have the same
+-     * contents but different genIDs.
+-     * skbug.com/40032862 for background on why fillType is necessary (for now).
+-     */
+-    uint32_t genID(SkPathFillType fillType) const;
+-
+-    void addGenIDChangeListener(sk_sp<SkIDChangeListener>);   // Threadsafe.
+-    int genIDChangeListenerCount();                           // Threadsafe
+-
+-    bool dataMatchesVerbs() const;
+-    bool isValid() const;
+-    SkDEBUGCODE(void validate() const { SkASSERT(this->isValid()); } )
+-
+-    /**
+-     * Resets this SkPathRef to a clean state.
+-     */
+-    void reset();
+-
+-    bool isInitialEmptyPathRef() const {
+-        return fGenerationID == kEmptyGenID;
+-    }
+-
+-private:
+-    enum SerializationOffsets {
+-        kLegacyRRectOrOvalStartIdx_SerializationShift = 28, // requires 3 bits, ignored.
+-        kLegacyRRectOrOvalIsCCW_SerializationShift = 27,    // requires 1 bit, ignored.
+-        kLegacyIsRRect_SerializationShift = 26,             // requires 1 bit, ignored.
+-        kIsFinite_SerializationShift = 25,                  // requires 1 bit
+-        kLegacyIsOval_SerializationShift = 24,              // requires 1 bit, ignored.
+-        kSegmentMask_SerializationShift = 0                 // requires 4 bits (deprecated)
+-    };
+-
+-    SkPathRef(int numVerbs = 0, int numPoints = 0, int numConics = 0) {
+-        fBoundsIsDirty = true;    // this also invalidates fIsFinite
+-        fGenerationID = kEmptyGenID;
+-        fSegmentMask = 0;
+-        fType = SkPathIsAType::kGeneral;
+-
+-        if (numPoints > 0) {
+-            fPoints.reserve_exact(numPoints);
+-        }
+-        if (numVerbs > 0) {
+-            fVerbs.reserve_exact(numVerbs);
+-        }
+-        if (numConics > 0) {
+-            fConicWeights.reserve_exact(numConics);
+-        }
+-        SkDEBUGCODE(fEditorsAttached.store(0);)
+-        SkDEBUGCODE(this->validate();)
+-    }
+-
+-    void copy(const SkPathRef& ref, int additionalReserveVerbs, int additionalReservePoints, int additionalReserveConics);
+-
+-    // Return true if the computed bounds are finite.
+-    static bool ComputePtBounds(SkRect* bounds, const SkPathRef& ref) {
+-        return bounds->setBoundsCheck(ref.pointSpan());
+-    }
+-
+-    // called, if dirty, by getBounds()
+-    void computeBounds() const {
+-        SkDEBUGCODE(this->validate();)
+-        // TODO: remove fBoundsIsDirty and fIsFinite,
+-        // using an inverted rect instead of fBoundsIsDirty and always recalculating fIsFinite.
+-        SkASSERT(fBoundsIsDirty);
+-
+-        fIsFinite = ComputePtBounds(&fBounds, *this);
+-        fBoundsIsDirty = false;
+-    }
+-
+-    void setBounds(const SkRect& rect) {
+-        SkASSERT(rect.fLeft <= rect.fRight && rect.fTop <= rect.fBottom);
+-        fBounds = rect;
+-        fBoundsIsDirty = false;
+-        fIsFinite = fBounds.isFinite();
+-    }
+-
+-    /** Makes additional room but does not change the counts or change the genID */
+-    void incReserve(int additionalVerbs, int additionalPoints, int additionalConics) {
+-        SkDEBUGCODE(this->validate();)
+-        // Use reserve() so that if there is not enough space, the array will grow with some
+-        // additional space. This ensures repeated calls to grow won't always allocate.
+-        if (additionalPoints > 0) {
+-            fPoints.reserve(fPoints.size() + additionalPoints);
+-        }
+-        if (additionalVerbs > 0) {
+-            fVerbs.reserve(fVerbs.size() + additionalVerbs);
+-        }
+-        if (additionalConics > 0) {
+-            fConicWeights.reserve(fConicWeights.size() + additionalConics);
+-        }
+-        SkDEBUGCODE(this->validate();)
+-    }
+-
+-    /**
+-     * Resets all state except that of the verbs, points, and conic-weights.
+-     * Intended to be called from other functions that reset state.
+-     */
+-    void commonReset() {
+-        SkDEBUGCODE(this->validate();)
+-        this->callGenIDChangeListeners();
+-        fBoundsIsDirty = true;      // this also invalidates fIsFinite
+-        fGenerationID = 0;
+-
+-        fSegmentMask = 0;
+-        fType = SkPathIsAType::kGeneral;
+-    }
+-
+-    /** Resets the path ref with verbCount verbs and pointCount points, all uninitialized. Also
+-     *  allocates space for reserveVerb additional verbs and reservePoints additional points.*/
+-    void resetToSize(int verbCount, int pointCount, int conicCount,
+-                     int reserveVerbs = 0, int reservePoints = 0,
+-                     int reserveConics = 0) {
+-        this->commonReset();
+-        // Use reserve_exact() so the arrays are sized to exactly fit the data.
+-        fPoints.reserve_exact(pointCount + reservePoints);
+-        fPoints.resize_back(pointCount);
+-
+-        fVerbs.reserve_exact(verbCount + reserveVerbs);
+-        fVerbs.resize_back(verbCount);
+-
+-        fConicWeights.reserve_exact(conicCount + reserveConics);
+-        fConicWeights.resize_back(conicCount);
+-        SkDEBUGCODE(this->validate();)
+-    }
+-
+-    /**
+-     * Increases the verb count by numVbs and point count by the required amount.
+-     * The new points are uninitialized. All the new verbs are set to the specified
+-     * verb. If 'verb' is kConic_Verb, 'weights' will return a pointer to the
+-     * uninitialized conic weights.
+-     */
+-    SkPoint* growForRepeatedVerb(SkPathVerb, int numVbs, SkScalar** weights);
+-
+-    /**
+-     * Increases the verb count 1, records the new verb, and creates room for the requisite number
+-     * of additional points. A pointer to the first point is returned. Any new points are
+-     * uninitialized.
+-     */
+-    SkPoint* growForVerb(SkPathVerb, SkScalar weight);
+-
+-    /**
+-     * Concatenates all verbs from 'path' onto our own verbs array. Increases the point count by the
+-     * number of points in 'path', and the conic weight count by the number of conics in 'path'.
+-     *
+-     * Returns pointers to the uninitialized points and conic weights data.
+-     */
+-    std::tuple<SkPoint*, SkScalar*> growForVerbsInPath(const SkPathRef& path);
+-
+-    /**
+-     * Private, non-const-ptr version of the public function verbsMemBegin().
+-     */
+-    uint8_t* verbsBeginWritable() { return (uint8_t*)fVerbs.begin(); }
+-
+-    /**
+-     * Called the first time someone calls CreateEmpty to actually create the singleton.
+-     */
+-    friend SkPathRef* sk_create_empty_pathref();
+-
+-    void setIsOval(SkPathDirection dir, unsigned start) {
+-        fType = SkPathIsAType::kOval;
+-        fIsA.fDirection  = dir;
+-        fIsA.fStartIndex = SkToU8(start);
+-    }
+-
+-    void setIsRRect(SkPathDirection dir, unsigned start) {
+-        fType = SkPathIsAType::kRRect;
+-        fIsA.fDirection  = dir;
+-        fIsA.fStartIndex = SkToU8(start);
+-    }
+-
+-    // called only by the editor. Note that this is not a const function.
+-    SkPoint* getWritablePoints() {
+-        SkDEBUGCODE(this->validate();)
+-        fType = SkPathIsAType::kGeneral;
+-        return fPoints.begin();
+-    }
+-
+-    const SkPoint* getPoints() const {
+-        SkDEBUGCODE(this->validate();)
+-        return fPoints.begin();
+-    }
+-
+-    void callGenIDChangeListeners();
+-
+-    PointsArray fPoints;
+-    VerbsArray fVerbs;
+-    ConicWeightsArray fConicWeights;
+-
+-    mutable SkRect   fBounds;
+-
+-    enum {
+-        kEmptyGenID = 1, // GenID reserved for path ref with zero points and zero verbs.
+-    };
+-    mutable uint32_t    fGenerationID;
+-    SkIDChangeListener::List fGenIDChangeListeners;
+-
+-    SkDEBUGCODE(std::atomic<int> fEditorsAttached;) // assert only one editor in use at any time.
+-
+-    // based on fType
+-    SkPathIsAData fIsA {};
+-
+-    SkPathIsAType   fType;
+-    uint8_t         fSegmentMask;
+-    mutable bool    fBoundsIsDirty;
+-    mutable bool    fIsFinite;    // only meaningful if bounds are valid
+-
+-    friend class PathRefTest_Private;
+-    friend class SkPath;
+-    friend class SkPathBuilder;
+-    friend class SkPathPriv;
+-};
+-
+ #endif
+diff --git a/src/core/BUILD.bazel b/src/core/BUILD.bazel
+index a54f4319eb..a91b18858e 100644
+--- a/src/core/BUILD.bazel
++++ b/src/core/BUILD.bazel
+@@ -357,10 +357,8 @@ skia_filegroup(
+         "SkPaintPriv.cpp",
+         "SkPath.cpp",
+         "SkPathData.cpp",
+-        "SkPath_editing.cpp",
+         "SkPath_interpolate.cpp",
+         "SkPath_pathdata.cpp",
+-        "SkPath_pathref.cpp",
+         "SkPathBuilder.cpp",
+         "SkPathDump.cpp",
+         "SkPathEffect.cpp",
+@@ -369,7 +367,6 @@ skia_filegroup(
+         "SkPathPriv.cpp",
+         "SkPathRaw.cpp",
+         "SkPathRawShapes.cpp",
+-        "SkPathRef.cpp",
+         "SkPathUtils.cpp",
+         "SkPath_serial.cpp",
+         "SkPicture.cpp",
+diff --git a/src/core/SkFont.cpp b/src/core/SkFont.cpp
+index 5e3cd62407..e228f46637 100644
+--- a/src/core/SkFont.cpp
++++ b/src/core/SkFont.cpp
+@@ -312,16 +312,6 @@ std::optional<SkPath> SkFont::getPath(SkGlyphID glyphID) const {
+     return result;
+ }
+ 
+-#ifndef SK_HIDE_PATH_EDIT_METHODS
+-bool SkFont::getPath(SkGlyphID glyphID, SkPath* path) const {
+-    if (auto maybepath = this->getPath(glyphID)) {
+-        *path = *maybepath;
+-        return true;
+-    }
+-    return false;
+-}
+-#endif
+-
+ SkScalar SkFont::getMetrics(SkFontMetrics* metrics) const {
+ 
+     auto [strikeSpec, strikeToSourceScale] = SkStrikeSpec::MakeCanonicalized(*this, nullptr);
+diff --git a/src/core/SkPath.cpp b/src/core/SkPath.cpp
+index 9da143d8ec..39f70b042d 100644
+--- a/src/core/SkPath.cpp
++++ b/src/core/SkPath.cpp
+@@ -273,23 +273,6 @@ SkPathIter SkPath::iter() const {
+     return { this->points(), this->verbs(), this->conicWeights() };
+ }
+ 
+-bool SkPath::isZeroLengthSincePoint(int startPtIndex) const {
+-    SkSpan<const SkPoint> span = this->points();
+-
+-    int count = (int)span.size() - startPtIndex;
+-    if (count < 2) {
+-        return true;
+-    }
+-    const SkPoint* pts = span.data() + startPtIndex;
+-    const SkPoint& first = *pts;
+-    for (int index = 1; index < count; ++index) {
+-        if (first != pts[index]) {
+-            return false;
+-        }
+-    }
+-    return true;
+-}
+-
+ ///////////////////////////////////////////////////////////////////////////////
+ 
+ SkPath::Iter::Iter() {
+diff --git a/src/core/SkPathPriv.cpp b/src/core/SkPathPriv.cpp
+index 4f31a00a41..741b56d692 100644
+--- a/src/core/SkPathPriv.cpp
++++ b/src/core/SkPathPriv.cpp
+@@ -1584,3 +1584,122 @@ int SkPathPriv::FindLastMoveToIndex(SkSpan<const SkPathVerb> verbs, const size_t
+     SkASSERT(ptIndex >= 0);
+     return ptIndex;
+ }
++
++std::pair<SkPathDirection, unsigned>
++SkPathPriv::TransformDirAndStart(const SkMatrix& matrix, bool isRRect, SkPathDirection dir,
++                                 unsigned start) {
++    unsigned inStart = start;
++    bool isCCW = (dir == SkPathDirection::kCCW);
++
++    int rm = 0;
++    if (isRRect) {
++        // Degenerate rrect indices to oval indices and remember the remainder.
++        // Ovals have one index per side whereas rrects have two.
++        rm = inStart & 0b1;
++        inStart /= 2;
++    }
++    // Is the antidiagonal non-zero (otherwise the diagonal is zero)
++    int antiDiag;
++    // Is the non-zero value in the top row (either kMScaleX or kMSkewX) negative
++    int topNeg;
++    // Are the two non-zero diagonal or antidiagonal values the same sign.
++    int sameSign;
++    if (matrix.get(SkMatrix::kMScaleX) != 0) {
++        antiDiag = 0b00;
++        if (matrix.get(SkMatrix::kMScaleX) > 0) {
++            topNeg = 0b00;
++            sameSign = matrix.get(SkMatrix::kMScaleY) > 0 ? 0b01 : 0b00;
++        } else {
++            topNeg = 0b10;
++            sameSign = matrix.get(SkMatrix::kMScaleY) > 0 ? 0b00 : 0b01;
++        }
++    } else {
++        antiDiag = 0b01;
++        if (matrix.get(SkMatrix::kMSkewX) > 0) {
++            topNeg = 0b00;
++            sameSign = matrix.get(SkMatrix::kMSkewY) > 0 ? 0b01 : 0b00;
++        } else {
++            topNeg = 0b10;
++            sameSign = matrix.get(SkMatrix::kMSkewY) > 0 ? 0b00 : 0b01;
++        }
++    }
++    if (sameSign != antiDiag) {
++        // This is a rotation (and maybe scale). The direction is unchanged.
++        // Trust me on the start computation (or draw yourself some pictures)
++        start = (inStart + 4 - (topNeg | antiDiag)) % 4;
++        SkASSERT(start < 4);
++        if (isRRect) {
++            start = 2 * start + rm;
++        }
++    } else {
++        // This is a mirror (and maybe scale). The direction is reversed.
++        isCCW = !isCCW;
++        // Trust me on the start computation (or draw yourself some pictures)
++        start = (6 + (topNeg | antiDiag) - inStart) % 4;
++        SkASSERT(start < 4);
++        if (isRRect) {
++            start = 2 * start + (rm ? 0 : 1);
++        }
++    }
++
++    return {
++        isCCW ? SkPathDirection::kCCW : SkPathDirection::kCW,
++        start
++    };
++}
++
++SkRRect SkPathPriv::DeduceRRectFromContour(const SkRect& bounds, SkSpan<const SkPoint> pts,
++                                           SkSpan<const SkPathVerb> vbs) {
++    SkASSERT(!vbs.empty());
++    SkASSERT(vbs.front() == SkPathVerb::kMove);
++
++    SkVector radii[4] = {{0, 0}, {0, 0}, {0, 0}, {0, 0}};
++
++    size_t ptIndex = 0;
++    for (const SkPathVerb verb : vbs) {
++        switch (verb) {
++            case SkPathVerb::kMove:
++                SkASSERT(ptIndex == 0); // we only expect 1 move
++                ptIndex += 1;
++                break;
++            case SkPathVerb::kLine: {
++                // we only expect horizontal or vertical lines
++                SkDEBUGCODE(const SkVector delta = pts[ptIndex] - pts[ptIndex-1];)
++                SkASSERT(delta.fX == 0 || delta.fY == 0);
++                ptIndex += 1;
++            } break;
++            case SkPathVerb::kQuad:  SkASSERT(false); break;
++            case SkPathVerb::kCubic: SkASSERT(false); break;
++            case SkPathVerb::kConic: {
++                SkVector v1_0 = pts[ptIndex] - pts[ptIndex - 1];
++                SkVector v2_1 = pts[ptIndex + 1] - pts[ptIndex];
++                SkVector dxdy;
++                if (v1_0.fX) {
++                    SkASSERT(!v2_1.fX && !v1_0.fY);
++                    dxdy.set(SkScalarAbs(v1_0.fX), SkScalarAbs(v2_1.fY));
++                } else if (!v1_0.fY) {
++                    SkASSERT(!v2_1.fX || !v2_1.fY);
++                    dxdy.set(SkScalarAbs(v2_1.fX), SkScalarAbs(v2_1.fY));
++                } else {
++                    SkASSERT(!v2_1.fY);
++                    dxdy.set(SkScalarAbs(v2_1.fX), SkScalarAbs(v1_0.fY));
++                }
++                SkRRect::Corner corner =
++                    pts[ptIndex].fX == bounds.fLeft ?
++                        pts[ptIndex].fY == bounds.fTop ?
++                            SkRRect::kUpperLeft_Corner : SkRRect::kLowerLeft_Corner :
++                        pts[ptIndex].fY == bounds.fTop ?
++                            SkRRect::kUpperRight_Corner : SkRRect::kLowerRight_Corner;
++                SkASSERT(!radii[corner].fX && !radii[corner].fY);
++                radii[corner] = dxdy;
++                ptIndex += 2;
++            } break;
++            case SkPathVerb::kClose:
++                break;
++        }
++    }
++    SkRRect rrect;
++    rrect.setRectRadii(bounds, radii);
++    return rrect;
++}
++
+diff --git a/src/core/SkPathPriv.h b/src/core/SkPathPriv.h
+index aba26275c0..90d8abf2ad 100644
+--- a/src/core/SkPathPriv.h
++++ b/src/core/SkPathPriv.h
+@@ -219,11 +219,6 @@ public:
+     /** Returns true if the underlying SkPathRef has one single owner. */
+     static bool TestingOnly_unique(const SkPath&);
+ 
+-    // Won't be needed once we can make path's immutable (with their bounds always computed)
+-    static bool HasComputedBounds(const SkPath& path) {
+-        return path.hasComputedBounds();
+-    }
+-
+     // returns Empty() if there are no points
+     static SkRect ComputeTightBounds(SkSpan<const SkPoint> points,
+                                      SkSpan<const SkPathVerb> verbs,
+@@ -309,10 +304,6 @@ public:
+         return true;
+     }
+ 
+-#ifndef SK_PATH_USES_PATHDATA
+-    static int LastMoveToIndex(const SkPath& path) { return path.fLastMoveToIndex; }
+-#endif
+-
+     struct RectContour {
+         SkRect          fRect;
+         bool            fIsClosed;
+diff --git a/src/core/SkPathRef.cpp b/src/core/SkPathRef.cpp
+deleted file mode 100644
+index bc20fbb4c6..0000000000
+--- a/src/core/SkPathRef.cpp
++++ /dev/null
+@@ -1,581 +0,0 @@
+-/*
+- * Copyright 2013 Google Inc.
+- *
+- * Use of this source code is governed by a BSD-style license that can be
+- * found in the LICENSE file.
+- */
+-
+-#include "include/private/SkPathRef.h"
+-
+-#include "include/core/SkMatrix.h"
+-#include "include/core/SkPath.h"
+-#include "include/core/SkRRect.h"
+-#include "include/private/base/SkFloatingPoint.h"
+-#include "include/private/base/SkOnce.h"
+-#include "src/base/SkVx.h"
+-#include "src/core/SkPathPriv.h"
+-
+-#include <cstring>
+-#include <utility>
+-
+-#ifdef SK_BUILD_FOR_ANDROID_FRAMEWORK
+-    static constexpr int kPathRefGenIDBitCnt = 30; // leave room for the fill type (skbug.com/40032862)
+-#else
+-    static constexpr int kPathRefGenIDBitCnt = 32;
+-#endif
+-
+-//////////////////////////////////////////////////////////////////////////////
+-SkPathRef::Editor::Editor(sk_sp<SkPathRef>* pathRef,
+-                          int incReserveVerbs,
+-                          int incReservePoints,
+-                          int incReserveConics)
+-{
+-    SkASSERT(incReserveVerbs >= 0);
+-    SkASSERT(incReservePoints >= 0);
+-
+-    if ((*pathRef)->unique()) {
+-        (*pathRef)->incReserve(incReserveVerbs, incReservePoints, incReserveConics);
+-    } else {
+-        SkPathRef* copy;
+-        // No need to copy if the existing ref is the empty ref (because it doesn't contain
+-        // anything).
+-        if (!(*pathRef)->isInitialEmptyPathRef()) {
+-            copy = new SkPathRef;
+-            copy->copy(**pathRef, incReserveVerbs, incReservePoints, incReserveConics);
+-        } else {
+-            // Size previously empty paths to exactly fit the supplied hints. The assumpion is
+-            // the caller knows the exact size they want (as happens in chrome when deserializing
+-            // paths).
+-            copy = new SkPathRef(incReserveVerbs, incReservePoints, incReserveConics);
+-        }
+-        pathRef->reset(copy);
+-    }
+-    fPathRef = pathRef->get();
+-    fPathRef->callGenIDChangeListeners();
+-    fPathRef->fGenerationID = 0;
+-    fPathRef->fBoundsIsDirty = true;
+-    SkDEBUGCODE(fPathRef->fEditorsAttached++;)
+-}
+-
+-//////////////////////////////////////////////////////////////////////////////
+-
+-size_t SkPathRef::approximateBytesUsed() const {
+-    return sizeof(SkPathRef)
+-         + fPoints      .capacity() * sizeof(fPoints      [0])
+-         + fVerbs       .capacity() * sizeof(fVerbs       [0])
+-         + fConicWeights.capacity() * sizeof(fConicWeights[0]);
+-}
+-
+-SkPathRef::~SkPathRef() {
+-    // Deliberately don't validate() this path ref, otherwise there's no way
+-    // to read one that's not valid and then free its memory without asserting.
+-    SkDEBUGCODE(fGenerationID = 0xEEEEEEEE;)
+-    SkDEBUGCODE(fEditorsAttached.store(0x7777777);)
+-}
+-
+-static SkPathRef* gEmpty = nullptr;
+-
+-SkPathRef* SkPathRef::CreateEmpty() {
+-    static SkOnce once;
+-    once([]{
+-        gEmpty = new SkPathRef;
+-        gEmpty->computeBounds();   // Avoids races later to be the first to do this.
+-    });
+-    return SkRef(gEmpty);
+-}
+-
+-std::pair<SkPathDirection, unsigned>
+-SkPathPriv::TransformDirAndStart(const SkMatrix& matrix, bool isRRect, SkPathDirection dir,
+-                                 unsigned start) {
+-    unsigned inStart = start;
+-    bool isCCW = (dir == SkPathDirection::kCCW);
+-
+-    int rm = 0;
+-    if (isRRect) {
+-        // Degenerate rrect indices to oval indices and remember the remainder.
+-        // Ovals have one index per side whereas rrects have two.
+-        rm = inStart & 0b1;
+-        inStart /= 2;
+-    }
+-    // Is the antidiagonal non-zero (otherwise the diagonal is zero)
+-    int antiDiag;
+-    // Is the non-zero value in the top row (either kMScaleX or kMSkewX) negative
+-    int topNeg;
+-    // Are the two non-zero diagonal or antidiagonal values the same sign.
+-    int sameSign;
+-    if (matrix.get(SkMatrix::kMScaleX) != 0) {
+-        antiDiag = 0b00;
+-        if (matrix.get(SkMatrix::kMScaleX) > 0) {
+-            topNeg = 0b00;
+-            sameSign = matrix.get(SkMatrix::kMScaleY) > 0 ? 0b01 : 0b00;
+-        } else {
+-            topNeg = 0b10;
+-            sameSign = matrix.get(SkMatrix::kMScaleY) > 0 ? 0b00 : 0b01;
+-        }
+-    } else {
+-        antiDiag = 0b01;
+-        if (matrix.get(SkMatrix::kMSkewX) > 0) {
+-            topNeg = 0b00;
+-            sameSign = matrix.get(SkMatrix::kMSkewY) > 0 ? 0b01 : 0b00;
+-        } else {
+-            topNeg = 0b10;
+-            sameSign = matrix.get(SkMatrix::kMSkewY) > 0 ? 0b00 : 0b01;
+-        }
+-    }
+-    if (sameSign != antiDiag) {
+-        // This is a rotation (and maybe scale). The direction is unchanged.
+-        // Trust me on the start computation (or draw yourself some pictures)
+-        start = (inStart + 4 - (topNeg | antiDiag)) % 4;
+-        SkASSERT(start < 4);
+-        if (isRRect) {
+-            start = 2 * start + rm;
+-        }
+-    } else {
+-        // This is a mirror (and maybe scale). The direction is reversed.
+-        isCCW = !isCCW;
+-        // Trust me on the start computation (or draw yourself some pictures)
+-        start = (6 + (topNeg | antiDiag) - inStart) % 4;
+-        SkASSERT(start < 4);
+-        if (isRRect) {
+-            start = 2 * start + (rm ? 0 : 1);
+-        }
+-    }
+-
+-    return {
+-        isCCW ? SkPathDirection::kCCW : SkPathDirection::kCW,
+-        start
+-    };
+-}
+-
+-void SkPathRef::CreateTransformedCopy(sk_sp<SkPathRef>* dst,
+-                                      const SkPathRef& src,
+-                                      const SkMatrix& matrix) {
+-    SkDEBUGCODE(src.validate();)
+-    if (matrix.isIdentity()) {
+-        if (dst->get() != &src) {
+-            src.ref();
+-            dst->reset(const_cast<SkPathRef*>(&src));
+-            SkDEBUGCODE((*dst)->validate();)
+-        }
+-        return;
+-    }
+-
+-    sk_sp<const SkPathRef> srcKeepAlive;
+-    if (!(*dst)->unique()) {
+-        // If dst and src are the same then we are about to drop our only ref on the common path
+-        // ref. Some other thread may have owned src when we checked unique() above but it may not
+-        // continue to do so. Add another ref so we continue to be an owner until we're done.
+-        if (dst->get() == &src) {
+-            srcKeepAlive.reset(SkRef(&src));
+-        }
+-        dst->reset(new SkPathRef);
+-    }
+-
+-    if (dst->get() != &src) {
+-        (*dst)->fVerbs = src.fVerbs;
+-        (*dst)->fConicWeights = src.fConicWeights;
+-        (*dst)->callGenIDChangeListeners();
+-        (*dst)->fGenerationID = 0;  // mark as dirty
+-        // don't copy, just allocate the points
+-        (*dst)->fPoints.resize(src.fPoints.size());
+-    }
+-    matrix.mapPoints((*dst)->fPoints, src.fPoints);
+-
+-    // Need to check this here in case (&src == dst)
+-    bool canXformBounds = !src.fBoundsIsDirty && matrix.rectStaysRect() && src.countPoints() > 1;
+-
+-    /*
+-     *  Here we optimize the bounds computation, by noting if the bounds are
+-     *  already known, and if so, we just transform those as well and mark
+-     *  them as "known", rather than force the transformed path to have to
+-     *  recompute them.
+-     *
+-     *  Special gotchas if the path is effectively empty (<= 1 point) or
+-     *  if it is non-finite. In those cases bounds need to stay empty,
+-     *  regardless of the matrix.
+-     */
+-    if (canXformBounds) {
+-        (*dst)->fBoundsIsDirty = false;
+-        if (src.fIsFinite) {
+-            matrix.mapRect(&(*dst)->fBounds, src.fBounds);
+-            if (!((*dst)->fIsFinite = (*dst)->fBounds.isFinite())) {
+-                (*dst)->fBounds.setEmpty();
+-            }
+-        } else {
+-            (*dst)->fIsFinite = false;
+-            (*dst)->fBounds.setEmpty();
+-        }
+-    } else {
+-        (*dst)->fBoundsIsDirty = true;
+-    }
+-
+-    (*dst)->fSegmentMask = src.fSegmentMask;
+-
+-    // It's an oval/rrect only if rect stays rect.
+-    const SkPathIsAType newType = matrix.rectStaysRect() ? src.fType : SkPathIsAType::kGeneral;
+-
+-    (*dst)->fType = newType;
+-    if (newType == SkPathIsAType::kOval || newType == SkPathIsAType::kRRect) {
+-        auto [dir, start] =
+-        SkPathPriv::TransformDirAndStart(matrix, newType == SkPathIsAType::kRRect,
+-                                         src.fIsA.fDirection, src.fIsA.fStartIndex);
+-        (*dst)->fIsA.fDirection  = dir;
+-        (*dst)->fIsA.fStartIndex = start;
+-    }
+-
+-    if (dst->get() == &src) {
+-        (*dst)->callGenIDChangeListeners();
+-        (*dst)->fGenerationID = 0;
+-    }
+-
+-    SkDEBUGCODE((*dst)->validate();)
+-}
+-
+-void SkPathRef::Rewind(sk_sp<SkPathRef>* pathRef) {
+-    if ((*pathRef)->unique()) {
+-        SkDEBUGCODE((*pathRef)->validate();)
+-        (*pathRef)->callGenIDChangeListeners();
+-        (*pathRef)->fBoundsIsDirty = true;  // this also invalidates fIsFinite
+-        (*pathRef)->fGenerationID = 0;
+-        (*pathRef)->fPoints.clear();
+-        (*pathRef)->fVerbs.clear();
+-        (*pathRef)->fConicWeights.clear();
+-        (*pathRef)->fSegmentMask = 0;
+-        (*pathRef)->fType = SkPathIsAType::kGeneral;
+-        SkDEBUGCODE((*pathRef)->validate();)
+-    } else {
+-        int oldVCnt = (*pathRef)->countVerbs();
+-        int oldPCnt = (*pathRef)->countPoints();
+-        pathRef->reset(new SkPathRef);
+-        (*pathRef)->resetToSize(0, 0, 0, oldVCnt, oldPCnt);
+-    }
+-}
+-
+-bool SkPathRef::operator== (const SkPathRef& ref) const {
+-    SkDEBUGCODE(this->validate();)
+-    SkDEBUGCODE(ref.validate();)
+-
+-    // We explicitly check fSegmentMask as a quick-reject. We could skip it,
+-    // since it is only a cache of info in the fVerbs, but its a fast way to
+-    // notice a difference
+-    if (fSegmentMask != ref.fSegmentMask) {
+-        return false;
+-    }
+-
+-    bool genIDMatch = fGenerationID && fGenerationID == ref.fGenerationID;
+-#ifdef SK_RELEASE
+-    if (genIDMatch) {
+-        return true;
+-    }
+-#endif
+-    if (fPoints != ref.fPoints || fConicWeights != ref.fConicWeights || fVerbs != ref.fVerbs) {
+-        SkASSERT(!genIDMatch);
+-        return false;
+-    }
+-    if (ref.fVerbs.empty()) {
+-        SkASSERT(ref.fPoints.empty());
+-    }
+-    return true;
+-}
+-
+-void SkPathRef::copy(const SkPathRef& ref,
+-                     int additionalReserveVerbs,
+-                     int additionalReservePoints,
+-                     int additionalReserveConics) {
+-    SkDEBUGCODE(this->validate();)
+-    this->resetToSize(ref.fVerbs.size(), ref.fPoints.size(), ref.fConicWeights.size(),
+-                      additionalReserveVerbs, additionalReservePoints, additionalReserveConics);
+-    fVerbs = ref.fVerbs;
+-    fPoints = ref.fPoints;
+-    fConicWeights = ref.fConicWeights;
+-    fBoundsIsDirty = ref.fBoundsIsDirty;
+-    if (!fBoundsIsDirty) {
+-        fBounds = ref.fBounds;
+-        fIsFinite = ref.fIsFinite;
+-    }
+-    fSegmentMask = ref.fSegmentMask;
+-    fType = ref.fType;
+-    fIsA  = ref.fIsA;
+-    SkDEBUGCODE(this->validate();)
+-}
+-
+-std::tuple<SkPoint*, SkScalar*> SkPathRef::growForVerbsInPath(const SkPathRef& path) {
+-    SkDEBUGCODE(this->validate();)
+-
+-    fSegmentMask |= path.fSegmentMask;
+-    fBoundsIsDirty = true;  // this also invalidates fIsFinite
+-    fType = SkPathIsAType::kGeneral;
+-
+-    if (int numVerbs = path.countVerbs()) {
+-        memcpy(fVerbs.push_back_n(numVerbs), path.fVerbs.begin(), numVerbs * sizeof(fVerbs[0]));
+-    }
+-
+-    SkPoint* pts = nullptr;
+-    if (int numPts = path.countPoints()) {
+-        pts = fPoints.push_back_n(numPts);
+-    }
+-
+-    SkScalar* weights = nullptr;
+-    if (int numConics = path.countWeights()) {
+-        weights = fConicWeights.push_back_n(numConics);
+-    }
+-
+-    SkDEBUGCODE(this->validate();)
+-    return {pts, weights};
+-}
+-
+-SkPoint* SkPathRef::growForRepeatedVerb(SkPathVerb verb,
+-                                        int numVbs,
+-                                        SkScalar** weights) {
+-    SkDEBUGCODE(this->validate();)
+-    int pCnt = 0;
+-    switch (verb) {
+-        case SkPathVerb::kMove:
+-            pCnt = numVbs;
+-            break;
+-        case SkPathVerb::kLine:
+-            fSegmentMask |= SkPath::kLine_SegmentMask;
+-            pCnt = numVbs;
+-            break;
+-        case SkPathVerb::kQuad:
+-            fSegmentMask |= SkPath::kQuad_SegmentMask;
+-            pCnt = 2 * numVbs;
+-            break;
+-        case SkPathVerb::kConic:
+-            fSegmentMask |= SkPath::kConic_SegmentMask;
+-            pCnt = 2 * numVbs;
+-            break;
+-        case SkPathVerb::kCubic:
+-            fSegmentMask |= SkPath::kCubic_SegmentMask;
+-            pCnt = 3 * numVbs;
+-            break;
+-        case SkPathVerb::kClose:
+-            SkDEBUGFAIL("growForRepeatedVerb called for kClose");
+-            pCnt = 0;
+-            break;
+-    }
+-
+-    fBoundsIsDirty = true;  // this also invalidates fIsFinite
+-    fType = SkPathIsAType::kGeneral;
+-
+-    memset(fVerbs.push_back_n(numVbs), (uint8_t)verb, numVbs);
+-    if (SkPathVerb::kConic == verb) {
+-        SkASSERT(weights);
+-        *weights = fConicWeights.push_back_n(numVbs);
+-    }
+-    SkPoint* pts = fPoints.push_back_n(pCnt);
+-
+-    SkDEBUGCODE(this->validate();)
+-    return pts;
+-}
+-
+-SkPoint* SkPathRef::growForVerb(SkPathVerb verb, SkScalar weight) {
+-    SkDEBUGCODE(this->validate();)
+-    int pCnt = 0;
+-    unsigned mask = 0;
+-    switch (verb) {
+-        case SkPathVerb::kMove:
+-            pCnt = 1;
+-            break;
+-        case SkPathVerb::kLine:
+-            mask = SkPath::kLine_SegmentMask;
+-            pCnt = 1;
+-            break;
+-        case SkPathVerb::kQuad:
+-            mask = SkPath::kQuad_SegmentMask;
+-            pCnt = 2;
+-            break;
+-        case SkPathVerb::kConic:
+-            mask = SkPath::kConic_SegmentMask;
+-            pCnt = 2;
+-            break;
+-        case SkPathVerb::kCubic:
+-            mask = SkPath::kCubic_SegmentMask;
+-            pCnt = 3;
+-            break;
+-        case SkPathVerb::kClose:
+-            pCnt = 0;
+-            break;
+-    }
+-
+-    fSegmentMask |= mask;
+-    fBoundsIsDirty = true;  // this also invalidates fIsFinite
+-    fType = SkPathIsAType::kGeneral;
+-
+-    fVerbs.push_back(verb);
+-    if (SkPathVerb::kConic == verb) {
+-        fConicWeights.push_back(weight);
+-    }
+-    SkPoint* pts = fPoints.push_back_n(pCnt);
+-
+-    SkDEBUGCODE(this->validate();)
+-    return pts;
+-}
+-
+-uint32_t SkPathRef::genID(SkPathFillType fillType) const {
+-    SkASSERT(fEditorsAttached.load() == 0);
+-    static const uint32_t kMask = (static_cast<int64_t>(1) << kPathRefGenIDBitCnt) - 1;
+-
+-    if (fGenerationID == 0) {
+-        if (fPoints.empty() && fVerbs.empty()) {
+-            fGenerationID = kEmptyGenID;
+-        } else {
+-            static std::atomic<uint32_t> nextID{kEmptyGenID + 1};
+-            do {
+-                fGenerationID = nextID.fetch_add(1, std::memory_order_relaxed) & kMask;
+-            } while (fGenerationID == 0 || fGenerationID == kEmptyGenID);
+-        }
+-    }
+-    #if defined(SK_BUILD_FOR_ANDROID_FRAMEWORK)
+-        SkASSERT((unsigned)fillType < (1 << (32 - kPathRefGenIDBitCnt)));
+-        fGenerationID |= static_cast<uint32_t>(fillType) << kPathRefGenIDBitCnt;
+-    #endif
+-    return fGenerationID;
+-}
+-
+-void SkPathRef::addGenIDChangeListener(sk_sp<SkIDChangeListener> listener) {
+-    if (this == gEmpty) {
+-        return;
+-    }
+-    fGenIDChangeListeners.add(std::move(listener));
+-}
+-
+-int SkPathRef::genIDChangeListenerCount() { return fGenIDChangeListeners.count(); }
+-
+-// we need to be called *before* the genID gets changed or zerod
+-void SkPathRef::callGenIDChangeListeners() {
+-    fGenIDChangeListeners.changed();
+-}
+-
+-SkRRect SkPathPriv::DeduceRRectFromContour(const SkRect& bounds, SkSpan<const SkPoint> pts,
+-                                           SkSpan<const SkPathVerb> vbs) {
+-    SkASSERT(!vbs.empty());
+-    SkASSERT(vbs.front() == SkPathVerb::kMove);
+-
+-    SkVector radii[4] = {{0, 0}, {0, 0}, {0, 0}, {0, 0}};
+-
+-    size_t ptIndex = 0;
+-    for (const SkPathVerb verb : vbs) {
+-        switch (verb) {
+-            case SkPathVerb::kMove:
+-                SkASSERT(ptIndex == 0); // we only expect 1 move
+-                ptIndex += 1;
+-                break;
+-            case SkPathVerb::kLine: {
+-                // we only expect horizontal or vertical lines
+-                SkDEBUGCODE(const SkVector delta = pts[ptIndex] - pts[ptIndex-1];)
+-                SkASSERT(delta.fX == 0 || delta.fY == 0);
+-                ptIndex += 1;
+-            } break;
+-            case SkPathVerb::kQuad:  SkASSERT(false); break;
+-            case SkPathVerb::kCubic: SkASSERT(false); break;
+-            case SkPathVerb::kConic: {
+-                SkVector v1_0 = pts[ptIndex] - pts[ptIndex - 1];
+-                SkVector v2_1 = pts[ptIndex + 1] - pts[ptIndex];
+-                SkVector dxdy;
+-                if (v1_0.fX) {
+-                    SkASSERT(!v2_1.fX && !v1_0.fY);
+-                    dxdy.set(SkScalarAbs(v1_0.fX), SkScalarAbs(v2_1.fY));
+-                } else if (!v1_0.fY) {
+-                    SkASSERT(!v2_1.fX || !v2_1.fY);
+-                    dxdy.set(SkScalarAbs(v2_1.fX), SkScalarAbs(v2_1.fY));
+-                } else {
+-                    SkASSERT(!v2_1.fY);
+-                    dxdy.set(SkScalarAbs(v2_1.fX), SkScalarAbs(v1_0.fY));
+-                }
+-                SkRRect::Corner corner =
+-                    pts[ptIndex].fX == bounds.fLeft ?
+-                        pts[ptIndex].fY == bounds.fTop ?
+-                            SkRRect::kUpperLeft_Corner : SkRRect::kLowerLeft_Corner :
+-                        pts[ptIndex].fY == bounds.fTop ?
+-                            SkRRect::kUpperRight_Corner : SkRRect::kLowerRight_Corner;
+-                SkASSERT(!radii[corner].fX && !radii[corner].fY);
+-                radii[corner] = dxdy;
+-                ptIndex += 2;
+-            } break;
+-            case SkPathVerb::kClose:
+-                break;
+-        }
+-    }
+-    SkRRect rrect;
+-    rrect.setRectRadii(bounds, radii);
+-    return rrect;
+-}
+-
+-std::optional<SkPathRRectInfo> SkPathRef::isRRect() const {
+-    if (fType == SkPathIsAType::kRRect) {
+-        return {{
+-            SkPathPriv::DeduceRRectFromContour(this->getBounds(), this->pointSpan(), this->verbs()),
+-            fIsA.fDirection,
+-            fIsA.fStartIndex,
+-        }};
+-    }
+-    return {};
+-}
+-
+-///////////////////////////////////////////////////////////////////////////////
+-
+-bool SkPathRef::isValid() const {
+-    switch (fType) {
+-        case SkPathIsAType::kGeneral:
+-            break;
+-        case SkPathIsAType::kOval:
+-            if (fIsA.fStartIndex >= 4) {
+-                return false;
+-            }
+-            break;
+-        case SkPathIsAType::kRRect:
+-            if (fIsA.fStartIndex >= 8) {
+-                return false;
+-            }
+-            break;
+-    }
+-
+-    if (!fBoundsIsDirty && !fBounds.isEmpty()) {
+-        bool isFinite = true;
+-        auto leftTop = skvx::float2(fBounds.fLeft, fBounds.fTop);
+-        auto rightBot = skvx::float2(fBounds.fRight, fBounds.fBottom);
+-        for (int i = 0; i < fPoints.size(); ++i) {
+-            auto point = skvx::float2(fPoints[i].fX, fPoints[i].fY);
+-#ifdef SK_DEBUG
+-            if (fPoints[i].isFinite() && (any(point < leftTop)|| any(point > rightBot))) {
+-                SkDebugf("bad SkPathRef bounds: %g %g %g %g\n",
+-                         fBounds.fLeft, fBounds.fTop, fBounds.fRight, fBounds.fBottom);
+-                for (int j = 0; j < fPoints.size(); ++j) {
+-                    if (i == j) {
+-                        SkDebugf("*** bounds do not contain: ");
+-                    }
+-                    SkDebugf("%g %g\n", fPoints[j].fX, fPoints[j].fY);
+-                }
+-                return false;
+-            }
+-#endif
+-
+-            if (fPoints[i].isFinite() && any(point < leftTop) && !any(point > rightBot))
+-                return false;
+-            if (!fPoints[i].isFinite()) {
+-                isFinite = false;
+-            }
+-        }
+-        if (SkToBool(fIsFinite) != isFinite) {
+-            return false;
+-        }
+-    }
+-    return true;
+-}
+-
+-void SkPathRef::reset() {
+-    commonReset();
+-    fPoints.clear();
+-    fVerbs.clear();
+-    fConicWeights.clear();
+-    SkDEBUGCODE(validate();)
+-}
+-
+-bool SkPathRef::dataMatchesVerbs() const {
+-    const auto info = SkPathPriv::AnalyzeVerbs(fVerbs);
+-    return info.valid                          &&
+-           info.segmentMask == fSegmentMask    &&
+-           info.points      == (size_t)fPoints.size()  &&
+-           info.weights     == (size_t)fConicWeights.size();
+-}
+diff --git a/src/core/SkPath_editing.cpp b/src/core/SkPath_editing.cpp
+deleted file mode 100644
+index b4f67d7cde..0000000000
+--- a/src/core/SkPath_editing.cpp
++++ /dev/null
+@@ -1,990 +0,0 @@
+-/*
+- * Copyright 2006 The Android Open Source Project
+- *
+- * Use of this source code is governed by a BSD-style license that can be
+- * found in the LICENSE file.
+- */
+-
+-#include "include/core/SkPath.h"
+-
+-#include "include/core/SkArc.h"
+-#include "include/core/SkPathBuilder.h"
+-#include "include/core/SkPathTypes.h"
+-#include "include/core/SkRRect.h"
+-#include "include/core/SkSpan.h"
+-#include "include/core/SkStream.h"
+-#include "include/core/SkString.h"
+-#include "include/private/SkPathRef.h"
+-#include "include/private/base/SkFloatingPoint.h"
+-#include "include/private/base/SkMalloc.h"
+-#include "include/private/base/SkTArray.h"
+-#include "include/private/base/SkTDArray.h"
+-#include "include/private/base/SkTo.h"
+-#include "src/base/SkFloatBits.h"
+-#include "src/base/SkVx.h"
+-#include "src/core/SkCubicClipper.h"
+-#include "src/core/SkEdgeClipper.h"
+-#include "src/core/SkGeometry.h"
+-#include "src/core/SkMatrixPriv.h"
+-#include "src/core/SkPathEnums.h"
+-#include "src/core/SkPathPriv.h"
+-#include "src/core/SkPathRawShapes.h"
+-#include "src/core/SkPointPriv.h"
+-#include "src/core/SkStringUtils.h"
+-
+-#include <algorithm>
+-#include <cmath>
+-#include <cstring>
+-#include <limits.h>
+-#include <utility>
+-
+-class [[nodiscard]] SkAutoAddSimpleShape {
+-public:
+-    SkAutoAddSimpleShape(SkPath* path, SkPathDirection dir)
+-        : fPath(path)
+-        , fDirection(dir)
+-    {
+-        fIsEffectivelyEmpty = SkPathPriv::IsEffectivelyEmpty(*path);
+-    }
+-
+-    ~SkAutoAddSimpleShape() {
+-        fPath->setConvexity(fIsEffectivelyEmpty ? SkPathDirection_ToConvexity(fDirection)
+-                                                : SkPathConvexity::kUnknown);
+-    }
+-
+-private:
+-    SkPath*         fPath;
+-    bool            fIsEffectivelyEmpty;
+-    SkPathDirection fDirection;
+-};
+-
+-////////////////////////////////////////////////////////////////////////////
+-
+-#ifndef SK_HIDE_PATH_EDIT_METHODS
+-
+-SkPath& SkPath::rewind() {
+-    SkDEBUGCODE(this->validate();)
+-
+-    SkPathRef::Rewind(&fPathRef);
+-    this->resetFields();
+-    return *this;
+-}
+-
+-/*
+-    Stores the verbs and points as they are given to us, with exceptions:
+-    - we only record "Close" if it was immediately preceeded by Move | Line | Quad | Cubic
+-    - we insert a Move(0,0) if Line | Quad | Cubic is our first command
+-
+-    The iterator does more cleanup, especially if forceClose == true
+-    1. If we encounter degenerate segments, remove them
+-    2. if we encounter Close, return a cons'd up Line() first (if the curr-pt != start-pt)
+-    3. if we encounter Move without a preceeding Close, and forceClose is true, goto #2
+-    4. if we encounter Line | Quad | Cubic after Close, cons up a Move
+-*/
+-
+-SkPath& SkPath::moveTo(SkScalar x, SkScalar y) {
+-    SkDEBUGCODE(this->validate();)
+-
+-    SkPathRef::Editor ed(&fPathRef);
+-
+-    if (!fPathRef->fVerbs.empty() && fPathRef->fVerbs.back() == SkPathVerb::kMove) {
+-        fPathRef->fPoints.back() = {x, y};
+-    } else {
+-        // remember our index
+-        fLastMoveToIndex = fPathRef->countPoints();
+-
+-        ed.growForVerb(SkPathVerb::kMove)->set(x, y);
+-    }
+-
+-    return this->dirtyAfterEdit();
+-}
+-
+-SkPath& SkPath::rMoveTo(SkScalar x, SkScalar y) {
+-    SkPoint pt = {0,0};
+-    int count = fPathRef->countPoints();
+-    if (count > 0) {
+-        if (fLastMoveToIndex >= 0) {
+-            pt = fPathRef->atPoint(count - 1);
+-        } else {
+-            pt = fPathRef->atPoint(~fLastMoveToIndex);
+-        }
+-    }
+-    return this->moveTo(pt.fX + x, pt.fY + y);
+-}
+-
+-void SkPath::injectMoveToIfNeeded() {
+-    if (fLastMoveToIndex < 0) {
+-        SkScalar x, y;
+-        if (fPathRef->countVerbs() == 0) {
+-            x = y = 0;
+-        } else {
+-            const SkPoint& pt = fPathRef->atPoint(~fLastMoveToIndex);
+-            x = pt.fX;
+-            y = pt.fY;
+-        }
+-        this->moveTo(x, y);
+-    }
+-}
+-
+-SkPath& SkPath::lineTo(SkScalar x, SkScalar y) {
+-    SkDEBUGCODE(this->validate();)
+-
+-    this->injectMoveToIfNeeded();
+-
+-    SkPathRef::Editor ed(&fPathRef);
+-    ed.growForVerb(SkPathVerb::kLine)->set(x, y);
+-
+-    return this->dirtyAfterEdit();
+-}
+-
+-SkPath& SkPath::rLineTo(SkScalar x, SkScalar y) {
+-    this->injectMoveToIfNeeded();  // This can change the result of this->getLastPt().
+-    SkPoint pt = this->getLastPt().value_or(SkPoint{0, 0});
+-    return this->lineTo(pt.fX + x, pt.fY + y);
+-}
+-
+-SkPath& SkPath::quadTo(SkScalar x1, SkScalar y1, SkScalar x2, SkScalar y2) {
+-    SkDEBUGCODE(this->validate();)
+-
+-    this->injectMoveToIfNeeded();
+-
+-    SkPathRef::Editor ed(&fPathRef);
+-    SkPoint* pts = ed.growForVerb(SkPathVerb::kQuad);
+-    pts[0].set(x1, y1);
+-    pts[1].set(x2, y2);
+-
+-    return this->dirtyAfterEdit();
+-}
+-
+-SkPath& SkPath::rQuadTo(SkScalar x1, SkScalar y1, SkScalar x2, SkScalar y2) {
+-    this->injectMoveToIfNeeded();  // This can change the result of this->getLastPt().
+-    SkPoint pt = this->getLastPt().value_or(SkPoint{0, 0});
+-    return this->quadTo(pt.fX + x1, pt.fY + y1, pt.fX + x2, pt.fY + y2);
+-}
+-
+-SkPath& SkPath::conicTo(SkScalar x1, SkScalar y1, SkScalar x2, SkScalar y2,
+-                        SkScalar w) {
+-    // check for <= 0 or NaN with this test
+-    if (!(w > 0)) {
+-        this->lineTo(x2, y2);
+-    } else if (!SkIsFinite(w)) {
+-        this->lineTo(x1, y1);
+-        this->lineTo(x2, y2);
+-    } else if (SK_Scalar1 == w) {
+-        this->quadTo(x1, y1, x2, y2);
+-    } else {
+-        SkDEBUGCODE(this->validate();)
+-
+-        this->injectMoveToIfNeeded();
+-
+-        SkPathRef::Editor ed(&fPathRef);
+-        SkPoint* pts = ed.growForVerb(SkPathVerb::kConic, w);
+-        pts[0].set(x1, y1);
+-        pts[1].set(x2, y2);
+-
+-        (void)this->dirtyAfterEdit();
+-    }
+-    return *this;
+-}
+-
+-SkPath& SkPath::rConicTo(SkScalar dx1, SkScalar dy1, SkScalar dx2, SkScalar dy2,
+-                         SkScalar w) {
+-    this->injectMoveToIfNeeded();  // This can change the result of this->getLastPt().
+-    SkPoint pt = this->getLastPt().value_or(SkPoint{0, 0});
+-    return this->conicTo(pt.fX + dx1, pt.fY + dy1, pt.fX + dx2, pt.fY + dy2, w);
+-}
+-
+-SkPath& SkPath::cubicTo(SkScalar x1, SkScalar y1, SkScalar x2, SkScalar y2,
+-                        SkScalar x3, SkScalar y3) {
+-    SkDEBUGCODE(this->validate();)
+-
+-    this->injectMoveToIfNeeded();
+-
+-    SkPathRef::Editor ed(&fPathRef);
+-    SkPoint* pts = ed.growForVerb(SkPathVerb::kCubic);
+-    pts[0].set(x1, y1);
+-    pts[1].set(x2, y2);
+-    pts[2].set(x3, y3);
+-
+-    return this->dirtyAfterEdit();
+-}
+-
+-SkPath& SkPath::rCubicTo(SkScalar x1, SkScalar y1, SkScalar x2, SkScalar y2,
+-                         SkScalar x3, SkScalar y3) {
+-    this->injectMoveToIfNeeded();  // This can change the result of this->getLastPt().
+-    SkPoint pt = this->getLastPt().value_or(SkPoint{0, 0});
+-    return this->cubicTo(pt.fX + x1, pt.fY + y1, pt.fX + x2, pt.fY + y2,
+-                         pt.fX + x3, pt.fY + y3);
+-}
+-
+-SkPath& SkPath::close() {
+-    SkDEBUGCODE(this->validate();)
+-
+-    if (!fPathRef->verbs().empty()) {
+-        switch (fPathRef->verbs().back()) {
+-            case SkPathVerb::kLine:
+-            case SkPathVerb::kQuad:
+-            case SkPathVerb::kConic:
+-            case SkPathVerb::kCubic:
+-            case SkPathVerb::kMove: {
+-                SkPathRef::Editor ed(&fPathRef);
+-                ed.growForVerb(SkPathVerb::kClose);
+-                break;
+-            }
+-            case SkPathVerb::kClose:
+-                // don't add a close if it's the first verb or a repeat
+-                break;
+-        }
+-    }
+-
+-    // signal that we need a moveTo to follow us (unless we're done)
+-#if 0
+-    if (fLastMoveToIndex >= 0) {
+-        fLastMoveToIndex = ~fLastMoveToIndex;
+-    }
+-#else
+-    fLastMoveToIndex ^= ~fLastMoveToIndex >> (8 * sizeof(fLastMoveToIndex) - 1);
+-#endif
+-    return *this;
+-}
+-
+-///////////////////////////////////////////////////////////////////////////////
+-
+-static void assert_known_direction(SkPathDirection dir) {
+-    SkASSERT(SkPathDirection::kCW == dir || SkPathDirection::kCCW == dir);
+-}
+-
+-SkPath& SkPath::addRect(const SkRect &rect, SkPathDirection dir, unsigned startIndex) {
+-    assert_known_direction(dir);
+-
+-    SkAutoAddSimpleShape addc(this, dir);
+-
+-    this->addRaw(SkPathRawShapes::Rect(rect, dir, startIndex));
+-
+-    return *this;
+-}
+-
+-SkPath& SkPath::addPoly(SkSpan<const SkPoint> pts, bool close) {
+-    SkDEBUGCODE(this->validate();)
+-    if (pts.empty()) {
+-        return *this;
+-    }
+-    const int count = SkToInt(pts.size());
+-
+-    fLastMoveToIndex = fPathRef->countPoints();
+-
+-    // +close makes room for the extra SkPathVerb::kClose
+-    SkPathRef::Editor ed(&fPathRef, count+close, count);
+-
+-    ed.growForVerb(SkPathVerb::kMove)->set(pts[0].fX, pts[0].fY);
+-    if (count > 1) {
+-        SkPoint* p = ed.growForRepeatedVerb(SkPathVerb::kLine, count - 1);
+-        memcpy(p, &pts[1], (count-1) * sizeof(SkPoint));
+-    }
+-
+-    if (close) {
+-        ed.growForVerb(SkPathVerb::kClose);
+-        fLastMoveToIndex ^= ~fLastMoveToIndex >> (8 * sizeof(fLastMoveToIndex) - 1);
+-    }
+-
+-    (void)this->dirtyAfterEdit();
+-    SkDEBUGCODE(this->validate();)
+-    return *this;
+-}
+-
+-void SkPath::addRaw(const SkPathRaw& raw) {
+-    this->incReserve(raw.points().size(), raw.verbs().size());
+-
+-    for (auto iter = raw.iter(); auto rec = iter.next();) {
+-        const auto pts = rec->fPoints;
+-        switch (rec->fVerb) {
+-            case SkPathVerb::kMove:  this->moveTo( pts[0]); break;
+-            case SkPathVerb::kLine:  this->lineTo( pts[1]); break;
+-            case SkPathVerb::kQuad:  this->quadTo( pts[1], pts[2]); break;
+-            case SkPathVerb::kConic: this->conicTo(pts[1], pts[2], rec->fConicWeight); break;
+-            case SkPathVerb::kCubic: this->cubicTo(pts[1], pts[2], pts[3]); break;
+-            case SkPathVerb::kClose: this->close(); break;
+-        }
+-    }
+-}
+-
+-static bool arc_is_lone_point(const SkRect& oval, SkScalar startAngle, SkScalar sweepAngle,
+-                              SkPoint* pt) {
+-    if (0 == sweepAngle && (0 == startAngle || SkIntToScalar(360) == startAngle)) {
+-        // Chrome uses this path to move into and out of ovals. If not
+-        // treated as a special case the moves can distort the oval's
+-        // bounding box (and break the circle special case).
+-        pt->set(oval.fRight, oval.centerY());
+-        return true;
+-    } else if (0 == oval.width() && 0 == oval.height()) {
+-        // Chrome will sometimes create 0 radius round rects. Having degenerate
+-        // quad segments in the path prevents the path from being recognized as
+-        // a rect.
+-        // TODO: optimizing the case where only one of width or height is zero
+-        // should also be considered. This case, however, doesn't seem to be
+-        // as common as the single point case.
+-        pt->set(oval.fRight, oval.fTop);
+-        return true;
+-    }
+-    return false;
+-}
+-
+-// Return the unit vectors pointing at the start/stop points for the given start/sweep angles
+-//
+-static void angles_to_unit_vectors(SkScalar startAngle, SkScalar sweepAngle,
+-                                   SkVector* startV, SkVector* stopV, SkPathDirection* dir) {
+-    SkScalar startRad = SkDegreesToRadians(startAngle),
+-             stopRad  = SkDegreesToRadians(startAngle + sweepAngle);
+-
+-    startV->fY = SkScalarSinSnapToZero(startRad);
+-    startV->fX = SkScalarCosSnapToZero(startRad);
+-    stopV->fY = SkScalarSinSnapToZero(stopRad);
+-    stopV->fX = SkScalarCosSnapToZero(stopRad);
+-
+-    /*  If the sweep angle is nearly (but less than) 360, then due to precision
+-     loss in radians-conversion and/or sin/cos, we may end up with coincident
+-     vectors, which will fool SkBuildQuadArc into doing nothing (bad) instead
+-     of drawing a nearly complete circle (good).
+-     e.g. canvas.drawArc(0, 359.99, ...)
+-     -vs- canvas.drawArc(0, 359.9, ...)
+-     We try to detect this edge case, and tweak the stop vector
+-     */
+-    if (*startV == *stopV) {
+-        SkScalar sw = SkScalarAbs(sweepAngle);
+-        if (sw < SkIntToScalar(360) && sw > SkIntToScalar(359)) {
+-            // make a guess at a tiny angle (in radians) to tweak by
+-            SkScalar deltaRad = SkScalarCopySign(SK_Scalar1/512, sweepAngle);
+-            // not sure how much will be enough, so we use a loop
+-            do {
+-                stopRad -= deltaRad;
+-                stopV->fY = SkScalarSinSnapToZero(stopRad);
+-                stopV->fX = SkScalarCosSnapToZero(stopRad);
+-            } while (*startV == *stopV);
+-        }
+-    }
+-    *dir = sweepAngle > 0 ? SkPathDirection::kCW : SkPathDirection::kCCW;
+-}
+-
+-/**
+- *  If this returns 0, then the caller should just line-to the singlePt, else it should
+- *  ignore singlePt and append the specified number of conics.
+- */
+-static int build_arc_conics(const SkRect& oval, const SkVector& start, const SkVector& stop,
+-                            SkPathDirection dir, SkConic conics[SkConic::kMaxConicsForArc],
+-                            SkPoint* singlePt) {
+-    SkMatrix    matrix;
+-
+-    matrix.setScale(SkScalarHalf(oval.width()), SkScalarHalf(oval.height()));
+-    matrix.postTranslate(oval.centerX(), oval.centerY());
+-
+-    int count = SkConic::BuildUnitArc(start, stop, dir, &matrix, conics);
+-    if (0 == count) {
+-        *singlePt = matrix.mapPoint(stop);
+-    }
+-    return count;
+-}
+-
+-SkPath& SkPath::addRoundRect(const SkRect& rect, SkSpan<const SkScalar> radii,
+-                             SkPathDirection dir) {
+-    SkASSERT(radii.size() >= 8);
+-    SkRRect rrect;
+-    rrect.setRectRadii(rect, (const SkVector*) radii.data());
+-    return this->addRRect(rrect, dir);
+-}
+-
+-SkPath& SkPath::addRRect(const SkRRect& rrect, SkPathDirection dir) {
+-    // legacy start indices: 6 (CW) and 7(CCW)
+-    return this->addRRect(rrect, dir, dir == SkPathDirection::kCW ? 6 : 7);
+-}
+-
+-SkPath& SkPath::addRRect(const SkRRect &rrect, SkPathDirection dir, unsigned startIndex) {
+-    assert_known_direction(dir);
+-
+-    bool isRRect = hasOnlyMoveTos();
+-    const SkRect& bounds = rrect.getBounds();
+-
+-    if (rrect.isRect() || rrect.isEmpty()) {
+-        // degenerate(rect) => radii points are collapsing
+-        this->addRect(bounds, dir, (startIndex + 1) / 2);
+-    } else if (rrect.isOval()) {
+-        // degenerate(oval) => line points are collapsing
+-        this->addOval(bounds, dir, startIndex / 2);
+-    } else {
+-        SkAutoAddSimpleShape addc(this, dir);
+-
+-        this->addRaw(SkPathRawShapes::RRect(rrect, dir, startIndex));
+-
+-        if (isRRect) {
+-            SkPathRef::Editor ed(&fPathRef);
+-            ed.setIsRRect(dir, startIndex % 8);
+-        }
+-    }
+-
+-    SkDEBUGCODE(fPathRef->validate();)
+-    return *this;
+-}
+-
+-SkPath& SkPath::addRoundRect(const SkRect& rect, SkScalar rx, SkScalar ry,
+-                             SkPathDirection dir) {
+-    assert_known_direction(dir);
+-
+-    if (rx < 0 || ry < 0) {
+-        return *this;
+-    }
+-
+-    SkRRect rrect;
+-    rrect.setRectXY(rect, rx, ry);
+-    return this->addRRect(rrect, dir);
+-}
+-
+-SkPath& SkPath::addOval(const SkRect& oval, SkPathDirection dir) {
+-    // legacy start index: 1
+-    return this->addOval(oval, dir, 1);
+-}
+-
+-SkPath& SkPath::addOval(const SkRect &oval, SkPathDirection dir, unsigned startPointIndex) {
+-    assert_known_direction(dir);
+-
+-    /* If addOval() is called after previous moveTo(),
+-       this path is still marked as an oval. This is used to
+-       fit into WebKit's calling sequences.
+-       We can't simply check isEmpty() in this case, as additional
+-       moveTo() would mark the path non empty.
+-     */
+-    bool isOval = hasOnlyMoveTos();
+-
+-    SkAutoAddSimpleShape addc(this, dir);
+-
+-    this->addRaw(SkPathRawShapes::Oval(oval, dir, startPointIndex));
+-
+-    if (isOval) {
+-        SkPathRef::Editor ed(&fPathRef);
+-        ed.setIsOval(dir, startPointIndex % 4);
+-    }
+-    return *this;
+-}
+-
+-SkPath& SkPath::addCircle(SkScalar x, SkScalar y, SkScalar r, SkPathDirection dir) {
+-    if (r > 0) {
+-        this->addOval(SkRect::MakeLTRB(x - r, y - r, x + r, y + r), dir);
+-    }
+-    return *this;
+-}
+-
+-SkPath& SkPath::arcTo(const SkRect& oval, SkScalar startAngle, SkScalar sweepAngle,
+-                      bool forceMoveTo) {
+-    if (oval.width() < 0 || oval.height() < 0) {
+-        return *this;
+-    }
+-
+-    startAngle = SkScalarMod(startAngle, 360.0f);
+-
+-    if (fPathRef->countVerbs() == 0) {
+-        forceMoveTo = true;
+-    }
+-
+-    SkPoint lonePt;
+-    if (arc_is_lone_point(oval, startAngle, sweepAngle, &lonePt)) {
+-        return forceMoveTo ? this->moveTo(lonePt) : this->lineTo(lonePt);
+-    }
+-
+-    SkVector startV, stopV;
+-    SkPathDirection dir;
+-    angles_to_unit_vectors(startAngle, sweepAngle, &startV, &stopV, &dir);
+-
+-    SkPoint singlePt;
+-
+-    // Adds a move-to to 'pt' if forceMoveTo is true. Otherwise a lineTo unless we're sufficiently
+-    // close to 'pt' currently. This prevents spurious lineTos when adding a series of contiguous
+-    // arcs from the same oval.
+-    auto addPt = [&forceMoveTo, this](const SkPoint& pt) {
+-        if (forceMoveTo) {
+-            this->moveTo(pt);
+-        } else {
+-            auto lastPt = this->getLastPt();
+-            if (!lastPt ||
+-                !SkScalarNearlyEqual(lastPt->fX, pt.fX) ||
+-                !SkScalarNearlyEqual(lastPt->fY, pt.fY)) {
+-                this->lineTo(pt);
+-            }
+-        }
+-    };
+-
+-    // At this point, we know that the arc is not a lone point, but startV == stopV
+-    // indicates that the sweepAngle is too small such that angles_to_unit_vectors
+-    // cannot handle it.
+-    if (startV == stopV) {
+-        SkScalar endAngle = SkDegreesToRadians(startAngle + sweepAngle);
+-        SkScalar radiusX = oval.width() / 2;
+-        SkScalar radiusY = oval.height() / 2;
+-        // We do not use SkScalar[Sin|Cos]SnapToZero here. When sin(startAngle) is 0 and sweepAngle
+-        // is very small and radius is huge, the expected behavior here is to draw a line. But
+-        // calling SkScalarSinSnapToZero will make sin(endAngle) be 0 which will then draw a dot.
+-        singlePt.set(oval.centerX() + radiusX * SkScalarCos(endAngle),
+-                     oval.centerY() + radiusY * SkScalarSin(endAngle));
+-        addPt(singlePt);
+-        return *this;
+-    }
+-
+-    SkConic conics[SkConic::kMaxConicsForArc];
+-    int count = build_arc_conics(oval, startV, stopV, dir, conics, &singlePt);
+-    if (count) {
+-        // Conics take two points. Add one to the verb in case there is a moveto.
+-        this->incReserve(count * 2 + 1, count + 1, count);
+-        const SkPoint& pt = conics[0].fPts[0];
+-        addPt(pt);
+-        for (int i = 0; i < count; ++i) {
+-            this->conicTo(conics[i].fPts[1], conics[i].fPts[2], conics[i].fW);
+-        }
+-    } else {
+-        addPt(singlePt);
+-    }
+-    return *this;
+-}
+-
+-// This converts the SVG arc to conics.
+-// Partly adapted from Niko's code in kdelibs/kdecore/svgicons.
+-// Then transcribed from webkit/chrome's SVGPathNormalizer::decomposeArcToCubic()
+-// See also SVG implementation notes:
+-// http://www.w3.org/TR/SVG/implnote.html#ArcConversionEndpointToCenter
+-// Note that arcSweep bool value is flipped from the original implementation.
+-SkPath& SkPath::arcTo(SkScalar rx, SkScalar ry, SkScalar angle, SkPath::ArcSize arcLarge,
+-                      SkPathDirection arcSweep, SkScalar x, SkScalar y) {
+-    this->injectMoveToIfNeeded();
+-    SkPoint srcPts[2];
+-    srcPts[0] = *this->getLastPt();
+-    // If rx = 0 or ry = 0 then this arc is treated as a straight line segment (a "lineto")
+-    // joining the endpoints.
+-    // http://www.w3.org/TR/SVG/implnote.html#ArcOutOfRangeParameters
+-    if (!rx || !ry) {
+-        return this->lineTo(x, y);
+-    }
+-    // If the current point and target point for the arc are identical, it should be treated as a
+-    // zero length path. This ensures continuity in animations.
+-    srcPts[1].set(x, y);
+-    if (srcPts[0] == srcPts[1]) {
+-        return this->lineTo(x, y);
+-    }
+-    rx = SkScalarAbs(rx);
+-    ry = SkScalarAbs(ry);
+-    SkVector midPointDistance = srcPts[0] - srcPts[1];
+-    midPointDistance *= 0.5f;
+-
+-    SkMatrix pointTransform;
+-    pointTransform.setRotate(-angle);
+-
+-    SkPoint transformedMidPoint = pointTransform.mapPoint(midPointDistance);
+-    SkScalar squareRx = rx * rx;
+-    SkScalar squareRy = ry * ry;
+-    SkScalar squareX = transformedMidPoint.fX * transformedMidPoint.fX;
+-    SkScalar squareY = transformedMidPoint.fY * transformedMidPoint.fY;
+-
+-    // Check if the radii are big enough to draw the arc, scale radii if not.
+-    // http://www.w3.org/TR/SVG/implnote.html#ArcCorrectionOutOfRangeRadii
+-    SkScalar radiiScale = squareX / squareRx + squareY / squareRy;
+-    if (radiiScale > 1) {
+-        radiiScale = SkScalarSqrt(radiiScale);
+-        rx *= radiiScale;
+-        ry *= radiiScale;
+-    }
+-
+-    pointTransform.setScale(1 / rx, 1 / ry);
+-    pointTransform.preRotate(-angle);
+-
+-    SkPoint unitPts[2];
+-    pointTransform.mapPoints(unitPts, srcPts);
+-    SkVector delta = unitPts[1] - unitPts[0];
+-
+-    SkScalar d = delta.fX * delta.fX + delta.fY * delta.fY;
+-    SkScalar scaleFactorSquared = std::max(1 / d - 0.25f, 0.f);
+-
+-    SkScalar scaleFactor = SkScalarSqrt(scaleFactorSquared);
+-    if ((arcSweep == SkPathDirection::kCCW) != SkToBool(arcLarge)) {  // flipped from the original implementation
+-        scaleFactor = -scaleFactor;
+-    }
+-    delta.scale(scaleFactor);
+-    SkPoint centerPoint = unitPts[0] + unitPts[1];
+-    centerPoint *= 0.5f;
+-    centerPoint.offset(-delta.fY, delta.fX);
+-    unitPts[0] -= centerPoint;
+-    unitPts[1] -= centerPoint;
+-    SkScalar theta1 = SkScalarATan2(unitPts[0].fY, unitPts[0].fX);
+-    SkScalar theta2 = SkScalarATan2(unitPts[1].fY, unitPts[1].fX);
+-    SkScalar thetaArc = theta2 - theta1;
+-    if (thetaArc < 0 && (arcSweep == SkPathDirection::kCW)) {  // arcSweep flipped from the original implementation
+-        thetaArc += SK_ScalarPI * 2;
+-    } else if (thetaArc > 0 && (arcSweep != SkPathDirection::kCW)) {  // arcSweep flipped from the original implementation
+-        thetaArc -= SK_ScalarPI * 2;
+-    }
+-
+-    // Very tiny angles cause our subsequent math to go wonky (skbug.com/40040578)
+-    // so we do a quick check here. The precise tolerance amount is just made up.
+-    // PI/million happens to fix the bug in 9272, but a larger value is probably
+-    // ok too.
+-    if (SkScalarAbs(thetaArc) < (SK_ScalarPI / (1000 * 1000))) {
+-        return this->lineTo(x, y);
+-    }
+-
+-    pointTransform.setRotate(angle);
+-    pointTransform.preScale(rx, ry);
+-
+-    // the arc may be slightly bigger than 1/4 circle, so allow up to 1/3rd
+-    int segments = SkScalarCeilToInt(SkScalarAbs(thetaArc / (2 * SK_ScalarPI / 3)));
+-    SkScalar thetaWidth = thetaArc / segments;
+-    SkScalar t = SkScalarTan(0.5f * thetaWidth);
+-    if (!SkIsFinite(t)) {
+-        return *this;
+-    }
+-    SkScalar startTheta = theta1;
+-    SkScalar w = SkScalarSqrt(SK_ScalarHalf + SkScalarCos(thetaWidth) * SK_ScalarHalf);
+-    auto scalar_is_integer = [](SkScalar scalar) -> bool {
+-        return scalar == SkScalarFloorToScalar(scalar);
+-    };
+-    bool expectIntegers = SkScalarNearlyZero(SK_ScalarPI/2 - SkScalarAbs(thetaWidth)) &&
+-        scalar_is_integer(rx) && scalar_is_integer(ry) &&
+-        scalar_is_integer(x) && scalar_is_integer(y);
+-
+-    for (int i = 0; i < segments; ++i) {
+-        SkScalar endTheta    = startTheta + thetaWidth,
+-                 sinEndTheta = SkScalarSinSnapToZero(endTheta),
+-                 cosEndTheta = SkScalarCosSnapToZero(endTheta);
+-
+-        unitPts[1].set(cosEndTheta, sinEndTheta);
+-        unitPts[1] += centerPoint;
+-        unitPts[0] = unitPts[1];
+-        unitPts[0].offset(t * sinEndTheta, -t * cosEndTheta);
+-        SkPoint mapped[2];
+-        pointTransform.mapPoints(mapped, unitPts);
+-        /*
+-        Computing the arc width introduces rounding errors that cause arcs to start
+-        outside their marks. A round rect may lose convexity as a result. If the input
+-        values are on integers, place the conic on integers as well.
+-         */
+-        if (expectIntegers) {
+-            for (SkPoint& point : mapped) {
+-                point.fX = SkScalarRoundToScalar(point.fX);
+-                point.fY = SkScalarRoundToScalar(point.fY);
+-            }
+-        }
+-        this->conicTo(mapped[0], mapped[1], w);
+-        startTheta = endTheta;
+-    }
+-
+-    // The final point should match the input point (by definition); replace it to
+-    // ensure that rounding errors in the above math don't cause any problems.
+-    this->setLastPt(x, y);
+-    return *this;
+-}
+-
+-SkPath& SkPath::rArcTo(SkScalar rx, SkScalar ry, SkScalar xAxisRotate, SkPath::ArcSize largeArc,
+-                       SkPathDirection sweep, SkScalar dx, SkScalar dy) {
+-    SkPoint currentPoint = this->getLastPt().value_or(SkPoint{0, 0});
+-    return this->arcTo(rx, ry, xAxisRotate, largeArc, sweep,
+-                       currentPoint.fX + dx, currentPoint.fY + dy);
+-}
+-
+-SkPath& SkPath::addArc(const SkRect& oval, SkScalar startAngle, SkScalar sweepAngle) {
+-    if (oval.isEmpty() || 0 == sweepAngle) {
+-        return *this;
+-    }
+-
+-    const SkScalar kFullCircleAngle = SkIntToScalar(360);
+-
+-    if (sweepAngle >= kFullCircleAngle || sweepAngle <= -kFullCircleAngle) {
+-        // We can treat the arc as an oval if it begins at one of our legal starting positions.
+-        // See SkPath::addOval() docs.
+-        SkScalar startOver90 = startAngle / 90.f;
+-        SkScalar startOver90I = SkScalarRoundToScalar(startOver90);
+-        SkScalar error = startOver90 - startOver90I;
+-        if (SkScalarNearlyEqual(error, 0)) {
+-            // Index 1 is at startAngle == 0.
+-            SkScalar startIndex = std::fmod(startOver90I + 1.f, 4.f);
+-            startIndex = startIndex < 0 ? startIndex + 4.f : startIndex;
+-            return this->addOval(oval, sweepAngle > 0 ? SkPathDirection::kCW : SkPathDirection::kCCW,
+-                                 (unsigned) startIndex);
+-        }
+-    }
+-    return this->arcTo(oval, startAngle, sweepAngle, true);
+-}
+-
+-/*
+-    Need to handle the case when the angle is sharp, and our computed end-points
+-    for the arc go behind pt1 and/or p2...
+-*/
+-SkPath& SkPath::arcTo(SkScalar x1, SkScalar y1, SkScalar x2, SkScalar y2, SkScalar radius) {
+-    this->injectMoveToIfNeeded();
+-
+-    if (radius == 0) {
+-        return this->lineTo(x1, y1);
+-    }
+-
+-    // need to know our prev pt so we can construct tangent vectors
+-    SkPoint start = this->getLastPt().value_or(SkPoint{0, 0});
+-
+-    // need double precision for these calcs.
+-    skvx::double2 befored = normalize(skvx::double2{x1 - start.fX, y1 - start.fY});
+-    skvx::double2 afterd = normalize(skvx::double2{x2 - x1, y2 - y1});
+-    double cosh = dot(befored, afterd);
+-    double sinh = cross(befored, afterd);
+-
+-    // If the previous point equals the first point, befored will be denormalized.
+-    // If the two points equal, afterd will be denormalized.
+-    // If the second point equals the first point, sinh will be zero.
+-    // In all these cases, we cannot construct an arc, so we construct a line to the first point.
+-    if (!isfinite(befored) || !isfinite(afterd) || SkScalarNearlyZero(SkDoubleToScalar(sinh))) {
+-        return this->lineTo(x1, y1);
+-    }
+-
+-    // safe to convert back to floats now
+-    SkScalar dist = SkScalarAbs(SkDoubleToScalar(radius * (1 - cosh) / sinh));
+-    SkScalar xx = x1 - dist * befored[0];
+-    SkScalar yy = y1 - dist * befored[1];
+-
+-    SkVector after = SkVector::Make(afterd[0], afterd[1]);
+-    after.setLength(dist);
+-    this->lineTo(xx, yy);
+-    SkScalar weight = SkScalarSqrt(SkDoubleToScalar(SK_ScalarHalf + cosh * 0.5));
+-    return this->conicTo(x1, y1, x1 + after.fX, y1 + after.fY, weight);
+-}
+-
+-///////////////////////////////////////////////////////////////////////////////
+-
+-SkPath& SkPath::addPath(const SkPath& path, SkScalar dx, SkScalar dy, AddPathMode mode) {
+-    SkMatrix matrix;
+-
+-    matrix.setTranslate(dx, dy);
+-    return this->addPath(path, matrix, mode);
+-}
+-
+-SkPath& SkPath::addPath(const SkPath& srcPath, const SkMatrix& matrix, AddPathMode mode) {
+-    if (srcPath.isEmpty()) {
+-        return *this;
+-    }
+-
+-    const bool canReplaceThis = (mode == kAppend_AddPathMode &&
+-                                 SkPathPriv::IsEffectivelyEmpty(*this))
+-                              || this->countVerbs() == 0;
+-    if (canReplaceThis && matrix.isIdentity()) {
+-        const SkPathFillType fillType = fFillType;
+-        *this = srcPath;
+-        fFillType = fillType;
+-        return *this;
+-    }
+-
+-    // Detect if we're trying to add ourself
+-    const SkPath* src = &srcPath;
+-    std::optional<SkPath> tmp;
+-    if (this == src) {
+-        tmp = srcPath;
+-        src = &tmp.value();
+-    }
+-
+-    if (kAppend_AddPathMode == mode && !matrix.hasPerspective()) {
+-        if (src->fLastMoveToIndex >= 0) {
+-            fLastMoveToIndex = src->fLastMoveToIndex + this->countPoints();
+-        } else {
+-            fLastMoveToIndex = src->fLastMoveToIndex - this->countPoints();
+-        }
+-        SkPathRef::Editor ed(&fPathRef);
+-        auto [newPts, newWeights] = ed.growForVerbsInPath(*src->fPathRef);
+-        const size_t N = src->countPoints();
+-        matrix.mapPoints({newPts, N}, {src->fPathRef->points(), N});
+-        if (int numWeights = src->fPathRef->countWeights()) {
+-            memcpy(newWeights, src->fPathRef->conicWeights(), numWeights * sizeof(newWeights[0]));
+-        }
+-        return this->dirtyAfterEdit();
+-    }
+-
+-    SkMatrixPriv::MapPtsProc mapPtsProc = SkMatrixPriv::GetMapPtsProc(matrix);
+-    bool firstVerb = true;
+-    for (auto [verb, pts, w] : SkPathPriv::Iterate(*src)) {
+-        SkPoint mappedPts[3];
+-        switch (verb) {
+-            case SkPathVerb::kMove:
+-                mapPtsProc(matrix, mappedPts, &pts[0], 1);
+-                if (firstVerb && mode == kExtend_AddPathMode && !isEmpty()) {
+-                    injectMoveToIfNeeded(); // In case last contour is closed
+-                    auto lastPt = this->getLastPt();
+-                    // don't add lineTo if it is degenerate
+-                    if (!lastPt.has_value() || *lastPt != mappedPts[0]) {
+-                        this->lineTo(mappedPts[0]);
+-                    }
+-                } else {
+-                    this->moveTo(mappedPts[0]);
+-                }
+-                break;
+-            case SkPathVerb::kLine:
+-                mapPtsProc(matrix, mappedPts, &pts[1], 1);
+-                this->lineTo(mappedPts[0]);
+-                break;
+-            case SkPathVerb::kQuad:
+-                mapPtsProc(matrix, mappedPts, &pts[1], 2);
+-                this->quadTo(mappedPts[0], mappedPts[1]);
+-                break;
+-            case SkPathVerb::kConic:
+-                mapPtsProc(matrix, mappedPts, &pts[1], 2);
+-                this->conicTo(mappedPts[0], mappedPts[1], *w);
+-                break;
+-            case SkPathVerb::kCubic:
+-                mapPtsProc(matrix, mappedPts, &pts[1], 3);
+-                this->cubicTo(mappedPts[0], mappedPts[1], mappedPts[2]);
+-                break;
+-            case SkPathVerb::kClose:
+-                this->close();
+-                break;
+-        }
+-        firstVerb = false;
+-    }
+-    return *this;
+-}
+-
+-///////////////////////////////////////////////////////////////////////////////
+-
+-// ignore the last point of the 1st contour
+-SkPath& SkPath::reversePathTo(const SkPath& path) {
+-    if (path.fPathRef->fVerbs.empty()) {
+-        return *this;
+-    }
+-
+-    const SkPathVerb* verbs = path.fPathRef->verbsEnd();
+-    const SkPathVerb* verbsBegin = path.fPathRef->verbsBegin();
+-    SkASSERT(verbsBegin[0] == SkPathVerb::kMove);
+-    const SkPoint*  pts = path.fPathRef->pointsEnd() - 1;
+-    const SkScalar* conicWeights = path.fPathRef->conicWeightsEnd();
+-
+-    while (verbs > verbsBegin) {
+-        SkPathVerb v = *--verbs;
+-        pts -= SkPathPriv::PtsInVerb(v);
+-        switch (v) {
+-            case SkPathVerb::kMove:
+-                // if the path has multiple contours, stop after reversing the last
+-                return *this;
+-            case SkPathVerb::kLine:
+-                this->lineTo(pts[0]);
+-                break;
+-            case SkPathVerb::kQuad:
+-                this->quadTo(pts[1], pts[0]);
+-                break;
+-            case SkPathVerb::kConic:
+-                this->conicTo(pts[1], pts[0], *--conicWeights);
+-                break;
+-            case SkPathVerb::kCubic:
+-                this->cubicTo(pts[2], pts[1], pts[0]);
+-                break;
+-            case SkPathVerb::kClose:
+-                break;
+-        }
+-    }
+-    return *this;
+-}
+-
+-SkPath& SkPath::reverseAddPath(const SkPath& srcPath) {
+-    // Detect if we're trying to add ourself
+-    const SkPath* src = &srcPath;
+-    std::optional<SkPath> tmp;
+-    if (this == src) {
+-        tmp = srcPath;
+-        src = &tmp.value();
+-    }
+-
+-    const SkPathVerb* verbsBegin = src->fPathRef->verbsBegin();
+-    const SkPathVerb* verbs = src->fPathRef->verbsEnd();
+-    const SkPoint* pts = src->fPathRef->pointsEnd();
+-    const SkScalar* conicWeights = src->fPathRef->conicWeightsEnd();
+-
+-    bool needMove = true;
+-    bool needClose = false;
+-    while (verbs > verbsBegin) {
+-        SkPathVerb v = *--verbs;
+-        int n = SkPathPriv::PtsInVerb(v);
+-
+-        if (needMove) {
+-            --pts;
+-            this->moveTo(pts->fX, pts->fY);
+-            needMove = false;
+-        }
+-        pts -= n;
+-        switch (v) {
+-            case SkPathVerb::kMove:
+-                if (needClose) {
+-                    this->close();
+-                    needClose = false;
+-                }
+-                needMove = true;
+-                pts += 1;   // so we see the point in "if (needMove)" above
+-                break;
+-            case SkPathVerb::kLine:
+-                this->lineTo(pts[0]);
+-                break;
+-            case SkPathVerb::kQuad:
+-                this->quadTo(pts[1], pts[0]);
+-                break;
+-            case SkPathVerb::kConic:
+-                this->conicTo(pts[1], pts[0], *--conicWeights);
+-                break;
+-            case SkPathVerb::kCubic:
+-                this->cubicTo(pts[2], pts[1], pts[0]);
+-                break;
+-            case SkPathVerb::kClose:
+-                needClose = true;
+-                break;
+-        }
+-    }
+-    return *this;
+-}
+-
+-void SkPath::setBounds(const SkRect& rect) {
+-    SkPathRef::Editor ed(&fPathRef);
+-    ed.setBounds(rect);
+-}
+-
+-void SkPath::setPt(int index, SkScalar x, SkScalar y) {
+-    SkDEBUGCODE(this->validate();)
+-
+-    int count = fPathRef->countPoints();
+-    if (count <= index) {
+-        return;
+-    } else {
+-        SkPathRef::Editor ed(&fPathRef);
+-        ed.atPoint(index)->set(x, y);
+-    }
+-}
+-
+-void SkPath::setLastPt(SkScalar x, SkScalar y) {
+-    SkDEBUGCODE(this->validate();)
+-
+-    int count = fPathRef->countPoints();
+-    if (count == 0) {
+-        this->moveTo(x, y);
+-    } else {
+-        SkPathRef::Editor ed(&fPathRef);
+-        ed.atPoint(count-1)->set(x, y);
+-    }
+-}
+-
+-void SkPath::incReserve(int extraPtCount, int extraVerbCount, int extraConicCount) {
+-    SkDEBUGCODE(this->validate();)
+-    if (extraPtCount > 0) {
+-        // For compat with when this function only took a single argument, use
+-        // extraPtCount if extraVerbCount is 0 (default value).
+-        SkPathRef::Editor(&fPathRef, extraVerbCount == 0 ? extraPtCount : extraVerbCount, extraPtCount, extraConicCount);
+-    }
+-    SkDEBUGCODE(this->validate();)
+-}
+-
+-SkPath& SkPath::dirtyAfterEdit() {
+-    this->setConvexity(SkPathConvexity::kUnknown);
+-
+-#ifdef SK_DEBUG
+-    // enable this as needed for testing, but it slows down some chrome tests so much
+-    // that they don't complete, so we don't enable it by default
+-    // e.g. TEST(IdentifiabilityPaintOpDigestTest, MassiveOpSkipped)
+-    if (this->countVerbs() < 16) {
+-        SkASSERT(fPathRef->dataMatchesVerbs());
+-    }
+-#endif
+-
+-    return *this;
+-}
+-
+-#endif
+diff --git a/src/core/SkPath_pathdata.cpp b/src/core/SkPath_pathdata.cpp
+index b23a91ab44..efeeb2adfc 100644
+--- a/src/core/SkPath_pathdata.cpp
++++ b/src/core/SkPath_pathdata.cpp
+@@ -19,17 +19,6 @@
+ #include <limits.h>
+ #include <utility>
+ 
+-/*  Contains path methods that require SkPathData -- not SkPathRef:
+- *
+- *  The remaining fields:
+- *  - fFillType
+- *  - fIsVolatile
+- *
+- *  ... are shared in both implemtations.
+- */
+-
+-#ifdef SK_PATH_USES_PATHDATA
+-
+ /*
+  *  This returns a singleton instance which SkPath uses to signify that its pathdata is in error:
+  *  either because the inputs were invalid (e.g. bad verbs), or its coordintes were non-finite
+@@ -123,14 +112,10 @@ bool SkPath::isFinite() const {
+ 
+ bool SkPath::isValid() const { return this->isFinite(); }
+ 
+-bool SkPath::hasComputedBounds() const { return true; }
+-
+ uint32_t SkPath::getGenerationID() const { return fPathData->uniqueID(); }
+ 
+ #ifdef SK_DEBUG
+ void SkPath::validate() const {}
+-
+-void SkPath::validateRef() const {}
+ #endif
+ 
+ std::optional<SkPathOvalInfo> SkPath::getOvalInfo() const { return fPathData->asOval(); }
+@@ -256,5 +241,3 @@ SkPath SkPathBuilder::snapshot(const SkMatrix* mx) const {
+     }
+     return SkPath::MakeNullCheck(std::move(pdata), fFillType, fIsVolatile);
+ }
+-
+-#endif
+diff --git a/src/core/SkPath_pathref.cpp b/src/core/SkPath_pathref.cpp
+deleted file mode 100644
+index 5569b705f7..0000000000
+--- a/src/core/SkPath_pathref.cpp
++++ /dev/null
+@@ -1,479 +0,0 @@
+-/*
+- * Copyright 2006 The Android Open Source Project
+- *
+- * Use of this source code is governed by a BSD-style license that can be
+- * found in the LICENSE file.
+- */
+-
+-#include "include/core/SkPath.h"
+-#include "include/core/SkPathBuilder.h"
+-#include "include/core/SkPathTypes.h"
+-#include "include/core/SkRRect.h"
+-#include "include/core/SkSpan.h"
+-#include "include/private/SkPathRef.h"
+-#include "include/private/base/SkMalloc.h"
+-#include "include/private/base/SkTArray.h"
+-#include "include/private/base/SkTo.h"
+-#include "src/core/SkGeometry.h"
+-#include "src/core/SkPathEnums.h"
+-#include "src/core/SkPathPriv.h"
+-
+-#include <algorithm>
+-#include <cmath>
+-#include <cstring>
+-#include <limits.h>
+-#include <utility>
+-
+-#ifndef SK_PATH_USES_PATHDATA
+-
+-/*  Contains path methods that require the legacy fields:
+- *  - fPathRef
+- *  - fConvexity
+- *  - fLastMoveToIndex
+- *
+- *  ... these are encompaed by SkPathData
+- *
+- *  The remaining fields:
+- *  - fFillType
+- *  - fIsVolatile
+- *
+- *  ... are shared in both implemtations.
+- */
+-
+-// flag to require a moveTo if we begin with something else, like lineTo etc.
+-// This will also be the value of lastMoveToIndex for a single contour
+-// ending with close, so countVerbs needs to be checked against 0.
+-#define INITIAL_LASTMOVETOINDEX_VALUE   ~0
+-
+-SkPath::SkPath(sk_sp<SkPathRef> pr, SkPathFillType ft, bool isVolatile, SkPathConvexity ct)
+-    : fPathRef(std::move(pr))
+-    , fLastMoveToIndex(INITIAL_LASTMOVETOINDEX_VALUE)
+-    , fConvexity((uint8_t)ct)
+-    , fFillType(ft)
+-    , fIsVolatile(isVolatile)
+-{}
+-
+-SkPath::SkPath(SkPathFillType ft)
+-    : fPathRef(SkPathRef::CreateEmpty())
+-    , fLastMoveToIndex(INITIAL_LASTMOVETOINDEX_VALUE)
+-    , fConvexity((uint8_t)SkPathConvexity::kUnknown)
+-    , fFillType(ft)
+-    , fIsVolatile(false)
+-{}
+-
+-void SkPath::resetFields() {
+-    //fPathRef is assumed to have been emptied by the caller.
+-    fLastMoveToIndex = INITIAL_LASTMOVETOINDEX_VALUE;
+-    fFillType = SkPathFillType::kDefault;
+-    this->setConvexity(SkPathConvexity::kUnknown);
+-}
+-
+-SkPath::SkPath(const SkPath& that)
+-    : fPathRef(SkRef(that.fPathRef.get())) {
+-    this->copyFields(that);
+-    SkDEBUGCODE(that.validate();)
+-}
+-
+-void SkPath::setConvexity(SkPathConvexity c) const {
+-    fConvexity.store((uint8_t)c, std::memory_order_relaxed);
+-}
+-
+-SkPathConvexity SkPath::getConvexityOrUnknown() const {
+-    return (SkPathConvexity)fConvexity.load(std::memory_order_relaxed);
+-}
+-
+-void SkPath::copyFields(const SkPath& that) {
+-    //fPathRef is assumed to have been set by the caller.
+-    fLastMoveToIndex = that.fLastMoveToIndex;
+-    fFillType        = that.fFillType;
+-    fIsVolatile      = that.fIsVolatile;
+-
+-    // Non-atomic assignment of atomic values.
+-    this->setConvexity(that.getConvexityOrUnknown());
+-}
+-
+-SkPath& SkPath::operator=(const SkPath& that) {
+-    SkDEBUGCODE(that.validate();)
+-
+-    if (this != &that) {
+-        fPathRef.reset(SkRef(that.fPathRef.get()));
+-        this->copyFields(that);
+-    }
+-    SkDEBUGCODE(this->validate();)
+-    return *this;
+-}
+-
+-bool operator==(const SkPath& a, const SkPath& b) {
+-    // note: don't need to look at isConvex or bounds, since just comparing the
+-    // raw data is sufficient.
+-    return &a == &b ||
+-        (a.fFillType == b.fFillType && *a.fPathRef == *b.fPathRef);
+-}
+-
+-void SkPath::swap(SkPath& that) {
+-    if (this != &that) {
+-        fPathRef.swap(that.fPathRef);
+-        std::swap(fLastMoveToIndex, that.fLastMoveToIndex);
+-        std::swap(fFillType, that.fFillType);
+-        std::swap(fIsVolatile, that.fIsVolatile);
+-
+-        // Non-atomic swaps of atomic values.
+-        SkPathConvexity c = this->getConvexityOrUnknown();
+-        this->setConvexity(that.getConvexityOrUnknown());
+-        that.setConvexity(c);
+-    }
+-}
+-
+-uint32_t SkPath::getGenerationID() const {
+-    return fPathRef->genID(fFillType);
+-}
+-
+-SkPath& SkPath::reset() {
+-    SkDEBUGCODE(this->validate();)
+-
+-    if (fPathRef->unique()) {
+-        fPathRef->reset();
+-    } else {
+-        fPathRef.reset(SkPathRef::CreateEmpty());
+-    }
+-    this->resetFields();
+-    return *this;
+-}
+-
+-bool SkPath::isFinite() const {
+-    SkDEBUGCODE(this->validate();)
+-    return fPathRef->isFinite();
+-}
+-
+-const SkRect& SkPath::getBounds() const {
+-    return fPathRef->getBounds();
+-}
+-
+-uint32_t SkPath::getSegmentMasks() const {
+-    return fPathRef->getSegmentMasks();
+-}
+-
+-bool SkPath::isValid() const {
+-    return this->isValidImpl() && fPathRef->isValid();
+-}
+-
+-bool SkPath::hasComputedBounds() const {
+-    SkDEBUGCODE(this->validate();)
+-    return fPathRef->hasComputedBounds();
+-}
+-
+-#ifdef SK_DEBUG
+-void SkPath::validate() const {
+-    SkASSERT(this->isValidImpl());
+-}
+-
+-void SkPath::validateRef() const {
+-    // This will SkASSERT if not valid.
+-    fPathRef->validate();
+-}
+-#endif
+-
+-std::optional<SkPathOvalInfo> SkPath::getOvalInfo() const { return fPathRef->isOval(); }
+-std::optional<SkPathRRectInfo> SkPath::getRRectInfo() const { return fPathRef->isRRect(); }
+-
+-SkSpan<const SkPoint> SkPath::points() const {
+-    return fPathRef->pointSpan();
+-}
+-SkSpan<const SkPathVerb> SkPath::verbs() const {
+-    return fPathRef->verbs();
+-}
+-SkSpan<const float> SkPath::conicWeights() const {
+-    return fPathRef->conicSpan();
+-}
+-
+-///////////////////////////////////////////////////////////////////////////////
+-
+-bool SkPath::isValidImpl() const {
+-    if ((static_cast<int>(fFillType) & ~3) != 0) {
+-        return false;
+-    }
+-
+-#ifdef SK_DEBUG_PATH
+-    if (!fBoundsIsDirty) {
+-        SkRect bounds;
+-
+-        bool isFinite = compute_pt_bounds(&bounds, *fPathRef.get());
+-        if (SkToBool(fIsFinite) != isFinite) {
+-            return false;
+-        }
+-
+-        if (this->countPoints() <= 1) {
+-            // if we're empty, fBounds may be empty but translated, so we can't
+-            // necessarily compare to bounds directly
+-            // try path.addOval(2, 2, 2, 2) which is empty, but the bounds will
+-            // be [2, 2, 2, 2]
+-            if (!bounds.isEmpty() || !fBounds.isEmpty()) {
+-                return false;
+-            }
+-        } else {
+-            if (bounds.isEmpty()) {
+-                if (!fBounds.isEmpty()) {
+-                    return false;
+-                }
+-            } else {
+-                if (!fBounds.isEmpty()) {
+-                    if (!fBounds.contains(bounds)) {
+-                        return false;
+-                    }
+-                }
+-            }
+-        }
+-    }
+-#endif // SK_DEBUG_PATH
+-    return true;
+-}
+-
+-//////////////////////////////////////////////////////////////////////////////////////////////////
+-
+-SkPath SkPath::Raw(SkSpan<const SkPoint> pts, SkSpan<const SkPathVerb> vbs,
+-                   SkSpan<const float> ws, SkPathFillType ft, bool isVolatile) {
+-    if (vbs.empty()) {
+-        return SkPath();
+-    }
+-
+-    const auto info = SkPathPriv::AnalyzeVerbs(vbs);
+-    if (!info.valid || info.points > pts.size() || info.weights > ws.size()) {
+-        SkDEBUGFAIL("invalid verbs and number of points/weights");
+-        return SkPath();
+-    }
+-
+-    return MakeInternal(info, pts.data(), vbs, ws.data(), ft, isVolatile);
+-}
+-
+-SkPath SkPath::Rect(const SkRect& r, SkPathFillType ft, SkPathDirection dir, unsigned startIndex) {
+-    return SkPathBuilder(ft).addRect(r, dir, startIndex).detach();
+-}
+-
+-SkPath SkPath::Oval(const SkRect& r, SkPathDirection dir, unsigned startIndex) {
+-    return SkPathBuilder().addOval(r, dir, startIndex).detach();
+-}
+-
+-SkPath SkPath::RRect(const SkRRect& rr, SkPathDirection dir, unsigned startIndex) {
+-    return SkPathBuilder().addRRect(rr, dir, startIndex).detach();
+-}
+-
+-SkPath SkPath::Polygon(SkSpan<const SkPoint> pts, bool isClosed,
+-                       SkPathFillType ft, bool isVolatile) {
+-    return SkPathBuilder().addPolygon(pts, isClosed)
+-                          .setFillType(ft)
+-                          .setIsVolatile(isVolatile)
+-                          .detach();
+-}
+-
+-SkPath SkPath::MakeInternal(const SkPathVerbAnalysis& analysis,
+-                            const SkPoint points[],
+-                            SkSpan<const SkPathVerb> verbs,
+-                            const SkScalar conics[],
+-                            SkPathFillType fillType,
+-                            bool isVolatile) {
+-  return SkPath(sk_sp<SkPathRef>(new SkPathRef(
+-                                     SkSpan(points, analysis.points),
+-                                     verbs,
+-                                     SkSpan(conics, analysis.weights),
+-                                     analysis.segmentMask,
+-                                     nullptr)),
+-                fillType, isVolatile, SkPathConvexity::kUnknown);
+-}
+-
+-SkPath SkPath::makeTransform(const SkMatrix& matrix) const {
+-    SkPath dst;
+-    this->transform(matrix, &dst);
+-    return dst;
+-}
+-
+-void SkPath::offset(SkScalar dx, SkScalar dy, SkPath* dst) const {
+-    SkMatrix    matrix;
+-
+-    matrix.setTranslate(dx, dy);
+-    this->transform(matrix, dst);
+-}
+-
+-static void subdivide_cubic_to(SkPathBuilder* builder, const SkPoint pts[4],
+-                               int level = 2) {
+-    if (--level >= 0) {
+-        SkPoint tmp[7];
+-
+-        SkChopCubicAtHalf(pts, tmp);
+-        subdivide_cubic_to(builder, &tmp[0], level);
+-        subdivide_cubic_to(builder, &tmp[3], level);
+-    } else {
+-        builder->cubicTo(pts[1], pts[2], pts[3]);
+-    }
+-}
+-
+-void SkPath::transform(const SkMatrix& matrix, SkPath* dst) const {
+-    if (matrix.isIdentity()) {
+-        if (dst != nullptr && dst != this) {
+-            *dst = *this;
+-        }
+-        return;
+-    }
+-
+-    SkDEBUGCODE(this->validate();)
+-    if (dst == nullptr) {
+-        dst = const_cast<SkPath*>(this);
+-    }
+-
+-    if (matrix.hasPerspective()) {
+-
+-        SkPath clipped;
+-        const SkPath* src = this;
+-        if (SkPathPriv::PerspectiveClip(*this, matrix, &clipped)) {
+-            src = &clipped;
+-        }
+-
+-        SkPathBuilder tmp(this->getFillType());
+-        SkPath::Iter iter(*src, false);
+-        while (auto rec = iter.next()) {
+-            const SkSpan<const SkPoint> pts = rec->fPoints;
+-            switch (rec->fVerb) {
+-                case SkPathVerb::kMove:
+-                    tmp.moveTo(pts[0]);
+-                    break;
+-                case SkPathVerb::kLine:
+-                    tmp.lineTo(pts[1]);
+-                    break;
+-                case SkPathVerb::kQuad:
+-                    // promote the quad to a conic
+-                    tmp.conicTo(pts[1], pts[2],
+-                                SkConic::TransformW(pts.data(), SK_Scalar1, matrix));
+-                    break;
+-                case SkPathVerb::kConic:
+-                    tmp.conicTo(pts[1], pts[2],
+-                                SkConic::TransformW(pts.data(), rec->conicWeight(), matrix));
+-                    break;
+-                case SkPathVerb::kCubic:
+-                    subdivide_cubic_to(&tmp, pts.data());
+-                    break;
+-                case SkPathVerb::kClose:
+-                    tmp.close();
+-                    break;
+-            }
+-        }
+-        *dst = tmp.detach(&matrix);
+-    } else {
+-        SkPathConvexity convexity = this->getConvexityOrUnknown();
+-
+-        SkPathRef::CreateTransformedCopy(&dst->fPathRef, *fPathRef, matrix);
+-
+-        if (this != dst) {
+-            dst->fLastMoveToIndex = fLastMoveToIndex;
+-            dst->fFillType = fFillType;
+-            dst->fIsVolatile = fIsVolatile;
+-        }
+-
+-        dst->setConvexity(SkPathPriv::TransformConvexity(matrix, fPathRef->pointSpan(), convexity));
+-
+-        SkDEBUGCODE(dst->validate();)
+-    }
+-}
+-
+-// TODO: evolve this one to the source of truth (when we have SkPathData),
+-//       and have makeTransform() call it and mark the non-finite flag if it fails.
+-std::optional<SkPath> SkPath::tryMakeTransform(const SkMatrix& matrix) const {
+-    auto path = this->makeTransform(matrix);
+-    if (path.isFinite()) {
+-        return path;
+-    }
+-    return {};
+-}
+-
+-std::optional<SkPathRaw> SkPath::raw(SkResolveConvexity rc) const {
+-    const SkPathRef* ref = fPathRef.get();
+-    SkASSERT(ref);
+-    if (!ref->isFinite()) {
+-        return {};
+-    }
+-
+-    return SkPathRaw{
+-        ref->pointSpan(),
+-        ref->verbs(),
+-        ref->conicSpan(),
+-        ref->getBounds(),
+-        this->getFillType(),
+-        rc == SkResolveConvexity::kYes ? this->getConvexity() : this->getConvexityOrUnknown(),
+-        SkTo<uint8_t>(ref->getSegmentMasks()),
+-    };
+-}
+-
+-int SkPathPriv::GenIDChangeListenersCount(const SkPath& path) {
+-    return path.fPathRef->genIDChangeListenerCount();
+-}
+-
+-bool SkPathPriv::TestingOnly_unique(const SkPath& path) {
+-    return path.fPathRef->unique();
+-}
+-
+-void SkPathPriv::AddGenIDChangeListener(const SkPath& path, sk_sp<SkIDChangeListener> listener) {
+-    path.fPathRef->addGenIDChangeListener(std::move(listener));
+-}
+-
+-/////////////////////////////////////////////////////////////////////////////////////
+-
+-SkPathBuilder& SkPathBuilder::operator=(const SkPath& src) {
+-    this->reset().setFillType(src.getFillType());
+-    this->setIsVolatile(src.isVolatile());
+-
+-    const sk_sp<SkPathRef>& ref = src.fPathRef;
+-    fVerbs        = ref->fVerbs;
+-    fPts          = ref->fPoints;
+-    fConicWeights = ref->fConicWeights;
+-
+-    fSegmentMask   = ref->fSegmentMask;
+-    fLastMoveIndex = src.fLastMoveToIndex < 0 ? ~src.fLastMoveToIndex : src.fLastMoveToIndex;
+-
+-    fType = ref->fType;
+-    fIsA  = ref->fIsA;
+-
+-    fConvexity = src.getConvexityOrUnknown();
+-
+-    return *this;
+-}
+-
+-SkPath SkPathBuilder::make(sk_sp<SkPathRef> pr) const {
+-    switch (fType) {
+-        case SkPathIsAType::kGeneral:
+-            break;
+-        case SkPathIsAType::kOval:
+-            pr->setIsOval(fIsA.fDirection, fIsA.fStartIndex);
+-            SkASSERT(SkPathConvexity_IsConvex(fConvexity));
+-            break;
+-        case SkPathIsAType::kRRect:
+-            pr->setIsRRect(fIsA.fDirection, fIsA.fStartIndex);
+-            SkASSERT(SkPathConvexity_IsConvex(fConvexity));
+-            break;
+-    }
+-
+-    // Wonder if we can combine convexity and dir internally...
+-    //  unknown, convex_cw, convex_ccw, concave
+-    // Do we ever have direction w/o convexity, or viceversa (inside path)?
+-    //
+-    auto path = SkPath(std::move(pr), fFillType, fIsVolatile, fConvexity);
+-
+-    // This hopefully can go away in the future when Paths are immutable,
+-    // but if while they are still editable, we need to correctly set this.
+-    SkSpan<const SkPathVerb> verbs = path.fPathRef->verbs();
+-    if (!verbs.empty()) {
+-        SkASSERT(fLastMoveIndex >= 0);
+-        // peek at the last verb, to know if our last contour is closed
+-        const bool isClosed = (verbs.back() == SkPathVerb::kClose);
+-        path.fLastMoveToIndex = isClosed ? ~fLastMoveIndex : fLastMoveIndex;
+-    }
+-
+-    return path;
+-}
+-
+-SkPath SkPathBuilder::snapshot(const SkMatrix* mx) const {
+-    return this->make(sk_sp<SkPathRef>(new SkPathRef(fPts,
+-                                                     fVerbs,
+-                                                     fConicWeights,
+-                                                     fSegmentMask,
+-                                                     mx)));
+-}
+-
+-#endif
+diff --git a/src/core/SkPath_serial.cpp b/src/core/SkPath_serial.cpp
+index b0831232d4..95f28580b6 100644
+--- a/src/core/SkPath_serial.cpp
++++ b/src/core/SkPath_serial.cpp
+@@ -207,16 +207,6 @@ std::optional<SkPath> read_rrect_path(const void* storage, size_t length, size_t
+     return path;
+ }
+ 
+-#ifndef SK_HIDE_PATH_EDIT_METHODS
+-size_t SkPath::readFromMemory(const void* storage, size_t length) {
+-    size_t bytesRead = 0;
+-    if (auto path = SkPath::ReadFromMemory(storage, length, &bytesRead)) {
+-        *this = path.value();
+-    }
+-    return bytesRead;
+-}
+-#endif
+-
+ std::optional<SkPath> SkPath::ReadFromMemory(const void* storage, size_t length, size_t* bytesRead) {
+     size_t bytesStorage = 0;
+     if (!bytesRead) {
+diff --git a/src/core/SkRegion_path.cpp b/src/core/SkRegion_path.cpp
+index affa348c3b..23098ebbf4 100644
+--- a/src/core/SkRegion_path.cpp
++++ b/src/core/SkRegion_path.cpp
+@@ -613,13 +613,3 @@ SkPath SkRegion::getBoundaryPath() const {
+     (void)this->addBoundaryPath(&builder);
+     return builder.detach();
+ }
+-
+-#ifndef SK_HIDE_PATH_EDIT_METHODS
+-bool SkRegion::getBoundaryPath(SkPath* path) const {
+-    if (this->isEmpty()) {
+-        return false;
+-    }
+-    path->addPath(this->getBoundaryPath());
+-    return true;
+-}
+-#endif
+diff --git a/tests/PathBuilderTest.cpp b/tests/PathBuilderTest.cpp
+index 90bf06adf0..3f4f99a525 100644
+--- a/tests/PathBuilderTest.cpp
++++ b/tests/PathBuilderTest.cpp
+@@ -43,11 +43,6 @@ DEF_TEST(pathbuilder, reporter) {
+     SkPath p1 = b.snapshot();
+     SkPath p2 = b.detach();
+ 
+-    // Builders should always precompute the path's bounds, so there is no race condition later
+-    REPORTER_ASSERT(reporter, SkPathPriv::HasComputedBounds(p0));
+-    REPORTER_ASSERT(reporter, SkPathPriv::HasComputedBounds(p1));
+-    REPORTER_ASSERT(reporter, SkPathPriv::HasComputedBounds(p2));
+-
+     REPORTER_ASSERT(reporter, p0.getBounds() == SkRect::MakeLTRB(10, 10, 30, 20));
+     REPORTER_ASSERT(reporter, p0.countPoints() == 4);
+ 
+@@ -472,17 +467,6 @@ static void test_addPath_convexity(skiatest::Reporter* reporter) {
+     auto circle = SkPath::Circle(10, 10, 10);
+     REPORTER_ASSERT(reporter, circle.isConvex());
+ 
+-#ifndef SK_HIDE_PATH_EDIT_METHODS
+-    auto path_add = [&](bool startWithMove, SkPath::AddPathMode mode) {
+-        SkPath path;
+-        if (startWithMove) {
+-            path.moveTo(0, 0);
+-        }
+-        path.addPath(circle, mode);
+-        return path;
+-    };
+-#endif
+-
+     auto builder_add = [&](bool startWithMove, SkPath::AddPathMode mode) {
+         SkPathBuilder builder;
+         if (startWithMove) {
+@@ -505,10 +489,6 @@ static void test_addPath_convexity(skiatest::Reporter* reporter) {
+ 
+     for (auto e : expectations) {
+         SkPath path;
+-#ifndef SK_HIDE_PATH_EDIT_METHODS
+-        path = path_add(e.fStartWithMove, e.fMode);
+-        REPORTER_ASSERT(reporter, path.isConvex() == e.fShouldBeConvex);
+-#endif
+         path = builder_add(e.fStartWithMove, e.fMode);
+         REPORTER_ASSERT(reporter, path.isConvex() == e.fShouldBeConvex);
+     }
+@@ -577,43 +557,6 @@ DEF_TEST(pathbuilder_addpath_crbug_1153516, r) {
+     REPORTER_ASSERT(r, actualLineTo.value() == lineEnd);
+ }
+ 
+-/*
+- *  If paths were immutable, we would not have to track this, but until that day, we need
+- *  to ensure that paths are built correctly/consistently with this field, regardless of
+- *  either the classic mutable apis, or via SkPathBuilder (SkPath::Polygon uses builder).
+- */
+-DEF_TEST(pathbuilder_lastmoveindex, reporter) {
+-#ifndef SK_HIDE_PATH_EDIT_METHODS
+-    const SkPoint pts[] = {
+-        {0, 1}, {2, 3}, {4, 5},
+-    };
+-    const size_t N = std::size(pts);
+-
+-    for (int ctrCount = 1; ctrCount < 4; ++ctrCount) {
+-        const int lastMoveToIndex = (ctrCount - 1) * N;
+-
+-        for (bool isClosed : {false, true}) {
+-            SkPath a, b;
+-
+-            SkPathBuilder builder;
+-            for (int i = 0; i < ctrCount; ++i) {
+-                builder.addPolygon(pts, isClosed);  // new-school way
+-                b.addPoly(pts, isClosed);           // old-school way
+-            }
+-            a = builder.detach();
+-
+-            // We track the last moveTo verb index, and we invert it if the last verb was a close
+-            const int expected = isClosed ? ~lastMoveToIndex : lastMoveToIndex;
+-            const int a_last = SkPathPriv::LastMoveToIndex(a);
+-            const int b_last = SkPathPriv::LastMoveToIndex(b);
+-
+-            REPORTER_ASSERT(reporter, a_last == expected);
+-            REPORTER_ASSERT(reporter, b_last == expected);
+-        }
+-    }
+-#endif
+-}
+-
+ static void assertIsMoveTo(skiatest::Reporter* reporter, SkPathPriv::RangeIter* iter,
+                            SkScalar x0, SkScalar y0) {
+     auto [v, pts, w] = *(*iter)++;
+@@ -834,35 +777,6 @@ DEF_TEST(SkPathBuilder_transform, reporter) {
+     }
+ }
+ 
+-DEF_TEST(SkPathBuilder_Path_arcTo, reporter) {
+-#ifndef SK_HIDE_PATH_EDIT_METHODS
+-    auto check_both_methods = [reporter](const SkRect& r, float start, float sweep) {
+-        SkPath path;
+-        path.arcTo(r, start, sweep, true);
+-
+-        SkPathBuilder builder;
+-        builder.arcTo(r, start, sweep, true);
+-
+-        auto bupath = builder.snapshot();
+-        REPORTER_ASSERT(reporter, bupath == path);
+-    };
+-
+-    // this specific case was known to fail before
+-    const SkRect r = {-18, -18, 18, 18};
+-    float start = 375, sweep = 320;
+-
+-    check_both_methods(r, start, sweep);
+-
+-    // so now try a lot of other variants
+-    SkRandom rand;
+-    for (int i = 0; i < 1000; ++i) {
+-        start = rand.nextSScalar1() * 1000;
+-        sweep = rand.nextSScalar1() * 1000;
+-        check_both_methods(r, start, sweep);
+-    }
+-#endif
+-}
+-
+ DEF_TEST(SkPathBuilder_cleaning, reporter) {
+     // Test that we safely handle meaningless verbs, like repeated kClose
+     SkPathBuilder b;
+diff --git a/tests/PathMeasureTest.cpp b/tests/PathMeasureTest.cpp
+index e0edec69de..aa2d582972 100644
+--- a/tests/PathMeasureTest.cpp
++++ b/tests/PathMeasureTest.cpp
+@@ -301,23 +301,6 @@ static void test_MLM_contours(skiatest::Reporter* reporter) {
+     }
+ }
+ 
+-static void test_shrink(skiatest::Reporter* reporter) {
+-#ifndef SK_HIDE_PATH_EDIT_METHODS
+-    SkPath path;
+-    path.addRect({1, 2, 3, 4});
+-
+-    SkContourMeasureIter iter(path, false);
+-
+-    // try to realloc arrays to be sure that the iterator safely made a copy
+-    path.incReserve(100);
+-
+-    // Note, this failed (before the fix) on an ASAN build, which notices that we were
+-    // using an internal iterator of the passed-in path, not our copy.
+-    while (iter.next())
+-        ;
+-#endif
+-}
+-
+ DEF_TEST(contour_measure, reporter) {
+     SkPath path = SkPathBuilder()
+                   .addCircle(0, 0, 100)
+@@ -344,8 +327,6 @@ DEF_TEST(contour_measure, reporter) {
+ 
+     test_empty_contours(reporter);
+     test_MLM_contours(reporter);
+-
+-    test_shrink(reporter);
+ }
+ 
+ DEF_TEST(contour_measure_verbs, reporter) {
+diff --git a/tests/PathTest.cpp b/tests/PathTest.cpp
+index a528a6b8ce..158ebaf35f 100644
+--- a/tests/PathTest.cpp
++++ b/tests/PathTest.cpp
+@@ -427,56 +427,6 @@ static void test_path_close_issue1474(skiatest::Reporter* reporter) {
+     REPORTER_ASSERT(reporter, 95 == last->fY);
+ }
+ 
+-static void test_gen_id(skiatest::Reporter* reporter) {
+-#ifndef SK_HIDE_PATH_EDIT_METHODS
+-    SkPath a, b;
+-    REPORTER_ASSERT(reporter, a.getGenerationID() == b.getGenerationID());
+-
+-    a.moveTo(0, 0);
+-    const uint32_t z = a.getGenerationID();
+-    REPORTER_ASSERT(reporter, z != b.getGenerationID());
+-
+-    a.reset();
+-    REPORTER_ASSERT(reporter, a.getGenerationID() == b.getGenerationID());
+-
+-    a.moveTo(1, 1);
+-    const uint32_t y = a.getGenerationID();
+-    REPORTER_ASSERT(reporter, z != y);
+-
+-    b.moveTo(2, 2);
+-    const uint32_t x = b.getGenerationID();
+-    REPORTER_ASSERT(reporter, x != y && x != z);
+-
+-    a.swap(b);
+-    REPORTER_ASSERT(reporter, b.getGenerationID() == y && a.getGenerationID() == x);
+-
+-    b = a;
+-    REPORTER_ASSERT(reporter, b.getGenerationID() == x);
+-
+-    SkPath c(a);
+-    REPORTER_ASSERT(reporter, c.getGenerationID() == x);
+-
+-    c.lineTo(3, 3);
+-    const uint32_t w = c.getGenerationID();
+-    REPORTER_ASSERT(reporter, b.getGenerationID() == x);
+-    REPORTER_ASSERT(reporter, a.getGenerationID() == x);
+-    REPORTER_ASSERT(reporter, w != x);
+-
+-#ifdef SK_BUILD_FOR_ANDROID_FRAMEWORK
+-    static bool kExpectGenIDToIgnoreFill = false;
+-#else
+-    static bool kExpectGenIDToIgnoreFill = true;
+-#endif
+-
+-    c.toggleInverseFillType();
+-    const uint32_t v = c.getGenerationID();
+-    REPORTER_ASSERT(reporter, (v == w) == kExpectGenIDToIgnoreFill);
+-
+-    c.rewind();
+-    REPORTER_ASSERT(reporter, v != c.getGenerationID());
+-#endif
+-}
+-
+ // This used to assert in the debug build, as the edges did not all line-up.
+ static void test_bad_cubic_crbug234190() {
+     SkPath path = SkPathBuilder()
+@@ -1016,25 +966,6 @@ static void test_isfinite(skiatest::Reporter* reporter) {
+     test_path_isfinite(reporter);
+ }
+ 
+-static void test_islastcontourclosed(skiatest::Reporter* reporter) {
+-#ifndef SK_HIDE_PATH_EDIT_METHODS
+-    SkPath path;
+-    REPORTER_ASSERT(reporter, !path.isLastContourClosed());
+-    path.moveTo(0, 0);
+-    REPORTER_ASSERT(reporter, !path.isLastContourClosed());
+-    path.close();
+-    REPORTER_ASSERT(reporter, path.isLastContourClosed());
+-    path.lineTo(100, 100);
+-    REPORTER_ASSERT(reporter, !path.isLastContourClosed());
+-    path.moveTo(200, 200);
+-    REPORTER_ASSERT(reporter, !path.isLastContourClosed());
+-    path.close();
+-    REPORTER_ASSERT(reporter, path.isLastContourClosed());
+-    path.moveTo(0, 0);
+-    REPORTER_ASSERT(reporter, !path.isLastContourClosed());
+-#endif
+-}
+-
+ // assert that we always
+ //  start with a moveTo
+ //  only have 1 moveTo
+@@ -1629,23 +1560,6 @@ static void test_convexity_doubleback(skiatest::Reporter* reporter) {
+     }
+ }
+ 
+-#ifndef SK_HIDE_PATH_EDIT_METHODS
+-static void check_convex_bounds(skiatest::Reporter* reporter, const SkPath& p,
+-                                const SkRect& bounds) {
+-    REPORTER_ASSERT(reporter, p.isConvex());
+-    REPORTER_ASSERT(reporter, p.getBounds() == bounds);
+-
+-    SkPath p2(p);
+-    REPORTER_ASSERT(reporter, p2.isConvex());
+-    REPORTER_ASSERT(reporter, p2.getBounds() == bounds);
+-
+-    SkPath other;
+-    other.swap(p2);
+-    REPORTER_ASSERT(reporter, other.isConvex());
+-    REPORTER_ASSERT(reporter, other.getBounds() == bounds);
+-}
+-#endif
+-
+ static SkPath setFromString(const char str[]) {
+     SkPathBuilder builder;
+     bool first = true;
+@@ -4107,22 +4021,6 @@ static void test_addEmptyPath(skiatest::Reporter* reporter, SkPath::AddPathMode
+     REPORTER_ASSERT(reporter, q.isEmpty());
+ }
+ 
+-static void test_get_point(skiatest::Reporter* reporter) {
+-#ifndef SK_HIDE_PATH_EDIT_METHODS
+-    SkPath p;
+-    SkPoint pt = p.getPoint(0);
+-    REPORTER_ASSERT(reporter, pt == SkPoint::Make(0, 0));
+-    REPORTER_ASSERT(reporter, !p.getLastPt(nullptr));
+-    REPORTER_ASSERT(reporter, !p.getLastPt(&pt) && pt == SkPoint::Make(0, 0));
+-    p.setLastPt(10, 10);
+-    pt = p.getPoint(0);
+-    REPORTER_ASSERT(reporter, pt == SkPoint::Make(10, 10));
+-    REPORTER_ASSERT(reporter, p.getLastPt(nullptr));
+-    p.rMoveTo(10, 10);
+-    REPORTER_ASSERT(reporter, p.getLastPt(&pt) && pt == SkPoint::Make(20, 20));
+-#endif
+-}
+-
+ static void test_contains(skiatest::Reporter* reporter,
+                           const SkPathBuilder& bu, SkPoint pt, bool expectedContains) {
+     SkPath path = bu.snapshot();
+@@ -4298,80 +4196,6 @@ static void test_contains(skiatest::Reporter* reporter) {
+     }
+ }
+ 
+-class PathRefTest_Private {
+-public:
+-    static size_t GetFreeSpace(const SkPathRef& ref) {
+-        return   (ref.fPoints.capacity() - ref.fPoints.size()) * sizeof(SkPoint)
+-               + (ref.fVerbs.capacity()  - ref.fVerbs.size())  * sizeof(uint8_t);
+-    }
+-
+-    static void TestPathRef(skiatest::Reporter* reporter) {
+-        static const int kRepeatCnt = 10;
+-
+-        sk_sp<SkPathRef> pathRef(new SkPathRef);
+-
+-        SkPathRef::Editor ed(&pathRef);
+-
+-        {
+-            ed.growForRepeatedVerb(SkPathVerb::kMove, kRepeatCnt);
+-            REPORTER_ASSERT(reporter, kRepeatCnt == pathRef->countVerbs());
+-            REPORTER_ASSERT(reporter, kRepeatCnt == pathRef->countPoints());
+-            REPORTER_ASSERT(reporter, 0 == pathRef->getSegmentMasks());
+-            for (int i = 0; i < kRepeatCnt; ++i) {
+-                REPORTER_ASSERT(reporter, SkPathVerb::kMove == pathRef->verbs()[i]);
+-            }
+-            ed.resetToSize(0, 0, 0);
+-        }
+-
+-        {
+-            ed.growForRepeatedVerb(SkPathVerb::kLine, kRepeatCnt);
+-            REPORTER_ASSERT(reporter, kRepeatCnt == pathRef->countVerbs());
+-            REPORTER_ASSERT(reporter, kRepeatCnt == pathRef->countPoints());
+-            REPORTER_ASSERT(reporter, SkPath::kLine_SegmentMask == pathRef->getSegmentMasks());
+-            for (int i = 0; i < kRepeatCnt; ++i) {
+-                REPORTER_ASSERT(reporter, SkPathVerb::kLine == pathRef->atVerb(i));
+-            }
+-            ed.resetToSize(0, 0, 0);
+-        }
+-
+-        {
+-            ed.growForRepeatedVerb(SkPathVerb::kQuad, kRepeatCnt);
+-            REPORTER_ASSERT(reporter, kRepeatCnt == pathRef->countVerbs());
+-            REPORTER_ASSERT(reporter, 2*kRepeatCnt == pathRef->countPoints());
+-            REPORTER_ASSERT(reporter, SkPath::kQuad_SegmentMask == pathRef->getSegmentMasks());
+-            for (int i = 0; i < kRepeatCnt; ++i) {
+-                REPORTER_ASSERT(reporter, SkPathVerb::kQuad == pathRef->atVerb(i));
+-            }
+-            ed.resetToSize(0, 0, 0);
+-        }
+-
+-        {
+-            SkScalar* weights = nullptr;
+-            ed.growForRepeatedVerb(SkPathVerb::kConic, kRepeatCnt, &weights);
+-            REPORTER_ASSERT(reporter, kRepeatCnt == pathRef->countVerbs());
+-            REPORTER_ASSERT(reporter, 2*kRepeatCnt == pathRef->countPoints());
+-            REPORTER_ASSERT(reporter, kRepeatCnt == pathRef->countWeights());
+-            REPORTER_ASSERT(reporter, SkPath::kConic_SegmentMask == pathRef->getSegmentMasks());
+-            REPORTER_ASSERT(reporter, weights);
+-            for (int i = 0; i < kRepeatCnt; ++i) {
+-                REPORTER_ASSERT(reporter, SkPathVerb::kConic == pathRef->atVerb(i));
+-            }
+-            ed.resetToSize(0, 0, 0);
+-        }
+-
+-        {
+-            ed.growForRepeatedVerb(SkPathVerb::kCubic, kRepeatCnt);
+-            REPORTER_ASSERT(reporter, kRepeatCnt == pathRef->countVerbs());
+-            REPORTER_ASSERT(reporter, 3*kRepeatCnt == pathRef->countPoints());
+-            REPORTER_ASSERT(reporter, SkPath::kCubic_SegmentMask == pathRef->getSegmentMasks());
+-            for (int i = 0; i < kRepeatCnt; ++i) {
+-                REPORTER_ASSERT(reporter, SkPathVerb::kCubic == pathRef->atVerb(i));
+-            }
+-            ed.resetToSize(0, 0, 0);
+-        }
+-    }
+-};
+-
+ static void test_operatorEqual(skiatest::Reporter* reporter) {
+     SkPath a;
+     SkPath b;
+@@ -4467,95 +4291,6 @@ private:
+ 
+ }  // namespace
+ 
+-#ifndef SK_HIDE_PATH_EDIT_METHODS
+-class PathTest_Private {
+-public:
+-    static size_t GetFreeSpace(const SkPath& path) {
+-        return PathRefTest_Private::GetFreeSpace(*path.fPathRef);
+-    }
+-
+-    static const sk_sp<SkPathRef>& GetPathRef(const SkPath& path) {
+-        return path.fPathRef;
+-    }
+-
+-    static void TestPathTo(skiatest::Reporter* reporter) {
+-        SkPathBuilder builder;
+-        builder.lineTo(4, 4);
+-        SkPathPriv::ReversePathTo(&builder, SkPath());
+-        check_path_is_line(reporter, builder.snapshot(), 4, 4);
+-
+-        SkPathBuilder q;
+-        q.moveTo(-4, -4);
+-        SkPathPriv::ReversePathTo(&builder, q.snapshot());
+-        check_path_is_line(reporter, builder.snapshot(), 4, 4);
+-        q.lineTo(7, 8)
+-         .conicTo(8, 7, 6, 5, 0.5f)
+-         .quadTo(6, 7, 8, 6)
+-         .cubicTo(5, 6, 7, 8, 7, 5)
+-         .close();
+-        SkPathPriv::ReversePathTo(&builder, q.detach());
+-        SkRect reverseExpected = {-4, -4, 8, 8};
+-        REPORTER_ASSERT(reporter, builder.computeBounds() == reverseExpected);
+-    }
+-
+-    static void TestPathrefListeners(skiatest::Reporter* reporter) {
+-        SkPath p;
+-
+-        bool changed = false;
+-        p.moveTo(0, 0);
+-
+-        // Check that listener is notified on moveTo().
+-
+-        SkPathPriv::AddGenIDChangeListener(p, sk_make_sp<ChangeListener>(&changed));
+-        REPORTER_ASSERT(reporter, !changed);
+-        p.moveTo(10, 0);
+-        REPORTER_ASSERT(reporter, changed);
+-
+-        // Check that listener is notified on lineTo().
+-        SkPathPriv::AddGenIDChangeListener(p, sk_make_sp<ChangeListener>(&changed));
+-        REPORTER_ASSERT(reporter, !changed);
+-        p.lineTo(20, 0);
+-        REPORTER_ASSERT(reporter, changed);
+-
+-        // Check that listener is notified on reset().
+-        SkPathPriv::AddGenIDChangeListener(p, sk_make_sp<ChangeListener>(&changed));
+-        REPORTER_ASSERT(reporter, !changed);
+-        p.reset();
+-        REPORTER_ASSERT(reporter, changed);
+-
+-        p.moveTo(0, 0);
+-
+-        // Check that listener is notified on rewind().
+-        SkPathPriv::AddGenIDChangeListener(p, sk_make_sp<ChangeListener>(&changed));
+-        REPORTER_ASSERT(reporter, !changed);
+-        p.rewind();
+-        REPORTER_ASSERT(reporter, changed);
+-
+-        // Check that listener is notified on transform().
+-        {
+-            SkPath q;
+-            q.moveTo(10, 10);
+-            SkPathPriv::AddGenIDChangeListener(q, sk_make_sp<ChangeListener>(&changed));
+-            REPORTER_ASSERT(reporter, !changed);
+-            SkMatrix matrix;
+-            matrix.setScale(2, 2);
+-            p.transform(matrix, &q);
+-            REPORTER_ASSERT(reporter, changed);
+-        }
+-
+-        // Check that listener is notified when pathref is deleted.
+-        {
+-            SkPath q;
+-            q.moveTo(10, 10);
+-            SkPathPriv::AddGenIDChangeListener(q, sk_make_sp<ChangeListener>(&changed));
+-            REPORTER_ASSERT(reporter, !changed);
+-        }
+-        // q went out of scope.
+-        REPORTER_ASSERT(reporter, changed);
+-    }
+-};
+-#endif
+-
+ static void test_crbug_629455(skiatest::Reporter* reporter) {
+     SkPath path = SkPathBuilder()
+                   .moveTo(0, 0)
+@@ -4891,27 +4626,6 @@ DEF_TEST(PathInterp, reporter) {
+     test_interp(reporter);
+ }
+ 
+-#ifndef SK_HIDE_PATH_EDIT_METHODS
+-DEF_TEST(Path_multipleMoveTos, reporter) {
+-    SkPath path;
+-    REPORTER_ASSERT(reporter, path.isEmpty());
+-
+-    auto check_last_pt = [&](float x, float y) {
+-        REPORTER_ASSERT(reporter, path.countPoints() == 1);
+-        REPORTER_ASSERT(reporter, path.getBounds() == SkRect::MakeXYWH(x, y, 0, 0));
+-        return path.getPoint(0) == SkPoint{x, y};
+-    };
+-
+-    path.moveTo(1, 2);
+-    REPORTER_ASSERT(reporter, check_last_pt(1, 2));
+-
+-    path.moveTo(3, 4);
+-    path.moveTo(5, 6);
+-    path.moveTo(7, 8);
+-    REPORTER_ASSERT(reporter, check_last_pt(7, 8));
+-}
+-#endif
+-
+ DEF_TEST(PathBigCubic, reporter) {
+     SkPath path = SkPathBuilder()
+                   .moveTo(SkBits2Float(0x00000000), SkBits2Float(0x00000000))  // 0, 0
+@@ -4965,84 +4679,6 @@ DEF_TEST(Paths, reporter) {
+     // this triggers a code path in SkPath::swap which is otherwise unexercised
+     p.swap(self);
+ 
+-#ifndef SK_HIDE_PATH_EDIT_METHODS
+-    SkRect  bounds, bounds2;
+-    bounds.setLTRB(0, 0, 1, 1);
+-
+-    p.addRoundRect(bounds, 1, 1);
+-    check_convex_bounds(reporter, p, bounds);
+-    // we have quads or cubics
+-    REPORTER_ASSERT(reporter,
+-                    p.getSegmentMasks() & (SkPath::kQuad_SegmentMask | SkPath::kCubic_SegmentMask |
+-                                           SkPath::kConic_SegmentMask));
+-    REPORTER_ASSERT(reporter, !p.isEmpty());
+-
+-    p.reset();
+-    test_empty(reporter, p);
+-
+-    p.addOval(bounds);
+-    check_convex_bounds(reporter, p, bounds);
+-    REPORTER_ASSERT(reporter, !p.isEmpty());
+-
+-    p.rewind();
+-    test_empty(reporter, p);
+-
+-    p.addRect(bounds);
+-    check_convex_bounds(reporter, p, bounds);
+-    // we have only lines
+-    REPORTER_ASSERT(reporter, SkPath::kLine_SegmentMask == p.getSegmentMasks());
+-    REPORTER_ASSERT(reporter, !p.isEmpty());
+-
+-    REPORTER_ASSERT(reporter, p != empty);
+-    REPORTER_ASSERT(reporter, !(p == empty));
+-
+-    // do getPoints and getVerbs return the right result
+-    REPORTER_ASSERT(reporter, p.getPoints({}) == 4);
+-    REPORTER_ASSERT(reporter, p.getVerbs({}) == 5);
+-    SkPoint pts[4];
+-    int count = p.getPoints(pts);
+-    REPORTER_ASSERT(reporter, count == 4);
+-    uint8_t verbs[6];
+-    verbs[5] = 0xff;
+-    p.getVerbs({verbs, 5});
+-    REPORTER_ASSERT(reporter, SkPath::kMove_Verb == verbs[0]);
+-    REPORTER_ASSERT(reporter, SkPath::kLine_Verb == verbs[1]);
+-    REPORTER_ASSERT(reporter, SkPath::kLine_Verb == verbs[2]);
+-    REPORTER_ASSERT(reporter, SkPath::kLine_Verb == verbs[3]);
+-    REPORTER_ASSERT(reporter, SkPath::kClose_Verb == verbs[4]);
+-    REPORTER_ASSERT(reporter, 0xff == verbs[5]);
+-    bounds2.setBounds(pts);
+-    REPORTER_ASSERT(reporter, bounds == bounds2);
+-
+-    bounds.offset(SK_Scalar1*3, SK_Scalar1*4);
+-    p.offset(SK_Scalar1*3, SK_Scalar1*4);
+-    REPORTER_ASSERT(reporter, bounds == p.getBounds());
+-
+-    REPORTER_ASSERT(reporter, p.isRect(nullptr));
+-    bounds2.setEmpty();
+-    REPORTER_ASSERT(reporter, p.isRect(&bounds2));
+-    REPORTER_ASSERT(reporter, bounds == bounds2);
+-
+-    // now force p to not be a rect
+-    bounds.setWH(SK_Scalar1/2, SK_Scalar1/2);
+-    p.addRect(bounds);
+-    REPORTER_ASSERT(reporter, !p.isRect(nullptr));
+-
+-    // Test an edge case w.r.t. the bound returned by isRect (i.e., the
+-    // path has a trailing moveTo. Please see crbug.com\445368)
+-    {
+-        SkRect r;
+-        p.reset();
+-        p.addRect(bounds);
+-        REPORTER_ASSERT(reporter, p.isRect(&r));
+-        REPORTER_ASSERT(reporter, r == bounds);
+-        // add a moveTo outside of our bounds
+-        p.moveTo(bounds.fLeft + 10, bounds.fBottom + 10);
+-        REPORTER_ASSERT(reporter, p.isRect(&r));
+-        REPORTER_ASSERT(reporter, r == bounds);
+-    }
+-#endif
+-
+     test_operatorEqual(reporter);
+     test_isLine(reporter);
+     test_isRect(reporter);
+@@ -5067,7 +4703,6 @@ DEF_TEST(Paths, reporter) {
+     test_addPoly(reporter);
+     test_isfinite(reporter);
+     test_isfinite_after_transform(reporter);
+-    test_islastcontourclosed(reporter);
+     test_arb_round_rect_is_convex(reporter);
+     test_arb_zero_rad_round_rect_is_rect(reporter);
+     test_addrect(reporter);
+@@ -5080,7 +4715,6 @@ DEF_TEST(Paths, reporter) {
+     test_crbug_613918();
+     test_bad_cubic_crbug229478();
+     test_bad_cubic_crbug234190();
+-    test_gen_id(reporter);
+     test_path_close_issue1474(reporter);
+     test_path_to_region(reporter);
+     test_rrect(reporter);
+@@ -5096,13 +4730,7 @@ DEF_TEST(Paths, reporter) {
+     test_extendClosedPath(reporter);
+     test_addEmptyPath(reporter, SkPath::kExtend_AddPathMode);
+     test_addEmptyPath(reporter, SkPath::kAppend_AddPathMode);
+-    test_get_point(reporter);
+     test_contains(reporter);
+-#ifndef SK_HIDE_PATH_EDIT_METHODS
+-    PathTest_Private::TestPathTo(reporter);
+-    PathRefTest_Private::TestPathRef(reporter);
+-    PathTest_Private::TestPathrefListeners(reporter);
+-#endif
+     test_dump(reporter);
+     test_path_crbug389050(reporter);
+     test_path_crbugskia2820(reporter);
+@@ -5151,40 +4779,6 @@ DEF_TEST(skbug_6450, r) {
+     SkMakeNullCanvas()->drawDRRect(orr, irr, SkPaint());
+ }
+ 
+-#ifndef SK_HIDE_PATH_EDIT_METHODS
+-DEF_TEST(PathRefSerialization, reporter) {
+-    SkPath path;
+-
+-    const size_t numMoves = 1;
+-    path.moveTo(1, 2);
+-
+-    const size_t numConics = 7;
+-    const size_t numPoints = numMoves + 2 * numConics;
+-    const size_t numVerbs = numMoves + numConics;
+-    for (size_t i = 0; i < numConics; ++i) path.conicTo(1, 2, 3, 4, 5);
+-    REPORTER_ASSERT(reporter, path.countPoints() == numPoints);
+-    REPORTER_ASSERT(reporter, path.countVerbs() == numVerbs);
+-
+-    // Verify that path serializes/deserializes properly.
+-    sk_sp<SkData> data = path.serialize();
+-    size_t bytesWritten = data->size();
+-
+-    {
+-        size_t bytesRead = 0;
+-        auto readBack = SkPath::ReadFromMemory(data->data(), bytesWritten, &bytesRead);
+-        REPORTER_ASSERT(reporter, readBack.has_value());
+-        REPORTER_ASSERT(reporter, bytesRead == bytesWritten);
+-        REPORTER_ASSERT(reporter, *readBack == path);
+-    }
+-
+-    // One less byte (rounded down to alignment) than was written will also
+-    // fail to be deserialized.
+-    {
+-        auto readBack = SkPath::ReadFromMemory(data->data(), bytesWritten - 4);
+-        REPORTER_ASSERT(reporter, !readBack.has_value());
+-    }
+-}
+-#endif
+ 
+ DEF_TEST(NonFinitePathIteration, reporter) {
+     SkPath path = SkPathBuilder()
+@@ -5433,31 +5027,6 @@ DEF_TEST(Path_isRect, reporter) {
+     REPORTER_ASSERT(reporter, rect == compare);
+ }
+ 
+-#ifndef SK_HIDE_PATH_EDIT_METHODS
+-// Be sure we can safely add ourselves
+-DEF_TEST(Path_self_add, reporter) {
+-    // The possible problem is that during path.add() we may have to grow the dst buffers as
+-    // we append the src pts/verbs, but all the while we are iterating over the src. If src == dst
+-    // we could realloc the buffer's (on behalf of dst) leaving the src iterator pointing at
+-    // garbage.
+-    //
+-    // The test runs though verious sized src paths, since its not defined publicly what the
+-    // reserve allocation strategy is for SkPath, therefore we can't know when an append operation
+-    // will trigger a realloc. At the time of this writing, these loops were sufficient to trigger
+-    // an ASAN error w/o the fix to SkPath::addPath().
+-    //
+-    for (int count = 0; count < 10; ++count) {
+-        SkPath path;
+-        for (int add = 0; add < count; ++add) {
+-            // just add some stuff, so we have something to copy/append in addPath()
+-            path.moveTo(1, 2).lineTo(3, 4).cubicTo(1,2,3,4,5,6).conicTo(1,2,3,4,5);
+-        }
+-        path.addPath(path, 1, 2);
+-        path.addPath(path, 3, 4);
+-    }
+-}
+-#endif
+-
+ static void draw_triangle(SkCanvas* canvas, const SkPoint pts[]) {
+     // draw in different ways, looking for an assert
+ 
+@@ -5498,23 +5067,6 @@ DEF_TEST(triangle_big, reporter) {
+     draw_triangle(surface->getCanvas(), pts);
+ }
+ 
+-#ifndef SK_HIDE_PATH_EDIT_METHODS
+-DEF_TEST(Path_setLastPt, r) {
+-    // There was a time where SkPath::setLastPoint() didn't invalidate cached path bounds.
+-    SkPath p;
+-    p.moveTo( 0, 0);
+-    p.lineTo(20, 1);
+-    p.lineTo(20,10);
+-    p.lineTo(20,61);
+-    REPORTER_ASSERT(r, p.getBounds() == SkRect::MakeLTRB(0,0, 20,61));
+-
+-    p.setLastPt(30, 1);
+-    REPORTER_ASSERT(r, p.getBounds() == SkRect::MakeLTRB(0,0, 30,10));  // was {0,0, 20,61}
+-
+-    REPORTER_ASSERT(r, p.isValid());
+-}
+-#endif
+-
+ DEF_TEST(Path_increserve_handle_neg_crbug_883666, r) {
+     SkPathBuilder builder;
+ 
+@@ -5613,35 +5165,6 @@ DEF_TEST(Path_survive_transform, r) {
+     survive(&path, x, false, r, [](const SkPath& p) { return true; });
+ }
+ 
+-#ifndef SK_HIDE_PATH_EDIT_METHODS
+-DEF_TEST(path_last_move_to_index, r) {
+-    // Make sure that copyPath is safe after the call to path.offset().
+-    // Previously, we would leave its fLastMoveToIndex alone after the copy, but now we should
+-    // set it to path's value inside SkPath::transform()
+-
+-    const char text[] = "hello";
+-    constexpr size_t len = sizeof(text) - 1;
+-    SkGlyphID glyphs[len];
+-
+-    SkFont font = ToolUtils::DefaultFont();
+-    font.textToGlyphs(text, len, SkTextEncoding::kUTF8, glyphs);
+-
+-    SkPath copyPath;
+-    font.getPaths(glyphs, [](const SkPath* src, const SkMatrix& mx, void* ctx) {
+-        if (src) {
+-            ((SkPath*)ctx)->addPath(*src, mx);
+-        }
+-    }, &copyPath);
+-
+-    SkScalar radii[] = { 80, 100, 0, 0, 40, 60, 0, 0 };
+-    SkPath path;
+-    path.addRoundRect({10, 10, 110, 110}, radii);
+-    path.offset(0, 5, &(copyPath));                     // <== change buffer copyPath.fPathRef->fPoints but not reset copyPath.fLastMoveToIndex lead to out of bound
+-
+-    copyPath.rConicTo(1, 1, 3, 3, 0.707107f);
+-}
+-#endif
+-
+ static void test_edger(skiatest::Reporter* r,
+                        const std::initializer_list<SkPathVerb>& in,
+                        const std::initializer_list<SkPathVerb>& expected) {
+@@ -5730,79 +5253,6 @@ static void test_addRect_and_trailing_lineTo(skiatest::Reporter* reporter) {
+     });
+ }
+ 
+-/*
+- *  SkPath allows the caller to "skip" calling moveTo for contours. If lineTo (or a curve) is
+- *  called on an empty path, a 'moveTo(0,0)' will automatically be injected. If the path is
+- *  not empty, but its last contour has been "closed", then it will inject a moveTo corresponding
+- *  to where the last contour itself started (i.e. its moveTo).
+- *
+- *  This test exercises this in a particular case:
+- *      path.moveTo(...)                <-- needed to show the bug
+- *      path.moveTo....close()
+- *      // at this point, the path's verbs are: M M ... C
+- *
+- *      path.lineTo(...)
+- *      // after lineTo,  the path's verbs are: M M ... C M L
+- */
+-static void test_addPath_and_injected_moveTo(skiatest::Reporter* reporter) {
+-#ifndef SK_HIDE_PATH_EDIT_METHODS
+-    /*
+-     *  Given a path, and the expected last-point and last-move-to in it,
+-     *  assert that, after a lineTo(), that the injected moveTo corresponds
+-     *  to the expected value.
+-     */
+-    auto test_before_after_lineto = [reporter](SkPath& path,
+-                                               SkPoint expectedLastPt,
+-                                               SkPoint expectedMoveTo) {
+-        SkPoint p = path.getPoint(path.countPoints() - 1);
+-        REPORTER_ASSERT(reporter, p == expectedLastPt);
+-
+-        const SkPoint newLineTo = {1234, 5678};
+-        path.lineTo(newLineTo);
+-
+-        p = path.getPoint(path.countPoints() - 2);
+-        REPORTER_ASSERT(reporter, p == expectedMoveTo); // this was injected by lineTo()
+-
+-        p = path.getPoint(path.countPoints() - 1);
+-        REPORTER_ASSERT(reporter, p == newLineTo);
+-    };
+-
+-    SkPath path1;
+-    path1.moveTo(230, 230); // Needed to show the bug: a moveTo before the addRect
+-    path1.moveTo(20,30).lineTo(40,30).lineTo(40,50).lineTo(20,50);
+-    SkPath path1c(path1);
+-    path1c.close();
+-
+-    SkPath path2;
+-    // If path2 contains zero points, the update calculation isn't tested.
+-    path2.moveTo(144, 72);
+-    path2.lineTo(146, 72);
+-    SkPath path2c(path2);
+-    path2c.close();
+-    SkPath path3(path2);
+-    SkPath path3c(path2c);
+-
+-    // Test addPath, adding a path that ends with close.
+-    // The start point of the last contour added,
+-    // and the internal flag tracking whether it is closed,
+-    // must be updated correctly.
+-    path2.addPath(path1c);
+-    path2c.addPath(path1c);
+-    // At this point, path1c, path2, and path2c should end the same way.
+-    test_before_after_lineto(path1c, {20,50}, {20,30});
+-    test_before_after_lineto(path2, {20,50}, {20,30});
+-    test_before_after_lineto(path2c, {20,50}, {20,30});
+-
+-    // Test addPath, adding a path not ending in close.
+-    path3.addPath(path1);
+-    path3c.addPath(path1);
+-    // At this point, path1, path3, and path3c should end the same way.
+-    test_before_after_lineto(path1, {20,50}, {20,50});
+-    test_before_after_lineto(path3, {20,50}, {20,50});
+-    test_before_after_lineto(path3c, {20,50}, {20,50});
+-#endif
+-}
+-
+ DEF_TEST(pathedger, r) {
+     auto M = SkPathVerb::kMove;
+     auto L = SkPathVerb::kLine;
+@@ -5820,34 +5270,7 @@ DEF_TEST(pathedger, r) {
+     test_edger(r, { M, L, L, M, L, L }, { L, L, L,   L, L, L });
+ 
+     test_addRect_and_trailing_lineTo(r);
+-    test_addPath_and_injected_moveTo(r);
+-}
+-
+-DEF_TEST(path_addpath_crbug_1153516, r) {
+-#ifndef SK_HIDE_PATH_EDIT_METHODS
+-    // When we add a closed path to another path, verify
+-    // that the result has the right value for last contour start point.
+-    SkPath p1, p2;
+-    p2.lineTo(10,20);
+-    p1.addRect({143,226,200,241});
+-    p2.addPath(p1);
+-    p2.lineTo(262,513); // this should not assert
+-    SkPoint rectangleStart = {143, 226};
+-    SkPoint lineEnd = {262, 513};
+-    SkPoint actualMoveTo = p2.getPoint(p2.countPoints() - 2);
+-    REPORTER_ASSERT(r, actualMoveTo == rectangleStart );
+-    SkPoint actualLineTo = p2.getPoint(p2.countPoints() - 1);
+-    REPORTER_ASSERT(r, actualLineTo == lineEnd);
+-
+-    // Verify adding a closed path to itself
+-    p1.addPath(p1);
+-    p1.lineTo(262,513);
+-    actualMoveTo = p1.getPoint(p1.countPoints() - 2);
+-    REPORTER_ASSERT(r, actualMoveTo == rectangleStart );
+-    actualLineTo = p1.getPoint(p1.countPoints() - 1);
+-    REPORTER_ASSERT(r, actualLineTo == lineEnd);
+-#endif
+- }
++}
+ 
+ DEF_TEST(path_convexity_scale_way_down, r) {
+     SkPath path = SkPathBuilder().moveTo(0,0).lineTo(1, 0)
+@@ -5967,16 +5390,10 @@ DEF_TEST(path_filltype_utils, r) {
+     const SkPath p2 = p1.makeFillType(SkPathFillType::kEvenOdd);
+     REPORTER_ASSERT(r, p2 != p1);
+     REPORTER_ASSERT(r, p2.getFillType() == SkPathFillType::kEvenOdd);
+-#ifndef SK_HIDE_PATH_EDIT_METHODS
+-    REPORTER_ASSERT(r, PathTest_Private::GetPathRef(p2) == PathTest_Private::GetPathRef(p1));
+-#endif
+ 
+     const SkPath p3 = p2.makeToggleInverseFillType();
+     REPORTER_ASSERT(r, p3 != p2);
+     REPORTER_ASSERT(r, p3.getFillType() == SkPathFillType::kInverseEvenOdd);
+-#ifndef SK_HIDE_PATH_EDIT_METHODS
+-    REPORTER_ASSERT(r, PathTest_Private::GetPathRef(p3) == PathTest_Private::GetPathRef(p2));
+-#endif
+ }
+ 
+ // To test tight bounds, we ...
+-- 
+2.52.0
+

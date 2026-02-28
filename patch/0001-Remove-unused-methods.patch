@@ -1,0 +1,345 @@
+From ac83f799429e8216aaa285f546dcaf2df3470006 Mon Sep 17 00:00:00 2001
+From: Michael Reed <mike@reedtribe.org>
+Date: Mon, 22 Dec 2025 16:04:13 -0500
+Subject: [PATCH] Remove unused methods
+
+- remove unused methods
+- inline a couple that had a single caller
+
+Change-Id: I228f277bf058a0a882474d0207ae6042a53b491c
+Reviewed-on: https://skia-review.googlesource.com/c/skia/+/1130716
+Commit-Queue: Mike Reed <mike@reedtribe.org>
+Reviewed-by: Eric Boren <borenet@google.com>
+Reviewed-by: Florin Malita <fmalita@google.com>
+Signed-off-by: Hin-Tak Leung <htl10@users.sourceforge.net>
+---
+ .../Path_ConvertToNonInverseFillType.cpp      | 26 ---------
+ src/core/SkPath.cpp                           |  4 --
+ src/core/SkPathBuilder.cpp                    |  2 +-
+ src/core/SkPathPriv.cpp                       | 54 -------------------
+ src/core/SkPathPriv.h                         | 44 ---------------
+ src/core/SkPath_pathdata.cpp                  |  4 --
+ tests/PathBuilderTest.cpp                     | 23 +++++---
+ tools/fiddle/all_examples.cpp                 |  1 -
+ 8 files changed, 16 insertions(+), 142 deletions(-)
+ delete mode 100644 docs/examples/Path_ConvertToNonInverseFillType.cpp
+
+diff --git a/docs/examples/Path_ConvertToNonInverseFillType.cpp b/docs/examples/Path_ConvertToNonInverseFillType.cpp
+deleted file mode 100644
+index 0fb17062f5..0000000000
+--- a/docs/examples/Path_ConvertToNonInverseFillType.cpp
++++ /dev/null
+@@ -1,26 +0,0 @@
+-// Copyright 2019 Google LLC.
+-// Use of this source code is governed by a BSD-style license that can be found in the LICENSE file.
+-#include "tools/fiddle/examples.h"
+-REG_FIDDLE(Path_ConvertToNonInverseFillType, 256, 256, true, 0) {
+-#define nameValue(fill) { SkPathFillType::fill, #fill }
+-
+-void draw(SkCanvas* canvas) {
+-    struct {
+-        SkPathFillType fill;
+-        const char* name;
+-    } fills[] = {
+-        nameValue(kWinding),
+-        nameValue(kEvenOdd),
+-        nameValue(kInverseWinding),
+-        nameValue(kInverseEvenOdd),
+-    };
+-    for (unsigned i = 0; i < std::size(fills); ++i) {
+-        if (fills[i].fill != (SkPathFillType) i) {
+-            SkDebugf("fills array order does not match FillType enum order");
+-            break;
+-        }
+-        SkDebugf("ConvertToNonInverseFillType(%s) == %s\n", fills[i].name,
+-                fills[(int) SkPathFillType_ConvertToNonInverse(fills[i].fill)].name);
+-    }
+-}
+-}  // END FIDDLE
+diff --git a/src/core/SkPath.cpp b/src/core/SkPath.cpp
+index 39f70b042d..0ddd7931cc 100644
+--- a/src/core/SkPath.cpp
++++ b/src/core/SkPath.cpp
+@@ -787,10 +787,6 @@ bool SkPathPriv::PerspectiveClip(const SkPath& path, const SkMatrix& matrix, SkP
+     return true;
+ }
+ 
+-bool SkPathPriv::IsAxisAligned(const SkPath& path) {
+-    return IsAxisAligned(path.points());
+-}
+-
+ std::optional<SkPathRectInfo> SkPathPriv::IsSimpleRect(const SkPath& path, bool isSimpleFill) {
+     if (path.getSegmentMasks() != SkPath::kLine_SegmentMask) {
+         return {};
+diff --git a/src/core/SkPathBuilder.cpp b/src/core/SkPathBuilder.cpp
+index ce5c5064e0..6100d86c98 100644
+--- a/src/core/SkPathBuilder.cpp
++++ b/src/core/SkPathBuilder.cpp
+@@ -786,7 +786,7 @@ SkPathBuilder& SkPathBuilder::addPath(const SkPath& src, const SkMatrix& matrix,
+     }
+ 
+     const bool canReplaceThis = (mode == SkPath::AddPathMode::kAppend_AddPathMode &&
+-                                 SkPathPriv::IsEffectivelyEmpty(*this))
++                                 this->verbs().size() <= 1)
+                               || this->verbs().empty();
+     if (canReplaceThis && matrix.isIdentity()) {
+         const SkPathFillType fillType = fFillType;
+diff --git a/src/core/SkPathPriv.cpp b/src/core/SkPathPriv.cpp
+index 741b56d692..54cb6fad32 100644
+--- a/src/core/SkPathPriv.cpp
++++ b/src/core/SkPathPriv.cpp
+@@ -1380,60 +1380,6 @@ bool SkPathPriv::Contains(const SkPathRaw& raw, SkPoint p) {
+ 
+ ////////////////////////////////////////////////////////////////////////////////////////
+ 
+-SkPathVerbAnalysis SkPathPriv::AnalyzeVerbs(SkSpan<const SkPathVerb> vbs) {
+-    SkPathVerbAnalysis info = {false, 0, 0, 0};
+-    bool needMove = true;
+-    bool invalid = false;
+-
+-    if (vbs.size() >= (INT_MAX / 3)) SK_UNLIKELY {
+-        // A path with an extremely high number of quad, conic or cubic verbs could cause
+-        // `info.points` to overflow. To prevent against this, we reject extremely large paths. This
+-        // check is conservative and assumes the worst case (in particular, it assumes that every
+-        // verb consumes 3 points, which would only happen for a path composed entirely of cubics).
+-        // This limits us to 700 million verbs, which is large enough for any reasonable use case.
+-        invalid = true;
+-    } else {
+-        for (auto v : vbs) {
+-            switch (v) {
+-                case SkPathVerb::kMove:
+-                    needMove = false;
+-                    info.points += 1;
+-                    break;
+-                case SkPathVerb::kLine:
+-                    invalid |= needMove;
+-                    info.segmentMask |= kLine_SkPathSegmentMask;
+-                    info.points += 1;
+-                    break;
+-                case SkPathVerb::kQuad:
+-                    invalid |= needMove;
+-                    info.segmentMask |= kQuad_SkPathSegmentMask;
+-                    info.points += 2;
+-                    break;
+-                case SkPathVerb::kConic:
+-                    invalid |= needMove;
+-                    info.segmentMask |= kConic_SkPathSegmentMask;
+-                    info.points += 2;
+-                    info.weights += 1;
+-                    break;
+-                case SkPathVerb::kCubic:
+-                    invalid |= needMove;
+-                    info.segmentMask |= kCubic_SkPathSegmentMask;
+-                    info.points += 3;
+-                    break;
+-                case SkPathVerb::kClose:
+-                    invalid |= needMove;
+-                    needMove = true;
+-                    break;
+-                default:
+-                    invalid = true;
+-                    break;
+-            }
+-        }
+-    }
+-    info.valid = !invalid;
+-    return info;
+-}
+-
+ bool SkPathPriv::IsAxisAligned(SkSpan<const SkPoint> pts) {
+     // Conservative (quick) test to see if all segments are axis-aligned.
+     // Multiple contours might give a false-negative, but for speed, we ignore that
+diff --git a/src/core/SkPathPriv.h b/src/core/SkPathPriv.h
+index 90d8abf2ad..e24ad46d78 100644
+--- a/src/core/SkPathPriv.h
++++ b/src/core/SkPathPriv.h
+@@ -39,13 +39,6 @@ static_assert(1 == static_cast<int>(SkPathFillType::kEvenOdd), "fill_type_mismat
+ static_assert(2 == static_cast<int>(SkPathFillType::kInverseWinding), "fill_type_mismatch");
+ static_assert(3 == static_cast<int>(SkPathFillType::kInverseEvenOdd), "fill_type_mismatch");
+ 
+-// These are computed from a stream of verbs
+-struct SkPathVerbAnalysis {
+-    size_t   points, weights;
+-    unsigned segmentMask;
+-    bool     valid;
+-};
+-
+ class SkPathPriv {
+ public:
+     enum class RRectAsEnum {
+@@ -75,8 +68,6 @@ public:
+      */
+     static bool Contains(const SkPathRaw&, SkPoint);
+ 
+-    static SkPathVerbAnalysis AnalyzeVerbs(SkSpan<const SkPathVerb> verbs);
+-
+     // skbug.com/40041027: Not a perfect solution for W plane clipping, but 1/16384 is a
+     // reasonable limit (roughly 5e-5)
+     inline static constexpr SkScalar kW0PlaneDistance = 1.f / (1 << 14);
+@@ -216,9 +207,6 @@ public:
+         const SkScalar* fWeights;
+     };
+ 
+-    /** Returns true if the underlying SkPathRef has one single owner. */
+-    static bool TestingOnly_unique(const SkPath&);
+-
+     // returns Empty() if there are no points
+     static SkRect ComputeTightBounds(SkSpan<const SkPoint> points,
+                                      SkSpan<const SkPathVerb> verbs,
+@@ -293,7 +281,6 @@ public:
+     static int PtsInVerb(SkPathVerb verb) { return PtsInVerb((unsigned)verb); }
+ 
+     static bool IsAxisAligned(SkSpan<const SkPoint>);
+-    static bool IsAxisAligned(const SkPath& path);
+ 
+     static bool AllPointsEq(SkSpan<const SkPoint> pts) {
+         for (size_t i = 1; i < pts.size(); ++i) {
+@@ -341,30 +328,6 @@ public:
+         return (static_cast<int>(fill) & 2) != 0;
+     }
+ 
+-    /*
+-     *  We are effectively empty if we have zero or one verbs.
+-     *  Zero obviously means we're empty.
+-     *  One means we only have a MoveTo -- but no segments, so this is effectively
+-     *  empty (e.g. when adding another contour, this moveTo will be overwritten).
+-     */
+-    static bool IsEffectivelyEmpty(const SkPath& path) {
+-        return path.countVerbs() <= 1;
+-    }
+-    static bool IsEffectivelyEmpty(const SkPathBuilder& builder) {
+-        return builder.verbs().size() <= 1;
+-    }
+-
+-    /** Returns equivalent SkPath::FillType representing SkPath fill inside its bounds.
+-     .
+-
+-     @param fill  one of: kWinding_FillType, kEvenOdd_FillType,
+-     kInverseWinding_FillType, kInverseEvenOdd_FillType
+-     @return      fill, or kWinding_FillType or kEvenOdd_FillType if fill is inverted
+-     */
+-    static SkPathFillType ConvertToNonInverseFillType(SkPathFillType fill) {
+-        return (SkPathFillType)(static_cast<int>(fill) & 1);
+-    }
+-
+     /**
+      *  If needed (to not blow-up under a perspective matrix), clip the path, returning the
+      *  answer in "result", and return true.
+@@ -414,13 +377,6 @@ public:
+         return bu.detach();
+     }
+ 
+-    static std::optional<SkPoint> GetPoint(const SkPathBuilder& builder, int index) {
+-        if ((unsigned)index < (unsigned)builder.fPts.size()) {
+-            return builder.fPts.at(index);
+-        }
+-        return std::nullopt;
+-    }
+-
+     static SkSpan<const SkPathVerb> GetVerbs(const SkPathBuilder& builder) {
+         return builder.fVerbs;
+     }
+diff --git a/src/core/SkPath_pathdata.cpp b/src/core/SkPath_pathdata.cpp
+index efeeb2adfc..a38d184702 100644
+--- a/src/core/SkPath_pathdata.cpp
++++ b/src/core/SkPath_pathdata.cpp
+@@ -190,10 +190,6 @@ std::optional<SkPathRaw> SkPath::raw(SkResolveConvexity rc) const {
+ 
+ //////////////////////////////////////////////////////////////////////////////////////////////
+ 
+-bool SkPathPriv::TestingOnly_unique(const SkPath& path) {
+-    return path.fPathData->unique();
+-}
+-
+ int SkPathPriv::GenIDChangeListenersCount(const SkPath& path) {
+     return path.fPathData->genIDChangeListenerCount();
+ }
+diff --git a/tests/PathBuilderTest.cpp b/tests/PathBuilderTest.cpp
+index 3f4f99a525..3bd284f03b 100644
+--- a/tests/PathBuilderTest.cpp
++++ b/tests/PathBuilderTest.cpp
+@@ -346,6 +346,13 @@ static void test_addPathMode(skiatest::Reporter* reporter, bool explicitMoveTo,
+     REPORTER_ASSERT(reporter, verbs[3] == SkPathVerb::kLine);
+ }
+ 
++static std::optional<SkPoint> get_point(const SkPathBuilder& builder, int index) {
++    if ((unsigned)index < (unsigned)builder.points().size()) {
++        return builder.points()[index];
++    }
++    return std::nullopt;
++}
++
+ static void test_extendClosedPath(skiatest::Reporter* reporter) {
+     SkPathBuilder p, q;
+     p.moveTo(1, 1);
+@@ -368,7 +375,7 @@ static void test_extendClosedPath(skiatest::Reporter* reporter) {
+     std::optional<SkPoint> pt = p.getLastPt();
+     REPORTER_ASSERT(reporter, pt.has_value());
+     REPORTER_ASSERT(reporter, pt.value() == SkPoint::Make(2, 3));
+-    pt = SkPathPriv::GetPoint(p, 3);
++    pt = get_point(p, 3);
+     REPORTER_ASSERT(reporter, pt.has_value());
+     REPORTER_ASSERT(reporter, pt == SkPoint::Make(1, 1));
+ }
+@@ -412,18 +419,18 @@ static void test_addPath_and_injected_moveTo(skiatest::Reporter* reporter) {
+     auto test_before_after_lineto = [reporter](SkPathBuilder& path,
+                                                SkPoint expectedLastPt,
+                                                SkPoint expectedMoveTo) {
+-        std::optional<SkPoint> p = SkPathPriv::GetPoint(path, path.countPoints() - 1);
++        std::optional<SkPoint> p = get_point(path, path.countPoints() - 1);
+         REPORTER_ASSERT(reporter, p.has_value());
+         REPORTER_ASSERT(reporter, p.value() == expectedLastPt);
+ 
+         const SkPoint newLineTo = {1234, 5678};
+         path.lineTo(newLineTo);
+ 
+-        p = SkPathPriv::GetPoint(path, path.countPoints() - 2);
++        p = get_point(path, path.countPoints() - 2);
+         REPORTER_ASSERT(reporter, p.has_value());
+         REPORTER_ASSERT(reporter, p.value() == expectedMoveTo); // this was injected by lineTo()
+ 
+-        p = SkPathPriv::GetPoint(path, path.countPoints() - 1);
++        p = get_point(path, path.countPoints() - 1);
+         REPORTER_ASSERT(reporter, p.has_value());
+         REPORTER_ASSERT(reporter, p.value() == newLineTo);
+     };
+@@ -539,20 +546,20 @@ DEF_TEST(pathbuilder_addpath_crbug_1153516, r) {
+     p2.lineTo(262,513); // this should not assert
+     SkPoint rectangleStart = {143, 226};
+     SkPoint lineEnd = {262, 513};
+-    std::optional<SkPoint> actualMoveTo = SkPathPriv::GetPoint(p2, p2.countPoints() - 2);
++    std::optional<SkPoint> actualMoveTo = get_point(p2, p2.countPoints() - 2);
+     REPORTER_ASSERT(r, actualMoveTo.has_value());
+     REPORTER_ASSERT(r, actualMoveTo.value() == rectangleStart );
+-    std::optional<SkPoint> actualLineTo = SkPathPriv::GetPoint(p2, p2.countPoints() - 1);
++    std::optional<SkPoint> actualLineTo = get_point(p2, p2.countPoints() - 1);
+     REPORTER_ASSERT(r, actualLineTo.has_value());
+     REPORTER_ASSERT(r, actualLineTo.value() == lineEnd);
+ 
+     // Verify adding a closed path to itself
+     p1.addPath(p1.snapshot());
+     p1.lineTo(262,513);
+-    actualMoveTo = SkPathPriv::GetPoint(p1, p1.countPoints() - 2);
++    actualMoveTo = get_point(p1, p1.countPoints() - 2);
+     REPORTER_ASSERT(r, actualMoveTo.has_value());
+     REPORTER_ASSERT(r, actualMoveTo.value() == rectangleStart );
+-    actualLineTo = SkPathPriv::GetPoint(p1, p1.countPoints() - 1);
++    actualLineTo = get_point(p1, p1.countPoints() - 1);
+     REPORTER_ASSERT(r, actualLineTo.has_value());
+     REPORTER_ASSERT(r, actualLineTo.value() == lineEnd);
+ }
+diff --git a/tools/fiddle/all_examples.cpp b/tools/fiddle/all_examples.cpp
+index bac48edc7d..fb9369a658 100644
+--- a/tools/fiddle/all_examples.cpp
++++ b/tools/fiddle/all_examples.cpp
+@@ -495,7 +495,6 @@
+ #include "docs/examples/Path_AddPathMode.cpp"
+ #include "docs/examples/Path_ArcSize.cpp"
+ #include "docs/examples/Path_ConvertConicToQuads.cpp"
+-#include "docs/examples/Path_ConvertToNonInverseFillType.cpp"
+ #include "docs/examples/Path_Effect_Methods.cpp"
+ #include "docs/examples/Path_FillType_a.cpp"
+ #include "docs/examples/Path_IsCubicDegenerate.cpp"
+-- 
+2.52.0
+

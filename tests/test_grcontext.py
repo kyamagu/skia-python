@@ -62,7 +62,7 @@ def test_GrBackendFormat_MakeVk_1():
     if sys.platform.startswith("darwin"):
         pytest.skip("Known not to work")
     assert isinstance(
-        skia.GrBackendFormat.MakeVk(0), (type(None), skia.GrBackendFormat))
+        skia.GrBackendFormat.MakeVk(skia.VkFormat.UNDEFINED), (type(None), skia.GrBackendFormat))
 
 
 def test_GrBackendFormat_MakeVk_2():
@@ -98,7 +98,7 @@ def test_GrBackendFormat_channelMask(backend_format):
 
 
 def test_GrBackendFormat_asVkFormat(backend_format):
-    fmt = 1
+    fmt = skia.VkFormat.UNDEFINED
     if sys.platform.startswith("darwin"):
         pytest.skip("Known not to work")
     assert isinstance(backend_format.asVkFormat(fmt), bool)
@@ -266,7 +266,7 @@ def test_GrBackendRenderTarget_getVkImageInfo(backend_render_target):
 def test_GrBackendRenderTarget_setVkImageLayout(backend_render_target):
     if sys.platform.startswith("darwin"):
         pytest.skip("Known not to work")
-    backend_render_target.setVkImageLayout(0)
+    backend_render_target.setVkImageLayout(skia.VkImageLayout.UNDEFINED)
 
 
 def test_GrBackendRenderTarget_getBackendFormat(backend_render_target):

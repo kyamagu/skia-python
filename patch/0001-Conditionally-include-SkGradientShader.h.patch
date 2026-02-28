@@ -1,0 +1,114 @@
+From 075316994c97ee86961b369bb2bff246aaa9d6c4 Mon Sep 17 00:00:00 2001
+From: Ben Wagner <bungeman@google.com>
+Date: Fri, 2 Jan 2026 10:14:39 -0500
+Subject: [PATCH] Conditionally include SkGradientShader.h
+
+User builds still set `SK_SUPPORT_LEGACY_UNSPANNED_GRADIENTS` globally.
+
+Change-Id: I868ade904ed15a5a84e97630502ebfa979d41621
+Reviewed-on: https://skia-review.googlesource.com/c/skia/+/1134418
+Reviewed-by: Florin Malita <fmalita@google.com>
+Commit-Queue: Ben Wagner <bungeman@google.com>
+Signed-off-by: Hin-Tak Leung <htl10@users.sourceforge.net>
+---
+ include/effects/SkGradientShader.h                 | 4 ----
+ include/gpu/graphite/precompile/PrecompileShader.h | 4 ++++
+ src/shaders/gradients/SkConicalGradient.cpp        | 4 ++++
+ src/shaders/gradients/SkLinearGradient.cpp         | 4 ++++
+ src/shaders/gradients/SkRadialGradient.cpp         | 4 ++++
+ src/shaders/gradients/SkSweepGradient.cpp          | 4 ++++
+ 6 files changed, 20 insertions(+), 4 deletions(-)
+
+diff --git a/include/effects/SkGradientShader.h b/include/effects/SkGradientShader.h
+index e633d68e3b..578ef0aef2 100644
+--- a/include/effects/SkGradientShader.h
++++ b/include/effects/SkGradientShader.h
+@@ -22,10 +22,6 @@
+ #include <cstdint>
+ #include <utility>
+ 
+-#ifndef SK_SUPPORT_LEGACY_UNSPANNED_GRADIENTS
+-#define SK_SUPPORT_LEGACY_UNSPANNED_GRADIENTS
+-#endif
+-
+ class SkMatrix;
+ 
+ /** \class SkGradientShader
+diff --git a/include/gpu/graphite/precompile/PrecompileShader.h b/include/gpu/graphite/precompile/PrecompileShader.h
+index d85a8a6e3e..d04b780a7c 100644
+--- a/include/gpu/graphite/precompile/PrecompileShader.h
++++ b/include/gpu/graphite/precompile/PrecompileShader.h
+@@ -14,7 +14,10 @@
+ #include "include/core/SkImageInfo.h"
+ #include "include/effects/SkGradient.h"
+ 
++#ifdef SK_SUPPORT_LEGACY_UNSPANNED_GRADIENTS
+ #include "include/effects/SkGradientShader.h"
++#endif
++
+ class SkColorSpace;
+ 
+ namespace skgpu::graphite {
+diff --git a/src/shaders/gradients/SkConicalGradient.cpp b/src/shaders/gradients/SkConicalGradient.cpp
+index ab368b6af6..0e65e02f64 100644
+--- a/src/shaders/gradients/SkConicalGradient.cpp
++++ b/src/shaders/gradients/SkConicalGradient.cpp
+@@ -29,7 +29,10 @@
+ #include <cstdint>
+ #include <utility>
+ 
++#ifdef SK_SUPPORT_LEGACY_UNSPANNED_GRADIENTS
+ #include "include/effects/SkGradientShader.h"
++#endif
++
+ bool SkConicalGradient::FocalData::set(SkScalar r0, SkScalar r1, SkMatrix* matrix) {
+     fIsSwapped = false;
+     fFocalX = sk_ieee_float_divide(r0, (r0 - r1));
+diff --git a/src/shaders/gradients/SkLinearGradient.cpp b/src/shaders/gradients/SkLinearGradient.cpp
+index e515e9f0d3..e2adc0ad40 100644
+--- a/src/shaders/gradients/SkLinearGradient.cpp
++++ b/src/shaders/gradients/SkLinearGradient.cpp
+@@ -23,7 +23,10 @@
+ #include <cstdint>
+ #include <utility>
+ 
++#ifdef SK_SUPPORT_LEGACY_UNSPANNED_GRADIENTS
+ #include "include/effects/SkGradientShader.h"
++#endif
++
+ class SkArenaAlloc;
+ class SkRasterPipeline;
+ enum class SkTileMode;
+diff --git a/src/shaders/gradients/SkRadialGradient.cpp b/src/shaders/gradients/SkRadialGradient.cpp
+index 8837651c27..016c82e13d 100644
+--- a/src/shaders/gradients/SkRadialGradient.cpp
++++ b/src/shaders/gradients/SkRadialGradient.cpp
+@@ -23,7 +23,10 @@
+ #include <cstdint>
+ #include <utility>
+ 
++#ifdef SK_SUPPORT_LEGACY_UNSPANNED_GRADIENTS
+ #include "include/effects/SkGradientShader.h"
++#endif
++
+ class SkArenaAlloc;
+ enum class SkTileMode;
+ 
+diff --git a/src/shaders/gradients/SkSweepGradient.cpp b/src/shaders/gradients/SkSweepGradient.cpp
+index 411f42658e..6c53ba3fe5 100644
+--- a/src/shaders/gradients/SkSweepGradient.cpp
++++ b/src/shaders/gradients/SkSweepGradient.cpp
+@@ -28,7 +28,10 @@
+ #include <tuple>
+ #include <utility>
+ 
++#ifdef SK_SUPPORT_LEGACY_UNSPANNED_GRADIENTS
+ #include "include/effects/SkGradientShader.h"
++#endif
++
+ class SkArenaAlloc;
+ 
+ SkSweepGradient::SkSweepGradient(const SkPoint& center,
+-- 
+2.52.0
+

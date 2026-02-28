@@ -38,12 +38,15 @@ void SetItem(SkMatrix& m, int index, SkScalar value) {
 }
 
 void initMatrix(py::module &m) {
+/* SkApplyPerspectiveClip removed in m143 */
+/*
 py::enum_<SkApplyPerspectiveClip>(m, "ApplyPerspectiveClip")
     .value("kNo", SkApplyPerspectiveClip::kNo,
         "Don't pre-clip the geometry before applying the (perspective) matrix.")
     .value("kYes", SkApplyPerspectiveClip::kYes,
         "Do pre-clip the geometry before applying the (perspective) matrix.")
     .export_values();
+*/
 
 // Matrix
 py::class_<SkMatrix> matrix(m, "Matrix", R"docstring(
@@ -1197,8 +1200,8 @@ matrix
             if (src.size() != dst.size())
                 throw std::runtime_error("src and dst must have the same size");
             if (src.empty())
-                return matrix.setPolyToPoly(nullptr, nullptr, 0);
-            return matrix.setPolyToPoly(&src[0], &dst[0], src.size());
+                return matrix.setPolyToPoly({nullptr, 0}, {nullptr, 0});
+            return matrix.setPolyToPoly({&src[0], src.size()}, {&dst[0], dst.size()});
         },
         R"docstring(
         Sets :py:class:`Matrix` to map src to dst.
@@ -1217,7 +1220,7 @@ matrix
         :return: true if :py:class:`Matrix` was constructed successfully
         )docstring",
         py::arg("src"), py::arg("dst"))
-    .def("invert", &SkMatrix::invert,
+    .def("invert", py::overload_cast<SkMatrix*>(&SkMatrix::invert, py::const_),
         R"docstring(
         Sets inverse to reciprocal matrix, returning true if :py:class:`Matrix`
         can be inverted.
@@ -1291,7 +1294,7 @@ matrix
         [] (const SkMatrix& matrix, std::vector<SkPoint>& pts) {
             if (pts.empty())
                 return pts;
-            matrix.mapPoints(&pts[0], &pts[0], pts.size());
+            matrix.mapPoints({&pts[0], pts.size()}, {&pts[0], pts.size()});
             return pts;
         },
         R"docstring(
@@ -1325,7 +1328,7 @@ matrix
         [] (const SkMatrix& matrix, std::vector<SkPoint3>& pts) -> py::object {
             if (pts.empty())
                 return py::cast(pts);
-            matrix.mapHomogeneousPoints(&pts[0], &pts[0], pts.size());
+            matrix.mapHomogeneousPoints({&pts[0], pts.size()}, {&pts[0], pts.size()});
             return py::cast(pts);
         },
         R"docstring(
@@ -1354,7 +1357,7 @@ matrix
             if (pts.empty())
                 return py::cast(pts);
             std::vector<SkPoint3> dst(pts.size());
-            matrix.mapHomogeneousPoints(&dst[0], &pts[0], pts.size());
+            matrix.mapPointsToHomogeneous({&dst[0], dst.size()}, {&pts[0], pts.size()});
             return py::cast(dst);
         },
         R"docstring(
@@ -1365,7 +1368,9 @@ matrix
         )docstring",
         py::arg("pts"))
     .def("mapXY",
-        py::overload_cast<SkScalar, SkScalar>(&SkMatrix::mapXY, py::const_),
+        [] (const SkMatrix& matrix, SkScalar x, SkScalar y) {
+            return matrix.mapPoint({x, y});
+        },
         R"docstring(
         Returns :py:class:`Point` (x, y) multiplied by :py:class:`Matrix`.
 
@@ -1390,7 +1395,7 @@ matrix
         [] (const SkMatrix& matrix, std::vector<SkVector>& src) {
             if (src.empty())
                 return src;
-            matrix.mapVectors(&src[0], &src[0], src.size());
+            matrix.mapVectors({&src[0], src.size()}, {&src[0], src.size()});
             return src;
         },
         R"docstring(
@@ -1443,18 +1448,15 @@ matrix
         )docstring",
         py::arg("dx"), py::arg("dy"))
     .def("mapRect",
-        py::overload_cast<const SkRect&, SkApplyPerspectiveClip>(
+        py::overload_cast<const SkRect&>(
             &SkMatrix::mapRect, py::const_),
         R"docstring(
         Returns bounds of src corners mapped by :py:class:`Matrix`.
 
         :param skia.Rect src: rectangle to map
-        :param skia.ApplyPerspectiveClip pc: whether to apply perspective
-            clipping
         :return: mapped bounds
         )docstring",
-        py::arg("src"),
-        py::arg_v("pc", SkApplyPerspectiveClip::kYes, "skia.ApplyPerspectiveClip.kYes"))
+        py::arg("src"))
     .def("mapRectToQuad",
         [] (const SkMatrix& matrix, const SkRect& rect) {
             std::vector<SkPoint> dst(4);
@@ -1553,7 +1555,7 @@ matrix
         :return: maximum scale factor
         )docstring")
     .def("getMinMaxScales",
-        [] (const SkMatrix& matrix) {
+        [] (const SkMatrix& matrix) -> py::object {
             std::vector<SkScalar> factors(2);
             if (matrix.getMinMaxScales(&factors[0]))
                 return py::make_tuple(factors[0], factors[1]);

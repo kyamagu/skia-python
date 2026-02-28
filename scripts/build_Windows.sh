@@ -12,10 +12,16 @@ fi
 
 # Build skia
 cd skia && \
-    patch -p1 < ../patch/skia-m138-minimize-download.patch && \
+    patch -R -p1 < ../patch/0001-Proper-copy-and-move-for-path-classes.patch    && \
+    patch -R -p1 < ../patch/0001-Conditionally-include-SkGradientShader.h.patch && \
+    patch -R -p1 < ../patch/0001-Remove-unused-methods.patch                    && \
+    patch -R -p1 < ../patch/0001-Remove-obsolete-types-in-SkPath.h.patch        && \
+    patch -R -p1 < ../patch/0001-Remove-dead-code-related-to-SkPathRef.patch    && \
+    patch -R -p1 < ../patch/0001-Reland-Make-SkPath-immutable-on-GN-build.patch && \
+    patch -p1 < ../patch/skia-m145-minimize-download.patch && \
     patch -p1 < ../patch/skia-m132-colrv1-freetype.diff && \
     patch -p1 -R < ../patch/0001-Disable-OpenGL-for-Windows-on-ARM64.patch && \
-    patch -p1 < ../patch/0001-gn-Remove-msvc-env-setting.patch && \
+    patch -p1 < ../patch/fetch-gn-windows-arm64.diff && \
     python tools/git-sync-deps && \
     bin/gn gen out/Release --args="
 is_official_build=true

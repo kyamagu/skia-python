@@ -69,6 +69,8 @@ py::enum_<SkPathDirection>(m, "PathDirection")
         "clockwise direction for adding closed contours")
     .value("kCCW", SkPathDirection::kCCW,
         "counter-clockwise direction for adding closed contours")
+    .value("kDefault", SkPathDirection::kDefault,
+        "default = clockwise direction")
     .export_values();
 
 py::enum_<SkPathSegmentMask>(m, "PathSegmentMask")
@@ -380,8 +382,8 @@ path
             SkPathFillType fillType,
             bool isVolatile) {
             return SkPath::Make(
-                points.data(), points.size(), verbs.data(), verbs.size(),
-                conicWeights.data(), conicWeights.size(), fillType, isVolatile);
+                {points.data(), points.size()}, {verbs.data(), verbs.size()},
+                {conicWeights.data(), conicWeights.size()}, fillType, isVolatile);
         },
         R"docstring(
         Create a new path with the specified segments.
@@ -406,9 +408,9 @@ path
         )docstring",
         py::arg("points"), py::arg("verbs"), py::arg("conicWeights"),
         py::arg("fillType"), py::arg("isVolatile") = false)
-    .def_static("Rect", &SkPath::Rect,
+    .def_static("Rect", py::overload_cast<const SkRect&, SkPathDirection, unsigned>(&SkPath::Rect),
         py::arg("rect"),
-        py::arg_v("pathDirection", SkPathDirection::kCW, "skia.PathDirection.kCW"),
+        py::arg_v("pathDirection", SkPathDirection::kDefault, "skia.PathDirection.kDefault"),
         py::arg("startIndex") = 0)
     .def_static("Oval",
         py::overload_cast<const SkRect&, SkPathDirection, unsigned>(
@@ -434,7 +436,7 @@ path
         [] (const std::vector<SkPoint>& points, bool isClosed,
             SkPathFillType fillType, bool isVolatile) {
             return SkPath::Polygon(
-                points.data(), points.size(), isClosed, fillType, isVolatile);
+                {points.data(), points.size()}, isClosed, fillType, isVolatile);
         },
         py::arg("points"), py::arg("isClosed"),
         py::arg_v("fillType", SkPathFillType::kWinding, "skia.PathFillType.kWinding"),
@@ -710,7 +712,7 @@ path
             if (max == 0)
                 max = path.countVerbs();
             std::vector<SkPoint> points(max);
-            auto length = path.getPoints(&points[0], max);
+            auto length = path.getPoints({&points[0], max});
             if (length < max)
                 points.erase(points.begin() + length, points.end());
             return points;
@@ -741,7 +743,7 @@ path
             if (max == 0)
                 max = path.countVerbs();
             std::vector<uint8_t> verbs(max);
-            auto length = path.getVerbs(&verbs[0], max);
+            auto length = path.getVerbs({&verbs[0], max});
             if (length < max)
                 verbs.erase(verbs.begin() + length, verbs.end());
             std::vector<SkPath::Verb> verbs_(verbs.size());
@@ -877,7 +879,7 @@ path
         )docstring",
         py::arg("x"), py::arg("y"))
     .def("moveTo",
-        py::overload_cast<const SkPoint&>(&SkPath::moveTo),
+        py::overload_cast<const SkPoint>(&SkPath::moveTo),
         R"docstring(
         Adds beginning of contour at :py:class:`Point` p.
 
@@ -1604,7 +1606,7 @@ path
                     << " elements).";
                 throw py::value_error(stream.str());
             }
-            return path.addRoundRect(rect, &radii_[0], dir);
+            return path.addRoundRect(rect, {&radii_[0], radii_.size()}, dir);
         },
         R"docstring(
         Appends :py:class:`RRect` to :py:class:`Path`, creating a new closed
@@ -1658,7 +1660,7 @@ path
         py::arg("rrect"), py::arg("dir"), py::arg("start"))
     .def("addPoly",
         [] (SkPath& path, const std::vector<SkPoint>& pts, bool close) {
-            return path.addPoly(&pts[0], pts.size(), close);
+            return path.addPoly({&pts[0], pts.size()}, close);
         },
         R"docstring(
         Adds contour created from pts.
@@ -1775,7 +1777,7 @@ path
     //     py::overload_cast<SkScalar, SkScalar>(&SkPath::offset),
     //     "Offsets SkPoint array by (dx, dy).")
     .def("transform",
-        py::overload_cast<const SkMatrix&, SkPath*, SkApplyPerspectiveClip>(
+        py::overload_cast<const SkMatrix&, SkPath*>(
             &SkPath::transform, py::const_),
         R"docstring(
         Transforms verb array, :py:class:`Point` array, and weight by matrix.
@@ -1788,16 +1790,13 @@ path
             :py:class:`Path`
         :param skia.Path dst: overwritten, transformed copy of :py:class:`Path`;
             may be nullptr
-        :param skia.ApplyPerspectiveClip pc: whether to apply perspective
-            clipping
         )docstring",
-        py::arg("matrix"), py::arg("dst") = nullptr,
-        py::arg_v("pc", SkApplyPerspectiveClip::kYes, "skia.ApplyPerspectiveClip.kYes"))
+        py::arg("matrix"), py::arg("dst") = nullptr)
     // .def("transform",
     //     py::overload_cast<const SkMatrix&, SkApplyPerspectiveClip>(
     //         &SkPath::transform),
     //     "Transforms verb array, SkPoint array, and weight by matrix.")
-    .def("getLastPt", &SkPath::getLastPt,
+    .def("getLastPt", py::overload_cast<SkPoint*>(&SkPath::getLastPt, py::const_),
         R"docstring(
         Returns last point on :py:class:`Path` in lastPt.
 
@@ -1848,7 +1847,7 @@ path
 
         :return: SegmentMask bits or zero
         )docstring")
-    .def("contains", &SkPath::contains,
+    .def("contains", py::overload_cast<SkScalar, SkScalar>(&SkPath::contains, py::const_),
         R"docstring(
         Returns true if the point (x, y) is contained by :py:class:`Path`,
         taking into account FillType.
@@ -2227,11 +2226,13 @@ PathBuilder
     .def("snapshot", &SkPathBuilder::snapshot,
         R"docstring(
         the builder is unchanged after returning this path
-        )docstring")
+        )docstring",
+        py::arg("mx") = nullptr)
     .def("detach", &SkPathBuilder::detach,
         R"docstring(
         the builder is reset to empty after returning this path
-        )docstring")
+        )docstring",
+        py::arg("mx") = nullptr)
     .def("setFillType", &SkPathBuilder::setFillType, py::arg("fillType"))
     .def("setIsVolatile", &SkPathBuilder::setIsVolatile, py::arg("isVolatile"))
     .def("reset", &SkPathBuilder::reset)
@@ -2291,7 +2292,7 @@ PathBuilder
     .def("close", &SkPathBuilder::close)
     .def("polylineTo",
         [] (SkPathBuilder& self, const std::vector<SkPoint>& points) {
-            return self.polylineTo(points.data(), points.size());
+            return self.polylineTo({points.data(), points.size()});
         },
         R"docstring(
         Append a series of lineTo(...)
@@ -2451,22 +2452,22 @@ PathBuilder
             &SkPathBuilder::addRRect),
         py::arg("rrect"),
         py::arg_v("pathDirection", SkPathDirection::kCW, "skia.PathDirection.kCW"))
-    .def("addCircle", &SkPathBuilder::addCircle,
+    .def("addCircle", py::overload_cast<SkScalar, SkScalar, SkScalar, SkPathDirection>(&SkPathBuilder::addCircle),
         py::arg("center_x"), py::arg("center_y"), py::arg("radius"),
         py::arg_v("pathDirection", SkPathDirection::kCW, "skia.PathDirection.kCW"))
     .def("addPolygon",
         [] (SkPathBuilder& self, const std::vector<SkPoint>& points,
             bool isClosed) {
-            return self.addPolygon(points.data(), points.size(), isClosed);
+            return self.addPolygon({points.data(), points.size()}, isClosed);
         },
         py::arg("points"), py::arg("isClosed"))
     .def("incReserve",
-        py::overload_cast<int, int>(&SkPathBuilder::incReserve),
+        py::overload_cast<int, int, int>(&SkPathBuilder::incReserve),
         R"docstring(
         Performance hint, to reserve extra storage for subsequent calls to
         lineTo, quadTo, etc.
         )docstring",
-        py::arg("extraPtCount"), py::arg("extraVerbCount"))
+        py::arg("extraPtCount"), py::arg("extraVerbCount"), py::arg("extraConicCount"))
     .def("incReserve",
         py::overload_cast<int>(&SkPathBuilder::incReserve),
         py::arg("extraPtCount"))

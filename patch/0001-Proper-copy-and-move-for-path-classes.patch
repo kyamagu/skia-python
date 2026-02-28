@@ -1,0 +1,141 @@
+From e9b3264ade0c0e520d32df1ad00184de9640851b Mon Sep 17 00:00:00 2001
+From: Ben Wagner <bungeman@google.com>
+Date: Thu, 8 Jan 2026 12:12:56 -0500
+Subject: [PATCH] Proper copy and move for path classes
+
+SkPathBuilder and SkPath should be movable (avoids extra work in both
+cases) and the default implementations should not be inline as they are
+not trivial.
+
+Change-Id: I31ee6b2b775c83e0b681e1dc6c2c1cf1357c8724
+Reviewed-on: https://skia-review.googlesource.com/c/skia/+/1138116
+Reviewed-by: Florin Malita <fmalita@google.com>
+Auto-Submit: Ben Wagner <bungeman@google.com>
+Commit-Queue: Ben Wagner <bungeman@google.com>
+Commit-Queue: Florin Malita <fmalita@google.com>
+Signed-off-by: Hin-Tak Leung <htl10@users.sourceforge.net>
+---
+ include/core/SkPath.h        |  6 ++++--
+ include/core/SkPathBuilder.h | 10 ++++++----
+ src/core/SkPathBuilder.cpp   |  9 ++++++---
+ src/core/SkPath_pathdata.cpp | 18 ++++--------------
+ 4 files changed, 20 insertions(+), 23 deletions(-)
+
+diff --git a/include/core/SkPath.h b/include/core/SkPath.h
+index 7a433f7a82..192a0d3c81 100644
+--- a/include/core/SkPath.h
++++ b/include/core/SkPath.h
+@@ -142,7 +142,8 @@ public:
+ 
+         example: https://fiddle.skia.org/c/@Path_copy_const_SkPath
+     */
+-    SkPath(const SkPath& path);
++    SkPath(const SkPath&);
++    SkPath(SkPath&&);
+ 
+     /** Releases ownership of any shared data and deletes data if SkPath is sole owner.
+ 
+@@ -169,7 +170,8 @@ public:
+ 
+         example: https://fiddle.skia.org/c/@Path_copy_operator
+     */
+-    SkPath& operator=(const SkPath& path);
++    SkPath& operator=(const SkPath&);
++    SkPath& operator=(SkPath&&);
+ 
+     /** Compares a and b; returns true if SkPath::FillType, verb array, SkPoint array, and weights
+         are equivalent.
+diff --git a/include/core/SkPathBuilder.h b/include/core/SkPathBuilder.h
+index d64d221462..adc5b24f52 100644
+--- a/include/core/SkPathBuilder.h
++++ b/include/core/SkPathBuilder.h
+@@ -47,6 +47,12 @@ public:
+     */
+     SkPathBuilder();
+ 
++    SkPathBuilder(const SkPathBuilder&);
++    SkPathBuilder& operator=(const SkPathBuilder&);
++    SkPathBuilder(SkPathBuilder&&);
++    SkPathBuilder& operator=(SkPathBuilder&&);
++    ~SkPathBuilder();
++
+     /** Constructs an empty SkPathBuilder with the given FillType. By default, SkPathBuilder has no
+         verbs, no SkPoint, and no weights.
+ 
+@@ -63,9 +69,6 @@ public:
+     */
+     explicit SkPathBuilder(const SkPath& path);
+ 
+-    SkPathBuilder(const SkPathBuilder&) = default;
+-    ~SkPathBuilder();
+-
+     /** Sets an SkPathBuilder to be a copy of an existing SkPath.
+         Copies the FillType and replays all of the verbs from the SkPath into the SkPathBuilder.
+ 
+@@ -73,7 +76,6 @@ public:
+         @return      SkPathBuilder
+     */
+     SkPathBuilder& operator=(const SkPath&);
+-    SkPathBuilder& operator=(const SkPathBuilder&) = default;
+ 
+     bool operator==(const SkPathBuilder&) const;
+     bool operator!=(const SkPathBuilder& o) const { return !(*this == o); }
+diff --git a/src/core/SkPathBuilder.cpp b/src/core/SkPathBuilder.cpp
+index 789ab6bebe..bcab6bfff5 100644
+--- a/src/core/SkPathBuilder.cpp
++++ b/src/core/SkPathBuilder.cpp
+@@ -52,6 +52,12 @@ SkPathBuilder::SkPathBuilder() {
+     this->reset();
+ }
+ 
++SkPathBuilder::SkPathBuilder(const SkPathBuilder&) = default;
++SkPathBuilder& SkPathBuilder::operator=(const SkPathBuilder&) = default;
++SkPathBuilder::SkPathBuilder(SkPathBuilder&&) = default;
++SkPathBuilder& SkPathBuilder::operator=(SkPathBuilder&&) = default;
++SkPathBuilder::~SkPathBuilder() = default;
++
+ SkPathBuilder::SkPathBuilder(SkPathFillType ft) {
+     this->reset();
+     fFillType = ft;
+@@ -61,9 +67,6 @@ SkPathBuilder::SkPathBuilder(const SkPath& src) {
+     *this = src;
+ }
+ 
+-SkPathBuilder::~SkPathBuilder() {
+-}
+-
+ SkPathBuilder& SkPathBuilder::reset() {
+     fPts.clear();
+     fVerbs.clear();
+diff --git a/src/core/SkPath_pathdata.cpp b/src/core/SkPath_pathdata.cpp
+index a38d184702..1005dc7624 100644
+--- a/src/core/SkPath_pathdata.cpp
++++ b/src/core/SkPath_pathdata.cpp
+@@ -57,20 +57,10 @@ SkPath::SkPath(SkPathFillType ft)
+     , fIsVolatile(false)
+ {}
+ 
+-SkPath::SkPath(const SkPath& that)
+-    : fPathData(that.fPathData)
+-    , fFillType(that.fFillType)
+-    , fIsVolatile(that.fIsVolatile)
+-{}
+-
+-SkPath& SkPath::operator=(const SkPath& o) {
+-    if (this != &o) {
+-        fPathData   = o.fPathData;
+-        fFillType   = o.fFillType;
+-        fIsVolatile = o.fIsVolatile;
+-    }
+-    return *this;
+-}
++SkPath::SkPath(const SkPath&) = default;
++SkPath& SkPath::operator=(const SkPath&) = default;
++SkPath::SkPath(SkPath&&) = default;
++SkPath& SkPath::operator=(SkPath&&) = default;
+ 
+ void SkPath::setConvexity(SkPathConvexity c) const {
+     fPathData->setConvexity(c);
+-- 
+2.52.0
+

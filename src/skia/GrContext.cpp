@@ -301,7 +301,7 @@ py::class_<GrBackendSemaphore>(m, "GrBackendSemaphore")
 py::class_<GrBackendFormat>(m, "GrBackendFormat")
     .def(py::init<>())
     .def(py::init<const GrBackendFormat&>())
-    .def_static("MakeGL", &GrBackendFormats::MakeGL,
+    .def_static("MakeGL", py::overload_cast<GrGLenum, GrGLenum>(&GrBackendFormats::MakeGL),
         py::arg("format"), py::arg("target"))
 #ifdef SK_VULKAN
     .def_static("MakeVk", py::overload_cast<VkFormat, bool>(&GrBackendFormats::MakeVk),
