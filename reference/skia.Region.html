@@ -8,14 +8,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Region &mdash; skia-python 0.0.1 documentation</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
-      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=9edc463e" />
 
   
       <script src="../_static/jquery.js?v=5d32c60e"></script>
       <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
       <script src="../_static/documentation_options.js?v=d45e8c67"></script>
-      <script src="../_static/doctools.js?v=9bcbadda"></script>
-      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -49,7 +49,6 @@
 <li class="toctree-l1 current"><a class="reference internal" href="../reference.html">Reference</a><ul class="current">
 <li class="toctree-l2 current"><a class="reference internal" href="skia.html">skia</a><ul class="current">
 <li class="toctree-l3"><a class="reference internal" href="skia.AlphaType.html">AlphaType</a></li>
-<li class="toctree-l3"><a class="reference internal" href="skia.ApplyPerspectiveClip.html">ApplyPerspectiveClip</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.AutoCanvasRestore.html">AutoCanvasRestore</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.BBHFactory.html">BBHFactory</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.BBoxHierarchy.html">BBoxHierarchy</a></li>
@@ -292,7 +291,7 @@
 <h1>Region<a class="headerlink" href="#region" title="Link to this heading"></a></h1>
 <dl class="py class">
 <dt class="sig sig-object py" id="skia.Region">
-<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">Region</span></span><a class="headerlink" href="#skia.Region" title="Link to this definition"></a></dt>
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">Region</span></span><a class="headerlink" href="#skia.Region" title="Link to this definition"></a></dt>
 <dd><p><a class="reference internal" href="#skia.Region" title="skia.Region"><code class="xref py py-class docutils literal notranslate"><span class="pre">Region</span></code></a> describes the set of pixels used to clip
 <a class="reference internal" href="skia.Canvas.html#skia.Canvas" title="skia.Canvas"><code class="xref py py-class docutils literal notranslate"><span class="pre">Canvas</span></code></a>.</p>
 <p><a class="reference internal" href="#skia.Region" title="skia.Region"><code class="xref py py-class docutils literal notranslate"><span class="pre">Region</span></code></a> is compact, efficiently storing a single integer
@@ -336,79 +335,79 @@ or rectangles contained by it, optionally intersecting a bounding rectangle.</p>
 <table class="autosummary longtable docutils align-default">
 <tbody>
 <tr class="row-odd"><td><p><a class="reference internal" href="#skia.Region.__init__" title="skia.Region.__init__"><code class="xref py py-obj docutils literal notranslate"><span class="pre">__init__</span></code></a></p></td>
-<td><p>__init__(<a href="#id1"><span class="problematic" id="id2">*</span></a>args, <a href="#id3"><span class="problematic" id="id4">**</span></a>kwargs) Overloaded function.</p></td>
+<td><p>Overloaded function.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#skia.Region.cliperator" title="skia.Region.cliperator"><code class="xref py py-obj docutils literal notranslate"><span class="pre">cliperator</span></code></a></p></td>
-<td><p>cliperator(self: skia.Region, clip: skia.IRect) -&gt; skia.Region.Cliperator</p></td>
+<td><p>Creates <a class="reference internal" href="skia.Region.Cliperator.html#skia.Region.Cliperator" title="skia.Region.Cliperator"><code class="xref py py-class docutils literal notranslate"><span class="pre">Cliperator</span></code></a> to return elements of <a class="reference internal" href="skia.IRect.html#skia.IRect" title="skia.IRect"><code class="xref py py-class docutils literal notranslate"><span class="pre">IRect</span></code></a> array in <a class="reference internal" href="#skia.Region" title="skia.Region"><code class="xref py py-class docutils literal notranslate"><span class="pre">Region</span></code></a> within clip.</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#skia.Region.computeRegionComplexity" title="skia.Region.computeRegionComplexity"><code class="xref py py-obj docutils literal notranslate"><span class="pre">computeRegionComplexity</span></code></a></p></td>
-<td><p>computeRegionComplexity(self: skia.Region) -&gt; int</p></td>
+<td><p>Returns a value that increases with the number of elements in <a class="reference internal" href="#skia.Region" title="skia.Region"><code class="xref py py-class docutils literal notranslate"><span class="pre">Region</span></code></a>.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#skia.Region.contains" title="skia.Region.contains"><code class="xref py py-obj docutils literal notranslate"><span class="pre">contains</span></code></a></p></td>
-<td><p>contains(<a href="#id5"><span class="problematic" id="id6">*</span></a>args, <a href="#id7"><span class="problematic" id="id8">**</span></a>kwargs) Overloaded function.</p></td>
+<td><p>Overloaded function.</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#skia.Region.getBoundaryPath" title="skia.Region.getBoundaryPath"><code class="xref py py-obj docutils literal notranslate"><span class="pre">getBoundaryPath</span></code></a></p></td>
-<td><p>getBoundaryPath(self: skia.Region, path: SkPath) -&gt; bool</p></td>
+<td><p>Appends outline of <a class="reference internal" href="#skia.Region" title="skia.Region"><code class="xref py py-class docutils literal notranslate"><span class="pre">Region</span></code></a> to path.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#skia.Region.getBounds" title="skia.Region.getBounds"><code class="xref py py-obj docutils literal notranslate"><span class="pre">getBounds</span></code></a></p></td>
-<td><p>getBounds(self: skia.Region) -&gt; skia.IRect</p></td>
+<td><p>Returns minimum and maximum axes values of <a class="reference internal" href="skia.IRect.html#skia.IRect" title="skia.IRect"><code class="xref py py-class docutils literal notranslate"><span class="pre">IRect</span></code></a> array.</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#skia.Region.intersects" title="skia.Region.intersects"><code class="xref py py-obj docutils literal notranslate"><span class="pre">intersects</span></code></a></p></td>
-<td><p>intersects(<a href="#id9"><span class="problematic" id="id10">*</span></a>args, <a href="#id11"><span class="problematic" id="id12">**</span></a>kwargs) Overloaded function.</p></td>
+<td><p>Overloaded function.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#skia.Region.isComplex" title="skia.Region.isComplex"><code class="xref py py-obj docutils literal notranslate"><span class="pre">isComplex</span></code></a></p></td>
-<td><p>isComplex(self: skia.Region) -&gt; bool</p></td>
+<td><p>Returns true if <a class="reference internal" href="#skia.Region" title="skia.Region"><code class="xref py py-class docutils literal notranslate"><span class="pre">Region</span></code></a> is described by more than one rectangle.</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#skia.Region.isEmpty" title="skia.Region.isEmpty"><code class="xref py py-obj docutils literal notranslate"><span class="pre">isEmpty</span></code></a></p></td>
-<td><p>isEmpty(self: skia.Region) -&gt; bool</p></td>
+<td><p>Returns true if <a class="reference internal" href="#skia.Region" title="skia.Region"><code class="xref py py-class docutils literal notranslate"><span class="pre">Region</span></code></a> is empty.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#skia.Region.isRect" title="skia.Region.isRect"><code class="xref py py-obj docutils literal notranslate"><span class="pre">isRect</span></code></a></p></td>
-<td><p>isRect(self: skia.Region) -&gt; bool</p></td>
+<td><p>Returns true if <a class="reference internal" href="#skia.Region" title="skia.Region"><code class="xref py py-class docutils literal notranslate"><span class="pre">Region</span></code></a> is one <a class="reference internal" href="skia.IRect.html#skia.IRect" title="skia.IRect"><code class="xref py py-class docutils literal notranslate"><span class="pre">IRect</span></code></a> with positive dimensions.</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#skia.Region.iterator" title="skia.Region.iterator"><code class="xref py py-obj docutils literal notranslate"><span class="pre">iterator</span></code></a></p></td>
-<td><p>iterator(self: skia.Region) -&gt; skia.Region.Iterator</p></td>
+<td><p>Creates <a class="reference internal" href="skia.Region.Iterator.html#skia.Region.Iterator" title="skia.Region.Iterator"><code class="xref py py-class docutils literal notranslate"><span class="pre">Iterator</span></code></a> to return elements of <a class="reference internal" href="skia.IRect.html#skia.IRect" title="skia.IRect"><code class="xref py py-class docutils literal notranslate"><span class="pre">IRect</span></code></a> array in region.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#skia.Region.op" title="skia.Region.op"><code class="xref py py-obj docutils literal notranslate"><span class="pre">op</span></code></a></p></td>
-<td><p>op(<a href="#id13"><span class="problematic" id="id14">*</span></a>args, <a href="#id15"><span class="problematic" id="id16">**</span></a>kwargs) Overloaded function.</p></td>
+<td><p>Overloaded function.</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#skia.Region.quickContains" title="skia.Region.quickContains"><code class="xref py py-obj docutils literal notranslate"><span class="pre">quickContains</span></code></a></p></td>
-<td><p>quickContains(self: skia.Region, r: skia.IRect) -&gt; bool</p></td>
+<td><p>Returns true if <a class="reference internal" href="#skia.Region" title="skia.Region"><code class="xref py py-class docutils literal notranslate"><span class="pre">Region</span></code></a> is a single rectangle and contains r.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#skia.Region.quickReject" title="skia.Region.quickReject"><code class="xref py py-obj docutils literal notranslate"><span class="pre">quickReject</span></code></a></p></td>
-<td><p>quickReject(<a href="#id17"><span class="problematic" id="id18">*</span></a>args, <a href="#id19"><span class="problematic" id="id20">**</span></a>kwargs) Overloaded function.</p></td>
+<td><p>Overloaded function.</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#skia.Region.readFromMemory" title="skia.Region.readFromMemory"><code class="xref py py-obj docutils literal notranslate"><span class="pre">readFromMemory</span></code></a></p></td>
-<td><p>readFromMemory(self: skia.Region, data: SkData) -&gt; int</p></td>
+<td><p>Constructs <a class="reference internal" href="#skia.Region" title="skia.Region"><code class="xref py py-class docutils literal notranslate"><span class="pre">Region</span></code></a> from buffer of size length.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#skia.Region.set" title="skia.Region.set"><code class="xref py py-obj docutils literal notranslate"><span class="pre">set</span></code></a></p></td>
-<td><p>set(self: skia.Region, src: skia.Region) -&gt; bool</p></td>
+<td><p>Sets <a class="reference internal" href="#skia.Region" title="skia.Region"><code class="xref py py-class docutils literal notranslate"><span class="pre">Region</span></code></a> to src, and returns true if src bounds is not empty.</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#skia.Region.setEmpty" title="skia.Region.setEmpty"><code class="xref py py-obj docutils literal notranslate"><span class="pre">setEmpty</span></code></a></p></td>
-<td><p>setEmpty(self: skia.Region) -&gt; bool</p></td>
+<td><p>Constructs an empty <a class="reference internal" href="#skia.Region" title="skia.Region"><code class="xref py py-class docutils literal notranslate"><span class="pre">Region</span></code></a>.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#skia.Region.setPath" title="skia.Region.setPath"><code class="xref py py-obj docutils literal notranslate"><span class="pre">setPath</span></code></a></p></td>
-<td><p>setPath(self: skia.Region, path: SkPath, clip: skia.Region) -&gt; bool</p></td>
+<td><p>Constructs <a class="reference internal" href="#skia.Region" title="skia.Region"><code class="xref py py-class docutils literal notranslate"><span class="pre">Region</span></code></a> to match outline of path within clip.</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#skia.Region.setRect" title="skia.Region.setRect"><code class="xref py py-obj docutils literal notranslate"><span class="pre">setRect</span></code></a></p></td>
-<td><p>setRect(self: skia.Region, rect: skia.IRect) -&gt; bool</p></td>
+<td><p>Constructs a rectangular <a class="reference internal" href="#skia.Region" title="skia.Region"><code class="xref py py-class docutils literal notranslate"><span class="pre">Region</span></code></a> matching the bounds of rect.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#skia.Region.setRects" title="skia.Region.setRects"><code class="xref py py-obj docutils literal notranslate"><span class="pre">setRects</span></code></a></p></td>
-<td><p>setRects(self: skia.Region, rects: list[skia.IRect]) -&gt; bool</p></td>
+<td><p>Constructs <a class="reference internal" href="#skia.Region" title="skia.Region"><code class="xref py py-class docutils literal notranslate"><span class="pre">Region</span></code></a> as the union of <a class="reference internal" href="skia.IRect.html#skia.IRect" title="skia.IRect"><code class="xref py py-class docutils literal notranslate"><span class="pre">IRect</span></code></a> in rects array.</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#skia.Region.setRegion" title="skia.Region.setRegion"><code class="xref py py-obj docutils literal notranslate"><span class="pre">setRegion</span></code></a></p></td>
-<td><p>setRegion(self: skia.Region, region: skia.Region) -&gt; bool</p></td>
+<td><p>Constructs a copy of an existing region.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#skia.Region.spanerator" title="skia.Region.spanerator"><code class="xref py py-obj docutils literal notranslate"><span class="pre">spanerator</span></code></a></p></td>
-<td><p>spanerator(self: skia.Region, y: int, left: int, right: int) -&gt; skia.Region.Spanerator</p></td>
+<td><p>Creates <a class="reference internal" href="skia.Region.Spanerator.html#skia.Region.Spanerator" title="skia.Region.Spanerator"><code class="xref py py-class docutils literal notranslate"><span class="pre">Region.Spanerator</span></code></a> to return line segments in <a class="reference internal" href="#skia.Region" title="skia.Region"><code class="xref py py-class docutils literal notranslate"><span class="pre">Region</span></code></a> on scan line.</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#skia.Region.swap" title="skia.Region.swap"><code class="xref py py-obj docutils literal notranslate"><span class="pre">swap</span></code></a></p></td>
-<td><p>swap(self: skia.Region, other: skia.Region) -&gt; None</p></td>
+<td><p>Exchanges <a class="reference internal" href="skia.IRect.html#skia.IRect" title="skia.IRect"><code class="xref py py-class docutils literal notranslate"><span class="pre">IRect</span></code></a> array of <a class="reference internal" href="#skia.Region" title="skia.Region"><code class="xref py py-class docutils literal notranslate"><span class="pre">Region</span></code></a> and other.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#skia.Region.translate" title="skia.Region.translate"><code class="xref py py-obj docutils literal notranslate"><span class="pre">translate</span></code></a></p></td>
-<td><p>translate(self: skia.Region, dx: int, dy: int) -&gt; skia.Region</p></td>
+<td><p>Offsets <a class="reference internal" href="#skia.Region" title="skia.Region"><code class="xref py py-class docutils literal notranslate"><span class="pre">Region</span></code></a> by ivector (dx, dy).</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#skia.Region.writeToMemory" title="skia.Region.writeToMemory"><code class="xref py py-obj docutils literal notranslate"><span class="pre">writeToMemory</span></code></a></p></td>
-<td><p>writeToMemory(self: skia.Region) -&gt; SkData</p></td>
+<td><p>Writes <a class="reference internal" href="#skia.Region" title="skia.Region"><code class="xref py py-class docutils literal notranslate"><span class="pre">Region</span></code></a> to <a class="reference internal" href="skia.Data.html#skia.Data" title="skia.Data"><code class="xref py py-class docutils literal notranslate"><span class="pre">Data</span></code></a>.</p></td>
 </tr>
 </tbody>
 </table>
@@ -524,7 +523,7 @@ greater than one indicating that <a class="reference internal" href="#skia.Regio
 <span class="sig-prename descclassname"><span class="pre">Region.</span></span><span class="sig-name descname"><span class="pre">contains</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#skia.Region.contains" title="Link to this definition"></a></dt>
 <dd><p>Overloaded function.</p>
 <ol class="arabic">
-<li><p>contains(self: skia.Region, x: int, y: int) -&gt; bool</p>
+<li><p>contains(self: skia.Region, x: typing.SupportsInt | typing.SupportsIndex, y: typing.SupportsInt | typing.SupportsIndex) -&gt; bool</p>
 <blockquote>
 <div><p>Returns true if <a class="reference internal" href="skia.IPoint.html#skia.IPoint" title="skia.IPoint"><code class="xref py py-class docutils literal notranslate"><span class="pre">IPoint</span></code></a> (x, y) is inside <a class="reference internal" href="#skia.Region" title="skia.Region"><code class="xref py py-class docutils literal notranslate"><span class="pre">Region</span></code></a>.</p>
 <p>Returns false if <a class="reference internal" href="#skia.Region" title="skia.Region"><code class="xref py py-class docutils literal notranslate"><span class="pre">Region</span></code></a> is empty.</p>
@@ -919,7 +918,7 @@ clip when anti-aliasing is disabled.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="skia.Region.setRects">
-<span class="sig-prename descclassname"><span class="pre">Region.</span></span><span class="sig-name descname"><span class="pre">setRects</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#skia.Region" title="skia.Region"><span class="pre">skia.Region</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">rects</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="skia.IRect.html#skia.IRect" title="skia.IRect"><span class="pre">skia.IRect</span></a><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#skia.Region.setRects" title="Link to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">Region.</span></span><span class="sig-name descname"><span class="pre">setRects</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#skia.Region" title="skia.Region"><span class="pre">skia.Region</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">rects</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">collections.abc.Sequence</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="skia.IRect.html#skia.IRect" title="skia.IRect"><span class="pre">skia.IRect</span></a><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#skia.Region.setRects" title="Link to this definition"></a></dt>
 <dd><p>Constructs <a class="reference internal" href="#skia.Region" title="skia.Region"><code class="xref py py-class docutils literal notranslate"><span class="pre">Region</span></code></a> as the union of <a class="reference internal" href="skia.IRect.html#skia.IRect" title="skia.IRect"><code class="xref py py-class docutils literal notranslate"><span class="pre">IRect</span></code></a> in rects
 array.</p>
 <p>If count is zero, constructs empty <a class="reference internal" href="#skia.Region" title="skia.Region"><code class="xref py py-class docutils literal notranslate"><span class="pre">Region</span></code></a>. Returns false if
@@ -957,7 +956,7 @@ interface; the underlying shared pointers are not exposed.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="skia.Region.spanerator">
-<span class="sig-prename descclassname"><span class="pre">Region.</span></span><span class="sig-name descname"><span class="pre">spanerator</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#skia.Region" title="skia.Region"><span class="pre">skia.Region</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">left</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">right</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="skia.Region.Spanerator.html#skia.Region.Spanerator" title="skia.Region.Spanerator"><span class="pre">skia.Region.Spanerator</span></a></span></span><a class="headerlink" href="#skia.Region.spanerator" title="Link to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">Region.</span></span><span class="sig-name descname"><span class="pre">spanerator</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#skia.Region" title="skia.Region"><span class="pre">skia.Region</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">SupportsInt</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">SupportsIndex</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">left</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">SupportsInt</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">SupportsIndex</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">right</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">SupportsInt</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">SupportsIndex</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="skia.Region.Spanerator.html#skia.Region.Spanerator" title="skia.Region.Spanerator"><span class="pre">skia.Region.Spanerator</span></a></span></span><a class="headerlink" href="#skia.Region.spanerator" title="Link to this definition"></a></dt>
 <dd><p>Creates <a class="reference internal" href="skia.Region.Spanerator.html#skia.Region.Spanerator" title="skia.Region.Spanerator"><code class="xref py py-class docutils literal notranslate"><span class="pre">Region.Spanerator</span></code></a> to return line segments in
 <a class="reference internal" href="#skia.Region" title="skia.Region"><code class="xref py py-class docutils literal notranslate"><span class="pre">Region</span></code></a> on scan line.</p>
 <p>Example:</p>
@@ -993,7 +992,7 @@ written to, making assignment as efficient as swap().</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="skia.Region.translate">
-<span class="sig-prename descclassname"><span class="pre">Region.</span></span><span class="sig-name descname"><span class="pre">translate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#skia.Region" title="skia.Region"><span class="pre">skia.Region</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">dx</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dy</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#skia.Region" title="skia.Region"><span class="pre">skia.Region</span></a></span></span><a class="headerlink" href="#skia.Region.translate" title="Link to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">Region.</span></span><span class="sig-name descname"><span class="pre">translate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#skia.Region" title="skia.Region"><span class="pre">skia.Region</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">dx</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">SupportsInt</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">SupportsIndex</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dy</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">SupportsInt</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">SupportsIndex</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#skia.Region" title="skia.Region"><span class="pre">skia.Region</span></a></span></span><a class="headerlink" href="#skia.Region.translate" title="Link to this definition"></a></dt>
 <dd><p>Offsets <a class="reference internal" href="#skia.Region" title="skia.Region"><code class="xref py py-class docutils literal notranslate"><span class="pre">Region</span></code></a> by ivector (dx, dy).</p>
 <p>Has no effect if <a class="reference internal" href="#skia.Region" title="skia.Region"><code class="xref py py-class docutils literal notranslate"><span class="pre">Region</span></code></a> is empty. If <a class="reference internal" href="#skia.Region" title="skia.Region"><code class="xref py py-class docutils literal notranslate"><span class="pre">Region</span></code></a> is
 empty, returns empty region.</p>
@@ -1023,42 +1022,42 @@ empty, returns empty region.</p>
 <h2>Attributes<a class="headerlink" href="#attributes" title="Link to this heading"></a></h2>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="skia.Region.kDifference_Op">
-<span class="sig-prename descclassname"><span class="pre">Region.</span></span><span class="sig-name descname"><span class="pre">kDifference_Op</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;Op.kDifference_Op:</span> <span class="pre">0&gt;</span></em><a class="headerlink" href="#skia.Region.kDifference_Op" title="Link to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">Region.</span></span><span class="sig-name descname"><span class="pre">kDifference_Op</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;Op.kDifference_Op:</span> <span class="pre">0&gt;</span></span><a class="headerlink" href="#skia.Region.kDifference_Op" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="skia.Region.kIntersect_Op">
-<span class="sig-prename descclassname"><span class="pre">Region.</span></span><span class="sig-name descname"><span class="pre">kIntersect_Op</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;Op.kIntersect_Op:</span> <span class="pre">1&gt;</span></em><a class="headerlink" href="#skia.Region.kIntersect_Op" title="Link to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">Region.</span></span><span class="sig-name descname"><span class="pre">kIntersect_Op</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;Op.kIntersect_Op:</span> <span class="pre">1&gt;</span></span><a class="headerlink" href="#skia.Region.kIntersect_Op" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="skia.Region.kLastOp">
-<span class="sig-prename descclassname"><span class="pre">Region.</span></span><span class="sig-name descname"><span class="pre">kLastOp</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;Op.kReplace_Op:</span> <span class="pre">5&gt;</span></em><a class="headerlink" href="#skia.Region.kLastOp" title="Link to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">Region.</span></span><span class="sig-name descname"><span class="pre">kLastOp</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;Op.kReplace_Op:</span> <span class="pre">5&gt;</span></span><a class="headerlink" href="#skia.Region.kLastOp" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="skia.Region.kOpCnt">
-<span class="sig-prename descclassname"><span class="pre">Region.</span></span><span class="sig-name descname"><span class="pre">kOpCnt</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">6</span></em><a class="headerlink" href="#skia.Region.kOpCnt" title="Link to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">Region.</span></span><span class="sig-name descname"><span class="pre">kOpCnt</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">6</span></span><a class="headerlink" href="#skia.Region.kOpCnt" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="skia.Region.kReplace_Op">
-<span class="sig-prename descclassname"><span class="pre">Region.</span></span><span class="sig-name descname"><span class="pre">kReplace_Op</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;Op.kReplace_Op:</span> <span class="pre">5&gt;</span></em><a class="headerlink" href="#skia.Region.kReplace_Op" title="Link to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">Region.</span></span><span class="sig-name descname"><span class="pre">kReplace_Op</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;Op.kReplace_Op:</span> <span class="pre">5&gt;</span></span><a class="headerlink" href="#skia.Region.kReplace_Op" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="skia.Region.kReverseDifference_Op">
-<span class="sig-prename descclassname"><span class="pre">Region.</span></span><span class="sig-name descname"><span class="pre">kReverseDifference_Op</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;Op.kReverseDifference_Op:</span> <span class="pre">4&gt;</span></em><a class="headerlink" href="#skia.Region.kReverseDifference_Op" title="Link to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">Region.</span></span><span class="sig-name descname"><span class="pre">kReverseDifference_Op</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;Op.kReverseDifference_Op:</span> <span class="pre">4&gt;</span></span><a class="headerlink" href="#skia.Region.kReverseDifference_Op" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="skia.Region.kUnion_Op">
-<span class="sig-prename descclassname"><span class="pre">Region.</span></span><span class="sig-name descname"><span class="pre">kUnion_Op</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;Op.kUnion_Op:</span> <span class="pre">2&gt;</span></em><a class="headerlink" href="#skia.Region.kUnion_Op" title="Link to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">Region.</span></span><span class="sig-name descname"><span class="pre">kUnion_Op</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;Op.kUnion_Op:</span> <span class="pre">2&gt;</span></span><a class="headerlink" href="#skia.Region.kUnion_Op" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="skia.Region.kXOR_Op">
-<span class="sig-prename descclassname"><span class="pre">Region.</span></span><span class="sig-name descname"><span class="pre">kXOR_Op</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;Op.kXOR_Op:</span> <span class="pre">3&gt;</span></em><a class="headerlink" href="#skia.Region.kXOR_Op" title="Link to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">Region.</span></span><span class="sig-name descname"><span class="pre">kXOR_Op</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;Op.kXOR_Op:</span> <span class="pre">3&gt;</span></span><a class="headerlink" href="#skia.Region.kXOR_Op" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 </section>

@@ -8,14 +8,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Shader &mdash; skia-python 0.0.1 documentation</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
-      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=9edc463e" />
 
   
       <script src="../_static/jquery.js?v=5d32c60e"></script>
       <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
       <script src="../_static/documentation_options.js?v=d45e8c67"></script>
-      <script src="../_static/doctools.js?v=9bcbadda"></script>
-      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -49,7 +49,6 @@
 <li class="toctree-l1 current"><a class="reference internal" href="../reference.html">Reference</a><ul class="current">
 <li class="toctree-l2 current"><a class="reference internal" href="skia.html">skia</a><ul class="current">
 <li class="toctree-l3"><a class="reference internal" href="skia.AlphaType.html">AlphaType</a></li>
-<li class="toctree-l3"><a class="reference internal" href="skia.ApplyPerspectiveClip.html">ApplyPerspectiveClip</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.AutoCanvasRestore.html">AutoCanvasRestore</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.BBHFactory.html">BBHFactory</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.BBoxHierarchy.html">BBoxHierarchy</a></li>
@@ -289,7 +288,7 @@
 <h1>Shader<a class="headerlink" href="#shader" title="Link to this heading"></a></h1>
 <dl class="py class">
 <dt class="sig sig-object py" id="skia.Shader">
-<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">Shader</span></span><a class="headerlink" href="#skia.Shader" title="Link to this definition"></a></dt>
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">Shader</span></span><a class="headerlink" href="#skia.Shader" title="Link to this definition"></a></dt>
 <dd><p>Shaders specify the source color(s) for what is being drawn.</p>
 <p>If a paint has no shader, then the paint’s color is used. If the paint has a
 shader, then the shader’s color(s) are use instead, but they are modulated
@@ -322,40 +321,40 @@ modify the original shader… only the paint’s alpha needs to be modified.</p>
 <table class="autosummary longtable docutils align-default">
 <tbody>
 <tr class="row-odd"><td><p><a class="reference internal" href="#skia.Shader.Deserialize" title="skia.Shader.Deserialize"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Deserialize</span></code></a></p></td>
-<td><p>Deserialize(type: skia.Flattanable.Type, b: Buffer) -&gt; skia.Flattanable</p></td>
+<td><p></p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#skia.Shader.__init__" title="skia.Shader.__init__"><code class="xref py py-obj docutils literal notranslate"><span class="pre">__init__</span></code></a></p></td>
 <td><p></p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#skia.Shader.getFlattenableType" title="skia.Shader.getFlattenableType"><code class="xref py py-obj docutils literal notranslate"><span class="pre">getFlattenableType</span></code></a></p></td>
-<td><p>getFlattenableType(self: skia.Flattanable) -&gt; skia.Flattanable.Type</p></td>
+<td><p></p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#skia.Shader.getTypeName" title="skia.Shader.getTypeName"><code class="xref py py-obj docutils literal notranslate"><span class="pre">getTypeName</span></code></a></p></td>
-<td><p>getTypeName(self: skia.Flattanable) -&gt; str</p></td>
+<td><p>Returns the name of the object's class.</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#skia.Shader.isAImage" title="skia.Shader.isAImage"><code class="xref py py-obj docutils literal notranslate"><span class="pre">isAImage</span></code></a></p></td>
-<td><p>isAImage(<a href="#id1"><span class="problematic" id="id2">*</span></a>args, <a href="#id3"><span class="problematic" id="id4">**</span></a>kwargs) Overloaded function.</p></td>
+<td><p>Overloaded function.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#skia.Shader.isOpaque" title="skia.Shader.isOpaque"><code class="xref py py-obj docutils literal notranslate"><span class="pre">isOpaque</span></code></a></p></td>
-<td><p>isOpaque(self: skia.Shader) -&gt; bool</p></td>
+<td><p>Returns true if the shader is guaranteed to produce only opaque colors, subject to the <a class="reference internal" href="skia.Paint.html#skia.Paint" title="skia.Paint"><code class="xref py py-class docutils literal notranslate"><span class="pre">Paint</span></code></a> using the shader to apply an opaque alpha value.</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#skia.Shader.makeWithColorFilter" title="skia.Shader.makeWithColorFilter"><code class="xref py py-obj docutils literal notranslate"><span class="pre">makeWithColorFilter</span></code></a></p></td>
-<td><p>makeWithColorFilter(self: skia.Shader, colorFilter: skia.ColorFilter) -&gt; skia.Shader</p></td>
+<td><p>Create a new shader that produces the same colors as invoking this shader and then applying the colorfilter.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#skia.Shader.makeWithLocalMatrix" title="skia.Shader.makeWithLocalMatrix"><code class="xref py py-obj docutils literal notranslate"><span class="pre">makeWithLocalMatrix</span></code></a></p></td>
-<td><p>makeWithLocalMatrix(self: skia.Shader, matrix: skia.Matrix) -&gt; skia.Shader</p></td>
+<td><p>Return a shader that will apply the specified localMatrix to this shader.</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#skia.Shader.ref" title="skia.Shader.ref"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ref</span></code></a></p></td>
-<td><p>ref(self: skia.RefCntBase) -&gt; None</p></td>
+<td><p>Increment the reference count.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#skia.Shader.serialize" title="skia.Shader.serialize"><code class="xref py py-obj docutils literal notranslate"><span class="pre">serialize</span></code></a></p></td>
-<td><p>serialize(self: skia.Flattanable) -&gt; skia.Data</p></td>
+<td><p></p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#skia.Shader.unique" title="skia.Shader.unique"><code class="xref py py-obj docutils literal notranslate"><span class="pre">unique</span></code></a></p></td>
-<td><p>unique(self: skia.RefCntBase) -&gt; bool</p></td>
+<td><p>May return true if the caller is the only owner.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#skia.Shader.unref" title="skia.Shader.unref"><code class="xref py py-obj docutils literal notranslate"><span class="pre">unref</span></code></a></p></td>
-<td><p>unref(self: skia.RefCntBase) -&gt; None</p></td>
+<td><p>Decrement the reference count.</p></td>
 </tr>
 </tbody>
 </table>
@@ -388,7 +387,7 @@ modify the original shader… only the paint’s alpha needs to be modified.</p>
 <h2>Methods<a class="headerlink" href="#methods" title="Link to this heading"></a></h2>
 <dl class="py method">
 <dt class="sig sig-object py" id="skia.Shader.Deserialize">
-<em class="property"><span class="k"><span class="pre">static</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">Shader.</span></span><span class="sig-name descname"><span class="pre">Deserialize</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">type</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="skia.Flattanable.Type.html#skia.Flattanable.Type" title="skia.Flattanable.Type"><span class="pre">skia.Flattanable.Type</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">b</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Buffer</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="skia.Flattanable.html#skia.Flattanable" title="skia.Flattanable"><span class="pre">skia.Flattanable</span></a></span></span><a class="headerlink" href="#skia.Shader.Deserialize" title="Link to this definition"></a></dt>
+<span class="property"><span class="k"><span class="pre">static</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">Shader.</span></span><span class="sig-name descname"><span class="pre">Deserialize</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">type</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="skia.Flattanable.Type.html#skia.Flattanable.Type" title="skia.Flattanable.Type"><span class="pre">skia.Flattanable.Type</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">b</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">typing_extensions.Buffer</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="skia.Flattanable.html#skia.Flattanable" title="skia.Flattanable"><span class="pre">skia.Flattanable</span></a></span></span><a class="headerlink" href="#skia.Shader.Deserialize" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
@@ -413,7 +412,7 @@ modify the original shader… only the paint’s alpha needs to be modified.</p>
 <span class="sig-prename descclassname"><span class="pre">Shader.</span></span><span class="sig-name descname"><span class="pre">isAImage</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#skia.Shader.isAImage" title="Link to this definition"></a></dt>
 <dd><p>Overloaded function.</p>
 <ol class="arabic">
-<li><p>isAImage(self: skia.Shader, localMatrix: skia.Matrix, xy: list[skia.TileMode] = None) -&gt; skia.Image</p>
+<li><p>isAImage(self: skia.Shader, localMatrix: skia.Matrix, xy: collections.abc.Sequence[skia.TileMode] = None) -&gt; skia.Image</p>
 <blockquote>
 <div><p>Iff this shader is backed by a single <a class="reference internal" href="skia.Image.html#skia.Image" title="skia.Image"><code class="xref py py-class docutils literal notranslate"><span class="pre">Image</span></code></a>, return its ptr
 (the caller must ref this if they want to keep it longer than the
@@ -483,32 +482,32 @@ been allocated via new, and not on the stack.</p>
 <h2>Attributes<a class="headerlink" href="#attributes" title="Link to this heading"></a></h2>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="skia.Shader.kColorFilter_Type">
-<span class="sig-prename descclassname"><span class="pre">Shader.</span></span><span class="sig-name descname"><span class="pre">kColorFilter_Type</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;Type.kColorFilter_Type:</span> <span class="pre">0&gt;</span></em><a class="headerlink" href="#skia.Shader.kColorFilter_Type" title="Link to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">Shader.</span></span><span class="sig-name descname"><span class="pre">kColorFilter_Type</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;Type.kColorFilter_Type:</span> <span class="pre">0&gt;</span></span><a class="headerlink" href="#skia.Shader.kColorFilter_Type" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="skia.Shader.kDrawLooper_Type">
-<span class="sig-prename descclassname"><span class="pre">Shader.</span></span><span class="sig-name descname"><span class="pre">kDrawLooper_Type</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;Type.kDrawLooper_Type:</span> <span class="pre">3&gt;</span></em><a class="headerlink" href="#skia.Shader.kDrawLooper_Type" title="Link to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">Shader.</span></span><span class="sig-name descname"><span class="pre">kDrawLooper_Type</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;Type.kDrawLooper_Type:</span> <span class="pre">3&gt;</span></span><a class="headerlink" href="#skia.Shader.kDrawLooper_Type" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="skia.Shader.kDrawable_Type">
-<span class="sig-prename descclassname"><span class="pre">Shader.</span></span><span class="sig-name descname"><span class="pre">kDrawable_Type</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;Type.kDrawable_Type:</span> <span class="pre">2&gt;</span></em><a class="headerlink" href="#skia.Shader.kDrawable_Type" title="Link to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">Shader.</span></span><span class="sig-name descname"><span class="pre">kDrawable_Type</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;Type.kDrawable_Type:</span> <span class="pre">2&gt;</span></span><a class="headerlink" href="#skia.Shader.kDrawable_Type" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="skia.Shader.kImageFilter_Type">
-<span class="sig-prename descclassname"><span class="pre">Shader.</span></span><span class="sig-name descname"><span class="pre">kImageFilter_Type</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;Type.kImageFilter_Type:</span> <span class="pre">4&gt;</span></em><a class="headerlink" href="#skia.Shader.kImageFilter_Type" title="Link to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">Shader.</span></span><span class="sig-name descname"><span class="pre">kImageFilter_Type</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;Type.kImageFilter_Type:</span> <span class="pre">4&gt;</span></span><a class="headerlink" href="#skia.Shader.kImageFilter_Type" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="skia.Shader.kMaskFilter_Type">
-<span class="sig-prename descclassname"><span class="pre">Shader.</span></span><span class="sig-name descname"><span class="pre">kMaskFilter_Type</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;Type.kMaskFilter_Type:</span> <span class="pre">5&gt;</span></em><a class="headerlink" href="#skia.Shader.kMaskFilter_Type" title="Link to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">Shader.</span></span><span class="sig-name descname"><span class="pre">kMaskFilter_Type</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;Type.kMaskFilter_Type:</span> <span class="pre">5&gt;</span></span><a class="headerlink" href="#skia.Shader.kMaskFilter_Type" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="skia.Shader.kPathEffect_Type">
-<span class="sig-prename descclassname"><span class="pre">Shader.</span></span><span class="sig-name descname"><span class="pre">kPathEffect_Type</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;Type.kPathEffect_Type:</span> <span class="pre">6&gt;</span></em><a class="headerlink" href="#skia.Shader.kPathEffect_Type" title="Link to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">Shader.</span></span><span class="sig-name descname"><span class="pre">kPathEffect_Type</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;Type.kPathEffect_Type:</span> <span class="pre">6&gt;</span></span><a class="headerlink" href="#skia.Shader.kPathEffect_Type" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 </section>

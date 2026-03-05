@@ -8,14 +8,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Path.RawIter &mdash; skia-python 0.0.1 documentation</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
-      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=9edc463e" />
 
   
       <script src="../_static/jquery.js?v=5d32c60e"></script>
       <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
       <script src="../_static/documentation_options.js?v=d45e8c67"></script>
-      <script src="../_static/doctools.js?v=9bcbadda"></script>
-      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -49,7 +49,6 @@
 <li class="toctree-l1 current"><a class="reference internal" href="../reference.html">Reference</a><ul class="current">
 <li class="toctree-l2 current"><a class="reference internal" href="skia.html">skia</a><ul class="current">
 <li class="toctree-l3"><a class="reference internal" href="skia.AlphaType.html">AlphaType</a></li>
-<li class="toctree-l3"><a class="reference internal" href="skia.ApplyPerspectiveClip.html">ApplyPerspectiveClip</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.AutoCanvasRestore.html">AutoCanvasRestore</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.BBHFactory.html">BBHFactory</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.BBoxHierarchy.html">BBoxHierarchy</a></li>
@@ -295,7 +294,7 @@
 <h1>Path.RawIter<a class="headerlink" href="#path-rawiter" title="Link to this heading"></a></h1>
 <dl class="py class">
 <dt class="sig sig-object py" id="skia.Path.RawIter">
-<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">RawIter</span></span><a class="headerlink" href="#skia.Path.RawIter" title="Link to this definition"></a></dt>
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">RawIter</span></span><a class="headerlink" href="#skia.Path.RawIter" title="Link to this definition"></a></dt>
 <dd><p>Iterates through verb array, and associated <code class="xref py py-class docutils literal notranslate"><span class="pre">Point</span></code> array and
 conic weight.</p>
 <p>verb array, <code class="xref py py-class docutils literal notranslate"><span class="pre">Point</span></code> array, and conic weight are returned
@@ -304,19 +303,19 @@ unaltered.</p>
 <table class="autosummary longtable docutils align-default">
 <tbody>
 <tr class="row-odd"><td><p><a class="reference internal" href="#skia.Path.RawIter.__init__" title="skia.Path.RawIter.__init__"><code class="xref py py-obj docutils literal notranslate"><span class="pre">__init__</span></code></a></p></td>
-<td><p>__init__(<a href="#id1"><span class="problematic" id="id2">*</span></a>args, <a href="#id3"><span class="problematic" id="id4">**</span></a>kwargs) Overloaded function.</p></td>
+<td><p>Overloaded function.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#skia.Path.RawIter.conicWeight" title="skia.Path.RawIter.conicWeight"><code class="xref py py-obj docutils literal notranslate"><span class="pre">conicWeight</span></code></a></p></td>
-<td><p>conicWeight(self: skia.Path.RawIter) -&gt; float</p></td>
+<td><p>Returns conic weight if <a class="reference internal" href="#skia.Path.RawIter.next" title="skia.Path.RawIter.next"><code class="xref py py-meth docutils literal notranslate"><span class="pre">next()</span></code></a> returned <a class="reference internal" href="skia.Path.html#skia.Path.kConic_Verb" title="skia.Path.kConic_Verb"><code class="xref py py-attr docutils literal notranslate"><span class="pre">kConic_Verb</span></code></a>.</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#skia.Path.RawIter.next" title="skia.Path.RawIter.next"><code class="xref py py-obj docutils literal notranslate"><span class="pre">next</span></code></a></p></td>
-<td><p>next(self: skia.Path.RawIter) -&gt; tuple</p></td>
+<td><p>Returns next <a class="reference internal" href="skia.Path.Verb.html#skia.Path.Verb" title="skia.Path.Verb"><code class="xref py py-class docutils literal notranslate"><span class="pre">Verb</span></code></a> in verb array, and advances <a class="reference internal" href="#skia.Path.RawIter" title="skia.Path.RawIter"><code class="xref py py-class docutils literal notranslate"><span class="pre">RawIter</span></code></a>.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#skia.Path.RawIter.peek" title="skia.Path.RawIter.peek"><code class="xref py py-obj docutils literal notranslate"><span class="pre">peek</span></code></a></p></td>
-<td><p>peek(self: skia.Path.RawIter) -&gt; skia.Path.Verb</p></td>
+<td><p>Returns next <a class="reference internal" href="skia.Path.Verb.html#skia.Path.Verb" title="skia.Path.Verb"><code class="xref py py-class docutils literal notranslate"><span class="pre">Verb</span></code></a>, but does not advance <a class="reference internal" href="#skia.Path.RawIter" title="skia.Path.RawIter"><code class="xref py py-class docutils literal notranslate"><span class="pre">RawIter</span></code></a>.</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#skia.Path.RawIter.setPath" title="skia.Path.RawIter.setPath"><code class="xref py py-obj docutils literal notranslate"><span class="pre">setPath</span></code></a></p></td>
-<td><p>setPath(self: skia.Path.RawIter, path: skia.Path) -&gt; None</p></td>
+<td><p>Sets <a class="reference internal" href="#skia.Path.RawIter" title="skia.Path.RawIter"><code class="xref py py-class docutils literal notranslate"><span class="pre">RawIter</span></code></a> to return elements of verb array, <code class="xref py py-class docutils literal notranslate"><span class="pre">Point</span></code> array, and conic weight in path.</p></td>
 </tr>
 </tbody>
 </table>

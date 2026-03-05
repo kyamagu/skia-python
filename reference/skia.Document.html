@@ -8,14 +8,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Document &mdash; skia-python 0.0.1 documentation</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
-      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=9edc463e" />
 
   
       <script src="../_static/jquery.js?v=5d32c60e"></script>
       <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
       <script src="../_static/documentation_options.js?v=d45e8c67"></script>
-      <script src="../_static/doctools.js?v=9bcbadda"></script>
-      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -49,7 +49,6 @@
 <li class="toctree-l1 current"><a class="reference internal" href="../reference.html">Reference</a><ul class="current">
 <li class="toctree-l2 current"><a class="reference internal" href="skia.html">skia</a><ul class="current">
 <li class="toctree-l3"><a class="reference internal" href="skia.AlphaType.html">AlphaType</a></li>
-<li class="toctree-l3"><a class="reference internal" href="skia.ApplyPerspectiveClip.html">ApplyPerspectiveClip</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.AutoCanvasRestore.html">AutoCanvasRestore</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.BBHFactory.html">BBHFactory</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.BBoxHierarchy.html">BBoxHierarchy</a></li>
@@ -287,7 +286,7 @@
 <h1>Document<a class="headerlink" href="#document" title="Link to this heading"></a></h1>
 <dl class="py class">
 <dt class="sig sig-object py" id="skia.Document">
-<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">Document</span></span><a class="headerlink" href="#skia.Document" title="Link to this definition"></a></dt>
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">Document</span></span><a class="headerlink" href="#skia.Document" title="Link to this definition"></a></dt>
 <dd><p>High-level API for creating a document-based canvas.</p>
 <p>To use:</p>
 <ol class="arabic">
@@ -317,28 +316,28 @@
 <td><p></p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#skia.Document.abort" title="skia.Document.abort"><code class="xref py py-obj docutils literal notranslate"><span class="pre">abort</span></code></a></p></td>
-<td><p>abort(self: skia.Document) -&gt; None</p></td>
+<td><p>Call <a class="reference internal" href="#skia.Document.abort" title="skia.Document.abort"><code class="xref py py-meth docutils literal notranslate"><span class="pre">abort()</span></code></a> to stop producing the document immediately.</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#skia.Document.beginPage" title="skia.Document.beginPage"><code class="xref py py-obj docutils literal notranslate"><span class="pre">beginPage</span></code></a></p></td>
-<td><p>beginPage(self: skia.Document, width: float, height: float, content: skia.Rect = None) -&gt; SkCanvas</p></td>
+<td><p>Begin a new page for the document, returning the canvas that will draw into the page.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#skia.Document.close" title="skia.Document.close"><code class="xref py py-obj docutils literal notranslate"><span class="pre">close</span></code></a></p></td>
-<td><p>close(self: skia.Document) -&gt; None</p></td>
+<td><p>Call <a class="reference internal" href="#skia.Document.close" title="skia.Document.close"><code class="xref py py-meth docutils literal notranslate"><span class="pre">close()</span></code></a> when all pages have been drawn.</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#skia.Document.endPage" title="skia.Document.endPage"><code class="xref py py-obj docutils literal notranslate"><span class="pre">endPage</span></code></a></p></td>
-<td><p>endPage(self: skia.Document) -&gt; None</p></td>
+<td><p>Call <a class="reference internal" href="#skia.Document.endPage" title="skia.Document.endPage"><code class="xref py py-meth docutils literal notranslate"><span class="pre">endPage()</span></code></a> when the content for the current page has been drawn (into the canvas returned by <a class="reference internal" href="#skia.Document.beginPage" title="skia.Document.beginPage"><code class="xref py py-meth docutils literal notranslate"><span class="pre">beginPage()</span></code></a>).</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#skia.Document.page" title="skia.Document.page"><code class="xref py py-obj docutils literal notranslate"><span class="pre">page</span></code></a></p></td>
-<td><p>page(self: skia.Document, width: float, height: float) -&gt; (anonymous namespace)::PyAutoDocumentPage</p></td>
+<td><p></p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#skia.Document.ref" title="skia.Document.ref"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ref</span></code></a></p></td>
-<td><p>ref(self: skia.RefCntBase) -&gt; None</p></td>
+<td><p>Increment the reference count.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#skia.Document.unique" title="skia.Document.unique"><code class="xref py py-obj docutils literal notranslate"><span class="pre">unique</span></code></a></p></td>
-<td><p>unique(self: skia.RefCntBase) -&gt; bool</p></td>
+<td><p>May return true if the caller is the only owner.</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#skia.Document.unref" title="skia.Document.unref"><code class="xref py py-obj docutils literal notranslate"><span class="pre">unref</span></code></a></p></td>
-<td><p>unref(self: skia.RefCntBase) -&gt; None</p></td>
+<td><p>Decrement the reference count.</p></td>
 </tr>
 </tbody>
 </table>
@@ -360,7 +359,7 @@
 
 <dl class="py method">
 <dt class="sig sig-object py" id="skia.Document.beginPage">
-<span class="sig-prename descclassname"><span class="pre">Document.</span></span><span class="sig-name descname"><span class="pre">beginPage</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#skia.Document" title="skia.Document"><span class="pre">skia.Document</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">width</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">height</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">content</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="skia.Rect.html#skia.Rect" title="skia.Rect"><span class="pre">skia.Rect</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">SkCanvas</span></span></span><a class="headerlink" href="#skia.Document.beginPage" title="Link to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">Document.</span></span><span class="sig-name descname"><span class="pre">beginPage</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#skia.Document" title="skia.Document"><span class="pre">skia.Document</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">width</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">SupportsFloat</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">SupportsIndex</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">height</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">SupportsFloat</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">SupportsIndex</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">content</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="skia.Rect.html#skia.Rect" title="skia.Rect"><span class="pre">skia.Rect</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">SkCanvas</span></span></span><a class="headerlink" href="#skia.Document.beginPage" title="Link to this definition"></a></dt>
 <dd><p>Begin a new page for the document, returning the canvas that will draw
 into the page.</p>
 <p>The document owns this canvas, and it will go out of scope when
@@ -389,7 +388,7 @@ out-of-scope.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="skia.Document.page">
-<span class="sig-prename descclassname"><span class="pre">Document.</span></span><span class="sig-name descname"><span class="pre">page</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#skia.Document" title="skia.Document"><span class="pre">skia.Document</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">width</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">height</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">(anonymous</span> <span class="pre">namespace)::PyAutoDocumentPage</span></span></span><a class="headerlink" href="#skia.Document.page" title="Link to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">Document.</span></span><span class="sig-name descname"><span class="pre">page</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#skia.Document" title="skia.Document"><span class="pre">skia.Document</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">width</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">SupportsFloat</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">SupportsIndex</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">height</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">SupportsFloat</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">SupportsIndex</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">(anonymous</span> <span class="pre">namespace)::PyAutoDocumentPage</span></span></span><a class="headerlink" href="#skia.Document.page" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">

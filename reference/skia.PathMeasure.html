@@ -8,14 +8,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>PathMeasure &mdash; skia-python 0.0.1 documentation</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
-      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=9edc463e" />
 
   
       <script src="../_static/jquery.js?v=5d32c60e"></script>
       <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
       <script src="../_static/documentation_options.js?v=d45e8c67"></script>
-      <script src="../_static/doctools.js?v=9bcbadda"></script>
-      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -49,7 +49,6 @@
 <li class="toctree-l1 current"><a class="reference internal" href="../reference.html">Reference</a><ul class="current">
 <li class="toctree-l2 current"><a class="reference internal" href="skia.html">skia</a><ul class="current">
 <li class="toctree-l3"><a class="reference internal" href="skia.AlphaType.html">AlphaType</a></li>
-<li class="toctree-l3"><a class="reference internal" href="skia.ApplyPerspectiveClip.html">ApplyPerspectiveClip</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.AutoCanvasRestore.html">AutoCanvasRestore</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.BBHFactory.html">BBHFactory</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.BBoxHierarchy.html">BBoxHierarchy</a></li>
@@ -289,7 +288,7 @@
 <h1>PathMeasure<a class="headerlink" href="#pathmeasure" title="Link to this heading"></a></h1>
 <dl class="py class">
 <dt class="sig sig-object py" id="skia.PathMeasure">
-<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">PathMeasure</span></span><a class="headerlink" href="#skia.PathMeasure" title="Link to this definition"></a></dt>
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">PathMeasure</span></span><a class="headerlink" href="#skia.PathMeasure" title="Link to this definition"></a></dt>
 <dd><p><a class="reference internal" href="#skia.PathMeasure" title="skia.PathMeasure"><code class="xref py py-class docutils literal notranslate"><span class="pre">PathMeasure</span></code></a></p>
 <p class="rubric">Classes</p>
 <table class="autosummary longtable docutils align-default">
@@ -303,28 +302,28 @@
 <table class="autosummary longtable docutils align-default">
 <tbody>
 <tr class="row-odd"><td><p><a class="reference internal" href="#skia.PathMeasure.__init__" title="skia.PathMeasure.__init__"><code class="xref py py-obj docutils literal notranslate"><span class="pre">__init__</span></code></a></p></td>
-<td><p>__init__(<a href="#id1"><span class="problematic" id="id2">*</span></a>args, <a href="#id3"><span class="problematic" id="id4">**</span></a>kwargs) Overloaded function.</p></td>
+<td><p>Overloaded function.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#skia.PathMeasure.getLength" title="skia.PathMeasure.getLength"><code class="xref py py-obj docutils literal notranslate"><span class="pre">getLength</span></code></a></p></td>
-<td><p>getLength(self: skia.PathMeasure) -&gt; float</p></td>
+<td><p>Return the total length of the current contour, or 0 if no path is associated.</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#skia.PathMeasure.getMatrix" title="skia.PathMeasure.getMatrix"><code class="xref py py-obj docutils literal notranslate"><span class="pre">getMatrix</span></code></a></p></td>
-<td><p>getMatrix(self: skia.PathMeasure, distance: float, flags: skia.PathMeasure.GetPosAndTan = skia.PathMeasure.GetPosAndTan.kGetPosAndTan_MatrixFlag) -&gt; object</p></td>
+<td><p>Pins distance to 0 &lt;= distance &lt;= getLength(), and then computes the corresponding matrix (by calling getPosTan).</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#skia.PathMeasure.getPosTan" title="skia.PathMeasure.getPosTan"><code class="xref py py-obj docutils literal notranslate"><span class="pre">getPosTan</span></code></a></p></td>
-<td><p>getPosTan(self: skia.PathMeasure, distance: float) -&gt; object</p></td>
+<td><p>Pins distance to 0 &lt;= distance &lt;= getLength(), and then computes the corresponding position and tangent.</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#skia.PathMeasure.getSegment" title="skia.PathMeasure.getSegment"><code class="xref py py-obj docutils literal notranslate"><span class="pre">getSegment</span></code></a></p></td>
-<td><p>getSegment(self: skia.PathMeasure, startD: float, stopD: float, dst: skia.Path, startWithMoveTo: bool) -&gt; bool</p></td>
+<td><p>Given a start and stop distance, return in dst the intervening segment(s).</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#skia.PathMeasure.isClosed" title="skia.PathMeasure.isClosed"><code class="xref py py-obj docutils literal notranslate"><span class="pre">isClosed</span></code></a></p></td>
-<td><p>isClosed(self: skia.PathMeasure) -&gt; bool</p></td>
+<td><p></p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#skia.PathMeasure.nextContour" title="skia.PathMeasure.nextContour"><code class="xref py py-obj docutils literal notranslate"><span class="pre">nextContour</span></code></a></p></td>
-<td><p>nextContour(self: skia.PathMeasure) -&gt; bool</p></td>
+<td><p>Move to the next contour in the path.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#skia.PathMeasure.setPath" title="skia.PathMeasure.setPath"><code class="xref py py-obj docutils literal notranslate"><span class="pre">setPath</span></code></a></p></td>
-<td><p>setPath(self: skia.PathMeasure, arg0: skia.Path, arg1: bool) -&gt; None</p></td>
+<td><p>Reset the pathmeasure with the specified path.</p></td>
 </tr>
 </tbody>
 </table>
@@ -356,7 +355,7 @@
 <div><p>Initializes a PathMeasure without an associated Path</p>
 </div></blockquote>
 </li>
-<li><p>__init__(self: skia.PathMeasure, path: skia.Path, forceClosed: bool, resScale: float = 1.0) -&gt; None</p>
+<li><p>__init__(self: skia.PathMeasure, path: skia.Path, forceClosed: bool, resScale: typing.SupportsFloat | typing.SupportsIndex = 1.0) -&gt; None</p>
 <blockquote>
 <div><p>Initialize the PathMeasure with the specified path.</p>
 <p>The parts of the path that are needed are copied, so the
@@ -378,7 +377,7 @@ path is associated.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="skia.PathMeasure.getMatrix">
-<span class="sig-prename descclassname"><span class="pre">PathMeasure.</span></span><span class="sig-name descname"><span class="pre">getMatrix</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#skia.PathMeasure" title="skia.PathMeasure"><span class="pre">skia.PathMeasure</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">distance</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">flags</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="skia.PathMeasure.GetPosAndTan.html#skia.PathMeasure.GetPosAndTan" title="skia.PathMeasure.GetPosAndTan"><span class="pre">skia.PathMeasure.GetPosAndTan</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">skia.PathMeasure.GetPosAndTan.kGetPosAndTan_MatrixFlag</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">object</span></span></span><a class="headerlink" href="#skia.PathMeasure.getMatrix" title="Link to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">PathMeasure.</span></span><span class="sig-name descname"><span class="pre">getMatrix</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#skia.PathMeasure" title="skia.PathMeasure"><span class="pre">skia.PathMeasure</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">distance</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">SupportsFloat</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">SupportsIndex</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">flags</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="skia.PathMeasure.GetPosAndTan.html#skia.PathMeasure.GetPosAndTan" title="skia.PathMeasure.GetPosAndTan"><span class="pre">skia.PathMeasure.GetPosAndTan</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">skia.PathMeasure.GetPosAndTan.kGetPosAndTan_MatrixFlag</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">object</span></span></span><a class="headerlink" href="#skia.PathMeasure.getMatrix" title="Link to this definition"></a></dt>
 <dd><p>Pins distance to 0 &lt;= distance &lt;= getLength(), and then
 computes the corresponding matrix (by calling getPosTan).</p>
 <p>Returns false if there is no path, or a zero-length path was
@@ -394,7 +393,7 @@ the result.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="skia.PathMeasure.getPosTan">
-<span class="sig-prename descclassname"><span class="pre">PathMeasure.</span></span><span class="sig-name descname"><span class="pre">getPosTan</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#skia.PathMeasure" title="skia.PathMeasure"><span class="pre">skia.PathMeasure</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">distance</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">object</span></span></span><a class="headerlink" href="#skia.PathMeasure.getPosTan" title="Link to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">PathMeasure.</span></span><span class="sig-name descname"><span class="pre">getPosTan</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#skia.PathMeasure" title="skia.PathMeasure"><span class="pre">skia.PathMeasure</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">distance</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">SupportsFloat</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">SupportsIndex</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">object</span></span></span><a class="headerlink" href="#skia.PathMeasure.getPosTan" title="Link to this definition"></a></dt>
 <dd><p>Pins distance to 0 &lt;= distance &lt;= getLength(), and then
 computes the corresponding position and tangent.</p>
 <dl class="field-list simple">
@@ -408,7 +407,7 @@ computes the corresponding position and tangent.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="skia.PathMeasure.getSegment">
-<span class="sig-prename descclassname"><span class="pre">PathMeasure.</span></span><span class="sig-name descname"><span class="pre">getSegment</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#skia.PathMeasure" title="skia.PathMeasure"><span class="pre">skia.PathMeasure</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">startD</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stopD</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dst</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="skia.Path.html#skia.Path" title="skia.Path"><span class="pre">skia.Path</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">startWithMoveTo</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#skia.PathMeasure.getSegment" title="Link to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">PathMeasure.</span></span><span class="sig-name descname"><span class="pre">getSegment</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#skia.PathMeasure" title="skia.PathMeasure"><span class="pre">skia.PathMeasure</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">startD</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">SupportsFloat</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">SupportsIndex</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stopD</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">SupportsFloat</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">SupportsIndex</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dst</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="skia.Path.html#skia.Path" title="skia.Path"><span class="pre">skia.Path</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">startWithMoveTo</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#skia.PathMeasure.getSegment" title="Link to this definition"></a></dt>
 <dd><p>Given a start and stop distance, return in dst the intervening
 segment(s).</p>
 <dl class="field-list simple">
@@ -457,17 +456,17 @@ client is free to modify/delete the path after this call..</p>
 <h2>Attributes<a class="headerlink" href="#attributes" title="Link to this heading"></a></h2>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="skia.PathMeasure.kGetPosAndTan_MatrixFlag">
-<span class="sig-prename descclassname"><span class="pre">PathMeasure.</span></span><span class="sig-name descname"><span class="pre">kGetPosAndTan_MatrixFlag</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;GetPosAndTan.kGetPosAndTan_MatrixFlag:</span> <span class="pre">3&gt;</span></em><a class="headerlink" href="#skia.PathMeasure.kGetPosAndTan_MatrixFlag" title="Link to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">PathMeasure.</span></span><span class="sig-name descname"><span class="pre">kGetPosAndTan_MatrixFlag</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;GetPosAndTan.kGetPosAndTan_MatrixFlag:</span> <span class="pre">3&gt;</span></span><a class="headerlink" href="#skia.PathMeasure.kGetPosAndTan_MatrixFlag" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="skia.PathMeasure.kGetPosition_MatrixFlag">
-<span class="sig-prename descclassname"><span class="pre">PathMeasure.</span></span><span class="sig-name descname"><span class="pre">kGetPosition_MatrixFlag</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;GetPosAndTan.kGetPosition_MatrixFlag:</span> <span class="pre">1&gt;</span></em><a class="headerlink" href="#skia.PathMeasure.kGetPosition_MatrixFlag" title="Link to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">PathMeasure.</span></span><span class="sig-name descname"><span class="pre">kGetPosition_MatrixFlag</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;GetPosAndTan.kGetPosition_MatrixFlag:</span> <span class="pre">1&gt;</span></span><a class="headerlink" href="#skia.PathMeasure.kGetPosition_MatrixFlag" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="skia.PathMeasure.kGetTangent_MatrixFlag">
-<span class="sig-prename descclassname"><span class="pre">PathMeasure.</span></span><span class="sig-name descname"><span class="pre">kGetTangent_MatrixFlag</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;GetPosAndTan.kGetTangent_MatrixFlag:</span> <span class="pre">2&gt;</span></em><a class="headerlink" href="#skia.PathMeasure.kGetTangent_MatrixFlag" title="Link to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">PathMeasure.</span></span><span class="sig-name descname"><span class="pre">kGetTangent_MatrixFlag</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;GetPosAndTan.kGetTangent_MatrixFlag:</span> <span class="pre">2&gt;</span></span><a class="headerlink" href="#skia.PathMeasure.kGetTangent_MatrixFlag" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 </section>

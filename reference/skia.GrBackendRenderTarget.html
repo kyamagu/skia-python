@@ -8,14 +8,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>GrBackendRenderTarget &mdash; skia-python 0.0.1 documentation</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
-      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=9edc463e" />
 
   
       <script src="../_static/jquery.js?v=5d32c60e"></script>
       <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
       <script src="../_static/documentation_options.js?v=d45e8c67"></script>
-      <script src="../_static/doctools.js?v=9bcbadda"></script>
-      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -49,7 +49,6 @@
 <li class="toctree-l1 current"><a class="reference internal" href="../reference.html">Reference</a><ul class="current">
 <li class="toctree-l2 current"><a class="reference internal" href="skia.html">skia</a><ul class="current">
 <li class="toctree-l3"><a class="reference internal" href="skia.AlphaType.html">AlphaType</a></li>
-<li class="toctree-l3"><a class="reference internal" href="skia.ApplyPerspectiveClip.html">ApplyPerspectiveClip</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.AutoCanvasRestore.html">AutoCanvasRestore</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.BBHFactory.html">BBHFactory</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.BBoxHierarchy.html">BBoxHierarchy</a></li>
@@ -287,57 +286,57 @@
 <h1>GrBackendRenderTarget<a class="headerlink" href="#grbackendrendertarget" title="Link to this heading"></a></h1>
 <dl class="py class">
 <dt class="sig sig-object py" id="skia.GrBackendRenderTarget">
-<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">GrBackendRenderTarget</span></span><a class="headerlink" href="#skia.GrBackendRenderTarget" title="Link to this definition"></a></dt>
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">GrBackendRenderTarget</span></span><a class="headerlink" href="#skia.GrBackendRenderTarget" title="Link to this definition"></a></dt>
 <dd><p class="rubric">Methods</p>
 <table class="autosummary longtable docutils align-default">
 <tbody>
 <tr class="row-odd"><td><p><a class="reference internal" href="#skia.GrBackendRenderTarget.MakeGL" title="skia.GrBackendRenderTarget.MakeGL"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MakeGL</span></code></a></p></td>
-<td><p>MakeGL(width: int, height: int, sampleCnt: int, stencilBits: int, glInfo: GrGLFramebufferInfo) -&gt; skia.GrBackendRenderTarget</p></td>
+<td><p></p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#skia.GrBackendRenderTarget.__init__" title="skia.GrBackendRenderTarget.__init__"><code class="xref py py-obj docutils literal notranslate"><span class="pre">__init__</span></code></a></p></td>
-<td><p>__init__(<a href="#id1"><span class="problematic" id="id2">*</span></a>args, <a href="#id3"><span class="problematic" id="id4">**</span></a>kwargs) Overloaded function.</p></td>
+<td><p>Overloaded function.</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#skia.GrBackendRenderTarget.backend" title="skia.GrBackendRenderTarget.backend"><code class="xref py py-obj docutils literal notranslate"><span class="pre">backend</span></code></a></p></td>
-<td><p>backend(self: skia.GrBackendRenderTarget) -&gt; skia.GrBackendApi</p></td>
+<td><p></p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#skia.GrBackendRenderTarget.dimensions" title="skia.GrBackendRenderTarget.dimensions"><code class="xref py py-obj docutils literal notranslate"><span class="pre">dimensions</span></code></a></p></td>
-<td><p>dimensions(self: skia.GrBackendRenderTarget) -&gt; skia.ISize</p></td>
+<td><p></p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#skia.GrBackendRenderTarget.getBackendFormat" title="skia.GrBackendRenderTarget.getBackendFormat"><code class="xref py py-obj docutils literal notranslate"><span class="pre">getBackendFormat</span></code></a></p></td>
-<td><p>getBackendFormat(self: skia.GrBackendRenderTarget) -&gt; skia.GrBackendFormat</p></td>
+<td><p>Get the GrBackendFormat for this render target (or an invalid format if this is not valid).</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#skia.GrBackendRenderTarget.getGLFramebufferInfo" title="skia.GrBackendRenderTarget.getGLFramebufferInfo"><code class="xref py py-obj docutils literal notranslate"><span class="pre">getGLFramebufferInfo</span></code></a></p></td>
-<td><p>getGLFramebufferInfo(self: skia.GrBackendRenderTarget, info: GrGLFramebufferInfo) -&gt; bool</p></td>
+<td><p>If the backend API is GL, copies a snapshot of the GrGLFramebufferInfo struct into the passed in pointer and returns true.</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#skia.GrBackendRenderTarget.getMockRenderTargetInfo" title="skia.GrBackendRenderTarget.getMockRenderTargetInfo"><code class="xref py py-obj docutils literal notranslate"><span class="pre">getMockRenderTargetInfo</span></code></a></p></td>
-<td><p>getMockRenderTargetInfo(self: skia.GrBackendRenderTarget, info: GrMockRenderTargetInfo) -&gt; bool</p></td>
+<td><p>If the backend API is Mock, copies a snapshot of the GrMockTextureInfo struct into the passed in pointer and returns true.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#skia.GrBackendRenderTarget.getVkImageInfo" title="skia.GrBackendRenderTarget.getVkImageInfo"><code class="xref py py-obj docutils literal notranslate"><span class="pre">getVkImageInfo</span></code></a></p></td>
-<td><p>getVkImageInfo(self: skia.GrBackendRenderTarget, info: GrVkImageInfo) -&gt; bool</p></td>
+<td><p>If the backend API is Vulkan, copies a snapshot of the GrVkImageInfo struct into the passed in pointer and returns true.</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#skia.GrBackendRenderTarget.height" title="skia.GrBackendRenderTarget.height"><code class="xref py py-obj docutils literal notranslate"><span class="pre">height</span></code></a></p></td>
-<td><p>height(self: skia.GrBackendRenderTarget) -&gt; int</p></td>
+<td><p></p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#skia.GrBackendRenderTarget.isFramebufferOnly" title="skia.GrBackendRenderTarget.isFramebufferOnly"><code class="xref py py-obj docutils literal notranslate"><span class="pre">isFramebufferOnly</span></code></a></p></td>
-<td><p>isFramebufferOnly(self: skia.GrBackendRenderTarget) -&gt; bool</p></td>
+<td><p></p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#skia.GrBackendRenderTarget.isProtected" title="skia.GrBackendRenderTarget.isProtected"><code class="xref py py-obj docutils literal notranslate"><span class="pre">isProtected</span></code></a></p></td>
-<td><p>isProtected(self: skia.GrBackendRenderTarget) -&gt; bool</p></td>
+<td><p></p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#skia.GrBackendRenderTarget.isValid" title="skia.GrBackendRenderTarget.isValid"><code class="xref py py-obj docutils literal notranslate"><span class="pre">isValid</span></code></a></p></td>
-<td><p>isValid(self: skia.GrBackendRenderTarget) -&gt; bool</p></td>
+<td><p></p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#skia.GrBackendRenderTarget.sampleCnt" title="skia.GrBackendRenderTarget.sampleCnt"><code class="xref py py-obj docutils literal notranslate"><span class="pre">sampleCnt</span></code></a></p></td>
-<td><p>sampleCnt(self: skia.GrBackendRenderTarget) -&gt; int</p></td>
+<td><p></p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#skia.GrBackendRenderTarget.setVkImageLayout" title="skia.GrBackendRenderTarget.setVkImageLayout"><code class="xref py py-obj docutils literal notranslate"><span class="pre">setVkImageLayout</span></code></a></p></td>
-<td><p>setVkImageLayout(self: skia.GrBackendRenderTarget, layout: VkImageLayout) -&gt; None</p></td>
+<td><p>Anytime the client changes the VkImageLayout of the VkImage captured by this GrBackendRenderTarget, they must call this function to notify Skia of the changed layout.</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#skia.GrBackendRenderTarget.stencilBits" title="skia.GrBackendRenderTarget.stencilBits"><code class="xref py py-obj docutils literal notranslate"><span class="pre">stencilBits</span></code></a></p></td>
-<td><p>stencilBits(self: skia.GrBackendRenderTarget) -&gt; int</p></td>
+<td><p></p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#skia.GrBackendRenderTarget.width" title="skia.GrBackendRenderTarget.width"><code class="xref py py-obj docutils literal notranslate"><span class="pre">width</span></code></a></p></td>
-<td><p>width(self: skia.GrBackendRenderTarget) -&gt; int</p></td>
+<td><p></p></td>
 </tr>
 </tbody>
 </table>
@@ -347,7 +346,7 @@
 <h2>Methods<a class="headerlink" href="#methods" title="Link to this heading"></a></h2>
 <dl class="py method">
 <dt class="sig sig-object py" id="skia.GrBackendRenderTarget.MakeGL">
-<em class="property"><span class="k"><span class="pre">static</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">GrBackendRenderTarget.</span></span><span class="sig-name descname"><span class="pre">MakeGL</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">width</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">height</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sampleCnt</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stencilBits</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">glInfo</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="skia.GrGLFramebufferInfo.html#skia.GrGLFramebufferInfo" title="skia.GrGLFramebufferInfo"><span class="pre">GrGLFramebufferInfo</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#skia.GrBackendRenderTarget" title="skia.GrBackendRenderTarget"><span class="pre">skia.GrBackendRenderTarget</span></a></span></span><a class="headerlink" href="#skia.GrBackendRenderTarget.MakeGL" title="Link to this definition"></a></dt>
+<span class="property"><span class="k"><span class="pre">static</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">GrBackendRenderTarget.</span></span><span class="sig-name descname"><span class="pre">MakeGL</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">width</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">SupportsInt</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">SupportsIndex</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">height</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">SupportsInt</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">SupportsIndex</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sampleCnt</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">SupportsInt</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">SupportsIndex</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stencilBits</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">SupportsInt</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">SupportsIndex</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">glInfo</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="skia.GrGLFramebufferInfo.html#skia.GrGLFramebufferInfo" title="skia.GrGLFramebufferInfo"><span class="pre">GrGLFramebufferInfo</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#skia.GrBackendRenderTarget" title="skia.GrBackendRenderTarget"><span class="pre">skia.GrBackendRenderTarget</span></a></span></span><a class="headerlink" href="#skia.GrBackendRenderTarget.MakeGL" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
@@ -356,10 +355,10 @@
 <dd><p>Overloaded function.</p>
 <ol class="arabic simple">
 <li><p>__init__(self: skia.GrBackendRenderTarget) -&gt; None</p></li>
-<li><p>__init__(self: skia.GrBackendRenderTarget, width: int, height: int, sampleCnt: int, stencilBits: int, glInfo: GrGLFramebufferInfo) -&gt; None</p></li>
-<li><p>__init__(self: skia.GrBackendRenderTarget, width: int, height: int, vkInfo: GrVkImageInfo) -&gt; None</p></li>
-<li><p>__init__(self: skia.GrBackendRenderTarget, width: int, height: int, sampleCnt: int, vkInfo: GrVkImageInfo) -&gt; None</p></li>
-<li><p>__init__(self: skia.GrBackendRenderTarget, width: int, height: int, sampleCnt: int, stencilBits: int, mockInfo: GrMockRenderTargetInfo) -&gt; None</p></li>
+<li><p>__init__(self: skia.GrBackendRenderTarget, width: typing.SupportsInt | typing.SupportsIndex, height: typing.SupportsInt | typing.SupportsIndex, sampleCnt: typing.SupportsInt | typing.SupportsIndex, stencilBits: typing.SupportsInt | typing.SupportsIndex, glInfo: GrGLFramebufferInfo) -&gt; None</p></li>
+<li><p>__init__(self: skia.GrBackendRenderTarget, width: typing.SupportsInt | typing.SupportsIndex, height: typing.SupportsInt | typing.SupportsIndex, vkInfo: GrVkImageInfo) -&gt; None</p></li>
+<li><p>__init__(self: skia.GrBackendRenderTarget, width: typing.SupportsInt | typing.SupportsIndex, height: typing.SupportsInt | typing.SupportsIndex, sampleCnt: typing.SupportsInt | typing.SupportsIndex, vkInfo: GrVkImageInfo) -&gt; None</p></li>
+<li><p>__init__(self: skia.GrBackendRenderTarget, width: typing.SupportsInt | typing.SupportsIndex, height: typing.SupportsInt | typing.SupportsIndex, sampleCnt: typing.SupportsInt | typing.SupportsIndex, stencilBits: typing.SupportsInt | typing.SupportsIndex, mockInfo: GrMockRenderTargetInfo) -&gt; None</p></li>
 </ol>
 </dd></dl>
 

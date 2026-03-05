@@ -79,6 +79,7 @@ The following example uses glfw package to create an OpenGL context. Install
 
 .. code-block:: python
 
+    import sys
     import skia
     import glfw
     import contextlib
@@ -134,7 +135,7 @@ Here's a complete example:
 
 .. code-block:: python
 
-    import contextlib, glfw, skia
+    import sys, contextlib, glfw, skia
     from OpenGL import GL
 
     WIDTH, HEIGHT = 640, 480

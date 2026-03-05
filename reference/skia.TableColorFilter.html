@@ -8,19 +8,19 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>TableColorFilter &mdash; skia-python 0.0.1 documentation</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
-      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=9edc463e" />
 
   
       <script src="../_static/jquery.js?v=5d32c60e"></script>
       <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
       <script src="../_static/documentation_options.js?v=d45e8c67"></script>
-      <script src="../_static/doctools.js?v=9bcbadda"></script>
-      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="TableMaskFilter" href="skia.TableMaskFilter.html" />
-    <link rel="prev" title="Surfaces" href="skia.Surfaces.html" /> 
+    <link rel="prev" title="Surfaces.RescaleGamma" href="skia.Surfaces.RescaleGamma.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -49,7 +49,6 @@
 <li class="toctree-l1 current"><a class="reference internal" href="../reference.html">Reference</a><ul class="current">
 <li class="toctree-l2 current"><a class="reference internal" href="skia.html">skia</a><ul class="current">
 <li class="toctree-l3"><a class="reference internal" href="skia.AlphaType.html">AlphaType</a></li>
-<li class="toctree-l3"><a class="reference internal" href="skia.ApplyPerspectiveClip.html">ApplyPerspectiveClip</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.AutoCanvasRestore.html">AutoCanvasRestore</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.BBHFactory.html">BBHFactory</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.BBoxHierarchy.html">BBoxHierarchy</a></li>
@@ -287,15 +286,15 @@
 <h1>TableColorFilter<a class="headerlink" href="#tablecolorfilter" title="Link to this heading"></a></h1>
 <dl class="py class">
 <dt class="sig sig-object py" id="skia.TableColorFilter">
-<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">TableColorFilter</span></span><a class="headerlink" href="#skia.TableColorFilter" title="Link to this definition"></a></dt>
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">TableColorFilter</span></span><a class="headerlink" href="#skia.TableColorFilter" title="Link to this definition"></a></dt>
 <dd><p class="rubric">Methods</p>
 <table class="autosummary longtable docutils align-default">
 <tbody>
 <tr class="row-odd"><td><p><a class="reference internal" href="#skia.TableColorFilter.Make" title="skia.TableColorFilter.Make"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Make</span></code></a></p></td>
-<td><p>Make(table: list[int]) -&gt; skia.ColorFilter</p></td>
+<td><p>Create a table colorfilter, copying the table into the filter, and applying it to all 4 components.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#skia.TableColorFilter.MakeARGB" title="skia.TableColorFilter.MakeARGB"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MakeARGB</span></code></a></p></td>
-<td><p>MakeARGB(tableA: object, tableR: object, tableG: object, tableB: object) -&gt; skia.ColorFilter</p></td>
+<td><p>Create a table colorfilter, with a different table for each component [A, R, G, B].</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#skia.TableColorFilter.__init__" title="skia.TableColorFilter.__init__"><code class="xref py py-obj docutils literal notranslate"><span class="pre">__init__</span></code></a></p></td>
 <td><p></p></td>
@@ -308,7 +307,7 @@
 <h2>Methods<a class="headerlink" href="#methods" title="Link to this heading"></a></h2>
 <dl class="py method">
 <dt class="sig sig-object py" id="skia.TableColorFilter.Make">
-<em class="property"><span class="k"><span class="pre">static</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">TableColorFilter.</span></span><span class="sig-name descname"><span class="pre">Make</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">table</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="skia.ColorFilter.html#skia.ColorFilter" title="skia.ColorFilter"><span class="pre">skia.ColorFilter</span></a></span></span><a class="headerlink" href="#skia.TableColorFilter.Make" title="Link to this definition"></a></dt>
+<span class="property"><span class="k"><span class="pre">static</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">TableColorFilter.</span></span><span class="sig-name descname"><span class="pre">Make</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">table</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">collections.abc.Sequence</span><span class="p"><span class="pre">[</span></span><span class="pre">SupportsInt</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">SupportsIndex</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="skia.ColorFilter.html#skia.ColorFilter" title="skia.ColorFilter"><span class="pre">skia.ColorFilter</span></a></span></span><a class="headerlink" href="#skia.TableColorFilter.Make" title="Link to this definition"></a></dt>
 <dd><p>Create a table colorfilter, copying the table into the filter, and
 applying it to all 4 components.</p>
 <p>a’ = table[a]; r’ = table[r]; g’ = table[g]; b’ = table[b]; Compoents
@@ -319,7 +318,7 @@ applied, and then the result is remultiplied.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="skia.TableColorFilter.MakeARGB">
-<em class="property"><span class="k"><span class="pre">static</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">TableColorFilter.</span></span><span class="sig-name descname"><span class="pre">MakeARGB</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tableA</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">object</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tableR</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">object</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tableG</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">object</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tableB</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">object</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="skia.ColorFilter.html#skia.ColorFilter" title="skia.ColorFilter"><span class="pre">skia.ColorFilter</span></a></span></span><a class="headerlink" href="#skia.TableColorFilter.MakeARGB" title="Link to this definition"></a></dt>
+<span class="property"><span class="k"><span class="pre">static</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">TableColorFilter.</span></span><span class="sig-name descname"><span class="pre">MakeARGB</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tableA</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">object</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tableR</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">object</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tableG</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">object</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tableB</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">object</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="skia.ColorFilter.html#skia.ColorFilter" title="skia.ColorFilter"><span class="pre">skia.ColorFilter</span></a></span></span><a class="headerlink" href="#skia.TableColorFilter.MakeARGB" title="Link to this definition"></a></dt>
 <dd><p>Create a table colorfilter, with a different table for each component
 [A, R, G, B].</p>
 <p>If a given table is NULL, then it is treated as identity, with the
@@ -339,7 +338,7 @@ copied into the filter.</p>
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="skia.Surfaces.html" class="btn btn-neutral float-left" title="Surfaces" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="skia.Surfaces.RescaleGamma.html" class="btn btn-neutral float-left" title="Surfaces.RescaleGamma" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
         <a href="skia.TableMaskFilter.html" class="btn btn-neutral float-right" title="TableMaskFilter" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 

@@ -8,14 +8,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Point &mdash; skia-python 0.0.1 documentation</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
-      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=9edc463e" />
 
   
       <script src="../_static/jquery.js?v=5d32c60e"></script>
       <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
       <script src="../_static/documentation_options.js?v=d45e8c67"></script>
-      <script src="../_static/doctools.js?v=9bcbadda"></script>
-      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -49,7 +49,6 @@
 <li class="toctree-l1 current"><a class="reference internal" href="../reference.html">Reference</a><ul class="current">
 <li class="toctree-l2 current"><a class="reference internal" href="skia.html">skia</a><ul class="current">
 <li class="toctree-l3"><a class="reference internal" href="skia.AlphaType.html">AlphaType</a></li>
-<li class="toctree-l3"><a class="reference internal" href="skia.ApplyPerspectiveClip.html">ApplyPerspectiveClip</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.AutoCanvasRestore.html">AutoCanvasRestore</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.BBHFactory.html">BBHFactory</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.BBoxHierarchy.html">BBoxHierarchy</a></li>
@@ -288,7 +287,7 @@
 <h1>Point<a class="headerlink" href="#point" title="Link to this heading"></a></h1>
 <dl class="py class">
 <dt class="sig sig-object py" id="skia.Point">
-<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">Point</span></span><a class="headerlink" href="#skia.Point" title="Link to this definition"></a></dt>
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">Point</span></span><a class="headerlink" href="#skia.Point" title="Link to this definition"></a></dt>
 <dd><p><a class="reference internal" href="#skia.Point" title="skia.Point"><code class="xref py py-class docutils literal notranslate"><span class="pre">Point</span></code></a> holds two 32-bit floating point coordinates.</p>
 <p>Example:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">point</span> <span class="o">=</span> <span class="n">skia</span><span class="o">.</span><span class="n">Point</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">)</span>
@@ -304,82 +303,82 @@
 <table class="autosummary longtable docutils align-default">
 <tbody>
 <tr class="row-odd"><td><p><a class="reference internal" href="#skia.Point.CrossProduct" title="skia.Point.CrossProduct"><code class="xref py py-obj docutils literal notranslate"><span class="pre">CrossProduct</span></code></a></p></td>
-<td><p>CrossProduct(a: skia.Point, b: skia.Point) -&gt; float</p></td>
+<td><p>Returns the cross product of vector a and vector b.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#skia.Point.Distance" title="skia.Point.Distance"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Distance</span></code></a></p></td>
-<td><p>Distance(a: skia.Point, b: skia.Point) -&gt; float</p></td>
+<td><p>Returns the Euclidean distance between a and b.</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#skia.Point.DotProduct" title="skia.Point.DotProduct"><code class="xref py py-obj docutils literal notranslate"><span class="pre">DotProduct</span></code></a></p></td>
-<td><p>DotProduct(a: skia.Point, b: skia.Point) -&gt; float</p></td>
+<td><p>Returns the dot product of vector a and vector b.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#skia.Point.Length" title="skia.Point.Length"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Length</span></code></a></p></td>
-<td><p>Length(x: float, y: float) -&gt; float</p></td>
+<td><p>Returns the Euclidean distance from origin, computed as:</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#skia.Point.Make" title="skia.Point.Make"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Make</span></code></a></p></td>
-<td><p>Make(x: float, y: float) -&gt; skia.Point</p></td>
+<td><p>Sets fX to x, fY to y.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#skia.Point.Normalize" title="skia.Point.Normalize"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Normalize</span></code></a></p></td>
-<td><p>Normalize(vec: skia.Point) -&gt; float</p></td>
+<td><p>Scales (vec-&gt;fX, vec-&gt;fY) so that length() returns one, while preserving ratio of vec-&gt;fX to vec-&gt;fY, if possible.</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#skia.Point.Offset" title="skia.Point.Offset"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Offset</span></code></a></p></td>
-<td><p>Offset(<a href="#id1"><span class="problematic" id="id2">*</span></a>args, <a href="#id3"><span class="problematic" id="id4">**</span></a>kwargs) Overloaded function.</p></td>
+<td><p>Overloaded function.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#skia.Point.__init__" title="skia.Point.__init__"><code class="xref py py-obj docutils literal notranslate"><span class="pre">__init__</span></code></a></p></td>
-<td><p>__init__(<a href="#id5"><span class="problematic" id="id6">*</span></a>args, <a href="#id7"><span class="problematic" id="id8">**</span></a>kwargs) Overloaded function.</p></td>
+<td><p>Overloaded function.</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#skia.Point.cross" title="skia.Point.cross"><code class="xref py py-obj docutils literal notranslate"><span class="pre">cross</span></code></a></p></td>
-<td><p>cross(self: skia.Point, vec: skia.Point) -&gt; float</p></td>
+<td><p>Returns the cross product of vector and vec.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#skia.Point.distanceToOrigin" title="skia.Point.distanceToOrigin"><code class="xref py py-obj docutils literal notranslate"><span class="pre">distanceToOrigin</span></code></a></p></td>
-<td><p>distanceToOrigin(self: skia.Point) -&gt; float</p></td>
+<td><p>Returns the Euclidean distance from origin, computed as:</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#skia.Point.dot" title="skia.Point.dot"><code class="xref py py-obj docutils literal notranslate"><span class="pre">dot</span></code></a></p></td>
-<td><p>dot(self: skia.Point, vec: skia.Point) -&gt; float</p></td>
+<td><p>Returns the dot product of vector and vector vec.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#skia.Point.equals" title="skia.Point.equals"><code class="xref py py-obj docutils literal notranslate"><span class="pre">equals</span></code></a></p></td>
-<td><p>equals(self: skia.Point, x: float, y: float) -&gt; bool</p></td>
+<td><p>Returns true if <a class="reference internal" href="#skia.Point" title="skia.Point"><code class="xref py py-class docutils literal notranslate"><span class="pre">Point</span></code></a> is equivalent to <a class="reference internal" href="#skia.Point" title="skia.Point"><code class="xref py py-class docutils literal notranslate"><span class="pre">Point</span></code></a> constructed from (x, y).</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#skia.Point.isFinite" title="skia.Point.isFinite"><code class="xref py py-obj docutils literal notranslate"><span class="pre">isFinite</span></code></a></p></td>
-<td><p>isFinite(self: skia.Point) -&gt; bool</p></td>
+<td><p>Returns true if both fX and fY are measurable values.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#skia.Point.isZero" title="skia.Point.isZero"><code class="xref py py-obj docutils literal notranslate"><span class="pre">isZero</span></code></a></p></td>
-<td><p>isZero(self: skia.Point) -&gt; bool</p></td>
+<td><p>Returns true if fX and fY are both zero.</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#skia.Point.iset" title="skia.Point.iset"><code class="xref py py-obj docutils literal notranslate"><span class="pre">iset</span></code></a></p></td>
-<td><p>iset(<a href="#id9"><span class="problematic" id="id10">*</span></a>args, <a href="#id11"><span class="problematic" id="id12">**</span></a>kwargs) Overloaded function.</p></td>
+<td><p>Overloaded function.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#skia.Point.length" title="skia.Point.length"><code class="xref py py-obj docutils literal notranslate"><span class="pre">length</span></code></a></p></td>
-<td><p>length(self: skia.Point) -&gt; float</p></td>
+<td><p>Returns the Euclidean distance from origin, computed as:</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#skia.Point.negate" title="skia.Point.negate"><code class="xref py py-obj docutils literal notranslate"><span class="pre">negate</span></code></a></p></td>
-<td><p>negate(self: skia.Point) -&gt; None</p></td>
+<td><p>Changes the sign of fX and fY.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#skia.Point.normalize" title="skia.Point.normalize"><code class="xref py py-obj docutils literal notranslate"><span class="pre">normalize</span></code></a></p></td>
-<td><p>normalize(self: skia.Point) -&gt; bool</p></td>
+<td><p>Scales (fX, fY) so that <a class="reference internal" href="#skia.Point.length" title="skia.Point.length"><code class="xref py py-meth docutils literal notranslate"><span class="pre">length()</span></code></a> returns one, while preserving ratio of fX to fY, if possible.</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#skia.Point.offset" title="skia.Point.offset"><code class="xref py py-obj docutils literal notranslate"><span class="pre">offset</span></code></a></p></td>
-<td><p>offset(self: skia.Point, dx: float, dy: float) -&gt; None</p></td>
+<td><p>Adds offset (dx, dy) to <a class="reference internal" href="#skia.Point" title="skia.Point"><code class="xref py py-class docutils literal notranslate"><span class="pre">Point</span></code></a>.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#skia.Point.scale" title="skia.Point.scale"><code class="xref py py-obj docutils literal notranslate"><span class="pre">scale</span></code></a></p></td>
-<td><p>scale(self: skia.Point, scale: float) -&gt; skia.Point</p></td>
+<td><p>Sets dst to <a class="reference internal" href="#skia.Point" title="skia.Point"><code class="xref py py-class docutils literal notranslate"><span class="pre">Point</span></code></a> times scale.</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#skia.Point.set" title="skia.Point.set"><code class="xref py py-obj docutils literal notranslate"><span class="pre">set</span></code></a></p></td>
-<td><p>set(self: skia.Point, x: float, y: float) -&gt; None</p></td>
+<td><p>Sets fX to x and fY to y.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#skia.Point.setAbs" title="skia.Point.setAbs"><code class="xref py py-obj docutils literal notranslate"><span class="pre">setAbs</span></code></a></p></td>
-<td><p>setAbs(self: skia.Point, pt: skia.Point) -&gt; None</p></td>
+<td><p>Sets fX to absolute value of pt.fX; and fY to absolute value of pt.fY.</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#skia.Point.setLength" title="skia.Point.setLength"><code class="xref py py-obj docutils literal notranslate"><span class="pre">setLength</span></code></a></p></td>
-<td><p>setLength(<a href="#id13"><span class="problematic" id="id14">*</span></a>args, <a href="#id15"><span class="problematic" id="id16">**</span></a>kwargs) Overloaded function.</p></td>
+<td><p>Overloaded function.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#skia.Point.setNormalize" title="skia.Point.setNormalize"><code class="xref py py-obj docutils literal notranslate"><span class="pre">setNormalize</span></code></a></p></td>
-<td><p>setNormalize(self: skia.Point, x: float, y: float) -&gt; bool</p></td>
+<td><p>Sets vector to (x, y) scaled so <a class="reference internal" href="#skia.Point.length" title="skia.Point.length"><code class="xref py py-meth docutils literal notranslate"><span class="pre">length()</span></code></a> returns one, and so that (fX, fY) is proportional to (x, y).</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#skia.Point.x" title="skia.Point.x"><code class="xref py py-obj docutils literal notranslate"><span class="pre">x</span></code></a></p></td>
-<td><p>x(self: skia.Point) -&gt; float</p></td>
+<td><p>Returns x-axis value of <a class="reference internal" href="#skia.Point" title="skia.Point"><code class="xref py py-class docutils literal notranslate"><span class="pre">Point</span></code></a> or vector.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#skia.Point.y" title="skia.Point.y"><code class="xref py py-obj docutils literal notranslate"><span class="pre">y</span></code></a></p></td>
-<td><p>y(self: skia.Point) -&gt; float</p></td>
+<td><p>Returns y-axis value of <a class="reference internal" href="#skia.Point" title="skia.Point"><code class="xref py py-class docutils literal notranslate"><span class="pre">Point</span></code></a> or vector.</p></td>
 </tr>
 </tbody>
 </table>
@@ -400,7 +399,7 @@
 <h2>Methods<a class="headerlink" href="#methods" title="Link to this heading"></a></h2>
 <dl class="py method">
 <dt class="sig sig-object py" id="skia.Point.CrossProduct">
-<em class="property"><span class="k"><span class="pre">static</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">Point.</span></span><span class="sig-name descname"><span class="pre">CrossProduct</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">a</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#skia.Point" title="skia.Point"><span class="pre">skia.Point</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">b</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#skia.Point" title="skia.Point"><span class="pre">skia.Point</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="headerlink" href="#skia.Point.CrossProduct" title="Link to this definition"></a></dt>
+<span class="property"><span class="k"><span class="pre">static</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">Point.</span></span><span class="sig-name descname"><span class="pre">CrossProduct</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">a</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#skia.Point" title="skia.Point"><span class="pre">skia.Point</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">b</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#skia.Point" title="skia.Point"><span class="pre">skia.Point</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="headerlink" href="#skia.Point.CrossProduct" title="Link to this definition"></a></dt>
 <dd><p>Returns the cross product of vector a and vector b.</p>
 <p>a and b form three-dimensional vectors with z-axis value equal to zero.
 The cross product is a three-dimensional vector with x-axis and y-axis
@@ -420,7 +419,7 @@ values equal to zero. The cross product z-axis component is returned.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="skia.Point.Distance">
-<em class="property"><span class="k"><span class="pre">static</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">Point.</span></span><span class="sig-name descname"><span class="pre">Distance</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">a</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#skia.Point" title="skia.Point"><span class="pre">skia.Point</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">b</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#skia.Point" title="skia.Point"><span class="pre">skia.Point</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="headerlink" href="#skia.Point.Distance" title="Link to this definition"></a></dt>
+<span class="property"><span class="k"><span class="pre">static</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">Point.</span></span><span class="sig-name descname"><span class="pre">Distance</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">a</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#skia.Point" title="skia.Point"><span class="pre">skia.Point</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">b</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#skia.Point" title="skia.Point"><span class="pre">skia.Point</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="headerlink" href="#skia.Point.Distance" title="Link to this definition"></a></dt>
 <dd><p>Returns the Euclidean distance between a and b.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -437,7 +436,7 @@ values equal to zero. The cross product z-axis component is returned.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="skia.Point.DotProduct">
-<em class="property"><span class="k"><span class="pre">static</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">Point.</span></span><span class="sig-name descname"><span class="pre">DotProduct</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">a</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#skia.Point" title="skia.Point"><span class="pre">skia.Point</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">b</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#skia.Point" title="skia.Point"><span class="pre">skia.Point</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="headerlink" href="#skia.Point.DotProduct" title="Link to this definition"></a></dt>
+<span class="property"><span class="k"><span class="pre">static</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">Point.</span></span><span class="sig-name descname"><span class="pre">DotProduct</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">a</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#skia.Point" title="skia.Point"><span class="pre">skia.Point</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">b</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#skia.Point" title="skia.Point"><span class="pre">skia.Point</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="headerlink" href="#skia.Point.DotProduct" title="Link to this definition"></a></dt>
 <dd><p>Returns the dot product of vector a and vector b.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -455,7 +454,7 @@ them</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="skia.Point.Length">
-<em class="property"><span class="k"><span class="pre">static</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">Point.</span></span><span class="sig-name descname"><span class="pre">Length</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="headerlink" href="#skia.Point.Length" title="Link to this definition"></a></dt>
+<span class="property"><span class="k"><span class="pre">static</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">Point.</span></span><span class="sig-name descname"><span class="pre">Length</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">SupportsFloat</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">SupportsIndex</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">SupportsFloat</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">SupportsIndex</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="headerlink" href="#skia.Point.Length" title="Link to this definition"></a></dt>
 <dd><p>Returns the Euclidean distance from origin, computed as:</p>
 <blockquote>
 <div><p>sqrt(x * x + y * y)</p>
@@ -475,7 +474,7 @@ them</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="skia.Point.Make">
-<em class="property"><span class="k"><span class="pre">static</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">Point.</span></span><span class="sig-name descname"><span class="pre">Make</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#skia.Point" title="skia.Point"><span class="pre">skia.Point</span></a></span></span><a class="headerlink" href="#skia.Point.Make" title="Link to this definition"></a></dt>
+<span class="property"><span class="k"><span class="pre">static</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">Point.</span></span><span class="sig-name descname"><span class="pre">Make</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">SupportsFloat</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">SupportsIndex</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">SupportsFloat</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">SupportsIndex</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#skia.Point" title="skia.Point"><span class="pre">skia.Point</span></a></span></span><a class="headerlink" href="#skia.Point.Make" title="Link to this definition"></a></dt>
 <dd><p>Sets fX to x, fY to y.</p>
 <p>Used both to set <a class="reference internal" href="#skia.Point" title="skia.Point"><code class="xref py py-class docutils literal notranslate"><span class="pre">Point</span></code></a> and vector.</p>
 <dl class="field-list simple">
@@ -493,7 +492,7 @@ them</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="skia.Point.Normalize">
-<em class="property"><span class="k"><span class="pre">static</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">Point.</span></span><span class="sig-name descname"><span class="pre">Normalize</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">vec</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#skia.Point" title="skia.Point"><span class="pre">skia.Point</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="headerlink" href="#skia.Point.Normalize" title="Link to this definition"></a></dt>
+<span class="property"><span class="k"><span class="pre">static</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">Point.</span></span><span class="sig-name descname"><span class="pre">Normalize</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">vec</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#skia.Point" title="skia.Point"><span class="pre">skia.Point</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="headerlink" href="#skia.Point.Normalize" title="Link to this definition"></a></dt>
 <dd><p>Scales (vec-&gt;fX, vec-&gt;fY) so that length() returns one, while preserving
 ratio of vec-&gt;fX to vec-&gt;fY, if possible.</p>
 <p>If original length is nearly zero, sets vec to (0, 0) and returns zero;
@@ -514,7 +513,7 @@ required.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="skia.Point.Offset">
-<em class="property"><span class="k"><span class="pre">static</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">Point.</span></span><span class="sig-name descname"><span class="pre">Offset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#skia.Point.Offset" title="Link to this definition"></a></dt>
+<span class="property"><span class="k"><span class="pre">static</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">Point.</span></span><span class="sig-name descname"><span class="pre">Offset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#skia.Point.Offset" title="Link to this definition"></a></dt>
 <dd><p>Overloaded function.</p>
 <ol class="arabic">
 <li><p>Offset(points: std::vector&lt;SkPoint, std::allocator&lt;SkPoint&gt; &gt;, offset: skia.Point) -&gt; std::vector&lt;SkPoint, std::allocator&lt;SkPoint&gt; &gt;</p>
@@ -534,7 +533,7 @@ entries.</p>
 </dl>
 </div></blockquote>
 </li>
-<li><p>Offset(points: std::vector&lt;SkPoint, std::allocator&lt;SkPoint&gt; &gt;, dx: float, dy: float) -&gt; std::vector&lt;SkPoint, std::allocator&lt;SkPoint&gt; &gt;</p>
+<li><p>Offset(points: std::vector&lt;SkPoint, std::allocator&lt;SkPoint&gt; &gt;, dx: typing.SupportsFloat | typing.SupportsIndex, dy: typing.SupportsFloat | typing.SupportsIndex) -&gt; std::vector&lt;SkPoint, std::allocator&lt;SkPoint&gt; &gt;</p>
 <blockquote>
 <div><p>Adds offset (dx, dy) to each <a class="reference internal" href="#skia.Point" title="skia.Point"><code class="xref py py-class docutils literal notranslate"><span class="pre">Point</span></code></a> in points array of length
 count.</p>
@@ -559,7 +558,7 @@ count.</p>
 <span class="sig-prename descclassname"><span class="pre">Point.</span></span><span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#skia.Point.__init__" title="Link to this definition"></a></dt>
 <dd><p>Overloaded function.</p>
 <ol class="arabic">
-<li><p>__init__(self: skia.Point, x: float, y: float) -&gt; None</p>
+<li><p>__init__(self: skia.Point, x: typing.SupportsFloat | typing.SupportsIndex, y: typing.SupportsFloat | typing.SupportsIndex) -&gt; None</p>
 <blockquote>
 <div><p>Sets fX to x, fY to y.</p>
 <p>Used both to set <a class="reference internal" href="#skia.Point" title="skia.Point"><code class="xref py py-class docutils literal notranslate"><span class="pre">Point</span></code></a> and vector.</p>
@@ -632,7 +631,7 @@ them</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="skia.Point.equals">
-<span class="sig-prename descclassname"><span class="pre">Point.</span></span><span class="sig-name descname"><span class="pre">equals</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#skia.Point" title="skia.Point"><span class="pre">skia.Point</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">x</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#skia.Point.equals" title="Link to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">Point.</span></span><span class="sig-name descname"><span class="pre">equals</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#skia.Point" title="skia.Point"><span class="pre">skia.Point</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">x</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">SupportsFloat</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">SupportsIndex</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">SupportsFloat</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">SupportsIndex</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#skia.Point.equals" title="Link to this definition"></a></dt>
 <dd><p>Returns true if <a class="reference internal" href="#skia.Point" title="skia.Point"><code class="xref py py-class docutils literal notranslate"><span class="pre">Point</span></code></a> is equivalent to <a class="reference internal" href="#skia.Point" title="skia.Point"><code class="xref py py-class docutils literal notranslate"><span class="pre">Point</span></code></a>
 constructed from (x, y).</p>
 <dl class="field-list simple">
@@ -675,7 +674,7 @@ constructed from (x, y).</p>
 <span class="sig-prename descclassname"><span class="pre">Point.</span></span><span class="sig-name descname"><span class="pre">iset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#skia.Point.iset" title="Link to this definition"></a></dt>
 <dd><p>Overloaded function.</p>
 <ol class="arabic">
-<li><p>iset(self: skia.Point, x: int, y: int) -&gt; None</p>
+<li><p>iset(self: skia.Point, x: typing.SupportsInt | typing.SupportsIndex, y: typing.SupportsInt | typing.SupportsIndex) -&gt; None</p>
 <blockquote>
 <div><p>Sets fX to x and fY to y, promoting integers to SkScalar values.</p>
 <p>Assigning a large integer value directly to fX or fY may cause a
@@ -744,7 +743,7 @@ otherwise returns true.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="skia.Point.offset">
-<span class="sig-prename descclassname"><span class="pre">Point.</span></span><span class="sig-name descname"><span class="pre">offset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#skia.Point" title="skia.Point"><span class="pre">skia.Point</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">dx</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dy</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#skia.Point.offset" title="Link to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">Point.</span></span><span class="sig-name descname"><span class="pre">offset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#skia.Point" title="skia.Point"><span class="pre">skia.Point</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">dx</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">SupportsFloat</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">SupportsIndex</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dy</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">SupportsFloat</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">SupportsIndex</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#skia.Point.offset" title="Link to this definition"></a></dt>
 <dd><p>Adds offset (dx, dy) to <a class="reference internal" href="#skia.Point" title="skia.Point"><code class="xref py py-class docutils literal notranslate"><span class="pre">Point</span></code></a>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -758,7 +757,7 @@ otherwise returns true.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="skia.Point.scale">
-<span class="sig-prename descclassname"><span class="pre">Point.</span></span><span class="sig-name descname"><span class="pre">scale</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#skia.Point" title="skia.Point"><span class="pre">skia.Point</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">scale</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#skia.Point" title="skia.Point"><span class="pre">skia.Point</span></a></span></span><a class="headerlink" href="#skia.Point.scale" title="Link to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">Point.</span></span><span class="sig-name descname"><span class="pre">scale</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#skia.Point" title="skia.Point"><span class="pre">skia.Point</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">scale</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">SupportsFloat</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">SupportsIndex</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#skia.Point" title="skia.Point"><span class="pre">skia.Point</span></a></span></span><a class="headerlink" href="#skia.Point.scale" title="Link to this definition"></a></dt>
 <dd><p>Sets dst to <a class="reference internal" href="#skia.Point" title="skia.Point"><code class="xref py py-class docutils literal notranslate"><span class="pre">Point</span></code></a> times scale.</p>
 <p>dst may be <a class="reference internal" href="#skia.Point" title="skia.Point"><code class="xref py py-class docutils literal notranslate"><span class="pre">Point</span></code></a> to modify <a class="reference internal" href="#skia.Point" title="skia.Point"><code class="xref py py-class docutils literal notranslate"><span class="pre">Point</span></code></a> in place.</p>
 <p>It is also possible to use operators:</p>
@@ -775,7 +774,7 @@ otherwise returns true.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="skia.Point.set">
-<span class="sig-prename descclassname"><span class="pre">Point.</span></span><span class="sig-name descname"><span class="pre">set</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#skia.Point" title="skia.Point"><span class="pre">skia.Point</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">x</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#skia.Point.set" title="Link to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">Point.</span></span><span class="sig-name descname"><span class="pre">set</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#skia.Point" title="skia.Point"><span class="pre">skia.Point</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">x</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">SupportsFloat</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">SupportsIndex</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">SupportsFloat</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">SupportsIndex</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#skia.Point.set" title="Link to this definition"></a></dt>
 <dd><p>Sets fX to x and fY to y.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -803,7 +802,7 @@ otherwise returns true.</p>
 <span class="sig-prename descclassname"><span class="pre">Point.</span></span><span class="sig-name descname"><span class="pre">setLength</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#skia.Point.setLength" title="Link to this definition"></a></dt>
 <dd><p>Overloaded function.</p>
 <ol class="arabic">
-<li><p>setLength(self: skia.Point, length: float) -&gt; bool</p>
+<li><p>setLength(self: skia.Point, length: typing.SupportsFloat | typing.SupportsIndex) -&gt; bool</p>
 <blockquote>
 <div><p>Scales vector so that <a class="reference internal" href="#skia.Point.distanceToOrigin" title="skia.Point.distanceToOrigin"><code class="xref py py-meth docutils literal notranslate"><span class="pre">distanceToOrigin()</span></code></a> returns length, if
 possible.</p>
@@ -819,7 +818,7 @@ otherwise returns true.</p>
 </dl>
 </div></blockquote>
 </li>
-<li><p>setLength(self: skia.Point, x: float, y: float, length: float) -&gt; bool</p>
+<li><p>setLength(self: skia.Point, x: typing.SupportsFloat | typing.SupportsIndex, y: typing.SupportsFloat | typing.SupportsIndex, length: typing.SupportsFloat | typing.SupportsIndex) -&gt; bool</p>
 <blockquote>
 <div><p>Sets vector to (x, y) scaled to length, if possible.</p>
 <p>If former length is nearly zero, sets vector to (0, 0) and return false;
@@ -845,7 +844,7 @@ otherwise returns true.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="skia.Point.setNormalize">
-<span class="sig-prename descclassname"><span class="pre">Point.</span></span><span class="sig-name descname"><span class="pre">setNormalize</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#skia.Point" title="skia.Point"><span class="pre">skia.Point</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">x</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#skia.Point.setNormalize" title="Link to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">Point.</span></span><span class="sig-name descname"><span class="pre">setNormalize</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#skia.Point" title="skia.Point"><span class="pre">skia.Point</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">x</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">SupportsFloat</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">SupportsIndex</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">SupportsFloat</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">SupportsIndex</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#skia.Point.setNormalize" title="Link to this definition"></a></dt>
 <dd><p>Sets vector to (x, y) scaled so <a class="reference internal" href="#skia.Point.length" title="skia.Point.length"><code class="xref py py-meth docutils literal notranslate"><span class="pre">length()</span></code></a> returns one, and so
 that (fX, fY) is proportional to (x, y).</p>
 <p>If (x, y) length is nearly zero, sets vector to (0, 0) and returns

@@ -8,14 +8,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Typeface &mdash; skia-python 0.0.1 documentation</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
-      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=9edc463e" />
 
   
       <script src="../_static/jquery.js?v=5d32c60e"></script>
       <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
       <script src="../_static/documentation_options.js?v=d45e8c67"></script>
-      <script src="../_static/doctools.js?v=9bcbadda"></script>
-      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -49,7 +49,6 @@
 <li class="toctree-l1 current"><a class="reference internal" href="../reference.html">Reference</a><ul class="current">
 <li class="toctree-l2 current"><a class="reference internal" href="skia.html">skia</a><ul class="current">
 <li class="toctree-l3"><a class="reference internal" href="skia.AlphaType.html">AlphaType</a></li>
-<li class="toctree-l3"><a class="reference internal" href="skia.ApplyPerspectiveClip.html">ApplyPerspectiveClip</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.AutoCanvasRestore.html">AutoCanvasRestore</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.BBHFactory.html">BBHFactory</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.BBoxHierarchy.html">BBoxHierarchy</a></li>
@@ -289,7 +288,7 @@
 <h1>Typeface<a class="headerlink" href="#typeface" title="Link to this heading"></a></h1>
 <dl class="py class">
 <dt class="sig sig-object py" id="skia.Typeface">
-<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">Typeface</span></span><a class="headerlink" href="#skia.Typeface" title="Link to this definition"></a></dt>
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">Typeface</span></span><a class="headerlink" href="#skia.Typeface" title="Link to this definition"></a></dt>
 <dd><p>The <a class="reference internal" href="#skia.Typeface" title="skia.Typeface"><code class="xref py py-class docutils literal notranslate"><span class="pre">Typeface</span></code></a> class specifies the typeface and intrinsic style of
 a font.</p>
 <p>This is used in the paint, along with optionally algorithmic settings like
@@ -314,106 +313,106 @@ appears when drawn (and measured).</p>
 <table class="autosummary longtable docutils align-default">
 <tbody>
 <tr class="row-odd"><td><p><a class="reference internal" href="#skia.Typeface.Equal" title="skia.Typeface.Equal"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Equal</span></code></a></p></td>
-<td><p>Equal(self: skia.Typeface, other: skia.Typeface) -&gt; bool</p></td>
+<td><p>Returns true if the two typefaces reference the same underlying font, handling either being null (treating null as the default font)</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#skia.Typeface.MakeDefault" title="skia.Typeface.MakeDefault"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MakeDefault</span></code></a></p></td>
-<td><p>MakeDefault() -&gt; skia.Typeface</p></td>
+<td><p>Returns the default normal typeface, which is never nullptr.</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#skia.Typeface.MakeDeserialize" title="skia.Typeface.MakeDeserialize"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MakeDeserialize</span></code></a></p></td>
-<td><p>MakeDeserialize(dats: skia.Data, lastResortMgr: SkFontMgr) -&gt; skia.Typeface</p></td>
+<td><p>Given the data previously written by <a class="reference internal" href="#skia.Typeface.serialize" title="skia.Typeface.serialize"><code class="xref py py-meth docutils literal notranslate"><span class="pre">serialize()</span></code></a>, return a new instance of a typeface referring to the same font.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#skia.Typeface.MakeEmpty" title="skia.Typeface.MakeEmpty"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MakeEmpty</span></code></a></p></td>
-<td><p>MakeEmpty() -&gt; skia.Typeface</p></td>
+<td><p>Returns a non-null typeface which contains no glyphs.</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#skia.Typeface.MakeFromData" title="skia.Typeface.MakeFromData"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MakeFromData</span></code></a></p></td>
-<td><p>MakeFromData(data: skia.Data, index: int = 0) -&gt; skia.Typeface</p></td>
+<td><p>Return a new typeface given a <a class="reference internal" href="skia.Data.html#skia.Data" title="skia.Data"><code class="xref py py-class docutils literal notranslate"><span class="pre">Data</span></code></a>.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#skia.Typeface.MakeFromFile" title="skia.Typeface.MakeFromFile"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MakeFromFile</span></code></a></p></td>
-<td><p>MakeFromFile(path: str, index: int = 0) -&gt; skia.Typeface</p></td>
+<td><p>Return a new typeface given a file.</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#skia.Typeface.MakeFromName" title="skia.Typeface.MakeFromName"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MakeFromName</span></code></a></p></td>
-<td><p>MakeFromName(familyName: object, fontStyle: skia.FontStyle = None) -&gt; skia.Typeface</p></td>
+<td><p>Creates a new reference to the typeface that most closely matches the requested familyName and fontStyle.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#skia.Typeface.__init__" title="skia.Typeface.__init__"><code class="xref py py-obj docutils literal notranslate"><span class="pre">__init__</span></code></a></p></td>
-<td><p>__init__(<a href="#id1"><span class="problematic" id="id2">*</span></a>args, <a href="#id3"><span class="problematic" id="id4">**</span></a>kwargs) Overloaded function.</p></td>
+<td><p>Overloaded function.</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#skia.Typeface.copyTableData" title="skia.Typeface.copyTableData"><code class="xref py py-obj docutils literal notranslate"><span class="pre">copyTableData</span></code></a></p></td>
-<td><p>copyTableData(self: skia.Typeface, tag: int) -&gt; skia.Data</p></td>
+<td><p>Return an immutable copy of the requested font table, or nullptr if that table was not found.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#skia.Typeface.countGlyphs" title="skia.Typeface.countGlyphs"><code class="xref py py-obj docutils literal notranslate"><span class="pre">countGlyphs</span></code></a></p></td>
-<td><p>countGlyphs(self: skia.Typeface) -&gt; int</p></td>
+<td><p>Return the number of glyphs in the typeface.</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#skia.Typeface.countTables" title="skia.Typeface.countTables"><code class="xref py py-obj docutils literal notranslate"><span class="pre">countTables</span></code></a></p></td>
-<td><p>countTables(self: skia.Typeface) -&gt; int</p></td>
+<td><p>Return the number of tables in the font.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#skia.Typeface.fontStyle" title="skia.Typeface.fontStyle"><code class="xref py py-obj docutils literal notranslate"><span class="pre">fontStyle</span></code></a></p></td>
-<td><p>fontStyle(self: skia.Typeface) -&gt; skia.FontStyle</p></td>
+<td><p>Returns the typeface's intrinsic style attributes.</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#skia.Typeface.getBounds" title="skia.Typeface.getBounds"><code class="xref py py-obj docutils literal notranslate"><span class="pre">getBounds</span></code></a></p></td>
-<td><p>getBounds(self: skia.Typeface) -&gt; skia.Rect</p></td>
+<td><p>Return a rectangle (scaled to 1-pt) that represents the union of the bounds of all of the glyphs, but each one positioned at (0,).</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#skia.Typeface.getFamilyName" title="skia.Typeface.getFamilyName"><code class="xref py py-obj docutils literal notranslate"><span class="pre">getFamilyName</span></code></a></p></td>
-<td><p>getFamilyName(self: skia.Typeface) -&gt; str</p></td>
+<td><p>Return the family name for this typeface.</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#skia.Typeface.getFamilyNames" title="skia.Typeface.getFamilyNames"><code class="xref py py-obj docutils literal notranslate"><span class="pre">getFamilyNames</span></code></a></p></td>
-<td><p>getFamilyNames(self: skia.Typeface) -&gt; list</p></td>
+<td><p>Returns a list of (family name, language) pairs specified by the font.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#skia.Typeface.getKerningPairAdjustments" title="skia.Typeface.getKerningPairAdjustments"><code class="xref py py-obj docutils literal notranslate"><span class="pre">getKerningPairAdjustments</span></code></a></p></td>
-<td><p>getKerningPairAdjustments(self: skia.Typeface, glyphs: list[int]) -&gt; object</p></td>
+<td><p>Given a run of glyphs, return the associated horizontal adjustments.</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#skia.Typeface.getPostScriptName" title="skia.Typeface.getPostScriptName"><code class="xref py py-obj docutils literal notranslate"><span class="pre">getPostScriptName</span></code></a></p></td>
-<td><p>getPostScriptName(self: skia.Typeface) -&gt; str</p></td>
+<td><p>Return the PostScript name for this typeface.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#skia.Typeface.getTableData" title="skia.Typeface.getTableData"><code class="xref py py-obj docutils literal notranslate"><span class="pre">getTableData</span></code></a></p></td>
-<td><p>getTableData(self: skia.Typeface, tag: int) -&gt; bytes</p></td>
+<td><p>Returns the contents of a table.</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#skia.Typeface.getTableSize" title="skia.Typeface.getTableSize"><code class="xref py py-obj docutils literal notranslate"><span class="pre">getTableSize</span></code></a></p></td>
-<td><p>getTableSize(self: skia.Typeface, tag: int) -&gt; int</p></td>
+<td><p>Given a table tag, return the size of its contents, or 0 if not present.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#skia.Typeface.getTableTags" title="skia.Typeface.getTableTags"><code class="xref py py-obj docutils literal notranslate"><span class="pre">getTableTags</span></code></a></p></td>
-<td><p>getTableTags(self: skia.Typeface) -&gt; list[int]</p></td>
+<td><p>Returns the list of table tags in the font.</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#skia.Typeface.getUnitsPerEm" title="skia.Typeface.getUnitsPerEm"><code class="xref py py-obj docutils literal notranslate"><span class="pre">getUnitsPerEm</span></code></a></p></td>
-<td><p>getUnitsPerEm(self: skia.Typeface) -&gt; int</p></td>
+<td><p>Return the units-per-em value for this typeface, or zero if there is an error.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#skia.Typeface.getVariationDesignParameters" title="skia.Typeface.getVariationDesignParameters"><code class="xref py py-obj docutils literal notranslate"><span class="pre">getVariationDesignParameters</span></code></a></p></td>
-<td><p>getVariationDesignParameters(self: skia.Typeface) -&gt; list[skia.FontParameters.Variation.Axis]</p></td>
+<td><p>Returns the design variation parameters.</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#skia.Typeface.getVariationDesignPosition" title="skia.Typeface.getVariationDesignPosition"><code class="xref py py-obj docutils literal notranslate"><span class="pre">getVariationDesignPosition</span></code></a></p></td>
-<td><p>getVariationDesignPosition(self: skia.Typeface) -&gt; skia.FontArguments.VariationPosition.Coordinates</p></td>
+<td><p>Returns the design variation coordinates.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#skia.Typeface.isBold" title="skia.Typeface.isBold"><code class="xref py py-obj docutils literal notranslate"><span class="pre">isBold</span></code></a></p></td>
-<td><p>isBold(self: skia.Typeface) -&gt; bool</p></td>
+<td><p>Returns true if style() has the kBold bit set.</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#skia.Typeface.isFixedPitch" title="skia.Typeface.isFixedPitch"><code class="xref py py-obj docutils literal notranslate"><span class="pre">isFixedPitch</span></code></a></p></td>
-<td><p>isFixedPitch(self: skia.Typeface) -&gt; bool</p></td>
+<td><p>Returns true if the typeface claims to be fixed-pitch.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#skia.Typeface.isItalic" title="skia.Typeface.isItalic"><code class="xref py py-obj docutils literal notranslate"><span class="pre">isItalic</span></code></a></p></td>
-<td><p>isItalic(self: skia.Typeface) -&gt; bool</p></td>
+<td><p>Returns true if style() has the kItalic bit set.</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#skia.Typeface.makeClone" title="skia.Typeface.makeClone"><code class="xref py py-obj docutils literal notranslate"><span class="pre">makeClone</span></code></a></p></td>
-<td><p>makeClone(self: skia.Typeface, fontArguments: skia.FontArguments) -&gt; skia.Typeface</p></td>
+<td><p>Return a new typeface based on this typeface but parameterized as specified in the <a class="reference internal" href="skia.FontArguments.html#skia.FontArguments" title="skia.FontArguments"><code class="xref py py-class docutils literal notranslate"><span class="pre">FontArguments</span></code></a>.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#skia.Typeface.ref" title="skia.Typeface.ref"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ref</span></code></a></p></td>
-<td><p>ref(self: skia.RefCntBase) -&gt; None</p></td>
+<td><p>Increment the reference count.</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#skia.Typeface.serialize" title="skia.Typeface.serialize"><code class="xref py py-obj docutils literal notranslate"><span class="pre">serialize</span></code></a></p></td>
-<td><p>serialize(self: skia.Typeface, behavior: skia.Typeface.SerializeBehavior = skia.Typeface.SerializeBehavior.kIncludeDataIfLocal) -&gt; skia.Data</p></td>
+<td><p>Returns a unique signature to a stream, sufficient to reconstruct a typeface referencing the same font when Deserialize is called.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#skia.Typeface.unicharToGlyph" title="skia.Typeface.unicharToGlyph"><code class="xref py py-obj docutils literal notranslate"><span class="pre">unicharToGlyph</span></code></a></p></td>
-<td><p>unicharToGlyph(self: skia.Typeface, unichar: int) -&gt; int</p></td>
+<td><p>Return the glyphID that corresponds to the specified unicode code-point (in UTF32 encoding).</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#skia.Typeface.unicharsToGlyphs" title="skia.Typeface.unicharsToGlyphs"><code class="xref py py-obj docutils literal notranslate"><span class="pre">unicharsToGlyphs</span></code></a></p></td>
-<td><p>unicharsToGlyphs(self: skia.Typeface, chars: list[int]) -&gt; list[int]</p></td>
+<td><p>Given an array of UTF32 character codes, return their corresponding glyph IDs.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#skia.Typeface.unique" title="skia.Typeface.unique"><code class="xref py py-obj docutils literal notranslate"><span class="pre">unique</span></code></a></p></td>
-<td><p>unique(self: skia.RefCntBase) -&gt; bool</p></td>
+<td><p>May return true if the caller is the only owner.</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#skia.Typeface.uniqueID" title="skia.Typeface.uniqueID"><code class="xref py py-obj docutils literal notranslate"><span class="pre">uniqueID</span></code></a></p></td>
-<td><p>uniqueID(self: skia.Typeface) -&gt; int</p></td>
+<td><p>Return a 32bit value for this typeface, unique for the underlying font data.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#skia.Typeface.unref" title="skia.Typeface.unref"><code class="xref py py-obj docutils literal notranslate"><span class="pre">unref</span></code></a></p></td>
-<td><p>unref(self: skia.RefCntBase) -&gt; None</p></td>
+<td><p>Decrement the reference count.</p></td>
 </tr>
 </tbody>
 </table>
@@ -437,20 +436,20 @@ appears when drawn (and measured).</p>
 <h2>Methods<a class="headerlink" href="#methods" title="Link to this heading"></a></h2>
 <dl class="py method">
 <dt class="sig sig-object py" id="skia.Typeface.Equal">
-<em class="property"><span class="k"><span class="pre">static</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">Typeface.</span></span><span class="sig-name descname"><span class="pre">Equal</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#skia.Typeface" title="skia.Typeface"><span class="pre">skia.Typeface</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">other</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#skia.Typeface" title="skia.Typeface"><span class="pre">skia.Typeface</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#skia.Typeface.Equal" title="Link to this definition"></a></dt>
+<span class="property"><span class="k"><span class="pre">static</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">Typeface.</span></span><span class="sig-name descname"><span class="pre">Equal</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#skia.Typeface" title="skia.Typeface"><span class="pre">skia.Typeface</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">other</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#skia.Typeface" title="skia.Typeface"><span class="pre">skia.Typeface</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#skia.Typeface.Equal" title="Link to this definition"></a></dt>
 <dd><p>Returns true if the two typefaces reference the same underlying font,
 handling either being null (treating null as the default font)</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="skia.Typeface.MakeDefault">
-<em class="property"><span class="k"><span class="pre">static</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">Typeface.</span></span><span class="sig-name descname"><span class="pre">MakeDefault</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#skia.Typeface" title="skia.Typeface"><span class="pre">skia.Typeface</span></a></span></span><a class="headerlink" href="#skia.Typeface.MakeDefault" title="Link to this definition"></a></dt>
+<span class="property"><span class="k"><span class="pre">static</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">Typeface.</span></span><span class="sig-name descname"><span class="pre">MakeDefault</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#skia.Typeface" title="skia.Typeface"><span class="pre">skia.Typeface</span></a></span></span><a class="headerlink" href="#skia.Typeface.MakeDefault" title="Link to this definition"></a></dt>
 <dd><p>Returns the default normal typeface, which is never nullptr.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="skia.Typeface.MakeDeserialize">
-<em class="property"><span class="k"><span class="pre">static</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">Typeface.</span></span><span class="sig-name descname"><span class="pre">MakeDeserialize</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dats</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="skia.Data.html#skia.Data" title="skia.Data"><span class="pre">skia.Data</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">lastResortMgr</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">SkFontMgr</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#skia.Typeface" title="skia.Typeface"><span class="pre">skia.Typeface</span></a></span></span><a class="headerlink" href="#skia.Typeface.MakeDeserialize" title="Link to this definition"></a></dt>
+<span class="property"><span class="k"><span class="pre">static</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">Typeface.</span></span><span class="sig-name descname"><span class="pre">MakeDeserialize</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dats</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="skia.Data.html#skia.Data" title="skia.Data"><span class="pre">skia.Data</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">lastResortMgr</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">SkFontMgr</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#skia.Typeface" title="skia.Typeface"><span class="pre">skia.Typeface</span></a></span></span><a class="headerlink" href="#skia.Typeface.MakeDeserialize" title="Link to this definition"></a></dt>
 <dd><p>Given the data previously written by <a class="reference internal" href="#skia.Typeface.serialize" title="skia.Typeface.serialize"><code class="xref py py-meth docutils literal notranslate"><span class="pre">serialize()</span></code></a>, return a new
 instance of a typeface referring to the same font.</p>
 <p>If that font is not available, return nullptr.</p>
@@ -458,13 +457,13 @@ instance of a typeface referring to the same font.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="skia.Typeface.MakeEmpty">
-<em class="property"><span class="k"><span class="pre">static</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">Typeface.</span></span><span class="sig-name descname"><span class="pre">MakeEmpty</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#skia.Typeface" title="skia.Typeface"><span class="pre">skia.Typeface</span></a></span></span><a class="headerlink" href="#skia.Typeface.MakeEmpty" title="Link to this definition"></a></dt>
+<span class="property"><span class="k"><span class="pre">static</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">Typeface.</span></span><span class="sig-name descname"><span class="pre">MakeEmpty</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#skia.Typeface" title="skia.Typeface"><span class="pre">skia.Typeface</span></a></span></span><a class="headerlink" href="#skia.Typeface.MakeEmpty" title="Link to this definition"></a></dt>
 <dd><p>Returns a non-null typeface which contains no glyphs.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="skia.Typeface.MakeFromData">
-<em class="property"><span class="k"><span class="pre">static</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">Typeface.</span></span><span class="sig-name descname"><span class="pre">MakeFromData</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="skia.Data.html#skia.Data" title="skia.Data"><span class="pre">skia.Data</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">index</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#skia.Typeface" title="skia.Typeface"><span class="pre">skia.Typeface</span></a></span></span><a class="headerlink" href="#skia.Typeface.MakeFromData" title="Link to this definition"></a></dt>
+<span class="property"><span class="k"><span class="pre">static</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">Typeface.</span></span><span class="sig-name descname"><span class="pre">MakeFromData</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="skia.Data.html#skia.Data" title="skia.Data"><span class="pre">skia.Data</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">index</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">SupportsInt</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">SupportsIndex</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#skia.Typeface" title="skia.Typeface"><span class="pre">skia.Typeface</span></a></span></span><a class="headerlink" href="#skia.Typeface.MakeFromData" title="Link to this definition"></a></dt>
 <dd><p>Return a new typeface given a <a class="reference internal" href="skia.Data.html#skia.Data" title="skia.Data"><code class="xref py py-class docutils literal notranslate"><span class="pre">Data</span></code></a>.</p>
 <p>If the data is null, or is not a valid font file, returns nullptr.</p>
 <p>Use <a class="reference internal" href="#skia.Typeface.MakeDeserialize" title="skia.Typeface.MakeDeserialize"><code class="xref py py-meth docutils literal notranslate"><span class="pre">MakeDeserialize()</span></code></a> for the result of <a class="reference internal" href="#skia.Typeface.serialize" title="skia.Typeface.serialize"><code class="xref py py-meth docutils literal notranslate"><span class="pre">serialize()</span></code></a>.</p>
@@ -472,7 +471,7 @@ instance of a typeface referring to the same font.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="skia.Typeface.MakeFromFile">
-<em class="property"><span class="k"><span class="pre">static</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">Typeface.</span></span><span class="sig-name descname"><span class="pre">MakeFromFile</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">index</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#skia.Typeface" title="skia.Typeface"><span class="pre">skia.Typeface</span></a></span></span><a class="headerlink" href="#skia.Typeface.MakeFromFile" title="Link to this definition"></a></dt>
+<span class="property"><span class="k"><span class="pre">static</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">Typeface.</span></span><span class="sig-name descname"><span class="pre">MakeFromFile</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">index</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">SupportsInt</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">SupportsIndex</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#skia.Typeface" title="skia.Typeface"><span class="pre">skia.Typeface</span></a></span></span><a class="headerlink" href="#skia.Typeface.MakeFromFile" title="Link to this definition"></a></dt>
 <dd><p>Return a new typeface given a file.</p>
 <p>If the file does not exist, or is not a valid font file, returns
 nullptr.</p>
@@ -480,7 +479,7 @@ nullptr.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="skia.Typeface.MakeFromName">
-<em class="property"><span class="k"><span class="pre">static</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">Typeface.</span></span><span class="sig-name descname"><span class="pre">MakeFromName</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">familyName</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">object</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fontStyle</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="skia.FontStyle.html#skia.FontStyle" title="skia.FontStyle"><span class="pre">skia.FontStyle</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#skia.Typeface" title="skia.Typeface"><span class="pre">skia.Typeface</span></a></span></span><a class="headerlink" href="#skia.Typeface.MakeFromName" title="Link to this definition"></a></dt>
+<span class="property"><span class="k"><span class="pre">static</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">Typeface.</span></span><span class="sig-name descname"><span class="pre">MakeFromName</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">familyName</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">object</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fontStyle</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="skia.FontStyle.html#skia.FontStyle" title="skia.FontStyle"><span class="pre">skia.FontStyle</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#skia.Typeface" title="skia.Typeface"><span class="pre">skia.Typeface</span></a></span></span><a class="headerlink" href="#skia.Typeface.MakeFromName" title="Link to this definition"></a></dt>
 <dd><p>Creates a new reference to the typeface that most closely matches the
 requested familyName and fontStyle.</p>
 <p>This method allows extended font face specifiers as in the
@@ -532,7 +531,7 @@ requested familyName and fontStyle.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="skia.Typeface.copyTableData">
-<span class="sig-prename descclassname"><span class="pre">Typeface.</span></span><span class="sig-name descname"><span class="pre">copyTableData</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#skia.Typeface" title="skia.Typeface"><span class="pre">skia.Typeface</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">tag</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="skia.Data.html#skia.Data" title="skia.Data"><span class="pre">skia.Data</span></a></span></span><a class="headerlink" href="#skia.Typeface.copyTableData" title="Link to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">Typeface.</span></span><span class="sig-name descname"><span class="pre">copyTableData</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#skia.Typeface" title="skia.Typeface"><span class="pre">skia.Typeface</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">tag</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">SupportsInt</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">SupportsIndex</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="skia.Data.html#skia.Data" title="skia.Data"><span class="pre">skia.Data</span></a></span></span><a class="headerlink" href="#skia.Typeface.copyTableData" title="Link to this definition"></a></dt>
 <dd><p>Return an immutable copy of the requested font table, or nullptr if that
 table was not found.</p>
 <p>This can sometimes be faster than calling <a class="reference internal" href="#skia.Typeface.getTableData" title="skia.Typeface.getTableData"><code class="xref py py-meth docutils literal notranslate"><span class="pre">getTableData()</span></code></a> twice:
@@ -590,7 +589,7 @@ is whatever the host platform chooses.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="skia.Typeface.getKerningPairAdjustments">
-<span class="sig-prename descclassname"><span class="pre">Typeface.</span></span><span class="sig-name descname"><span class="pre">getKerningPairAdjustments</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#skia.Typeface" title="skia.Typeface"><span class="pre">skia.Typeface</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">glyphs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">object</span></span></span><a class="headerlink" href="#skia.Typeface.getKerningPairAdjustments" title="Link to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">Typeface.</span></span><span class="sig-name descname"><span class="pre">getKerningPairAdjustments</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#skia.Typeface" title="skia.Typeface"><span class="pre">skia.Typeface</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">glyphs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">collections.abc.Sequence</span><span class="p"><span class="pre">[</span></span><span class="pre">SupportsInt</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">SupportsIndex</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">object</span></span></span><a class="headerlink" href="#skia.Typeface.getKerningPairAdjustments" title="Link to this definition"></a></dt>
 <dd><p>Given a run of glyphs, return the associated horizontal adjustments.</p>
 <p>Adjustments are in “design units”, which are integers relative to the
 typeface’s units per em (see getUnitsPerEm).</p>
@@ -609,7 +608,7 @@ Returns false if no PostScript name is available.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="skia.Typeface.getTableData">
-<span class="sig-prename descclassname"><span class="pre">Typeface.</span></span><span class="sig-name descname"><span class="pre">getTableData</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#skia.Typeface" title="skia.Typeface"><span class="pre">skia.Typeface</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">tag</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bytes</span></span></span><a class="headerlink" href="#skia.Typeface.getTableData" title="Link to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">Typeface.</span></span><span class="sig-name descname"><span class="pre">getTableData</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#skia.Typeface" title="skia.Typeface"><span class="pre">skia.Typeface</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">tag</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">SupportsInt</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">SupportsIndex</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bytes</span></span></span><a class="headerlink" href="#skia.Typeface.getTableData" title="Link to this definition"></a></dt>
 <dd><p>Returns the contents of a table.</p>
 <p>Note that the contents of the table will be in their native endian order
 (which for most truetype tables is big endian). If the table tag is not
@@ -628,7 +627,7 @@ by data may have been written to, even though an error has occured.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="skia.Typeface.getTableSize">
-<span class="sig-prename descclassname"><span class="pre">Typeface.</span></span><span class="sig-name descname"><span class="pre">getTableSize</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#skia.Typeface" title="skia.Typeface"><span class="pre">skia.Typeface</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">tag</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="headerlink" href="#skia.Typeface.getTableSize" title="Link to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">Typeface.</span></span><span class="sig-name descname"><span class="pre">getTableSize</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#skia.Typeface" title="skia.Typeface"><span class="pre">skia.Typeface</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">tag</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">SupportsInt</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">SupportsIndex</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="headerlink" href="#skia.Typeface.getTableSize" title="Link to this definition"></a></dt>
 <dd><p>Given a table tag, return the size of its contents, or 0 if not present.</p>
 </dd></dl>
 
@@ -722,7 +721,7 @@ typeface referencing the same font when Deserialize is called.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="skia.Typeface.unicharToGlyph">
-<span class="sig-prename descclassname"><span class="pre">Typeface.</span></span><span class="sig-name descname"><span class="pre">unicharToGlyph</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#skia.Typeface" title="skia.Typeface"><span class="pre">skia.Typeface</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">unichar</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="headerlink" href="#skia.Typeface.unicharToGlyph" title="Link to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">Typeface.</span></span><span class="sig-name descname"><span class="pre">unicharToGlyph</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#skia.Typeface" title="skia.Typeface"><span class="pre">skia.Typeface</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">unichar</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">SupportsInt</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">SupportsIndex</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="headerlink" href="#skia.Typeface.unicharToGlyph" title="Link to this definition"></a></dt>
 <dd><p>Return the glyphID that corresponds to the specified unicode code-point
 (in UTF32 encoding).</p>
 <p>If the unichar is not supported, returns 0.</p>
@@ -731,7 +730,7 @@ typeface referencing the same font when Deserialize is called.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="skia.Typeface.unicharsToGlyphs">
-<span class="sig-prename descclassname"><span class="pre">Typeface.</span></span><span class="sig-name descname"><span class="pre">unicharsToGlyphs</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#skia.Typeface" title="skia.Typeface"><span class="pre">skia.Typeface</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">chars</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#skia.Typeface.unicharsToGlyphs" title="Link to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">Typeface.</span></span><span class="sig-name descname"><span class="pre">unicharsToGlyphs</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#skia.Typeface" title="skia.Typeface"><span class="pre">skia.Typeface</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">chars</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">collections.abc.Sequence</span><span class="p"><span class="pre">[</span></span><span class="pre">SupportsInt</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">SupportsIndex</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#skia.Typeface.unicharsToGlyphs" title="Link to this definition"></a></dt>
 <dd><p>Given an array of UTF32 character codes, return their corresponding
 glyph IDs.</p>
 <dl class="field-list simple">
@@ -773,17 +772,17 @@ been allocated via new, and not on the stack.</p>
 <h2>Attributes<a class="headerlink" href="#attributes" title="Link to this heading"></a></h2>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="skia.Typeface.kDoIncludeData">
-<span class="sig-prename descclassname"><span class="pre">Typeface.</span></span><span class="sig-name descname"><span class="pre">kDoIncludeData</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;SerializeBehavior.kDoIncludeData:</span> <span class="pre">0&gt;</span></em><a class="headerlink" href="#skia.Typeface.kDoIncludeData" title="Link to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">Typeface.</span></span><span class="sig-name descname"><span class="pre">kDoIncludeData</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;SerializeBehavior.kDoIncludeData:</span> <span class="pre">0&gt;</span></span><a class="headerlink" href="#skia.Typeface.kDoIncludeData" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="skia.Typeface.kDontIncludeData">
-<span class="sig-prename descclassname"><span class="pre">Typeface.</span></span><span class="sig-name descname"><span class="pre">kDontIncludeData</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;SerializeBehavior.kDontIncludeData:</span> <span class="pre">1&gt;</span></em><a class="headerlink" href="#skia.Typeface.kDontIncludeData" title="Link to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">Typeface.</span></span><span class="sig-name descname"><span class="pre">kDontIncludeData</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;SerializeBehavior.kDontIncludeData:</span> <span class="pre">1&gt;</span></span><a class="headerlink" href="#skia.Typeface.kDontIncludeData" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="skia.Typeface.kIncludeDataIfLocal">
-<span class="sig-prename descclassname"><span class="pre">Typeface.</span></span><span class="sig-name descname"><span class="pre">kIncludeDataIfLocal</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;SerializeBehavior.kIncludeDataIfLocal:</span> <span class="pre">2&gt;</span></em><a class="headerlink" href="#skia.Typeface.kIncludeDataIfLocal" title="Link to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">Typeface.</span></span><span class="sig-name descname"><span class="pre">kIncludeDataIfLocal</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;SerializeBehavior.kIncludeDataIfLocal:</span> <span class="pre">2&gt;</span></span><a class="headerlink" href="#skia.Typeface.kIncludeDataIfLocal" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 </section>

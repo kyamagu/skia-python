@@ -8,14 +8,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>GrRecordingContext &mdash; skia-python 0.0.1 documentation</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
-      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=9edc463e" />
 
   
       <script src="../_static/jquery.js?v=5d32c60e"></script>
       <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
       <script src="../_static/documentation_options.js?v=d45e8c67"></script>
-      <script src="../_static/doctools.js?v=9bcbadda"></script>
-      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -49,7 +49,6 @@
 <li class="toctree-l1 current"><a class="reference internal" href="../reference.html">Reference</a><ul class="current">
 <li class="toctree-l2 current"><a class="reference internal" href="skia.html">skia</a><ul class="current">
 <li class="toctree-l3"><a class="reference internal" href="skia.AlphaType.html">AlphaType</a></li>
-<li class="toctree-l3"><a class="reference internal" href="skia.ApplyPerspectiveClip.html">ApplyPerspectiveClip</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.AutoCanvasRestore.html">AutoCanvasRestore</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.BBHFactory.html">BBHFactory</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skia.BBoxHierarchy.html">BBoxHierarchy</a></li>
@@ -287,7 +286,7 @@
 <h1>GrRecordingContext<a class="headerlink" href="#grrecordingcontext" title="Link to this heading"></a></h1>
 <dl class="py class">
 <dt class="sig sig-object py" id="skia.GrRecordingContext">
-<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">GrRecordingContext</span></span><a class="headerlink" href="#skia.GrRecordingContext" title="Link to this definition"></a></dt>
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">GrRecordingContext</span></span><a class="headerlink" href="#skia.GrRecordingContext" title="Link to this definition"></a></dt>
 <dd><p class="rubric">Methods</p>
 <table class="autosummary longtable docutils align-default">
 <tbody>
@@ -295,46 +294,46 @@
 <td><p></p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#skia.GrRecordingContext.abandoned" title="skia.GrRecordingContext.abandoned"><code class="xref py py-obj docutils literal notranslate"><span class="pre">abandoned</span></code></a></p></td>
-<td><p>abandoned(self: skia.GrRecordingContext) -&gt; bool</p></td>
+<td><p>Reports whether the <a class="reference internal" href="skia.GrDirectContext.html#skia.GrDirectContext" title="skia.GrDirectContext"><code class="xref py py-class docutils literal notranslate"><span class="pre">GrDirectContext</span></code></a> associated with this <a class="reference internal" href="#skia.GrRecordingContext" title="skia.GrRecordingContext"><code class="xref py py-class docutils literal notranslate"><span class="pre">GrRecordingContext</span></code></a> is abandoned.</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#skia.GrRecordingContext.asDirectContext" title="skia.GrRecordingContext.asDirectContext"><code class="xref py py-obj docutils literal notranslate"><span class="pre">asDirectContext</span></code></a></p></td>
-<td><p>asDirectContext(self: skia.GrContext_Base) -&gt; GrDirectContext</p></td>
+<td><p>Safely downcast to a <a class="reference internal" href="skia.GrDirectContext.html#skia.GrDirectContext" title="skia.GrDirectContext"><code class="xref py py-class docutils literal notranslate"><span class="pre">GrDirectContext</span></code></a>.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#skia.GrRecordingContext.backend" title="skia.GrRecordingContext.backend"><code class="xref py py-obj docutils literal notranslate"><span class="pre">backend</span></code></a></p></td>
-<td><p>backend(self: skia.GrContext_Base) -&gt; skia.GrBackendApi</p></td>
+<td><p>The 3D API backing this context.</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#skia.GrRecordingContext.colorTypeSupportedAsImage" title="skia.GrRecordingContext.colorTypeSupportedAsImage"><code class="xref py py-obj docutils literal notranslate"><span class="pre">colorTypeSupportedAsImage</span></code></a></p></td>
-<td><p>colorTypeSupportedAsImage(self: skia.GrRecordingContext, arg0: SkColorType) -&gt; bool</p></td>
+<td><p>Can a <a class="reference internal" href="skia.Image.html#skia.Image" title="skia.Image"><code class="xref py py-class docutils literal notranslate"><span class="pre">Image</span></code></a> be created with the given color type.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#skia.GrRecordingContext.colorTypeSupportedAsSurface" title="skia.GrRecordingContext.colorTypeSupportedAsSurface"><code class="xref py py-obj docutils literal notranslate"><span class="pre">colorTypeSupportedAsSurface</span></code></a></p></td>
-<td><p>colorTypeSupportedAsSurface(self: skia.GrRecordingContext, colorType: SkColorType) -&gt; bool</p></td>
+<td><p>Can a <a class="reference internal" href="skia.Surface.html#skia.Surface" title="skia.Surface"><code class="xref py py-class docutils literal notranslate"><span class="pre">Surface</span></code></a> be created with the given color type.</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#skia.GrRecordingContext.compressedBackendFormat" title="skia.GrRecordingContext.compressedBackendFormat"><code class="xref py py-obj docutils literal notranslate"><span class="pre">compressedBackendFormat</span></code></a></p></td>
-<td><p>compressedBackendFormat(self: skia.GrContext_Base, arg0: SkTextureCompressionType) -&gt; skia.GrBackendFormat</p></td>
+<td><p></p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#skia.GrRecordingContext.defaultBackendFormat" title="skia.GrRecordingContext.defaultBackendFormat"><code class="xref py py-obj docutils literal notranslate"><span class="pre">defaultBackendFormat</span></code></a></p></td>
-<td><p>defaultBackendFormat(self: skia.GrRecordingContext, colorType: SkColorType, renderable: skia.GrRenderable = skia.GrRenderable.kNo) -&gt; skia.GrBackendFormat</p></td>
+<td><p>Retrieve the default <a class="reference internal" href="skia.GrBackendFormat.html#skia.GrBackendFormat" title="skia.GrBackendFormat"><code class="xref py py-class docutils literal notranslate"><span class="pre">GrBackendFormat</span></code></a> for a given <a class="reference internal" href="skia.ColorType.html#skia.ColorType" title="skia.ColorType"><code class="xref py py-class docutils literal notranslate"><span class="pre">ColorType</span></code></a> and renderability.</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#skia.GrRecordingContext.maxRenderTargetSize" title="skia.GrRecordingContext.maxRenderTargetSize"><code class="xref py py-obj docutils literal notranslate"><span class="pre">maxRenderTargetSize</span></code></a></p></td>
-<td><p>maxRenderTargetSize(self: skia.GrRecordingContext) -&gt; int</p></td>
+<td><p>Gets the maximum supported render target size.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#skia.GrRecordingContext.maxSurfaceSampleCountForColorType" title="skia.GrRecordingContext.maxSurfaceSampleCountForColorType"><code class="xref py py-obj docutils literal notranslate"><span class="pre">maxSurfaceSampleCountForColorType</span></code></a></p></td>
-<td><p>maxSurfaceSampleCountForColorType(self: skia.GrRecordingContext, arg0: SkColorType) -&gt; int</p></td>
+<td><p>Gets the maximum supported sample count for a color type.</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#skia.GrRecordingContext.maxTextureSize" title="skia.GrRecordingContext.maxTextureSize"><code class="xref py py-obj docutils literal notranslate"><span class="pre">maxTextureSize</span></code></a></p></td>
-<td><p>maxTextureSize(self: skia.GrRecordingContext) -&gt; int</p></td>
+<td><p>Gets the maximum supported texture size.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#skia.GrRecordingContext.ref" title="skia.GrRecordingContext.ref"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ref</span></code></a></p></td>
-<td><p>ref(self: skia.RefCntBase) -&gt; None</p></td>
+<td><p>Increment the reference count.</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#skia.GrRecordingContext.threadSafeProxy" title="skia.GrRecordingContext.threadSafeProxy"><code class="xref py py-obj docutils literal notranslate"><span class="pre">threadSafeProxy</span></code></a></p></td>
-<td><p>threadSafeProxy(self: skia.GrContext_Base) -&gt; GrContextThreadSafeProxy</p></td>
+<td><p></p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#skia.GrRecordingContext.unique" title="skia.GrRecordingContext.unique"><code class="xref py py-obj docutils literal notranslate"><span class="pre">unique</span></code></a></p></td>
-<td><p>unique(self: skia.RefCntBase) -&gt; bool</p></td>
+<td><p>May return true if the caller is the only owner.</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#skia.GrRecordingContext.unref" title="skia.GrRecordingContext.unref"><code class="xref py py-obj docutils literal notranslate"><span class="pre">unref</span></code></a></p></td>
-<td><p>unref(self: skia.RefCntBase) -&gt; None</p></td>
+<td><p>Decrement the reference count.</p></td>
 </tr>
 </tbody>
 </table>
