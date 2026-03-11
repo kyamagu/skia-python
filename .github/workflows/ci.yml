@@ -35,7 +35,7 @@ jobs:
           submodules: true
 
       - name: Build wheels
-        uses: pypa/cibuildwheel@v2.21.3
+        uses: pypa/cibuildwheel@v3.4.0
         env:
           CIBW_MANYLINUX_X86_64_IMAGE: manylinux_2_28
           CIBW_MANYLINUX_AARCH64_IMAGE: manylinux_2_28
@@ -59,7 +59,7 @@ jobs:
           name: wheel-${{ matrix.os }}-${{ matrix.arch }}-${{ matrix.cp }}
           path: ./wheelhouse/*.whl
 
-  # identical to "build_wheels", except with the older pypa/cibuildwheel@v2.19.2
+  # identical to "build_wheels", except with the older pypa/cibuildwheel
   build_wheels_old:
     name: Build wheels on ${{ matrix.os }} (${{ matrix.arch }}) for ${{ matrix.cp }}
     runs-on: ${{ matrix.os }}
@@ -83,7 +83,7 @@ jobs:
           submodules: true
 
       - name: Build wheels
-        uses: pypa/cibuildwheel@v2.19.2
+        uses: pypa/cibuildwheel@v3.4.0
         env:
           CIBW_MANYLINUX_X86_64_IMAGE: manylinux_2_28
           CIBW_MANYLINUX_AARCH64_IMAGE: manylinux_2_28
