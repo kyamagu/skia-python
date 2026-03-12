@@ -17,17 +17,17 @@ jobs:
       matrix:
         os: [ubuntu-22.04, windows-2022, macos-15-intel]
         arch: [auto64]
-        cp: ["cp3{10,11,12,13,14}"]
+        cp: ["cp3{10,11,12,13,14,14t}"]
         include:
           - os: macos-14
             arch: arm64
-            cp: "cp3{10,11,12,13,14}"
+            cp: "cp3{10,11,12,13,14,14t}"
           - os: ubuntu-22.04-arm
             arch: aarch64
-            cp: "cp3{10,11,12,13,14}"
+            cp: "cp3{10,11,12,13,14,14t}"
           - os: windows-11-arm
             arch: ARM64
-            cp: "cp3{11,12,13,14}"
+            cp: "cp3{11,12,13,14,14t}"
 
     steps:
       - uses: actions/checkout@v5
