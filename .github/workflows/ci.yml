@@ -54,7 +54,7 @@ jobs:
           CIBW_REPAIR_WHEEL_COMMAND_LINUX: "auditwheel repair --exclude libEGL.so.1 -w {dest_dir} {wheel}"
           CIBW_TEST_SKIP: "*-macosx_arm64"
 
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v6
         with:
           name: wheel-${{ matrix.os }}-${{ matrix.arch }}-${{ matrix.cp }}
           path: ./wheelhouse/*.whl
@@ -102,7 +102,7 @@ jobs:
           CIBW_REPAIR_WHEEL_COMMAND_LINUX: "auditwheel repair --exclude libEGL.so.1 -w {dest_dir} {wheel}"
           CIBW_TEST_SKIP: "*-macosx_arm64"
 
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v6
         with:
           name: wheel-${{ matrix.os }}-${{ matrix.arch }}-${{ matrix.cp }}
           path: ./wheelhouse/*.whl
