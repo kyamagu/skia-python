@@ -30,7 +30,7 @@ jobs:
             cp: "cp3{11,12,13}"
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
         with:
           submodules: true
 
@@ -78,7 +78,7 @@ jobs:
             cp: "cp3{8,9}"
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
         with:
           submodules: true
 
@@ -112,7 +112,7 @@ jobs:
     needs: [build_wheels, build_wheels_old]
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
 
       - uses: actions/setup-python@v5
         name: Install Python
@@ -168,7 +168,7 @@ jobs:
        - run: dnf install -y patch
        - run: dnf install -y expat-devel fontconfig-devel
        - run: dnf install -y libxml2-devel vulkan-headers
-       - uses: actions/checkout@v4
+       - uses: actions/checkout@v5
          with:
           submodules: recursive
        - run: bash scripts/build_Linux.sh
