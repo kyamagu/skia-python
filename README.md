@@ -44,7 +44,7 @@ Or:
 yum install fontconfig mesa-libGL mesa-libEGL libglvnd-egl mesa-dri-drivers
 ```
 
-For unsupported environment, check the [build instruction](https://skia-python.github.io/skia-python/install.html).
+For unsupported environments, check the [build instructions](https://skia-python.github.io/skia-python/install.html).
 
 ## Examples
 
