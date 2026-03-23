@@ -30,6 +30,6 @@ Contributing
 
 Development happens at `Github`_. Feel free to post to `issues`_ or make `PR`_.
 
-.. _Github: https://github.com/kyamagu/skia-python
-.. _issues: https://github.com/kyamagu/skia-python/issues
-.. _PR: https://github.com/kyamagu/skia-python/pulls
+.. _Github: https://github.com/skia-python/skia-python
+.. _issues: https://github.com/skia-python/skia-python/issues
+.. _PR: https://github.com/skia-python/skia-python/pulls

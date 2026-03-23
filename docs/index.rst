@@ -10,7 +10,7 @@ across a variety of hardware and software platforms.
 
 .. _Skia Graphics Library: https://skia.org/
 
-.. _Github: https://github.com/kyamagu/skia-python
+.. _Github: https://github.com/skia-python/skia-python
 
 
 Documentation

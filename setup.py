@@ -169,9 +169,9 @@ extension = Extension(
 setup(
     name=NAME,
     version=__version__,
-    author='Kota Yamaguchi',
-    author_email='KotaYamaguchi1984@gmail.com',
-    url='https://github.com/kyamagu/skia-python',
+    author='Kota Yamaguchi, Hin-Tak Leung',
+    author_email='KotaYamaguchi1984@gmail.com, htl10@users.sourceforge.net',
+    url='https://github.com/skia-python/skia-python',
     description='Skia python binding',
     long_description=open('README.md', 'r').read(),
     long_description_content_type='text/markdown',

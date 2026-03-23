@@ -1,10 +1,10 @@
-This is a partial port of [skia-python](https://github.com/kyamagu/skia-python/)
+This is a partial port of [skia-python](https://github.com/skia-python/skia-python/)
 from `m87` to `m116`, possibly disabling any `m87` APIs that have no close `m116` equivalents.
 
 It concentrates on OT-SVG, and fixing these two issues:
 
-* [SkSVGDOM::renderNode() is not exposed in python](https://github.com/kyamagu/skia-python/issues/192)
-* [three-args contructor to SkMemoryStream not exposed.](https://github.com/kyamagu/skia-python/issues/194)
+* [SkSVGDOM::renderNode() is not exposed in python](https://github.com/skia-python/skia-python/issues/192)
+* [three-args contructor to SkMemoryStream not exposed.](https://github.com/skia-python/skia-python/issues/194)
 
 The SVG module left experimental in `m88` upstream. It has received many improvements since.
 
@@ -13,7 +13,7 @@ are also exposed for access. This experimental functionality is available to
 Linux/FreeType users only.
 
 Special mention of [0lru](https://github.com/0lru) who provided a
-[draft m98 pull](https://github.com/kyamagu/skia-python/pull/181) for which some ideas
+[draft m98 pull](https://github.com/skia-python/skia-python/pull/181) for which some ideas
 of this update had taken from.
 
 # General overview of changes between `m87` and `m116`

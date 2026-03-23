@@ -179,7 +179,7 @@ Alternatively, :py:class:`Canvas` content can be exported to numpy array::
         skia.kRGBA_8888_ColorType)
 
 For more examples, check the
-`Python Image I/O notebook <https://github.com/kyamagu/skia-python/blob/master/notebooks/Python-Image-IO.ipynb>`_.
+`Python Image I/O notebook <https://github.com/skia-python/skia-python/blob/main/notebooks/Python-Image-IO.ipynb>`_.
 
 APIs at a glance
 ----------------
