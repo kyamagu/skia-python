@@ -4,7 +4,7 @@ from `m87` to `m116`, possibly disabling any `m87` APIs that have no close `m116
 It concentrates on OT-SVG, and fixing these two issues:
 
 * [SkSVGDOM::renderNode() is not exposed in python](https://github.com/skia-python/skia-python/issues/192)
-* [three-args contructor to SkMemoryStream not exposed.](https://github.com/skia-python/skia-python/issues/194)
+* [three-args constructor to SkMemoryStream not exposed.](https://github.com/skia-python/skia-python/issues/194)
 
 The SVG module left experimental in `m88` upstream. It has received many improvements since.
 
