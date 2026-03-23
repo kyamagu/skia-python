@@ -13,8 +13,8 @@ are also exposed for access. This experimental functionality is available to
 Linux/FreeType users only.
 
 Special mention of [0lru](https://github.com/0lru) who provided a
-[draft m98 pull](https://github.com/skia-python/skia-python/pull/181) for which some ideas
-of this update had taken from.
+[draft m98 pull](https://github.com/skia-python/skia-python/pull/181) from which some ideas
+for this update were taken.
 
 # General overview of changes between `m87` and `m116`
 
