@@ -1609,6 +1609,14 @@ canvas
         If :py:class:`Rect` oval is empty or sweepAngle is zero, nothing is
         drawn.
 
+        NOTE: `oval` should be normalized, so that `oval.fLeft` is less than `oval.fRight`
+        and `oval.fTop` is less than `oval.fBottom`. If unsure, call its `makeSorted()` method.
+        This method differs from `drawOval`, which does not requires such
+        preprocessing. Upstream `drawOval` calls `makeSorted()` internally,
+        but upstream `drawArc` does not; this difference is likely to avoid
+        ambiguity in interpreting `startAngle` and `sweepAngle` in various backends,
+        where drawing direction matters.
+
         :param skia.Rect oval: :py:class:`Rect` bounds of oval containing arc to
             draw
         :param float startAngle: angle in degrees where arc begins
