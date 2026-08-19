@@ -112,6 +112,8 @@ jobs:
     name: Build docs
     needs: [build_wheels, build_wheels_old]
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     steps:
       - uses: actions/checkout@v7
 
@@ -162,7 +164,8 @@ jobs:
   build_and_test_on_Fedora:
     runs-on: ubuntu-24.04
     container: fedora:42
-    permissions: write-all
+    permissions:
+      contents: read
     steps:
        - run: dnf install -y dnf-utils git gcc-c++ libstdc++-devel libstdc++-static
        - run: dnf install -y python3-build python3-devel python3-pytest python3-pillow python3-glfw

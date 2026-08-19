@@ -38,7 +38,7 @@ First, clone the repo.
 
 .. code-block:: bash
 
-    git clone --recursive https://github.com/kyamagu/skia-python.git
+    git clone --recursive https://github.com/skia-python/skia-python.git
     cd skia-python
 
 The repository bundles `skia` and its build tools (`depot_tools`) as submodules.

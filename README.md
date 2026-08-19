@@ -1,6 +1,6 @@
 # Skia python binding
 
-[![CI](https://github.com/kyamagu/skia-python/actions/workflows/ci.yml/badge.svg)](https://github.com/kyamagu/skia-python/actions/workflows/ci.yml)
+[![CI](https://github.com/skia-python/skia-python/actions/workflows/ci.yml/badge.svg)](https://github.com/skia-python/skia-python/actions/workflows/ci.yml)
 [![PyPI version](https://badge.fury.io/py/skia-python.svg)](https://badge.fury.io/py/skia-python)
 
 Python binding to [Skia Graphics Library](https://skia.org/).
@@ -44,24 +44,24 @@ Or:
 yum install fontconfig mesa-libGL mesa-libEGL libglvnd-egl mesa-dri-drivers
 ```
 
-For unsupported environment, check the [build instruction](https://kyamagu.github.io/skia-python/install.html).
+For unsupported environments, check the [build instructions](https://skia-python.github.io/skia-python/install.html).
 
 ## Examples
 
-- [Showcase](https://github.com/kyamagu/skia-python/blob/main/notebooks/Showcase.ipynb)
-- [Canvas Overview](https://github.com/kyamagu/skia-python/blob/main/notebooks/Canvas-Overview.ipynb)
-- [Canvas Creation](https://github.com/kyamagu/skia-python/blob/main/notebooks/Canvas-Creation.ipynb)
-- [Path Overview](https://github.com/kyamagu/skia-python/blob/main/notebooks/Path-Overview.ipynb)
-- [Paint Overview](https://github.com/kyamagu/skia-python/blob/main/notebooks/Paint-Overview.ipynb)
-- [Python Image I/O](https://github.com/kyamagu/skia-python/blob/main/notebooks/Python-Image-IO.ipynb)
-- [Drawing Texts](https://github.com/kyamagu/skia-python/blob/main/notebooks/Drawing-Texts.ipynb)
+- [Showcase](https://github.com/skia-python/skia-python/blob/main/notebooks/Showcase.ipynb)
+- [Canvas Overview](https://github.com/skia-python/skia-python/blob/main/notebooks/Canvas-Overview.ipynb)
+- [Canvas Creation](https://github.com/skia-python/skia-python/blob/main/notebooks/Canvas-Creation.ipynb)
+- [Path Overview](https://github.com/skia-python/skia-python/blob/main/notebooks/Path-Overview.ipynb)
+- [Paint Overview](https://github.com/skia-python/skia-python/blob/main/notebooks/Paint-Overview.ipynb)
+- [Python Image I/O](https://github.com/skia-python/skia-python/blob/main/notebooks/Python-Image-IO.ipynb)
+- [Drawing Texts](https://github.com/skia-python/skia-python/blob/main/notebooks/Drawing-Texts.ipynb)
 
 ## Documentation
 
-https://kyamagu.github.io/skia-python
+https://skia-python.github.io/skia-python
 
-- [Tutorial](https://kyamagu.github.io/skia-python/tutorial/)
-- [Reference](https://kyamagu.github.io/skia-python/reference.html)
+- [Tutorial](https://skia-python.github.io/skia-python/tutorial/)
+- [Reference](https://skia-python.github.io/skia-python/reference.html)
 
 - For breaking changes and tips on migration from `m87`: See [Migration Guide](Migration_from_v8x_to_v13x.md), also
   see the detailed changes below, especially [README.m116](relnotes/README.m116.md).
@@ -80,4 +80,4 @@ https://kyamagu.github.io/skia-python
 
 ## Contributing
 
-Feel free to [post an issue](https://github.com/kyamagu/skia-python/issues) or [PR](https://github.com/kyamagu/skia-python/pulls).
+Feel free to [post an issue](https://github.com/skia-python/skia-python/issues) or [PR](https://github.com/skia-python/skia-python/pulls).
