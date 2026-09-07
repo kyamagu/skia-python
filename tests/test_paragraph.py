@@ -222,3 +222,122 @@ def test_Paragraph_wordSpacing(paragraph_builder, textlayout_text_style, textlay
         return paragraph
 
     assert graf_with_word_spacing(spacing_a).LongestLine < graf_with_word_spacing(spacing_b).LongestLine
+
+
+# TextStyle height accessors round-trip. Note that getHeight() returns 0 unless
+# the height override is enabled - the multiplier is only meaningful then.
+def test_TextStyle_heightAccessors():
+    text_style = skia.textlayout.TextStyle()
+
+    text_style.setHeightOverride(True)
+    assert text_style.getHeightOverride() is True
+
+    text_style.setHeight(1.5)
+    assert text_style.getHeight() == pytest.approx(1.5)
+
+    text_style.setHeightOverride(False)
+    assert text_style.getHeightOverride() is False
+    assert text_style.getHeight() == 0
+
+    text_style.setHalfLeading(True)
+    assert text_style.getHalfLeading() is True
+
+    text_style.setBaselineShift(-4.0)
+    assert text_style.getBaselineShift() == pytest.approx(-4.0)
+
+    text_style.setFontSize(23.5)
+    assert text_style.getFontSize() == pytest.approx(23.5)
+
+    text_style.setFontFamilies(["monospace", "serif"])
+    assert list(text_style.getFontFamilies()) == ["monospace", "serif"]
+
+
+def graf_with_text_height(font_collection, height_override, height, font_size=20.0):
+    font_collection.setDefaultFontManager(skia.FontMgr())
+
+    text_style = skia.textlayout.TextStyle()
+    text_style.setFontSize(font_size)
+    text_style.setHeightOverride(height_override)
+    text_style.setHalfLeading(True)
+    text_style.setHeight(height)
+
+    paragraph_style = skia.textlayout.ParagraphStyle()
+
+    builder = skia.textlayout.ParagraphBuilder.make(
+        paragraph_style, font_collection, skia.Unicodes.ICU.Make()
+    )
+    builder.pushStyle(text_style)
+
+    builder.addText("o\no")
+    paragraph = builder.Build()
+    paragraph.layout(300)
+
+    return paragraph
+
+
+# With the height override on, a line's height is fontSize * height, so a
+# two-line paragraph is exactly twice that - independent of the font in use.
+@pytest.mark.parametrize('height', [1.0, 2.0, 3.0])
+def test_Paragraph_textStyleHeightIsExact(textlayout_font_collection, height):
+    font_size = 20.0
+    paragraph = graf_with_text_height(textlayout_font_collection, True, height, font_size)
+
+    assert paragraph.Height == pytest.approx(2 * font_size * height, abs=1)
+
+
+# The height is only applied when the override is enabled; without it the font's
+# own metrics decide, and the multiplier is ignored.
+@pytest.mark.parametrize('test_operator, spec_a, spec_b', [
+    (operator.eq, (False, 1.0), (False, 3.0)),
+    (operator.lt, (False, 3.0), (True, 3.0)),
+    (operator.lt, (True, 1.0), (True, 2.0)),
+    (operator.lt, (True, 2.0), (True, 3.0)),
+])
+def test_Paragraph_textStyleHeight(textlayout_font_collection, test_operator, spec_a, spec_b):
+    paragraph_a_height = graf_with_text_height(textlayout_font_collection, *spec_a).Height
+    paragraph_b_height = graf_with_text_height(textlayout_font_collection, *spec_b).Height
+
+    assert test_operator(paragraph_a_height, paragraph_b_height)
+
+
+# Same for StrutStyle: setHeight() only takes effect once setHeightOverride() is
+# on. The text style is pinned to a plain 1.0 line so the strut is what varies.
+@pytest.mark.parametrize('test_operator, spec_a, spec_b', [
+    (operator.eq, (False, 2.0), (False, 4.0)),
+    (operator.lt, (False, 4.0), (True, 4.0)),
+    (operator.lt, (True, 2.0), (True, 3.0)),
+    (operator.lt, (True, 3.0), (True, 4.0)),
+])
+def test_Paragraph_strutStyleHeight(textlayout_font_collection, test_operator, spec_a, spec_b):
+    textlayout_font_collection.setDefaultFontManager(skia.FontMgr())
+
+    def graf_with_strut_height(height_override, height):
+        strut_style = skia.textlayout.StrutStyle()
+        strut_style.setStrutEnabled(True)
+        strut_style.setHeightOverride(height_override)
+        strut_style.setHeight(height)
+
+        paragraph_style = skia.textlayout.ParagraphStyle()
+        paragraph_style.setStrutStyle(strut_style)
+
+        text_style = skia.textlayout.TextStyle()
+        text_style.setFontSize(20.0)
+        text_style.setHeightOverride(True)
+        text_style.setHalfLeading(True)
+        text_style.setHeight(1.0)
+
+        builder = skia.textlayout.ParagraphBuilder.make(
+            paragraph_style, textlayout_font_collection, skia.Unicodes.ICU.Make()
+        )
+        builder.pushStyle(text_style)
+
+        builder.addText("o\no")
+        paragraph = builder.Build()
+        paragraph.layout(300)
+
+        return paragraph
+
+    paragraph_a_height = graf_with_strut_height(*spec_a).Height
+    paragraph_b_height = graf_with_strut_height(*spec_b).Height
+
+    assert test_operator(paragraph_a_height, paragraph_b_height)

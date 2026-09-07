@@ -97,6 +97,16 @@ strut_style
         R"docstring(
         )docstring",
         py::arg("leading"))
+    .def("setHeight",
+        py::overload_cast<const SkScalar>(&StrutStyle::setHeight),
+        R"docstring(
+        )docstring",
+        py::arg("height"))
+    .def("setHeightOverride",
+        py::overload_cast<const bool>(&StrutStyle::setHeightOverride),
+        R"docstring(
+        )docstring",
+        py::arg("heightoverride"))
     ;
 
 paragraph_style
@@ -156,11 +166,15 @@ text_style
         R"docstring(
         )docstring",
         py::arg("paint"))
+    .def("getFontFamilies",
+        &TextStyle::getFontFamilies)
     .def("setFontFamilies",
         py::overload_cast<std::vector<SkString>>(&TextStyle::setFontFamilies),
         R"docstring(
         )docstring",
         py::arg("families"))
+    .def("getFontSize",
+        &TextStyle::getFontSize)
     .def("setFontSize",
         py::overload_cast<SkScalar>(&TextStyle::setFontSize),
         R"docstring(
@@ -211,6 +225,34 @@ text_style
         R"docstring(
         )docstring",
         py::arg("m"))
+    .def("getHeight",
+        &TextStyle::getHeight)
+    .def("setHeight",
+        py::overload_cast<SkScalar>(&TextStyle::setHeight),
+        R"docstring(
+        )docstring",
+        py::arg("height"))
+    .def("getHeightOverride",
+        &TextStyle::getHeightOverride)
+    .def("setHeightOverride",
+        py::overload_cast<bool>(&TextStyle::setHeightOverride),
+        R"docstring(
+        )docstring",
+        py::arg("heightoverride"))
+    .def("getHalfLeading",
+        &TextStyle::getHalfLeading)
+    .def("setHalfLeading",
+        py::overload_cast<bool>(&TextStyle::setHalfLeading),
+        R"docstring(
+        )docstring",
+        py::arg("halfleading"))
+    .def("getBaselineShift",
+        &TextStyle::getBaselineShift)
+    .def("setBaselineShift",
+        py::overload_cast<SkScalar>(&TextStyle::setBaselineShift),
+        R"docstring(
+        )docstring",
+        py::arg("baselineshift"))
     ;
 
 paragraph
